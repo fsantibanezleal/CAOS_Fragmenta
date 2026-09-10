@@ -13,12 +13,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          # The same version the canonical bake ran on. The tests compare against committed
+          # artifacts, so the environment has to be the one that produced them.
+          python-version: "3.13"
           cache: pip
       - name: Install the pinned engine and the heavy lane
         run: pip install -r requirements-precompute.txt -r requirements-dev.txt
       - name: Lint
-        run: ruff check data-pipeline tests
+        run: ruff check data-pipeline tests scripts
       - name: The pipeline tests, against the COMMITTED artifacts
         run: pytest
       - name: The release gate on what is committed
@@ -40,35 +42,29 @@ jobs:
         run: cd frontend && npm run build
 
   determinism:
-    # A bake is a pure function of the case registry, the pinned engine and the seed. Re-running it
-    # on an unchanged tree must leave git clean. Without this check a bake that quietly depends on
-    # dictionary ordering, a wall clock or a CPU-speed-dependent stopping rule ships as reproducible.
+    # A bake is a pure function of the case registry, the seed AND the pinned environment. This job
+    # checks both halves, and it earned itself: the requirements file originally carried version
+    # RANGES, so the runner installed different library versions from the machine that baked, the
+    # learned models produced slightly different numbers, and the digest moved. A canonical artifact
+    # built from a range is not reproducible by anyone, and nothing else would have caught it.
+    #
+    # The Python version is pinned here for the same reason. If this job ever fails after a library
+    # or Python bump, the answer is to re-bake and commit the artifacts, not to loosen the check.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
       - run: pip install -r requirements-precompute.txt
-      - name: Re-bake one case into a sandbox and compare its digest
-        run: |
-          python - <<'PY'
-          import json, sys, tempfile
-          from pathlib import Path
-          sys.path.insert(0, "data-pipeline")
-          from pipeline.pipeline import bake_case
-          from pipeline.registry import get_case
-
-          committed = json.loads(Path("data/derived/real-murgul/case.json").read_text())
-          with tempfile.TemporaryDirectory() as sandbox:
-              # A sandbox, never the canonical tree: a test that can overwrite the shipped artifacts
-              # can silently make itself pass.
-              result = bake_case(get_case("real-murgul"), seed=0, root=Path(sandbox))
-          assert result.digest == committed["digest"], (
-              f"a re-bake produced {result.digest} against the committed {committed['digest']}"
-          )
-          print(f"OK: the bake is reproducible, digest {result.digest[:16]}")
-          PY
+      - name: Report the installed environment
+        # Printed unconditionally. When this job fails, the first question is what was installed,
+        # and reading it from a log beats guessing from a requirements file.
+        run: pip list --format=freeze | grep -Ei '^(numpy|scikit-learn|scipy|xgboost|blastfrag)=' && python -VV
+      - name: Bake twice, then compare against what was committed
+        # The same command a developer runs locally, on purpose. A CI check written inline is a
+        # second implementation of the check, and the two drift.
+        run: python scripts/compare_bakes.py real-murgul --repeat 2
 
   guards:
     runs-on: ubuntu-latest

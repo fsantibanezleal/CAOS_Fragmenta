@@ -1,2 +1,7 @@
-pytest>=8.0
-ruff>=0.6
+# The development lane: the test runner and the linter.
+#
+# Pinned exactly, but for a different reason than requirements-precompute.txt. Nothing here touches
+# a published number. These are pinned so that a release of a linter cannot turn a green build red
+# overnight, on a commit that changed nothing. Bump them deliberately, on their own commit.
+pytest==9.1.1
+ruff==0.16.6

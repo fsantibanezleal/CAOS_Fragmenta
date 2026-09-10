@@ -1,12 +1,20 @@
-# The heavy lane: the bake. Pinned, because a canonical artifact must be reproducible.
+# The heavy lane: the bake.
+#
+# EXACTLY pinned, not ranged. A canonical scientific artifact built from a version RANGE is not
+# reproducible by anyone else, and the failure is silent: the numbers come out slightly different and
+# every gate still passes because nothing compares across machines.
+#
+# This repo's determinism check does compare across machines, and it is what caught the range. A bake
+# is a pure function of the case registry, the seed AND this file.
+#
+# Bumping any pin below means re-running the full bake and committing the artifacts in the same
+# change, because every number in every artifact came from these versions.
 #
 # The science lives in blastfrag, a SEPARATE published repo this product consumes. A product declares
-# no package of its own; see the engine repo for the models themselves.
-#
-# Installed from a git tag until the PyPI trusted publisher is registered, at which point this line
-# becomes `blastfrag==0.2.0`. The tag is what makes the bake reproducible in the meantime.
+# no package of its own. Installed from a git tag until the PyPI trusted publisher is registered, at
+# which point this becomes `blastfrag==0.2.0`.
 blastfrag @ git+https://github.com/fsantibanezleal/CAOS_BlastFrag@v0.02.000
 
-numpy>=1.24,<3
-scikit-learn>=1.3,<2
-xgboost>=2.0,<4
+numpy==2.5.3
+scikit-learn==1.9.0
+xgboost==3.4.1
