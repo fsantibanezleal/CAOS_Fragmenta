@@ -200,7 +200,7 @@
    "passed": true
   }
  },
- "digest": "61083f32217b9fd2fcb444554487392d2c24bfa5be0ab1ba5cbaf65972ddd96c",
+ "digest": "4884ea9d037fd378f8320bdf1d23b93695aae1d41fe95f01d63df513542b34f6",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -879,7 +879,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.02.001",
+  "app_version": "0.02.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

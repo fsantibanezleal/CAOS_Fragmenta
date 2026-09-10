@@ -99,7 +99,7 @@ export interface DistributionChartProps {
 const HINTS = {
   line: {
     en: 'Move the pointer across the chart to read values',
-    es: 'Mueva el puntero por el grafico para leer los valores',
+    es: 'Mueva el puntero por el gráfico para leer los valores',
   },
   curve: {
     en: 'Move the pointer over the curve to read values',

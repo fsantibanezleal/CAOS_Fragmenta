@@ -1,5 +1,5 @@
 {
- "app_version": "0.02.001",
+ "app_version": "0.02.002",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 60271,
@@ -9,7 +9,7 @@
  "case_id": "real-soma",
  "category": "real-campaign",
  "controls": {},
- "digest": "6fe495e236eaeaeec2fcf8603c3e4476efa89f48a60da9de8c6399bd34b0809d",
+ "digest": "9f6bfea7dbc0063245f44ead6d255097074712160b08aeebf79a0f0af4fc9256",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
