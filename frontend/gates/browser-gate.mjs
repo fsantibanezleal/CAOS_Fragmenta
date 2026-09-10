@@ -41,7 +41,25 @@ const BASE = (args.url || 'https://fragmenta.fasl-work.com').replace(/\/$/, '');
 const SHOTS = args.shots || null;
 if (SHOTS) mkdirSync(SHOTS, { recursive: true });
 
-const ROUTES = ['/', '/introduction', '/methodology', '/implementation', '/experiments', '/benchmark'];
+// Both forms of every deep route, and the trailing slash is not padding.
+//
+// GitHub Pages serves a route as a directory, so it redirects /benchmark to /benchmark/ and the
+// page's base URL gains a path segment. Any relative fetch then resolves UNDER the route: a
+// `data/benchmark.json` becomes `/benchmark/data/benchmark.json` and 404s. A local preview server
+// answers /benchmark directly with no redirect, so the base URL stays at the root, the relative
+// path resolves correctly and the bug is invisible until it is in production. It was: the site
+// 404ed its data on every route except the landing page while every local check passed.
+const ROUTES = [
+  '/',
+  '/introduction',
+  '/introduction/',
+  '/methodology/',
+  '/implementation/',
+  '/experiments',
+  '/experiments/',
+  '/benchmark',
+  '/benchmark/',
+];
 const TABS = ['predict', 'distribution', 'bench', 'rock', 'explain', 'decide'];
 const VIEWPORTS = [
   [1280, 800],
@@ -124,6 +142,26 @@ for (const [w, h] of VIEWPORTS) {
       page.on('pageerror', (e) => problems.push('pageerror: ' + e.message));
       page.on('requestfailed', (r) => {
         if (!IGNORE.some((x) => x.test(r.url()))) problems.push('request failed: ' + r.url());
+      });
+      // A 404 is a SUCCESSFUL http exchange, so requestfailed never sees it. And on a static host
+      // with a single-page fallback, a missing artifact comes back as the app's own index.html with
+      // a 200, which a status check cannot see either. Both were real here: the data paths were
+      // written relative, so they resolved under the current route and 404ed on every page except
+      // the landing one, while a dev server answered the same wrong URL with HTML and a 200 and hid
+      // it completely. So this checks the status AND, for a data URL, that what came back is JSON.
+      page.on('response', async (r) => {
+        const url = r.url();
+        if (IGNORE.some((x) => x.test(url))) return;
+        if (r.status() >= 400) {
+          problems.push(`${r.status()} on ${url}`);
+          return;
+        }
+        if (/\/data\//.test(url) && !/\.(png|jpg|svg|woff2?)/.test(url)) {
+          const type = r.headers()['content-type'] || '';
+          if (!/json/i.test(type)) {
+            problems.push(`${url} came back as ${type || 'no content-type'} rather than JSON`);
+          }
+        }
       });
 
       for (const route of ROUTES) {

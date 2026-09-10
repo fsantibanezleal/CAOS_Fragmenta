@@ -44,9 +44,20 @@ async function fetchJson<T>(path: string): Promise<T> {
   return pending;
 }
 
-export const loadIndex = () => fetchJson<CaseIndex>('data/manifests/index.json');
-export const loadCase = (caseId: string) => fetchJson<CaseArtifact>(`data/${caseId}/case.json`);
-export const loadBenchmark = () => fetchJson<BenchmarkArtifact>('data/benchmark.json');
+/**
+ * Every artifact path is ROOT-absolute, and the leading slash is the whole point.
+ *
+ * Written relative, `data/benchmark.json` resolves against the CURRENT route: it is
+ * `/data/benchmark.json` on `/`, and `/introduction/data/benchmark.json` on `/introduction`. The
+ * app therefore worked perfectly on its landing page and 404ed its data on every other route.
+ *
+ * A dev server hides this completely. Its single-page fallback answers the wrong URL with the app's
+ * own index.html and a 200, so nothing fails locally, the JSON parse guard above fires instead of a
+ * network error, and the only place the bug is visible is the static host in production.
+ */
+export const loadIndex = () => fetchJson<CaseIndex>('/data/manifests/index.json');
+export const loadCase = (caseId: string) => fetchJson<CaseArtifact>(`/data/${caseId}/case.json`);
+export const loadBenchmark = () => fetchJson<BenchmarkArtifact>('/data/benchmark.json');
 
 /* ------------------------------------------------------------------------------------------- */
 /* The shared vocabulary                                                                        */

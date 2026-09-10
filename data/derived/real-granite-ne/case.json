@@ -166,7 +166,7 @@
    "unstamped": []
   }
  },
- "digest": "83380dfdadd7547b105e74f09b8c2d29b06d78acc23dacf54802846d5d250b9b",
+ "digest": "bbc50374c7eb36e67b756ab7fedf378eb7eaefe64a563de4a1fe7b8591bde988",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -737,7 +737,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.002",
+  "app_version": "0.01.003",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
