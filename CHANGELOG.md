@@ -2,6 +2,33 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.02.001] - 2026-09-10
+
+### Fixed
+
+- The verdict, which is the single most important sentence this product prints, was rendering in
+  English to Spanish readers. The engine writes one English sentence and that stays the canonical
+  record in the artifact, shown verbatim so the page and the file can never disagree; the Spanish is
+  now composed in the product from the same structured fields, so it derives from the numbers rather
+  than from prose and the two cannot drift apart.
+- All three chart hints were hardcoded English, so a Spanish reader was told in English how to use
+  the only interactive element on the page.
+- The browser gate was setting `caos-lang` and `caos-theme` with hyphens. The shell stores them as
+  `caos.lang` and `caos.theme`, so every run the gate labelled "es" was rendering English and it was
+  reporting passing checks in a language it had never displayed. The keys are right now, and the
+  gate ASSERTS the page came back in the language and theme it asked for rather than assuming it.
+- The last tick on the collapse chart was clipped by the plot edge; the x scale is widened past the
+  data so an end label has room.
+- `best_learned_is_positive` was in every benchmark artifact and in no TypeScript interface.
+
+### Added
+
+- A test that walks every shipped artifact and fails on any field name the contract mirror never
+  mentions. The comment in the pipeline claimed the web build fails on contract drift; it does not
+  and cannot, because TypeScript is structural and an undeclared field type-checks perfectly while
+  being invisible to the app. That comment is corrected and the check now exists. Confirmed by
+  deleting a field from the mirror and watching the test name it.
+
 ## [0.02.000] - 2026-09-10
 
 ### Added

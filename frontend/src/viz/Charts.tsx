@@ -9,6 +9,7 @@
  * and nobody notices until a screenshot.
  */
 
+import { useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
@@ -93,6 +94,23 @@ export interface DistributionChartProps {
  * Settled against a bar histogram, which hides both tails, and against linear axes, which compress
  * the fines branch into nothing. The tails are the entire reason the three-parameter form exists.
  */
+// The hint under an idle chart. All three were hardcoded English, so a Spanish reader was told in
+// English how to read the only interactive element on the page.
+const HINTS = {
+  line: {
+    en: 'Move the pointer across the chart to read values',
+    es: 'Mueva el puntero por el grafico para leer los valores',
+  },
+  curve: {
+    en: 'Move the pointer over the curve to read values',
+    es: 'Mueva el puntero sobre la curva para leer los valores',
+  },
+  parity: {
+    en: 'Hover a point for its blast, its error and its site. Click to select it.',
+    es: 'Pase el puntero por un punto para ver su tiro, su error y su sitio. Haga clic para seleccionarlo.',
+  },
+} as const;
+
 /**
  * A chart says what it actually drew, on the element itself.
  *
@@ -119,6 +137,7 @@ export function DistributionChart({
   const [ref, box] = useBox<HTMLDivElement>();
   const plotRef = useRef<uPlot | null>(null);
   const epoch = useThemeEpoch();
+  const lang = useShellLang();
   const [readout, setReadout] = useState<{ size: number; values: (number | null)[] } | null>(null);
 
   useEffect(() => {
@@ -258,7 +277,7 @@ export function DistributionChart({
             ))}
           </>
         ) : (
-          <span className="fr-readout-hint">Move the pointer over the curve to read values</span>
+          <span className="fr-readout-hint">{HINTS.curve[lang] ?? HINTS.curve.en}</span>
         )}
       </div>
     </div>
@@ -305,6 +324,7 @@ export function ParityChart({
   const [ref, box] = useBox<HTMLDivElement>();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const epoch = useThemeEpoch();
+  const lang = useShellLang();
   const [hover, setHover] = useState<ParityPoint | null>(null);
 
   const size = Math.max(180, Math.min(box.w, box.h || height));
@@ -454,9 +474,7 @@ export function ParityChart({
             {hover.extrapolated ? <span className="fr-badge fr-badge-warn">extrapolated</span> : null}
           </>
         ) : (
-          <span className="fr-readout-hint">
-            Hover a point for its blast, its error and its site. Click to select it.
-          </span>
+          <span className="fr-readout-hint">{HINTS.parity[lang] ?? HINTS.parity.en}</span>
         )}
       </div>
     </div>
@@ -481,6 +499,8 @@ export interface LineChartProps {
   zeroLine?: boolean;
   /** Exact x positions to tick. Without this uPlot picks its own and a categorical axis repeats. */
   xTicks?: number[];
+  /** Widen the x scale past the data, so an end tick's label is not clipped by the plot edge. */
+  xRange?: [number, number];
   /** Show a legend that can solo a series. Necessary past about four lines. */
   legend?: boolean;
 }
@@ -498,6 +518,7 @@ export function LineChart({
   yRange,
   zeroLine = false,
   xTicks,
+  xRange,
   legend = false,
 }: LineChartProps) {
   // Click a legend entry to solo it, click again to release. With a dozen lines crossing each other
@@ -506,6 +527,7 @@ export function LineChart({
   const [ref, box] = useBox<HTMLDivElement>();
   const plotRef = useRef<uPlot | null>(null);
   const epoch = useThemeEpoch();
+  const lang = useShellLang();
   const [readout, setReadout] = useState<{ x: number; values: (number | null)[] } | null>(null);
 
   useEffect(() => {
@@ -519,7 +541,10 @@ export function LineChart({
       height: Math.max(160, box.h || height),
       padding: [8, 12, 4, 4],
       cursor: { drag: { x: false, y: false }, points: { size: 6 } },
-      scales: { x: { distr: logX ? 3 : 1, time: false }, y: yRange ? { range: yRange } : {} },
+      scales: {
+        x: { distr: logX ? 3 : 1, time: false, ...(xRange ? { range: xRange } : {}) },
+        y: yRange ? { range: yRange } : {},
+      },
       axes: [
         {
           stroke: text,
@@ -620,6 +645,7 @@ export function LineChart({
     logX,
     solo,
     xTicks,
+    xRange,
     xTickFormat,
     yTickFormat,
     yRange,
@@ -663,7 +689,7 @@ export function LineChart({
             ))}
           </>
         ) : (
-          <span className="fr-readout-hint">Move the pointer across the chart to read values</span>
+          <span className="fr-readout-hint">{HINTS.line[lang] ?? HINTS.line.en}</span>
         )}
       </div>
     </div>

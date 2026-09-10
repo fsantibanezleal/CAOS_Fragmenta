@@ -229,6 +229,11 @@ export interface BenchmarkArtifact {
     best_learned_r2_identity: number;
     null_r2_identity: number;
     margin_over_null: number;
+    // Whether the best learned arm's score is above zero at all. The kill criterion needs BOTH this
+    // and the margin, because a margin over a null that is itself deeply negative is two models
+    // failing by different amounts rather than skill. The artifact has carried it since the bake
+    // was written; the mirror did not, which is drift in the direction that hides a field.
+    best_learned_is_positive: boolean;
     n_learned_arms_positive: number;
     n_learned_arms: number;
     arms_with_positive_variance_explained_across_sites: [string, number][];

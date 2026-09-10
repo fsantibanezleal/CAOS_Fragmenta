@@ -98,9 +98,18 @@ async function inspect(page) {
       width: Math.round(el.getBoundingClientRect().width),
       height: Math.round(el.getBoundingClientRect().height),
     }));
+    // Read the settings back from where the shell keeps them, rather than from a class name that
+    // might be stale or from a colour sample that cannot tell a dark page from a dark image.
+    let stored = {};
+    try {
+      stored = { lang: localStorage.getItem('caos.lang'), theme: localStorage.getItem('caos.theme') };
+    } catch {
+      stored = {};
+    }
     return {
       title: document.title,
-      theme: de.getAttribute('data-theme') || getComputedStyle(de).colorScheme,
+      lang: stored.lang || 'en',
+      theme: de.getAttribute('data-theme') || stored.theme || getComputedStyle(de).colorScheme,
       overflowX: de.scrollWidth > window.innerWidth + 1,
       bodyText: (document.body.innerText || '').trim().length,
       panels: [...document.querySelectorAll('.fr-panel')].map((el) => ({
@@ -168,13 +177,14 @@ for (const [w, h] of VIEWPORTS) {
         const where = `${w}x${h} ${theme} ${lang} ${route}`;
         problems.length = 0;
         await page.goto(BASE + route, { waitUntil: 'networkidle', timeout: 60000 });
-        // The theme and the language are user settings the shell persists, so set them explicitly
-        // rather than trusting the colour-scheme hint alone.
+        // The shell persists both settings under these EXACT keys. The first version of this gate
+        // guessed 'caos-lang' and 'caos-theme' with hyphens, so every "es" run rendered English and
+        // the gate reported passing checks in a language it had never displayed. A gate has to
+        // verify its own subject, which is why the language is asserted below rather than assumed.
         await page.evaluate(
           ([t, l]) => {
-            localStorage.setItem('caos-theme', t);
-            localStorage.setItem('caos-lang', l);
-            document.documentElement.setAttribute('data-theme', t);
+            localStorage.setItem('caos.theme', t);
+            localStorage.setItem('caos.lang', l);
           },
           [theme, lang],
         );
@@ -182,6 +192,9 @@ for (const [w, h] of VIEWPORTS) {
         await page.waitForTimeout(1200);
 
         const info = await inspect(page);
+
+        if (info.lang !== lang) fail(where, `asked for ${lang} and the page is in ${info.lang}`);
+        if (info.theme !== theme) fail(where, `asked for the ${theme} theme and the page is ${info.theme}`);
 
         if (problems.length) fail(where, problems.slice(0, 3).join(' | '));
         else if (info.overflowX) fail(where, 'the document scrolls horizontally');
