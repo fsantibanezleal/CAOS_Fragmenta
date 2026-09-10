@@ -42,14 +42,22 @@ jobs:
         run: cd frontend && npm run build
 
   determinism:
-    # A bake is a pure function of the case registry, the seed AND the pinned environment. This job
-    # checks both halves, and it earned itself: the requirements file originally carried version
-    # RANGES, so the runner installed different library versions from the machine that baked, the
-    # learned models produced slightly different numbers, and the digest moved. A canonical artifact
-    # built from a range is not reproducible by anyone, and nothing else would have caught it.
+    # Reproducibility has two halves, and they need two different instruments.
     #
-    # The Python version is pinned here for the same reason. If this job ever fails after a library
-    # or Python bump, the answer is to re-bake and commit the artifacts, not to loosen the check.
+    # WITHIN one environment the bake is byte-identical, and a content address is the right check.
+    #
+    # ACROSS environments it reproduces to a numeric tolerance, not to a hash. Two builds of the same
+    # pinned numpy reduce a dot product in a different order, and the one iterative solver in the
+    # product carries those last bits through to its output. This job measured it: baking on a Linux
+    # runner against artifacts baked on Windows, with identical pins, 72 fields differ at a worst
+    # relative error of 8.3e-09, and every one of them belongs to the Levenberg-Marquardt network.
+    # No other arm moves at all. Asserting equal hashes across machines would assert something
+    # false, so the check compares numbers and names the tolerance.
+    #
+    # The pins and the Python version still matter, and this job earned them: the requirements file
+    # originally carried version RANGES, so the runner installed different libraries from the machine
+    # that baked and the numbers moved by far more than reduction order. A canonical artifact built
+    # from a range is reproducible by nobody, and nothing else would have caught it.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,63 +69,28 @@ jobs:
         # Printed unconditionally. When this job fails, the first question is what was installed,
         # and reading it from a log beats guessing from a requirements file.
         run: pip list --format=freeze | grep -Ei '^(numpy|scikit-learn|scipy|xgboost|blastfrag)=' && python -VV
-      - name: Bake twice, then compare against what was committed
-        # The same command a developer runs locally, on purpose. A CI check written inline is a
-        # second implementation of the check, and the two drift.
+      # The same commands a developer runs locally, on purpose. A CI check written inline is a
+      # second implementation of the check, and the two drift.
+      - name: Two bakes in this environment must be byte-identical
         run: python scripts/compare_bakes.py real-murgul --repeat 2
+
+      - name: Every case must reproduce the committed numbers to tolerance
+        run: python scripts/compare_bakes.py
 
   guards:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: Base-integrity guards
-        run: |
-          fail=0
-          if git ls-files | grep -qE '(^|/)\.env(\..+)?$'; then
-            echo "::error::a real .env is tracked"; fail=1; fi
-          if git ls-files | grep -qiE '(^|/)\.?venv|node_modules|\.(dll|so|dylib|pt|pth)$'; then
-            echo "::error::a venv, node_modules or a native binary is tracked"; fail=1; fi
-          if git grep -nF 'D:\_Repos' -- . ':!.github' >/dev/null 2>&1; then
-            echo "::error::leaked local machine path in a tracked file"; fail=1; fi
-          # A product declares NO package of its own. If a package is required it is a separate repo
-          # with a real PyPI project, which is what blastfrag is.
-          if git ls-files | grep -qE '(^|/)[a-z_]+lab/'; then
-            echo "::error::an internal lab package appeared"; fail=1; fi
-          if grep -q '^\[project\]' pyproject.toml 2>/dev/null; then
-            echo "::error::this product declared a package of its own"; fail=1; fi
-          # The source articles are copyrighted. Only numeric facts ship.
-          if git ls-files | grep -qiE '\.(pdf|mht)$'; then
-            echo "::error::a source document is tracked"; fail=1; fi
-          if [ "$fail" -eq 0 ]; then echo "guards: OK"; fi
-          exit $fail
+        # A script rather than shell one-liners, so a developer can run the same check before
+        # pushing, and so the guards themselves can be tested. They are: tests/test_guards.py.
+        run: python scripts/check_guards.py
 
       - name: Content standards, no em-dash and no emoji
-        run: |
-          python - <<'PY'
-          import pathlib, re, sys
-
-          emoji = re.compile("[\U0001F000-\U0001FAFF\u2190-\u21FF\u2300-\u27BF\uFE0F]")
-          skip = {"node_modules", ".git", "dist", ".venv"}
-          bad = []
-          for path in pathlib.Path(".").rglob("*"):
-              if not path.is_file() or skip & set(path.parts):
-                  continue
-              if path.suffix not in {".md", ".py", ".toml", ".yml", ".yaml", ".txt", ".ts", ".tsx", ".css"}:
-                  continue
-              try:
-                  text = path.read_text(encoding="utf-8")
-              except UnicodeDecodeError:
-                  continue
-              for i, line in enumerate(text.splitlines(), 1):
-                  if "\u2014" in line or "\u2013" in line:
-                      bad.append(f"{path}:{i}: em or en dash")
-                  if emoji.search(line):
-                      bad.append(f"{path}:{i}: emoji")
-          for b in bad:
-              print(f"::error::{b}")
-          print("content standards: OK" if not bad else f"{len(bad)} violations")
-          sys.exit(1 if bad else 0)
-          PY
+        run: python scripts/check_content_standards.py
 
       - name: No template residue survived instantiation
         run: |

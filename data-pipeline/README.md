@@ -46,9 +46,16 @@ each produces a refusal that says which and why, and the refusal reaches the scr
 
 ## Determinism
 
-A bake is a pure function of the case registry, the pinned engine version and the seed. Re-running it
-on an unchanged tree produces byte-identical artifacts and leaves git clean, and a CI job asserts
-that by re-baking one case into a sandbox and comparing digests.
+A bake is a pure function of the case registry, the pinned engine version and the seed. In the same
+environment it produces byte-identical artifacts and leaves git clean, and a CI job asserts that by
+baking one case twice into a sandbox and comparing digests.
+
+Across operating systems the artifact reproduces to a numeric tolerance rather than to a hash, and
+the gate compares numbers accordingly. The reason, and the measurement behind the tolerance, are in
+[`docs/architecture/01_the-bake.md`](../docs/architecture/01_the-bake.md).
+
+    python scripts/compare_bakes.py            # every case, against what is committed
+    python scripts/compare_bakes.py real-murgul --repeat 2
 
 The sandbox is not incidental. A test that can overwrite the canonical artifacts can silently make
 itself pass.

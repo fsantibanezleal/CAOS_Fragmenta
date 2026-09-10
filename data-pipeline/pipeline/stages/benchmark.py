@@ -8,12 +8,12 @@ screen is how a workbench turns into a summary table.
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import blastfrag as bf
 
 from .. import __version__
+from ..core.jsonio import write_json
 from .export import digest
 
 __all__ = ["BENCHMARK_SCHEMA", "build", "write"]
@@ -224,8 +224,5 @@ def _serialisable(value):
 
 
 def write(root: Path, payload: dict) -> tuple[Path, int]:
-    root.mkdir(parents=True, exist_ok=True)
     path = root / "benchmark.json"
-    text = json.dumps(payload, indent=1, sort_keys=True, default=str, allow_nan=False)
-    path.write_text(text, encoding="utf-8")
-    return path, len(text.encode("utf-8"))
+    return path, write_json(path, payload)

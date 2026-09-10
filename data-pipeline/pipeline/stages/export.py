@@ -16,6 +16,7 @@ from typing import Any
 import blastfrag as bf
 
 from ..cases.fragmenta_cases import Case
+from ..core.jsonio import write_json
 from .evaluate import CaseEvaluation
 from .infer import InferResult
 from .preprocess import PreprocessResult
@@ -163,12 +164,10 @@ def _serialisable(value: Any) -> Any:
 
 
 def write_artifact(root: Path, case_id: str, payload: dict) -> tuple[Path, int]:
-    directory = root / case_id
-    directory.mkdir(parents=True, exist_ok=True)
-    path = directory / "case.json"
-    # allow_nan=False makes the writer RAISE on a non-finite value rather than emitting invalid
-    # JSON. Belt and braces with _serialisable above, deliberately: this one cannot be forgotten
-    # when a new field is added.
-    text = json.dumps(payload, indent=1, sort_keys=True, default=str, allow_nan=False)
-    path.write_text(text, encoding="utf-8")
-    return path, len(text.encode("utf-8"))
+    """Write the artifact and return its path and the size of the file on disk.
+
+    The size is the one the manifest declares and the release gate re-reads, so it has to be the
+    real file, not the length of a string that a platform newline translation is about to change.
+    """
+    path = root / case_id / "case.json"
+    return path, write_json(path, payload)

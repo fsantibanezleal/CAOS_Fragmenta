@@ -15,6 +15,9 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "data-pipeline"))
+# The reproducibility check is a script a developer runs by hand as well as a gate. The test imports
+# the same code rather than restating it, so the two cannot drift apart.
+sys.path.insert(0, str(ROOT / "scripts"))
 
 import blastfrag as bf  # noqa: E402
 from pipeline.registry import get_case, list_cases  # noqa: E402
@@ -384,8 +387,11 @@ def test_the_duplicate_groups_are_baked(benchmark):
 # Determinism
 # ---------------------------------------------------------------------------------------------
 
-def test_rebaking_one_case_reproduces_its_committed_digest(artifacts, tmp_path):
-    """A bake is a pure function of the registry, the pinned engine and the seed.
+def test_rebaking_the_same_case_twice_here_is_byte_identical(tmp_path):
+    """Within one environment the bake is a pure function of the registry, the seed and the pins.
+
+    This is the half of reproducibility a hash can answer. If it ever fails, the pipeline is reading
+    a wall clock, iterating a set, or stopping on a time limit.
 
     Written to a sandbox, never to the canonical tree, because a test that can overwrite the shipped
     artifacts can silently make itself pass.
@@ -393,6 +399,46 @@ def test_rebaking_one_case_reproduces_its_committed_digest(artifacts, tmp_path):
     from pipeline.pipeline import bake_case
 
     case = get_case("real-murgul")
-    result = bake_case(case, seed=0, root=tmp_path)
-    assert result.digest == artifacts["real-murgul"]["digest"]
-    assert not (DERIVED / "real-murgul" / "case.json").stat().st_size == 0
+    first = bake_case(case, seed=0, root=tmp_path / "a")
+    second = bake_case(case, seed=0, root=tmp_path / "b")
+    assert first.digest == second.digest
+    assert (tmp_path / "a" / "real-murgul" / "case.json").read_bytes() == (
+        tmp_path / "b" / "real-murgul" / "case.json"
+    ).read_bytes()
+
+
+def test_rebaking_reproduces_the_committed_numbers_to_tolerance(artifacts, tmp_path):
+    """Across environments the artifact reproduces to a numeric tolerance, not to a hash.
+
+    A content address is a discrete answer to a continuous question. Two builds of the same pinned
+    numpy reduce a dot product in a different order, the last bits differ, and the one iterative
+    solver in the product carries that through to its output. Measured between Windows and a Linux
+    runner on identical pins: 72 fields differ, worst relative error 8.3e-09, every one of them in
+    the Levenberg-Marquardt network and none in any other arm.
+
+    Asserting equal hashes here would therefore assert something false. Asserting nothing would let
+    a changed model through. The tolerance sits between the two, five orders below the percent-scale
+    move a different model would make and two orders above the measured floating-point noise.
+
+    Written to a sandbox, for the same reason as the test above.
+    """
+    from compare_bakes import RELATIVE_TOLERANCE, compare
+    from pipeline.pipeline import bake_case
+
+    case = get_case("real-murgul")
+    bake_case(case, seed=0, root=tmp_path)
+    baked = json.loads((tmp_path / "real-murgul" / "case.json").read_text(encoding="utf-8"))
+
+    committed = dict(artifacts["real-murgul"])
+    baked.pop("digest", None)
+    committed.pop("digest", None)
+
+    problems, numeric = compare(baked, committed)
+    assert not problems, problems
+    worst = numeric[0] if numeric else None
+    assert worst is None or worst[0] <= RELATIVE_TOLERANCE, (
+        f"{worst[1]} re-baked as {worst[2]!r} against the committed {worst[3]!r}, "
+        f"a relative difference of {worst[0]:.3e}. That is far above floating-point noise, so this "
+        "is a different model rather than a different machine."
+    )
+    assert (DERIVED / "real-murgul" / "case.json").stat().st_size > 0
