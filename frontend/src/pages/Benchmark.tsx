@@ -15,6 +15,17 @@ import { LineChart, type SeriesSpec } from '../viz/Charts';
 
 const PROTOCOL_ORDER = ['random-8020', 'dedup-random', 'leave-one-site-out'];
 
+// Short enough to sit under a tick without the axis wrapping. The long names are in the table.
+const PROTOCOL_SHORT: Record<number, Record<string, string>> = {
+  0: { en: 'random 80/20', es: 'aleatorio 80/20' },
+  1: { en: 'deduplicated', es: 'deduplicado' },
+  2: { en: 'held out', es: 'excluido' },
+};
+
+// The two arms with fixed coefficients are the argument, so they are drawn thick, and the null is
+// dashed because it is a reference rather than a competitor.
+const EMPHASISED = new Set(['published-regression', 'kuznetsov']);
+
 export default function Benchmark() {
   const lang = useShellLang();
   const es = lang === 'es';
@@ -32,6 +43,20 @@ export default function Benchmark() {
     (arm) => arm !== 'oracle',
   );
 
+  // An arm that abstains on every row of a protocol has no score there, and a null in the series is
+  // drawn as a gap rather than as a zero. The rock-stiffness router is exactly that case: it routes,
+  // it does not predict, so it abstains on all 97 rows under the honest protocol.
+  const collapseSeries: SeriesSpec[] = arms.map((arm) => ({
+    id: arm,
+    label: ARM_BY_ID.get(arm)?.label[lang] ?? arm,
+    values: PROTOCOL_ORDER.map((protocol) => {
+      const value = benchmark.protocols[protocol].arms[arm]?.r2_identity;
+      return value === undefined || value === null ? null : Math.max(value, -1.05);
+    }),
+    width: EMPHASISED.has(arm) ? 3 : 1.5,
+    dashed: arm === 'null',
+  }));
+
   return (
     <article className="fr-prose fr-prose-wide">
       <h1>{es ? 'Benchmark' : 'Benchmark'}</h1>
@@ -45,6 +70,31 @@ export default function Benchmark() {
           ? 'Los mismos modelos, las mismas filas, tres formas de partir los datos. La brecha entre ellas es el hallazgo, y cualquiera de sus dos signos habría sido publicable.'
           : 'The same models, the same rows, three ways of splitting the data. The gap between them is the finding, and either sign of it would have been worth reporting.'}
       </p>
+
+      {/* The finding is a COLLAPSE, and a table asks the reader to do the subtraction themselves.
+          One line per model across the three protocols puts it on a slope: the fitted arms fall off
+          a cliff at the third column, the two with fixed coefficients do not, and the null sits
+          flat underneath. Zero is drawn, because the sign is the whole argument. */}
+      <h2>{es ? 'La caída, por protocolo' : 'The collapse, protocol by protocol'}</h2>
+      <p className="fr-fine">
+        {es
+          ? 'Una línea por modelo. Bajo cero el modelo es peor que predecir una constante. El eje se corta en -1: cuatro modelos caen mucho más abajo que eso y se dibujan en el piso, con su valor exacto en la tabla siguiente. Un tramo faltante es un modelo que se abstuvo en todas las filas de ese protocolo.'
+          : 'One line per model. Below zero the model is worse than predicting a constant. The axis is cut at -1: four arms fall far below that and are drawn at the floor, with their exact value in the table below. A missing segment is a model that abstained on every row of that protocol.'}
+      </p>
+      <LineChart
+        x={[0, 1, 2]}
+        series={collapseSeries}
+        xLabel={es ? 'protocolo' : 'protocol'}
+        yLabel={es ? 'varianza explicada' : 'variance explained'}
+        height={380}
+        zeroLine
+        legend
+        yRange={[-1.1, 1]}
+        xTicks={[0, 1, 2]}
+        xTickFormat={(v) => PROTOCOL_SHORT[Math.round(v)]?.[lang] ?? ''}
+        yTickFormat={(v) => v.toFixed(1)}
+        valueFormat={(v) => (v === null ? 'n/a' : v.toFixed(3))}
+      />
 
       <h2>{es ? 'Los tres protocolos' : 'The three protocols'}</h2>
       <p className="fr-fine">

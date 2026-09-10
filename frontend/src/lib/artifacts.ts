@@ -8,7 +8,10 @@
 
 import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang } from './contract.types';
 
-export const APP_VERSION: string = import.meta.env.VITE_APP_VERSION ?? '0.0.0';
+// `import.meta.env` is injected by the bundler and does not exist when this module is imported
+// from plain Node, which is how the parity tests read the arm catalogue. Guarding it is what makes
+// this file testable outside a browser build.
+export const APP_VERSION: string = import.meta.env?.VITE_APP_VERSION ?? '0.0.0';
 
 /**
  * Cache-busted with the app version.
@@ -186,6 +189,34 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: false,
     source: 'Amoako, Jha and Zhong 2022, section 4.2.1',
+  },
+  {
+    // Present in the benchmark only. It is the second study's own choice of kernel, reported by that
+    // study as its worst model, and it is here so that "the learned tier fails" cannot be answered
+    // with "you picked the wrong kernel".
+    id: 'svr-poly',
+    tier: 'learned',
+    label: { en: 'Support vector regression, polynomial', es: 'Regresión por vectores de soporte, polinomial' },
+    blurb: {
+      en: 'A degree-5 polynomial kernel, the kernel a second study chose and then reported as its own worst model. Kept in the benchmark so the failure of the learned tier cannot be blamed on one kernel choice.',
+      es: 'Núcleo polinomial de grado 5, el que un segundo estudio eligió y luego reportó como su peor modelo. Se mantiene en el benchmark para que el fracaso del nivel aprendido no pueda atribuirse a la elección de un núcleo.',
+    },
+    distribution: false,
+    source: 'Sui et al. 2025, doi:10.3390/app15031254',
+  },
+  {
+    // The ceiling. It returns the measurement, so it is not a prediction and never appears on a
+    // case; it is in the benchmark to prove the scoring harness is wired correctly. An oracle that
+    // does not score perfectly means the scoring is broken, not the model.
+    id: 'oracle',
+    tier: 'control',
+    label: { en: 'Oracle: return the measurement', es: 'Oráculo: devolver la medición' },
+    blurb: {
+      en: 'Returns the measured size itself. Not a model and not a prediction: it is the ceiling, and a check that the scoring harness is right. If it does not score perfectly, the scoring is broken.',
+      es: 'Devuelve la medición misma. No es un modelo ni una predicción: es el techo, y una comprobación de que el andamiaje de puntuación está bien. Si no puntúa perfecto, lo que está roto es la puntuación.',
+    },
+    distribution: false,
+    source: 'the measured value itself',
   },
   {
     id: 'random-forest',

@@ -355,7 +355,7 @@
   }
  },
  "controls": {},
- "digest": "9f18898feab43063fb91966587e31f43102d38b40ad9731910ef66d6703eda58",
+ "digest": "b037cda081a221c6105e5553414d95ed93f842ce646576128f5e0a19e7d33885",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3159,7 +3159,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.003",
+  "app_version": "0.02.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

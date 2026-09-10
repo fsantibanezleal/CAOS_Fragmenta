@@ -2,6 +2,31 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.02.000] - 2026-09-10
+
+### Added
+
+- The Benchmark page opens with the finding as a picture. One line per model across the three
+  protocols puts the collapse on a slope: the fitted arms fall off a cliff at the third column, the
+  two with fixed coefficients do not, and the null sits flat underneath. A table asked the reader to
+  do that subtraction themselves.
+- Line charts take a legend whose entries solo a series on click, dimming the rest rather than
+  hiding them so the context stays. Past about four lines a hover readout is not enough.
+- Line charts take pinned x ticks. Without them uPlot fills a categorical axis with its own ticks,
+  every one of which rounds to the same label, and the axis reads as the same two words printed
+  twenty times. It did.
+
+### Fixed
+
+- Two arms had no entry in the interface's arm catalogue and rendered as bare slugs beside properly
+  named models: `svr-poly`, the polynomial kernel a second study chose and then reported as its own
+  worst model, and `oracle`, the ceiling that proves the scoring harness is wired correctly. Both
+  are described now, in both languages, and a test asserts that every arm in every shipped artifact
+  has a catalogue entry.
+- The parity plot is drawn at 520px rather than 340px, so the square uses the panel it sits in.
+- `artifacts.ts` guards `import.meta.env`, which the bundler injects and plain Node does not have.
+  That is what makes the module importable from the tests that now read its catalogue.
+
 ## [0.01.003] - 2026-09-10
 
 ### Fixed
