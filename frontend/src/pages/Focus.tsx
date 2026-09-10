@@ -106,6 +106,7 @@ export default function Focus() {
             selected={selected}
             onSelect={setSelected}
             height={640}
+            fill
           />
         ) : (
           <p className="fr-note">

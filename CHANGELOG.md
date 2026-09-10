@@ -2,6 +2,57 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.03.000] - 2026-09-10
+
+The App route did not follow the frontend ADRs. Felipe said so about the left rail, and an audit
+against the quantified floors found the rail was the visible part of a layout that never composed
+the shared shell at all.
+
+### Changed
+
+- Every route now composes the shell's own containers. The doc routes are `.page-body prose` and the
+  App route is `.page-body wide`, instead of the product's own `.fr-prose { max-width: 78ch }` root
+  and a bare `.fr-layout`. Picking a width the shell already owns is the divergence ADR-0017 section
+  1.3 bans by name, and it is why nothing else about the sizing worked.
+- The App route runs in the shell's `fixed` mode, so it is locked to the viewport and the rail can be
+  bounded at all. Measured before: the rail was **1717px tall in an 800px viewport**, so 917px of
+  controls sat below the fold on first paint. It now ends at 668px of 800.
+- The case control is a `select` with one optgroup per category instead of sixteen chips under six
+  headings (ADR-0071 rule 7).
+- The rail is SPLIT rather than scrolled (rule 6): the case and model selectors are always visible
+  because they steer every tab, and the case description and the provenance take turns in a pane
+  below them.
+- The full arm ranking moved out of the instrument's stage and in beside the score panel, which is
+  the same question it answers. While it was in the stage it took 520 of the stage's 620 pixels and
+  left the parity plot 58.
+- The footer is one line again, as ADR-0016 section 2 asks. It had grown to 116px, and on a route
+  locked to the viewport that is 13% of a 900px screen taken from the instrument permanently.
+- The focus route's chart fills its stage: 747px square at 1600x900 where it was 640px.
+
+### Fixed
+
+- The chart measured its own canvas to choose its size, which is circular: the canvas then set that
+  size as the container's height. The number never moved off 520px at any viewport from 1280 to
+  2560. The measured host is out of flow now, and the chart scales with the window.
+- The per-tab error boundary was a plain `<div>`, which is `display: block` with `min-height: auto`,
+  and that one element broke the height chain the whole App route depends on.
+- The layout was language-dependent: the Spanish footer wrapped an extra line and the Spanish
+  readout hint wrapped, and between them the instrument measured 0.257 of the viewport in Spanish
+  against 0.280 in English. The same screen gives the picture the same space in both languages now.
+- The browser gate counted the distinct row positions of every `[role="tab"]` on the page, so adding
+  a second tablist in the rail made it report that the tab strip had wrapped onto two rows when both
+  strips were on one. It counts per tablist now.
+
+### Known deviation, measured rather than hidden
+
+ADR-0071 rule 8 asks the instrument to occupy at least **0.50** of the viewport on an App route.
+This product reaches **0.28** at 1600x900 and **0.36** at 2560x1440, and cannot reach 0.50: the
+instrument is a parity plot, which has to be square, and a square's area is capped by the pane
+HEIGHT. At 1600x900 the pane is about 680px after the header, footer, tab strip and padding, so the
+largest honest square is about 0.32 of the screen. 0.50 would need a side of 848px in a 680px pane.
+Closing it means changing which chart lands on the App route, which is a product decision rather
+than a layout fix. The gate asserts the achievable floor and names the shortfall.
+
 ## [0.02.002] - 2026-09-10
 
 ### Fixed

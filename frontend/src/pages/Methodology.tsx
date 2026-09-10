@@ -40,7 +40,7 @@ export default function Methodology() {
   ];
 
   return (
-    <article className="fr-prose">
+    <div className="page-body prose">
       <h1>{es ? 'Metodología' : 'Methodology'}</h1>
       <p className="fr-lede">
         {es
@@ -49,7 +49,7 @@ export default function Methodology() {
       </p>
       <SubTabs tabs={tabs} ariaLabel="method families" />
       <Refs ids={SECTION_REFS.methodology} label={es ? "Fuentes de esta página" : "Sources for this page"} />
-    </article>
+    </div>
   );
 }
 

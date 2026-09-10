@@ -17,7 +17,7 @@ export default function Introduction() {
   const es = lang === 'es';
 
   return (
-    <article className="fr-prose">
+    <div className="page-body prose">
       <h1>{es ? 'Fragmentación por voladura' : 'Blast fragmentation'}</h1>
 
       <p className="fr-lede">
@@ -113,6 +113,6 @@ export default function Introduction() {
       </ul>
 
       <Refs ids={SECTION_REFS.introduction} label={es ? "Fuentes de esta página" : "Sources for this page"} />
-    </article>
+    </div>
   );
 }

@@ -31,31 +31,29 @@ const config: ShellConfig = {
   ],
   links: { github: 'https://github.com/fsantibanezleal/CAOS_Fragmenta' },
   version: APP_VERSION,
+  // The App route is an instrument, so it is sized to the viewport rather than allowed to grow
+  // (ADR-0071 rules 1 and 6). The shell's `fixed` mode locks the shell to 100dvh and hands the
+  // remaining height to `.page-body.wide`, which is what makes a bounded rail possible at all: a
+  // rail with `height: 100%` inside an ancestor chain that has no height simply grows, and it did.
+  // Measured before this: the rail was 1717px tall in an 800px viewport, so 917px of controls sat
+  // below the fold on first paint. Doc routes stay scrollable and are deliberately not listed.
+  fixedRoutes: ['/', '/app'],
   architecture,
   footer: {
-    // One line of provenance and one of disclaimer. The long-form versions live on Implementation
-    // and Benchmark and in the architecture modal, where there is room to read them.
+    // COMPACT, and the word is load-bearing (ADR-0016 section 2: one wrapping line).
+    //
+    // What was here ran to four wrapped lines each, and the footer measured 116px. On a route the
+    // shell locks to the viewport that is 13% of a 900px screen permanently gone from the
+    // instrument, which is the space ADR-0071 rule 8 is trying to protect. The long forms are not
+    // lost: the full provenance with every DOI is on Implementation, and the full disclaimer with
+    // what is and is not modelled is on Benchmark, which is where there is room to read them.
     provenance: {
-      en:
-        'Engine: blastfrag (MIT), a separately published package. Data: 97 published bench blasts ' +
-        '(doi:10.1002/nag.957), a 14-blast published hold-out (doi:10.1007/s10706-012-9496-3) and 5 ' +
-        'field blasts (doi:10.3390/app15031254, CC BY). Numeric values reused with citation; the ' +
-        'source articles are not redistributed.',
-      es:
-        'Motor: blastfrag (MIT), un paquete publicado aparte. Datos: 97 tiros de banco publicados ' +
-        '(doi:10.1002/nag.957), un conjunto de validacion de 14 tiros (doi:10.1007/s10706-012-9496-3) ' +
-        'y 5 tiros de terreno (doi:10.3390/app15031254, CC BY). Valores numericos reutilizados con ' +
-        'cita; los articulos fuente no se redistribuyen.',
+      en: 'Engine: blastfrag (MIT). Data: 116 published blasts, reused with citation; the source articles are not redistributed.',
+      es: 'Motor: blastfrag (MIT). Datos: 116 tiros publicados, reutilizados con cita; los artículos no se redistribuyen.',
     },
     disclaimer: {
-      en:
-        'Every prediction is a model, shown with the name of its statistic and a constant predictor ' +
-        'beside it. No mechanistic simulation, no flyrock, no ground vibration, no comminution model. ' +
-        'Not for production blast design.',
-      es:
-        'Toda predicción es un modelo, mostrada con el nombre de su estadístico y un predictor ' +
-        'constante al lado. Sin simulacion mecanicista, sin proyeccion de rocas, sin vibracion, sin ' +
-        'modelo de conminucion. No apto para diseno de voladura de produccion.',
+      en: 'Every prediction is a model, shown with its statistic beside it. Not for production blast design.',
+      es: 'Toda predicción es un modelo, con su estadístico al lado. No apta para diseño de voladura de producción.',
     },
   },
 };

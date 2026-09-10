@@ -54,7 +54,7 @@ export default function Experiments() {
   }
 
   return (
-    <article className="fr-prose fr-prose-wide">
+    <div className="page-body wide prose">
       <h1>{es ? 'Experimentos' : 'Experiments'}</h1>
       <p className="fr-lede">
         {es
@@ -172,7 +172,7 @@ export default function Experiments() {
       ) : null}
 
       <Refs ids={SECTION_REFS.experiments} label={es ? "Fuentes de esta página" : "Sources for this page"} />
-    </article>
+    </div>
   );
 }
 

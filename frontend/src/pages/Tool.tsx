@@ -64,6 +64,7 @@ export default function Tool() {
   const caseId = params.get('case') ?? DEFAULT_CASE;
   const [armId, setArmId] = useState('published-regression');
   const [selectedBlast, setSelectedBlast] = useState<string | null>(null);
+  const [railSection, setRailSection] = useState<'case' | 'provenance'>('case');
 
   useEffect(() => {
     loadIndex().then(setIndex).catch((e) => setError(String(e)));
@@ -164,12 +165,51 @@ export default function Tool() {
   ];
 
   return (
-    <div className="fr-layout">
+    <div className="page-body wide fr-layout">
       <aside className="fr-rail">
-        <CaseSelector cases={cases} selectedId={caseId} onSelect={selectCase} lang={lang} />
-        <CaseCard artifact={artifact} lang={lang} />
+        {/* A dropdown with one optgroup per category, not sixteen chips under six headings.
+            ADR-0071 rule 7: the chip layout spends vertical space linearly in the number of cases,
+            and that space comes out of the instrument on every render. Sixteen cases cost about
+            twenty rows of rail as chips and one row as a select, with the categories preserved. */}
+        <CaseSelector
+          cases={cases}
+          selectedId={caseId}
+          onSelect={selectCase}
+          lang={lang}
+          layout="select"
+        />
         <ArmSelector armId={armId} onArm={setArmId} artifact={artifact} />
-        <ProvenancePanel artifact={artifact} />
+
+        {/* Split, not scrolled.
+            ADR-0071 rule 6: a rail that has to be scrolled before a control can be reached is a
+            sizing failure, and the fix is to divide the content and show one part at a time rather
+            than to let the reader hunt. The two controls above are always visible because they
+            steer every tab; what is READING, the case's reason and the provenance, takes turns.
+            Measured before this at 1280x800: 165px of rail below its own fold. */}
+        <div className="fr-railtabs" role="tablist" aria-label={lang === 'es' ? 'Detalle del caso' : 'Case detail'}>
+          {(['case', 'provenance'] as const).map((section) => (
+            <button
+              key={section}
+              type="button"
+              role="tab"
+              aria-selected={railSection === section}
+              className={`fr-railtab${railSection === section ? ' fr-railtab-on' : ''}`}
+              onClick={() => setRailSection(section)}
+            >
+              {section === 'case'
+                ? lang === 'es' ? 'El caso' : 'The case'
+                : lang === 'es' ? 'Procedencia' : 'Provenance'}
+            </button>
+          ))}
+        </div>
+        <div className="fr-railpane">
+          {railSection === 'case' ? (
+            <CaseCard artifact={artifact} lang={lang} />
+          ) : (
+            <ProvenancePanel artifact={artifact} />
+          )}
+        </div>
+
         <Link className="fr-focus-link" to={`/focus/${artifact.case.id}`}>
           {lang === 'es' ? 'Abrir en pantalla completa' : 'Open the full-screen view'}
         </Link>
@@ -295,7 +335,7 @@ function PredictTab({
   const selectedCell = selectedBlast ? row[selectedBlast] : undefined;
 
   return (
-    <div className="fr-grid fr-grid-2">
+    <div className="fr-grid fr-grid-2 fr-grid-fill">
       <div className="fr-stage">
         <h3 className="fr-stage-title">
           {lang === 'es' ? 'Predicho contra medido' : 'Predicted against measured'}
@@ -307,6 +347,7 @@ function PredictTab({
             selected={selectedBlast}
             onSelect={onSelectBlast}
             height={520}
+            fill
           />
         ) : (
           <p className="fr-note">
@@ -315,7 +356,6 @@ function PredictTab({
               : 'This case has no measurements to plot, or the model abstains on all of them. It is a design study rather than a score.'}
           </p>
         )}
-        <ArmComparison artifact={artifact} armId={armId} onArm={onArm} />
       </div>
       <div className="fr-side">
         {score ? (
@@ -327,6 +367,14 @@ function PredictTab({
         ) : null}
         {selectedCell ? <SimulationSpread cell={selectedCell} /> : null}
         <AbstentionPanel artifact={artifact} arm={armId} />
+        {/* The ranking sits with the score, not in the stage.
+            While this table lived in the stage it took 520 of the stage's 620 pixels and left the
+            parity plot 58, which is how a chart ends up at 2% of a screen on a route whose entire
+            purpose is that chart. Moving it to a second grid ROW did not help either: an `auto` row
+            claims its content height before a `1fr` row gets anything, so the instrument was still
+            left with what the table did not want. Here it reads as what it is, the same question the
+            score panel answers, for every arm rather than the selected one. */}
+        <ArmComparison artifact={artifact} armId={armId} onArm={onArm} />
       </div>
     </div>
   );

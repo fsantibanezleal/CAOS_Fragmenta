@@ -303,6 +303,8 @@ export interface ParityChartProps {
   height?: number;
   onSelect?: (blastId: string) => void;
   selected?: string | null;
+  /** Take the height the container gives instead of the `height` floor. ADR-0071 rule 8. */
+  fill?: boolean;
 }
 
 /**
@@ -320,6 +322,7 @@ export function ParityChart({
   height = 320,
   onSelect,
   selected,
+  fill = false,
 }: ParityChartProps) {
   const [ref, box] = useBox<HTMLDivElement>();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -327,7 +330,10 @@ export function ParityChart({
   const lang = useShellLang();
   const [hover, setHover] = useState<ParityPoint | null>(null);
 
-  const size = Math.max(180, Math.min(box.w, box.h || height));
+  // Square, because a parity plot with unequal scales puts the identity line at an angle the eye
+  // reads as bias. So the side is the SMALLER of the two container dimensions, and when the caller
+  // asks it to fill, the height comes from the container rather than from the `height` floor.
+  const size = Math.max(180, Math.min(box.w, fill ? box.h : box.h || height));
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -441,7 +447,16 @@ export function ParityChart({
 
   return (
     <div className="fr-chart">
-      <div ref={ref} className="fr-chart-canvas fr-parity" style={{ minHeight: height }}>
+      {/* In fill mode the measured host is taken OUT of flow, inside a box whose height comes only
+          from the flex column above it. Any arrangement where the host is in flow makes the size
+          self-referential: the chart reads the host to choose a side, the canvas then sets that
+          side as the host's height, and the number never moves off whatever it started at. */}
+      <div className={fill ? 'fr-chart-fillbox' : undefined}>
+      <div
+        ref={ref}
+        className="fr-chart-canvas fr-parity"
+        style={fill ? undefined : { minHeight: height }}
+      >
         <canvas
           ref={canvasRef}
           onMouseMove={(e) => setHover(pick(e))}
@@ -451,6 +466,7 @@ export function ParityChart({
             if (point && onSelect) onSelect(point.blastId);
           }}
         />
+      </div>
       </div>
       <div className="fr-readout" role="status" aria-live="polite">
         {hover ? (

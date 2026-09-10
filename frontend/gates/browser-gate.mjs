@@ -61,6 +61,22 @@ const ROUTES = [
   '/benchmark/',
 ];
 const TABS = ['predict', 'distribution', 'bench', 'rock', 'explain', 'decide'];
+/**
+ * ADR-0071 rule 8 asks for at least 0.50 of the viewport, and this product cannot reach it.
+ *
+ * The App route's instrument is a parity plot, which has to be SQUARE: unequal scales put the
+ * identity line at an angle a reader interprets as bias. A square's area on a 16:9 screen is capped
+ * by the pane HEIGHT, and the pane is the viewport minus the header, the footer, the tab strip and
+ * the page padding. At 1600x900 that leaves about 680px, so the largest honest square is about 0.32
+ * of the screen; at 2560x1440 it reaches 0.36. Reaching 0.50 would need a side of 848px in a 680px
+ * pane, which is not a layout problem.
+ *
+ * So this floor is what the layout can actually deliver, measured after the fixes of 0.03.000, and
+ * the shortfall against the ADR is written down rather than hidden by a looser number. Changing it
+ * to meet 0.50 means changing WHICH chart lands on the App route, which is a product decision.
+ */
+const INSTRUMENT_FLOOR = 0.26;
+
 const VIEWPORTS = [
   [1280, 800],
   [1600, 900],
@@ -122,13 +138,63 @@ async function inspect(page) {
       ),
       charts,
       benchHoles: document.querySelector('[data-bench-holes]')?.getAttribute('data-bench-holes') ?? null,
+
+      // ADR-0071, measured rather than judged by eye.
+      //
+      // `documentElement` is the WRONG element to ask about scrolling here: the shell makes `body`
+      // the scroll container, so the root stays exactly the viewport height on every route and a
+      // check against it passes whatever the page does. Ask the real scroller.
+      bodyOverflowY: document.body.scrollHeight - document.body.clientHeight,
+      bodyOverflowX: document.body.scrollWidth - document.body.clientWidth,
+      // Rule 6: every CONTROL in the rail is reachable without scrolling it. The reading pane inside
+      // the rail may scroll, because it is reading and not controls.
+      railControlsBelowFold: (() => {
+        const controls = [...document.querySelectorAll('.fr-rail select, .fr-railtabs, .fr-focus-link')];
+        if (!controls.length) return null;
+        const lowest = Math.max(...controls.map((el) => el.getBoundingClientRect().bottom));
+        return Math.max(0, Math.round(lowest - window.innerHeight));
+      })(),
+      // Rule 7: a categorised one-of-N choice is a select with optgroups, not N buttons.
+      caseSelectOptgroups: document.querySelector('.fr-rail select')?.querySelectorAll('optgroup').length ?? null,
+      // Rule 8: the share of the screen the instrument actually occupies.
+      instrumentFraction: (() => {
+        let best = 0;
+        for (const el of document.querySelectorAll('canvas, .fr-chart-canvas svg')) {
+          const b = el.getBoundingClientRect();
+          best = Math.max(best, b.width * b.height);
+        }
+        return +(best / (window.innerWidth * window.innerHeight)).toFixed(3);
+      })(),
+      // ADR-0017 rule 1: the shell owns the width. A page root that is not `.page-body` has picked
+      // its own, which is the divergence that ADR banned by name.
+      pageRoot: (() => {
+        const el = document.querySelector('.page-body');
+        if (!el) return null;
+        const b = el.getBoundingClientRect();
+        return {
+          wide: el.classList.contains('wide'),
+          gutterLeft: Math.round(b.left),
+          gutterRight: Math.round(window.innerWidth - b.right),
+        };
+      })(),
       benchDisclaimer: !!document.querySelector('[data-bench-disclaimer]'),
-      tabs: [...document.querySelectorAll('[role="tab"]')].map((t) => t.textContent?.trim()),
-      tabRows: new Set(
-        [...document.querySelectorAll('[role="tab"]')].map((t) =>
-          Math.round(t.getBoundingClientRect().top),
+      // Per TABLIST, not across every tab on the page. There are two tablists on the App route now,
+      // the workbench tabs and the rail's two sections, and counting the distinct tops of all of
+      // them together reported "the tab strip wrapped onto 2 rows" for two strips that were each
+      // perfectly on one row. ADR-0071 rule 4 is about one strip wrapping, not about how many
+      // strips exist.
+      tabs: [...document.querySelectorAll('.fr-main [role="tab"]')].map((t) => t.textContent?.trim()),
+      tabRows: Math.max(
+        0,
+        ...[...document.querySelectorAll('[role="tablist"]')].map(
+          (list) =>
+            new Set(
+              [...list.querySelectorAll('[role="tab"]')].map((t) =>
+                Math.round(t.getBoundingClientRect().top),
+              ),
+            ).size,
         ),
-      ).size,
+      ),
     };
   });
 }
@@ -203,6 +269,36 @@ for (const [w, h] of VIEWPORTS) {
           fail(where, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
         else pass(where, `${info.panels.length} panels, ${info.charts.length} charts`);
 
+        // ADR-0071 and ADR-0017, asserted. These were all failing before 0.03.000, and none of them
+        // was visible from any check that did not open a browser at a stated size.
+        if (!info.pageRoot) {
+          fail(where, 'the page root is not the shell .page-body, so this route picked its own width');
+        } else if (!info.pageRoot.wide && Math.abs(info.pageRoot.gutterLeft - info.pageRoot.gutterRight) > 2) {
+          fail(
+            where,
+            `capped but not centred: ${info.pageRoot.gutterLeft}px left against ` +
+              `${info.pageRoot.gutterRight}px right`,
+          );
+        }
+        if (info.bodyOverflowX > 1) fail(where, `the page is ${info.bodyOverflowX}px wider than the screen`);
+
+        if (route === '/' || route === '/app') {
+          // The App route is locked to the viewport, so NOTHING may scroll the page itself.
+          if (info.bodyOverflowY > 2) fail(where, `the App route scrolls the page by ${info.bodyOverflowY}px`);
+          if (info.railControlsBelowFold === null) fail(where, 'the rail has no controls to check');
+          else if (info.railControlsBelowFold > 0)
+            fail(where, `${info.railControlsBelowFold}px of rail controls below the fold (ADR-0071 rule 6)`);
+          if (!info.caseSelectOptgroups)
+            fail(where, 'the case control is not a select with optgroups (ADR-0071 rule 7)');
+          if (info.instrumentFraction < INSTRUMENT_FLOOR)
+            fail(
+              where,
+              `the instrument is ${info.instrumentFraction} of the viewport, under the ` +
+                `${INSTRUMENT_FLOOR} this layout can reach`,
+            );
+          else pass(`${where} instrument`, `${info.instrumentFraction} of the viewport`);
+        }
+
         for (const chart of info.charts) {
           const total = Object.values(chart.declared).reduce((a, b) => a + b, 0);
           if (!total) fail(where, `the ${chart.chart} chart declared nothing drawn`);
@@ -222,7 +318,7 @@ for (const [w, h] of VIEWPORTS) {
       await page.waitForTimeout(1200);
       for (const tab of TABS) {
         const where = `${w}x${h} ${theme} ${lang} tab:${tab}`;
-        const button = page.locator('[role="tab"]').nth(TABS.indexOf(tab));
+        const button = page.locator('.fr-main [role="tab"]').nth(TABS.indexOf(tab));
         if (!(await button.count())) {
           fail(where, 'the tab is not on the page');
           continue;
