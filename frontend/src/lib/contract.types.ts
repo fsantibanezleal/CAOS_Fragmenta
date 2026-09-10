@@ -159,7 +159,7 @@ export interface CaseArtifact {
     site: string | null;
     title: Bilingual;
     reason: Bilingual;
-    expected_band: string;
+    expected_band: Record<Lang, string>;
     licence: string;
     doi: string;
   };

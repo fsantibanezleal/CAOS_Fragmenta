@@ -200,7 +200,10 @@
  "case": {
   "category": "real-campaign",
   "doi": "10.1002/nag.957",
-  "expected_band": "medium, 0.23 to 0.38 m measured",
+  "expected_band": {
+   "en": "medium, 0.23 to 0.38 m measured",
+   "es": "media, 0.23 a 0.38 m medidos"
+  },
   "id": "real-murgul",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
@@ -215,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "dba64c012699a27bf34a8142f9f1099a918c82e2b998503a09fc23bfa4622131",
+ "digest": "574cf672f6e5653ef92f35db65ea44c540e6d5d041ead998759cb9feee2dea40",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2530,7 +2533,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

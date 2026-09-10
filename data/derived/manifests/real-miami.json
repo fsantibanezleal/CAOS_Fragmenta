@@ -1,8 +1,8 @@
 {
- "app_version": "0.03.001",
+ "app_version": "0.03.002",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 36631,
+  "bytes": 36737,
   "format": "json",
   "path": "real-miami/case.json"
  },
@@ -15,19 +15,22 @@
    "passed": true
   }
  },
- "digest": "8b19c64e692ea5d57062693450224a342d362520fdf723cbec82bc804f63c13e",
+ "digest": "60b61e2f765f5b3f4ea12075bdc8b397432cab9bbdd1ba5b2dfaa8ca15743f26",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
  },
- "expected_band": "the classical arm abstains on all six; the ratio arms answer",
+ "expected_band": {
+  "en": "the classical arm abstains on all six; the ratio arms answer",
+  "es": "el brazo cl\u00e1sico se abstiene en los seis; los brazos de razones responden"
+ },
  "flags": [],
  "gate": {
   "lane": "live",
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 36631,
+  "trace_bytes": 36737,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

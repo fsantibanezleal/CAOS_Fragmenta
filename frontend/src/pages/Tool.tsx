@@ -235,7 +235,7 @@ function CaseCard({ artifact, lang }: { artifact: CaseArtifact; lang: Lang }) {
         <dt>{lang === 'es' ? 'Tiros' : 'Blasts'}</dt>
         <dd>{artifact.blasts.length}</dd>
         <dt>{lang === 'es' ? 'Esperado' : 'Expected'}</dt>
-        <dd className="fr-fine">{artifact.case.expected_band}</dd>
+        <dd className="fr-fine">{artifact.case.expected_band[lang]}</dd>
       </dl>
       {controls.length ? (
         <ul className="fr-controls">

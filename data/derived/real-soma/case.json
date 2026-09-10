@@ -200,7 +200,10 @@
  "case": {
   "category": "real-campaign",
   "doi": "10.1002/nag.957",
-  "expected_band": "fine, 0.15 to 0.28 m measured",
+  "expected_band": {
+   "en": "fine, 0.15 to 0.28 m measured",
+   "es": "fina, 0.15 a 0.28 m medidos"
+  },
   "id": "real-soma",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
@@ -215,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "e8cd6454be82e2f131826f89edc1550c287feaedb3b9624a9a85639115824e4d",
+ "digest": "2be42d4751a12666719e16e01615156834cd74dfd24f337171662a6804d5647a",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2517,7 +2520,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

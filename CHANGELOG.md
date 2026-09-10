@@ -2,6 +2,22 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.03.002] - 2026-09-10
+
+### Fixed
+
+- Two things on the App route were still English while the page was Spanish, and both were English
+  for the same reason: they were not where a translation pass looks.
+  - The parity plot's axis labels and its null-model marker are painted INTO the canvas, so no
+    amount of reading the JSX would have found them.
+  - `expected_band` was the one user-facing field in the artifact that was a bare string rather than
+    a bilingual record, so a Spanish label sat above an English value. It is `{en, es}` now. The
+    formulaic bands compose their Spanish from the coarseness word and the range; anything that is
+    not formulaic RAISES at bake time unless its Spanish is written out, so the next band cannot
+    ship in English by default.
+
+The contract-mirror test caught the new language map on its first run, which is what it is for.
+
 ## [0.03.001] - 2026-09-10
 
 ### Fixed

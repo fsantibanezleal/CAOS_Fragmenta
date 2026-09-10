@@ -340,7 +340,10 @@
  "case": {
   "category": "real-campaign",
   "doi": "10.1002/nag.957",
-  "expected_band": "coarse, 0.26 to 0.64 m measured",
+  "expected_band": {
+   "en": "coarse, 0.26 to 0.64 m measured",
+   "es": "gruesa, 0.26 a 0.64 m medidos"
+  },
   "id": "real-enusa",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
@@ -355,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "e8a6328329a8f8fd71d9ba844a2375fee5d214f93a327bdadf0d53440d16a3b0",
+ "digest": "0a309bc1dc2056acc2d52f0192210436a99b577d06b307f67f39194e64db30a2",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3184,7 +3187,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
