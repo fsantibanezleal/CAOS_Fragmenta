@@ -10,7 +10,7 @@
 import { applyTheme, readTheme, useShellLang } from '@fasl-work/caos-app-shell';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 
 import { ARM_BY_ID, formatScore, formatSize, loadCase } from '../lib/artifacts';
 import type { CaseArtifact } from '../lib/contract.types';

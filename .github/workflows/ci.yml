@@ -41,6 +41,21 @@ jobs:
       - name: Type-check and build
         run: cd frontend && npm run build
 
+      - name: Install the browser the gate drives
+        run: cd frontend && npx playwright install --with-deps chromium
+
+      - name: The browser gate on the BUILT site, every route, both themes, both languages
+        # This job exists because everything upstream of it was green while the deployed site
+        # rendered a blank page. Two copies of react-router were installed, the shell's useLocation
+        # read a different context than the app's Router provided, and every route threw before
+        # painting a character. Every unit test passed, every artifact validated, and the site
+        # returned 200 on every URL. A 200 on a single-page app means a file was served.
+        run: |
+          cd frontend
+          npx vite preview --port 4173 --strictPort &
+          npx wait-on http://localhost:4173 --timeout 60000
+          npm run gate:browser -- --url http://localhost:4173
+
   determinism:
     # Reproducibility has two halves, and they need two different instruments.
     #

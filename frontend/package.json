@@ -1,7 +1,7 @@
 {
   "name": "fragmenta-frontend",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "predev": "node copy-data.mjs",
@@ -10,7 +10,8 @@
     "build": "tsc --noEmit && vite build",
     "postbuild": "node spa-404.mjs",
     "preview": "vite preview",
-    "test": "node --import tsx --test"
+    "test": "node --import tsx --test",
+    "gate:browser": "node gates/browser-gate.mjs"
   },
   "dependencies": {
     "@fasl-work/caos-app-shell": "^0.6.0",
@@ -18,7 +19,7 @@
     "lucide-react": "^0.469.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.1",
+    "react-router": "^7.1.1",
     "three": "^0.171.0",
     "uplot": "^1.6.31"
   },
@@ -28,8 +29,10 @@
     "@types/react-dom": "^19.0.0",
     "@types/three": "^0.171.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.56.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "vite": "^6.0.7"
+    "vite": "^6.0.7",
+    "wait-on": "^9.1.0"
   }
 }
