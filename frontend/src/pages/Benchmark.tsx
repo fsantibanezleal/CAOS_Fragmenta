@@ -26,6 +26,49 @@ const PROTOCOL_SHORT: Record<number, Record<string, string>> = {
 // dashed because it is a reference rather than a competitor.
 const EMPHASISED = new Set(['published-regression', 'kuznetsov']);
 
+/**
+ * The verdict, in the reader's language.
+ *
+ * The engine writes ONE sentence, in English, and that sentence is the canonical record in the
+ * artifact. It is not translated here, it is shown verbatim, so the English on the page and the
+ * English in the file can never disagree.
+ *
+ * The Spanish is COMPOSED from the same structured fields the engine also writes, rather than being
+ * a translation of the sentence. That way it derives from the numbers, not from prose, and the two
+ * languages cannot drift apart as the numbers change. The product's most important sentence was
+ * shipping in English to Spanish readers, which is the one place that is least acceptable.
+ */
+function verdictText(verdict: BenchmarkArtifact['verdict'], lang: string): string {
+  if (lang !== 'es') return verdict.outcome;
+
+  const best = ARM_BY_ID.get(verdict.best_learned_arm ?? '')?.label.es ?? verdict.best_learned_arm;
+  const score = verdict.best_learned_r2_identity;
+  const margin = verdict.margin_over_null;
+  if (score === undefined || score === null || margin === undefined || margin === null) {
+    return verdict.outcome;
+  }
+
+  if (verdict.generalises_across_sites) {
+    return (
+      `El nivel aprendido generaliza entre sitios: ${best} explica ${score.toFixed(3)} de la ` +
+      `varianza y supera a un predictor constante por ${margin.toFixed(3)}.`
+    );
+  }
+  if (!verdict.best_learned_is_positive) {
+    return (
+      'EL NIVEL APRENDIDO NO GENERALIZA ENTRE SITIOS. Todo brazo aprendido tiene varianza ' +
+      `explicada NEGATIVA al excluir un sitio; el mejor de ellos, ${best}, puntua ` +
+      `${score.toFixed(3)}, que es peor que predecir una constante. Su margen de ` +
+      `${margin.toFixed(3)} sobre el nulo son dos modelos fracasando por cantidades distintas, ` +
+      'no habilidad.'
+    );
+  }
+  return (
+    `EL NIVEL APRENDIDO NO GENERALIZA ENTRE SITIOS: el mejor brazo aprendido, ${best}, supera a ` +
+    `un predictor constante por solo ${margin.toFixed(3)} en varianza explicada al excluir un sitio.`
+  );
+}
+
 export default function Benchmark() {
   const lang = useShellLang();
   const es = lang === 'es';
@@ -62,7 +105,7 @@ export default function Benchmark() {
       <h1>{es ? 'Benchmark' : 'Benchmark'}</h1>
 
       <Callout variant={benchmark.verdict.generalises_across_sites ? 'note' : 'strong'} title={es ? 'El veredicto' : 'The verdict'}>
-        {benchmark.verdict.outcome}
+        {verdictText(benchmark.verdict, lang)}
       </Callout>
 
       <p className="fr-lede">
@@ -91,6 +134,7 @@ export default function Benchmark() {
         legend
         yRange={[-1.1, 1]}
         xTicks={[0, 1, 2]}
+        xRange={[-0.12, 2.12]}
         xTickFormat={(v) => PROTOCOL_SHORT[Math.round(v)]?.[lang] ?? ''}
         yTickFormat={(v) => v.toFixed(1)}
         valueFormat={(v) => (v === null ? 'n/a' : v.toFixed(3))}

@@ -249,7 +249,7 @@
    "passed": true
   }
  },
- "digest": "3eff114cc5cae9a6943df6cd9ad62efeef3947e36c950d55d999d04783ac8ac3",
+ "digest": "f460c797d773e145f7ccabfe49e63094153882ab343a99bd8ee1232fa885dcc9",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2621,7 +2621,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.02.000",
+  "app_version": "0.02.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

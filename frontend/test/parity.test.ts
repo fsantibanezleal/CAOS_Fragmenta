@@ -341,3 +341,60 @@ test('every arm in every shipped artifact has an entry in the arm catalogue', ()
   const missing = [...seen].filter((id) => !known.has(id));
   assert.deepEqual(missing, [], `arms with no catalogue entry: ${missing.join(', ')}`);
 });
+
+test('every field in every shipped artifact is named in the TypeScript contract mirror', () => {
+  // The docs claimed "the web build fails on drift". It does not, and cannot: TypeScript is
+  // structural, so a JSON file carrying a field the interface never declares type-checks perfectly
+  // and the field is simply invisible to the app. Five already were, including
+  // `best_learned_is_positive`, which is half of the kill criterion.
+  //
+  // This compares NAMES rather than types on purpose. A type mismatch surfaces the moment the field
+  // is used; a missing name never surfaces at all.
+  const mirror = readFileSync(new URL('../src/lib/contract.types.ts', import.meta.url), 'utf8');
+  // Anywhere in the file, not only at the start of a line. The mirror declares plenty of small
+  // shapes inline, `engine: { package: string; version: string }`, and a line-anchored match reports
+  // every one of those as missing. That nearly sent a correct mirror off to be "fixed".
+  const declared = new Set([...mirror.matchAll(/([a-z_][a-z0-9_]*)\??\s*:/gi)].map((m) => m[1]));
+
+  // Paths whose keys are DATA, not schema: an arm id, a blast id, a variant id, a control name, a
+  // protocol name. No interface can name them, and `*` matches exactly one such level.
+  const dataKeyed = [
+    'case.predictions', 'case.predictions.*', 'case.predictions.*.*',
+    'case.variant_curves', 'case.variant_curves.*', 'case.variant_curves.*.*',
+    'case.distributions', 'case.distributions.*', 'case.scores', 'case.scores.*',
+    'case.controls', 'case.blasts.features', 'case.geometry_report',
+    'case.geometry_report.*', 'case.case.title', 'case.case.reason',
+    'case.variants.label', 'benchmark.duplicate_groups',
+    'benchmark.protocols', 'benchmark.protocols.*.arms',
+    'benchmark.network_seed_sweep.per_blast',
+    'benchmark.published_reproduction', 'benchmark.published_reproduction.*',
+    'benchmark.site_counts', 'benchmark.verdict.protocol_gap_random_minus_grouped',
+    'index.case_paths', 'index.cases.title',
+    // ControlBlock is deliberately open: `[key: string]: unknown`. Each control reports the counts
+    // that make sense for the thing it controls, and forcing them into one shape would flatten
+    // what each one measures.
+    'case.controls.*',
+  ].map((pattern) => new RegExp('^' + pattern.replace(/\./g, '\.').replace(/\*/g, '[^.]+') + '$'));
+
+  const isDataKeyed = (path: string) => dataKeyed.some((re) => re.test(path));
+
+  const missing = new Set<string>();
+  const walk = (node: unknown, path: string[]): void => {
+    if (Array.isArray(node)) {
+      for (const item of node) walk(item, path);
+      return;
+    }
+    if (!node || typeof node !== 'object') return;
+    const here = path.join('.');
+    for (const [key, value] of Object.entries(node as Record<string, unknown>)) {
+      if (!isDataKeyed(here) && !declared.has(key)) missing.add(`${here}.${key}`);
+      walk(value, [...path, isDataKeyed(here) ? '*' : key]);
+    }
+  };
+
+  walk(JSON.parse(readFileSync(join(DERIVED, 'benchmark.json'), 'utf8')), ['benchmark']);
+  for (const one of cases) walk(one, ['case']);
+  walk(index, ['index']);
+
+  assert.deepEqual([...missing].sort(), [], `fields the mirror never names: ${[...missing].sort().join(', ')}`);
+});
