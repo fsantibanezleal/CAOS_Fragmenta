@@ -74,8 +74,15 @@ const TABS = ['predict', 'distribution', 'bench', 'rock', 'explain', 'decide'];
  * So this floor is what the layout can actually deliver, measured after the fixes of 0.03.000, and
  * the shortfall against the ADR is written down rather than hidden by a looser number. Changing it
  * to meet 0.50 means changing WHICH chart lands on the App route, which is a product decision.
+ *
+ * The floor carries HEADROOM, and it earned that the same way the bake's tolerance did. Set at 0.26
+ * from a single machine, it passed locally and failed on the CI runner at 0.257: the same build, the
+ * same viewport, a couple of pixels of difference in text metrics on a different operating system,
+ * and the pane is that much shorter. A floor with no margin is a floor that measures the runner
+ * rather than the layout. 0.25 still sits above the 0.219 this route had before the fixes, so a
+ * regression to the old layout fails it.
  */
-const INSTRUMENT_FLOOR = 0.26;
+const INSTRUMENT_FLOOR = 0.25;
 
 const VIEWPORTS = [
   [1280, 800],

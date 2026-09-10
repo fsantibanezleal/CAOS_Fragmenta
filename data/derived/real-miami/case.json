@@ -139,7 +139,7 @@
    "passed": true
   }
  },
- "digest": "8a44ea7bafcc3acba031146a3a31e30fb1efe6d55362917eaf789095383c0dab",
+ "digest": "8b19c64e692ea5d57062693450224a342d362520fdf723cbec82bc804f63c13e",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -825,7 +825,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.000",
+  "app_version": "0.03.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

@@ -2,6 +2,17 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.03.001] - 2026-09-10
+
+### Fixed
+
+- The instrument floor in the browser gate was set at 0.26 from one machine and failed on the CI
+  runner at 0.257: the same build at the same viewport, a couple of pixels of difference in text
+  metrics on another operating system, and the pane is that much shorter. It is 0.25 now, which
+  still sits above the 0.219 this route measured before 0.03.000, so a regression to the old layout
+  fails it. A threshold with no headroom measures the runner rather than the thing it is checking,
+  which is the same lesson the bake's numeric tolerance taught earlier today.
+
 ## [0.03.000] - 2026-09-10
 
 The App route did not follow the frontend ADRs. Felipe said so about the left rail, and an audit
