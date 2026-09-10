@@ -299,7 +299,7 @@
   }
  },
  "controls": {},
- "digest": "b27f172debeeed4cb09f85767e2915a558dba295d95c21621663c8601335074c",
+ "digest": "c9f749dd1d60f0aefad9ed5768939c836a4ec55115125168715bab2e085161a2",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2912,7 +2912,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.001",
+  "app_version": "0.01.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

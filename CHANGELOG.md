@@ -2,6 +2,35 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.01.002] - 2026-09-10
+
+### Fixed
+
+- The deployed site rendered a completely blank page on every route, and had done since it was
+  first published. Two copies of react-router were installed: the shell declares a peer dependency
+  on `react-router` and npm hoisted 8.3.1 to satisfy it, while `react-router-dom` 7.18.3 pinned its
+  own nested 7.18.3. Two module instances mean two React contexts, so the shell's `useLocation` saw
+  no Router and every route threw before painting a character. The app now depends on
+  `react-router` directly and imports from it, which is what react-router 7 expects anyway, and
+  there is exactly one copy.
+- A chart handed uPlot `hooks.draw: undefined` when it had no zero line to draw. uPlot copies the
+  keys it finds straight onto its hook table, so `draw` existed holding undefined and the next
+  `fire('draw')` called `.forEach` on it. That took the Experiments route and the Explain and Decide
+  tabs to a blank page. The key is now omitted rather than set to undefined.
+
+### Added
+
+- `frontend/gates/browser-gate.mjs`, run in CI against the built site: every route, six workbench
+  tabs, three viewports, both themes, both languages. It asserts no console error, no horizontal
+  overflow, no panel in its error boundary, a tab strip that has not wrapped, an idle page at rest,
+  and that every chart DECLARES what it drew with a non-zero count. 156 checks.
+- Charts declare their own content on the element, `data-chart` and `data-chart-*`, the way the 3D
+  bench already declared its hole count. Sampling pixels cannot tell an empty canvas from a canvas
+  that never mounted; a renderer saying what it drew can.
+- Per-panel and per-tab error boundaries. One panel that throws now keeps its heading and prints
+  what went wrong, and the rest of the tab stays usable, instead of unmounting the route into a
+  white screen that is indistinguishable from a page that chose to show nothing.
+
 ## [0.01.001] - 2026-09-10
 
 ### Fixed

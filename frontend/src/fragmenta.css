@@ -917,3 +917,26 @@
   margin: 8px auto;
   overflow-wrap: anywhere;
 }
+
+/* One panel that throws keeps its heading and prints why, instead of blanking the whole route.
+ * Deliberately loud: a failure the user cannot see is a failure nobody reports. */
+.fr-panel-error {
+  border: 1px solid var(--color-bad);
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--color-bad) 8%, transparent);
+}
+
+.fr-panel-error p {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  color: var(--color-fg);
+}
+
+.fr-panel-error pre {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-bad);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

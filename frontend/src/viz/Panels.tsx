@@ -8,7 +8,7 @@
 
 import { useShellLang } from '@fasl-work/caos-app-shell';
 import { AlertTriangle, Ban, CheckCircle2, Info, TrendingDown, TrendingUp } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 import {
   ARM_BY_ID,
@@ -405,19 +405,88 @@ export function TierBadge({ tier }: { tier: Tier }) {
   return <span className={`fr-badge fr-badge-${tier}`}>{TIER_LABEL[tier][lang]}</span>;
 }
 
+/**
+ * One panel failing must not take the page with it.
+ *
+ * Without a boundary, a single thrown error anywhere in a tab unmounts the whole React tree and the
+ * user gets a white screen with nothing to read and nothing to report. That is the worst possible
+ * failure for a product whose entire argument is that it says what it cannot do: a blank page is
+ * indistinguishable from a page that decided to show nothing.
+ *
+ * So each panel catches its own error, keeps its heading, and prints what went wrong. The rest of
+ * the tab stays usable, and the state is on the element as well as on the screen, so a browser gate
+ * can find a broken panel without reading pixels.
+ */
+class Boundary extends Component<
+  { title: ReactNode; lang: string; children: ReactNode },
+  { error: Error | null }
+> {
+  state = { error: null as Error | null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    // Kept: a boundary that swallows the stack makes the failure harder to fix than a white screen.
+    console.error('panel failed', this.props.title, error, info.componentStack);
+  }
+
+  render() {
+    if (!this.state.error) return this.props.children;
+    const es = this.props.lang === 'es';
+    return (
+      <div className="fr-panel-error" role="alert">
+        <p>
+          <strong>
+            {es ? 'Este panel no pudo dibujarse.' : 'This panel could not be drawn.'}
+          </strong>{' '}
+          {es
+            ? 'El resto de la pestana sigue siendo utilizable. El error va completo a la consola.'
+            : 'The rest of the tab is still usable. The full error is in the console.'}
+        </p>
+        <pre>{String(this.state.error?.message ?? this.state.error)}</pre>
+      </div>
+    );
+  }
+}
+
+/**
+ * The same containment for a whole tab.
+ *
+ * The panel-level boundary only helps once a panel has begun rendering. A component that throws
+ * before it gets there takes the route with it, which is what happened when a chart library was
+ * handed a malformed option: three views went blank and nothing on the page said why.
+ */
+export function TabBoundary({ id, children }: { id: string; children: ReactNode }) {
+  const lang = useShellLang();
+  return (
+    <div data-tab-panel={id}>
+      <Boundary title={id} lang={lang}>
+        {children}
+      </Boundary>
+    </div>
+  );
+}
+
 export function Panel({
+  id,
   title,
   children,
   note,
 }: {
+  id?: string;
   title: ReactNode;
   children: ReactNode;
   note?: ReactNode;
 }) {
+  const lang = useShellLang();
   return (
-    <section className="fr-panel">
+    <section className="fr-panel" data-panel={id ?? ''}>
       <h3>{title}</h3>
-      {children}
+      <Boundary title={title} lang={lang}>
+        {children}
+      </Boundary>
       {note ? <p className="fr-fine">{note}</p> : null}
     </section>
   );

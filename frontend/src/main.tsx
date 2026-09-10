@@ -3,7 +3,7 @@ import '@fasl-work/caos-app-shell/styles.css';
 import { Hammer } from 'lucide-react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
 import './fragmenta.css';
 import { architecture } from './architecture';

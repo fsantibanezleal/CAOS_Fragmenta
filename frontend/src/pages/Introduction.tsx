@@ -1,6 +1,6 @@
 import { Cite, Refs, useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { SECTION_REFS } from '../data/citations';
 import { loadBenchmark } from '../lib/artifacts';

@@ -93,6 +93,22 @@ export interface DistributionChartProps {
  * Settled against a bar histogram, which hides both tails, and against linear axes, which compress
  * the fines branch into nothing. The tails are the entire reason the three-parameter form exists.
  */
+/**
+ * A chart says what it actually drew, on the element itself.
+ *
+ * A browser gate that samples pixels can pass on the wrong thing: a canvas full of background is
+ * still a canvas, and a chart that silently rendered zero series looks the same as one that never
+ * mounted. So the renderer declares its own result and the gate reads the declaration. The
+ * BenchView3D already does this with data-bench-holes; these are the same idea for the 2D charts.
+ */
+function declare(node: HTMLElement | null, chart: string, drawn: Record<string, number>) {
+  if (!node) return;
+  node.setAttribute('data-chart', chart);
+  for (const [key, value] of Object.entries(drawn)) {
+    node.setAttribute(`data-chart-${key}`, String(value));
+  }
+}
+
 export function DistributionChart({
   sizesM,
   series,
@@ -206,6 +222,12 @@ export function DistributionChart({
 
     plotRef.current?.destroy();
     plotRef.current = new uPlot(options, data, ref.current);
+    declare(ref.current, 'distribution', {
+      series: series.length,
+      points: sizesM.length,
+      markers: markers.length,
+      measured: measured.length,
+    });
     return () => {
       plotRef.current?.destroy();
       plotRef.current = null;
@@ -367,7 +389,12 @@ export function ParityChart({
     ctx.restore();
     ctx.fillText(`${(hi * 100).toFixed(0)}cm`, 6, 18);
     ctx.fillText('0', pad - 10, size - pad + 14);
-  }, [points, size, nullMeanM, selected, epoch]);
+    declare(ref.current, 'parity', {
+      points: points.length,
+      selected: selected ? 1 : 0,
+      'null-line': nullMeanM === undefined || nullMeanM === null ? 0 : 1,
+    });
+  }, [ref, points, size, nullMeanM, selected, epoch]);
 
   const pick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -513,6 +540,13 @@ export function LineChart({
           spanGaps: false,
         })),
       ],
+      // The key is OMITTED when there is no zero line, never set to undefined.
+      //
+      // uPlot copies whatever keys it finds on opts.hooks straight onto its own hook table, so
+      // `draw: undefined` leaves a `draw` key holding undefined, and the next `fire('draw')` calls
+      // `.forEach` on it. That throws out of the render and takes the whole route to a blank page,
+      // which is exactly what it did on the Experiments route and on two workbench tabs. A ternary
+      // that yields undefined looks like "no hook" and is not.
       hooks: {
         setCursor: [
           (u) => {
@@ -524,27 +558,36 @@ export function LineChart({
             setReadout({ x: x[idx], values: series.map((s) => s.values[idx] ?? null) });
           },
         ],
-        draw: zeroLine
-          ? [
-              (u) => {
-                const y = u.valToPos(0, 'y', true);
-                u.ctx.save();
-                u.ctx.strokeStyle = token('--color-fg-subtle', '#8892a4');
-                u.ctx.setLineDash([4, 4]);
-                u.ctx.beginPath();
-                u.ctx.moveTo(u.bbox.left, y);
-                u.ctx.lineTo(u.bbox.left + u.bbox.width, y);
-                u.ctx.stroke();
-                u.ctx.restore();
-              },
-            ]
-          : undefined,
+        ...(zeroLine
+          ? {
+              draw: [
+                (u: uPlot) => {
+                  const y = u.valToPos(0, 'y', true);
+                  u.ctx.save();
+                  u.ctx.strokeStyle = token('--color-fg-subtle', '#8892a4');
+                  u.ctx.setLineDash([4, 4]);
+                  u.ctx.beginPath();
+                  u.ctx.moveTo(u.bbox.left, y);
+                  u.ctx.lineTo(u.bbox.left + u.bbox.width, y);
+                  u.ctx.stroke();
+                  u.ctx.restore();
+                },
+              ],
+            }
+          : {}),
       },
       legend: { show: false },
     };
 
     plotRef.current?.destroy();
     plotRef.current = new uPlot(options, [x, ...series.map((s) => s.values)] as uPlot.AlignedData, ref.current);
+    declare(ref.current, 'line', {
+      series: series.length,
+      points: x.length,
+      // A series of all-nulls draws nothing while still counting as a series, so count the ones
+      // that actually put a value on the canvas.
+      'series-with-values': series.filter((one) => one.values.some((v) => v !== null && v !== undefined)).length,
+    });
     return () => {
       plotRef.current?.destroy();
       plotRef.current = null;

@@ -11,7 +11,7 @@
 
 import { CaseSelector, Tabs, useShellLang, type CaseDef, type TabDef } from '@fasl-work/caos-app-shell';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router';
 
 import {
   ARMS,
@@ -48,6 +48,7 @@ import {
   ProvenancePanel,
   ScorePanel,
   SimulationSpread,
+  TabBoundary,
   TierBadge,
 } from '../viz/Panels';
 
@@ -114,39 +115,51 @@ export default function Tool() {
       id: 'predict',
       label: lang === 'es' ? 'Predecir' : 'Predict',
       content: (
-        <PredictTab
-          artifact={artifact}
-          armId={armId}
-          onArm={setArmId}
-          selectedBlast={selectedBlast}
-          onSelectBlast={setSelectedBlast}
-        />
+        <TabBoundary id="predict">
+          <PredictTab
+            artifact={artifact}
+            armId={armId}
+            onArm={setArmId}
+            selectedBlast={selectedBlast}
+            onSelectBlast={setSelectedBlast}
+          />
+        </TabBoundary>
       ),
     },
     {
       id: 'distribution',
       label: lang === 'es' ? 'Distribución' : 'Distribution',
-      content: <DistributionTab blast={blast} />,
+      content: (
+        <TabBoundary id="distribution"><DistributionTab blast={blast} /></TabBoundary>
+      ),
     },
     {
       id: 'bench',
       label: lang === 'es' ? 'Banco' : 'Bench',
-      content: <BenchTab artifact={artifact} blast={blast} onSelectBlast={setSelectedBlast} />,
+      content: (
+        <TabBoundary id="bench"><BenchTab artifact={artifact} blast={blast} onSelectBlast={setSelectedBlast} /></TabBoundary>
+      ),
     },
     {
       id: 'rock',
       label: lang === 'es' ? 'Roca' : 'Rock',
-      content: <RockTab blast={blast} />,
+      content: (
+        <TabBoundary id="rock"><RockTab blast={blast} /></TabBoundary>
+      ),
     },
     {
       id: 'explain',
       label: lang === 'es' ? 'Explicar' : 'Explain',
-      content: <ExplainTab artifact={artifact} armId={armId} />,
+      content: (
+        <TabBoundary id="explain"><ExplainTab artifact={artifact} armId={armId} /></TabBoundary>
+      ),
     },
     {
       id: 'decide',
       label: lang === 'es' ? 'Decidir' : 'Decide',
-      content: <DecideTab artifact={artifact} blast={blast} armId={armId} />,
+      content: (
+        <TabBoundary id="decide"><DecideTab artifact={artifact} blast={blast} armId={armId} /></TabBoundary>
+      ),
     },
   ];
 
@@ -426,7 +439,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
 
   if (!live) {
     return (
-      <Panel title={lang === 'es' ? 'Sin distribución' : 'No distribution'}>
+      <Panel id="no-distribution" title={lang === 'es' ? 'Sin distribución' : 'No distribution'}>
         <p className="fr-note fr-note-warn">
           {blast.geometry_reason ??
             blast.degenerate_reason ??
@@ -484,7 +497,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
         </p>
       </div>
       <div className="fr-side">
-        <Panel title={lang === 'es' ? 'Lecturas' : 'Readouts'}>
+        <Panel id="readouts" title={lang === 'es' ? 'Lecturas' : 'Readouts'}>
           <dl className="fr-kv">
             <dt>P20</dt>
             <dd>{formatSize(p20)}</dd>
@@ -506,6 +519,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
           ) : null}
         </Panel>
         <Panel
+          id="unpublished-parameters"
           title={lang === 'es' ? 'Parámetros no publicados' : 'Unpublished parameters'}
           note={
             lang === 'es'
@@ -538,7 +552,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
             <output>{(finesFraction * 100).toFixed(0)}%</output>
           </label>
         </Panel>
-        <Panel title={lang === 'es' ? 'Finos' : 'Fines'}>
+        <Panel id="fines" title={lang === 'es' ? 'Finos' : 'Fines'}>
           <dl className="fr-kv">
             <dt>{lang === 'es' ? 'Pasa 10 mm, clásica' : 'Passing 10 mm, classical'}</dt>
             <dd>{(passingAt(live.classical, 0.01) * 100).toFixed(2)}%</dd>
@@ -594,7 +608,7 @@ function BenchTab({
         )}
       </div>
       <div className="fr-side">
-        <Panel title={lang === 'es' ? 'Tiro' : 'Blast'}>
+        <Panel id="blast" title={lang === 'es' ? 'Tiro' : 'Blast'}>
           <select
             className="fr-select"
             value={blast.blast_id}
@@ -610,6 +624,7 @@ function BenchTab({
           </select>
         </Panel>
         <Panel
+          id="initiation"
           title={lang === 'es' ? 'Iniciación' : 'Initiation'}
           note={
             lang === 'es'
@@ -644,6 +659,7 @@ function BenchTab({
         </Panel>
         {report?.checks?.length ? (
           <Panel
+            id="geometry-recovery"
             title={lang === 'es' ? 'Cómo se recuperó esta geometría' : 'How this geometry was recovered'}
           >
             <p className="fr-note">
@@ -749,6 +765,7 @@ function RockTab({ blast }: { blast: BlastRow }) {
       </div>
       <div className="fr-side">
         <Panel
+          id="rock-description"
           title={lang === 'es' ? 'Descripción de la roca' : 'Rock description'}
           note={
             lang === 'es'
@@ -772,7 +789,7 @@ function RockTab({ blast }: { blast: BlastRow }) {
             <output>{jointSpacing.toFixed(2)}</output>
           </label>
         </Panel>
-        <Panel title={lang === 'es' ? 'Lo que el corpus sí publica' : 'What the corpus does publish'}>
+        <Panel id="corpus-publishes" title={lang === 'es' ? 'Lo que el corpus sí publica' : 'What the corpus does publish'}>
           <dl className="fr-kv">
             {(Object.keys(blast.features) as (keyof typeof blast.features)[]).map((key) => (
               <FeatureRow key={key} name={key} value={blast.features[key]} lang={lang} />
@@ -893,6 +910,7 @@ function ExplainTab({ artifact, armId }: { artifact: CaseArtifact; armId: string
       </div>
       <div className="fr-side">
         <Panel
+          id="how-to-read"
           title={lang === 'es' ? 'Cómo leer esto' : 'How to read this'}
           note={
             lang === 'es'
@@ -906,7 +924,7 @@ function ExplainTab({ artifact, armId }: { artifact: CaseArtifact; armId: string
               : 'Each variant moves a single field by a multiplier, so the response to that lever is isolated. Real campaigns vary several things at once.'}
           </p>
         </Panel>
-        <Panel title={lang === 'es' ? 'Signos que deben cumplirse' : 'Signs that must hold'}>
+        <Panel id="signs" title={lang === 'es' ? 'Signos que deben cumplirse' : 'Signs that must hold'}>
           <ul className="fr-list">
             <li>
               {lang === 'es'
@@ -990,7 +1008,7 @@ function DecideTab({
             armId,
           }}
         />
-        <Panel title={lang === 'es' ? 'Consecuencia aguas abajo' : 'Downstream consequence'}>
+        <Panel id="downstream" title={lang === 'es' ? 'Consecuencia aguas abajo' : 'Downstream consequence'}>
           <p className="fr-note fr-note-warn">
             {lang === 'es'
               ? 'Este producto no modela la chancadora ni el molino. La fragmentación los alimenta y esa cadena es real, pero cualquier cifra de energía específica que se mostrara aquí sería un sustituto, no un modelo de conminución.'
@@ -999,7 +1017,7 @@ function DecideTab({
         </Panel>
       </div>
       <div className="fr-side">
-        <Panel title={lang === 'es' ? 'Su especificación' : 'Your specification'}>
+        <Panel id="specification" title={lang === 'es' ? 'Su especificación' : 'Your specification'}>
           <label className="fr-control">
             {lang === 'es' ? 'P80 objetivo, cm' : 'Target P80, cm'}
             <input
@@ -1026,7 +1044,7 @@ function DecideTab({
           </label>
         </Panel>
         {cell ? <SimulationSpread cell={cell} /> : null}
-        <Panel title={lang === 'es' ? 'Cuánto confiar' : 'How much to trust this'}>
+        <Panel id="how-much-to-trust" title={lang === 'es' ? 'Cuánto confiar' : 'How much to trust this'}>
           <p className="fr-note">
             {lang === 'es'
               ? 'El modelo seleccionado se puntúa contra tiros reales en la página de Benchmark, y bajo tres protocolos distintos. Solo uno de ellos responde la pregunta que usted tiene.'
