@@ -20,7 +20,7 @@ export default function Implementation() {
   const totalBytes = index?.cases.reduce((sum, c) => sum + c.bytes, 0) ?? 0;
 
   return (
-    <article className="fr-prose">
+    <div className="page-body prose">
       <h1>{es ? 'Implementación' : 'Implementation'}</h1>
       <p className="fr-lede">
         {es
@@ -158,6 +158,6 @@ pytest                                 # the tests run against the COMMITTED art
       </p>
 
       <Refs ids={SECTION_REFS.implementation} label={es ? "Fuentes de esta página" : "Sources for this page"} />
-    </article>
+    </div>
   );
 }

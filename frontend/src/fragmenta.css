@@ -38,6 +38,44 @@
   gap: 10px;
 }
 
+/* The rail's two sections. Both are always REACHABLE in one click, which is the point: the rule is
+ * that a control must not be below the fold, not that everything must be on screen at once. */
+.fr-railtabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.fr-railtab {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-fg-subtle);
+  font: inherit;
+  font-size: 0.76rem;
+  padding: 5px 6px;
+  cursor: pointer;
+}
+
+.fr-railtab:hover {
+  color: var(--color-fg);
+}
+
+.fr-railtab-on {
+  border-color: var(--color-accent);
+  color: var(--color-fg);
+  background: var(--color-surface-2);
+}
+
+/* The one place in the rail allowed to scroll, and only because it is READING rather than controls.
+ * It is also the only element that can absorb a long case reason without pushing a control off. */
+.fr-railpane {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 .fr-main {
   min-width: 0;
   min-height: 0;
@@ -78,6 +116,35 @@
   flex: 1 1 auto;
 }
 
+/* The per-tab error boundary is a real element in the tree, so it has to pass height through.
+ *
+ * It was added as a plain `<div>`, which is `display: block` with `min-height: auto`, and that one
+ * element broke the sizing chain the whole App route depends on: the tab panel was correctly bounded
+ * at 650px, the boundary div sat inside it at 1146px because it sized to its content, and the grid's
+ * `height: 100%` then resolved against 1146 instead of 650. A wrapper that does not pass height
+ * through is invisible in the markup and decisive in the layout. */
+[data-tab-panel] {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* The instrument takes the pane it is given, and the pane is the visible height.
+ *
+ * ADR-0071 rule 8 asks for at least half the viewport on an App route. Without this the stage sized
+ * itself to the chart's own minimum and the rest of the tab scrolled underneath, so the instrument
+ * was 21% to 32% of the screen depending on size, which is the thumbnail the rule exists to stop.
+ *
+ * `100%` of a flex item whose parent is already bounded by the shell's fixed mode resolves to the
+ * visible pane, so the chart grows with the window instead of sitting at a hand-picked pixel size.
+ * A square chart on a 16:9 screen tops out around 41% by geometry; see the note in the browser gate. */
+.fr-grid-fill {
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+}
+
 .fr-grid-2 {
   grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr);
 }
@@ -97,6 +164,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* Inside `.fr-grid-fill` the row is `minmax(0, 1fr)`, so the stage must be allowed to be shorter
+     than its content for the chart to size to the pane rather than the other way round. */
+  overflow: hidden;
 }
 
 .fr-stage-title {
@@ -346,7 +416,14 @@
   flex-direction: column;
   min-width: 0;
   min-height: 0;
-  flex: 1 1 auto;
+  /* Basis ZERO, not auto, and the difference decides whether the instrument can grow at all.
+   *
+   * A chart measures its container to choose a size, and the container's height then depends on the
+   * chart. With `flex: 1 1 auto` that circle resolves the wrong way: the container takes its content
+   * as the basis, the canvas sets an explicit pixel height, and the container collapses to 76px with
+   * a 520px canvas hanging out of it. With basis 0 the container takes the leftover height of its
+   * column first, and the chart measures a real number. */
+  flex: 1 1 0;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 10px;
@@ -359,10 +436,39 @@
   min-height: 0;
 }
 
+/* The host measures the space; the canvas does not get a vote.
+ *
+ * The chart picks its side from the host's height, and the canvas then sets that height in pixels.
+ * While the canvas is in normal flow those two facts are the same number, so the measurement is
+ * self-referential and the square sticks at whatever it happened to start at: 520px, at every
+ * viewport from 1280 to 2560. Taking the canvas out of flow breaks the loop, and the host's height
+ * comes from the flex column above it instead. */
 .fr-parity {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* Height from the column above, never from the content inside. The absolutely positioned host
+ * contributes nothing to this box, which is the whole point. */
+.fr-chart-fillbox {
+  flex: 1 1 0;
+  min-height: 120px;
+  min-width: 0;
+  position: relative;
+}
+
+.fr-chart-fillbox > .fr-chart-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fr-parity > canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Past about four lines a hover readout is not enough: the reader needs to isolate one and follow
@@ -414,7 +520,13 @@
   margin-top: 6px;
   font-size: 0.72rem;
   color: var(--color-fg-subtle);
-  min-height: 28px;
+  /* FIXED, not minimum. The row sits directly under the instrument and takes its height out of it,
+     so a row that grows with its text makes the layout language-dependent: the Spanish hint is
+     longer, wrapped to two lines, and the App route's instrument measured 0.257 of the viewport in
+     Spanish against 0.280 in English. The same screen has to give the same space to the picture
+     whatever language it is read in. */
+  height: 28px;
+  overflow: hidden;
 }
 
 .fr-readout-key {
@@ -445,6 +557,12 @@
 .fr-readout-hint {
   color: var(--color-fg-faint);
   font-style: italic;
+  /* One line, clipped if the sentence is long in this language. It is a hint about a pointer, and
+     the values it explains are one hover away. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 /* ---------------------------------------------------------------------------------------------
@@ -705,51 +823,29 @@
 
 /* ---------------------------------------------------------------------------------------------
  * Prose routes
+ *
+ * There is deliberately almost nothing here. The doc routes compose the shell's own `.page-body`
+ * and `.prose`, which already carry the width, the centering and the heading and paragraph rhythm.
+ *
+ * What used to be here was a `.fr-prose { max-width: 78ch; }` root with its own h1/h2/h3/p rules,
+ * which is the divergence ADR-0017 section 1.3 exists to stop: the shell was imported and then
+ * refused, so the product picked a width the shell already owned and restyled typography the shell
+ * already set. A per-app width cannot follow a change to the shared measure, and it did not.
  * ------------------------------------------------------------------------------------------- */
 
-.fr-prose {
-  max-width: 78ch;
-  margin: 0 auto;
-  padding-bottom: 40px;
-  min-width: 0;
-}
-
-/* A route that is mostly tables and charts needs the screen, so it opts out of the reading measure.
- * The measure is for prose; capping an instrument at a reading width throws away the screen it
- * exists to use. */
-.fr-prose-wide {
-  max-width: min(1400px, 100%);
-}
-
-.fr-prose h1 {
+.prose h1 {
   font-size: 1.5rem;
   margin: 4px 0 12px;
 }
 
-.fr-prose h2 {
-  font-size: 1.08rem;
-  margin: 28px 0 10px;
-}
-
-.fr-prose h3 {
-  font-size: 0.94rem;
-  margin: 20px 0 8px;
-}
-
-.fr-prose p {
-  font-size: 0.88rem;
-  line-height: 1.68;
-  margin: 0 0 12px;
+.prose .fr-list {
+  font-size: 0.86rem;
 }
 
 .fr-lede {
   font-size: 0.98rem !important;
   line-height: 1.6 !important;
   color: var(--color-fg-subtle);
-}
-
-.fr-prose .fr-list {
-  font-size: 0.86rem;
 }
 
 .fr-symbols {

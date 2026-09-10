@@ -101,7 +101,7 @@ export default function Benchmark() {
   }));
 
   return (
-    <article className="fr-prose fr-prose-wide">
+    <div className="page-body wide prose">
       <h1>{es ? 'Benchmark' : 'Benchmark'}</h1>
 
       <Callout variant={benchmark.verdict.generalises_across_sites ? 'note' : 'strong'} title={es ? 'El veredicto' : 'The verdict'}>
@@ -276,7 +276,7 @@ export default function Benchmark() {
       </p>
 
       <Refs ids={SECTION_REFS.benchmark} label={es ? "Fuentes de esta página" : "Sources for this page"} />
-    </article>
+    </div>
   );
 }
 
