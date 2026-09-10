@@ -290,16 +290,16 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The largest burden in the corpus at 6.0 m on 229 mm holes. Its Rc1 blast is the one that sits in both the training table and the published validation set.",
-   "es": "El mayor bordo del conjunto, 6.0 m con perforacion de 229 mm. Su tiro Rc1 es el que aparece tanto en la tabla de entrenamiento como en el conjunto de validacion publicado."
+   "es": "El mayor bordo del conjunto, 6.0 m con perforaci\u00f3n de 229 mm. Su tiro Rc1 es el que aparece tanto en la tabla de entrenamiento como en el conjunto de validaci\u00f3n publicado."
   },
   "site": "Reocin",
   "title": {
    "en": "Reocin zinc open pit, Spain",
-   "es": "Rajo de zinc Reocin, Espana"
+   "es": "Rajo de zinc Reocin, Espa\u00f1a"
   }
  },
  "controls": {},
- "digest": "574b1374e565e84f9ee3c84718c529e9b41f70c448da302836482d296b2c2947",
+ "digest": "b27f172debeeed4cb09f85767e2915a558dba295d95c21621663c8601335074c",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2912,7 +2912,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3584,7 +3584,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3638,7 +3638,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

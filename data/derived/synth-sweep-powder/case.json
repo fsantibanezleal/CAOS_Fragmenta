@@ -346,16 +346,16 @@
   "real_or_synthetic": "synthetic",
   "reason": {
    "en": "The economics axis. Explosive is the cheapest place to break rock, and this is the curve that says how much finer each extra kilogram per cubic metre buys.",
-   "es": "El eje economico. El explosivo es el lugar mas barato para fragmentar roca, y esta es la curva que dice cuanto mas fino compra cada kilogramo por metro cubico adicional."
+   "es": "El eje econ\u00f3mico. El explosivo es el lugar m\u00e1s barato para fragmentar roca, y esta es la curva que dice cu\u00e1nto m\u00e1s fino compra cada kilogramo por metro c\u00fabico adicional."
   },
   "site": null,
   "title": {
    "en": "Powder-factor sweep at fixed geometry",
-   "es": "Barrido de factor de carga con geometria fija"
+   "es": "Barrido de factor de carga con geometr\u00eda fija"
   }
  },
  "controls": {},
- "digest": "cf6e58bb2096b0afb749c67037bcfcd8ad6b666d1169cda6a78a9a79139a51a1",
+ "digest": "1c9a720e967df371ecba082ec48c15025a5e46b30ebd18aa716c0011f08eec1a",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3159,7 +3159,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3380,7 +3380,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3434,7 +3434,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

@@ -346,7 +346,7 @@
   "real_or_synthetic": "synthetic",
   "reason": {
    "en": "Isolates the burden while everything else is held. The real campaigns each vary several things at once, so no real case can show a clean response to one lever. This is the spine of the design response surface.",
-   "es": "Aisla el bordo manteniendo todo lo demas. Cada campana real varia varias cosas a la vez, de modo que ningun caso real muestra una respuesta limpia a una sola palanca. Esta es la columna de la superficie de respuesta de diseno."
+   "es": "A\u00edsla el bordo manteniendo todo lo dem\u00e1s. Cada campa\u00f1a real var\u00eda varias cosas a la vez, de modo que ning\u00fan caso real muestra una respuesta limpia a una sola palanca. Esta es la columna de la superficie de respuesta de dise\u00f1o."
   },
   "site": null,
   "title": {
@@ -355,7 +355,7 @@
   }
  },
  "controls": {},
- "digest": "5c9ba7ade5acaa144de9a0dafaaa94006ad36e4f9d47868e9819d79ad9099847",
+ "digest": "68d4d22258a4a901e9d40a73ba87ddbdc786ad6dbc2983881fb10c6767169422",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3159,7 +3159,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3376,7 +3376,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3430,7 +3430,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

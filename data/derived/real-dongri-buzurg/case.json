@@ -262,7 +262,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The weakest rock in the corpus at 9.57 GPa, and the lowest recovered rock factor at 3.68. It is also where the classical model fails hardest: on the hold-out blast from this site it predicts 0.08 m against 0.35 m measured.",
-   "es": "La roca mas debil del conjunto, 9.57 GPa, y el menor factor de roca recuperado, 3.68. Tambien es donde el modelo clasico falla mas: en el tiro de validacion de este sitio predice 0.08 m frente a 0.35 m medidos."
+   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9.57 GPa, y el menor factor de roca recuperado, 3.68. Tambi\u00e9n es donde el modelo cl\u00e1sico falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0.08 m frente a 0.35 m medidos."
   },
   "site": "Dongri-Buzurg",
   "title": {
@@ -271,7 +271,7 @@
   }
  },
  "controls": {},
- "digest": "8bf0f5dff6277814f227d538dc1c1c236a8566b6979c7a453f398d068edf4b6e",
+ "digest": "faeada2ff736b3d5d116592b36d127020a3b7f23bbcd7a767e95758e638cae4f",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2802,7 +2802,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3474,7 +3474,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3528,7 +3528,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

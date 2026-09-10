@@ -13,22 +13,26 @@ same pinned numpy reduce a dot product in a different order, the last bits of th
 an iterative solver amplifies that difference over its iterations. No amount of pinning removes it,
 because it is not a version difference.
 
-That is not a hypothesis here, it is a measurement. Baking `real-murgul` on Windows and on a Linux
-runner, with the same pinned numpy 2.5.3, scikit-learn 1.9.0 and xgboost 3.4.1 on Python 3.13:
+That is not a hypothesis here, it is a measurement. Baking all sixteen cases on Windows and on Linux
+runners, with the same pinned numpy 2.5.3, scikit-learn 1.9.0 and xgboost 3.4.1 on Python 3.13:
 
   - 2 bakes on the same runner: identical, byte for byte;
-  - Windows against Linux: 72 fields differ, worst relative error 8.3e-09;
-  - every one of those 72 fields belongs to `published-neural-net`. The classical arms, the support
-    vector machine, the random forest, the gradient-boosted trees and the stack are bit-identical
-    across the two platforms.
+  - worst difference across all sixteen cases: 2.7e-08 relative, on `real-reocin-ug`;
+  - a typical case: 30 to 100 fields differ, the worst of them around 1e-09;
+  - `ctrl-degenerate`, where every arm abstains and the artifact holds refusals rather than numbers:
+    identical, byte for byte.
 
-That localisation is the useful part. The network is trained by Levenberg-Marquardt, which is the
-only iterative solver in the product, and it is the only arm that carries the platform through to
-its output. Everything else is a closed form or a fit whose result is determined to the last bit.
+That last line is the control on the explanation. If the drift were structural rather than
+arithmetic, a case with no arithmetic in it would drift too.
+
+The drift is largest on the fitted arms, `published-neural-net` and `refitted-regression`, then
+`svr-rbf` and `stacking`. It is not confined to them: on `real-soma` the closed forms move as well,
+because a closed form here is evaluated on a reconstructed geometry that is itself several operations
+deep. Any arm whose value passes through a chain of arithmetic can pick up the last bit.
 
 So the tolerance below is set from the measurement, with room, and it still separates the two things
-that matter: a floating-point reduction order moves a number by about 1e-8, and a different model
-moves it by percent. Five orders of margin sit between them.
+that matter: a floating-point reduction order moves a number by less than 1e-7, and a different model
+moves it by percent.
 """
 from __future__ import annotations
 
@@ -45,10 +49,10 @@ sys.path.insert(0, str(ROOT / "data-pipeline"))
 from pipeline.pipeline import bake_case  # noqa: E402
 from pipeline.registry import list_cases  # noqa: E402
 
-# Measured worst cross-platform difference: 8.3e-09, confined to the Levenberg-Marquardt network.
-# This sits two orders above it, and roughly five orders below any difference a changed model would
-# produce. It is also far finer than anything the App displays: predictions are exported rounded to
-# a micrometre and read in centimetres.
+# Measured worst cross-platform difference over all sixteen cases: 2.7e-08. This sits about two
+# orders above it, and roughly five orders below any difference a changed model would produce. It is
+# also far finer than anything the App displays: predictions are exported rounded to a micrometre
+# and read in centimetres.
 RELATIVE_TOLERANCE = 1e-6
 
 
@@ -98,8 +102,8 @@ def compare(baked: dict, committed: dict) -> tuple[list[str], list[tuple[float, 
 def arm_of(key: str) -> str:
     """Which arm a differing field belongs to, because that is the actionable fact.
 
-    A difference spread over every arm is an environment problem. A difference confined to one arm
-    is a fact about that arm, and worth naming in the documentation.
+    A difference spread over every arm points at the environment. A difference on one arm points at
+    that arm. Both are worth knowing, and neither is visible from a hash.
     """
     parts = key.split(".")
     for head in ("scores", "predictions", "variant_curves", "distributions"):
@@ -143,7 +147,7 @@ def check_case(case, *, seed: int, repeat: int, tolerance: float, verbose: bool)
     status = "FAILED" if problems or worst > tolerance else "within tolerance"
     print(
         f"{case.id}: {status}, {len(numeric)} fields differ, worst {worst:.3e}"
-        + (f", confined to {', '.join(arms)}" if arms else "")
+        + (f", across {', '.join(arms)}" if arms else "")
     )
     for problem in problems:
         print(f"  STRUCTURAL {problem}")

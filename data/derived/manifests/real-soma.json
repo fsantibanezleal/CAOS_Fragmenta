@@ -1,15 +1,15 @@
 {
- "app_version": "0.01.000",
+ "app_version": "0.01.001",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 60221,
+  "bytes": 60271,
   "format": "json",
   "path": "real-soma/case.json"
  },
  "case_id": "real-soma",
  "category": "real-campaign",
  "controls": {},
- "digest": "f29a33c286671fc89c3b0cb07877f8f5c43b5dad3420b6470dc6ec56782e9932",
+ "digest": "6cd0e7b623653ffc431abd70d274466c379a756e18ebf2cbaa23f7e9ab3f69d8",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
@@ -21,7 +21,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 60221,
+  "trace_bytes": 60271,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

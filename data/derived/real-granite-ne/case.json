@@ -150,12 +150,12 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "Five production blasts measured with image analysis, and the only real set in this product that lies OUTSIDE the fitted envelope. Its Young modulus of 5.6 GPa sits below the corpus minimum of 9.57, on the feature two independent studies rank most important. Every prediction here is stamped as an extrapolation. It is also the only set that publishes its absolute pattern, so it checks the geometry reconstruction instead of consuming it.",
-   "es": "Cinco tiros de produccion medidos por analisis de imagen, y el unico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su modulo de Young de 5.6 GPa esta bajo el minimo del corpus, 9.57, en la variable que dos estudios independientes califican como la mas importante. Toda prediccion aqui se marca como extrapolacion. Es tambien el unico conjunto que publica su malla absoluta, asi que verifica la reconstruccion geometrica en vez de consumirla."
+   "es": "Cinco tiros de producci\u00f3n medidos por an\u00e1lisis de imagen, y el \u00fanico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su m\u00f3dulo de Young de 5.6 GPa esta bajo el m\u00ednimo del corpus, 9.57, en la variable que dos estudios independientes califican como la m\u00e1s importante. Toda predicci\u00f3n aqu\u00ed se marca como extrapolaci\u00f3n. Es tambi\u00e9n el \u00fanico conjunto que publica su malla absoluta, as\u00ed que verifica la reconstrucci\u00f3n geom\u00e9trica en vez de consumirla."
   },
   "site": "Granite-NE",
   "title": {
    "en": "Granite mine, northeastern China: the extrapolation control",
-   "es": "Mina de granito, noreste de China: el control de extrapolacion"
+   "es": "Mina de granito, noreste de China: el control de extrapolaci\u00f3n"
   }
  },
  "controls": {
@@ -166,7 +166,7 @@
    "unstamped": []
   }
  },
- "digest": "770af042634e677004b26413dc7838782d1172bb1f8a8fac237547da553aa35c",
+ "digest": "dead491e69ed0f75b650dd78ab6ac5e68688fa47794d2a70032b2dc6868f1bb0",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -737,7 +737,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -1289,7 +1289,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -1343,7 +1343,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

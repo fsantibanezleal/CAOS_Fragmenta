@@ -346,7 +346,7 @@
   "real_or_synthetic": "synthetic",
   "reason": {
    "en": "Drives the in-situ block size to the top of the corpus range while the pattern stays aggressive. The point is the coarse tail: no amount of explosive breaks rock finer than the joint structure without energy to do it, and this case is where that shows.",
-   "es": "Lleva el tamano de bloque in situ al tope del rango del corpus mientras la malla sigue agresiva. El punto es la cola gruesa: ninguna cantidad de explosivo fragmenta mas fino que la estructura de juntas sin energia para hacerlo, y aqui se ve."
+   "es": "Lleva el tama\u00f1o de bloque in situ al tope del rango del corpus mientras la malla sigue agresiva. El punto es la cola gruesa: ninguna cantidad de explosivo fragmenta m\u00e1s fino que la estructura de juntas sin energ\u00eda para hacerlo, y aqu\u00ed se ve."
   },
   "site": null,
   "title": {
@@ -355,7 +355,7 @@
   }
  },
  "controls": {},
- "digest": "dbf4f7cf43949b6cd63ee937c2312c42851124f165d9da6d80dcf5fa66d0a5bf",
+ "digest": "519905de83ae3c690ab65c3813000fd22777de89312e6f1bf1ab774147131f3f",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3159,7 +3159,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3380,7 +3380,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3434,7 +3434,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

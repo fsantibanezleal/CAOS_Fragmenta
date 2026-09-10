@@ -79,9 +79,9 @@ npm run dev
 
 The bake is a pure function of the case registry, the pinned engine version and the seed. Re-running
 it in the same environment produces byte-identical artifacts. Re-running it on a different operating
-system reproduces every published number to better than 1e-8 relative, with the residual confined to
-the one iteratively trained arm. Both halves are gated in CI, and the second is a measurement rather
-than a hope: see [`docs/architecture/01_the-bake.md`](docs/architecture/01_the-bake.md).
+system reproduces every published number to better than 3e-8 relative, measured across all sixteen
+cases. Both halves are gated in CI, and the second is a measurement rather than a hope: see
+[`docs/architecture/01_the-bake.md`](docs/architecture/01_the-bake.md).
 
 ## How it is built
 

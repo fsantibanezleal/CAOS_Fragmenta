@@ -626,7 +626,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The largest site in the corpus, 22 of the 97 blasts, which is why rows here are not independent draws and why the benchmark holds out whole sites. Sandstone at 16.9 GPa with the highest powder factors in the set.",
-   "es": "El sitio mas grande del conjunto, 22 de los 97 tiros, razon por la cual las filas no son muestras independientes y el benchmark excluye sitios completos. Arenisca de 16.9 GPa con los mayores factores de carga del conjunto."
+   "es": "El sitio m\u00e1s grande del conjunto, 22 de los 97 tiros, raz\u00f3n por la cual las filas no son muestras independientes y el benchmark excluye sitios completos. Arenisca de 16.9 GPa con los mayores factores de carga del conjunto."
   },
   "site": "Akdaglar",
   "title": {
@@ -635,7 +635,7 @@
   }
  },
  "controls": {},
- "digest": "290d2f999256fa94064b4b7bd15c6e18f4832de4b1457cb942b6647289649642",
+ "digest": "e31497f051a742d889ed559ce4c3858f461380e9b0cdc35393b18c858bcdcd7b",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -4544,7 +4544,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -5216,7 +5216,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -5270,7 +5270,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

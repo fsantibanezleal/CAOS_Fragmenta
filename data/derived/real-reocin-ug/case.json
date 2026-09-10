@@ -178,16 +178,16 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The stiffness-ratio extreme: an 18 m bench on a 3 m burden, six burdens tall. Its hole diameter is the one the source never printed, recovered by inverting the stated bench height and agreeing on all six rows.",
-   "es": "El extremo de rigidez del banco: 18 m de altura sobre 3 m de bordo, seis bordos de alto. Su diametro es el que la fuente nunca publico, recuperado invirtiendo la altura declarada y coincidente en las seis filas."
+   "es": "El extremo de rigidez del banco: 18 m de altura sobre 3 m de bordo, seis bordos de alto. Su di\u00e1metro es el que la fuente nunca public\u00f3, recuperado invirtiendo la altura declarada y coincidente en las seis filas."
   },
   "site": "Reocin-UG",
   "title": {
    "en": "Reocin underground",
-   "es": "Reocin subterranea"
+   "es": "Reocin subterr\u00e1nea"
   }
  },
  "controls": {},
- "digest": "bf9836bd65e1db83c3dbaf76b503a2737a118f1c4243f229f3f307bc31ac9340",
+ "digest": "816881e3bceb1e92d3ce6f583a6b65ff325b7693bf6dfa07bd440e9705ef40bf",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2368,7 +2368,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3040,7 +3040,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3094,7 +3094,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

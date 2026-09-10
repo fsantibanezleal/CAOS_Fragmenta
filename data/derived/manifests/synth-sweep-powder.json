@@ -1,15 +1,15 @@
 {
- "app_version": "0.01.000",
+ "app_version": "0.01.001",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 64004,
+  "bytes": 64049,
   "format": "json",
   "path": "synth-sweep-powder/case.json"
  },
  "case_id": "synth-sweep-powder",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "cf6e58bb2096b0afb749c67037bcfcd8ad6b666d1169cda6a78a9a79139a51a1",
+ "digest": "1c9a720e967df371ecba082ec48c15025a5e46b30ebd18aa716c0011f08eec1a",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
@@ -21,7 +21,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 64004,
+  "trace_bytes": 64049,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

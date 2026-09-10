@@ -184,12 +184,12 @@
   "real_or_synthetic": "synthetic",
   "reason": {
    "en": "A design that is not a blast: the stemming exceeds the hole, so there is no charge to detonate. Every arm must refuse it rather than return a plausible-looking number. If any arm answers here, the product is fabricating.",
-   "es": "Un diseno que no es un tiro: el taco excede la perforacion, de modo que no hay carga que detonar. Todo modelo debe rechazarlo en vez de devolver un numero verosimil. Si algun modelo responde aqui, el producto esta fabricando."
+   "es": "Un dise\u00f1o que no es un tiro: el taco excede la perforaci\u00f3n, de modo que no hay carga que detonar. Todo modelo debe rechazarlo en vez de devolver un n\u00famero veros\u00edmil. Si alg\u00fan modelo responde aqu\u00ed, el producto esta fabricando."
   },
   "site": null,
   "title": {
    "en": "Degenerate design: the negative control",
-   "es": "Diseno degenerado: el control negativo"
+   "es": "Dise\u00f1o degenerado: el control negativo"
   }
  },
  "controls": {
@@ -200,7 +200,7 @@
    "passed": true
   }
  },
- "digest": "8fbb3170e4cbbefa63d79e3419daa71f5eec65810d5e6b1ae3d9002fc4db6ad2",
+ "digest": "69010bf33f470154c8ad925fa0121111efb7f212bf414a41e74dc7f9d4e79df2",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -879,7 +879,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -1094,7 +1094,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {

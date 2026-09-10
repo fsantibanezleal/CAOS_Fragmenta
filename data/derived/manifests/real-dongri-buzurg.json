@@ -1,15 +1,15 @@
 {
- "app_version": "0.01.000",
+ "app_version": "0.01.001",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 65959,
+  "bytes": 66004,
   "format": "json",
   "path": "real-dongri-buzurg/case.json"
  },
  "case_id": "real-dongri-buzurg",
  "category": "real-campaign",
  "controls": {},
- "digest": "8bf0f5dff6277814f227d538dc1c1c236a8566b6979c7a453f398d068edf4b6e",
+ "digest": "faeada2ff736b3d5d116592b36d127020a3b7f23bbcd7a767e95758e638cae4f",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
@@ -21,7 +21,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 65959,
+  "trace_bytes": 66004,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

@@ -47,12 +47,12 @@ jobs:
     # WITHIN one environment the bake is byte-identical, and a content address is the right check.
     #
     # ACROSS environments it reproduces to a numeric tolerance, not to a hash. Two builds of the same
-    # pinned numpy reduce a dot product in a different order, and the one iterative solver in the
-    # product carries those last bits through to its output. This job measured it: baking on a Linux
-    # runner against artifacts baked on Windows, with identical pins, 72 fields differ at a worst
-    # relative error of 8.3e-09, and every one of them belongs to the Levenberg-Marquardt network.
-    # No other arm moves at all. Asserting equal hashes across machines would assert something
-    # false, so the check compares numbers and names the tolerance.
+    # pinned numpy reduce a dot product in a different order, and the last bits differ. This job
+    # measured it: baking on Linux runners against artifacts baked on Windows, with identical pins,
+    # the worst difference over all sixteen cases is 2.7e-08 relative, largest on the fitted arms,
+    # and the one case where every arm abstains comes out byte-identical. Asserting equal hashes
+    # across machines would assert something false, so the check compares numbers and names its
+    # tolerance.
     #
     # The pins and the Python version still matter, and this job earned them: the requirements file
     # originally carried version RANGES, so the runner installed different libraries from the machine
@@ -91,6 +91,14 @@ jobs:
 
       - name: Content standards, no em-dash and no emoji
         run: python scripts/check_content_standards.py
+
+      - name: The Spanish surface carries its accents
+        # The product shipped its whole Spanish body text unaccented while its own navigation read
+        # correctly, so the two halves of the same page disagreed. To a Spanish reader an unaccented
+        # "campana" is a bell, not a campaign.
+        run: |
+          pip install -r requirements-precompute.txt
+          python scripts/check_spanish_accents.py
 
       - name: No template residue survived instantiation
         run: |

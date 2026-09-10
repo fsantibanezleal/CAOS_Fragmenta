@@ -346,16 +346,16 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The stiffest rock in the corpus at 60 GPa, in a moderately to heavily folded schist. It is also where the uniformity index goes lowest, because the stemming takes most of a bench only 1.33 burdens tall.",
-   "es": "La roca mas rigida del conjunto, 60 GPa, en un esquisto plegado. Tambien es donde el indice de uniformidad baja mas, porque el taco ocupa casi todo un banco de solo 1.33 bordos."
+   "es": "La roca m\u00e1s r\u00edgida del conjunto, 60 GPa, en un esquisto plegado. Tambi\u00e9n es donde el \u00edndice de uniformidad baja m\u00e1s, porque el taco ocupa casi todo un banco de solo 1.33 bordos."
   },
   "site": "Enusa",
   "title": {
    "en": "Enusa uranium mine, Spain",
-   "es": "Mina de uranio Enusa, Espana"
+   "es": "Mina de uranio Enusa, Espa\u00f1a"
   }
  },
  "controls": {},
- "digest": "910d0dd05e6b03cfdf1346020dacd22c99f08f21039b9a7c0695d4220520f538",
+ "digest": "e9c9c07ce725156d49a5b1f03dcc3c323e815229fbd354a7b7c74dadd471fe42",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3184,7 +3184,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3856,7 +3856,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3910,7 +3910,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {
