@@ -60,25 +60,34 @@ Two builds of the same pinned numpy reduce a dot product in a different order. T
 result differ, at a relative scale of about 1e-16, and no version pin can remove that because it is
 not a version difference. An iterative solver then amplifies it over its iterations.
 
-This is measured, not assumed. Baking `real-murgul` on Windows and on a Linux runner, both on Python
-3.13 with numpy 2.5.3, scikit-learn 1.9.0 and xgboost 3.4.1:
+This is measured, not assumed. Baking all sixteen cases on Windows and on Linux runners, both on
+Python 3.13 with numpy 2.5.3, scikit-learn 1.9.0 and xgboost 3.4.1:
 
 | | |
 |---|---|
 | two bakes on the same runner | identical, byte for byte |
-| Windows against Linux | 72 fields differ, worst relative error 8.3e-09 |
-| where those fields live | every one of them in `published-neural-net` |
-| every other arm | bit-identical across both platforms |
+| worst difference across all sixteen cases | 2.7e-08 relative, on `real-reocin-ug` |
+| typical case | 30 to 100 fields differ, worst around 1e-09 |
+| `ctrl-degenerate` | identical, byte for byte |
 
-The localisation is the informative part. The network is trained by Levenberg-Marquardt, the only
-iterative solver in the product, and it is the only arm that carries the platform into its output.
-The classical closed forms, the support vector machine, the random forest, the gradient-boosted
-trees and the stack all land on the same bits.
+Two details in that table are worth more than the headline number.
 
-So the cross-environment gate compares numbers and names its tolerance: **1e-6 relative**, two orders
-above the measured noise and roughly five orders below the percent-scale move a genuinely different
-model would make. It is also far finer than anything anyone reads: predictions are exported rounded
-to a micrometre and displayed in centimetres.
+`ctrl-degenerate` is the case where every arm abstains, so the artifact contains refusals and no
+predictions. It comes out byte-identical. That is the control on the explanation: if the drift were
+structural rather than arithmetic, a case with no arithmetic in it would drift too.
+
+And the difference is **not** confined to one arm, which is what a single case first suggested. It is
+largest and most consistent on the fitted arms, `published-neural-net` and `refitted-regression`,
+then `svr-rbf` and `stacking`. But on `real-soma` and `synth-sweep-burden` the closed forms move as
+well, `kuznetsov`, `kuz-ram`, `swebrec` and `crush-zone` among them, because a closed form here is
+still evaluated on a reconstructed geometry that is itself several floating-point operations deep.
+Every arm whose value passes through a chain of arithmetic can pick up the last bit. Only an arm that
+returns a refusal cannot.
+
+So the cross-environment gate compares numbers and names its tolerance: **1e-6 relative**, roughly
+two orders above the worst measured difference and five below the percent-scale move a genuinely
+different model would make. It is also far finer than anything anyone reads: predictions are exported
+rounded to a micrometre and displayed in centimetres.
 
     python scripts/compare_bakes.py            # every case, every number, against what is committed
     python scripts/compare_bakes.py real-murgul --repeat 2   # byte-identity within this environment
@@ -90,7 +99,7 @@ mode is a suite that is green because it rewrote the thing it was verifying.
 ### What this costs, honestly
 
 The published artifacts were baked on one machine, and a reader who re-bakes on another will get
-numbers that agree with them to eight or nine significant digits rather than to the last bit. For
+numbers that agree with them to seven or eight significant digits rather than to the last bit. For
 every number this product reports that is far past the point of meaning: the corpus itself carries
 x50 to two or three significant digits. But it is a real limit on the word "reproducible", and it is
 better stated than implied.

@@ -53,7 +53,7 @@ const config: ShellConfig = {
         'beside it. No mechanistic simulation, no flyrock, no ground vibration, no comminution model. ' +
         'Not for production blast design.',
       es:
-        'Toda prediccion es un modelo, mostrada con el nombre de su estadistico y un predictor ' +
+        'Toda predicción es un modelo, mostrada con el nombre de su estadístico y un predictor ' +
         'constante al lado. Sin simulacion mecanicista, sin proyeccion de rocas, sin vibracion, sin ' +
         'modelo de conminucion. No apto para diseno de voladura de produccion.',
     },

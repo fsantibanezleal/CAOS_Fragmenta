@@ -107,13 +107,13 @@ export function OverviewDiagram() {
       label={es ? 'De la malla a la curva y al puntaje' : 'From pattern to curve to score'}
       caption={
         es
-          ? 'El camino completo. Todo a la izquierda de la linea punteada es dato real; todo a la derecha es un modelo que debe ganarse la confianza.'
+          ? 'El camino completo. Todo a la izquierda de la línea punteada es dato real; todo a la derecha es un modelo que debe ganarse la confianza.'
           : 'The whole path. Everything left of the dotted line is real data; everything right of it is a model that has to earn trust.'
       }
     >
       <Box x={10} y={40} w={170} h={78} title={es ? '97 tiros reales' : '97 real blasts'} lines={['10 campaigns', '7 ratios each', 'x50 by image analysis']} accent={OK} />
       <Arrow from={[184, 79]} to={[220, 79]} />
-      <Box x={224} y={40} w={170} h={78} title={es ? 'Geometria recuperada' : 'Geometry recovered'} lines={['B = (B/D) x D', 'V = B x S x H', 'Q = Pf x V']} />
+      <Box x={224} y={40} w={170} h={78} title={es ? 'Geometría recuperada' : 'Geometry recovered'} lines={['B = (B/D) x D', 'V = B x S x H', 'Q = Pf x V']} />
       <Arrow from={[398, 79]} to={[434, 79]} />
       <Box x={438} y={16} w={190} h={60} title={es ? 'Doce modelos' : 'Twelve models'} lines={['classical to ensemble', '4 tiers, 2 controls']} accent={ACCENT} />
       <Box x={438} y={92} w={190} h={60} title={es ? 'Tres protocolos' : 'Three protocols'} lines={['random, dedup,', 'leave one site out']} accent={WARN} />
@@ -130,7 +130,7 @@ export function OverviewDiagram() {
       </text>
       <text x={10} y={228} fill={MUTED} fontSize={10}>
         {es
-          ? 'La reconstruccion se verifica contra 15 restricciones dimensionales que la propia fuente declara en prosa.'
+          ? 'La reconstrucción se verifica contra 15 restricciones dimensionales que la propia fuente declara en prosa.'
           : 'The reconstruction is checked against 15 dimensional constraints the source states in its own prose.'}
       </text>
     </Figure>
@@ -142,10 +142,10 @@ export function ClassicalFlowDiagram() {
   return (
     <Figure
       viewBox="0 0 900 200"
-      label={es ? 'El modelo clasico, termino a termino' : 'The classical model, term by term'}
+      label={es ? 'El modelo clásico, término a término' : 'The classical model, term by term'}
       caption={
         es
-          ? 'Las tres piezas del modelo clasico. El factor de roca entra multiplicando, asi que el tamano predicho es lineal en el.'
+          ? 'Las tres piezas del modelo clásico. El factor de roca entra multiplicando, así que el tamaño predicho es lineal en el.'
           : 'The three pieces of the classical model. The rock factor enters multiplicatively, so predicted size is linear in it.'
       }
     >
@@ -153,16 +153,16 @@ export function ClassicalFlowDiagram() {
       <Box x={10} y={106} w={180} h={62} title={es ? 'Factor de roca' : 'Rock factor'} lines={['3 published schemes', '+ 1 recovered']} accent={WARN} />
       <Arrow from={[194, 56]} to={[236, 66]} />
       <Arrow from={[194, 137]} to={[236, 90]} />
-      <Box x={240} y={44} w={210} h={68} title={es ? 'Tamano medio' : 'Mean size'} lines={['A (V/Q)^0.8 Q^(1/6)', 'x (RWS/115)^(-19/30)']} accent={ACCENT} />
+      <Box x={240} y={44} w={210} h={68} title={es ? 'Tamaño medio' : 'Mean size'} lines={['A (V/Q)^0.8 Q^(1/6)', 'x (RWS/115)^(-19/30)']} accent={ACCENT} />
       <Arrow from={[454, 78]} to={[496, 78]} />
-      <Box x={500} y={20} w={200} h={62} title={es ? 'Indice de uniformidad' : 'Uniformity index'} lines={['2.2 - 14 B/d', 'B in m, d in mm']} accent={DANGER} />
+      <Box x={500} y={20} w={200} h={62} title={es ? 'Índice de uniformidad' : 'Uniformity index'} lines={['2.2 - 14 B/d', 'B in m, d in mm']} accent={DANGER} />
       <Box x={500} y={96} w={200} h={62} title={es ? 'Curva' : 'Curve'} lines={['two-parameter', 'three-parameter', 'two-branch']} />
       <Arrow from={[704, 51]} to={[746, 70]} />
       <Arrow from={[704, 127]} to={[746, 94]} />
       <Box x={750} y={52} w={140} h={62} title="P20 P50 P80" lines={['oversize %', 'fines %']} accent={OK} />
       <text x={500} y={180} fill={DANGER} fontSize={10}>
         {es
-          ? 'Trampa: el bordo va en metros y el diametro en milimetros. Leerlo como la razon tabulada rompe el indice.'
+          ? 'Trampa: el bordo va en metros y el diámetro en milímetros. Leerlo como la razón tabulada rompe el índice.'
           : 'Trap: the burden is in metres and the diameter in millimetres. Reading it as the tabulated ratio breaks the index.'}
       </text>
     </Figure>
@@ -177,13 +177,13 @@ export function RockFactorDiagram() {
       label={es ? 'Cuatro caminos al factor de roca' : 'Four routes to the rock factor'}
       caption={
         es
-          ? 'Cuatro caminos, tres publicados y uno recuperado. Los dos esquemas de calificacion llevan la misma atribucion y diferentes tablas.'
+          ? 'Cuatro caminos, tres publicados y uno recuperado. Los dos esquemas de calificación llevan la misma atribución y diferentes tablas.'
           : 'Four routes, three published and one recovered. The two rating schemes carry the same attribution and different tables.'
       }
     >
       <Box x={10} y={14} w={200} h={76} title={es ? 'Esquema A' : 'Scheme A'} lines={['BI = 0.5(RMD+JPS+', 'JPO+RDI+0.05 UCS)', 'A = 0.06 BI']} />
       <Box x={10} y={102} w={200} h={76} title={es ? 'Esquema B' : 'Scheme B'} lines={['same sum, strength', '= UCS/3 or UCS/5', 'by modulus']} accent={WARN} />
-      <Box x={240} y={14} w={190} h={76} title={es ? 'Busqueda de cinco bandas' : 'Five-band lookup'} lines={['Protodyakonov index', '3 to 13']} />
+      <Box x={240} y={14} w={190} h={76} title={es ? 'Búsqueda de cinco bandas' : 'Five-band lookup'} lines={['Protodyakonov index', '3 to 13']} />
       <Box x={240} y={102} w={190} h={76} title={es ? 'Recuperado' : 'Recovered'} lines={['invert x50 on the', 'published prediction']} accent={OK} />
       <Arrow from={[434, 96]} to={[486, 96]} />
       <Box x={490} y={54} w={190} h={82} title="A" lines={['0.8 to 22', 'linear in x50', 'spread 0.6 to 3.7%', 'within a site']} accent={ACCENT} />
@@ -191,7 +191,7 @@ export function RockFactorDiagram() {
       <Box x={730} y={62} w={160} h={66} title={es ? 'Desacuerdo' : 'Disagreement'} lines={['up to 0.85 in A', 'on the same rock']} accent={DANGER} />
       <text x={10} y={200} fill={MUTED} fontSize={10}>
         {es
-          ? 'Los valores recuperados apenas se mueven dentro de un sitio, lo que a su vez valida la reconstruccion geometrica.'
+          ? 'Los valores recuperados apenas se mueven dentro de un sitio, lo que a su vez valida la reconstrucción geométrica.'
           : 'The recovered values barely move within a site, which in turn validates the geometry reconstruction.'}
       </text>
     </Figure>
@@ -206,7 +206,7 @@ export function GroupRouterDiagram() {
       label={es ? 'El enrutador por rigidez' : 'The stiffness router'}
       caption={
         es
-          ? 'La funcion discriminante decide que ecuacion se aplica. Cero errores en los 109 tiros etiquetados, y los dos grupos quedan perfectamente separados.'
+          ? 'La función discriminante decide qué ecuación se aplica. Cero errores en los 109 tiros etiquetados, y los dos grupos quedan perfectamente separados.'
           : 'The discriminant function decides which equation fires. Zero errors on all 109 labelled blasts, and the two groups are perfectly separated.'
       }
     >
@@ -215,14 +215,14 @@ export function GroupRouterDiagram() {
       <Box x={254} y={54} w={210} h={76} title="L" lines={['4.467 S/B - 0.551 H/B', '- 0.123 B/D + ... + 3.577']} accent={ACCENT} />
       <Arrow from={[468, 78]} to={[520, 50]} label="L > 11.821" />
       <Arrow from={[468, 106]} to={[520, 134]} label="L <= 11.821" />
-      <Box x={524} y={16} w={200} h={68} title={es ? 'Grupo 1, modulo alto' : 'Group 1, high modulus'} lines={['35 blasts, mean 51.1 GPa', 'min L = 13.067']} accent={OK} />
-      <Box x={524} y={104} w={200} h={68} title={es ? 'Grupo 2, modulo bajo' : 'Group 2, low modulus'} lines={['62 blasts, mean 17.2 GPa', 'max L = 10.318']} accent={OK} />
+      <Box x={524} y={16} w={200} h={68} title={es ? 'Grupo 1, módulo alto' : 'Group 1, high modulus'} lines={['35 blasts, mean 51.1 GPa', 'min L = 13.067']} accent={OK} />
+      <Box x={524} y={104} w={200} h={68} title={es ? 'Grupo 2, módulo bajo' : 'Group 2, low modulus'} lines={['62 blasts, mean 17.2 GPa', 'max L = 10.318']} accent={OK} />
       <Arrow from={[728, 50]} to={[770, 78]} />
       <Arrow from={[728, 138]} to={[770, 110]} />
-      <Box x={774} y={62} w={116} h={64} title={es ? 'Su ecuacion' : 'Its equation'} lines={['208 x ...', '0.60 x ...']} />
+      <Box x={774} y={62} w={116} h={64} title={es ? 'Su ecuación' : 'Its equation'} lines={['208 x ...', '0.60 x ...']} />
       <text x={254} y={172} fill={MUTED} fontSize={10}>
         {es
-          ? 'Es una compuerta real, no una consulta de etiqueta: enruta disenos que el corpus nunca vio.'
+          ? 'Es una compuerta real, no una consulta de etiqueta: enruta diseños que el corpus nunca vio.'
           : 'A real gate rather than a label lookup: it routes designs the corpus has never seen.'}
       </text>
     </Figure>
@@ -237,14 +237,14 @@ export function LearnedFlowDiagram() {
       label={es ? 'El nivel aprendido y sus carriles' : 'The learned tier and its lanes'}
       caption={
         es
-          ? 'Los modelos aprendidos se entrenan sin conexion y predicen en el navegador. Cada caso real excluye su propia campana del entrenamiento, y el sitio excluido viaja en el artefacto.'
+          ? 'Los modelos aprendidos se entrenan sin conexión y predicen en el navegador. Cada caso real excluye su propia campaña del entrenamiento, y el sitio excluido viaja en el artefacto.'
           : 'The learned models train offline and predict in the browser. Every real case withholds its own campaign from training, and the withheld site travels on the artifact.'
       }
     >
       <Box x={10} y={20} w={190} h={80} title={es ? 'Corpus menos el sitio' : 'Corpus minus the site'} lines={['e.g. 90 of 97 rows', 'asserted at bake time']} accent={OK} />
       <Arrow from={[204, 60]} to={[248, 60]} />
       <Box x={252} y={14} w={186} h={56} title={es ? 'Red 7-N-1' : '7-N-1 network'} lines={['Levenberg-Marquardt', '8 simulations']} />
-      <Box x={252} y={80} w={186} h={56} title={es ? 'Arboles y vectores' : 'Trees and vectors'} lines={['forest, boosting,', 'support vectors']} />
+      <Box x={252} y={80} w={186} h={56} title={es ? 'Árboles y vectores' : 'Trees and vectors'} lines={['forest, boosting,', 'support vectors']} />
       <Box x={252} y={146} w={186} h={56} title={es ? 'Ensamble apilado' : 'Stacking ensemble'} lines={['linear meta-learner', 'no cross-validation']} />
       <Arrow from={[442, 42]} to={[492, 90]} />
       <Arrow from={[442, 108]} to={[492, 104]} />
@@ -255,7 +255,7 @@ export function LearnedFlowDiagram() {
       <Box x={728} y={112} w={162} h={60} title={es ? 'Carril vivo' : 'Live lane'} lines={['closed forms in TS', 'parity is a gate']} accent={WARN} />
       <text x={10} y={210} fill={DANGER} fontSize={10}>
         {es
-          ? 'Un modelo entrenado sobre una campana y luego mostrado prediciendola muestra una memoria, no una prediccion.'
+          ? 'Un modelo entrenado sobre una campaña y luego mostrado prediciéndola muestra una memoria, no una predicción.'
           : 'A model trained on a campaign and then shown predicting it is displaying a memory, not a prediction.'}
       </text>
     </Figure>
@@ -294,7 +294,7 @@ export function ProtocolDiagram() {
       <Arrow from={[710, 118]} to={[752, 118]} />
       <Box x={756} y={78} w={134} h={80} title={es ? 'La brecha' : 'The gap'} lines={['median 0.88', 'across every', 'learned model']} accent={DANGER} />
       <text x={10} y={216} fill={MUTED} fontSize={10}>
-        {es ? 'Deduplicar SUBE los puntajes. El sitio compartido es lo que los sostenia.' : 'Deduplicating RAISES the scores. The shared site is what was holding them up.'}
+        {es ? 'Deduplicar SUBE los puntajes. El sitio compartido es lo que los sostenía.' : 'Deduplicating RAISES the scores. The shared site is what was holding them up.'}
       </text>
     </Figure>
   );
@@ -305,10 +305,10 @@ export function PipelineDiagram() {
   return (
     <Figure
       viewBox="0 0 900 260"
-      label={es ? 'La tuberia sin conexion' : 'The offline pipeline'}
+      label={es ? 'La tubería sin conexión' : 'The offline pipeline'}
       caption={
         es
-          ? 'Nueve etapas, ninguna vacia. El horneado es una operacion de version deliberada; el despliegue copia artefactos ya auditados y nunca entrena.'
+          ? 'Nueve etapas, ninguna vacía. El horneado es una operación de versión deliberada; el despliegue copia artefactos ya auditados y nunca entrena.'
           : 'Nine stages, none of them empty. The bake is a deliberate versioned operation; the deploy copies already-audited artifacts and never trains.'
       }
     >
@@ -338,12 +338,12 @@ export function PipelineDiagram() {
       ))}
       <text x={10} y={232} fill={MUTED} fontSize={10}>
         {es
-          ? 'Las pruebas escriben en un directorio temporal. Un test que puede sobrescribir los artefactos canonicos puede hacerse pasar en silencio.'
+          ? 'Las pruebas escriben en un directorio temporal. Un test que puede sobrescribir los artefactos canónicos puede hacerse pasar en silencio.'
           : 'Tests write to a sandbox. A test that can overwrite the canonical artifacts can silently make itself pass.'}
       </text>
       <text x={10} y={250} fill={MUTED} fontSize={10}>
         {es
-          ? '1824 celdas de prediccion, 282 de ellas negativas, cada negativa con su razon.'
+          ? '1824 celdas de predicción, 282 de ellas negativas, cada negativa con su razón.'
           : '1824 prediction cells, 282 of them refusals, every refusal with a reason.'}
       </text>
     </Figure>
@@ -358,7 +358,7 @@ export function ContractsDiagram() {
       label={es ? 'Los dos contratos de datos' : 'The two data contracts'}
       caption={
         es
-          ? 'Uno decide que entra; el otro decide que sale y como el navegador puede confiar en ello.'
+          ? 'Uno decide qué entra; el otro decide qué sale y cómo el navegador puede confiar en ello.'
           : 'One decides what gets in; the other decides what goes out and how the browser can trust it.'
       }
     >
@@ -372,17 +372,17 @@ export function ContractsDiagram() {
       </text>
       <text x={10} y={164} fill={MUTED} fontSize={10}>
         {es
-          ? 'El corpus llego con cinco errores de transcripcion contra las tablas publicadas, dos sobre la variable que se predice.'
+          ? 'El corpus llegó con cinco errores de transcripción contra las tablas publicadas, dos sobre la variable que se predice.'
           : 'The corpus arrived with five transcription errors against the published tables, two of them on the variable being predicted.'}
       </text>
       <text x={10} y={182} fill={MUTED} fontSize={10}>
         {es
-          ? 'La senal fue que el propio articulo imprime sus estadisticas descriptivas y nadie las estaba leyendo.'
+          ? 'La señal fue que el propio artículo imprime sus estadísticas descriptivas y nadie las estaba leyendo.'
           : 'The tell was that the paper prints its own descriptive statistics and nothing was reading them.'}
       </text>
       <text x={10} y={200} fill={MUTED} fontSize={10}>
         {es
-          ? 'Una media sobre 97 filas es un detector debil para un cambio de una celda, asi que tambien hay un resumen criptografico fijado.'
+          ? 'Una media sobre 97 filas es un detector débil para un cambio de una celda, así que también hay un resumen criptográfico fijado.'
           : 'A mean over 97 rows is a weak detector for a single-cell change, so there is a pinned digest as well.'}
       </text>
     </Figure>

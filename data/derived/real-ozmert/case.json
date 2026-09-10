@@ -206,7 +206,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The sibling quarry to Akdaglar: the same sandstone and the same 89 mm holes on a different pattern, which is the closest thing this corpus has to a controlled comparison.",
-   "es": "La cantera hermana de Akdaglar: la misma arenisca y la misma perforacion de 89 mm sobre otra malla, lo mas parecido a una comparacion controlada que ofrece este conjunto."
+   "es": "La cantera hermana de Akdaglar: la misma arenisca y la misma perforaci\u00f3n de 89 mm sobre otra malla, lo m\u00e1s parecido a una comparaci\u00f3n controlada que ofrece este conjunto."
   },
   "site": "Ozmert",
   "title": {
@@ -215,7 +215,7 @@
   }
  },
  "controls": {},
- "digest": "77c9efc3b6b1ed167e57d6d58282cb24409f239bfeebd829e3cca9651025936e",
+ "digest": "19a354a78f53c0f133690c9ccd7d0807b21237cb24b296b6e1f2723dbbeb85bb",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2517,7 +2517,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3189,7 +3189,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3243,7 +3243,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

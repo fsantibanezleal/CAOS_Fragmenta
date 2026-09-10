@@ -125,7 +125,7 @@ export default function Tool() {
     },
     {
       id: 'distribution',
-      label: lang === 'es' ? 'Distribucion' : 'Distribution',
+      label: lang === 'es' ? 'Distribución' : 'Distribution',
       content: <DistributionTab blast={blast} />,
     },
     {
@@ -177,7 +177,7 @@ function CaseCard({ artifact, lang }: { artifact: CaseArtifact; lang: Lang }) {
       <h3>{artifact.case.title[lang]}</h3>
       <p className="fr-case-reason">{artifact.case.reason[lang]}</p>
       <dl className="fr-kv">
-        <dt>{lang === 'es' ? 'Categoria' : 'Category'}</dt>
+        <dt>{lang === 'es' ? 'Categoría' : 'Category'}</dt>
         <dd>{CATEGORY_LABEL[artifact.case.category]?.[lang] ?? artifact.case.category}</dd>
         <dt>{lang === 'es' ? 'Tiros' : 'Blasts'}</dt>
         <dd>{artifact.blasts.length}</dd>
@@ -298,7 +298,7 @@ function PredictTab({
         ) : (
           <p className="fr-note">
             {lang === 'es'
-              ? 'Este caso no tiene mediciones que graficar, o el modelo se abstiene en todas ellas. Es un estudio de diseno, no una puntuacion.'
+              ? 'Este caso no tiene mediciones que graficar, o el modelo se abstiene en todas ellas. Es un estudio de diseño, no una puntuación.'
               : 'This case has no measurements to plot, or the model abstains on all of them. It is a design study rather than a score.'}
           </p>
         )}
@@ -384,7 +384,7 @@ function ArmComparison({
       </table>
       <p className="fr-fine">
         {lang === 'es'
-          ? 'Las dos columnas de varianza son cantidades distintas y en el conjunto de validacion publicado difieren por un factor de dos y medio para el modelo clasico.'
+          ? 'Las dos columnas de varianza son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo clásico.'
           : 'The two variance columns are different quantities, and on the published hold-out they differ by a factor of two and a half for the classical model.'}
       </p>
     </div>
@@ -426,12 +426,12 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
 
   if (!live) {
     return (
-      <Panel title={lang === 'es' ? 'Sin distribucion' : 'No distribution'}>
+      <Panel title={lang === 'es' ? 'Sin distribución' : 'No distribution'}>
         <p className="fr-note fr-note-warn">
           {blast.geometry_reason ??
             blast.degenerate_reason ??
             (lang === 'es'
-              ? 'Este tiro no tiene geometria absoluta ni factor de roca, asi que ningun modelo de distribucion puede correr sobre el.'
+              ? 'Este tiro no tiene geometría absoluta ni factor de roca, así que ningún modelo de distribución puede correr sobre el.'
               : 'This blast has neither an absolute geometry nor a rock factor, so no distribution model can run on it.')}
         </p>
       </Panel>
@@ -439,10 +439,10 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
   }
 
   const series: SeriesSpec[] = [
-    { id: 'classical', label: lang === 'es' ? 'Clasica' : 'Classical', values: live.classical.passing },
+    { id: 'classical', label: lang === 'es' ? 'Clásica' : 'Classical', values: live.classical.passing },
     {
       id: 'three',
-      label: lang === 'es' ? 'Tres parametros' : 'Three-parameter',
+      label: lang === 'es' ? 'Tres parámetros' : 'Three-parameter',
       values: live.three.passing,
     },
     {
@@ -460,7 +460,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
     <div className="fr-grid fr-grid-2">
       <div className="fr-stage">
         <h3 className="fr-stage-title">
-          {lang === 'es' ? 'Curva granulometrica' : 'Fragment-size distribution'} · {blast.blast_id}
+          {lang === 'es' ? 'Curva granulométrica' : 'Fragment-size distribution'} · {blast.blast_id}
         </h3>
         <DistributionChart
           sizesM={live.grid}
@@ -479,7 +479,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
         />
         <p className="fr-fine">
           {lang === 'es'
-            ? 'El punto rojo es el tamano medio medido de este tiro, en el 50 por ciento pasante por definicion. La curva completa medida no se publica en la fuente.'
+            ? 'El punto rojo es el tamaño medio medido de este tiro, en el 50 por ciento pasante por definición. La curva completa medida no se publica en la fuente.'
             : 'The red point is this blast’s measured mean size, at 50 percent passing by definition. The full measured curve is not published in the source.'}
         </p>
       </div>
@@ -492,7 +492,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
             <dd>{formatSize(live.x50)}</dd>
             <dt>P80</dt>
             <dd>{formatSize(p80)}</dd>
-            <dt>{lang === 'es' ? 'Indice de uniformidad' : 'Uniformity index'}</dt>
+            <dt>{lang === 'es' ? 'Índice de uniformidad' : 'Uniformity index'}</dt>
             <dd>{live.n.toFixed(3)}</dd>
             <dt>{lang === 'es' ? 'Medido' : 'Measured'}</dt>
             <dd>{formatSize(blast.x50_measured_m)}</dd>
@@ -506,7 +506,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
           ) : null}
         </Panel>
         <Panel
-          title={lang === 'es' ? 'Parametros no publicados' : 'Unpublished parameters'}
+          title={lang === 'es' ? 'Parámetros no publicados' : 'Unpublished parameters'}
           note={
             lang === 'es'
               ? 'Ninguna fuente consultada publica estos valores. Son suyos, y la curva cambia con ellos.'
@@ -514,7 +514,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
           }
         >
           <label className="fr-control">
-            {lang === 'es' ? 'Ondulacion (tres parametros)' : 'Undulation (three-parameter)'}
+            {lang === 'es' ? 'Ondulación (tres parámetros)' : 'Undulation (three-parameter)'}
             <input
               type="range"
               min={1}
@@ -526,7 +526,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
             <output>{undulation.toFixed(1)}</output>
           </label>
           <label className="fr-control">
-            {lang === 'es' ? 'Fraccion de finos (zona triturada)' : 'Fines fraction (crush zone)'}
+            {lang === 'es' ? 'Fracción de finos (zona triturada)' : 'Fines fraction (crush zone)'}
             <input
               type="range"
               min={0}
@@ -540,16 +540,16 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
         </Panel>
         <Panel title={lang === 'es' ? 'Finos' : 'Fines'}>
           <dl className="fr-kv">
-            <dt>{lang === 'es' ? 'Pasa 10 mm, clasica' : 'Passing 10 mm, classical'}</dt>
+            <dt>{lang === 'es' ? 'Pasa 10 mm, clásica' : 'Passing 10 mm, classical'}</dt>
             <dd>{(passingAt(live.classical, 0.01) * 100).toFixed(2)}%</dd>
-            <dt>{lang === 'es' ? 'Pasa 10 mm, tres parametros' : 'Passing 10 mm, three-parameter'}</dt>
+            <dt>{lang === 'es' ? 'Pasa 10 mm, tres parámetros' : 'Passing 10 mm, three-parameter'}</dt>
             <dd>{(passingAt(live.three, 0.01) * 100).toFixed(2)}%</dd>
             <dt>{lang === 'es' ? 'Pasa 10 mm, zona triturada' : 'Passing 10 mm, crush zone'}</dt>
             <dd>{(passingAt(live.crush, 0.01) * 100).toFixed(2)}%</dd>
           </dl>
           <p className="fr-fine">
             {lang === 'es'
-              ? 'La subestimacion de finos es la falla mejor documentada del modelo clasico, y es exactamente lo que las otras dos curvas existen para corregir.'
+              ? 'La subestimación de finos es la falla mejor documentada del modelo clásico, y es exactamente lo que las otras dos curvas existen para corregir.'
               : 'Under-predicting fines is the classical model’s best-documented failure, and correcting it is exactly why the other two curves exist.'}
           </p>
         </Panel>
@@ -588,7 +588,7 @@ function BenchTab({
           <p className="fr-note fr-note-warn">
             {blast.geometry_reason ??
               (lang === 'es'
-                ? 'Sin geometria absoluta no hay banco que dibujar.'
+                ? 'Sin geometría absoluta no hay banco que dibujar.'
                 : 'With no absolute geometry there is no bench to draw.')}
           </p>
         )}
@@ -610,10 +610,10 @@ function BenchTab({
           </select>
         </Panel>
         <Panel
-          title={lang === 'es' ? 'Iniciacion' : 'Initiation'}
+          title={lang === 'es' ? 'Iniciación' : 'Initiation'}
           note={
             lang === 'es'
-              ? 'Estos controles mueven la animacion y no mueven ninguna prediccion.'
+              ? 'Estos controles mueven la animación y no mueven ninguna predicción.'
               : 'These controls move the animation and move no prediction.'
           }
         >
@@ -644,7 +644,7 @@ function BenchTab({
         </Panel>
         {report?.checks?.length ? (
           <Panel
-            title={lang === 'es' ? 'Como se recupero esta geometria' : 'How this geometry was recovered'}
+            title={lang === 'es' ? 'Cómo se recuperó esta geometría' : 'How this geometry was recovered'}
           >
             <p className="fr-note">
               {lang === 'es'
@@ -717,7 +717,7 @@ function RockTab({ blast }: { blast: BlastRow }) {
         </h3>
         <p className="fr-note">
           {lang === 'es'
-            ? 'Dos fuentes primarias publican tablas de calificacion bajo la misma atribucion, y no son la misma tabla. El termino de resistencia difiere por un factor de seis. Mueva los controles y vea cuanto se separan.'
+            ? 'Dos fuentes primarias publican tablas de calificación bajo la misma atribución, y no son la misma tabla. El término de resistencia difiere por un factor de seis. Mueva los controles y vea cuánto se separan.'
             : 'Two primary sources publish rating tables under the same attribution, and they are not the same table. The strength term differs by a factor of six. Move the controls and watch them separate.'}
         </p>
         <div className="fr-rockcompare">
@@ -749,10 +749,10 @@ function RockTab({ blast }: { blast: BlastRow }) {
       </div>
       <div className="fr-side">
         <Panel
-          title={lang === 'es' ? 'Descripcion de la roca' : 'Rock description'}
+          title={lang === 'es' ? 'Descripción de la roca' : 'Rock description'}
           note={
             lang === 'es'
-              ? 'El corpus publica solo el modulo y el tamano de bloque, asi que estos otros valores son suyos. Ningun esquema los inventa: si faltan, se niega a calcular.'
+              ? 'El corpus publica solo el módulo y el tamaño de bloque, así que estos otros valores son suyos. Ningún esquema los inventa: si faltan, se niega a calcular.'
               : 'The corpus publishes only the modulus and the block size, so these other values are yours. No scheme invents them: if they are missing it refuses to compute.'
           }
         >
@@ -772,7 +772,7 @@ function RockTab({ blast }: { blast: BlastRow }) {
             <output>{jointSpacing.toFixed(2)}</output>
           </label>
         </Panel>
-        <Panel title={lang === 'es' ? 'Lo que el corpus si publica' : 'What the corpus does publish'}>
+        <Panel title={lang === 'es' ? 'Lo que el corpus sí publica' : 'What the corpus does publish'}>
           <dl className="fr-kv">
             {(Object.keys(blast.features) as (keyof typeof blast.features)[]).map((key) => (
               <FeatureRow key={key} name={key} value={blast.features[key]} lang={lang} />
@@ -781,10 +781,10 @@ function RockTab({ blast }: { blast: BlastRow }) {
             <dd>
               {group === 1
                 ? lang === 'es'
-                  ? '1, modulo alto'
+                  ? '1, módulo alto'
                   : '1, high modulus'
                 : lang === 'es'
-                  ? '2, modulo bajo'
+                  ? '2, módulo bajo'
                   : '2, low modulus'}
             </dd>
           </dl>
@@ -840,7 +840,7 @@ function ExplainTab({ artifact, armId }: { artifact: CaseArtifact; armId: string
   const series: SeriesSpec[] = [
     {
       id: 'response',
-      label: lang === 'es' ? 'tamano medio predicho' : 'predicted mean size',
+      label: lang === 'es' ? 'tamaño medio predicho' : 'predicted mean size',
       values: variants.map((v) => curves[v.id] ?? null),
     },
   ];
@@ -893,16 +893,16 @@ function ExplainTab({ artifact, armId }: { artifact: CaseArtifact; armId: string
       </div>
       <div className="fr-side">
         <Panel
-          title={lang === 'es' ? 'Como leer esto' : 'How to read this'}
+          title={lang === 'es' ? 'Cómo leer esto' : 'How to read this'}
           note={
             lang === 'es'
-              ? 'Una variante es un diseno que no se ha disparado, asi que no tiene medicion y nunca se puntua contra la del tiro original.'
+              ? 'Una variante es un diseño que no se ha disparado, así que no tiene medición y nunca se puntúa contra la del tiro original.'
               : 'A variant is a design that has not been fired, so it has no measurement and is never scored against the original blast’s.'
           }
         >
           <p className="fr-note">
             {lang === 'es'
-              ? 'Cada variante mueve un solo campo por un multiplicador, de modo que la respuesta a esa palanca queda aislada. Las campanas reales varian varias cosas a la vez.'
+              ? 'Cada variante mueve un solo campo por un multiplicador, de modo que la respuesta a esa palanca queda aislada. Las campañas reales varían varias cosas a la vez.'
               : 'Each variant moves a single field by a multiplier, so the response to that lever is isolated. Real campaigns vary several things at once.'}
           </p>
         </Panel>
@@ -910,17 +910,17 @@ function ExplainTab({ artifact, armId }: { artifact: CaseArtifact; armId: string
           <ul className="fr-list">
             <li>
               {lang === 'es'
-                ? 'Mas explosivo debe predecir roca mas fina.'
+                ? 'Más explosivo debe predecir roca más fina.'
                 : 'More explosive must predict finer rock.'}
             </li>
             <li>
               {lang === 'es'
-                ? 'Un bordo mas amplio debe predecir roca mas gruesa.'
+                ? 'Un bordo más amplio debe predecir roca más gruesa.'
                 : 'A wider burden must predict coarser rock.'}
             </li>
             <li>
               {lang === 'es'
-                ? 'Bloques in situ mayores deben predecir roca mas gruesa.'
+                ? 'Bloques in situ mayores deben predecir roca más gruesa.'
                 : 'Larger in situ blocks must predict coarser rock.'}
             </li>
           </ul>
@@ -993,13 +993,13 @@ function DecideTab({
         <Panel title={lang === 'es' ? 'Consecuencia aguas abajo' : 'Downstream consequence'}>
           <p className="fr-note fr-note-warn">
             {lang === 'es'
-              ? 'Este producto no modela la chancadora ni el molino. La fragmentacion los alimenta y esa cadena es real, pero cualquier cifra de energia especifica que se mostrara aqui seria un sustituto, no un modelo de conminucion.'
+              ? 'Este producto no modela la chancadora ni el molino. La fragmentación los alimenta y esa cadena es real, pero cualquier cifra de energía específica que se mostrara aquí sería un sustituto, no un modelo de conminución.'
               : 'This product does not model the crusher or the mill. Fragmentation feeds them and that chain is real, but any specific-energy figure shown here would be a proxy rather than a comminution model.'}
           </p>
         </Panel>
       </div>
       <div className="fr-side">
-        <Panel title={lang === 'es' ? 'Su especificacion' : 'Your specification'}>
+        <Panel title={lang === 'es' ? 'Su especificación' : 'Your specification'}>
           <label className="fr-control">
             {lang === 'es' ? 'P80 objetivo, cm' : 'Target P80, cm'}
             <input
@@ -1013,7 +1013,7 @@ function DecideTab({
             <output>{targetP80Cm} cm</output>
           </label>
           <label className="fr-control">
-            {lang === 'es' ? 'Limite de sobre tamano, cm' : 'Oversize limit, cm'}
+            {lang === 'es' ? 'Límite de sobre tamaño, cm' : 'Oversize limit, cm'}
             <input
               type="range"
               min={40}
@@ -1026,10 +1026,10 @@ function DecideTab({
           </label>
         </Panel>
         {cell ? <SimulationSpread cell={cell} /> : null}
-        <Panel title={lang === 'es' ? 'Cuanto confiar' : 'How much to trust this'}>
+        <Panel title={lang === 'es' ? 'Cuánto confiar' : 'How much to trust this'}>
           <p className="fr-note">
             {lang === 'es'
-              ? 'El modelo seleccionado se puntua contra tiros reales en la pagina de Benchmark, y bajo tres protocolos distintos. Solo uno de ellos responde la pregunta que usted tiene.'
+              ? 'El modelo seleccionado se puntúa contra tiros reales en la página de Benchmark, y bajo tres protocolos distintos. Solo uno de ellos responde la pregunta que usted tiene.'
               : 'The selected model is scored against real blasts on the Benchmark page, under three different protocols. Only one of them answers the question you have.'}
           </p>
           <Link className="fr-inline-link" to="/benchmark">

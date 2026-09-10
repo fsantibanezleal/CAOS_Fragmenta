@@ -49,7 +49,7 @@ export function ProvenancePanel({ artifact }: { artifact: CaseArtifact }) {
               ? 'tiros reales medidos'
               : 'real measured blasts'
             : lang === 'es'
-              ? 'diseno sintetico, sin medicion'
+              ? 'diseño sintético, sin medición'
               : 'synthetic design, no measurement'}
         </dd>
         {artifact.case.doi ? (
@@ -132,7 +132,7 @@ export function AbstentionPanel({
       </ul>
       <p className="fr-fine">
         {lang === 'es'
-          ? 'Una abstencion es un resultado. Un numero aqui seria una invencion.'
+          ? 'Una abstención es un resultado. Un número aquí sería una invención.'
           : 'An abstention is a result. A number here would be an invention.'}
       </p>
     </section>
@@ -199,7 +199,7 @@ export function ScorePanel({
           ) : null}
         </dd>
         <dt title="The square of the correlation between predicted and measured. What the source papers report.">
-          {lang === 'es' ? 'Correlacion al cuadrado' : 'Squared correlation'}
+          {lang === 'es' ? 'Correlación al cuadrado' : 'Squared correlation'}
         </dt>
         <dd>{formatScore(score.pearson_r2)}</dd>
         <dt>RMSE</dt>
@@ -225,7 +225,7 @@ export function ScorePanel({
       ) : null}
       {score.worst_rows && score.worst_rows.length ? (
         <>
-          <h4>{lang === 'es' ? 'Donde mas falla' : 'Where it fails hardest'}</h4>
+          <h4>{lang === 'es' ? 'Dónde más falla' : 'Where it fails hardest'}</h4>
           <table className="fr-table fr-table-compact">
             <thead>
               <tr>
@@ -278,7 +278,7 @@ export function SimulationSpread({ cell }: { cell: PredictionCell }) {
         : `Mean of ${cell.n_simulations} simulations; coefficient of variation ${cell.cv.toFixed(2)}.`}{' '}
       {unstable
         ? lang === 'es'
-          ? 'Aqui la respuesta depende de la semilla, no del modelo.'
+          ? 'Aquí la respuesta depende de la semilla, no del modelo.'
           : 'Here the answer depends on the seed rather than on the model.'
         : ''}
     </p>
@@ -313,10 +313,10 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
   if (predictedP80M === null || predictedX50M === null) {
     return (
       <section className="fr-panel fr-panel-decision">
-        <h3>{lang === 'es' ? 'Decision' : 'Decision'}</h3>
+        <h3>{lang === 'es' ? 'Decisión' : 'Decision'}</h3>
         <p className="fr-note fr-note-warn">
           {lang === 'es'
-            ? 'El modelo seleccionado se abstiene en este diseno, asi que no hay recomendacion que dar.'
+            ? 'El modelo seleccionado se abstiene en este diseño, así que no hay recomendación que dar.'
             : 'The selected model abstains on this design, so there is no recommendation to give.'}
         </p>
       </section>
@@ -341,19 +341,19 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
 
   const recommendation = meets
     ? lang === 'es'
-      ? 'El diseno alcanza el objetivo. Si busca ahorro, pruebe reducir el factor de carga en pasos de 10 por ciento y observe la cola gruesa.'
+      ? 'El diseño alcanza el objetivo. Si busca ahorro, pruebe reducir el factor de carga en pasos de 10 por ciento y observe la cola gruesa.'
       : 'The design meets the target. If cost matters, try cutting the powder factor in 10 percent steps and watch the coarse tail.'
     : ratio > 1.4
       ? lang === 'es'
-        ? 'El diseno queda muy grueso. Cierre el bordo y suba el factor de carga a la vez; una sola palanca no cubre esta brecha.'
+        ? 'El diseño queda muy grueso. Cierre el bordo y suba el factor de carga a la vez; una sola palanca no cubre esta brecha.'
         : 'The design is far too coarse. Tighten the burden and raise the powder factor together; one lever will not close this gap.'
       : lang === 'es'
-        ? 'El diseno queda grueso. Cierre el bordo entre 10 y 15 por ciento antes de tocar el explosivo: es el cambio mas barato.'
+        ? 'El diseño queda grueso. Cierre el bordo entre 10 y 15 por ciento antes de tocar el explosivo: es el cambio más barato.'
         : 'The design is coarse. Tighten the burden by 10 to 15 percent before touching the explosive: it is the cheaper change.';
 
   return (
     <section className="fr-panel fr-panel-decision">
-      <h3>{lang === 'es' ? 'Decision' : 'Decision'}</h3>
+      <h3>{lang === 'es' ? 'Decisión' : 'Decision'}</h3>
       <div className={`fr-verdict ${meets ? 'fr-verdict-ok' : 'fr-verdict-bad'}`}>
         {meets ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
         <div>
@@ -377,19 +377,19 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
         <dd>
           {severityLabel} ({(severity * 100).toFixed(0)}%)
         </dd>
-        <dt>{lang === 'es' ? 'Sobre tamano' : 'Oversize'}</dt>
+        <dt>{lang === 'es' ? 'Sobre tamaño' : 'Oversize'}</dt>
         <dd>
           {oversizeFraction === null
             ? 'n/a'
             : `${(oversizeFraction * 100).toFixed(1)}% ${lang === 'es' ? 'sobre' : 'above'} ${formatSize(oversizeLimitM)}`}
         </dd>
-        <dt>{lang === 'es' ? 'Segun' : 'According to'}</dt>
+        <dt>{lang === 'es' ? 'Según' : 'According to'}</dt>
         <dd>{arm ? arm.label[lang] : armId}</dd>
       </dl>
       <p className="fr-note">{recommendation}</p>
       <p className="fr-fine">
         {lang === 'es'
-          ? 'Compensacion: cerrar la malla o subir el explosivo produce mas finos y mas vibracion, y cuesta mas por tonelada. Este producto no modela ninguna de las tres cosas.'
+          ? 'Compensación: cerrar la malla o subir el explosivo produce más finos y más vibración, y cuesta más por tonelada. Este producto no modela ninguna de las tres cosas.'
           : 'Trade-off: tightening the pattern or raising the explosive makes more fines and more vibration, and costs more per tonne. This product models none of the three.'}
       </p>
     </section>

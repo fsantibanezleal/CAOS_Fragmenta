@@ -411,10 +411,10 @@ def test_rebaking_reproduces_the_committed_numbers_to_tolerance(artifacts, tmp_p
     """Across environments the artifact reproduces to a numeric tolerance, not to a hash.
 
     A content address is a discrete answer to a continuous question. Two builds of the same pinned
-    numpy reduce a dot product in a different order, the last bits differ, and the one iterative
-    solver in the product carries that through to its output. Measured between Windows and a Linux
-    runner on identical pins: 72 fields differ, worst relative error 8.3e-09, every one of them in
-    the Levenberg-Marquardt network and none in any other arm.
+    numpy reduce a dot product in a different order and the last bits differ. Measured between
+    Windows and Linux runners on identical pins, over all sixteen cases: the worst difference is
+    2.7e-08 relative, most of it on the fitted arms, and the one case where every arm abstains comes
+    out byte-identical.
 
     Asserting equal hashes here would therefore assert something false. Asserting nothing would let
     a changed model through. The tolerance sits between the two, five orders below the percent-scale

@@ -206,16 +206,16 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The geometry check. Its source paragraph states a bench height, a burden range and a spacing range, and the reconstruction reproduces all three exactly. If the arithmetic in this product were wrong, this case would show it.",
-   "es": "El control de geometria. Su parrafo fuente declara altura de banco, rango de bordo y rango de espaciamiento, y la reconstruccion reproduce los tres exactamente. Si la aritmetica de este producto estuviera mal, este caso lo mostraria."
+   "es": "El control de geometr\u00eda. Su p\u00e1rrafo fuente declara altura de banco, rango de bordo y rango de espaciamiento, y la reconstrucci\u00f3n reproduce los tres exactamente. Si la aritm\u00e9tica de este producto estuviera mal, este caso lo mostrar\u00eda."
   },
   "site": "Murgul",
   "title": {
    "en": "Murgul copper mine, Turkey",
-   "es": "Mina de cobre Murgul, Turquia"
+   "es": "Mina de cobre Murgul, Turqu\u00eda"
   }
  },
  "controls": {},
- "digest": "e8aecc7c3c17e318932313792640fa10d09fe24806f7bd17f638a5d68fd53969",
+ "digest": "a53366bf204090489a32c85cfb3888814be8678114ffac73f695788384bad61d",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2530,7 +2530,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3197,7 +3197,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3251,7 +3251,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

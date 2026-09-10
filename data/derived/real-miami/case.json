@@ -124,12 +124,12 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "Nothing in the source fixes this site's absolute scale: no hole diameter, no bench height, no burden. Every model that needs a rock volume and a charge mass must ABSTAIN on these six blasts, with a reason. A number here would be an invention, and this case exists so that refusal is visible rather than assumed.",
-   "es": "Nada en la fuente fija la escala absoluta de este sitio: sin diametro de perforacion, sin altura de banco, sin bordo. Todo modelo que necesite volumen de roca y masa de carga debe ABSTENERSE en estos seis tiros, con una razon. Un numero aqui seria una invencion, y este caso existe para que la negativa sea visible."
+   "es": "Nada en la fuente fija la escala absoluta de este sitio: sin di\u00e1metro de perforaci\u00f3n, sin altura de banco, sin bordo. Todo modelo que necesite volumen de roca y masa de carga debe ABSTENERSE en estos seis tiros, con una raz\u00f3n. Un n\u00famero aqu\u00ed ser\u00eda una invenci\u00f3n, y este caso existe para que la negativa sea visible."
   },
   "site": "Miami",
   "title": {
    "en": "Miami mine, Arizona: the geometry negative control",
-   "es": "Mina Miami, Arizona: el control negativo de geometria"
+   "es": "Mina Miami, Arizona: el control negativo de geometr\u00eda"
   }
  },
  "controls": {
@@ -139,7 +139,7 @@
    "passed": true
   }
  },
- "digest": "b55fddaa017dc345eef23f092fb68770e1c5e7af8fbc22f9c27decc0b17e0e20",
+ "digest": "532c639bc96b7c0ddc70c21a720202cbfc8b0bf2dbae607023348d5eb5a22833",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -825,7 +825,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -1377,7 +1377,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -1431,7 +1431,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

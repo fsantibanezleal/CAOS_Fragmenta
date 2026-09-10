@@ -206,16 +206,16 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The case that carries an unresolved source conflict. Its paragraph states both a 5 m burden and a 21 cm hole, and the ratios cannot hold both. Taking the diameter reproduces the stated spacing and bench height exactly, so the diameter is used and the disagreement travels with the case.",
-   "es": "El caso que arrastra un conflicto sin resolver en la fuente. Su parrafo declara un bordo de 5 m y una perforacion de 21 cm, y las razones no admiten ambos. Tomar el diametro reproduce exactamente el espaciamiento y la altura declarados, asi que se usa el diametro y la discrepancia viaja con el caso."
+   "es": "El caso que arrastra un conflicto sin resolver en la fuente. Su p\u00e1rrafo declara un bordo de 5 m y una perforaci\u00f3n de 21 cm, y las razones no admiten ambos. Tomar el di\u00e1metro reproduce exactamente el espaciamiento y la altura declarados, as\u00ed que se usa el di\u00e1metro y la discrepancia viaja con el caso."
   },
   "site": "Soma",
   "title": {
    "en": "Soma coal basin, Turkey",
-   "es": "Cuenca carbonifera de Soma, Turquia"
+   "es": "Cuenca carbon\u00edfera de Soma, Turqu\u00eda"
   }
  },
  "controls": {},
- "digest": "f29a33c286671fc89c3b0cb07877f8f5c43b5dad3420b6470dc6ec56782e9932",
+ "digest": "6cd0e7b623653ffc431abd70d274466c379a756e18ebf2cbaa23f7e9ab3f69d8",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2517,7 +2517,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3189,7 +3189,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3243,7 +3243,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

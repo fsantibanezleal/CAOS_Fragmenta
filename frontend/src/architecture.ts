@@ -13,12 +13,12 @@ import type { ArchitectureConfig } from '@fasl-work/caos-app-shell';
 
 export const architecture: ArchitectureConfig = {
   title_en: 'Architecture and how it works',
-  title_es: 'Arquitectura y como funciona',
+  title_es: 'Arquitectura y cómo funciona',
   tabs: [
     {
       id: 'what',
       en: 'What this is',
-      es: 'Que es esto',
+      es: 'Qué es esto',
       svg: 'svg/tech/01-the-app.svg',
       body_en: `Fragmenta predicts the mean fragment size of a muckpile from a bench-blast design, using twelve
 competing models that span the 1973 classical equation to the 2025 stacking ensemble. Every model is
@@ -114,7 +114,7 @@ cuando cambia un control esta roto, y la forma en que eso permanece invisible es
     {
       id: 'science',
       en: 'The science flow',
-      es: 'El flujo cientifico',
+      es: 'El flujo científico',
       svg: 'svg/tech/04-the-science.svg',
       body_en: `The corpus publishes seven dimensionless ratios and no dimensions, and the classical equation needs a
 rock volume and a charge mass per hole. So on the published table alone it could not run at all, which

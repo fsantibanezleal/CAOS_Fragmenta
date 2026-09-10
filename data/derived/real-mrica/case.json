@@ -318,7 +318,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "Andesite on the smallest holes in the corpus, 76 mm, in a 15 m bench. This is where the uniformity index reaches its highest values, because the charge column is long relative to the bench.",
-   "es": "Andesita con la perforacion mas pequena del conjunto, 76 mm, en un banco de 15 m. Aqui el indice de uniformidad alcanza sus valores mas altos, porque la columna de carga es larga respecto del banco."
+   "es": "Andesita con la perforaci\u00f3n m\u00e1s peque\u00f1a del conjunto, 76 mm, en un banco de 15 m. Aqu\u00ed el \u00edndice de uniformidad alcanza sus valores m\u00e1s altos, porque la columna de carga es larga respecto del banco."
   },
   "site": "Mrica",
   "title": {
@@ -327,7 +327,7 @@
   }
  },
  "controls": {},
- "digest": "d3fd0c58a373bafc63819029a5e5bc3b00c36c034278c59474b6396a1e3177a2",
+ "digest": "5505172200588b5f693e19bcfcdf9ba7d2800f8ae9cf9f0561589b6cc1adb674",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3048,7 +3048,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.01.000",
+  "app_version": "0.01.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
@@ -3720,7 +3720,7 @@
    "id": "base",
    "label": {
     "en": "As designed",
-    "es": "Como se diseno"
+    "es": "Como se dise\u00f1\u00f3"
    }
   },
   {
@@ -3774,7 +3774,7 @@
    "id": "stemming-long",
    "label": {
     "en": "Stemming 25 percent longer",
-    "es": "Taco 25 por ciento mas largo"
+    "es": "Taco 25 por ciento m\u00e1s largo"
    }
   },
   {

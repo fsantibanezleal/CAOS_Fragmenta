@@ -42,14 +42,14 @@ export default function Benchmark() {
 
       <p className="fr-lede">
         {es
-          ? 'Los mismos modelos, las mismas filas, tres formas de partir los datos. La brecha entre ellas es el hallazgo, y cualquiera de sus dos signos habria sido publicable.'
+          ? 'Los mismos modelos, las mismas filas, tres formas de partir los datos. La brecha entre ellas es el hallazgo, y cualquiera de sus dos signos habría sido publicable.'
           : 'The same models, the same rows, three ways of splitting the data. The gap between them is the finding, and either sign of it would have been worth reporting.'}
       </p>
 
       <h2>{es ? 'Los tres protocolos' : 'The three protocols'}</h2>
       <p className="fr-fine">
         {es
-          ? 'Varianza explicada respecto de la linea de identidad. Abstenciones entre parentesis.'
+          ? 'Varianza explicada respecto de la línea de identidad. Abstenciones entre paréntesis.'
           : 'Variance explained about the identity line. Abstentions in brackets.'}
       </p>
       <div className="fr-scroll-x">
@@ -98,7 +98,7 @@ export default function Benchmark() {
       <h3>{es ? 'Solo sobreviven los modelos que no se ajustan' : 'Only the models that are not fitted survive'}</h3>
       <p>
         {es
-          ? 'Dos modelos resisten, y ambos tienen coeficientes FIJOS. Los exponentes de la regresion publicada son constantes de un articulo; la unica cantidad libre de la ecuacion clasica es un factor de roca por sitio. Todo modelo que se ajusta a este corpus fracasa al salir de el.'
+          ? 'Dos modelos resisten, y ambos tienen coeficientes FIJOS. Los exponentes de la regresión publicada son constantes de un artículo; la única cantidad libre de la ecuación clásica es un factor de roca por sitio. Todo modelo que se ajusta a este corpus fracasa al salir de el.'
           : 'Two models hold up, and both have FIXED coefficients. The published regression’s exponents are constants from a paper; the classical equation’s only free quantity is a per-site rock factor. Every model that fits itself to this corpus fails to leave it.'}
       </p>
       <ul className="fr-list">
@@ -110,11 +110,11 @@ export default function Benchmark() {
       </ul>
       <p>
         {es
-          ? 'Es una afirmacion sobre lo que este corpus puede sostener: 97 tiros de diez campanas alcanzan para ajustar un modelo que interpola entre campanas que ya vio, y no alcanzan para uno que llegue a una nueva.'
+          ? 'Es una afirmación sobre lo que este corpus puede sostener: 97 tiros de diez campañas alcanzan para ajustar un modelo que interpola entre campañas que ya vio, y no alcanzan para uno que llegue a una nueva.'
           : 'It is a statement about what this corpus can support: 97 blasts from ten campaigns are enough to fit a model that interpolates between campaigns it has seen, and not enough to fit one that reaches a new one.'}
       </p>
 
-      <h3>{es ? 'El modelo clasico mejora bajo el protocolo honesto' : 'The classical model improves under the honest protocol'}</h3>
+      <h3>{es ? 'El modelo clásico mejora bajo el protocolo honesto' : 'The classical model improves under the honest protocol'}</h3>
       <p>
         {es
           ? `De ${formatScore(benchmark.protocols['random-8020'].arms.kuznetsov?.r2_identity)} en una particion aleatoria a ${formatScore(benchmark.protocols['leave-one-site-out'].arms.kuznetsov?.r2_identity)} al excluir un sitio. El modelo no cambio. Cambio la comparacion: en una particion aleatoria compite contra modelos que memorizaron casi duplicados de las filas de prueba.`
@@ -124,7 +124,7 @@ export default function Benchmark() {
       <h3>{es ? 'Deduplicar no explica la brecha' : 'Deduplication does not explain the gap'}</h3>
       <p>
         {es
-          ? 'Colapsar los vectores duplicados y partir al azar SUBE los puntajes de casi todos los modelos aprendidos, no los baja. Los duplicados no son lo que los sostenia. El sitio compartido si.'
+          ? 'Colapsar los vectores duplicados y partir al azar SUBE los puntajes de casi todos los modelos aprendidos, no los baja. Los duplicados no son lo que los sostenía. El sitio compartido sí.'
           : 'Collapsing the duplicate vectors and splitting randomly RAISES the scores of nearly every learned model, not lowers them. The duplicates are not what was holding them up. The shared site is.'}
       </p>
       <p className="fr-fine">
@@ -136,14 +136,14 @@ export default function Benchmark() {
       <h2>{es ? 'Reproducir el conjunto publicado' : 'Reproducing the published hold-out'}</h2>
       <PublishedArms benchmark={benchmark} es={es} />
 
-      <h3>{es ? 'La ecuacion publicada supera a las cifras que sus propios articulos imprimieron' : 'The published equation beats the numbers its own papers printed'}</h3>
+      <h3>{es ? 'La ecuación publicada supera a las cifras que sus propios artículos imprimieron' : 'The published equation beats the numbers its own papers printed'}</h3>
       <table className="fr-table">
         <thead>
           <tr>
             <th>{es ? 'conjunto' : 'hold-out'}</th>
             <th>{es ? 'filas' : 'rows'}</th>
-            <th>{es ? 'la tabla del articulo' : 'the paper’s own table'}</th>
-            <th>{es ? 'recalculado de su ecuacion' : 'recomputed from its equation'}</th>
+            <th>{es ? 'la tabla del artículo' : 'the paper’s own table'}</th>
+            <th>{es ? 'recalculado de su ecuación' : 'recomputed from its equation'}</th>
             <th>{es ? 'ganancia' : 'gain'}</th>
           </tr>
         </thead>
@@ -164,13 +164,13 @@ export default function Benchmark() {
         </tbody>
       </table>
 
-      <h2>{es ? 'La reproduccion de la red, a lo largo de las semillas' : 'The network reproduction, across seeds'}</h2>
+      <h2>{es ? 'La reproducción de la red, a lo largo de las semillas' : 'The network reproduction, across seeds'}</h2>
       <SeedSweep benchmark={benchmark} es={es} lang={lang} />
 
       <h2>{es ? 'La fuga en el protocolo publicado' : 'The leak in the published protocol'}</h2>
       <p>
         {es
-          ? 'Un tiro de validacion esta tambien en la tabla de entrenamiento sobre la que el articulo dice haber entrenado. La suposicion natural al encontrarlo fue que inflaba los modelos aprendidos. Medido, no lo hace: quitarlo les cuesta un poco y le GANA bastante al modelo clasico, porque es su segunda peor fila.'
+          ? 'Un tiro de validación está también en la tabla de entrenamiento sobre la que el artículo dice haber entrenado. La suposición natural al encontrarlo fue que inflaba los modelos aprendidos. Medido, no lo hace: quitarlo les cuesta un poco y le GANA bastante al modelo clásico, porque es su segunda peor fila.'
           : 'One validation blast is also in the training table the paper says it trained on. The natural assumption on finding it was that it inflated the learned models. Measured, it does not: removing it costs them slightly and GAINS the classical model a great deal, because it is that model’s second-worst row.'}
       </p>
       <LeakageTable benchmark={benchmark} es={es} />
@@ -181,7 +181,7 @@ export default function Benchmark() {
         {es ? 'motor' : 'engine'} {benchmark.engine_version}
       </p>
 
-      <Refs ids={SECTION_REFS.benchmark} label={es ? "Fuentes de esta pagina" : "Sources for this page"} />
+      <Refs ids={SECTION_REFS.benchmark} label={es ? "Fuentes de esta página" : "Sources for this page"} />
     </article>
   );
 }
@@ -192,16 +192,16 @@ function PublishedArms({ benchmark, es }: { benchmark: BenchmarkArtifact; es: bo
   const arms = benchmark.published_reproduction.published_holdout_arms;
   const order = ['classical', 'regression', 'neural-net', 'null'];
   const labels: Record<string, string> = {
-    classical: es ? 'clasico, tal como se publico' : 'classical, as published',
-    regression: es ? 'regresion, tal como se publico' : 'regression, as published',
-    'neural-net': es ? 'red neuronal, tal como se publico' : 'neural network, as published',
+    classical: es ? 'clásico, tal como se publicó' : 'classical, as published',
+    regression: es ? 'regresión, tal como se publicó' : 'regression, as published',
+    'neural-net': es ? 'red neuronal, tal como se publicó' : 'neural network, as published',
     null: es ? 'nulo: predecir la media' : 'null: predict the mean',
   };
   return (
     <>
       <p>
         {es
-          ? 'Los tres modelos que el articulo de 2012 imprime en la misma tabla, sobre las mismas doce filas, con un predictor constante al lado. El modelo clasico es el peor de los tres, y le gana a la constante por un 13 por ciento en RMSE.'
+          ? 'Los tres modelos que el artículo de 2012 imprime en la misma tabla, sobre las mismas doce filas, con un predictor constante al lado. El modelo clásico es el peor de los tres, y le gana a la constante por un 13 por ciento en RMSE.'
           : 'The three models the 2012 paper prints in one table, on the same twelve rows, with a constant predictor beside them. The classical model is the worst of the three, and it beats the constant by 13 percent on RMSE.'}
       </p>
       <table className="fr-table">
@@ -212,7 +212,7 @@ function PublishedArms({ benchmark, es }: { benchmark: BenchmarkArtifact; es: bo
               {es ? 'varianza explicada' : 'variance explained'}
             </th>
             <th title="the square of the correlation, which is what the papers report">
-              {es ? 'correlacion al cuadrado' : 'squared correlation'}
+              {es ? 'correlación al cuadrado' : 'squared correlation'}
             </th>
             <th>RMSE</th>
             <th>MAPE</th>
@@ -238,7 +238,7 @@ function PublishedArms({ benchmark, es }: { benchmark: BenchmarkArtifact; es: bo
       </table>
       <Callout variant="honest" title={es ? 'Las dos columnas no son lo mismo' : 'The two columns are not the same thing'}>
         {es
-          ? 'Para el modelo clasico difieren por un factor de dos y medio sobre estas mismas doce filas. La cifra que la literatura reporta es la segunda. La que un lector supone al ver la palabra es la primera.'
+          ? 'Para el modelo clásico difieren por un factor de dos y medio sobre estas mismas doce filas. La cifra que la literatura reporta es la segunda. La que un lector supone al ver la palabra es la primera.'
           : 'For the classical model they differ by a factor of two and a half on these same twelve rows. The figure the literature reports is the second one. The one a reader assumes on seeing the word is the first.'}
       </Callout>
     </>
@@ -260,7 +260,7 @@ function SeedSweep({
   const series: SeriesSpec[] = [
     {
       id: 'seeds',
-      label: es ? 'reproduccion, por semilla' : 'reproduction, per seed',
+      label: es ? 'reproducción, por semilla' : 'reproduction, per seed',
       values: sorted,
     },
     {
@@ -287,12 +287,12 @@ function SeedSweep({
         xTickFormat={(v) => `#${Math.round(v)}`}
         zeroLine
       />
-      <Callout variant="note" title={es ? 'Que se afirma, y que no' : 'What is claimed, and what is not'}>
+      <Callout variant="note" title={es ? 'Qué se afirma, y qué no' : 'What is claimed, and what is not'}>
         {es
-          ? 'No se afirma que el resultado publicado sea falso. Detalles no registrados, un esquema de inicializacion o una tirada distinta de simulaciones podrian explicarlo. Lo que el barrido si establece es que el puntaje publicado no es robusto a la semilla, sobre un metodo cuyo propio articulo lo muestra oscilando por un factor de cuatro entre anchos ocultos vecinos.'
+          ? 'No se afirma que el resultado publicado sea falso. Detalles no registrados, un esquema de inicialización o una tirada distinta de simulaciones podrían explicarlo. Lo que el barrido sí establece es que el puntaje publicado no es robusto a la semilla, sobre un método cuyo propio artículo lo muestra oscilando por un factor de cuatro entre anchos ocultos vecinos.'
           : 'It is not claimed that the published result is wrong. Unrecorded details, an initialisation scheme or a different simulation draw could account for it. What the sweep does establish is that the published score is not robust to the seed, on a method whose own paper shows it swinging by a factor of four between adjacent hidden widths.'}
       </Callout>
-      <h3>{es ? 'Donde se concentra el deficit' : 'Where the shortfall concentrates'}</h3>
+      <h3>{es ? 'Dónde se concentra el déficit' : 'Where the shortfall concentrates'}</h3>
       <table className="fr-table">
         <thead>
           <tr>
@@ -330,7 +330,7 @@ function SeedSweep({
       </table>
       <p className="fr-fine">
         {es
-          ? 'Las filas marcadas son aquellas donde el valor publicado queda fuera de todo lo que la reproduccion alcanzo en cualquier semilla. Son tambien las filas que la propia fuente reporta como sus mas inestables.'
+          ? 'Las filas marcadas son aquellas donde el valor publicado queda fuera de todo lo que la reproducción alcanzó en cualquier semilla. Son también las filas que la propia fuente reporta como sus más inestables.'
           : 'The marked rows are those where the published value falls outside everything the reproduction reached on any seed. They are also the rows the source itself reports as its most unstable.'}
       </p>
     </>
@@ -342,8 +342,8 @@ function LeakageTable({ benchmark, es }: { benchmark: BenchmarkArtifact; es: boo
   const withoutRow = benchmark.published_reproduction.without_the_leaked_row;
   const keys = ['classical', 'regression', 'neural-net'];
   const labels: Record<string, string> = {
-    classical: es ? 'clasico' : 'classical',
-    regression: es ? 'regresion' : 'regression',
+    classical: es ? 'clásico' : 'classical',
+    regression: es ? 'regresión' : 'regression',
     'neural-net': es ? 'red neuronal' : 'neural network',
   };
   return (

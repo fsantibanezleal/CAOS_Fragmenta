@@ -72,7 +72,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Null: predict the mean', es: 'Nulo: predecir la media' },
     blurb: {
       en: 'Predicts the training mean for every blast. The comparison every other arm is measured against.',
-      es: 'Predice la media de entrenamiento para todo tiro. La comparacion contra la que se mide todo lo demas.',
+      es: 'Predice la media de entrenamiento para todo tiro. La comparación contra la que se mide todo lo demás.',
     },
     distribution: false,
     source: 'the mean measured size of the training blasts',
@@ -80,10 +80,10 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'kuznetsov',
     tier: 'classical',
-    label: { en: 'Classical mean size', es: 'Tamano medio clasico' },
+    label: { en: 'Classical mean size', es: 'Tamaño medio clásico' },
     blurb: {
       en: 'The 1973 equation with the explosive-strength correction. Needs a rock volume and a charge mass, so it abstains where the scale is unpublished.',
-      es: 'La ecuacion de 1973 con la correccion por potencia del explosivo. Necesita volumen de roca y masa de carga, asi que se abstiene donde no se publica la escala.',
+      es: 'La ecuación de 1973 con la corrección por potencia del explosivo. Necesita volumen de roca y masa de carga, así que se abstiene donde no se publica la escala.',
     },
     distribution: false,
     source: 'Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957, Eq. 1',
@@ -91,10 +91,10 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'kuz-ram',
     tier: 'classical',
-    label: { en: 'Classical distribution', es: 'Distribucion clasica' },
+    label: { en: 'Classical distribution', es: 'Distribución clásica' },
     blurb: {
       en: 'The classical mean size with a two-parameter Rosin-Rammler curve around it, shaped by the Cunningham uniformity index.',
-      es: 'El tamano medio clasico con una curva Rosin-Rammler de dos parametros, moldeada por el indice de uniformidad de Cunningham.',
+      es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham.',
     },
     distribution: true,
     source: 'Amoako, Jha and Zhong 2022, doi:10.3390/mining2020013, Eqs. 3, 5 and 7',
@@ -102,10 +102,10 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'swebrec',
     tier: 'classical',
-    label: { en: 'Three-parameter distribution', es: 'Distribucion de tres parametros' },
+    label: { en: 'Three-parameter distribution', es: 'Distribución de tres parámetros' },
     blurb: {
       en: 'Adds an explicit upper size limit, which fixes the coarse tail the two-parameter form gets wrong and predicts a heavier fines branch.',
-      es: 'Agrega un limite superior explicito, que corrige la cola gruesa que la forma de dos parametros equivoca y predice mas finos.',
+      es: 'Agrega un límite superior explícito, que corrige la cola gruesa que la forma de dos parámetros equivoca y predice más finos.',
     },
     distribution: true,
     source: 'Ouchterlony 2005, as printed in Amoako 2022 Eqs. 10 and 11',
@@ -116,7 +116,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Two-branch crush zone', es: 'Zona triturada de dos ramas' },
     blurb: {
       en: 'Splits the curve: tensile fracturing makes the coarse fragments, compressive-shear fracturing around the hole makes the fines. Its branch constants are not published anywhere and are set here.',
-      es: 'Separa la curva: la fractura por traccion produce los fragmentos gruesos y la fractura por corte alrededor del barreno produce los finos. Sus constantes de rama no estan publicadas y aqui se fijan.',
+      es: 'Separa la curva: la fractura por tracción produce los fragmentos gruesos y la fractura por corte alrededor del barreno produce los finos. Sus constantes de rama no están publicadas y aquí se fijan.',
     },
     distribution: true,
     source: 'structure from Amoako 2022 section 3; branch constants not published',
@@ -127,7 +127,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Rock-stiffness router', es: 'Enrutador por rigidez de roca' },
     blurb: {
       en: 'Assigns a blast to the high or low modulus group, which decides which regression fires. Exact on all 109 labelled blasts. It predicts a group, not a size.',
-      es: 'Asigna un tiro al grupo de modulo alto o bajo, lo que decide que regresion se usa. Exacto en los 109 tiros etiquetados. Predice un grupo, no un tamano.',
+      es: 'Asigna un tiro al grupo de módulo alto o bajo, lo que decide qué regresión se usa. Exacto en los 109 tiros etiquetados. Predice un grupo, no un tamaño.',
     },
     distribution: false,
     source: 'Hudaverdi et al. 2010, Eq. 8',
@@ -135,10 +135,10 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'published-regression',
     tier: 'statistical',
-    label: { en: 'Published regression', es: 'Regresion publicada' },
+    label: { en: 'Published regression', es: 'Regresión publicada' },
     blurb: {
       en: 'Two power laws, one per stiffness group, with the exponents taken verbatim from the source. The only arm here that holds up on a site it has never seen.',
-      es: 'Dos leyes de potencia, una por grupo de rigidez, con los exponentes tomados literalmente de la fuente. El unico modelo aqui que resiste en un sitio que nunca vio.',
+      es: 'Dos leyes de potencia, una por grupo de rigidez, con los exponentes tomados literalmente de la fuente. El único modelo aquí que resiste en un sitio que nunca vio.',
     },
     distribution: false,
     source: 'Hudaverdi et al. 2010, Eqs. 9 and 10',
@@ -146,7 +146,7 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'refitted-regression',
     tier: 'statistical',
-    label: { en: 'Refitted regression', es: 'Regresion reajustada' },
+    label: { en: 'Refitted regression', es: 'Regresión reajustada' },
     blurb: {
       en: 'The same functional form, refitted to the training rows instead of taken as constants. It collapses when a whole site is held out, which is the point.',
       es: 'La misma forma funcional, reajustada a las filas de entrenamiento en vez de tomada como constantes. Se derrumba al excluir un sitio completo, y ese es el punto.',
@@ -160,7 +160,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Published neural network', es: 'Red neuronal publicada' },
     blurb: {
       en: 'Seven inputs, one hidden layer, trained per group by Levenberg-Marquardt, eight simulations averaged. Reproduced to its published specification; its published score is not reachable across seeds.',
-      es: 'Siete entradas, una capa oculta, entrenada por grupo con Levenberg-Marquardt, ocho simulaciones promediadas. Reproducida segun su especificacion publicada; su puntaje publicado no se alcanza en ninguna semilla.',
+      es: 'Siete entradas, una capa oculta, entrenada por grupo con Levenberg-Marquardt, ocho simulaciones promediadas. Reproducida según su especificación publicada; su puntaje publicado no se alcanza en ninguna semilla.',
     },
     distribution: false,
     source: 'Kulatilake, Hudaverdi and Wu 2012, doi:10.1007/s10706-012-9496-3, section 5',
@@ -168,10 +168,10 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'svr-rbf',
     tier: 'learned',
-    label: { en: 'Support vector regression', es: 'Regresion por vectores de soporte' },
+    label: { en: 'Support vector regression', es: 'Regresión por vectores de soporte' },
     blurb: {
       en: 'Radial kernel with the hyperparameters one 2025 study chose from a 2700-combination search. A second study chose a polynomial kernel and reported this arm as its worst.',
-      es: 'Nucleo radial con los hiperparametros que un estudio de 2025 eligio en una busqueda de 2700 combinaciones. Otro estudio eligio nucleo polinomial y lo reporto como su peor modelo.',
+      es: 'Núcleo radial con los hiperparámetros que un estudio de 2025 eligió en una búsqueda de 2700 combinaciones. Otro estudio eligió núcleo polinomial y lo reportó como su peor modelo.',
     },
     distribution: false,
     source: 'Amoako, Jha and Zhong 2022, section 4.2.1',
@@ -182,7 +182,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Random forest', es: 'Bosque aleatorio' },
     blurb: {
       en: 'Seventy-six trees with the 2025 study final parameters. Strong on a random split and negative on an unseen site.',
-      es: 'Setenta y seis arboles con los parametros finales del estudio de 2025. Fuerte en una particion aleatoria y negativo en un sitio no visto.',
+      es: 'Setenta y seis árboles con los parámetros finales del estudio de 2025. Fuerte en una partición aleatoria y negativo en un sitio no visto.',
     },
     distribution: false,
     source: 'Sui, Zhou, Zhao, Yang and Zou 2025, doi:10.3390/app15031254',
@@ -190,7 +190,7 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'xgboost',
     tier: 'learned',
-    label: { en: 'Gradient boosting', es: 'Potenciacion por gradiente' },
+    label: { en: 'Gradient boosting', es: 'Potenciación por gradiente' },
     blurb: {
       en: 'Reproduced at the published learning rate of 0.5, which its own source reports as overfitting. Left visible rather than tuned away.',
       es: 'Reproducido con la tasa de aprendizaje publicada de 0.5, que su propia fuente reporta como sobreajuste. Se deja visible en vez de corregirlo.',
@@ -204,7 +204,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Stacking ensemble', es: 'Ensamble apilado' },
     blurb: {
       en: 'The 2025 state of the art on this corpus: forest and boosting under a linear meta-learner, with cross-validation removed exactly as published.',
-      es: 'El estado del arte 2025 sobre este corpus: bosque y potenciacion bajo un meta-modelo lineal, sin validacion cruzada tal como se publico.',
+      es: 'El estado del arte 2025 sobre este corpus: bosque y potenciación bajo un meta-modelo lineal, sin validación cruzada tal como se publicó.',
     },
     distribution: false,
     source: 'Sui et al. 2025, section 4',
@@ -215,9 +215,9 @@ export const ARM_BY_ID = new Map(ARMS.map((arm) => [arm.id, arm]));
 
 export const TIER_LABEL: Record<Tier, Record<Lang, string>> = {
   control: { en: 'Controls', es: 'Controles' },
-  classical: { en: 'Classical', es: 'Clasicos' },
+  classical: { en: 'Classical', es: 'Clásicos' },
   'semi-mechanistic': { en: 'Semi-mechanistic', es: 'Semi-mecanicistas' },
-  statistical: { en: 'Statistical', es: 'Estadisticos' },
+  statistical: { en: 'Statistical', es: 'Estadísticos' },
   learned: { en: 'Learned', es: 'Aprendidos' },
 };
 
@@ -236,9 +236,9 @@ export const PROTOCOL_LABEL: Record<string, Record<Lang, string>> = {
 };
 
 export const CATEGORY_LABEL: Record<string, Record<Lang, string>> = {
-  'real-campaign': { en: 'Real campaigns', es: 'Campanas reales' },
-  'extrapolation-control': { en: 'Extrapolation control', es: 'Control de extrapolacion' },
-  'parameter-sweep': { en: 'Parameter sweeps', es: 'Barridos de parametros' },
+  'real-campaign': { en: 'Real campaigns', es: 'Campañas reales' },
+  'extrapolation-control': { en: 'Extrapolation control', es: 'Control de extrapolación' },
+  'parameter-sweep': { en: 'Parameter sweeps', es: 'Barridos de parámetros' },
   'structural-control': { en: 'Structural control', es: 'Control estructural' },
   'negative-control': { en: 'Negative controls', es: 'Controles negativos' },
   'positive-control': { en: 'Positive control', es: 'Control positivo' },
@@ -247,11 +247,11 @@ export const CATEGORY_LABEL: Record<string, Record<Lang, string>> = {
 export const FEATURE_LABEL: Record<string, Record<Lang, string>> = {
   S_over_B: { en: 'Spacing / burden', es: 'Espaciamiento / bordo' },
   H_over_B: { en: 'Bench height / burden', es: 'Altura de banco / bordo' },
-  B_over_D: { en: 'Burden / hole diameter', es: 'Bordo / diametro' },
+  B_over_D: { en: 'Burden / hole diameter', es: 'Bordo / diámetro' },
   T_over_B: { en: 'Stemming / burden', es: 'Taco / bordo' },
   Pf_kg_m3: { en: 'Powder factor, kg/m3', es: 'Factor de carga, kg/m3' },
-  XB_m: { en: 'In situ block size, m', es: 'Tamano de bloque in situ, m' },
-  E_GPa: { en: 'Young modulus, GPa', es: 'Modulo de Young, GPa' },
+  XB_m: { en: 'In situ block size, m', es: 'Tamaño de bloque in situ, m' },
+  E_GPa: { en: 'Young modulus, GPa', es: 'Módulo de Young, GPa' },
 };
 
 /** Format a fragment size for a readout: millimetres below 10 cm, centimetres above. */
