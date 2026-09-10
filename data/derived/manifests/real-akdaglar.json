@@ -1,5 +1,5 @@
 {
- "app_version": "0.03.000",
+ "app_version": "0.03.001",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 100819,
@@ -9,7 +9,7 @@
  "case_id": "real-akdaglar",
  "category": "real-campaign",
  "controls": {},
- "digest": "4fc2215773ba076ac7979acdf061449aa83f69454739f1aa2f6cf33a4021413a",
+ "digest": "6d19d5b85ae5d70cf205e9009660ac91be617c8d5a094de63b266069a500cbeb",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
