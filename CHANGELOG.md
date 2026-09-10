@@ -2,6 +2,14 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.02.002] - 2026-09-10
+
+### Fixed
+
+- Two words in the Spanish strings written for 0.02.001 were themselves unaccented, "puntua" in the
+  verdict and "grafico" in a chart hint. Both are on the accent guard's list now, which is how that
+  list is meant to grow: an entry earns its place by having shipped wrong once.
+
 ## [0.02.001] - 2026-09-10
 
 ### Fixed

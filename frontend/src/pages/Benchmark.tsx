@@ -57,7 +57,7 @@ function verdictText(verdict: BenchmarkArtifact['verdict'], lang: string): strin
   if (!verdict.best_learned_is_positive) {
     return (
       'EL NIVEL APRENDIDO NO GENERALIZA ENTRE SITIOS. Todo brazo aprendido tiene varianza ' +
-      `explicada NEGATIVA al excluir un sitio; el mejor de ellos, ${best}, puntua ` +
+      `explicada NEGATIVA al excluir un sitio; el mejor de ellos, ${best}, puntúa ` +
       `${score.toFixed(3)}, que es peor que predecir una constante. Su margen de ` +
       `${margin.toFixed(3)} sobre el nulo son dos modelos fracasando por cantidades distintas, ` +
       'no habilidad.'
