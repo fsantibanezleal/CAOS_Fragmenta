@@ -1,7 +1,12 @@
-"""The measured live-vs-precompute GATE (ADR-0054). A case runs LIVE in the browser (Pyodide) iff it is
-pure-Python AND its wheels are a subset of the Pyodide-safe set AND it is small+fast enough; otherwise it is
-PRECOMPUTE and the SPA replays the committed artifact. The verdict + the measured numbers go into the manifest,
-and CI fails on mislabeling. This is a MEASUREMENT, never a hand-wave."""
+"""The measured live-versus-precompute gate.
+
+A case runs LIVE in the browser only if it is pure Python, its wheels are Pyodide-safe, and it is
+small and fast enough. Otherwise it is PRECOMPUTE and the site replays the committed artifact.
+
+The verdict and the numbers behind it go into the manifest, and CI fails on a mislabelling. This is
+a MEASUREMENT, never a hand-wave: a lane chosen by hand is a claim about performance that nothing
+ever checks.
+"""
 from __future__ import annotations
 
 LIVE_WHEELS: set[str] = {"numpy"}   # the Pyodide-safe wheel set the live lane is allowed to import
@@ -25,9 +30,10 @@ def classify_lane(*, pure_python: bool, wheels: set[str], run_ms: float, trace_b
     if trace_bytes > TRACE_BYTES_GATE:
         live = False
         reasons.append(f"trace_bytes {trace_bytes} > {TRACE_BYTES_GATE}")
-    # NOTE: the raw measured run_ms is used for the DECISION but deliberately NOT stored, the committed manifest
-    # must be a pure function of (params, seed); wall-clock would dirty git on every re-run. We record the verdict
-    # + the (deterministic) budgets instead. The live runtime is measured separately, live, in the browser.
+    # The measured runtime drives the DECISION and is deliberately NOT stored. A committed manifest
+    # must be a pure function of the case and the seed, and a wall clock would dirty git on every
+    # re-run. The verdict and the deterministic budgets are recorded instead; the live runtime is
+    # measured separately, in the browser, where it actually matters.
     return {
         "lane": "live" if live else "precompute",
         "pure_python": pure_python,

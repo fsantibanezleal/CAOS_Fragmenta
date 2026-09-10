@@ -1,20 +1,29 @@
-# Docs, the product wiki
+# Fragmenta documentation
 
-SimLab-style navigable wiki (ADR-0056), authored **as the product is built**, not at the end. The pipeline +
-its validation + these docs are the primary product; the web app is a projection of a validated subset.
+The wiki. Written alongside the code, not bolted on afterwards.
 
-## Map
-- **[architecture/](architecture/)**, how the repo works: the frozen base, the two data contracts, determinism +
-  trace, the live/precompute gate, the staged pipeline, model evaluation, deploy.
-- **[frameworks/](frameworks/)**, one card per research-chosen engine/library (what/why · install · usage ·
-  applying). The deep research, made binding (each is pinned in a `requirements-*.txt`).
-- **[guides/](guides/)**, runnable how-tos: **instantiate the template**, run the precompute pipeline,
-  **bring your own data**, the GPU lane, run the API.
-- **[cases/](cases/)**, the CATEGORY taxonomy + the coverage matrix + one page per documented case.
+| Theme | Contents |
+|---|---|
+| [Architecture](architecture.md) | the lanes, the two data contracts, the bake, the deploy |
+| [Cases](cases.md) | the sixteen cases, why each one is in the matrix, and the four controls |
+| [Frameworks](frameworks.md) | what this product depends on and what it deliberately does not |
+| [Guides](guides.md) | running the bake, bringing your own blasts, reading a number honestly |
 
-## Honesty + data policy
-- Numbers come from the calibrated engine / committed artifacts, never from a claim. The EXAMPLE engine (SIR) is
-  synthetic and clearly labelled; a real product states sources, licenses and what is real vs synthetic.
-- Public derived artifacts are committed (`data/derived/`); raw/private sources stay out of git (`data/raw/`,
-  vault) per ADR-0055. The two data contracts ([architecture/08_data-contracts.md](architecture/08_data-contracts.md))
-  govern raw→pipeline and pipeline→web.
+## Where the science is
+
+Not here. It lives in **[blastfrag](https://github.com/fsantibanezleal/CAOS_BlastFrag)**, a
+separately published package this product pins and consumes, whose own `docs/` derives every model
+term by term from a primary source.
+
+A product declares no package of its own. Anything a third party could use to predict blast
+fragmentation without caring about Fragmenta belongs upstream, and keeping the boundary honest is
+what stops this repo growing a private copy of the science that nobody else can check.
+
+## The one-paragraph version
+
+With a whole campaign held out, not one of the six learned models explains any variance. The only
+two that transfer to an unseen site are the two whose coefficients are fixed rather than fitted, and
+the classical model gets *better* under the honest protocol because it has nothing to overfit. The
+gap between a random split and a site-held-out split has a median of 0.88 across the learned models.
+
+That is the product. Everything else here is the apparatus that makes the claim checkable.

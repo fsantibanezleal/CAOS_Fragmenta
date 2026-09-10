@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  pipeline:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,42 +15,147 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - name: Install (offline lane + dev + editable pkg)
+      - name: Install the pinned engine and the heavy lane
         run: pip install -r requirements-precompute.txt -r requirements-dev.txt
       - name: Lint
         run: ruff check data-pipeline tests
-      - name: Tests
+      - name: The pipeline tests, against the COMMITTED artifacts
         run: pytest
-      - name: Pipeline smoke (sandboxed; canonical artifacts are read-only)
-        run: python data-pipeline/run.py EX02_epidemic --output "${{ runner.temp }}/pipeline-smoke"
-      - name: CONTRACT 2, manifests <-> artifacts consistent (no drift)
-        run: python scripts/check_artifacts.py
+      - name: The release gate on what is committed
+        run: python data-pipeline/run.py --validate
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: cd frontend && npm ci
+      - name: The parity gate between the browser engine and the baked numbers
+        run: cd frontend && npm test
+      - name: Type-check and build
+        run: cd frontend && npm run build
+
+  determinism:
+    # A bake is a pure function of the case registry, the pinned engine and the seed. Re-running it
+    # on an unchanged tree must leave git clean. Without this check a bake that quietly depends on
+    # dictionary ordering, a wall clock or a CPU-speed-dependent stopping rule ships as reproducible.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-precompute.txt
+      - name: Re-bake one case into a sandbox and compare its digest
+        run: |
+          python - <<'PY'
+          import json, sys, tempfile
+          from pathlib import Path
+          sys.path.insert(0, "data-pipeline")
+          from pipeline.pipeline import bake_case
+          from pipeline.registry import get_case
+
+          committed = json.loads(Path("data/derived/real-murgul/case.json").read_text())
+          with tempfile.TemporaryDirectory() as sandbox:
+              # A sandbox, never the canonical tree: a test that can overwrite the shipped artifacts
+              # can silently make itself pass.
+              result = bake_case(get_case("real-murgul"), seed=0, root=Path(sandbox))
+          assert result.digest == committed["digest"], (
+              f"a re-bake produced {result.digest} against the committed {committed['digest']}"
+          )
+          print(f"OK: the bake is reproducible, digest {result.digest[:16]}")
+          PY
 
   guards:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Base-integrity guards (the regressions this archetype forbids)
+      - name: Base-integrity guards
         run: |
           fail=0
-          # a real .env must never be tracked (only .env.example)
-          if git ls-files | grep -qE '(^|/)\.env(\..+)?$' && ! git ls-files | grep -qx '.env.example'; then
-            echo "::error::a real .env is tracked (only .env.example may be)"; fail=1; fi
-          # venvs / native binaries / heavy model blobs must never be tracked
-          if git ls-files | grep -qiE '(^|/)\.?venv|\.(dll|so|dylib|pt|pth)$'; then
-            echo "::error::a venv or native/heavy binary is tracked (recreate from requirements; keep models small/LFS)"; fail=1; fi
-          # raw/heavy data must never be tracked, commit only compact derived artifacts under data/derived/
-          if git ls-files | grep -qiE '\.(parquet|h5|hdf5|nc|mat|npy)$'; then
-            echo "::error::raw/heavy data tracked, commit only compact derived artifacts (data/derived/)"; fail=1; fi
-          # no leaked local machine paths in tracked sources
+          if git ls-files | grep -qE '(^|/)\.env(\..+)?$'; then
+            echo "::error::a real .env is tracked"; fail=1; fi
+          if git ls-files | grep -qiE '(^|/)\.?venv|node_modules|\.(dll|so|dylib|pt|pth)$'; then
+            echo "::error::a venv, node_modules or a native binary is tracked"; fail=1; fi
           if git grep -nF 'D:\_Repos' -- . ':!.github' >/dev/null 2>&1; then
-            echo "::error::leaked local machine path (D:\\_Repos) in a tracked file"; fail=1; fi
+            echo "::error::leaked local machine path in a tracked file"; fail=1; fi
+          # A product declares NO package of its own. If a package is required it is a separate repo
+          # with a real PyPI project, which is what blastfrag is.
+          if git ls-files | grep -qE '(^|/)[a-z_]+lab/'; then
+            echo "::error::an internal lab package appeared"; fail=1; fi
+          if grep -q '^\[project\]' pyproject.toml 2>/dev/null; then
+            echo "::error::this product declared a package of its own"; fail=1; fi
+          # The source articles are copyrighted. Only numeric facts ship.
+          if git ls-files | grep -qiE '\.(pdf|mht)$'; then
+            echo "::error::a source document is tracked"; fail=1; fi
           if [ "$fail" -eq 0 ]; then echo "guards: OK"; fi
           exit $fail
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: No template residue (instantiated products must replace the example pipeline)
-        run: python scripts/check_template_residue.py
-      - name: No em-dash or emoji in product content (ADR-0067)
-        run: python scripts/check_content_standards.py
+
+      - name: Content standards, no em-dash and no emoji
+        run: |
+          python - <<'PY'
+          import pathlib, re, sys
+
+          emoji = re.compile("[\U0001F000-\U0001FAFF\u2190-\u21FF\u2300-\u27BF\uFE0F]")
+          skip = {"node_modules", ".git", "dist", ".venv"}
+          bad = []
+          for path in pathlib.Path(".").rglob("*"):
+              if not path.is_file() or skip & set(path.parts):
+                  continue
+              if path.suffix not in {".md", ".py", ".toml", ".yml", ".yaml", ".txt", ".ts", ".tsx", ".css"}:
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  continue
+              for i, line in enumerate(text.splitlines(), 1):
+                  if "\u2014" in line or "\u2013" in line:
+                      bad.append(f"{path}:{i}: em or en dash")
+                  if emoji.search(line):
+                      bad.append(f"{path}:{i}: emoji")
+          for b in bad:
+              print(f"::error::{b}")
+          print("content standards: OK" if not bad else f"{len(bad)} violations")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: No template residue survived instantiation
+        run: |
+          fail=0
+          if git ls-files | grep -q 'data-pipeline/pipeline/model/sir'; then
+            echo "::error::the template example model is still here"; fail=1; fi
+          if git grep -nlE '\bSIR\b|EX0[0-9]_|example_case' -- . ':!.github' >/dev/null 2>&1; then
+            echo "::error::template example text survived instantiation"; fail=1; fi
+          if [ "$fail" -eq 0 ]; then echo "no residue"; fi
+          exit $fail
+
+      - name: Version coherence
+        run: |
+          python - <<'PY'
+          import json, pathlib, re
+
+          def norm(v):
+              m = re.match(r"^v?(\d+)\.(\d+)\.(\d+)", v.strip())
+              assert m, f"unparseable version {v!r}"
+              return tuple(int(g) for g in m.groups())
+
+          seen = {
+              "VERSION": pathlib.Path("VERSION").read_text().strip(),
+              "CHANGELOG": re.search(r"^## \[([^\]]+)\]",
+                                     pathlib.Path("CHANGELOG.md").read_text(), re.M).group(1),
+              "pipeline": re.search(r'^__version__\s*=\s*"([^"]+)"',
+                                    pathlib.Path("data-pipeline/pipeline/__init__.py").read_text(), re.M).group(1),
+              "package.json": json.loads(pathlib.Path("frontend/package.json").read_text())["version"],
+          }
+          assert len({norm(v) for v in seen.values()}) == 1, f"version drift: {seen}"
+
+          index = json.loads(pathlib.Path("data/derived/manifests/index.json").read_text())
+          assert norm(index["app_version"]) == norm(seen["VERSION"]), (
+              f"the baked artifacts carry {index['app_version']} but the repo is {seen['VERSION']}"
+          )
+          print(f"OK: {seen['VERSION']}, and the artifacts agree")
+          PY

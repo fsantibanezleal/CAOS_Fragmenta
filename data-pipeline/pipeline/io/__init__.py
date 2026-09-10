@@ -1,2 +1,1 @@
-"""I/O boundary: the ingestion data contract (contract.py), standard-format readers/writers (formats.py), and the
-typed objects passed between stages (schema.py)."""
+"""Contract 1, ingestion: what a blast record must contain and what happens when it does not."""

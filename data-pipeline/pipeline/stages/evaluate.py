@@ -116,7 +116,9 @@ def _controls(case: Case, prepared: PreprocessResult, inferred: InferResult, mea
         answered = [
             blast_id
             for blast_id in without_geometry
-            if not predictions.get("kuznetsov", {}).get(blast_id, bf.Prediction("x", blast_id, None, "n/a")).abstained
+            if not predictions.get("kuznetsov", {})
+            .get(blast_id, bf.Prediction("x", blast_id, None, "n/a"))
+            .abstained
         ]
         controls["geometry_negative_control"] = {
             "n_without_geometry": len(without_geometry),

@@ -1,85 +1,146 @@
-# CAOS product template, a REAL product repo (not a demo)
+# Fragmenta
 
-<!-- BADGE HEADER (ADR-0065), copy this block to the top of an instantiated product README.
-     Replace <OWNER>/<REPO> and the CI workflow filename. Every badge here is auto-updating and truthful.
-     Allowed: CI (from Actions), license, latest version/tag, live demo, and arXiv ONLY once a real preprint exists.
-     FORBIDDEN: hand-typed count/claim badges (tests N passing, languages N, coverage unless from CI, agents N, ...)
-     and supply-chain-security theater (OpenSSF Scorecard, SLSA, VirusTotal) unless the repo actually ships signed
-     installable binaries. A badge that states something a tool does not verify live is vanity, do not add it.
-[![CI](https://img.shields.io/github/actions/workflow/status/<OWNER>/<REPO>/ci.yml?branch=main&label=CI)](https://github.com/<OWNER>/<REPO>/actions)
-[![License](https://img.shields.io/github/license/<OWNER>/<REPO>)](LICENSE)
-[![Version](https://img.shields.io/github/v/tag/<OWNER>/<REPO>?label=version&sort=semver)](https://github.com/<OWNER>/<REPO>/tags)
-[![Live demo](https://img.shields.io/badge/demo-live-2ea44f)](https://<SLUG>.fasl-work.com)
--->
+[![CI](https://github.com/fsantibanezleal/CAOS_Fragmenta/actions/workflows/ci.yml/badge.svg)](https://github.com/fsantibanezleal/CAOS_Fragmenta/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live](https://img.shields.io/badge/live-fragmenta.fasl--work.com-informational)](https://fragmenta.fasl-work.com)
 
-This is the **canonical template** every Faena/CAOS data-product repo is instantiated from. It exists because
-ad-hoc products (bespoke scripts, baked cases, no reproducible env, no data contract) kept shipping, they
-*look* done but **cannot be applied to new data**, so they are demos, not tools. This template makes the standard
-**executable**: clone it, run two scripts, and you have a reproducible offline pipeline that ingests data in a
-**standard format**, processes it through **typed, seeded, tested stages**, emits **committed standard-format
-artifacts + a manifest**, and feeds a web app that **replays** them, and that any third party can point at
-**their own data**.
+Blast-fragmentation prediction on real measured blasts. Twelve competing models, three ways of
+splitting the data, and the honest statistic named.
 
-It is modelled on the validated exemplar **CAOS_SIMLAB** (`simlab/pipeline.py`, `requirements-*.txt`,
-`scripts/setup+precompute`, `docs/frameworks`, `data/artifacts`, `manifests/`).
+**[fragmenta.fasl-work.com](https://fragmenta.fasl-work.com)**
 
-## The two data contracts (the thing that was missing everywhere)
+---
 
-A product is only real if data flows through **two enforced contracts**:
+## The result
 
-1. **Ingestion contract, `raw → processing`.** `data-pipeline/pipeline/io/contract.py` (shipped as `pipeline`) defines the required schema (columns,
-   units, ranges) of an input dataset and an explicit **outlier policy** (reject / clip / flag). This is the
-   *"bring your own data"* gate: a user's dataset is accepted iff it satisfies the contract. Documented in
-   [docs/data-contract.md](docs/data-contract.md).
-2. **Artifact contract, `processing → web`.** Every canonical pipeline run writes a compact,
-   standard-format artifact and a `manifests/<case>.json` (params, seed, run_ms, bytes, gate verdict,
-   format/version). The web replay lane loads only these. A separately named reduced live engine may compute
-   valid interactive results when its parity/latency/memory gates pass; it never overwrites or masquerades
-   as canonical offline truth. A TS type mirrors the manifest schema so contract drift fails the build.
+With a whole campaign held out, **not one of the six learned models explains any variance**. Every
+one falls below predicting a constant. The only two models that hold up on a site they have never
+seen are the two whose coefficients are **fixed rather than fitted**.
 
-If either contract is missing, the product is a demo. CI enforces both.
+| Model | Random 80/20 | Deduplicated | Leave one site out |
+|---|---|---|---|
+| classical mean size | -0.027 | 0.116 | **0.311** |
+| published regression | 0.632 | 0.861 | **0.802** |
+| random forest | 0.649 | 0.859 | -0.231 |
+| gradient boosting | 0.694 | 0.728 | -0.034 |
+| stacking ensemble | 0.667 | 0.885 | -0.951 |
+| null: predict the mean | -0.052 | -0.007 | -0.216 |
 
-## Quickstart (proves the template runs end-to-end)
+Variance explained about the identity line.
+
+The classical model **improves** under the honest protocol, from negative on a random split to 0.311
+with a site held out, because it has nothing to overfit. That inverts the usual reading of it as the
+weak baseline.
+
+Deduplication is not the explanation: collapsing the 17 duplicated feature vectors and splitting
+randomly *raises* the learned scores. The shared **site** is what was holding them up.
+
+## Why the protocol is the experiment
+
+The 2025 state of the art on this corpus reports 0.943 from a random 80/20 split of 97 rows, 17 of
+which duplicate another row's feature vector. The same paper records that cross-validation was tried
+and removed because it "had a poor prediction effect on the test set", which is the symptom this
+predicts.
+
+Nothing in the literature reports what these models do under a split that does not leak. That is
+what this product measures, with the kill criterion declared before the run.
+
+## Four other findings
+
+**The corpus had five transcription errors** against the published tables, two of them on the
+variable being predicted. The tell was that the source paper prints its own descriptive statistics
+and nothing was reading them. That check now runs on every load.
+
+**The corpus is dimensionless, so the classical model could not run on it at all.** It needs a rock
+volume and a charge mass per hole. The source's own prose gives a hole diameter for eight of its ten
+sites, which closes the system, and the reconstruction is asserted against **fifteen** dimensional
+constraints the same prose states. Nine sites reconstruct; the tenth publishes nothing absolute, so
+its six blasts are the geometry negative control and every model that needs a volume abstains there.
+
+**The rock factors both papers say they estimated were never printed.** Back-solving them recovers
+values that are near constant within each site, which validates the reconstruction in turn.
+
+**The published equation beats the numbers its own papers printed for it**, by 0.107 and 0.119 in
+variance explained on their two hold-outs. Where the two papers disagree with each other, the
+recomputation lands on the earlier one four times out of four.
+
+## Running it
 
 ```bash
-# 1. create the reproducible environment (.venv + pinned per-need requirements)
-./scripts/setup.sh                      # or scripts/setup.ps1 on Windows PowerShell
+python -m venv .venv && .venv/bin/pip install -r requirements-precompute.txt
+python data-pipeline/run.py            # bake every case plus the benchmark
+python data-pipeline/run.py --validate # re-check what is already on disk
+pytest                                 # tests run against the COMMITTED artifacts
 
-# 2. run the offline pipeline over every case → data/artifacts/ + manifests/
-./scripts/precompute.sh                 # or scripts/precompute.ps1
-
-# 3. the tests (determinism, both data contracts, the gate, parity)
-.venv/bin/python -m pytest              # .venv/Scripts/python.exe on Windows
-
-# 4. the web app consumes the artifacts (copy-data enforces the artifact contract)
-cd web && npm install && node copy-data.mjs && npm run dev
+cd frontend && npm ci
+npm test                               # the parity gate between the two engines
+npm run dev
 ```
 
-## How to instantiate this template for a NEW product
+The bake is a pure function of the case registry, the pinned engine version and the seed, so
+re-running it on an unchanged tree produces byte-identical artifacts. A CI job asserts that.
 
-See [docs/guides/00_instantiate.md](docs/guides/00_instantiate.md). In short: copy this tree, **delete the
-`.template-source` sentinel** (this arms the residue guard, `scripts/check_template_residue.py`, which then
-fails CI if any example pipeline or placeholder text survives), rename the `pipeline` package (in
-`data-pipeline/`) to `pipeline`, **replace the EXAMPLE engine** (the SIR model in
-`data-pipeline/pipeline/model/` + `stages/`) with your
-product's complete research-chosen classical→SOTA→frontier method registry. Every promised method must
-pass ADR-0069's vertical acceptance contract and be documented in `docs/frameworks/`, pinned in
-`requirements-precompute.txt` or `requirements-gpu.txt`, and actually executed by the pipeline. Write the
-ingestion contract, split policy, cases/variants, and fill the `docs/` wiki **as you build, not at the end**.
+## How it is built
 
-## Hard rules this template bakes in
+The science lives in **[blastfrag](https://github.com/fsantibanezleal/CAOS_BlastFrag)**, a separately
+published package this product pins and consumes. A product declares no package of its own: anything
+a third party could use to predict fragmentation without caring about Fragmenta belongs upstream.
 
-- **The deep research is binding, not decoration.** Every engine/solver/library the research selected lives in
-  `docs/frameworks/<tool>/` *and* `requirements-precompute.txt`, and the pipeline actually uses it. No hand-rolled
-  substitute for a SOTA engine the research prescribed.
-- **The repository is the product.** It implements ingest, preprocess, dataset/split, feature extraction,
-  training/fine-tuning, inference, evaluation, export, and validation for every promised method. The web is
-  the companion workbench, not a substitute for those engines.
-- **Canonical science is offline.** Tests run in sandboxes; release bake is explicit; deployment verifies
-  checksums and publishes existing evidence. Deploy never trains, benchmarks, or mutates canonical artifacts.
-- **Standard formats end-to-end** (`data-pipeline/pipeline/io/formats.py`): domain-standard in, compact-standard out.
-- **Reproducible**: pinned requirements per need; `scripts/setup`; CI installs them and runs a pipeline smoke.
-- **Applicable to new data**: the ingestion contract is the bring-your-own-data door.
-- **Versioned** (X.XX.XXX, CHANGELOG + tags from day 1) with **license/attribution hygiene**.
+What is here is the product.
 
-See [docs/architecture/01_overview.md](docs/architecture/01_overview.md) for the full rationale.
+| | |
+|---|---|
+| `data-pipeline/` | the case registry and the nine staged bake, none of them a no-op |
+| `data/derived/` | 16 content-addressed case artifacts plus a cross-case benchmark, 1.2 MB |
+| `frontend/` | the six-route SPA, plus a TypeScript reimplementation of the closed-form models |
+| `docs/` | the wiki |
+
+**Nothing is computed at deploy time.** The web replays committed artifacts, and the browser
+recomputes the closed forms only so that changing a design moves the curve. That the two engines
+agree is a **gate**: 15 parity checks score the TypeScript against the baked numbers point for point
+and fail the build on a divergence. It found a ship-blocker on its first run, where Python had
+written `NaN` into JSON that no browser can parse.
+
+## The case matrix
+
+16 cases across six categories, each stating in both languages why it is in the matrix. Four exist so
+the product **refuses** rather than answers, and they are the first ones to look at when judging
+whether it is honest:
+
+- **geometry negative control**, six blasts whose absolute scale no source publishes;
+- **degenerate negative control**, six designs where the stemming exceeds the bench, refused by every
+  model including the ratio-only ones, because the guard sits at the design level;
+- **extrapolation control**, five field blasts below the corpus minimum on its most important feature,
+  every prediction stamped;
+- **positive control**, truth generated by a known model which recovers it at zero error.
+
+Every learned model shown on a real campaign was trained on the corpus **minus that campaign**, and
+the bake fails if any of the case's own blasts appear in its training rows.
+
+## Data and licence
+
+| Set | Rows | Source |
+|---|---|---|
+| training corpus | 97 | Hudaverdi, Kulatilake and Kuzu 2010, `doi:10.1002/nag.957` |
+| published hold-out | 14 | the union of two published sets, `doi:10.1007/s10706-012-9496-3` |
+| field hold-out | 5 | Sui et al. 2025, `doi:10.3390/app15031254`, CC BY |
+
+Numeric values are experimental facts reused with citation. The source articles are not
+redistributed, and a CI guard fails the build if one is ever committed.
+
+## Honest scope
+
+No mechanistic simulation: there is no discrete-element or hybrid stress blasting model here, and a
+hand-rolled approximation under those names would be worse than nothing. No non-ideal detonics. No
+flyrock, no ground vibration, no downstream comminution model.
+
+**The initiation sequence is choreography.** The timing factor in the modified classical model is a
+scalar with no spatial structure, so changing the tie-in moves the animation and moves no prediction.
+The screen says so, permanently.
+
+Model constants that no held source prints, including that timing factor and the crush-zone branch
+parameters, are exposed as user-supplied values with documented ranges rather than invented.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).

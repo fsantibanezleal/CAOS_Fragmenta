@@ -1,9 +1,11 @@
-# app/, DORMANT FastAPI backend
+# app/, the dormant backend
 
-**This solution does not require a request-time backend at the moment.** The product is static
-deterministic-replay (ADR-0054): the frontend loads the committed artifacts in `data/derived/` directly.
+**This product does not require a request-time backend, and this directory says so rather than
+being absent**, so that the repo layout is the same as every other product in this line and a
+reviewer knows where to look if one is ever added.
 
-Activate this lane ONLY on an ADR-0002 trigger (server-side processing of uploaded data, auth-gated private data,
-paid heavy compute). To activate: pin `requirements-api.txt`, install it, run `uvicorn app.main:app`. The
-endpoints serve the SAME committed artifacts read-only, a thin layer over `data/`, never a re-implementation of
-the engine.
+Everything Fragmenta serves is either a committed artifact or a closed-form model small enough to
+run in the browser. There is no server state, no auth-gated data and no request-time compute, which
+are the three triggers that would justify activating this module.
+
+The module still imports cleanly, and CI keeps it that way, so it does not rot while unused.

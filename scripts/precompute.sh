@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Run the offline pipeline (pass-through args). E.g.:  ./scripts/precompute.sh EX02_epidemic --seed 7
+# Bake every case plus the cross-case benchmark.
+#
+# This is the heavy lane and it is a deliberate, versioned operation. It is never run at deploy time.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-VP=".venv-pipeline/bin/python"; [ -x "$VP" ] || VP=".venv-pipeline/Scripts/python.exe"
-"$VP" data-pipeline/run.py "$@"
+python data-pipeline/run.py "$@"

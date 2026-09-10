@@ -59,13 +59,43 @@ class Case:
 # Multipliers rather than absolute values, so one definition applies to patterns of any scale.
 _STANDARD_VARIANTS: tuple[Variant, ...] = (
     Variant("base", "As designed", "Como se diseno", "none", 1.0),
-    Variant("burden-tight", "Burden 15 percent tighter", "Bordo 15 por ciento menor", "B_over_D", 0.85),
-    Variant("burden-wide", "Burden 15 percent wider", "Bordo 15 por ciento mayor", "B_over_D", 1.15),
-    Variant("spacing-wide", "Spacing 20 percent wider", "Espaciamiento 20 por ciento mayor", "S_over_B", 1.20),
-    Variant("powder-up", "Powder factor 30 percent higher", "Factor de carga 30 por ciento mayor", "Pf_kg_m3", 1.30),
-    Variant("powder-down", "Powder factor 25 percent lower", "Factor de carga 25 por ciento menor", "Pf_kg_m3", 0.75),
-    Variant("stemming-long", "Stemming 25 percent longer", "Taco 25 por ciento mas largo", "T_over_B", 1.25),
-    Variant("blocky", "In situ blocks 50 percent larger", "Bloques in situ 50 por ciento mayores", "XB_m", 1.50),
+    Variant(
+        "burden-tight", "Burden 15 percent tighter", "Bordo 15 por ciento menor", "B_over_D", 0.85
+    ),
+    Variant(
+        "burden-wide", "Burden 15 percent wider", "Bordo 15 por ciento mayor", "B_over_D", 1.15
+    ),
+    Variant(
+        "spacing-wide",
+        "Spacing 20 percent wider",
+        "Espaciamiento 20 por ciento mayor",
+        "S_over_B",
+        1.20,
+    ),
+    Variant(
+        "powder-up",
+        "Powder factor 30 percent higher",
+        "Factor de carga 30 por ciento mayor",
+        "Pf_kg_m3",
+        1.30,
+    ),
+    Variant(
+        "powder-down",
+        "Powder factor 25 percent lower",
+        "Factor de carga 25 por ciento menor",
+        "Pf_kg_m3",
+        0.75,
+    ),
+    Variant(
+        "stemming-long", "Stemming 25 percent longer", "Taco 25 por ciento mas largo", "T_over_B", 1.25
+    ),
+    Variant(
+        "blocky",
+        "In situ blocks 50 percent larger",
+        "Bloques in situ 50 por ciento mayores",
+        "XB_m",
+        1.50,
+    ),
 )
 
 
