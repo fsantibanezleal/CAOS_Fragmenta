@@ -144,7 +144,10 @@
  "case": {
   "category": "extrapolation-control",
   "doi": "10.3390/app15031254",
-  "expected_band": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
+  "expected_band": {
+   "en": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
+   "es": "fina, 0.146 a 0.200 m medidos, toda predicci\u00f3n marcada como extrapolada"
+  },
   "id": "real-granite-ne",
   "licence": "numeric facts from Sui, Zhou, Zhao, Yang and Zou 2025, CC BY 4.0",
   "real_or_synthetic": "real",
@@ -166,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "c553a0bdbd5d5cf1a9bf72028427e55bec5f455156d0e49c6fc52fc0274b7596",
+ "digest": "bde78527e992fd06df8c9ef0c214ecf2d2fb9752d8b28f1b31996f212aef986e",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -737,7 +740,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

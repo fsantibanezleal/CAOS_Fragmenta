@@ -256,7 +256,10 @@
  "case": {
   "category": "real-campaign",
   "doi": "10.1002/nag.957",
-  "expected_band": "medium, 0.23 to 0.76 m measured",
+  "expected_band": {
+   "en": "medium, 0.23 to 0.76 m measured",
+   "es": "media, 0.23 a 0.76 m medidos"
+  },
   "id": "real-dongri-buzurg",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
@@ -271,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "fa907dbe79148cc38136993e220176f6a0255271a1c6d85d48fb6f278ecbdd0c",
+ "digest": "af492f03ac6436d03ffcfee6b60ba9cc0fe808761aa7fcf1d3c5beb904113470",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2802,7 +2805,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

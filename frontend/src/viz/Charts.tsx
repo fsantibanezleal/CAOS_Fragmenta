@@ -111,6 +111,15 @@ const HINTS = {
   },
 } as const;
 
+// Drawn INTO the canvas, so they are not reached by any of the usual i18n. They were English on a
+// Spanish page for exactly that reason: text painted on a canvas is invisible to a translation pass
+// that reads JSX.
+const AXES = {
+  measured: { en: 'measured', es: 'medido' },
+  predicted: { en: 'predicted', es: 'predicho' },
+  nullModel: { en: 'null model', es: 'modelo nulo' },
+} as const;
+
 /**
  * A chart says what it actually drew, on the element itself.
  *
@@ -383,7 +392,8 @@ export function ParityChart({
       ctx.setLineDash([]);
       ctx.fillStyle = token('--color-warn', '#d19a2b');
       ctx.font = '10px ui-monospace, monospace';
-      ctx.fillText('null model', toX(hi) - 62, toY(nullMeanM) - 4);
+      const nullLabel = AXES.nullModel[lang] ?? AXES.nullModel.en;
+      ctx.fillText(nullLabel, toX(hi) - ctx.measureText(nullLabel).width - 6, toY(nullMeanM) - 4);
     }
 
     for (const point of points) {
@@ -407,11 +417,12 @@ export function ParityChart({
 
     ctx.fillStyle = text;
     ctx.font = '11px ui-monospace, monospace';
-    ctx.fillText('measured', size / 2 - 24, size - 8);
+    const measuredLabel = AXES.measured[lang] ?? AXES.measured.en;
+    ctx.fillText(measuredLabel, size / 2 - ctx.measureText(measuredLabel).width / 2, size - 8);
     ctx.save();
     ctx.translate(12, size / 2 + 24);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('predicted', 0, 0);
+    ctx.fillText(AXES.predicted[lang] ?? AXES.predicted.en, 0, 0);
     ctx.restore();
     ctx.fillText(`${(hi * 100).toFixed(0)}cm`, 6, 18);
     ctx.fillText('0', pad - 10, size - pad + 14);
@@ -420,7 +431,7 @@ export function ParityChart({
       selected: selected ? 1 : 0,
       'null-line': nullMeanM === undefined || nullMeanM === null ? 0 : 1,
     });
-  }, [ref, points, size, nullMeanM, selected, epoch]);
+  }, [ref, points, size, nullMeanM, selected, epoch, lang]);
 
   const pick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;

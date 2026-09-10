@@ -118,7 +118,10 @@
  "case": {
   "category": "negative-control",
   "doi": "10.1002/nag.957",
-  "expected_band": "the classical arm abstains on all six; the ratio arms answer",
+  "expected_band": {
+   "en": "the classical arm abstains on all six; the ratio arms answer",
+   "es": "el brazo cl\u00e1sico se abstiene en los seis; los brazos de razones responden"
+  },
   "id": "real-miami",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
@@ -139,7 +142,7 @@
    "passed": true
   }
  },
- "digest": "8b19c64e692ea5d57062693450224a342d362520fdf723cbec82bc804f63c13e",
+ "digest": "60b61e2f765f5b3f4ea12075bdc8b397432cab9bbdd1ba5b2dfaa8ca15743f26",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -825,7 +828,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

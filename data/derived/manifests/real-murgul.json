@@ -1,27 +1,30 @@
 {
- "app_version": "0.03.001",
+ "app_version": "0.03.002",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 60758,
+  "bytes": 60814,
   "format": "json",
   "path": "real-murgul/case.json"
  },
  "case_id": "real-murgul",
  "category": "real-campaign",
  "controls": {},
- "digest": "dba64c012699a27bf34a8142f9f1099a918c82e2b998503a09fc23bfa4622131",
+ "digest": "574cf672f6e5653ef92f35db65ea44c540e6d5d041ead998759cb9feee2dea40",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
  },
- "expected_band": "medium, 0.23 to 0.38 m measured",
+ "expected_band": {
+  "en": "medium, 0.23 to 0.38 m measured",
+  "es": "media, 0.23 a 0.38 m medidos"
+ },
  "flags": [],
  "gate": {
   "lane": "live",
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 60758,
+  "trace_bytes": 60814,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

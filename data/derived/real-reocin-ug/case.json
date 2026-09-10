@@ -172,7 +172,10 @@
  "case": {
   "category": "real-campaign",
   "doi": "10.1002/nag.957",
-  "expected_band": "coarse, 0.51 to 0.69 m measured",
+  "expected_band": {
+   "en": "coarse, 0.51 to 0.69 m measured",
+   "es": "gruesa, 0.51 a 0.69 m medidos"
+  },
   "id": "real-reocin-ug",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
@@ -187,7 +190,7 @@
   }
  },
  "controls": {},
- "digest": "0557b46227e257147116327338cd1fdceadb92f03bac7644ebab04a1c72c9b07",
+ "digest": "bca3c1f166f5269b900a9dfb1129ad5dccd85ce472e18aaf06ce3b0337779640",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2368,7 +2371,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.03.001",
+  "app_version": "0.03.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
