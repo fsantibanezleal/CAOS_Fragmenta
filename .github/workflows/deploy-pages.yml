@@ -44,6 +44,18 @@ jobs:
           npm test
           npm run build
 
+      # Publishing a site that does not render is worse than not publishing: it looks deployed.
+      # This exact thing happened. Two copies of react-router meant every route threw before painting
+      # a character, the deploy workflow was green, and the site served 200 on every URL for days.
+      # The gate drives the built artifact in a real browser before it is allowed to become the site.
+      - name: The browser gate, on the artifact about to be published
+        run: |
+          cd frontend
+          npx playwright install --with-deps chromium
+          npx vite preview --port 4173 --strictPort &
+          npx wait-on http://localhost:4173 --timeout 60000
+          npm run gate:browser -- --url http://localhost:4173
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/dist

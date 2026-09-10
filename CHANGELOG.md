@@ -2,6 +2,29 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.01.003] - 2026-09-10
+
+### Fixed
+
+- Every artifact URL was relative, so on any route but the landing page the app fetched its data
+  from under that route and got a 404. GitHub Pages serves a route as a directory and redirects
+  `/benchmark` to `/benchmark/`, which puts a path segment in the page's base URL, and
+  `data/benchmark.json` then resolves to `/benchmark/data/benchmark.json`. A local preview server
+  does not redirect, so the base URL stays at the root, the same code works, and the bug exists only
+  in production. The paths are root-absolute now.
+
+### Changed
+
+- The browser gate visits both `/route` and `/route/`, because the trailing-slash form is the one
+  the host actually serves and it is the only form in which the bug above is visible. It also checks
+  the status of every response and, for an artifact URL, that what came back is JSON rather than the
+  single-page fallback with a 200. Confirmed by reverting the fix: the gate fails on four routes,
+  then passes when it is restored. 192 checks.
+- The deploy workflow runs the browser gate against the artifact it is about to publish. Publishing
+  a site that does not render is worse than not publishing, because it looks deployed.
+- A unit test asserts the loader paths start with a slash, read from the source, because the
+  behaviour needs the host to reproduce and the source does not.
+
 ## [0.01.002] - 2026-09-10
 
 ### Fixed
