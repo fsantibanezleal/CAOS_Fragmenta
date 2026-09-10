@@ -1,0 +1,46 @@
+{
+ "app_version": "0.01.000",
+ "arms_that_failed_to_fit": {},
+ "artifact": {
+  "bytes": 60713,
+  "format": "json",
+  "path": "real-murgul/case.json"
+ },
+ "case_id": "real-murgul",
+ "category": "real-campaign",
+ "controls": {},
+ "digest": "e8aecc7c3c17e318932313792640fa10d09fe24806f7bd17f638a5d68fd53969",
+ "engine": {
+  "package": "blastfrag",
+  "version": "0.02.000"
+ },
+ "expected_band": "medium, 0.23 to 0.38 m measured",
+ "flags": [],
+ "gate": {
+  "lane": "live",
+  "pure_python": true,
+  "reasons": [],
+  "run_ms_budget": 1500.0,
+  "trace_bytes": 60713,
+  "trace_bytes_budget": 262144,
+  "wheels": [
+   "numpy"
+  ]
+ },
+ "held_out_site": "Murgul",
+ "lane": "live",
+ "n_scoreable": 7,
+ "n_training_rows": 90,
+ "provenance": {
+  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+  "dataset": "train",
+  "doi": "10.1002/nag.957",
+  "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
+  "n_blasts": 7,
+  "real_or_synthetic": "real",
+  "site": "Murgul"
+ },
+ "real_or_synthetic": "real",
+ "schema": "fragmenta.manifest/v1",
+ "seed": 0
+}

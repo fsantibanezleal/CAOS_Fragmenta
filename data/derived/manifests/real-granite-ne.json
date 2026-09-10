@@ -1,0 +1,79 @@
+{
+ "app_version": "0.01.000",
+ "arms_that_failed_to_fit": {},
+ "artifact": {
+  "bytes": 31322,
+  "format": "json",
+  "path": "real-granite-ne/case.json"
+ },
+ "case_id": "real-granite-ne",
+ "category": "extrapolation-control",
+ "controls": {
+  "extrapolation_control": {
+   "n_predictions": 35,
+   "n_unstamped": 0,
+   "passed": true,
+   "unstamped": []
+  }
+ },
+ "digest": "b23ac7d67cf865897e54ca07295e34d9555b1fe3fa3d02fccf1ac4a0a6a3cc45",
+ "engine": {
+  "package": "blastfrag",
+  "version": "0.02.000"
+ },
+ "expected_band": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
+ "flags": [
+  {
+   "blast_id": "NE1",
+   "detail": "E_GPa = 5.6 is outside the fitted envelope [9.57, 60]",
+   "kind": "extrapolation"
+  },
+  {
+   "blast_id": "NE2",
+   "detail": "E_GPa = 5.6 is outside the fitted envelope [9.57, 60]",
+   "kind": "extrapolation"
+  },
+  {
+   "blast_id": "NE3",
+   "detail": "E_GPa = 5.6 is outside the fitted envelope [9.57, 60]",
+   "kind": "extrapolation"
+  },
+  {
+   "blast_id": "NE4",
+   "detail": "E_GPa = 5.6 is outside the fitted envelope [9.57, 60]",
+   "kind": "extrapolation"
+  },
+  {
+   "blast_id": "NE5",
+   "detail": "E_GPa = 5.6 is outside the fitted envelope [9.57, 60]",
+   "kind": "extrapolation"
+  }
+ ],
+ "gate": {
+  "lane": "live",
+  "pure_python": true,
+  "reasons": [],
+  "run_ms_budget": 1500.0,
+  "trace_bytes": 31322,
+  "trace_bytes_budget": 262144,
+  "wheels": [
+   "numpy"
+  ]
+ },
+ "held_out_site": null,
+ "lane": "live",
+ "n_scoreable": 5,
+ "n_training_rows": 97,
+ "provenance": {
+  "corpus_digest": null,
+  "dataset": "field",
+  "doi": "10.3390/app15031254",
+  "licence": "numeric facts from Sui, Zhou, Zhao, Yang and Zou 2025, CC BY 4.0",
+  "n_blasts": 5,
+  "real_or_synthetic": "real",
+  "site": "Granite-NE"
+ },
+ "real_or_synthetic": "real",
+ "schema": "fragmenta.manifest/v1",
+ "seed": 0
+}

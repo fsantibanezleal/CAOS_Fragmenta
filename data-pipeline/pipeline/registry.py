@@ -1,0 +1,34 @@
+"""The case registry, cases grouped by CATEGORY.
+
+The App shows ONE selected case; Experiments and Benchmark show cross-case evidence. Keeping that
+split is what stops the workbench turning into a summary table.
+"""
+from __future__ import annotations
+
+from .cases.fragmenta_cases import CASES, CATEGORY_LABELS, Case, Variant
+
+_BY_ID: dict[str, Case] = {c.id: c for c in CASES}
+
+
+def list_cases() -> list[Case]:
+    return list(CASES)
+
+
+def get_case(case_id: str) -> Case:
+    if case_id not in _BY_ID:
+        raise KeyError(f"unknown case: {case_id!r}. known: {sorted(_BY_ID)}")
+    return _BY_ID[case_id]
+
+
+def list_categories() -> dict[str, list[str]]:
+    out: dict[str, list[str]] = {}
+    for c in CASES:
+        out.setdefault(c.category, []).append(c.id)
+    return out
+
+
+def category_label(category: str) -> tuple[str, str]:
+    return CATEGORY_LABELS.get(category, (category, category))
+
+
+__all__ = ["CASES", "Case", "Variant", "category_label", "get_case", "list_cases", "list_categories"]

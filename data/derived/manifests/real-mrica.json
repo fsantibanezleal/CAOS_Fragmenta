@@ -1,0 +1,46 @@
+{
+ "app_version": "0.01.000",
+ "arms_that_failed_to_fit": {},
+ "artifact": {
+  "bytes": 70523,
+  "format": "json",
+  "path": "real-mrica/case.json"
+ },
+ "case_id": "real-mrica",
+ "category": "real-campaign",
+ "controls": {},
+ "digest": "69e97309f405bc39287c445dc50382707f6c02b3098a3ea4f7ed4216efc4df0e",
+ "engine": {
+  "package": "blastfrag",
+  "version": "0.02.000"
+ },
+ "expected_band": "fine, 0.13 to 0.21 m measured",
+ "flags": [],
+ "gate": {
+  "lane": "live",
+  "pure_python": true,
+  "reasons": [],
+  "run_ms_budget": 1500.0,
+  "trace_bytes": 70523,
+  "trace_bytes_budget": 262144,
+  "wheels": [
+   "numpy"
+  ]
+ },
+ "held_out_site": "Mrica",
+ "lane": "live",
+ "n_scoreable": 11,
+ "n_training_rows": 86,
+ "provenance": {
+  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+  "dataset": "train",
+  "doi": "10.1002/nag.957",
+  "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
+  "n_blasts": 11,
+  "real_or_synthetic": "real",
+  "site": "Mrica"
+ },
+ "real_or_synthetic": "real",
+ "schema": "fragmenta.manifest/v1",
+ "seed": 0
+}

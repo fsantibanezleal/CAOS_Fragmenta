@@ -1,0 +1,271 @@
+{
+ "app_version": "0.01.000",
+ "benchmark": {
+  "bytes": 19481,
+  "digest": "6d2b9ba5c6ca7f1a5c458c0390fd1035bc9b4e97066cec6ef5fbe7e3dfd07f90",
+  "path": "benchmark.json",
+  "verdict": "THE LEARNED TIER DOES NOT GENERALISE ACROSS SITES. Every learned arm has NEGATIVE variance explained under leave-one-site-out; the best of them, xgboost, scores -0.034, which is worse than predicting a constant. Its 0.182 margin over the null is two models failing by different amounts, not skill."
+ },
+ "cases": [
+  {
+   "artifact_path": "ctrl-degenerate/case.json",
+   "bytes": 35311,
+   "case_id": "ctrl-degenerate",
+   "category": "negative-control",
+   "controls_passed": true,
+   "digest": "8fbb3170e4cbbefa63d79e3419daa71f5eec65810d5e6b1ae3d9002fc4db6ad2",
+   "lane": "live",
+   "manifest_path": "manifests/ctrl-degenerate.json",
+   "real_or_synthetic": "synthetic",
+   "site": null,
+   "title": {
+    "en": "Degenerate design: the negative control",
+    "es": "Diseno degenerado: el control negativo"
+   }
+  },
+  {
+   "artifact_path": "ctrl-oracle/case.json",
+   "bytes": 62139,
+   "case_id": "ctrl-oracle",
+   "category": "positive-control",
+   "controls_passed": true,
+   "digest": "9247267da5e8e44f7e3ac92dd9b4268a70bc98fc072770cc60f8292067a7457b",
+   "lane": "live",
+   "manifest_path": "manifests/ctrl-oracle.json",
+   "real_or_synthetic": "synthetic",
+   "site": null,
+   "title": {
+    "en": "Recoverable design: the positive control",
+    "es": "Diseno recuperable: el control positivo"
+   }
+  },
+  {
+   "artifact_path": "real-akdaglar/case.json",
+   "bytes": 100793,
+   "case_id": "real-akdaglar",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "185834860e65ea6506aa89a38910ecc6bca47122baa9028da9138c7ba4217557",
+   "lane": "live",
+   "manifest_path": "manifests/real-akdaglar.json",
+   "real_or_synthetic": "real",
+   "site": "Akdaglar",
+   "title": {
+    "en": "Akdaglar quarry, Istanbul",
+    "es": "Cantera Akdaglar, Estambul"
+   }
+  },
+  {
+   "artifact_path": "real-dongri-buzurg/case.json",
+   "bytes": 65958,
+   "case_id": "real-dongri-buzurg",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "81205047496d155ccaa31377230cac9aa1cb13166dc93b9db41d1ad33fd72889",
+   "lane": "live",
+   "manifest_path": "manifests/real-dongri-buzurg.json",
+   "real_or_synthetic": "real",
+   "site": "Dongri-Buzurg",
+   "title": {
+    "en": "Dongri-Buzurg manganese mine, India",
+    "es": "Mina de manganeso Dongri-Buzurg, India"
+   }
+  },
+  {
+   "artifact_path": "real-enusa/case.json",
+   "bytes": 73427,
+   "case_id": "real-enusa",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "bf49b64b22f6905c500d447493a4a40b396e3348b6542f8051ac47ea5f15374c",
+   "lane": "live",
+   "manifest_path": "manifests/real-enusa.json",
+   "real_or_synthetic": "real",
+   "site": "Enusa",
+   "title": {
+    "en": "Enusa uranium mine, Spain",
+    "es": "Mina de uranio Enusa, Espana"
+   }
+  },
+  {
+   "artifact_path": "real-granite-ne/case.json",
+   "bytes": 31322,
+   "case_id": "real-granite-ne",
+   "category": "extrapolation-control",
+   "controls_passed": true,
+   "digest": "b23ac7d67cf865897e54ca07295e34d9555b1fe3fa3d02fccf1ac4a0a6a3cc45",
+   "lane": "live",
+   "manifest_path": "manifests/real-granite-ne.json",
+   "real_or_synthetic": "real",
+   "site": "Granite-NE",
+   "title": {
+    "en": "Granite mine, northeastern China: the extrapolation control",
+    "es": "Mina de granito, noreste de China: el control de extrapolacion"
+   }
+  },
+  {
+   "artifact_path": "real-miami/case.json",
+   "bytes": 36575,
+   "case_id": "real-miami",
+   "category": "negative-control",
+   "controls_passed": true,
+   "digest": "e00253656005da5dfa587e2a88d9d4288492cb27b19c93d6515afe73efaf7bf6",
+   "lane": "live",
+   "manifest_path": "manifests/real-miami.json",
+   "real_or_synthetic": "real",
+   "site": "Miami",
+   "title": {
+    "en": "Miami mine, Arizona: the geometry negative control",
+    "es": "Mina Miami, Arizona: el control negativo de geometria"
+   }
+  },
+  {
+   "artifact_path": "real-mrica/case.json",
+   "bytes": 70523,
+   "case_id": "real-mrica",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "69e97309f405bc39287c445dc50382707f6c02b3098a3ea4f7ed4216efc4df0e",
+   "lane": "live",
+   "manifest_path": "manifests/real-mrica.json",
+   "real_or_synthetic": "real",
+   "site": "Mrica",
+   "title": {
+    "en": "Mrica quarry, Indonesia",
+    "es": "Cantera Mrica, Indonesia"
+   }
+  },
+  {
+   "artifact_path": "real-murgul/case.json",
+   "bytes": 60713,
+   "case_id": "real-murgul",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "e8aecc7c3c17e318932313792640fa10d09fe24806f7bd17f638a5d68fd53969",
+   "lane": "live",
+   "manifest_path": "manifests/real-murgul.json",
+   "real_or_synthetic": "real",
+   "site": "Murgul",
+   "title": {
+    "en": "Murgul copper mine, Turkey",
+    "es": "Mina de cobre Murgul, Turquia"
+   }
+  },
+  {
+   "artifact_path": "real-ozmert/case.json",
+   "bytes": 60038,
+   "case_id": "real-ozmert",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "77c9efc3b6b1ed167e57d6d58282cb24409f239bfeebd829e3cca9651025936e",
+   "lane": "live",
+   "manifest_path": "manifests/real-ozmert.json",
+   "real_or_synthetic": "real",
+   "site": "Ozmert",
+   "title": {
+    "en": "Ozmert quarry, Istanbul",
+    "es": "Cantera Ozmert, Estambul"
+   }
+  },
+  {
+   "artifact_path": "real-reocin/case.json",
+   "bytes": 67845,
+   "case_id": "real-reocin",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "3ce17aa1f29600402989ac7f53c118f59ac33c07ce031b2f93504e0fbd13251a",
+   "lane": "live",
+   "manifest_path": "manifests/real-reocin.json",
+   "real_or_synthetic": "real",
+   "site": "Reocin",
+   "title": {
+    "en": "Reocin zinc open pit, Spain",
+    "es": "Rajo de zinc Reocin, Espana"
+   }
+  },
+  {
+   "artifact_path": "real-reocin-ug/case.json",
+   "bytes": 57318,
+   "case_id": "real-reocin-ug",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "22aeff5b030116ede92f4ab5c88e5c6b0c1b1d664f063b9d13bb192a8c2e8453",
+   "lane": "live",
+   "manifest_path": "manifests/real-reocin-ug.json",
+   "real_or_synthetic": "real",
+   "site": "Reocin-UG",
+   "title": {
+    "en": "Reocin underground",
+    "es": "Reocin subterranea"
+   }
+  },
+  {
+   "artifact_path": "real-soma/case.json",
+   "bytes": 60217,
+   "case_id": "real-soma",
+   "category": "real-campaign",
+   "controls_passed": true,
+   "digest": "c4d3be6c3f41f8271761a83b126b2ddb64322a664e4e22c1c485edab48904f0d",
+   "lane": "live",
+   "manifest_path": "manifests/real-soma.json",
+   "real_or_synthetic": "real",
+   "site": "Soma",
+   "title": {
+    "en": "Soma coal basin, Turkey",
+    "es": "Cuenca carbonifera de Soma, Turquia"
+   }
+  },
+  {
+   "artifact_path": "synth-ibsd-capped/case.json",
+   "bytes": 64938,
+   "case_id": "synth-ibsd-capped",
+   "category": "structural-control",
+   "controls_passed": true,
+   "digest": "dbf4f7cf43949b6cd63ee937c2312c42851124f165d9da6d80dcf5fa66d0a5bf",
+   "lane": "live",
+   "manifest_path": "manifests/synth-ibsd-capped.json",
+   "real_or_synthetic": "synthetic",
+   "site": null,
+   "title": {
+    "en": "Structurally capped: large in situ blocks",
+    "es": "Limitado por estructura: bloques in situ grandes"
+   }
+  },
+  {
+   "artifact_path": "synth-sweep-burden/case.json",
+   "bytes": 62843,
+   "case_id": "synth-sweep-burden",
+   "category": "parameter-sweep",
+   "controls_passed": true,
+   "digest": "5c9ba7ade5acaa144de9a0dafaaa94006ad36e4f9d47868e9819d79ad9099847",
+   "lane": "live",
+   "manifest_path": "manifests/synth-sweep-burden.json",
+   "real_or_synthetic": "synthetic",
+   "site": null,
+   "title": {
+    "en": "Burden sweep at fixed rock",
+    "es": "Barrido de bordo con roca fija"
+   }
+  },
+  {
+   "artifact_path": "synth-sweep-powder/case.json",
+   "bytes": 64004,
+   "case_id": "synth-sweep-powder",
+   "category": "parameter-sweep",
+   "controls_passed": true,
+   "digest": "cf6e58bb2096b0afb749c67037bcfcd8ad6b666d1169cda6a78a9a79139a51a1",
+   "lane": "live",
+   "manifest_path": "manifests/synth-sweep-powder.json",
+   "real_or_synthetic": "synthetic",
+   "site": null,
+   "title": {
+    "en": "Powder-factor sweep at fixed geometry",
+    "es": "Barrido de factor de carga con geometria fija"
+   }
+  }
+ ],
+ "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+ "engine_version": "0.02.000",
+ "n_cases": 16,
+ "schema": "fragmenta.index/v1"
+}

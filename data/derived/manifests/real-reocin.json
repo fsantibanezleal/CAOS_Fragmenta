@@ -1,0 +1,46 @@
+{
+ "app_version": "0.01.000",
+ "arms_that_failed_to_fit": {},
+ "artifact": {
+  "bytes": 67845,
+  "format": "json",
+  "path": "real-reocin/case.json"
+ },
+ "case_id": "real-reocin",
+ "category": "real-campaign",
+ "controls": {},
+ "digest": "3ce17aa1f29600402989ac7f53c118f59ac33c07ce031b2f93504e0fbd13251a",
+ "engine": {
+  "package": "blastfrag",
+  "version": "0.02.000"
+ },
+ "expected_band": "coarse, 0.44 to 0.96 m measured",
+ "flags": [],
+ "gate": {
+  "lane": "live",
+  "pure_python": true,
+  "reasons": [],
+  "run_ms_budget": 1500.0,
+  "trace_bytes": 67845,
+  "trace_bytes_budget": 262144,
+  "wheels": [
+   "numpy"
+  ]
+ },
+ "held_out_site": "Reocin",
+ "lane": "live",
+ "n_scoreable": 10,
+ "n_training_rows": 87,
+ "provenance": {
+  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+  "dataset": "train",
+  "doi": "10.1002/nag.957",
+  "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
+  "n_blasts": 10,
+  "real_or_synthetic": "real",
+  "site": "Reocin"
+ },
+ "real_or_synthetic": "real",
+ "schema": "fragmenta.manifest/v1",
+ "seed": 0
+}

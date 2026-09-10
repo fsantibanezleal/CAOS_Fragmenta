@@ -1,0 +1,46 @@
+{
+ "app_version": "0.01.000",
+ "arms_that_failed_to_fit": {},
+ "artifact": {
+  "bytes": 100793,
+  "format": "json",
+  "path": "real-akdaglar/case.json"
+ },
+ "case_id": "real-akdaglar",
+ "category": "real-campaign",
+ "controls": {},
+ "digest": "185834860e65ea6506aa89a38910ecc6bca47122baa9028da9138c7ba4217557",
+ "engine": {
+  "package": "blastfrag",
+  "version": "0.02.000"
+ },
+ "expected_band": "fine, 0.14 to 0.22 m measured",
+ "flags": [],
+ "gate": {
+  "lane": "live",
+  "pure_python": true,
+  "reasons": [],
+  "run_ms_budget": 1500.0,
+  "trace_bytes": 100793,
+  "trace_bytes_budget": 262144,
+  "wheels": [
+   "numpy"
+  ]
+ },
+ "held_out_site": "Akdaglar",
+ "lane": "live",
+ "n_scoreable": 22,
+ "n_training_rows": 75,
+ "provenance": {
+  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+  "dataset": "train",
+  "doi": "10.1002/nag.957",
+  "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
+  "n_blasts": 22,
+  "real_or_synthetic": "real",
+  "site": "Akdaglar"
+ },
+ "real_or_synthetic": "real",
+ "schema": "fragmenta.manifest/v1",
+ "seed": 0
+}

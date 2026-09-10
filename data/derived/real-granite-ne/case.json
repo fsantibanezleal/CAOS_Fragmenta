@@ -1,0 +1,1359 @@
+{
+ "blasts": [
+  {
+   "blast_id": "NE1",
+   "features": {
+    "B_over_D": 28.0,
+    "E_GPa": 5.6,
+    "H_over_B": 2.1429,
+    "Pf_kg_m3": 0.62,
+    "S_over_B": 1.2143,
+    "T_over_B": 1.0714,
+    "XB_m": 1.11
+   },
+   "group": null,
+   "has_geometry": true,
+   "pattern": {
+    "bench_height_m": 15.0003,
+    "burden_m": 7.0,
+    "charge_length_m": 7.5005,
+    "charge_mass_kg": 553.368,
+    "hole_diameter_mm": 250.0,
+    "rock_volume_m3": 892.528,
+    "spacing_m": 8.5001,
+    "stemming_m": 7.4998
+   },
+   "rock_factor": null,
+   "site": "Granite-NE",
+   "usable": true,
+   "x50_measured_m": 0.1456
+  },
+  {
+   "blast_id": "NE2",
+   "features": {
+    "B_over_D": 28.0,
+    "E_GPa": 5.6,
+    "H_over_B": 2.1429,
+    "Pf_kg_m3": 0.64,
+    "S_over_B": 1.2857,
+    "T_over_B": 1.0714,
+    "XB_m": 1.11
+   },
+   "group": null,
+   "has_geometry": true,
+   "pattern": {
+    "bench_height_m": 15.0003,
+    "burden_m": 7.0,
+    "charge_length_m": 7.5005,
+    "charge_mass_kg": 604.805,
+    "hole_diameter_mm": 250.0,
+    "rock_volume_m3": 945.008,
+    "spacing_m": 8.9999,
+    "stemming_m": 7.4998
+   },
+   "rock_factor": null,
+   "site": "Granite-NE",
+   "usable": true,
+   "x50_measured_m": 0.163
+  },
+  {
+   "blast_id": "NE3",
+   "features": {
+    "B_over_D": 28.0,
+    "E_GPa": 5.6,
+    "H_over_B": 2.1429,
+    "Pf_kg_m3": 0.61,
+    "S_over_B": 1.4286,
+    "T_over_B": 1.0714,
+    "XB_m": 1.11
+   },
+   "group": null,
+   "has_geometry": true,
+   "pattern": {
+    "bench_height_m": 15.0003,
+    "burden_m": 7.0,
+    "charge_length_m": 7.5005,
+    "charge_mass_kg": 640.526,
+    "hole_diameter_mm": 250.0,
+    "rock_volume_m3": 1050.042,
+    "spacing_m": 10.0002,
+    "stemming_m": 7.4998
+   },
+   "rock_factor": null,
+   "site": "Granite-NE",
+   "usable": true,
+   "x50_measured_m": 0.1962
+  },
+  {
+   "blast_id": "NE4",
+   "features": {
+    "B_over_D": 28.0,
+    "E_GPa": 5.6,
+    "H_over_B": 2.1429,
+    "Pf_kg_m3": 0.57,
+    "S_over_B": 1.3571,
+    "T_over_B": 1.0714,
+    "XB_m": 1.11
+   },
+   "group": null,
+   "has_geometry": true,
+   "pattern": {
+    "bench_height_m": 15.0003,
+    "burden_m": 7.0,
+    "charge_length_m": 7.5005,
+    "charge_mass_kg": 568.568,
+    "hole_diameter_mm": 250.0,
+    "rock_volume_m3": 997.488,
+    "spacing_m": 9.4997,
+    "stemming_m": 7.4998
+   },
+   "rock_factor": null,
+   "site": "Granite-NE",
+   "usable": true,
+   "x50_measured_m": 0.1997
+  },
+  {
+   "blast_id": "NE5",
+   "features": {
+    "B_over_D": 28.0,
+    "E_GPa": 5.6,
+    "H_over_B": 2.1429,
+    "Pf_kg_m3": 0.62,
+    "S_over_B": 1.3571,
+    "T_over_B": 1.0714,
+    "XB_m": 1.11
+   },
+   "group": null,
+   "has_geometry": true,
+   "pattern": {
+    "bench_height_m": 15.0003,
+    "burden_m": 7.0,
+    "charge_length_m": 7.5005,
+    "charge_mass_kg": 618.443,
+    "hole_diameter_mm": 250.0,
+    "rock_volume_m3": 997.488,
+    "spacing_m": 9.4997,
+    "stemming_m": 7.4998
+   },
+   "rock_factor": null,
+   "site": "Granite-NE",
+   "usable": true,
+   "x50_measured_m": 0.1786
+  }
+ ],
+ "case": {
+  "category": "extrapolation-control",
+  "doi": "10.3390/app15031254",
+  "expected_band": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
+  "id": "real-granite-ne",
+  "licence": "numeric facts from Sui, Zhou, Zhao, Yang and Zou 2025, CC BY 4.0",
+  "real_or_synthetic": "real",
+  "reason": {
+   "en": "Five production blasts measured with image analysis, and the only real set in this product that lies OUTSIDE the fitted envelope. Its Young modulus of 5.6 GPa sits below the corpus minimum of 9.57, on the feature two independent studies rank most important. Every prediction here is stamped as an extrapolation. It is also the only set that publishes its absolute pattern, so it checks the geometry reconstruction instead of consuming it.",
+   "es": "Cinco tiros de produccion medidos por analisis de imagen, y el unico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su modulo de Young de 5.6 GPa esta bajo el minimo del corpus, 9.57, en la variable que dos estudios independientes califican como la mas importante. Toda prediccion aqui se marca como extrapolacion. Es tambien el unico conjunto que publica su malla absoluta, asi que verifica la reconstruccion geometrica en vez de consumirla."
+  },
+  "site": "Granite-NE",
+  "title": {
+   "en": "Granite mine, northeastern China: the extrapolation control",
+   "es": "Mina de granito, noreste de China: el control de extrapolacion"
+  }
+ },
+ "controls": {
+  "extrapolation_control": {
+   "n_predictions": 35,
+   "n_unstamped": 0,
+   "passed": true,
+   "unstamped": []
+  }
+ },
+ "digest": "b23ac7d67cf865897e54ca07295e34d9555b1fe3fa3d02fccf1ac4a0a6a3cc45",
+ "distributions": {},
+ "geometry_report": {},
+ "null_mean_m": 0.3025773195876289,
+ "predictions": {
+  "crush-zone": {
+   "NE1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   }
+  },
+  "group-discriminant": {
+   "NE1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "x50_m": null
+   },
+   "NE2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "x50_m": null
+   },
+   "NE3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "x50_m": null
+   },
+   "NE4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "x50_m": null
+   },
+   "NE5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "x50_m": null
+   }
+  },
+  "kuz-ram": {
+   "NE1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   }
+  },
+  "kuznetsov": {
+   "NE1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   }
+  },
+  "published-neural-net": {
+   "NE1": {
+    "abstained": false,
+    "cv": 1.0349654854725348,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": 8,
+    "reason": null,
+    "x50_m": 0.338342
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": 0.8708709606496317,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": 8,
+    "reason": null,
+    "x50_m": 0.336537
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": 0.8337923349468509,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": 8,
+    "reason": null,
+    "x50_m": 0.389835
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": 0.7574107454945036,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": 8,
+    "reason": null,
+    "x50_m": 0.372989
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": 0.7414951494072286,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": 8,
+    "reason": null,
+    "x50_m": 0.373326
+   }
+  },
+  "published-regression": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.5761
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.592223
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.630841
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.618173
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.612224
+   }
+  },
+  "random-forest": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.312092
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.312136
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.300031
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.300031
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.299504
+   }
+  },
+  "refitted-regression": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.589598
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.607508
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.648409
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.633526
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.628568
+   }
+  },
+  "stacking": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.295799
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.307018
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.309306
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.308662
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.308734
+   }
+  },
+  "svr-rbf": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.055262
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.04161
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.122953
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.126164
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.081541
+   }
+  },
+  "swebrec": {
+   "NE1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   }
+  },
+  "xgboost": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.39751
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.367259
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.365524
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.367259
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": 2,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.367259
+   }
+  }
+ },
+ "provenance": {
+  "app_version": "0.01.000",
+  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+  "engine": {
+   "package": "blastfrag",
+   "version": "0.02.000"
+  },
+  "held_out_site": null,
+  "leakage_note": "this case is not in the training corpus, so nothing was withheld",
+  "n_training_rows": 97
+ },
+ "representative_blast_id": "NE1",
+ "schema": "fragmenta.case/v1",
+ "scores": {
+  "crush-zone": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 5,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "group-discriminant": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 5,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "kuz-ram": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 5,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "kuznetsov": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 5,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "null": {
+   "bias_m": 0.1259573195876289,
+   "mae_m": 0.1259573195876289,
+   "mape_pct": 73.71905878693858,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 5,
+   "pearson_r2": NaN,
+   "r2_identity": -38.36395879366165,
+   "r2_identity_interval": [
+    -211.23364213604293,
+    -26.075303363793136
+   ],
+   "r2_identity_point": -38.36395879366165,
+   "rmse_m": 0.12758836921012856,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE1",
+     "error_m": 0.1569773195876289,
+     "error_pct": 107.81409312337148,
+     "measured_m": 0.1456,
+     "predicted_m": 0.3025773195876289,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE2",
+     "error_m": 0.1395773195876289,
+     "error_pct": 85.63025741572325,
+     "measured_m": 0.163,
+     "predicted_m": 0.3025773195876289,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": 0.12397731958762889,
+     "error_pct": 69.41619237829165,
+     "measured_m": 0.1786,
+     "predicted_m": 0.3025773195876289,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "published-neural-net": {
+   "bias_m": 0.1855859600797215,
+   "mae_m": 0.1855859600797215,
+   "mape_pct": 106.66781187372206,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.7837489312867935,
+   "r2_identity": -82.52484971914113,
+   "r2_identity_interval": [
+    -638.2650302558908,
+    -53.800249588469256
+   ],
+   "r2_identity_point": -82.52484971914113,
+   "rmse_m": 0.18585299053825322,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE5",
+     "error_m": 0.19472595380514532,
+     "error_pct": 109.02908947656512,
+     "measured_m": 0.1786,
+     "predicted_m": 0.3733259538051453,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE3",
+     "error_m": 0.193635384283094,
+     "error_pct": 98.69285641340161,
+     "measured_m": 0.1962,
+     "predicted_m": 0.389835384283094,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE1",
+     "error_m": 0.1927421156069366,
+     "error_pct": 132.3778266531158,
+     "measured_m": 0.1456,
+     "predicted_m": 0.3383421156069366,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "published-regression": {
+   "bias_m": 0.4292923117574098,
+   "mae_m": 0.4292923117574098,
+   "mape_pct": 246.57428437856447,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.9197794033602856,
+   "r2_identity": -444.7188495231378,
+   "r2_identity_interval": [
+    -3293.5779206831376,
+    -285.48617106995937
+   ],
+   "r2_identity_point": -444.7188495231378,
+   "rmse_m": 0.4293309551585533,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE3",
+     "error_m": 0.43464111338845113,
+     "error_pct": 221.52961946404236,
+     "measured_m": 0.1962,
+     "predicted_m": 0.6308411133884512,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": 0.4336241194768925,
+     "error_pct": 242.79066040139557,
+     "measured_m": 0.1786,
+     "predicted_m": 0.6122241194768925,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE1",
+     "error_m": 0.43050026145705417,
+     "error_pct": 295.6732564952295,
+     "measured_m": 0.1456,
+     "predicted_m": 0.5761002614570542,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "random-forest": {
+   "bias_m": 0.12813877192982465,
+   "mae_m": 0.12813877192982465,
+   "mape_pct": 75.34012283030566,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.78139288851467,
+   "r2_identity": -40.31398908955331,
+   "r2_identity_interval": [
+    -201.0441744157794,
+    -27.57074985234555
+   ],
+   "r2_identity_point": -40.31398908955331,
+   "rmse_m": 0.13071043725132578,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE1",
+     "error_m": 0.166492105263158,
+     "error_pct": 114.34897339502608,
+     "measured_m": 0.1456,
+     "predicted_m": 0.312092105263158,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE2",
+     "error_m": 0.1491359649122808,
+     "error_pct": 91.49445700139925,
+     "measured_m": 0.163,
+     "predicted_m": 0.3121359649122808,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": 0.1209043859649124,
+     "error_pct": 67.69562484037648,
+     "measured_m": 0.1786,
+     "predicted_m": 0.2995043859649124,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "refitted-regression": {
+   "bias_m": 0.4449018390366504,
+   "mae_m": 0.4449018390366504,
+   "mape_pct": 255.46248437414724,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.9060081994083266,
+   "r2_identity": -477.7336395806329,
+   "r2_identity_interval": [
+    -3556.7053908964904,
+    -306.53287030235344
+   ],
+   "r2_identity_point": -477.7336395806329,
+   "rmse_m": 0.44494740163367236,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE3",
+     "error_m": 0.4522090068613944,
+     "error_pct": 230.4836936092734,
+     "measured_m": 0.1962,
+     "predicted_m": 0.6484090068613945,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": 0.4499684274939135,
+     "error_pct": 251.94200867520354,
+     "measured_m": 0.1786,
+     "predicted_m": 0.6285684274939135,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE2",
+     "error_m": 0.44450822939062296,
+     "error_pct": 272.7044352089711,
+     "measured_m": 0.163,
+     "predicted_m": 0.607508229390623,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "stacking": {
+   "bias_m": 0.1292837920554813,
+   "mae_m": 0.1292837920554813,
+   "mape_pct": 75.31755327838228,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.6983095763422204,
+   "r2_identity": -40.060260863669505,
+   "r2_identity_interval": [
+    -237.04045357433495,
+    -25.03079601339392
+   ],
+   "r2_identity_point": -40.060260863669505,
+   "rmse_m": 0.1303084426083848,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE1",
+     "error_m": 0.15019890397134222,
+     "error_pct": 103.15858789240536,
+     "measured_m": 0.1456,
+     "predicted_m": 0.29579890397134223,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE2",
+     "error_m": 0.14401823667283795,
+     "error_pct": 88.35474642505395,
+     "measured_m": 0.163,
+     "predicted_m": 0.30701823667283795,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": 0.1301336253738394,
+     "error_pct": 72.86317210181377,
+     "measured_m": 0.1786,
+     "predicted_m": 0.3087336253738394,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "svr-rbf": {
+   "bias_m": -0.09111407189383373,
+   "mae_m": 0.09111407189383373,
+   "mape_pct": 53.0036840601304,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.8374669485843907,
+   "r2_identity": -19.83914875425091,
+   "r2_identity_interval": [
+    -119.97937890023185,
+    -9.068478932379495
+   ],
+   "r2_identity_point": -19.83914875425091,
+   "rmse_m": 0.09283285127079716,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE2",
+     "error_m": -0.12139040128102213,
+     "error_pct": -74.47263882271297,
+     "measured_m": 0.163,
+     "predicted_m": 0.041609598718977875,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": -0.09705861572178653,
+     "error_pct": -54.344129743441506,
+     "measured_m": 0.1786,
+     "predicted_m": 0.08154138427821347,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE1",
+     "error_m": -0.09033848215743304,
+     "error_pct": -62.04566082241279,
+     "measured_m": 0.1456,
+     "predicted_m": 0.05526151784256697,
+     "site": "Granite-NE"
+    }
+   ]
+  },
+  "swebrec": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 5,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "xgboost": {
+   "bias_m": 0.19634237349510192,
+   "mae_m": 0.19634237349510192,
+   "mape_pct": 114.83341879562354,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.6052369835081997,
+   "r2_identity": -94.52492689139135,
+   "r2_identity_interval": [
+    -529.3149364940023,
+    -68.30315256717638
+   ],
+   "r2_identity_point": -94.52492689139135,
+   "rmse_m": 0.19875591363845393,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE1",
+     "error_m": 0.2519100219249725,
+     "error_pct": 173.01512494847012,
+     "measured_m": 0.1456,
+     "predicted_m": 0.39751002192497253,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE2",
+     "error_m": 0.20425926399230956,
+     "error_pct": 125.31243189712242,
+     "measured_m": 0.163,
+     "predicted_m": 0.36725926399230957,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": 0.18865926399230956,
+     "error_pct": 105.63228666982619,
+     "measured_m": 0.1786,
+     "predicted_m": 0.36725926399230957,
+     "site": "Granite-NE"
+    }
+   ]
+  }
+ },
+ "variant_curves": {
+  "crush-zone": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "group-discriminant": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "kuz-ram": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "kuznetsov": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "published-neural-net": {
+   "base": 0.3622059600797215,
+   "blocky": 0.28299849586376336,
+   "burden-tight": 0.4651628826671292,
+   "burden-wide": 0.35969984986685627,
+   "powder-down": 0.4004567250581747,
+   "powder-up": 0.39985526431864854,
+   "spacing-wide": 0.42105696693906103,
+   "stemming-long": 0.31706706144093555
+  },
+  "published-regression": {
+   "base": 0.6059123117574099,
+   "blocky": 0.7224925672915391,
+   "burden-tight": 0.5652904628771145,
+   "burden-wide": 0.6431729263897739,
+   "powder-down": 0.6262932512339623,
+   "powder-up": 0.5879038329482388,
+   "spacing-wide": 0.6694558157729732,
+   "stemming-long": 0.5924092974666733
+  },
+  "random-forest": {
+   "base": 0.3047587719298247,
+   "blocky": 0.3047587719298247,
+   "burden-tight": 0.3042500000000001,
+   "burden-wide": 0.3062938596491229,
+   "powder-down": 0.31014473684210525,
+   "powder-up": 0.32517982456140365,
+   "spacing-wide": 0.30467105263157906,
+   "stemming-long": 0.3084429824561405
+  },
+  "refitted-regression": {
+   "base": 0.6215218390366505,
+   "blocky": 0.7443677342437127,
+   "burden-tight": 0.5728726726374325,
+   "burden-wide": 0.666650142353407,
+   "powder-down": 0.6384530480805457,
+   "powder-up": 0.6064724554094321,
+   "spacing-wide": 0.6903010554729282,
+   "stemming-long": 0.6087916907121557
+  },
+  "stacking": {
+   "base": 0.3059037920554813,
+   "blocky": 0.31023574564664014,
+   "burden-tight": 0.3078975283593527,
+   "burden-wide": 0.30576552648604227,
+   "powder-down": 0.30535324408676784,
+   "powder-up": 0.2875934406614842,
+   "spacing-wide": 0.3086758763155686,
+   "stemming-long": 0.3065612140524826
+  },
+  "svr-rbf": {
+   "base": 0.08550592810616627,
+   "blocky": 0.10265611332396282,
+   "burden-tight": 0.1680647714454075,
+   "burden-wide": 0.06963989490097329,
+   "powder-down": 0.2246473583217723,
+   "powder-up": 0.0070190917669274155,
+   "spacing-wide": 0.2040845212544367,
+   "stemming-long": 0.1161480575040231
+  },
+  "swebrec": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "xgboost": {
+   "base": 0.3729623734951019,
+   "blocky": 0.3612882971763611,
+   "burden-tight": 0.367775696516037,
+   "burden-wide": 0.37277318835258483,
+   "powder-down": 0.37247493863105774,
+   "powder-up": 0.4148330330848694,
+   "spacing-wide": 0.3655240535736084,
+   "stemming-long": 0.3698423981666565
+  }
+ },
+ "variants": [
+  {
+   "factor": 1.0,
+   "field": "none",
+   "id": "base",
+   "label": {
+    "en": "As designed",
+    "es": "Como se diseno"
+   }
+  },
+  {
+   "factor": 0.85,
+   "field": "B_over_D",
+   "id": "burden-tight",
+   "label": {
+    "en": "Burden 15 percent tighter",
+    "es": "Bordo 15 por ciento menor"
+   }
+  },
+  {
+   "factor": 1.15,
+   "field": "B_over_D",
+   "id": "burden-wide",
+   "label": {
+    "en": "Burden 15 percent wider",
+    "es": "Bordo 15 por ciento mayor"
+   }
+  },
+  {
+   "factor": 1.2,
+   "field": "S_over_B",
+   "id": "spacing-wide",
+   "label": {
+    "en": "Spacing 20 percent wider",
+    "es": "Espaciamiento 20 por ciento mayor"
+   }
+  },
+  {
+   "factor": 1.3,
+   "field": "Pf_kg_m3",
+   "id": "powder-up",
+   "label": {
+    "en": "Powder factor 30 percent higher",
+    "es": "Factor de carga 30 por ciento mayor"
+   }
+  },
+  {
+   "factor": 0.75,
+   "field": "Pf_kg_m3",
+   "id": "powder-down",
+   "label": {
+    "en": "Powder factor 25 percent lower",
+    "es": "Factor de carga 25 por ciento menor"
+   }
+  },
+  {
+   "factor": 1.25,
+   "field": "T_over_B",
+   "id": "stemming-long",
+   "label": {
+    "en": "Stemming 25 percent longer",
+    "es": "Taco 25 por ciento mas largo"
+   }
+  },
+  {
+   "factor": 1.5,
+   "field": "XB_m",
+   "id": "blocky",
+   "label": {
+    "en": "In situ blocks 50 percent larger",
+    "es": "Bloques in situ 50 por ciento mayores"
+   }
+  }
+ ]
+}

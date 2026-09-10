@@ -1,0 +1,52 @@
+{
+ "app_version": "0.01.000",
+ "arms_that_failed_to_fit": {},
+ "artifact": {
+  "bytes": 36575,
+  "format": "json",
+  "path": "real-miami/case.json"
+ },
+ "case_id": "real-miami",
+ "category": "negative-control",
+ "controls": {
+  "geometry_negative_control": {
+   "n_answered_anyway": 0,
+   "n_without_geometry": 6,
+   "passed": true
+  }
+ },
+ "digest": "e00253656005da5dfa587e2a88d9d4288492cb27b19c93d6515afe73efaf7bf6",
+ "engine": {
+  "package": "blastfrag",
+  "version": "0.02.000"
+ },
+ "expected_band": "the classical arm abstains on all six; the ratio arms answer",
+ "flags": [],
+ "gate": {
+  "lane": "live",
+  "pure_python": true,
+  "reasons": [],
+  "run_ms_budget": 1500.0,
+  "trace_bytes": 36575,
+  "trace_bytes_budget": 262144,
+  "wheels": [
+   "numpy"
+  ]
+ },
+ "held_out_site": "Miami",
+ "lane": "live",
+ "n_scoreable": 6,
+ "n_training_rows": 91,
+ "provenance": {
+  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+  "dataset": "train",
+  "doi": "10.1002/nag.957",
+  "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
+  "n_blasts": 6,
+  "real_or_synthetic": "real",
+  "site": "Miami"
+ },
+ "real_or_synthetic": "real",
+ "schema": "fragmenta.manifest/v1",
+ "seed": 0
+}

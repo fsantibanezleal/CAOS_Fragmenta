@@ -1,0 +1,735 @@
+{
+ "app_version": "0.01.000",
+ "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+ "digest": "6d2b9ba5c6ca7f1a5c458c0390fd1035bc9b4e97066cec6ef5fbe7e3dfd07f90",
+ "duplicate_groups": [
+  [
+   "En1",
+   "En2"
+  ],
+  [
+   "En11",
+   "En12"
+  ],
+  [
+   "En3",
+   "En5"
+  ],
+  [
+   "En8",
+   "En9"
+  ],
+  [
+   "Mr1",
+   "Mr3"
+  ],
+  [
+   "Sm1",
+   "Sm2",
+   "Sm3"
+  ],
+  [
+   "Sm4",
+   "Sm5",
+   "Sm6",
+   "Sm7"
+  ]
+ ],
+ "engine_version": "0.02.000",
+ "kill_criterion": "The learned tier counts as generalising across sites only if the best learned arm's variance explained under leave-one-site-out is BOTH positive and at least 0.10 above the null model's. Both halves are required: a margin over a null that is itself deeply negative is not skill, it is two models failing by different amounts.",
+ "network_seed_sweep": {
+  "max": 0.6357654363562831,
+  "median": 0.35147465936322386,
+  "min": 0.25835238134850413,
+  "n_seeds": 12,
+  "per_blast": {
+   "Ad23": {
+    "max_m": 0.2415750005851948,
+    "measured_m": 0.21,
+    "min_m": 0.21746393590564717,
+    "published_m": 0.21
+   },
+   "Ad24": {
+    "max_m": 0.21562565907065553,
+    "measured_m": 0.2,
+    "min_m": 0.1969009002005217,
+    "published_m": 0.19
+   },
+   "Db10": {
+    "max_m": 0.7573168537793042,
+    "measured_m": 0.35,
+    "min_m": 0.6190402734102965,
+    "published_m": 0.33
+   },
+   "En13": {
+    "max_m": 0.420520061183793,
+    "measured_m": 0.47,
+    "min_m": 0.4171954314812377,
+    "published_m": 0.42
+   },
+   "Mg8": {
+    "max_m": 0.37540673222344234,
+    "measured_m": 0.44,
+    "min_m": 0.37130803106651467,
+    "published_m": 0.37
+   },
+   "Mg9": {
+    "max_m": 0.2556902062956774,
+    "measured_m": 0.25,
+    "min_m": 0.25160512582910927,
+    "published_m": 0.28
+   },
+   "Mr12": {
+    "max_m": 0.18057778559062795,
+    "measured_m": 0.2,
+    "min_m": 0.08074968529304735,
+    "published_m": 0.12
+   },
+   "Oz8": {
+    "max_m": 0.13610509384223138,
+    "measured_m": 0.23,
+    "min_m": 0.13126051363405516,
+    "published_m": 0.15
+   },
+   "Oz9": {
+    "max_m": 0.19727136751072885,
+    "measured_m": 0.17,
+    "min_m": 0.1802477359345499,
+    "published_m": 0.19
+   },
+   "Rc1": {
+    "max_m": 0.46041342817170966,
+    "measured_m": 0.46,
+    "min_m": 0.45996125454374165,
+    "published_m": 0.43
+   },
+   "Ru7": {
+    "max_m": 0.7430392039399921,
+    "measured_m": 0.64,
+    "min_m": 0.4125,
+    "published_m": 0.63
+   },
+   "Sm8": {
+    "max_m": 0.19002820725678488,
+    "measured_m": 0.18,
+    "min_m": 0.1898644471465035,
+    "published_m": 0.19
+   }
+  },
+  "published": 0.9096479791395046,
+  "published_above_every_seed": true,
+  "r2_identity": [
+   0.25835238134850413,
+   0.26418745420200607,
+   0.30107456889053186,
+   0.30935096029458964,
+   0.32535147665408104,
+   0.32804700585533764,
+   0.35147465936322386,
+   0.352413124565511,
+   0.36058573974342145,
+   0.38953672369009285,
+   0.4423393626536135,
+   0.6357654363562831
+  ]
+ },
+ "protocols": {
+  "dedup-random": {
+   "arms": {
+    "group-discriminant": {
+     "bias_m": null,
+     "mae_m": null,
+     "mape_pct": null,
+     "n_abstained": 17,
+     "n_scored": 0,
+     "pearson_r2": null,
+     "r2_identity": null,
+     "rmse_m": null,
+     "tier": "statistical"
+    },
+    "kuznetsov": {
+     "bias_m": 0.008602374694076619,
+     "mae_m": 0.10832997231695,
+     "mape_pct": 34.75682689495461,
+     "n_abstained": 2,
+     "n_scored": 15,
+     "pearson_r2": 0.48975618520507636,
+     "r2_identity": 0.11644681321395023,
+     "rmse_m": 0.15283261559964428,
+     "tier": "classical"
+    },
+    "null": {
+     "bias_m": -0.014504201680672315,
+     "mae_m": 0.14452100840336135,
+     "mape_pct": 67.72973834011569,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": NaN,
+     "r2_identity": -0.00702678140226598,
+     "rmse_m": 0.1736345391368679,
+     "tier": "control"
+    },
+    "oracle": {
+     "bias_m": 0.0,
+     "mae_m": 0.0,
+     "mape_pct": 0.0,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 1.0,
+     "r2_identity": 1.0,
+     "rmse_m": 0.0,
+     "tier": "control"
+    },
+    "published-neural-net": {
+     "bias_m": 0.022866135642470684,
+     "mae_m": 0.08024683660564087,
+     "mape_pct": 32.80878331671612,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.7436986450123785,
+     "r2_identity": 0.5567432775022199,
+     "rmse_m": 0.11519755826347405,
+     "tier": "learned"
+    },
+    "published-regression": {
+     "bias_m": -0.012228027920369415,
+     "mae_m": 0.04540447150408044,
+     "mape_pct": 14.432252407451232,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.8667619830344477,
+     "r2_identity": 0.8614916245555526,
+     "rmse_m": 0.06439521924052564,
+     "tier": "statistical"
+    },
+    "random-forest": {
+     "bias_m": 0.02479102167182676,
+     "mae_m": 0.04166408668730665,
+     "mape_pct": 16.143656900619774,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.8974060827593913,
+     "r2_identity": 0.8589805131309008,
+     "rmse_m": 0.0649763293408686,
+     "tier": "learned"
+    },
+    "refitted-regression": {
+     "bias_m": -0.012860409301796986,
+     "mae_m": 0.054074246441878485,
+     "mape_pct": 18.50621375984086,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.8328488513294057,
+     "r2_identity": 0.8232751995972669,
+     "rmse_m": 0.07273850292116937,
+     "tier": "statistical"
+    },
+    "stacking": {
+     "bias_m": 0.002559192348738585,
+     "mae_m": 0.038811039353444696,
+     "mape_pct": 12.626619958220097,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.899059610187853,
+     "r2_identity": 0.885029111812604,
+     "rmse_m": 0.05866911695979583,
+     "tier": "learned"
+    },
+    "svr-poly": {
+     "bias_m": -0.015480086985388367,
+     "mae_m": 0.1008351180681083,
+     "mape_pct": 35.95495815246618,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.4335918218966449,
+     "r2_identity": 0.424056559419019,
+     "rmse_m": 0.131312335782305,
+     "tier": "learned"
+    },
+    "svr-rbf": {
+     "bias_m": 0.023046877582596798,
+     "mae_m": 0.059756113273601544,
+     "mape_pct": 28.32004801461888,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.8191770158231456,
+     "r2_identity": 0.7922089594720814,
+     "rmse_m": 0.07887311939658775,
+     "tier": "learned"
+    },
+    "xgboost": {
+     "bias_m": 0.03551265194135553,
+     "mae_m": 0.054924917746992666,
+     "mape_pct": 18.621725162009604,
+     "n_abstained": 0,
+     "n_scored": 17,
+     "pearson_r2": 0.8572352480289188,
+     "r2_identity": 0.7276804607562084,
+     "rmse_m": 0.09029319281806689,
+     "tier": "learned"
+    }
+   },
+   "n_folds": 1
+  },
+  "leave-one-site-out": {
+   "arms": {
+    "group-discriminant": {
+     "bias_m": null,
+     "mae_m": null,
+     "mape_pct": null,
+     "n_abstained": 97,
+     "n_scored": 0,
+     "pearson_r2": null,
+     "r2_identity": null,
+     "rmse_m": null,
+     "tier": "statistical"
+    },
+    "kuznetsov": {
+     "bias_m": 0.027992644213963157,
+     "mae_m": 0.11124890899152237,
+     "mape_pct": 38.801493887860545,
+     "n_abstained": 6,
+     "n_scored": 91,
+     "pearson_r2": 0.514649633579382,
+     "r2_identity": 0.31122736550787145,
+     "rmse_m": 0.15282274166623336,
+     "tier": "classical"
+    },
+    "null": {
+     "bias_m": 0.005077411404643174,
+     "mae_m": 0.17097632109020516,
+     "mape_pct": 87.14116522484336,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 0.626809465231582,
+     "r2_identity": -0.21625443386057186,
+     "rmse_m": 0.20668833465435987,
+     "tier": "control"
+    },
+    "oracle": {
+     "bias_m": 0.0,
+     "mae_m": 0.0,
+     "mape_pct": 0.0,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 1.0,
+     "r2_identity": 1.0,
+     "rmse_m": 0.0,
+     "tier": "control"
+    },
+    "published-neural-net": {
+     "bias_m": 0.0608923092319628,
+     "mae_m": 0.1888617011577093,
+     "mape_pct": 91.85502494157893,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 0.08913932131046566,
+     "r2_identity": -0.6255607003621662,
+     "rmse_m": 0.2389490693537159,
+     "tier": "learned"
+    },
+    "published-regression": {
+     "bias_m": -0.008758391756203843,
+     "mae_m": 0.05434531807545503,
+     "mape_pct": 18.176854978289434,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 0.8044807289345747,
+     "r2_identity": 0.801830217968021,
+     "rmse_m": 0.08343004227353847,
+     "tier": "statistical"
+    },
+    "random-forest": {
+     "bias_m": 0.05497115856651944,
+     "mae_m": 0.1632544118027027,
+     "mape_pct": 89.64673337659065,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 0.10340489289497595,
+     "r2_identity": -0.23147984052740944,
+     "rmse_m": 0.20797800174330897,
+     "tier": "learned"
+    },
+    "refitted-regression": {
+     "bias_m": 0.03071796573994711,
+     "mae_m": 0.23827304889375547,
+     "mape_pct": 69.61483350133899,
+     "n_abstained": 4,
+     "n_scored": 93,
+     "pearson_r2": 0.16753163234456137,
+     "r2_identity": -4.074591549034062,
+     "rmse_m": 0.43057645820735185,
+     "tier": "statistical"
+    },
+    "stacking": {
+     "bias_m": -0.008926341213058688,
+     "mae_m": 0.21375921693214694,
+     "mape_pct": 99.16161364184165,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 0.329266156200324,
+     "r2_identity": -0.9511705448397898,
+     "rmse_m": 0.26178898144404544,
+     "tier": "learned"
+    },
+    "svr-poly": {
+     "bias_m": 0.14946720957243295,
+     "mae_m": 0.28472484160418254,
+     "mape_pct": 102.43550139620528,
+     "n_abstained": 11,
+     "n_scored": 86,
+     "pearson_r2": 0.051593653151113986,
+     "r2_identity": -4.54571300559865,
+     "rmse_m": 0.43175202935007806,
+     "tier": "learned"
+    },
+    "svr-rbf": {
+     "bias_m": 0.014802148247023325,
+     "mae_m": 0.17664094744762748,
+     "mape_pct": 76.02529672818024,
+     "n_abstained": 1,
+     "n_scored": 96,
+     "pearson_r2": 0.025965220232833354,
+     "r2_identity": -0.386787542598203,
+     "rmse_m": 0.22097854875745948,
+     "tier": "learned"
+    },
+    "xgboost": {
+     "bias_m": 0.030229528785980852,
+     "mae_m": 0.14451700559596425,
+     "mape_pct": 78.68703632961208,
+     "n_abstained": 0,
+     "n_scored": 97,
+     "pearson_r2": 0.16331566945358536,
+     "r2_identity": -0.0341857956443965,
+     "rmse_m": 0.1905912823211162,
+     "tier": "learned"
+    }
+   },
+   "n_folds": 10
+  },
+  "random-8020": {
+   "arms": {
+    "group-discriminant": {
+     "bias_m": null,
+     "mae_m": null,
+     "mape_pct": null,
+     "n_abstained": 19,
+     "n_scored": 0,
+     "pearson_r2": null,
+     "r2_identity": null,
+     "rmse_m": null,
+     "tier": "statistical"
+    },
+    "kuznetsov": {
+     "bias_m": -0.019212868200779738,
+     "mae_m": 0.14917107437094332,
+     "mape_pct": 41.123791411344335,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.26452207390215665,
+     "r2_identity": -0.026785729646553902,
+     "rmse_m": 0.20910422102029805,
+     "tier": "classical"
+    },
+    "null": {
+     "bias_m": -0.04719298245614035,
+     "mae_m": 0.1433333333333333,
+     "mape_pct": 44.39088605357133,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": NaN,
+     "r2_identity": -0.05230088930520882,
+     "rmse_m": 0.2116863507907657,
+     "tier": "control"
+    },
+    "oracle": {
+     "bias_m": 0.0,
+     "mae_m": 0.0,
+     "mape_pct": 0.0,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 1.0,
+     "r2_identity": 1.0,
+     "rmse_m": 0.0,
+     "tier": "control"
+    },
+    "published-neural-net": {
+     "bias_m": -0.05786404960810077,
+     "mae_m": 0.10918713410680009,
+     "mape_pct": 27.651824562942327,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.3515862182167239,
+     "r2_identity": 0.2704465826078757,
+     "rmse_m": 0.17625905430377176,
+     "tier": "learned"
+    },
+    "published-regression": {
+     "bias_m": -0.04181339186574486,
+     "mae_m": 0.0713199698402909,
+     "mape_pct": 17.985890002880307,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.694500747537226,
+     "r2_identity": 0.6322333125937274,
+     "rmse_m": 0.12514372603788748,
+     "tier": "statistical"
+    },
+    "random-forest": {
+     "bias_m": -0.01730057050521018,
+     "mae_m": 0.07279687706107377,
+     "mape_pct": 18.418400754781743,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.6815368404826916,
+     "r2_identity": 0.6486760187793672,
+     "rmse_m": 0.12231417358417809,
+     "tier": "learned"
+    },
+    "refitted-regression": {
+     "bias_m": -0.04588992942005364,
+     "mae_m": 0.08566370199851499,
+     "mape_pct": 22.419596148637243,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.5655119851647535,
+     "r2_identity": 0.5132422148198461,
+     "rmse_m": 0.14397243195654957,
+     "tier": "statistical"
+    },
+    "stacking": {
+     "bias_m": -0.03260744407400645,
+     "mae_m": 0.07227889358734783,
+     "mape_pct": 18.504163091366447,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.7070270436648939,
+     "r2_identity": 0.6669409662420145,
+     "rmse_m": 0.11909224891285418,
+     "tier": "learned"
+    },
+    "svr-poly": {
+     "bias_m": -0.029067676548996623,
+     "mae_m": 0.11526084259714815,
+     "mape_pct": 33.455701365157985,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.25713716036748074,
+     "r2_identity": 0.22107630802732792,
+     "rmse_m": 0.1821253269442877,
+     "tier": "learned"
+    },
+    "svr-rbf": {
+     "bias_m": -0.017969212449627348,
+     "mae_m": 0.0975829847312888,
+     "mape_pct": 29.296491138875563,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.54943126056574,
+     "r2_identity": 0.5409669952362252,
+     "rmse_m": 0.13981212736179544,
+     "tier": "learned"
+    },
+    "xgboost": {
+     "bias_m": -0.030949023663997648,
+     "mae_m": 0.07400033619843031,
+     "mape_pct": 18.824736107535742,
+     "n_abstained": 0,
+     "n_scored": 19,
+     "pearson_r2": 0.7450970917356647,
+     "r2_identity": 0.6940002949858497,
+     "rmse_m": 0.11415196491892673,
+     "tier": "learned"
+    }
+   },
+   "n_folds": 1
+  }
+ },
+ "published_reproduction": {
+  "2010": {
+   "as_published": {
+    "bias_m": -0.049230769230769224,
+    "mae_m": 0.05538461538461537,
+    "mape_pct": 20.146625641398316,
+    "n_abstained": 0,
+    "n_scored": 13,
+    "pearson_r2": 0.8663625408897918,
+    "r2_identity": 0.7466596250330078,
+    "rmse_m": 0.07534535869529772
+   },
+   "gain_in_r2_identity": 0.10699364102648856,
+   "n_rows": 13,
+   "recomputed": {
+    "bias_m": -0.037146313982453126,
+    "mae_m": 0.04387629479134659,
+    "mape_pct": 15.550431205088081,
+    "n_abstained": 0,
+    "n_scored": 13,
+    "pearson_r2": 0.9426006373089697,
+    "r2_identity": 0.8536532660594963,
+    "rmse_m": 0.05726586400356738
+   }
+  },
+  "2012": {
+   "as_published": {
+    "bias_m": -0.04833333333333333,
+    "mae_m": 0.06,
+    "mape_pct": 18.29703812811859,
+    "n_abstained": 0,
+    "n_scored": 12,
+    "pearson_r2": 0.8197132286617129,
+    "r2_identity": 0.7082138200782269,
+    "rmse_m": 0.07884584115009913
+   },
+   "gain_in_r2_identity": 0.11899987602029394,
+   "n_rows": 12,
+   "recomputed": {
+    "bias_m": -0.03941580556499314,
+    "mae_m": 0.04835868727328988,
+    "mape_pct": 15.226472345368537,
+    "n_abstained": 0,
+    "n_scored": 12,
+    "pearson_r2": 0.9003583998377843,
+    "r2_identity": 0.8272136960985208,
+    "rmse_m": 0.060673785088883894
+   }
+  },
+  "published_holdout_arms": {
+   "classical": {
+    "bias_m": 0.0033333333333333327,
+    "mae_m": 0.09499999999999999,
+    "mape_pct": 34.864566610979416,
+    "n_abstained": 0,
+    "n_scored": 12,
+    "pearson_r2": 0.569818356618675,
+    "r2_identity": 0.23181225554106932,
+    "rmse_m": 0.12793227374930324
+   },
+   "neural-net": {
+    "bias_m": -0.02416666666666667,
+    "mae_m": 0.03416666666666667,
+    "mape_pct": 12.454065313309378,
+    "n_abstained": 0,
+    "n_scored": 12,
+    "pearson_r2": 0.9371785094435324,
+    "r2_identity": 0.9096479791395046,
+    "rmse_m": 0.043874821936960615
+   },
+   "null": {
+    "bias_m": -0.014089347079037766,
+    "mae_m": 0.1270962199312715,
+    "mape_pct": 42.72345319112973,
+    "n_abstained": 0,
+    "n_scored": 12,
+    "pearson_r2": NaN,
+    "r2_identity": -0.00931727410702643,
+    "rmse_m": 0.14664264474111596
+   },
+   "regression": {
+    "bias_m": -0.04833333333333333,
+    "mae_m": 0.06,
+    "mape_pct": 18.29703812811859,
+    "n_abstained": 0,
+    "n_scored": 12,
+    "pearson_r2": 0.8197132286617129,
+    "r2_identity": 0.7082138200782269,
+    "rmse_m": 0.07884584115009913
+   }
+  },
+  "without_the_leaked_row": {
+   "classical": {
+    "bias_m": -0.019999999999999997,
+    "mae_m": 0.07999999999999999,
+    "mape_pct": 32.89573274557438,
+    "n_abstained": 0,
+    "n_scored": 11,
+    "pearson_r2": 0.5803038149896406,
+    "r2_identity": 0.4478135474316004,
+    "rmse_m": 0.10820855284630188
+   },
+   "neural-net": {
+    "bias_m": -0.023636363636363636,
+    "mae_m": 0.034545454545454546,
+    "mape_pct": 12.993367693570702,
+    "n_abstained": 0,
+    "n_scored": 11,
+    "pearson_r2": 0.9314191652185075,
+    "r2_identity": 0.9048250058461298,
+    "rmse_m": 0.044924178547657595
+   },
+   "regression": {
+    "bias_m": -0.058181818181818175,
+    "mae_m": 0.05999999999999999,
+    "mape_pct": 18.77463447968668,
+    "n_abstained": 0,
+    "n_scored": 11,
+    "pearson_r2": 0.8651858138989748,
+    "r2_identity": 0.6956115051835685,
+    "rmse_m": 0.08034018580103891
+   }
+  }
+ },
+ "schema": "fragmenta.benchmark/v1",
+ "seed": 0,
+ "site_counts": {
+  "Akdaglar": 22,
+  "Dongri-Buzurg": 9,
+  "Enusa": 12,
+  "Miami": 6,
+  "Mrica": 11,
+  "Murgul": 7,
+  "Ozmert": 7,
+  "Reocin": 10,
+  "Reocin-UG": 6,
+  "Soma": 7
+ },
+ "sites": [
+  "Akdaglar",
+  "Dongri-Buzurg",
+  "Enusa",
+  "Miami",
+  "Mrica",
+  "Murgul",
+  "Ozmert",
+  "Reocin",
+  "Reocin-UG",
+  "Soma"
+ ],
+ "verdict": {
+  "arms_with_positive_variance_explained_across_sites": [
+   [
+    "published-regression",
+    0.801830217968021
+   ],
+   [
+    "kuznetsov",
+    0.31122736550787145
+   ]
+  ],
+  "best_learned_arm": "xgboost",
+  "best_learned_is_positive": false,
+  "best_learned_r2_identity": -0.0341857956443965,
+  "criterion": "The learned tier counts as generalising across sites only if the best learned arm's variance explained under leave-one-site-out is BOTH positive and at least 0.10 above the null model's. Both halves are required: a margin over a null that is itself deeply negative is not skill, it is two models failing by different amounts.",
+  "generalises_across_sites": false,
+  "margin_over_null": 0.18206863821617536,
+  "median_protocol_gap": 0.8801558593067766,
+  "n_learned_arms": 6,
+  "n_learned_arms_positive": 0,
+  "null_r2_identity": -0.21625443386057186,
+  "outcome": "THE LEARNED TIER DOES NOT GENERALISE ACROSS SITES. Every learned arm has NEGATIVE variance explained under leave-one-site-out; the best of them, xgboost, scores -0.034, which is worse than predicting a constant. Its 0.182 margin over the null is two models failing by different amounts, not skill.",
+  "protocol_gap_random_minus_grouped": {
+   "kuznetsov": -0.33801309515442535,
+   "null": 0.16395354455536304,
+   "oracle": 0.0,
+   "published-neural-net": 0.8960072829700418,
+   "published-regression": -0.16959690537429362,
+   "random-forest": 0.8801558593067766,
+   "refitted-regression": 4.587833763853908,
+   "stacking": 1.6181115110818043,
+   "svr-poly": 4.766789313625978,
+   "svr-rbf": 0.9277545378344282,
+   "xgboost": 0.7281860906302462
+  }
+ }
+}
