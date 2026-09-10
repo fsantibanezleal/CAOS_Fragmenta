@@ -30,6 +30,7 @@ import {
   degenerateReason,
   type LiveBlast,
 } from '../src/engine/live';
+import { ARMS } from '../src/lib/artifacts';
 import type { CaseArtifact, CaseIndex } from '../src/lib/contract.types';
 
 const DERIVED = join(process.cwd(), '..', 'data', 'derived');
@@ -43,6 +44,9 @@ function readCase(caseId: string): CaseArtifact {
 
 const index = readIndex();
 const cases = index.cases.map((entry) => readCase(entry.case_id));
+const benchmark: { protocols: Record<string, { arms: Record<string, unknown> }> } = JSON.parse(
+  readFileSync(join(DERIVED, 'benchmark.json'), 'utf8'),
+);
 
 /* ------------------------------------------------------------------------------------------- */
 
@@ -320,4 +324,20 @@ test('every artifact path the app fetches is root-absolute', () => {
   for (const path of paths) {
     assert.ok(path.startsWith('/'), `${path} is relative and will break on a nested route`);
   }
+});
+
+test('every arm in every shipped artifact has an entry in the arm catalogue', () => {
+  // Without this, an arm the pipeline produces but the UI has never heard of renders as its raw id
+  // with no tier, no label and no source. Two did: `svr-poly` and `oracle` appeared in the
+  // benchmark table as bare slugs beside properly named models.
+  const known = new Set(ARMS.map((a) => a.id));
+  const seen = new Set<string>();
+  for (const protocol of Object.values(benchmark.protocols)) {
+    for (const id of Object.keys(protocol.arms)) seen.add(id);
+  }
+  for (const one of cases) {
+    for (const id of Object.keys(one.predictions)) seen.add(id);
+  }
+  const missing = [...seen].filter((id) => !known.has(id));
+  assert.deepEqual(missing, [], `arms with no catalogue entry: ${missing.join(', ')}`);
 });

@@ -306,7 +306,7 @@ function PredictTab({
             nullMeanM={artifact.null_mean_m}
             selected={selectedBlast}
             onSelect={onSelectBlast}
-            height={340}
+            height={520}
           />
         ) : (
           <p className="fr-note">

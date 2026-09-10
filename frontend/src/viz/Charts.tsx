@@ -479,6 +479,10 @@ export interface LineChartProps {
   valueFormat?: (value: number) => string;
   yRange?: [number, number];
   zeroLine?: boolean;
+  /** Exact x positions to tick. Without this uPlot picks its own and a categorical axis repeats. */
+  xTicks?: number[];
+  /** Show a legend that can solo a series. Necessary past about four lines. */
+  legend?: boolean;
 }
 
 export function LineChart({
@@ -493,7 +497,12 @@ export function LineChart({
   valueFormat,
   yRange,
   zeroLine = false,
+  xTicks,
+  legend = false,
 }: LineChartProps) {
+  // Click a legend entry to solo it, click again to release. With a dozen lines crossing each other
+  // the readout alone is not enough: the reader needs to be able to isolate one and follow it.
+  const [solo, setSolo] = useState<string | null>(null);
   const [ref, box] = useBox<HTMLDivElement>();
   const plotRef = useRef<uPlot | null>(null);
   const epoch = useThemeEpoch();
@@ -519,6 +528,10 @@ export function LineChart({
           label: xLabel,
           labelSize: 22,
           values: xTickFormat ? (_u, ticks) => ticks.map(xTickFormat) : undefined,
+          // Pinned, when given. On a categorical axis uPlot otherwise fills the range with ticks
+          // and every one of them rounds to the same label, so the axis reads as the same word
+          // printed twenty times.
+          ...(xTicks ? { splits: () => xTicks } : {}),
         },
         {
           stroke: text,
@@ -534,7 +547,10 @@ export function LineChart({
         ...series.map((s, i) => ({
           label: s.label,
           stroke: s.colour ?? colours[i % colours.length],
-          width: s.width ?? 2,
+          width: solo && solo !== s.id ? 1 : (s.width ?? 2),
+          // A soloed chart DIMS the rest rather than hiding them, so the reader keeps the context
+          // of where the chosen line sits among the others.
+          alpha: solo && solo !== s.id ? 0.12 : 1,
           dash: s.dashed ? [6, 4] : undefined,
           points: { show: x.length < 40, size: 5 },
           spanGaps: false,
@@ -602,6 +618,8 @@ export function LineChart({
     yLabel,
     height,
     logX,
+    solo,
+    xTicks,
     xTickFormat,
     yTickFormat,
     yRange,
@@ -614,6 +632,22 @@ export function LineChart({
   return (
     <div className="fr-chart">
       <div ref={ref} className="fr-chart-canvas" style={{ minHeight: height }} />
+      {legend ? (
+        <div className="fr-legend">
+          {series.map((s, i) => (
+            <button
+              key={s.id}
+              type="button"
+              className={`fr-legend-item${solo === s.id ? ' fr-legend-solo' : ''}`}
+              aria-pressed={solo === s.id}
+              onClick={() => setSolo(solo === s.id ? null : s.id)}
+            >
+              <i style={{ background: s.colour ?? palette()[i % palette().length] }} />
+              {s.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
       <div className="fr-readout" role="status" aria-live="polite">
         {readout ? (
           <>

@@ -365,6 +365,45 @@
   justify-content: center;
 }
 
+/* Past about four lines a hover readout is not enough: the reader needs to isolate one and follow
+ * it. Clicking an entry dims the others rather than hiding them, so the context stays. */
+.fr-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 6px 4px 0;
+}
+
+.fr-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  padding: 2px 6px;
+  font: inherit;
+  font-size: 0.72rem;
+  color: var(--color-fg-subtle);
+  cursor: pointer;
+}
+
+.fr-legend-item:hover {
+  border-color: var(--color-border);
+  color: var(--color-fg);
+}
+
+.fr-legend-item i {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.fr-legend-solo {
+  border-color: var(--color-accent);
+  color: var(--color-fg);
+}
+
 .fr-readout {
   display: flex;
   flex-wrap: wrap;
