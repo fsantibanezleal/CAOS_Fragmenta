@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -132,16 +133,32 @@ def build_case_artifact(
         "controls": evaluation.controls,
         "geometry_report": _serialisable(prepared.geometry_report),
     }
+    # Applied to the WHOLE payload, not only to the geometry report: a non-finite value can appear
+    # in any metric block, and one of them anywhere makes the file unparseable in a browser.
+    payload = _serialisable(payload)
     payload["digest"] = digest(payload)
     return payload
 
 
 def _serialisable(value: Any) -> Any:
-    """Tuples become lists so the artifact round-trips through JSON unchanged."""
+    """Make a value safe to write as JSON that a BROWSER can read.
+
+    Two conversions, and the second is a ship-blocker rather than tidiness.
+
+    Tuples become lists, so the artifact round-trips unchanged.
+
+    **Non-finite floats become null.** Python writes `NaN` and `Infinity` into JSON quite happily;
+    neither is valid JSON, and `JSON.parse` in a browser throws on the first one. A single NaN
+    anywhere in a file makes the whole artifact unreadable, and the failure surfaces as a blank page
+    rather than as an error anyone can trace. A correlation over predictions that are all identical
+    produces exactly that NaN, which is how this was found.
+    """
     if isinstance(value, dict):
         return {k: _serialisable(v) for k, v in value.items()}
     if isinstance(value, (list, tuple)):
         return [_serialisable(v) for v in value]
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
     return value
 
 
@@ -149,6 +166,9 @@ def write_artifact(root: Path, case_id: str, payload: dict) -> tuple[Path, int]:
     directory = root / case_id
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / "case.json"
-    text = json.dumps(payload, indent=1, sort_keys=True, default=str)
+    # allow_nan=False makes the writer RAISE on a non-finite value rather than emitting invalid
+    # JSON. Belt and braces with _serialisable above, deliberately: this one cannot be forgotten
+    # when a new field is added.
+    text = json.dumps(payload, indent=1, sort_keys=True, default=str, allow_nan=False)
     path.write_text(text, encoding="utf-8")
     return path, len(text.encode("utf-8"))

@@ -355,7 +355,7 @@
   }
  },
  "controls": {},
- "digest": "bf49b64b22f6905c500d447493a4a40b396e3348b6542f8051ac47ea5f15374c",
+ "digest": "910d0dd05e6b03cfdf1346020dacd22c99f08f21039b9a7c0695d4220520f538",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3346,7 +3346,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 12,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -1.066078582074077,
    "r2_identity_interval": [
     -6.482166438188252,

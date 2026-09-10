@@ -2,14 +2,14 @@
  "app_version": "0.01.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 73427,
+  "bytes": 73428,
   "format": "json",
   "path": "real-enusa/case.json"
  },
  "case_id": "real-enusa",
  "category": "real-campaign",
  "controls": {},
- "digest": "bf49b64b22f6905c500d447493a4a40b396e3348b6542f8051ac47ea5f15374c",
+ "digest": "910d0dd05e6b03cfdf1346020dacd22c99f08f21039b9a7c0695d4220520f538",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
@@ -21,7 +21,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 73427,
+  "trace_bytes": 73428,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

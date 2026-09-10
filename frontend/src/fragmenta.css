@@ -1,0 +1,919 @@
+/* Fragmenta layout.
+ *
+ * The UI floor is the minimum here and it is measured rather than judged by eye: the page IS the
+ * viewport, the workbench uses the full width, every ancestor of a scrollable row carries
+ * min-width: 0, navigation chrome gets ONE row, and the instrument owns at least half the App route
+ * and at least 80 percent of the focus route.
+ *
+ * The prose routes are legitimately taller than the screen and scroll INSIDE their own container,
+ * because clipping them is how a content page silently hides its own content.
+ */
+
+:root {
+  --fr-rail: 320px;
+  --fr-gap: 12px;
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * The workbench route
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-layout {
+  display: grid;
+  grid-template-columns: var(--fr-rail) minmax(0, 1fr);
+  gap: var(--fr-gap);
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+.fr-rail {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fr-main {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The instrument gets at least half an App route, and getting there is a chain, not one rule.
+ *
+ * The shell's own `.tabs` wrapper is a plain BLOCK, so as a flex item it sizes to its content and
+ * every descendant inherits that ceiling. Making it a filling flex column is what actually releases
+ * the height; styling the tab panel alone is not enough. */
+.fr-main > .tabs {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* `:not([hidden])` is load-bearing. The shell keeps EVERY tab panel mounted and hides the inactive
+ * ones with the `hidden` attribute; `[hidden] { display: none }` is one class of specificity, so a
+ * two-class `display: flex` beats it and every hidden panel comes back as an empty box stacked above
+ * the active one. */
+.fr-main .tabpanel:not([hidden]) {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.fr-grid {
+  display: grid;
+  gap: var(--fr-gap);
+  min-height: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.fr-grid-2 {
+  grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .fr-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fr-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.fr-stage {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fr-stage-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--color-fg);
+}
+
+.fr-side {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Panels
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  min-width: 0;
+}
+
+.fr-panel h3 {
+  margin: 0 0 8px;
+  font-size: 0.86rem;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-fg);
+}
+
+.fr-panel h4 {
+  margin: 12px 0 6px;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--color-fg-subtle);
+}
+
+.fr-panel-case .fr-case-reason {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-fg-subtle);
+}
+
+.fr-kv {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 3px 10px;
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.fr-kv-wide {
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  font-size: 0.85rem;
+}
+
+.fr-kv dt {
+  color: var(--color-fg-subtle);
+  min-width: 0;
+}
+
+.fr-kv dd {
+  margin: 0;
+  color: var(--color-fg);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fr-kv-metrics dd {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.fr-note {
+  margin: 8px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--color-fg-subtle);
+}
+
+.fr-note-warn {
+  color: var(--color-warn);
+}
+
+.fr-note-ok {
+  color: var(--color-good);
+}
+
+.fr-fine {
+  margin: 6px 0 0;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--color-fg-faint);
+}
+
+.fr-ok {
+  color: var(--color-good);
+}
+.fr-bad {
+  color: var(--color-bad);
+}
+.fr-warn {
+  color: var(--color-warn);
+}
+
+.fr-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-fg-subtle);
+}
+
+.fr-list li {
+  margin-bottom: 5px;
+}
+
+.fr-list b {
+  color: var(--color-fg);
+}
+
+.fr-reasons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.74rem;
+}
+
+.fr-reasons li {
+  display: grid;
+  grid-template-columns: minmax(0, 110px) minmax(0, 1fr);
+  gap: 8px;
+  padding: 5px 0;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-fg-subtle);
+}
+
+.fr-reasons code {
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
+
+.fr-controls {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  font-size: 0.7rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.fr-controls li {
+  padding: 2px 0;
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Controls
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-select {
+  width: 100%;
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--color-fg);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  min-width: 0;
+}
+
+.fr-select-compact {
+  width: auto;
+  min-width: 200px;
+}
+
+.fr-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 8px 0 0;
+  font-size: 0.76rem;
+  color: var(--color-fg-subtle);
+}
+
+.fr-control input[type='range'] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--color-accent);
+}
+
+.fr-control select {
+  grid-column: 1 / -1;
+}
+
+.fr-control output {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.74rem;
+  color: var(--color-fg);
+}
+
+.fr-inline-controls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.fr-inline-controls .fr-control {
+  min-width: 220px;
+  flex: 1 1 220px;
+}
+
+.fr-btn {
+  padding: 5px 10px;
+  font: inherit;
+  font-size: 0.76rem;
+  color: var(--color-fg);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.fr-btn:hover {
+  border-color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Charts
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-chart {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.fr-chart-canvas {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.fr-parity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fr-readout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 6px 4px 2px;
+  border-top: 1px solid var(--color-border);
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--color-fg-subtle);
+  min-height: 28px;
+}
+
+.fr-readout-key {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-weight: 650;
+  color: var(--color-fg);
+}
+
+.fr-readout-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fr-readout-item i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.fr-readout-item b {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.fr-readout-hint {
+  color: var(--color-fg-faint);
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * The bench
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-bench {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  gap: 6px;
+}
+
+.fr-bench-canvas {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fr-bench-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  color: var(--color-fg-subtle);
+}
+
+.fr-bench-dims {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Tables
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-scroll-x {
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.fr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin: 8px 0;
+}
+
+.fr-table-wide {
+  min-width: 720px;
+}
+
+.fr-table th,
+.fr-table td {
+  text-align: left;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.fr-table th {
+  color: var(--color-fg-subtle);
+  font-weight: 600;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.fr-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.fr-table-compact {
+  font-size: 0.72rem;
+}
+
+.fr-table tbody tr[role='button'] {
+  cursor: pointer;
+}
+
+.fr-table tbody tr[role='button']:hover {
+  background: var(--color-surface-2);
+}
+
+.fr-row-selected {
+  background: var(--color-accent-soft);
+}
+
+.fr-row-null td {
+  color: var(--color-fg-faint);
+  font-style: italic;
+}
+
+.fr-row-good td:first-child {
+  font-weight: 650;
+}
+
+.fr-row-bad {
+  background: color-mix(in srgb, var(--color-bad) 10%, transparent);
+}
+
+.fr-armtable {
+  margin-top: 4px;
+}
+
+.fr-bar {
+  display: inline-block;
+  width: 130px;
+  height: 7px;
+  background: var(--color-surface-2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.fr-bar span {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Badges, chips, verdicts
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  color: var(--color-fg-subtle);
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+.fr-badge-classical {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.fr-badge-statistical {
+  border-color: var(--color-accent-2);
+  color: var(--color-accent-2);
+}
+.fr-badge-learned {
+  border-color: var(--color-magenta);
+  color: var(--color-magenta);
+}
+.fr-badge-semi-mechanistic {
+  border-color: var(--color-warn);
+  color: var(--color-warn);
+}
+.fr-badge-control {
+  border-color: var(--color-fg-faint);
+  color: var(--color-fg-faint);
+}
+.fr-badge-warn {
+  border-color: var(--color-warn);
+  color: var(--color-warn);
+}
+
+.fr-chip {
+  display: inline-block;
+  padding: 2px 9px;
+  margin: 2px 4px 2px 0;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  font-size: 0.7rem;
+  color: var(--color-fg);
+  text-decoration: none;
+}
+
+.fr-chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.fr-verdict {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px;
+  border-radius: 9px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.fr-verdict div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fr-verdict strong {
+  font-size: 0.84rem;
+}
+
+.fr-verdict span {
+  font-size: 0.74rem;
+  color: var(--color-fg-subtle);
+}
+
+.fr-verdict-ok {
+  border-color: var(--color-good);
+  color: var(--color-good);
+}
+
+.fr-verdict-bad {
+  border-color: var(--color-bad);
+  color: var(--color-bad);
+}
+
+.fr-metric {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 6px 0 0;
+  color: var(--color-fg);
+}
+
+.fr-metric-small {
+  font-size: 0.75rem;
+  margin: 4px 0 0;
+  color: var(--color-fg-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.fr-rockcompare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.fr-rockcard {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--color-surface);
+}
+
+.fr-rockcard h4 {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.fr-rockcard-on {
+  border-color: var(--color-good);
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Prose routes
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-prose {
+  max-width: 78ch;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  min-width: 0;
+}
+
+/* A route that is mostly tables and charts needs the screen, so it opts out of the reading measure.
+ * The measure is for prose; capping an instrument at a reading width throws away the screen it
+ * exists to use. */
+.fr-prose-wide {
+  max-width: min(1400px, 100%);
+}
+
+.fr-prose h1 {
+  font-size: 1.5rem;
+  margin: 4px 0 12px;
+}
+
+.fr-prose h2 {
+  font-size: 1.08rem;
+  margin: 28px 0 10px;
+}
+
+.fr-prose h3 {
+  font-size: 0.94rem;
+  margin: 20px 0 8px;
+}
+
+.fr-prose p {
+  font-size: 0.88rem;
+  line-height: 1.68;
+  margin: 0 0 12px;
+}
+
+.fr-lede {
+  font-size: 0.98rem !important;
+  line-height: 1.6 !important;
+  color: var(--color-fg-subtle);
+}
+
+.fr-prose .fr-list {
+  font-size: 0.86rem;
+}
+
+.fr-symbols {
+  display: grid;
+  grid-template-columns: minmax(0, 64px) minmax(0, 1fr);
+  gap: 6px 14px;
+  margin: 12px 0 16px;
+  font-size: 0.82rem;
+}
+
+.fr-symbols dt {
+  text-align: right;
+  color: var(--color-fg);
+}
+
+.fr-symbols dd {
+  margin: 0;
+  color: var(--color-fg-subtle);
+}
+
+.fr-code {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.fr-callout {
+  border: 1px solid var(--color-border);
+  border-left-width: 3px;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 16px 0;
+  background: var(--color-surface);
+}
+
+.fr-callout-strong {
+  border-left-color: var(--color-accent);
+}
+
+.fr-callout p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.fr-callout-figures {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.fr-callout-figures li {
+  display: flex;
+  flex-direction: column;
+}
+
+.fr-callout-figures b {
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-good);
+}
+
+.fr-callout-figures .fr-bad b,
+.fr-callout-figures li.fr-bad b {
+  color: var(--color-bad);
+}
+
+.fr-callout-figures span {
+  font-size: 0.7rem;
+  color: var(--color-fg-subtle);
+}
+
+.fr-figure {
+  margin: 16px 0 20px;
+  min-width: 0;
+}
+
+.fr-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.fr-figure figcaption {
+  margin-top: 6px;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--color-fg-subtle);
+}
+
+.fr-inline-link {
+  font-size: 0.78rem;
+  color: var(--color-accent);
+}
+
+.fr-focus-link {
+  display: block;
+  text-align: center;
+  padding: 7px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.76rem;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.fr-focus-link:hover {
+  border-color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * The focus route: the instrument owns at least 80 percent
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-focus {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  min-width: 0;
+}
+
+.fr-focus-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.fr-focus-bar h1 {
+  font-size: 0.94rem;
+  margin: 0;
+  font-weight: 650;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fr-focus-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.fr-focus-metrics {
+  margin-left: auto;
+  font-size: 0.74rem;
+  color: var(--color-fg-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.fr-focus-metrics b {
+  color: var(--color-fg);
+}
+
+.fr-focus-stage {
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  padding: 10px 14px;
+}
+
+.fr-focus-foot {
+  padding: 6px 14px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.7rem;
+  color: var(--color-fg-faint);
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * States
+ * ------------------------------------------------------------------------------------------- */
+
+.fr-loading,
+.fr-error {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--color-fg-subtle);
+}
+
+.fr-error {
+  color: var(--color-bad);
+}
+
+.fr-error p {
+  font-size: 0.8rem;
+  max-width: 70ch;
+  margin: 8px auto;
+  overflow-wrap: anywhere;
+}

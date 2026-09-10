@@ -1,7 +1,7 @@
 {
  "app_version": "0.01.000",
  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
- "digest": "6d2b9ba5c6ca7f1a5c458c0390fd1035bc9b4e97066cec6ef5fbe7e3dfd07f90",
+ "digest": "9ff5e64ec7f3de13a7fdfbc48879b5a9e17794776c681935eb8b8c463c8c373d",
  "duplicate_groups": [
   [
    "En1",
@@ -164,7 +164,7 @@
      "mape_pct": 67.72973834011569,
      "n_abstained": 0,
      "n_scored": 17,
-     "pearson_r2": NaN,
+     "pearson_r2": null,
      "r2_identity": -0.00702678140226598,
      "rmse_m": 0.1736345391368679,
      "tier": "control"
@@ -438,7 +438,7 @@
      "mape_pct": 44.39088605357133,
      "n_abstained": 0,
      "n_scored": 19,
-     "pearson_r2": NaN,
+     "pearson_r2": null,
      "r2_identity": -0.05230088930520882,
      "rmse_m": 0.2116863507907657,
      "tier": "control"
@@ -622,7 +622,7 @@
     "mape_pct": 42.72345319112973,
     "n_abstained": 0,
     "n_scored": 12,
-    "pearson_r2": NaN,
+    "pearson_r2": null,
     "r2_identity": -0.00931727410702643,
     "rmse_m": 0.14664264474111596
    },

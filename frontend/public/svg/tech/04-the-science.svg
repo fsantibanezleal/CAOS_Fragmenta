@@ -1,73 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" class="arch-svg" role="img" aria-label="The science / algorithm flow, placeholder, specialise per product">
-  <!-- PLACEHOLDER (template). Each product REPLACES this with its real algorithm,
-       step by step, with the genuine equations. Keep the shell tokens (themed). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" class="arch-svg" role="img" aria-label="The science flow: from a dimensionless corpus back to patterns, then to twelve models">
   <style>
     .arch-svg text { font-family: var(--font-sans, Inter, "Segoe UI", system-ui, sans-serif); }
     .arch-svg .mono { font-family: var(--font-mono, ui-monospace, Consolas, monospace); }
     .arch-svg .bx { fill: var(--color-surface-2); stroke: var(--color-border); stroke-width: 1.2; }
-    .arch-svg .bx-hi { stroke: var(--color-accent); }
-    .arch-svg .bx-good { stroke: var(--color-good); }
-    .arch-svg .ttl { fill: var(--color-fg); font-size: 13px; font-weight: 700; }
-    .arch-svg .sub { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .it { fill: var(--color-fg); font-size: 10.5px; }
+    .arch-svg .bx-hi { stroke: var(--color-accent); stroke-width: 1.8; }
+    .arch-svg .bx-good { stroke: var(--color-good); stroke-width: 1.8; }
+    .arch-svg .bx-bad { stroke: var(--color-bad); stroke-width: 1.8; }
+    .arch-svg .bx-warn { stroke: var(--color-warn); stroke-width: 1.8; }
+    .arch-svg .ttl { fill: var(--color-fg); font-size: 14px; font-weight: 700; }
+    .arch-svg .hd { fill: var(--color-fg); font-size: 12px; font-weight: 650; }
     .arch-svg .cd { fill: var(--color-accent); font-size: 9.5px; }
-    .arch-svg .eq { fill: var(--color-fg); font-size: 12px; font-style: italic; }
     .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10px; }
+    .arch-svg .good { fill: var(--color-good); font-size: 10.5px; font-weight: 600; }
+    .arch-svg .bad { fill: var(--color-bad); font-size: 10.5px; font-weight: 600; }
     .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.6; }
-    .arch-svg .ph { fill: var(--color-warn); font-size: 10px; font-weight: 600; }
   </style>
   <defs>
-    <marker id="sc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="fa4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L8,4 L0,8 z" fill="var(--color-fg-faint)"/>
     </marker>
   </defs>
 
-  <text class="ttl" x="22" y="30">The science / algorithm flow</text>
-  <text class="ph" x="22" y="47">PLACEHOLDER, replace with this product's real stages + equations (e.g. image → watershed → PSD → Rosin–Rammler)</text>
+  <text class="ttl" x="22" y="26"><tspan class="l-en">The obstacle, and how it was closed</tspan><tspan class="l-es" x="22">El obstaculo, y como se cerro</tspan></text>
 
-  <!-- staged pipeline -->
-  <rect class="bx bx-hi" x="20" y="78" width="180" height="92" rx="10"/>
-  <text class="it" x="34" y="104">① Ingest + normalise</text>
-  <text class="mu" x="34" y="124">validated input (Contract 1)</text>
-  <text class="cd mono" x="34" y="150">stages/01_*.py</text>
+  <rect class="bx bx-bad" x="20" y="42" width="220" height="112" rx="10"/>
+  <text class="hd" x="32" y="64"><tspan class="l-en">The corpus is dimensionless</tspan><tspan class="l-es" x="32">El corpus es adimensional</tspan></text>
+  <text class="mono cd" x="32" y="84">S/B  H/B  B/D  T/B  Pf  XB  E</text>
+  <text class="mu" x="32" y="104"><tspan class="l-en">Seven ratios and no dimensions.</tspan><tspan class="l-es" x="32">Siete razones y ninguna dimension.</tspan></text>
+  <text class="mu" x="32" y="120"><tspan class="l-en">The classical equation needs a rock</tspan><tspan class="l-es" x="32">La ecuacion clasica necesita volumen</tspan></text>
+  <text class="mu" x="32" y="134"><tspan class="l-en">volume and a charge mass per hole,</tspan><tspan class="l-es" x="32">de roca y masa de carga por barreno,</tspan></text>
+  <text class="bad" x="32" y="150"><tspan class="l-en">so it could not run at all.</tspan><tspan class="l-es" x="32">asi que no podia correr.</tspan></text>
 
-  <rect class="bx bx-hi" x="232" y="78" width="180" height="92" rx="10"/>
-  <text class="it" x="246" y="104">② Core transform</text>
-  <text class="mu" x="246" y="124">the real method / model</text>
-  <text class="cd mono" x="246" y="150">stages/02_*.py</text>
+  <path class="flow" d="M244,98 L280,98" marker-end="url(#fa4)"/>
 
-  <rect class="bx bx-hi" x="444" y="78" width="180" height="92" rx="10"/>
-  <text class="it" x="458" y="104">③ Estimate + fit</text>
-  <text class="mu" x="458" y="124">parameters, uncertainty</text>
-  <text class="cd mono" x="458" y="150">stages/03_*.py</text>
+  <rect class="bx bx-good" x="284" y="42" width="230" height="112" rx="10"/>
+  <text class="hd" x="296" y="64"><tspan class="l-en">The source prose closes it</tspan><tspan class="l-es" x="296">La prosa de la fuente lo cierra</tspan></text>
+  <text class="mono cd" x="296" y="84">B = (B/D) x D</text>
+  <text class="mono cd" x="296" y="98">S, H, T from their ratios</text>
+  <text class="mono cd" x="296" y="112">V = B x S x H,  Q = Pf x V</text>
+  <text class="mu" x="296" y="132"><tspan class="l-en">a hole diameter for 8 of 10 sites,</tspan><tspan class="l-es" x="296">un diametro en 8 de 10 sitios,</tspan></text>
+  <text class="mu" x="296" y="146"><tspan class="l-en">a 9th inverted from its bench height</tspan><tspan class="l-es" x="296">un 9 invertido de su altura de banco</tspan></text>
 
-  <rect class="bx bx-good" x="656" y="78" width="180" height="92" rx="10"/>
-  <text class="it" x="670" y="104">④ Metrics + artifact</text>
-  <text class="mu" x="670" y="124">scored vs baseline / truth</text>
-  <text class="cd mono" x="670" y="150">stages/04_*.py</text>
+  <path class="flow" d="M518,98 L554,98" marker-end="url(#fa4)"/>
 
-  <path class="flow" d="M200,124 H230" marker-end="url(#sc-arrow)"/>
-  <path class="flow" d="M412,124 H442" marker-end="url(#sc-arrow)"/>
-  <path class="flow" d="M624,124 H654" marker-end="url(#sc-arrow)"/>
+  <rect class="bx bx-good" x="558" y="42" width="150" height="112" rx="10"/>
+  <text class="hd" x="570" y="64"><tspan class="l-en">Verified</tspan><tspan class="l-es" x="570">Verificado</tspan></text>
+  <text class="good" x="570" y="86">15 / 15</text>
+  <text class="mu" x="570" y="106"><tspan class="l-en">dimensional constraints</tspan><tspan class="l-es" x="570">restricciones dimensionales</tspan></text>
+  <text class="mu" x="570" y="120"><tspan class="l-en">the same prose states,</tspan><tspan class="l-es" x="570">que la misma prosa declara,</tspan></text>
+  <text class="mu" x="570" y="134"><tspan class="l-en">across 9 sites, asserted</tspan><tspan class="l-es" x="570">en 9 sitios, comprobadas</tspan></text>
+  <text class="mu" x="570" y="148"><tspan class="l-en">at bake time</tspan><tspan class="l-es" x="570">al hornear</tspan></text>
 
-  <!-- equation band -->
-  <rect class="bx" x="20" y="200" width="816" height="86" rx="10"/>
-  <text class="it" x="36" y="224">The governing relation (replace with the product's real equation):</text>
-  <text class="eq" x="36" y="256">y = f( x ; θ )            P(x) = 1 − exp[ −(x / x_c)^n ]            (placeholder)</text>
-  <text class="mu" x="36" y="276">render the real maths with KaTeX on the Methodology page; this SVG mirrors it visually.</text>
+  <rect class="bx bx-bad" x="724" y="42" width="160" height="112" rx="10"/>
+  <text class="hd" x="736" y="64"><tspan class="l-en">The 10th site</tspan><tspan class="l-es" x="736">El decimo sitio</tspan></text>
+  <text class="mu" x="736" y="84"><tspan class="l-en">publishes nothing absolute,</tspan><tspan class="l-es" x="736">no publica nada absoluto,</tspan></text>
+  <text class="mu" x="736" y="98"><tspan class="l-en">so its 6 blasts are not</tspan><tspan class="l-es" x="736">asi que sus 6 tiros no son</tspan></text>
+  <text class="mu" x="736" y="112"><tspan class="l-en">reconstructable and every</tspan><tspan class="l-es" x="736">reconstruibles y todo modelo</tspan></text>
+  <text class="mu" x="736" y="126"><tspan class="l-en">model that needs a volume</tspan><tspan class="l-es" x="736">que necesite un volumen</tspan></text>
+  <text class="bad" x="736" y="144"><tspan class="l-en">ABSTAINS, with a reason.</tspan><tspan class="l-es" x="736">SE ABSTIENE, con razon.</tspan></text>
 
-  <!-- baseline vs learned -->
-  <rect class="bx" x="20" y="312" width="404" height="128" rx="10"/>
-  <text class="it" x="36" y="336" style="font-weight:700">Classical baseline</text>
-  <text class="mu" x="36" y="358">a transparent, deterministic method , </text>
-  <text class="mu" x="36" y="378">the honest reference every result is</text>
-  <text class="mu" x="36" y="398">measured against.</text>
-  <text class="cd mono" x="36" y="424">src/&lt;domain&gt;/*.ts (runs live)</text>
+  <line x1="20" y1="172" x2="880" y2="172" stroke="var(--color-border)" stroke-width="1"/>
+  <text class="ttl" x="22" y="198"><tspan class="l-en">What that unlocked</tspan><tspan class="l-es" x="22">Lo que eso desbloqueo</tspan></text>
 
-  <rect class="bx bx-good" x="444" y="312" width="392" height="128" rx="10"/>
-  <text class="it" x="460" y="336" style="font-weight:700">Learned model</text>
-  <text class="mu" x="460" y="358">trained offline (torch), exported to</text>
-  <text class="mu" x="460" y="378">ONNX, run client-side; reported with</text>
-  <text class="mu" x="460" y="398">held-out skill vs the baseline.</text>
-  <text class="cd mono" x="460" y="424">model/learned.py → *.onnx → ort.ts</text>
+  <rect class="bx bx-warn" x="20" y="212" width="270" height="104" rx="10"/>
+  <text class="hd" x="32" y="234"><tspan class="l-en">A constant nobody printed</tspan><tspan class="l-es" x="32">Una constante que nadie imprimio</tspan></text>
+  <text class="mono cd" x="32" y="254">A = x50 / [(V/Q)^0.8 Q^(1/6) ...]</text>
+  <text class="mu" x="32" y="274"><tspan class="l-en">Both source papers say the rock factor</tspan><tspan class="l-es" x="32">Ambos articulos dicen que el factor de roca</tspan></text>
+  <text class="mu" x="32" y="288"><tspan class="l-en">was estimated per blast; neither prints a</tspan><tspan class="l-es" x="32">se estimo por tiro; ninguno imprime un</tspan></text>
+  <text class="mu" x="32" y="302"><tspan class="l-en">value. Inverting the equation recovers it.</tspan><tspan class="l-es" x="32">valor. Invertir la ecuacion lo recupera.</tspan></text>
+
+  <path class="flow" d="M294,264 L326,264" marker-end="url(#fa4)"/>
+
+  <rect class="bx bx-good" x="330" y="212" width="250" height="104" rx="10"/>
+  <text class="hd" x="342" y="234"><tspan class="l-en">And it barely moves within a site</tspan><tspan class="l-es" x="342">Y apenas se mueve dentro de un sitio</tspan></text>
+  <text class="good" x="342" y="256">0.6 to 3.7 percent spread</text>
+  <text class="mu" x="342" y="276"><tspan class="l-en">which is exactly what rounding the</tspan><tspan class="l-es" x="342">que es justo lo que produce redondear</tspan></text>
+  <text class="mu" x="342" y="290"><tspan class="l-en">published predictions to two decimals</tspan><tspan class="l-es" x="342">las predicciones publicadas a dos</tspan></text>
+  <text class="mu" x="342" y="304"><tspan class="l-en">produces. An error would scatter them.</tspan><tspan class="l-es" x="342">decimales. Un error las dispersaria.</tspan></text>
+
+  <path class="flow" d="M584,264 L616,264" marker-end="url(#fa4)"/>
+
+  <rect class="bx bx-hi" x="620" y="212" width="264" height="104" rx="10"/>
+  <text class="hd" x="632" y="234"><tspan class="l-en">One result, three jobs</tspan><tspan class="l-es" x="632">Un resultado, tres tareas</tspan></text>
+  <text class="mu" x="632" y="256"><tspan class="l-en">1. it validates the geometry reconstruction</tspan><tspan class="l-es" x="632">1. valida la reconstruccion geometrica</tspan></text>
+  <text class="mu" x="632" y="272"><tspan class="l-en">2. it settles which of two published</tspan><tspan class="l-es" x="632">2. resuelve cual de dos exponentes</tspan></text>
+  <text class="mu" x="632" y="286"><tspan class="l-en">    exponents the authors actually used</tspan><tspan class="l-es" x="632">    publicados usaron los autores</tspan></text>
+  <text class="mu" x="632" y="302"><tspan class="l-en">3. it recovers a constant the literature omitted</tspan><tspan class="l-es" x="632">3. recupera una constante omitida</tspan></text>
+
+  <line x1="20" y1="334" x2="880" y2="334" stroke="var(--color-border)" stroke-width="1"/>
+  <text class="ttl" x="22" y="360"><tspan class="l-en">The ladder that then runs</tspan><tspan class="l-es" x="22">La escalera que entonces corre</tspan></text>
+
+  <rect class="bx" x="20" y="374" width="200" height="76" rx="9"/>
+  <text class="hd" x="32" y="394"><tspan class="l-en">Classical, 4 models</tspan><tspan class="l-es" x="32">Clasicos, 4 modelos</tspan></text>
+  <text class="mu" x="32" y="414">mean size, uniformity index,</text>
+  <text class="mu" x="32" y="428">two-parameter, three-parameter</text>
+  <text class="mu" x="32" y="442">plus a two-branch composition</text>
+
+  <rect class="bx" x="232" y="374" width="200" height="76" rx="9"/>
+  <text class="hd" x="244" y="394"><tspan class="l-en">Statistical, 3</tspan><tspan class="l-es" x="244">Estadisticos, 3</tspan></text>
+  <text class="mu" x="244" y="414">the group router, exact on</text>
+  <text class="mu" x="244" y="428">109 labelled blasts, plus the</text>
+  <text class="mu" x="244" y="442">published and refitted regressions</text>
+
+  <rect class="bx" x="444" y="374" width="200" height="76" rx="9"/>
+  <text class="hd" x="456" y="394"><tspan class="l-en">Learned, 5</tspan><tspan class="l-es" x="456">Aprendidos, 5</tspan></text>
+  <text class="mu" x="456" y="414">the published network, support</text>
+  <text class="mu" x="456" y="428">vectors, forest, boosting and</text>
+  <text class="mu" x="456" y="442">the stacking ensemble</text>
+
+  <rect class="bx bx-good" x="656" y="374" width="228" height="76" rx="9"/>
+  <text class="hd" x="668" y="394"><tspan class="l-en">Controls, 2, on every case</tspan><tspan class="l-es" x="668">Controles, 2, en cada caso</tspan></text>
+  <text class="mu" x="668" y="414">the null predicts the training mean;</text>
+  <text class="mu" x="668" y="428">the oracle returns the measurement.</text>
+  <text class="mu" x="668" y="442">Nothing real sits outside that bracket.</text>
 </svg>

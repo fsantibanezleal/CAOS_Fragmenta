@@ -76,6 +76,7 @@ def build(*, seed: int = 0, n_seeds: int = 12) -> dict:
             for site in sorted({b.site for b in corpus})
         },
     }
+    payload = _serialisable(payload)
     payload["digest"] = digest(payload)
     return payload
 
@@ -210,16 +211,21 @@ def _network_seed_sweep(corpus, *, n_seeds: int) -> dict:
 
 
 def _serialisable(value):
+    """Same contract as the case exporter: a non-finite float becomes null, never NaN."""
+    import math
+
     if isinstance(value, dict):
         return {str(k): _serialisable(v) for k, v in value.items()}
     if isinstance(value, (list, tuple)):
         return [_serialisable(v) for v in value]
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
     return value
 
 
 def write(root: Path, payload: dict) -> tuple[Path, int]:
     root.mkdir(parents=True, exist_ok=True)
     path = root / "benchmark.json"
-    text = json.dumps(payload, indent=1, sort_keys=True, default=str)
+    text = json.dumps(payload, indent=1, sort_keys=True, default=str, allow_nan=False)
     path.write_text(text, encoding="utf-8")
     return path, len(text.encode("utf-8"))

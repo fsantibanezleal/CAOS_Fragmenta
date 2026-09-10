@@ -1,118 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" class="arch-svg" role="img" aria-label="The web-app flow: from user controls through the live engine to the six pages">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" class="arch-svg" role="img" aria-label="The web flow: routes, the workbench tabs, and the focus view">
   <style>
     .arch-svg text { font-family: var(--font-sans, Inter, "Segoe UI", system-ui, sans-serif); }
     .arch-svg .mono { font-family: var(--font-mono, ui-monospace, Consolas, monospace); }
     .arch-svg .bx { fill: var(--color-surface-2); stroke: var(--color-border); stroke-width: 1.2; }
-    .arch-svg .bx-hi { stroke: var(--color-accent); }
-    .arch-svg .bx-good { stroke: var(--color-good); }
-    .arch-svg .grp { fill: none; stroke: var(--color-border); stroke-dasharray: 5 4; }
-    .arch-svg .ttl { fill: var(--color-fg); font-size: 13px; font-weight: 700; }
-    .arch-svg .sub { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .it { fill: var(--color-fg); font-size: 10.5px; }
+    .arch-svg .bx-hi { stroke: var(--color-accent); stroke-width: 1.8; }
+    .arch-svg .bx-good { stroke: var(--color-good); stroke-width: 1.8; }
+    .arch-svg .bx-bad { stroke: var(--color-bad); stroke-width: 1.8; }
+    .arch-svg .ttl { fill: var(--color-fg); font-size: 14px; font-weight: 700; }
+    .arch-svg .hd { fill: var(--color-fg); font-size: 12px; font-weight: 650; }
     .arch-svg .cd { fill: var(--color-accent); font-size: 9.5px; }
     .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.5; }
-    .arch-svg .flow-hi { stroke: var(--color-accent); stroke-width: 1.7; }
-    .arch-svg .lbl { fill: var(--color-fg-subtle); font-size: 9.5px; }
-    .arch-svg .pg { fill: var(--color-accent); font-size: 10px; font-weight: 600; }
+    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.6; }
   </style>
   <defs>
-    <marker id="wf-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="fa3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L8,4 L0,8 z" fill="var(--color-fg-faint)"/>
-    </marker>
-    <marker id="wf-arrow-hi" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L8,4 L0,8 z" fill="var(--color-accent)"/>
     </marker>
   </defs>
 
-  <text class="ttl" x="22" y="30">Web-app flow, the App page recomputes live</text>
-  <text class="sub" x="22" y="47">no round-trip to a server: the engine + inference run in the browser on every control change</text>
+  <text class="ttl" x="22" y="26"><tspan class="l-en">Six routes, and one that escapes the chrome</tspan><tspan class="l-es" x="22">Seis rutas, y una que escapa del marco</tspan></text>
 
-  <!-- input -->
-  <rect class="bx bx-hi" x="14" y="70" width="190" height="120" rx="10"/>
-  <text class="it" x="28" y="92">Inputs</text>
-  <text class="mu" x="28" y="110">• case selector (built-in)</text>
-  <text class="mu" x="28" y="126">• drop your own data</text>
-  <text class="mu" x="28" y="142">• sliders / toggles</text>
-  <text class="cd mono" x="28" y="166">Tool.tsx · cases.ts</text>
-  <text class="mu" x="28" y="182">every page reacts to the case</text>
+  <rect class="bx bx-hi" x="20" y="44" width="180" height="150" rx="10"/>
+  <text class="hd" x="32" y="66"><tspan class="l-en">App, the workbench</tspan><tspan class="l-es" x="32">App, el taller</tspan></text>
+  <text class="mono cd" x="32" y="86">/?case=&lt;id&gt;</text>
+  <text class="mu" x="32" y="106"><tspan class="l-en">ONE selected case</tspan><tspan class="l-es" x="32">UN caso seleccionado</tspan></text>
+  <text class="mu" x="32" y="122"><tspan class="l-en">a 320px rail plus</tspan><tspan class="l-es" x="32">una barra de 320px mas</tspan></text>
+  <text class="mu" x="32" y="138"><tspan class="l-en">six sibling tabs</tspan><tspan class="l-es" x="32">seis pestanas hermanas</tspan></text>
+  <text class="mu" x="32" y="162"><tspan class="l-en">Anything that summarises</tspan><tspan class="l-es" x="32">Todo lo que resume entre</tspan></text>
+  <text class="mu" x="32" y="176"><tspan class="l-en">ACROSS cases is elsewhere.</tspan><tspan class="l-es" x="32">CASOS vive en otra parte.</tspan></text>
 
-  <!-- engine -->
-  <rect class="bx bx-hi" x="244" y="70" width="200" height="120" rx="10"/>
-  <text class="it" x="258" y="92">Live engine (TS)</text>
-  <text class="mu" x="258" y="110">re-run, no server call</text>
-  <text class="cd mono" x="258" y="130">src/&lt;domain&gt;/*.ts</text>
-  <text class="mu" x="258" y="150">+ onnxruntime-web inference</text>
-  <text class="cd mono" x="258" y="170">src/lib/ort.ts</text>
-  <text class="mu" x="258" y="186">classical baseline ⇄ learned toggle</text>
+  <path class="flow" d="M204,119 L236,119" marker-end="url(#fa3)"/>
 
-  <!-- viz -->
-  <rect class="bx bx-good" x="484" y="70" width="200" height="120" rx="10"/>
-  <text class="it" x="498" y="92">Interactive viz</text>
-  <text class="mu" x="498" y="110">reads values back, reacts</text>
-  <text class="cd mono" x="498" y="130">viz/*.tsx · uPlot · three</text>
-  <text class="mu" x="498" y="150">overlays, charts, gauges</text>
-  <text class="mu" x="498" y="170">hover = value readout</text>
-  <text class="mu" x="498" y="186">marks OOD / uncertain live</text>
+  <rect class="bx" x="240" y="44" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="60">Predict</text>
+  <rect class="bx" x="240" y="72" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="88">Distribution</text>
+  <rect class="bx" x="240" y="100" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="116">Bench</text>
+  <rect class="bx" x="240" y="128" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="144">Rock</text>
+  <rect class="bx" x="240" y="156" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="172">Explain</text>
+  <rect class="bx" x="240" y="184" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="200">Decide</text>
 
-  <!-- baked data feeds engine -->
-  <rect class="bx" x="724" y="70" width="162" height="120" rx="10"/>
-  <text class="it" x="738" y="92">Baked artifacts</text>
-  <text class="cd mono" x="738" y="112">/case-results.json</text>
-  <text class="cd mono" x="738" y="128">/data/manifests</text>
-  <text class="cd mono" x="738" y="144">/*.onnx</text>
-  <text class="mu" x="738" y="166">overlaid by</text>
-  <text class="cd mono" x="738" y="180">copy-data.mjs</text>
+  <text class="mu" x="240" y="228"><tspan class="l-en">grouped by the QUESTION, not by</tspan><tspan class="l-es" x="240">agrupadas por la PREGUNTA, no por</tspan></text>
+  <text class="mu" x="240" y="242"><tspan class="l-en">the model list. Thirteen models as</tspan><tspan class="l-es" x="240">la lista de modelos. Trece modelos</tspan></text>
+  <text class="mu" x="240" y="256"><tspan class="l-en">thirteen tabs is a list, not an</tspan><tspan class="l-es" x="240">como trece pestanas son una lista,</tspan></text>
+  <text class="mu" x="240" y="270"><tspan class="l-en">architecture.</tspan><tspan class="l-es" x="240">no una arquitectura.</tspan></text>
 
-  <path class="flow-hi" d="M204,130 H242" marker-end="url(#wf-arrow-hi)"/>
-  <path class="flow-hi" d="M444,130 H482" marker-end="url(#wf-arrow-hi)"/>
-  <path class="flow" d="M724,130 H686" marker-end="url(#wf-arrow)"/>
-  <text class="lbl" x="700" y="122">seeds + models</text>
+  <path class="flow" d="M364,119 L396,119" marker-end="url(#fa3)"/>
 
-  <!-- 6 pages -->
-  <rect class="grp" x="14" y="214" width="872" height="120" rx="10"/>
-  <text class="pg" x="28" y="234">Six sibling pages, identical across every product (ADR-0057)</text>
-  <rect class="bx bx-hi" x="28" y="246" width="132" height="72" rx="7"/>
-  <text class="it" x="40" y="266">App / Tool</text>
-  <text class="mu" x="40" y="282">live engine + controls</text>
-  <text class="cd mono" x="40" y="300">pages/Tool.tsx</text>
-  <rect class="bx" x="172" y="246" width="132" height="72" rx="7"/>
-  <text class="it" x="184" y="266">Introduction</text>
-  <text class="mu" x="184" y="282">problem + context</text>
-  <text class="cd mono" x="184" y="300">Introduction.tsx</text>
-  <rect class="bx" x="316" y="246" width="132" height="72" rx="7"/>
-  <text class="it" x="328" y="266">Methodology</text>
-  <text class="mu" x="328" y="282">method tabs + eqs</text>
-  <text class="cd mono" x="328" y="300">Methodology.tsx</text>
-  <rect class="bx" x="460" y="246" width="132" height="72" rx="7"/>
-  <text class="it" x="472" y="266">Implementation</text>
-  <text class="mu" x="472" y="282">pipeline + contracts</text>
-  <text class="cd mono" x="472" y="300">Implementation.tsx</text>
-  <rect class="bx" x="604" y="246" width="132" height="72" rx="7"/>
-  <text class="it" x="616" y="266">Experiments</text>
-  <text class="mu" x="616" y="282">per-case results</text>
-  <text class="cd mono" x="616" y="300">Experiments.tsx</text>
-  <rect class="bx bx-good" x="748" y="246" width="126" height="72" rx="7"/>
-  <text class="it" x="760" y="266">Benchmark</text>
-  <text class="mu" x="760" y="282">cross-case + real data</text>
-  <text class="cd mono" x="760" y="300">Benchmark.tsx</text>
+  <rect class="bx bx-good" x="400" y="80" width="180" height="78" rx="10"/>
+  <text class="hd" x="412" y="102"><tspan class="l-en">Model selector</tspan><tspan class="l-es" x="412">Selector de modelo</tspan></text>
+  <text class="mono cd" x="412" y="122">select with optgroup</text>
+  <text class="mu" x="412" y="140"><tspan class="l-en">a categorised one-of-N is a</tspan><tspan class="l-es" x="412">un uno-de-N categorizado es</tspan></text>
+  <text class="mu" x="412" y="152"><tspan class="l-en">select, not thirteen buttons</tspan><tspan class="l-es" x="412">un select, no trece botones</tspan></text>
 
-  <!-- build/deploy -->
-  <rect class="grp" x="14" y="352" width="872" height="100" rx="10"/>
-  <text class="pg" x="28" y="372">Build &amp; deploy, typed mirror gates, static output, GitHub Pages</text>
-  <rect class="bx bx-good" x="28" y="384" width="200" height="54" rx="7"/>
-  <text class="it" x="40" y="404">Contract-type mirror</text>
-  <text class="cd mono" x="40" y="422">src/lib/contract.types.ts</text>
-  <rect class="bx" x="248" y="384" width="200" height="54" rx="7"/>
-  <text class="it" x="260" y="404">copy-data overlay</text>
-  <text class="cd mono" x="260" y="422">predev / prebuild hook</text>
-  <rect class="bx" x="468" y="384" width="200" height="54" rx="7"/>
-  <text class="it" x="480" y="404">vite build (tsc strict)</text>
-  <text class="cd mono" x="480" y="422">frontend/dist</text>
-  <rect class="bx bx-hi" x="688" y="384" width="186" height="54" rx="7"/>
-  <text class="it" x="700" y="404">GitHub Pages</text>
-  <text class="cd mono" x="700" y="422">&lt;slug&gt;.fasl-work.com</text>
-  <path class="flow" d="M228,411 H246" marker-end="url(#wf-arrow)"/>
-  <path class="flow" d="M448,411 H466" marker-end="url(#wf-arrow)"/>
-  <path class="flow" d="M668,411 H686" marker-end="url(#wf-arrow)"/>
+  <rect class="bx" x="600" y="44" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="59">/introduction</text>
+  <rect class="bx" x="600" y="70" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="85">/methodology</text>
+  <rect class="bx" x="600" y="96" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="111">/implementation</text>
+  <rect class="bx" x="600" y="122" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="137">/experiments</text>
+  <rect class="bx" x="600" y="148" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="163">/benchmark</text>
+  <text class="mu" x="600" y="190"><tspan class="l-en">cross-case evidence lives</tspan><tspan class="l-es" x="600">la evidencia entre casos vive</tspan></text>
+  <text class="mu" x="600" y="204"><tspan class="l-en">on the last two only</tspan><tspan class="l-es" x="600">solo en las dos ultimas</tspan></text>
+
+  <rect class="bx bx-bad" x="760" y="80" width="124" height="90" rx="10"/>
+  <text class="hd" x="772" y="102"><tspan class="l-en">Focus</tspan><tspan class="l-es" x="772">Pantalla completa</tspan></text>
+  <text class="mono cd" x="772" y="122">/focus/&lt;case&gt;</text>
+  <text class="mu" x="772" y="142"><tspan class="l-en">renders OUTSIDE</tspan><tspan class="l-es" x="772">se dibuja FUERA</tspan></text>
+  <text class="mu" x="772" y="156"><tspan class="l-en">the shell</tspan><tspan class="l-es" x="772">del armazon</tspan></text>
+
+  <line x1="20" y1="290" x2="880" y2="290" stroke="var(--color-border)" stroke-width="1"/>
+
+  <text class="ttl" x="22" y="318"><tspan class="l-en">Two things that were easy to get wrong</tspan><tspan class="l-es" x="22">Dos cosas faciles de equivocar</tspan></text>
+
+  <rect class="bx bx-bad" x="20" y="332" width="420" height="106" rx="10"/>
+  <text class="hd" x="32" y="354"><tspan class="l-en">A cold deep link into the focus route</tspan><tspan class="l-es" x="32">Un enlace directo en frio a pantalla completa</tspan></text>
+  <text class="mu" x="32" y="376"><tspan class="l-en">The header and footer are exactly the chrome a full-screen</tspan><tspan class="l-es" x="32">El encabezado y el pie son justamente el marco del que una</tspan></text>
+  <text class="mu" x="32" y="390"><tspan class="l-en">view exists to escape, so it cannot be a child of the shell.</tspan><tspan class="l-es" x="32">vista completa escapa, asi que no puede colgar del armazon.</tspan></text>
+  <text class="mu" x="32" y="410"><tspan class="l-en">It therefore applies the theme ITSELF. Without that, a link</tspan><tspan class="l-es" x="32">Por eso aplica el tema POR SI MISMA. Sin eso, un enlace</tspan></text>
+  <text class="mu" x="32" y="424"><tspan class="l-en">opened directly boots in the wrong palette every time.</tspan><tspan class="l-es" x="32">abierto directo arranca siempre con la paleta equivocada.</tspan></text>
+
+  <rect class="bx bx-bad" x="456" y="332" width="428" height="106" rx="10"/>
+  <text class="hd" x="468" y="354"><tspan class="l-en">A 200 response, not just a rendered page</tspan><tspan class="l-es" x="468">Una respuesta 200, no solo una pagina dibujada</tspan></text>
+  <text class="mu" x="468" y="376"><tspan class="l-en">A static host serves a fallback page for an unknown path, so</tspan><tspan class="l-es" x="468">Un host estatico sirve una pagina de reserva para una ruta</tspan></text>
+  <text class="mu" x="468" y="390"><tspan class="l-en">the app appears and the status is still 404. A shared link is</tspan><tspan class="l-es" x="468">desconocida: la app aparece y el estado sigue siendo 404. Un</tspan></text>
+  <text class="mu" x="468" y="410"><tspan class="l-en">then a 404 to every crawler. The build writes a real file at</tspan><tspan class="l-es" x="468">enlace compartido es un 404 para todo rastreador. La</tspan></text>
+  <text class="mu" x="468" y="424"><tspan class="l-en">each route path so the server answers 200.</tspan><tspan class="l-es" x="468">compilacion escribe un archivo real por ruta para responder 200.</tspan></text>
 </svg>

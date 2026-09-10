@@ -53,7 +53,16 @@ def run(root: Path) -> ValidationReport:
             problems.append(f"{case_id}: the artifact its index entry points at does not exist")
             continue
 
-        payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+        raw = artifact_path.read_text(encoding="utf-8")
+        # A browser cannot read NaN or Infinity, and Python writes both without complaint. One of
+        # them anywhere makes the artifact unparseable and the symptom is a blank page.
+        for token in ("NaN", "Infinity", "-Infinity"):
+            if token in raw:
+                problems.append(
+                    f"{case_id}: the artifact contains {token}, which is not valid JSON and which "
+                    "no browser can parse"
+                )
+        payload = json.loads(raw)
         stored = payload.pop("digest", None)
         if stored != digest(payload):
             problems.append(f"{case_id}: content digest does not match, the artifact was edited")

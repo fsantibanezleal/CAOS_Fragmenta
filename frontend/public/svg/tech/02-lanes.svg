@@ -1,121 +1,115 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="900" class="arch-svg" role="img" aria-label="The three lanes: what runs in the web, offline/compute and replay">
-  <!-- Hand-authored. Every colour is a shell CSS variable, so the diagram repaints
-       with the active light/dark theme when inlined into the SPA (ADR-0058). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" class="arch-svg" role="img" aria-label="The three lanes: offline canonical, replay, and the live browser engine">
   <style>
     .arch-svg text { font-family: var(--font-sans, Inter, "Segoe UI", system-ui, sans-serif); }
     .arch-svg .mono { font-family: var(--font-mono, ui-monospace, Consolas, monospace); }
     .arch-svg .bx { fill: var(--color-surface-2); stroke: var(--color-border); stroke-width: 1.2; }
-    .arch-svg .lane { fill: none; stroke-width: 1.4; }
-    .arch-svg .lane-web { stroke: var(--color-accent); }
-    .arch-svg .lane-comp { stroke: var(--color-magenta); }
-    .arch-svg .lane-rep { stroke: var(--color-good); }
-    .arch-svg .bx-web { stroke: var(--color-accent); }
-    .arch-svg .bx-comp { stroke: var(--color-magenta); }
-    .arch-svg .bx-rep { stroke: var(--color-good); }
-    .arch-svg .ttl { fill: var(--color-fg); font-size: 13px; font-weight: 700; }
-    .arch-svg .lnt { font-size: 12.5px; font-weight: 700; }
-    .arch-svg .lnt-web { fill: var(--color-accent); }
-    .arch-svg .lnt-comp { fill: var(--color-magenta); }
-    .arch-svg .lnt-rep { fill: var(--color-good); }
-    .arch-svg .sub { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .it { fill: var(--color-fg); font-size: 10.5px; }
+    .arch-svg .bx-hi { stroke: var(--color-accent); stroke-width: 1.8; }
+    .arch-svg .bx-good { stroke: var(--color-good); stroke-width: 1.8; }
+    .arch-svg .bx-warn { stroke: var(--color-warn); stroke-width: 1.8; }
+    .arch-svg .bx-bad { stroke: var(--color-bad); stroke-width: 1.8; }
+    .arch-svg .lane { fill: none; stroke: var(--color-border); stroke-width: 1; stroke-dasharray: 5 4; }
+    .arch-svg .ttl { fill: var(--color-fg); font-size: 14px; font-weight: 700; }
+    .arch-svg .hd { fill: var(--color-fg); font-size: 12px; font-weight: 650; }
+    .arch-svg .it { fill: var(--color-fg); font-size: 11px; }
     .arch-svg .cd { fill: var(--color-accent); font-size: 9.5px; }
     .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.4; }
-    .arch-svg .lbl { fill: var(--color-fg-subtle); font-size: 9.5px; }
+    .arch-svg .bad { fill: var(--color-bad); font-size: 10.5px; font-weight: 600; }
+    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.6; }
   </style>
   <defs>
-    <marker id="ln-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="fa2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L8,4 L0,8 z" fill="var(--color-fg-faint)"/>
     </marker>
   </defs>
 
-  <text class="ttl" x="22" y="30">Three lanes, what runs WHERE</text>
-  <text class="sub" x="22" y="47">the same TypeScript engine runs in the browser AND under Node; Python only bakes &amp; trains offline</text>
+  <text class="ttl" x="22" y="26"><tspan class="l-en">Three lanes, and what runs in each</tspan><tspan class="l-es" x="22">Tres carriles, y que corre en cada uno</tspan></text>
 
-  <!-- ===== WEB lane ===== -->
-  <rect class="bx bx-web" x="14" y="66" width="290" height="392" rx="11"/>
-  <text class="lnt lnt-web" x="30" y="92">WEB · live, in the browser</text>
-  <text class="sub" x="30" y="108">no server, static GitHub Pages</text>
+  <rect class="lane" x="14" y="40" width="872" height="128" rx="8"/>
+  <text class="hd" x="26" y="60"><tspan class="l-en">OFFLINE, canonical</tspan><tspan class="l-es" x="26">SIN CONEXION, canonico</tspan></text>
+  <text class="mu" x="150" y="60"><tspan class="l-en">pinned Python, runs before release, never at deploy</tspan><tspan class="l-es" x="150">Python fijado, corre antes de publicar, nunca al desplegar</tspan></text>
 
-  <rect class="bx" x="30" y="122" width="258" height="58" rx="7"/>
-  <text class="it" x="42" y="142">Deterministic engine (TS)</text>
-  <text class="cd mono" x="42" y="158">frontend/src/&lt;domain&gt;/</text>
-  <text class="mu" x="42" y="172">re-runs on every control change</text>
+  <rect class="bx bx-good" x="26" y="72" width="152" height="82" rx="9"/>
+  <text class="hd" x="38" y="92">ingest</text>
+  <text class="mono cd" x="38" y="110">contract 1</text>
+  <text class="mono cd" x="38" y="124">integrity gate</text>
+  <text class="mu" x="38" y="144"><tspan class="l-en">rejects, never clips</tspan><tspan class="l-es" x="38">rechaza, nunca recorta</tspan></text>
 
-  <rect class="bx" x="30" y="190" width="258" height="58" rx="7"/>
-  <text class="it" x="42" y="210">In-browser inference</text>
-  <text class="cd mono" x="42" y="226">onnxruntime-web · WASM</text>
-  <text class="mu" x="42" y="240">*.onnx loaded from /public, numThreads=1</text>
+  <path class="flow" d="M182,113 L206,113" marker-end="url(#fa2)"/>
+  <rect class="bx" x="210" y="72" width="152" height="82" rx="9"/>
+  <text class="hd" x="222" y="92">preprocess</text>
+  <text class="mono cd" x="222" y="110">B = (B/D) x D</text>
+  <text class="mono cd" x="222" y="124">Q = Pf x B x S x H</text>
+  <text class="mu" x="222" y="144"><tspan class="l-en">15 constraints asserted</tspan><tspan class="l-es" x="222">15 restricciones verificadas</tspan></text>
 
-  <rect class="bx" x="30" y="258" width="258" height="58" rx="7"/>
-  <text class="it" x="42" y="278">6-page SPA + live viz</text>
-  <text class="cd mono" x="42" y="294">caos-app-shell · uPlot · three</text>
-  <text class="mu" x="42" y="308">App reacts to the case selector</text>
+  <path class="flow" d="M366,113 L390,113" marker-end="url(#fa2)"/>
+  <rect class="bx" x="394" y="72" width="152" height="82" rx="9"/>
+  <text class="hd" x="406" y="92">train</text>
+  <text class="mono cd" x="406" y="110">site withheld</text>
+  <text class="mono cd" x="406" y="124">seed drawn first</text>
+  <text class="mu" x="406" y="144"><tspan class="l-en">leakage is asserted</tspan><tspan class="l-es" x="406">la fuga se comprueba</tspan></text>
 
-  <rect class="bx" x="30" y="326" width="258" height="58" rx="7"/>
-  <text class="it" x="42" y="346">Loads baked artifacts</text>
-  <text class="cd mono" x="42" y="362">/case-results.json · /data/manifests</text>
-  <text class="mu" x="42" y="376">read-only, never recomputes the bake</text>
-  <text class="mu" x="30" y="406">User: pick a case OR drop your own data</text>
-  <text class="mu" x="30" y="420">→ engine + inference run client-side, live</text>
+  <path class="flow" d="M550,113 L574,113" marker-end="url(#fa2)"/>
+  <rect class="bx" x="578" y="72" width="152" height="82" rx="9"/>
+  <text class="hd" x="590" y="92">evaluate</text>
+  <text class="mono cd" x="590" y="110">both statistics</text>
+  <text class="mono cd" x="590" y="124">null beside each</text>
+  <text class="mu" x="590" y="144"><tspan class="l-en">abstentions counted</tspan><tspan class="l-es" x="590">abstenciones contadas</tspan></text>
 
-  <!-- ===== COMPUTE lane ===== -->
-  <rect class="bx bx-comp" x="318" y="66" width="290" height="392" rx="11"/>
-  <text class="lnt lnt-comp" x="334" y="92">OFFLINE · compute (your machine)</text>
-  <text class="sub" x="334" y="108">Python, isolated .venv, never in the browser</text>
+  <path class="flow" d="M734,113 L758,113" marker-end="url(#fa2)"/>
+  <rect class="bx bx-good" x="762" y="72" width="112" height="82" rx="9"/>
+  <text class="hd" x="774" y="92">export</text>
+  <text class="mono cd" x="774" y="110">sha256 per</text>
+  <text class="mono cd" x="774" y="124">case file</text>
+  <text class="mu" x="774" y="144">1.2 MB total</text>
 
-  <rect class="bx" x="334" y="122" width="258" height="58" rx="7"/>
-  <text class="it" x="346" y="142">Precompute / bake pipeline</text>
-  <text class="cd mono" x="346" y="158">data-pipeline/&lt;pkg&gt;/pipeline.py</text>
-  <text class="mu" x="346" y="172">numpy-light default · staged · gated</text>
+  <path class="flow" d="M818,158 L818,196" marker-end="url(#fa2)"/>
 
-  <rect class="bx" x="334" y="190" width="258" height="58" rx="7"/>
-  <text class="it" x="346" y="210">Model training (heavy lane)</text>
-  <text class="cd mono" x="346" y="226">--retrain · .venv-precompute · torch</text>
-  <text class="mu" x="346" y="240">exports torch → ONNX, never ships the venv</text>
+  <rect class="lane" x="14" y="200" width="872" height="112" rx="8"/>
+  <text class="hd" x="26" y="220"><tspan class="l-en">REPLAY, the default evidence</tspan><tspan class="l-es" x="26">REPRODUCCION, la evidencia por defecto</tspan></text>
+  <text class="mu" x="238" y="220"><tspan class="l-en">committed, content-addressed, re-hashed by the release gate</tspan><tspan class="l-es" x="238">comprometidos, direccionados por contenido, re-verificados</tspan></text>
 
-  <rect class="bx" x="334" y="258" width="258" height="58" rx="7"/>
-  <text class="it" x="346" y="278">Two-language bake (parity)</text>
-  <text class="cd mono" x="346" y="294">science/bake_cases.mjs · tsx</text>
-  <text class="mu" x="346" y="308">Node runs the SAME TS engine</text>
+  <rect class="bx bx-hi" x="26" y="232" width="200" height="66" rx="9"/>
+  <text class="mono cd" x="38" y="254">data/derived/&lt;case&gt;/case.json</text>
+  <text class="mu" x="38" y="274">16 cases, 31 to 101 kB each</text>
+  <text class="mu" x="38" y="290">1824 prediction cells</text>
 
-  <rect class="bx" x="334" y="326" width="258" height="58" rx="7"/>
-  <text class="it" x="346" y="346">Writes canonical artifacts</text>
-  <text class="cd mono" x="346" y="362">data/derived/ + manifests + trace</text>
-  <text class="mu" x="346" y="376">deterministic, git-clean after re-run</text>
-  <text class="mu" x="334" y="406">Run once per data/model change; the</text>
-  <text class="mu" x="334" y="420">artifacts are committed, the venvs are not</text>
+  <rect class="bx bx-hi" x="238" y="232" width="200" height="66" rx="9"/>
+  <text class="mono cd" x="250" y="254">data/derived/benchmark.json</text>
+  <text class="mu" x="250" y="274">the protocol sweep, the seed</text>
+  <text class="mu" x="250" y="290">sweep, both reproductions</text>
 
-  <!-- ===== REPLAY lane ===== -->
-  <rect class="bx bx-rep" x="622" y="66" width="264" height="392" rx="11"/>
-  <text class="lnt lnt-rep" x="638" y="92">REPLAY · committed bridge</text>
-  <text class="sub" x="638" y="108">the contract between compute &amp; web</text>
+  <rect class="bx" x="450" y="232" width="200" height="66" rx="9"/>
+  <text class="mono cd" x="462" y="254">manifests/index.json</text>
+  <text class="mu" x="462" y="274">what the web reads first;</text>
+  <text class="mu" x="462" y="290">declared vs shipped is checked</text>
 
-  <rect class="bx" x="638" y="122" width="232" height="64" rx="7"/>
-  <text class="it" x="650" y="142">Canonical artifacts</text>
-  <text class="cd mono" x="650" y="158">data/derived/*.json + *.onnx</text>
-  <text class="mu" x="650" y="174">small, reviewable, versioned in git</text>
+  <rect class="bx bx-bad" x="662" y="232" width="212" height="66" rx="9"/>
+  <text class="hd" x="674" y="252"><tspan class="l-en">Deploy never trains</tspan><tspan class="l-es" x="674">El despliegue no entrena</tspan></text>
+  <text class="mu" x="674" y="272"><tspan class="l-en">it copies audited artifacts and</tspan><tspan class="l-es" x="674">copia artefactos auditados y</tspan></text>
+  <text class="mu" x="674" y="288"><tspan class="l-en">verifies hashes. Nothing else.</tspan><tspan class="l-es" x="674">verifica resumenes. Nada mas.</tspan></text>
 
-  <rect class="bx" x="638" y="196" width="232" height="64" rx="7"/>
-  <text class="it" x="650" y="216">Overlay into the SPA</text>
-  <text class="cd mono" x="650" y="232">frontend/copy-data.mjs</text>
-  <text class="mu" x="650" y="248">copies derived → frontend/public</text>
+  <path class="flow" d="M126,302 L126,342" marker-end="url(#fa2)"/>
 
-  <rect class="bx" x="638" y="270" width="232" height="64" rx="7"/>
-  <text class="it" x="650" y="290">Typed mirror gates the build</text>
-  <text class="cd mono" x="650" y="306">frontend/src/lib/contract.types.ts</text>
-  <text class="mu" x="650" y="322">tsc fails if web ≠ pipeline shape</text>
+  <rect class="lane" x="14" y="346" width="872" height="110" rx="8"/>
+  <text class="hd" x="26" y="366"><tspan class="l-en">LIVE, in the browser</tspan><tspan class="l-es" x="26">VIVO, en el navegador</tspan></text>
+  <text class="mu" x="176" y="366"><tspan class="l-en">so that changing a burden moves the curve, not a page reload</tspan><tspan class="l-es" x="176">para que cambiar un bordo mueva la curva, sin recargar</tspan></text>
 
-  <text class="mu" x="638" y="356">Replay = how the live app shows real,</text>
-  <text class="mu" x="638" y="370">reproducible results with no backend.</text>
-  <text class="mu" x="638" y="392">If a model is pending, the app still</text>
-  <text class="mu" x="638" y="406">runs the classical baseline; the toggle</text>
-  <text class="mu" x="638" y="420">turns on once the ONNX exists.</text>
+  <rect class="bx bx-warn" x="26" y="378" width="230" height="66" rx="9"/>
+  <text class="mono cd" x="38" y="400">frontend/src/engine/live.ts</text>
+  <text class="mu" x="38" y="420"><tspan class="l-en">the closed forms, reimplemented</tspan><tspan class="l-es" x="38">las formas cerradas, reimplementadas</tspan></text>
+  <text class="mu" x="38" y="436"><tspan class="l-en">in TypeScript from the same sources</tspan><tspan class="l-es" x="38">en TypeScript desde las mismas fuentes</tspan></text>
 
-  <!-- flows compute -> replay -> web -->
-  <path class="flow" d="M608,355 H636" marker-end="url(#ln-arrow)"/>
-  <path class="flow" d="M636,300 H612 Q300,300 304,300" />
-  <path class="flow" d="M620,228 H306" marker-end="url(#ln-arrow)"/>
-  <text class="lbl" x="430" y="222">artifacts overlaid → loaded live</text>
+  <path class="flow" d="M260,411 L292,411" marker-end="url(#fa2)"/>
+
+  <rect class="bx bx-bad" x="296" y="378" width="272" height="66" rx="9"/>
+  <text class="hd" x="308" y="398"><tspan class="l-en">Parity is a GATE</tspan><tspan class="l-es" x="308">La paridad es una COMPUERTA</tspan></text>
+  <text class="mu" x="308" y="418"><tspan class="l-en">the TypeScript result is scored against the</tspan><tspan class="l-es" x="308">el resultado en TypeScript se compara con los</tspan></text>
+  <text class="mu" x="308" y="434"><tspan class="l-en">baked numbers; a divergence fails the build</tspan><tspan class="l-es" x="308">numeros horneados; una divergencia falla la compilacion</tspan></text>
+
+  <path class="flow" d="M572,411 L604,411" marker-end="url(#fa2)"/>
+
+  <rect class="bx" x="608" y="378" width="266" height="66" rx="9"/>
+  <text class="mu" x="620" y="398"><tspan class="l-en">Two implementations of one equation drift the</tspan><tspan class="l-es" x="620">Dos implementaciones de una ecuacion se separan</tspan></text>
+  <text class="mu" x="620" y="414"><tspan class="l-en">moment nobody checks, and the symptom is a</tspan><tspan class="l-es" x="620">en cuanto nadie revisa, y el sintoma es un grafico</tspan></text>
+  <text class="mu" x="620" y="430"><tspan class="l-en">chart that is subtly wrong and fully plausible.</tspan><tspan class="l-es" x="620">sutilmente erroneo y del todo verosimil.</tspan></text>
 </svg>

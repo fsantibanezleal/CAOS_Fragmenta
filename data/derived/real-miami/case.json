@@ -139,7 +139,7 @@
    "passed": true
   }
  },
- "digest": "e00253656005da5dfa587e2a88d9d4288492cb27b19c93d6515afe73efaf7bf6",
+ "digest": "b55fddaa017dc345eef23f092fb68770e1c5e7af8fbc22f9c27decc0b17e0e20",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -897,7 +897,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 6,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -64.61825634106108,
    "r2_identity_interval": [
     -3003.523626315226,

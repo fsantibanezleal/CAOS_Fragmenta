@@ -215,7 +215,7 @@
   }
  },
  "controls": {},
- "digest": "c4d3be6c3f41f8271761a83b126b2ddb64322a664e4e22c1c485edab48904f0d",
+ "digest": "f29a33c286671fc89c3b0cb07877f8f5c43b5dad3420b6470dc6ec56782e9932",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2537,7 +2537,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 7,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -9.69215113524536,
    "r2_identity_interval": [
     -52.64699841848213,
@@ -2593,7 +2593,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 7,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -9.69215113524536,
    "r2_identity_interval": [
     -52.64699841848213,
@@ -2636,7 +2636,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 7,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -9.69215113524536,
    "r2_identity_interval": [
     -52.64699841848213,
@@ -2980,7 +2980,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 7,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -9.69215113524536,
    "r2_identity_interval": [
     -52.64699841848213,

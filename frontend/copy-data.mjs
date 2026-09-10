@@ -1,7 +1,10 @@
-// Prebuild: copy the committed CONTRACT-2 artifacts (../data/derived) into the SPA's public/ so the static site
-// replays them, and inline the pipeline sources for the live (Pyodide) lane. Canonical copies live in ../data
-// and ../data-pipeline, public/ is a build-time overlay (git-ignored).
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+// Prebuild: copy the committed artifacts into the SPA's public/ so the static site replays them.
+//
+// The canonical copies live in ../data/derived; public/ is a build-time overlay and is git-ignored,
+// so there is exactly one copy of the evidence in the repo. The build FAILS rather than shipping a
+// site with no data behind it, because an empty chart is indistinguishable from a working one until
+// somebody looks.
+import { cpSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,31 +12,35 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const PUB = join(HERE, 'public');
 
-// 1) data/derived -> public/data (traces under <case>/trace.json + manifests/ subdir incl. index.json)
 const derived = join(ROOT, 'data', 'derived');
-if (existsSync(derived)) {
-  mkdirSync(join(PUB, 'data'), { recursive: true });
-  cpSync(derived, join(PUB, 'data'), { recursive: true });
-  console.log('[copy-data] data/derived -> public/data');
-} else {
-  console.warn('[copy-data] no data/derived, run scripts/precompute first');
+if (!existsSync(derived)) {
+  console.error('[copy-data] no data/derived; run "python data-pipeline/run.py" first');
+  process.exit(1);
+}
+mkdirSync(join(PUB, 'data'), { recursive: true });
+cpSync(derived, join(PUB, 'data'), { recursive: true });
+
+const index = join(PUB, 'data', 'manifests', 'index.json');
+if (!existsSync(index)) {
+  console.error('[copy-data] manifests/index.json missing; the bake did not finish');
+  process.exit(1);
+}
+const benchmark = join(PUB, 'data', 'benchmark.json');
+if (!existsSync(benchmark)) {
+  console.error('[copy-data] benchmark.json missing; the cross-case bake did not run');
+  process.exit(1);
 }
 
-// 2) inline the pipeline Python sources for the optional Pyodide live lane -> public/pyodide/sources.json
-const pkg = join(ROOT, 'data-pipeline', 'pipeline');
-if (existsSync(pkg)) {
-  const sources = {};
-  const walk = (dir, rel = '') => {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
-      if (e.name === '__pycache__') continue;
-      const abs = join(dir, e.name);
-      const r = rel ? `${rel}/${e.name}` : e.name;
-      if (e.isDirectory()) walk(abs, r);
-      else if (e.name.endsWith('.py')) sources[`pipeline/${r}`] = readFileSync(abs, 'utf-8');
-    }
-  };
-  walk(pkg);
-  mkdirSync(join(PUB, 'pyodide'), { recursive: true });
-  writeFileSync(join(PUB, 'pyodide', 'sources.json'), JSON.stringify(sources));
-  console.log(`[copy-data] inlined ${Object.keys(sources).length} pipeline sources -> public/pyodide/sources.json`);
+// Every case the index declares must actually be on disk. A partial bake ships clean and smaller,
+// and the only thing that catches it is comparing DECLARED against SHIPPED.
+const { readFileSync } = await import('node:fs');
+const idx = JSON.parse(readFileSync(index, 'utf8'));
+const missing = idx.cases.filter((c) => !existsSync(join(PUB, 'data', c.artifact_path)));
+if (missing.length) {
+  console.error(`[copy-data] ${missing.length} declared cases have no artifact: ${missing.map((c) => c.case_id).join(', ')}`);
+  process.exit(1);
 }
+const bytes = readdirSync(join(PUB, 'data'), { withFileTypes: true })
+  .filter((d) => d.isDirectory())
+  .reduce((sum, d) => sum + readdirSync(join(PUB, 'data', d.name)).reduce((s, f) => s + statSync(join(PUB, 'data', d.name, f)).size, 0), 0);
+console.log(`[copy-data] ${idx.cases.length} cases + benchmark copied, ${(bytes / 1024).toFixed(0)} kB`);

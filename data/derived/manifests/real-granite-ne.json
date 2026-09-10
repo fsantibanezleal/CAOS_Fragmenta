@@ -2,7 +2,7 @@
  "app_version": "0.01.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 31322,
+  "bytes": 31323,
   "format": "json",
   "path": "real-granite-ne/case.json"
  },
@@ -16,7 +16,7 @@
    "unstamped": []
   }
  },
- "digest": "b23ac7d67cf865897e54ca07295e34d9555b1fe3fa3d02fccf1ac4a0a6a3cc45",
+ "digest": "770af042634e677004b26413dc7838782d1172bb1f8a8fac237547da553aa35c",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
@@ -54,7 +54,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 31322,
+  "trace_bytes": 31323,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

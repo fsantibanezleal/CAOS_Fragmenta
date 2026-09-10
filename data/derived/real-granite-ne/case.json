@@ -166,7 +166,7 @@
    "unstamped": []
   }
  },
- "digest": "b23ac7d67cf865897e54ca07295e34d9555b1fe3fa3d02fccf1ac4a0a6a3cc45",
+ "digest": "770af042634e677004b26413dc7838782d1172bb1f8a8fac237547da553aa35c",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -809,7 +809,7 @@
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 5,
-   "pearson_r2": NaN,
+   "pearson_r2": null,
    "r2_identity": -38.36395879366165,
    "r2_identity_interval": [
     -211.23364213604293,
