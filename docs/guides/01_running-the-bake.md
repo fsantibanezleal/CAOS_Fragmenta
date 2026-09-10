@@ -40,15 +40,23 @@ Things that stop it:
 
 ## Determinism
 
-A bake is a pure function of the case registry, the pinned engine version and the seed. Re-running it
-on an unchanged tree produces byte-identical artifacts and leaves git clean.
+A bake is a pure function of the case registry, the pinned engine version and the seed. Run twice in
+the SAME environment it produces byte-identical artifacts and leaves git clean.
 
-If it does not, something is reading a wall clock, iterating a set, or stopping on a time limit.
-A CI job re-bakes one case into a temporary directory and compares its digest, so this cannot rot
-silently.
+    python scripts/compare_bakes.py real-murgul --repeat 2
 
-The temporary directory is not incidental. A test that can overwrite the canonical artifacts can
-silently make itself pass.
+If those two bakes disagree, something is reading a wall clock, iterating a set, or stopping on a
+time limit. A CI job runs the same command, so this cannot rot silently.
+
+Run on a DIFFERENT operating system it reproduces to a numeric tolerance instead, because two builds
+of the same pinned numpy sum a dot product in a different order. That is not a defect and pinning
+cannot remove it. The check is the same script without `--repeat`, which compares every number in
+every case and fails above the tolerance:
+
+    python scripts/compare_bakes.py
+
+Whichever you run, the comparison bakes into a temporary directory, and that is not incidental. A
+check that can overwrite the canonical artifacts can silently make itself pass.
 
 ## Changing the engine version
 

@@ -7,7 +7,6 @@ and leaves git clean.
 
 from __future__ import annotations
 
-import json
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -17,6 +16,7 @@ import blastfrag as bf
 from . import __version__
 from .cases.fragmenta_cases import Case
 from .core.gate import classify_lane
+from .core.jsonio import write_json
 from .registry import list_cases
 from .stages import benchmark, evaluate, export, infer, ingest, preprocess, train, validate
 
@@ -105,11 +105,8 @@ def bake_case(case: Case, *, seed: int = 0, root: Path | None = None) -> BakeRes
         "controls": evaluation.controls,
         "n_scoreable": evaluation.n_scoreable,
     }
-    MANIFEST_ROOT.mkdir(parents=True, exist_ok=True)
     manifest_path = MANIFEST_ROOT / f"{case.id}.json"
-    manifest_path.write_text(
-        json.dumps(manifest, indent=1, sort_keys=True, default=str), encoding="utf-8"
-    )
+    write_json(manifest_path, manifest)
 
     controls_passed = all(
         block.get("passed", True)
@@ -188,10 +185,7 @@ def bake_all(
             "verdict": payload["verdict"]["outcome"],
         }
 
-    MANIFEST_ROOT.mkdir(parents=True, exist_ok=True)
-    (MANIFEST_ROOT / "index.json").write_text(
-        json.dumps(index, indent=1, sort_keys=True), encoding="utf-8"
-    )
+    write_json(MANIFEST_ROOT / "index.json", index)
 
     report = validate.run(DATA_ROOT)
     if not report.ok:

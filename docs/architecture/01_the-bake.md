@@ -27,23 +27,73 @@ So the deploy workflow runs `python data-pipeline/run.py --validate` and never `
 | `export` | content-addressed JSON, non-finite floats as null | writing `NaN`, which no browser can parse |
 | `validate` | re-reads, re-hashes, re-checks the controls and the abstentions | passing without reading what was written |
 
-## 3. Determinism
+## 3. Determinism, and the two claims it actually supports
 
-A bake is a pure function of the case registry, the pinned engine version and the seed. Re-running it
-on an unchanged tree produces byte-identical artifacts and leaves git clean.
+A bake is a pure function of the case registry, the pinned environment and the seed. That sentence
+supports two different claims, and they need two different instruments.
 
-That is asserted in CI rather than asserted in prose: a job re-bakes one case into a **sandbox** and
-compares its digest against the committed one. The sandbox matters. A test that can overwrite the
-canonical artifacts can silently make itself pass, and the failure mode is a suite that is green
-because it rewrote the thing it was checking.
+### Within one environment: byte-identical
 
-Three things could break determinism and each is handled:
+Two bakes on the same machine produce the same bytes, and the check is a content address, which is
+exactly the right instrument for a discrete question.
+
+Three things could break this and each is handled:
 
 - **dictionary ordering** in the serialisation, closed by sorting keys;
 - **a wall clock** anywhere in a manifest, which is why the lane gate records budgets and a verdict
   rather than a measured runtime;
 - **a stopping rule that depends on CPU speed**, which is why the learned arms stop on a numerical
   criterion rather than a time limit.
+
+A fourth was found late and is worth naming, because nothing would have caught it. `Path.write_text`
+translates newlines on Windows, so the same bake wrote the same NUMBERS into files whose BYTES
+differed by platform. The digest is taken over the payload rather than over the file, so it never
+noticed, and the byte size the manifest declared was wrong on one of the two platforms. Every file
+this pipeline ships now goes through one writer that fixes the line ending at LF.
+
+### Across environments: to a tolerance, not to a hash
+
+Re-baking on a different operating system does **not** reproduce the same bytes, and asserting that
+it does would be asserting something false.
+
+Two builds of the same pinned numpy reduce a dot product in a different order. The last bits of the
+result differ, at a relative scale of about 1e-16, and no version pin can remove that because it is
+not a version difference. An iterative solver then amplifies it over its iterations.
+
+This is measured, not assumed. Baking `real-murgul` on Windows and on a Linux runner, both on Python
+3.13 with numpy 2.5.3, scikit-learn 1.9.0 and xgboost 3.4.1:
+
+| | |
+|---|---|
+| two bakes on the same runner | identical, byte for byte |
+| Windows against Linux | 72 fields differ, worst relative error 8.3e-09 |
+| where those fields live | every one of them in `published-neural-net` |
+| every other arm | bit-identical across both platforms |
+
+The localisation is the informative part. The network is trained by Levenberg-Marquardt, the only
+iterative solver in the product, and it is the only arm that carries the platform into its output.
+The classical closed forms, the support vector machine, the random forest, the gradient-boosted
+trees and the stack all land on the same bits.
+
+So the cross-environment gate compares numbers and names its tolerance: **1e-6 relative**, two orders
+above the measured noise and roughly five orders below the percent-scale move a genuinely different
+model would make. It is also far finer than anything anyone reads: predictions are exported rounded
+to a micrometre and displayed in centimetres.
+
+    python scripts/compare_bakes.py            # every case, every number, against what is committed
+    python scripts/compare_bakes.py real-murgul --repeat 2   # byte-identity within this environment
+
+Both run in CI. Both bake into a **sandbox**, never the canonical tree, and that is not incidental: a
+check that can overwrite the artifacts it is checking can silently make itself pass, and the failure
+mode is a suite that is green because it rewrote the thing it was verifying.
+
+### What this costs, honestly
+
+The published artifacts were baked on one machine, and a reader who re-bakes on another will get
+numbers that agree with them to eight or nine significant digits rather than to the last bit. For
+every number this product reports that is far past the point of meaning: the corpus itself carries
+x50 to two or three significant digits. But it is a real limit on the word "reproducible", and it is
+better stated than implied.
 
 ## 4. The leakage assertion
 
