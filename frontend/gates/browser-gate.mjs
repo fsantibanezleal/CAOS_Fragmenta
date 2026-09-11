@@ -145,6 +145,9 @@ async function inspect(page) {
       ),
       charts,
       benchHoles: document.querySelector('[data-bench-holes]')?.getAttribute('data-bench-holes') ?? null,
+      benchHolesVisible:
+        document.querySelector('[data-bench-holes-visible]')?.getAttribute('data-bench-holes-visible') ??
+        null,
 
       // ADR-0071, measured rather than judged by eye.
       //
@@ -348,6 +351,20 @@ for (const [w, h] of VIEWPORTS) {
 
         if (tab === 'bench' && !info.benchDisclaimer)
           fail(where, 'the 3D bench lost its timing disclaimer');
+
+        if (tab === 'bench' && info.benchHolesVisible !== null) {
+          // The hole COUNT was true while nothing was visible: the columns were drawn inside an
+          // opaque block, so the element said 18 and the tab showed a featureless slab. Three pixel
+          // heuristics were tried against that and every one of them measured something adjacent:
+          // counting distinct colours passed on the broken view because a shaded box has plenty,
+          // classifying pixels by colour passed in the dark theme because the palette's blues sit
+          // close together, and counting transitions along a scanline passed because it was counting
+          // the dimension lines. The renderer raycasts instead, and the two states separate exactly:
+          // 18 visible against 0.
+          if (Number(info.benchHolesVisible) < 1)
+            fail(where, 'the bench declares holes but none of them is visible from the camera');
+          else pass(`${where} visible`, `${info.benchHolesVisible} of ${info.benchHoles} holes`);
+        }
 
         if (SHOTS) {
           await page.screenshot({ path: `${SHOTS}/tab-${tab}-${theme}-${lang}-${w}x${h}.png` });

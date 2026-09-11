@@ -2,6 +2,56 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.04.000] - 2026-09-11
+
+Felipe: the Bench tab is a block image without any information. It was, and for two reasons at once.
+
+### Fixed
+
+- **The holes were drawn inside an opaque box.** Every charge column and every stemming plug sits
+  inside the rock by construction, because that is where a blasthole is, and the bench was rendered
+  solid. All 36 of them existed, the renderer counted 18 holes and said so on the element, and not
+  one pixel reached the screen. The bench is translucent now, with `depthWrite` off so the columns
+  behind it are not discarded before blending, and its edges are drawn so the block keeps a
+  silhouette.
+- **The rock took its colour from a TEXT token**, `--color-fg-subtle`, which is near-black in the
+  light theme, so the bench rendered as a dark slab on a white page. It is a neutral border token
+  now, which also keeps it clear of the accent blue and the warn amber that mark charge and stemming.
+- The free face was tinted at 0.18 opacity and invisible, so the block had no orientation. It is
+  outlined as well as tinted.
+- The columns were drawn true to scale. A 165 mm hole in a 12 m bench is 1.4% of the height, which
+  antialiasing eats, so they are drawn thicker than life and the real diameter is printed beside the
+  view. Exaggerating a dimension to make it visible is fine; doing it silently is not.
+- The camera framed the block at about a third of the canvas.
+- The whole component was English. The button, the dimension line, the disclaimer and the legend all
+  read in the page's language now.
+
+### Added
+
+- **The dimensions are on the drawing**, in a colour-keyed legend: charge length and mass, stemming,
+  free face, burden by spacing, bench height and hole diameter. They started as text sprites in the
+  3D scene and that was wrong: the reader can orbit, and every placement that read well at the
+  opening angle collided with something at another. A legend in a fixed corner cannot collide, and
+  being HTML it goes through the normal translation path, which text painted into a canvas never
+  does.
+- `data-bench-holes-visible`, a raycast from the camera to each charge that reports how many are
+  actually reachable by eye, and a gate assertion on it.
+
+### The instrument the gate needed
+
+The existing check read the declared hole count and passed while the tab was blank. Three pixel
+heuristics were tried against the broken view and every one measured something adjacent to the
+question:
+
+| attempt | on the broken view |
+|---|---|
+| count distinct colours | 90 colours, passed: a shaded grey box has plenty |
+| classify pixels by colour | passed in dark: the palette's blues sit close together |
+| count transitions along a scanline | 59 against 56, passed: it was counting the dimension lines |
+
+The raycast separates them exactly, 18 visible against 0, in both themes and at every size, because
+it asks the scene the question the reader is asking.
+
 ## [0.03.002] - 2026-09-10
 
 ### Fixed

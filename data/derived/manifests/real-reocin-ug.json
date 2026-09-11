@@ -1,5 +1,5 @@
 {
- "app_version": "0.03.002",
+ "app_version": "0.04.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 57406,
@@ -9,7 +9,7 @@
  "case_id": "real-reocin-ug",
  "category": "real-campaign",
  "controls": {},
- "digest": "bca3c1f166f5269b900a9dfb1129ad5dccd85ce472e18aaf06ce3b0337779640",
+ "digest": "9b8dc111972886445258596346cf22e524751eca066bfd24fa18f56b8bd98ee3",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"

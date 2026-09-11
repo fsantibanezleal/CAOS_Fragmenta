@@ -587,6 +587,64 @@
   overflow: hidden;
 }
 
+/* The legend sits ON the canvas, in a fixed corner.
+ *
+ * The dimensions used to be drawn into the 3D scene as sprites. Every placement that read well at
+ * the opening camera angle collided with something once the reader orbited: the bench-height label
+ * over the pattern, the column labels on the columns they named. A corner cannot collide, and being
+ * HTML this also goes through the normal translation path, which text painted into a canvas never
+ * does. It was English on the Spanish page for exactly that reason. */
+.fr-bench-frame {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+}
+
+.fr-bench-legend {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  backdrop-filter: blur(3px);
+  font-size: 0.72rem;
+  pointer-events: none;
+}
+
+.fr-bench-legend-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.fr-bench-legend dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-fg-subtle);
+}
+
+.fr-bench-legend dt i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+
+.fr-bench-legend dd {
+  margin: 0;
+  color: var(--color-fg);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
 .fr-bench-bar {
   display: flex;
   align-items: center;
