@@ -1,5 +1,5 @@
 {
- "app_version": "0.03.002",
+ "app_version": "0.04.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 60123,
@@ -9,7 +9,7 @@
  "case_id": "real-ozmert",
  "category": "real-campaign",
  "controls": {},
- "digest": "b03b56d86d2351a3d01c87c79dfc2ecb2433f3de301b0ccd42263482d33a6bb9",
+ "digest": "4aeaf39c1b0ac7847f9764a0664cf5a63d180a9a38a28de8641da8a6a62a83d1",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"

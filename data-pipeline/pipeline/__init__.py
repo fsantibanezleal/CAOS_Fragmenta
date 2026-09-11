@@ -8,4 +8,4 @@ That split is deliberate. A product declares no package of its own, so anything 
 use to predict blast fragmentation without caring about Fragmenta belongs upstream.
 """
 
-__version__ = "0.03.002"  # display X.XX.XXX; the PEP 440 form lives in frontend/package.json
+__version__ = "0.04.000"  # display X.XX.XXX; the PEP 440 form lives in frontend/package.json
