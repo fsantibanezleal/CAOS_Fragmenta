@@ -65,7 +65,7 @@ export default function Experiments() {
       <h2>{es ? 'La matriz de cobertura' : 'The coverage matrix'}</h2>
       <p>
         {es
-          ? `${index.n_cases} casos en ${byCategory.size} categorias. Cuatro de ellos existen para que el producto se niegue a responder en vez de responder, y son los primeros que conviene mirar al juzgar si es honesto.`
+          ? `${index.n_cases} casos en ${byCategory.size} categorías. Cuatro de ellos existen para que el producto se niegue a responder en vez de responder, y son los primeros que conviene mirar al juzgar si es honesto.`
           : `${index.n_cases} cases across ${byCategory.size} categories. Four of them exist so that the product refuses to answer rather than answering, and they are the first ones to look at when judging whether it is honest.`}
       </p>
       <div className="fr-scroll-x">
@@ -381,7 +381,7 @@ function ProtocolSlope({
       />
       <p className="fr-fine">
         {es
-          ? `Brecha mediana entre el protocolo aleatorio y el honesto: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. La linea punteada es el unico modelo que no cae.`
+          ? `Brecha mediana entre el protocolo aleatorio y el honesto: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. La línea punteada es el único modelo que no cae.`
           : `Median gap between the random protocol and the honest one: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. The dashed line is the one model that does not fall.`}
       </p>
       <p className="fr-fine">

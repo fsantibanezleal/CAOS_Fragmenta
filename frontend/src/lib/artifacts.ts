@@ -277,6 +277,36 @@ export const PROTOCOL_LABEL: Record<string, Record<Lang, string>> = {
   },
 };
 
+/**
+ * The quantities the geometry reconstruction checks, NAMED rather than de-underscored.
+ *
+ * The table printed `check.quantity.replace(/_/g, ' ')`, so `bench_height_m` read as "bench height"
+ * under a Spanish heading. Turning the underscores into spaces made an identifier look like prose
+ * and hid the fact that it had never been translated at all.
+ */
+export const QUANTITY_LABEL: Record<string, Record<Lang, string>> = {
+  bench_height_m: { en: 'bench height', es: 'altura de banco' },
+  burden_m: { en: 'burden', es: 'bordo' },
+  spacing_m: { en: 'spacing', es: 'espaciamiento' },
+  stemming_m: { en: 'stemming', es: 'taco' },
+  charge_length_m: { en: 'charge length', es: 'largo de carga' },
+  hole_diameter_mm: { en: 'hole diameter', es: 'diámetro de perforación' },
+};
+
+/** The controls, by the key the bake writes for each. */
+export const CONTROL_LABEL: Record<string, Record<Lang, string>> = {
+  geometry_negative_control: {
+    en: 'geometry negative control',
+    es: 'control negativo de geometría',
+  },
+  degenerate_negative_control: {
+    en: 'degenerate negative control',
+    es: 'control negativo degenerado',
+  },
+  extrapolation_control: { en: 'extrapolation control', es: 'control de extrapolación' },
+  positive_control: { en: 'positive control', es: 'control positivo' },
+};
+
 export const CATEGORY_LABEL: Record<string, Record<Lang, string>> = {
   'real-campaign': { en: 'Real campaigns', es: 'Campañas reales' },
   'extrapolation-control': { en: 'Extrapolation control', es: 'Control de extrapolación' },
