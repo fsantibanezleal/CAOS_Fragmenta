@@ -211,7 +211,7 @@ export default function Benchmark() {
       <h3>{es ? 'El modelo clásico mejora bajo el protocolo honesto' : 'The classical model improves under the honest protocol'}</h3>
       <p>
         {es
-          ? `De ${formatScore(benchmark.protocols['random-8020'].arms.kuznetsov?.r2_identity)} en una particion aleatoria a ${formatScore(benchmark.protocols['leave-one-site-out'].arms.kuznetsov?.r2_identity)} al excluir un sitio. El modelo no cambio. Cambio la comparacion: en una particion aleatoria compite contra modelos que memorizaron casi duplicados de las filas de prueba.`
+          ? `De ${formatScore(benchmark.protocols['random-8020'].arms.kuznetsov?.r2_identity)} en una partición aleatoria a ${formatScore(benchmark.protocols['leave-one-site-out'].arms.kuznetsov?.r2_identity)} al excluir un sitio. El modelo no cambio. Cambio la comparación: en una partición aleatoria compite contra modelos que memorizaron casi duplicados de las filas de prueba.`
           : `From ${formatScore(benchmark.protocols['random-8020'].arms.kuznetsov?.r2_identity)} on a random split to ${formatScore(benchmark.protocols['leave-one-site-out'].arms.kuznetsov?.r2_identity)} with a site held out. The model did not change. The comparison did: on a random split it competes against models that have memorised near-duplicates of the test rows.`}
       </p>
 
@@ -369,7 +369,7 @@ function SeedSweep({
     <>
       <p>
         {es
-          ? `La red publicada esta completamente especificada, asi que se puede reproducir exactamente. Reproducida sobre ${sweep.n_seeds} semillas, su varianza explicada sobre el conjunto publicado va de ${sweep.min.toFixed(3)} a ${sweep.max.toFixed(3)}. El ${sweep.published.toFixed(3)} publicado queda por encima de todas.`
+          ? `La red publicada esta completamente especificada, así que se puede reproducir exactamente. Reproducida sobre ${sweep.n_seeds} semillas, su varianza explicada sobre el conjunto publicado va de ${sweep.min.toFixed(3)} a ${sweep.max.toFixed(3)}. El ${sweep.published.toFixed(3)} publicado queda por encima de todas.`
           : `The published network is fully specified, so it can be reproduced exactly. Reproduced across ${sweep.n_seeds} seeds, its variance explained on the published hold-out runs from ${sweep.min.toFixed(3)} to ${sweep.max.toFixed(3)}. The published ${sweep.published.toFixed(3)} sits above every one of them.`}
       </p>
       <LineChart

@@ -31,17 +31,17 @@ here carries the name of what it is, and a model that predicts a constant runs b
 What it is not: there is no mechanistic simulation, no non-ideal detonics, no flyrock, no ground
 vibration and no downstream comminution model. Constants that no source prints are exposed as user
 parameters rather than invented.`,
-      body_es: `Fragmenta predice el tamano medio de fragmento de una pila tronada a partir del diseno de un banco,
-usando doce modelos que van desde la ecuacion clasica de 1973 hasta el ensamble apilado de 2025. Cada
-modelo se puntua contra los mismos 97 tiros reales medidos, de diez campanas en cuatro continentes.
+      body_es: `Fragmenta predice el tamaño medio de fragmento de una pila tronada a partir del diseño de un banco,
+usando doce modelos que van desde la ecuación clásica de 1973 hasta el ensamble apilado de 2025. Cada
+modelo se puntúa contra los mismos 97 tiros reales medidos, de diez campañas en cuatro continentes.
 
-El punto no es la prediccion sino la comparacion. En esta literatura se llama R2 a dos cantidades
-distintas que difieren por un factor de dos y medio sobre los mismos doce tiros, asi que cada cifra
-aqui lleva el nombre de lo que es, y un modelo que predice una constante corre junto a todos los demas.
+El punto no es la predicción sino la comparación. En esta literatura se llama R2 a dos cantidades
+distintas que difieren por un factor de dos y medio sobre los mismos doce tiros, así que cada cifra
+aquí lleva el nombre de lo que es, y un modelo que predice una constante corre junto a todos los demás.
 
-Lo que no es: no hay simulacion mecanicista, ni detonica no ideal, ni proyeccion de rocas, ni
-vibracion del terreno, ni modelo de conminucion aguas abajo. Las constantes que ninguna fuente publica
-se exponen como parametros del usuario en vez de inventarse.`,
+Lo que no es: no hay simulación mecanicista, ni detonica no ideal, ni proyección de rocas, ni
+vibración del terreno, ni modelo de conminución aguas abajo. Las constantes que ninguna fuente publica
+se exponen como parámetros del usuario en vez de inventarse.`,
     },
     {
       id: 'lanes',
@@ -62,17 +62,17 @@ the build on a divergence, because two implementations of one equation drift the
 
 Deploy copies already-audited artifacts. It never trains, never retunes and never regenerates a
 benchmark. A deployment is not an experiment.`,
-      body_es: `SIN CONEXION es lo canonico. El entrenamiento, el barrido de ancho oculto, el barrido de semillas,
+      body_es: `SIN CONEXIÓN es lo canónico. El entrenamiento, el barrido de ancho oculto, el barrido de semillas,
 la matriz de diez pliegues dejando un sitio fuera y todo el benchmark corren antes de publicar, en un
 entorno de Python fijado, contra un paquete motor publicado aparte que este producto consume.
 
-REPRODUCCION es la evidencia por defecto. La web lee artefactos comprometidos y direccionados por
+REPRODUCCIÓN es la evidencia por defecto. La web lee artefactos comprometidos y direccionados por
 contenido: un JSON por caso mas un archivo de benchmark entre casos, cerca de 1.2 MB en total, cada uno
-con un resumen criptografico que la compuerta de publicacion vuelve a verificar.
+con un resumen criptográfico que la compuerta de publicacion vuelve a verificar.
 
 VIVO es el taller. Los modelos de forma cerrada se reimplementan en TypeScript para que cambiar un
-bordo mueva la curva en pantalla. Que coincidan con el motor sin conexion es una compuerta de paridad
-que hace fallar la compilacion ante una divergencia, porque dos implementaciones de una ecuacion se
+bordo mueva la curva en pantalla. Que coincidan con el motor sin conexión es una compuerta de paridad
+que hace fallar la compilacion ante una divergencia, porque dos implementaciones de una ecuación se
 separan en cuanto nadie las revisa.
 
 El despliegue copia artefactos ya auditados. Nunca entrena, nunca reajusta y nunca regenera un
@@ -102,13 +102,13 @@ no una arquitectura. Los modelos se alcanzan desde un selector con grupos dentro
 necesitan.
 
 Todo lo que resume ENTRE casos vive en Experimentos o Benchmark. Un taller que responde "en todas las
-campanas" dejo de ser un taller.
+campañas" dejo de ser un taller.
 
 La ruta de pantalla completa se dibuja fuera del armazon, porque el encabezado y el pie son justamente
 el marco del que esa vista existe para escapar. Aplica el tema por si misma, de modo que un enlace
 directo en frio no arranque con la paleta equivocada.
 
-Cada grafico lee valores bajo el cursor y reacciona al selector de casos. Un grafico que no cambia
+Cada gráfico lee valores bajo el cursor y reacciona al selector de casos. Un gráfico que no cambia
 cuando cambia un control esta roto, y la forma en que eso permanece invisible es que nadie lo revise.`,
     },
     {
@@ -132,23 +132,23 @@ arithmetic rule reproduces all three exactly.
 
 Back-solving the rock factor then recovers a constant both papers say they estimated and neither
 printed. It comes out near constant within each site, which validates the reconstruction in turn.`,
-      body_es: `El corpus publica siete razones adimensionales y ninguna dimension, y la ecuacion clasica necesita
-volumen de roca y masa de carga por barreno. Sobre la tabla publicada no podia correr en absoluto, y
-esa es plausiblemente la razon de que todo estudio reciente sobre este corpus sea un regresor de caja
+      body_es: `El corpus publica siete razones adimensionales y ninguna dimensión, y la ecuación clásica necesita
+volumen de roca y masa de carga por barreno. Sobre la tabla publicada no podía correr en absoluto, y
+esa es plausiblemente la razón de que todo estudio reciente sobre este corpus sea un regresor de caja
 negra.
 
-La prosa de la propia fuente da un diametro de perforacion en ocho de sus diez sitios, y un diametro
+La prosa de la propia fuente da un diámetro de perforación en ocho de sus diez sitios, y un diámetro
 cierra el sistema. Un noveno sale invirtiendo su altura de banco declarada y devuelve los mismos
-91.2 mm en sus seis filas. El decimo no publica nada absoluto, asi que sus seis tiros no son
-reconstruibles y todo modelo que necesite un volumen se abstiene ahi con una razon.
+91.2 mm en sus seis filas. El décimo no publica nada absoluto, así que sus seis tiros no son
+reconstruibles y todo modelo que necesite un volumen se abstiene ahí con una razón.
 
 Lo que lo vuelve un resultado y no un supuesto es que la misma prosa declara restricciones
 dimensionales independientes. Quince, sobre nueve sitios, las quince comprobadas al hornear y las
-quince satisfechas. Un parrafo declara altura de banco, rango de bordo y rango de espaciamiento, y una
-sola regla aritmetica reproduce los tres exactamente.
+quince satisfechas. Un párrafo declara altura de banco, rango de bordo y rango de espaciamiento, y una
+sola regla aritmética reproduce los tres exactamente.
 
-Despejar el factor de roca recupera entonces una constante que ambos articulos dicen haber estimado y
-ninguno imprimio. Sale casi constante dentro de cada sitio, lo que a su vez valida la reconstruccion.`,
+Despejar el factor de roca recupera entonces una constante que ambos artículos dicen haber estimado y
+ninguno imprimio. Sale casi constante dentro de cada sitio, lo que a su vez valida la reconstrucción.`,
     },
     {
       id: 'contracts',
@@ -176,24 +176,24 @@ Every predicted cell carries a number or a reason. Never neither. The gate fails
 unexplained abstention.`,
       body_es: `EL CONTRATO 1, de ingreso, es la compuerta para traer datos propios. Dos bandas, y no son la misma. Un
 valor fuera del rango del contrato es un error de unidad o de captura y se RECHAZA. Un valor fuera de la
-envolvente ajustada es una extrapolacion: se admite solo con un permiso explicito, y toda prediccion
+envolvente ajustada es una extrapolación: se admite solo con un permiso explícito, y toda predicción
 hecha sobre el queda sellada. Nunca se recorta nada, porque una entrada recortada produce una
-prediccion confiada para un diseno que nadie ingreso.
+predicción confiada para un diseño que nadie ingreso.
 
-Detras esta la compuerta de integridad, que hace dos cosas independientes. Reproduce las estadisticas
-descriptivas del propio articulo fuente a partir de las filas enviadas, con la precision con que cada
-una se imprimio. Y compara un resumen criptografico del contenido con un valor fijado, porque una media
-sobre 97 filas es un detector debil para el cambio de una sola celda. Esa compuerta encontro cinco
-defectos de transcripcion en el corpus tal como se ensamblo primero, dos de ellos sobre la variable que
+Detras esta la compuerta de integridad, que hace dos cosas independientes. Reproduce las estadísticas
+descriptivas del propio artículo fuente a partir de las filas enviadas, con la precisión con que cada
+una se imprimio. Y compara un resumen criptográfico del contenido con un valor fijado, porque una media
+sobre 97 filas es un detector débil para el cambio de una sola celda. Esa compuerta encontro cinco
+defectos de transcripción en el corpus tal como se ensamblo primero, dos de ellos sobre la variable que
 se predice.
 
 EL CONTRATO 2, el del artefacto, es lo que la web lee. Cada archivo de caso esta direccionado por
 contenido y su resumen se vuelve a verificar en la compuerta de publicacion. Un espejo del esquema en
 TypeScript hace fallar la compilacion ante cualquier deriva, de modo que un campo renombrado en un lado
-y no en el otro detiene la compilacion en vez de dibujar un grafico vacio identico a uno que funciona.
+y no en el otro detiene la compilacion en vez de dibujar un gráfico vacio idéntico a uno que funciona.
 
-Cada celda predicha lleva un numero o una razon. Nunca ninguna de las dos. La compuerta hace fallar el
-horneado ante una sola abstencion sin explicar.`,
+Cada celda predicha lleva un número o una razón. Nunca ninguna de las dos. La compuerta hace fallar el
+horneado ante una sola abstención sin explicar.`,
     },
   ],
 };

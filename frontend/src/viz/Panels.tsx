@@ -274,7 +274,7 @@ export function SimulationSpread({ cell }: { cell: PredictionCell }) {
     <p className={`fr-note ${unstable ? 'fr-note-warn' : ''}`}>
       {unstable ? <AlertTriangle size={13} /> : <Info size={13} />}{' '}
       {lang === 'es'
-        ? `Promedio de ${cell.n_simulations} simulaciones; coeficiente de variacion ${cell.cv.toFixed(2)}.`
+        ? `Promedio de ${cell.n_simulations} simulaciones; coeficiente de variación ${cell.cv.toFixed(2)}.`
         : `Mean of ${cell.n_simulations} simulations; coefficient of variation ${cell.cv.toFixed(2)}.`}{' '}
       {unstable
         ? lang === 'es'

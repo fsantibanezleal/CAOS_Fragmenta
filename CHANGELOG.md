@@ -2,6 +2,26 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.04.001] - 2026-09-11
+
+### Fixed
+
+- The accent guard could not see TEMPLATE LITERALS, which is where a product puts the Spanish that
+  carries numbers. Widening it turned up **70 unaccented words across five files**, 57 of them in
+  the architecture modal, a whole user-facing surface that had passed every previous run because
+  its content is written as backtick strings.
+- The geometry table printed `check.quantity.replace(/_/g, ' ')`, so `bench_height_m` read as
+  "bench height" under a Spanish heading. Turning underscores into spaces made an identifier look
+  like prose and hid that it had never been translated. The quantities and the control names have
+  labels now, and the ranges read "4.5 a 5 m" rather than "4.5 to 5 m".
+
+### Changed
+
+- The guard builds one pattern per string delimiter instead of one alternation carrying a
+  backreference. The first attempt at adding backticks used a three-delimiter character class and
+  hung the guard outright on catastrophic backtracking, which is a worse failure than the blind spot
+  it was fixing.
+
 ## [0.04.000] - 2026-09-11
 
 Felipe: the Bench tab is a block image without any information. It was, and for two reasons at once.

@@ -17,11 +17,13 @@ import {
   ARMS,
   ARM_BY_ID,
   CATEGORY_LABEL,
+  CONTROL_LABEL,
   FEATURE_LABEL,
   formatScore,
   formatSize,
   loadCase,
   loadIndex,
+  QUANTITY_LABEL,
   TIER_LABEL,
   TIER_ORDER,
 } from '../lib/artifacts';
@@ -241,7 +243,7 @@ function CaseCard({ artifact, lang }: { artifact: CaseArtifact; lang: Lang }) {
         <ul className="fr-controls">
           {controls.map(([name, block]) => (
             <li key={name} className={block.passed ? 'fr-ok' : 'fr-bad'}>
-              {block.passed ? 'PASS' : 'FAIL'} {name.replace(/_/g, ' ')}
+              {block.passed ? 'PASS' : 'FAIL'} {CONTROL_LABEL[name]?.[lang] ?? name.replace(/_/g, ' ')}
             </li>
           ))}
         </ul>
@@ -561,7 +563,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
           {live.n < 0.7 ? (
             <p className="fr-note fr-note-warn">
               {lang === 'es'
-                ? `El indice cae bajo la banda usual de 0.7 a 2. En este tiro el taco ocupa ${((blast.features.T_over_B / blast.features.H_over_B) * 100).toFixed(0)} por ciento del barreno, asi que la columna de carga es corta.`
+                ? `El índice cae bajo la banda usual de 0.7 a 2. En este tiro el taco ocupa ${((blast.features.T_over_B / blast.features.H_over_B) * 100).toFixed(0)} por ciento del barreno, así que la columna de carga es corta.`
                 : `The index falls below the usual band of 0.7 to 2. On this blast the stemming takes ${((blast.features.T_over_B / blast.features.H_over_B) * 100).toFixed(0)} percent of the hole, so the charge column is short.`}
             </p>
           ) : null}
@@ -712,7 +714,7 @@ function BenchTab({
           >
             <p className="fr-note">
               {lang === 'es'
-                ? `El diametro de ${report.hole_diameter_mm} mm viene de la prosa de la fuente. Todo lo demas se deduce de las razones publicadas, y se verifica contra lo que la misma prosa declara.`
+                ? `El diámetro de ${report.hole_diameter_mm} mm viene de la prosa de la fuente. Todo lo demás se deduce de las razones publicadas, y se verifica contra lo que la misma prosa declara.`
                 : `The ${report.hole_diameter_mm} mm diameter comes from the source’s own prose. Everything else follows from the published ratios, and is checked against what the same prose states.`}
             </p>
             <table className="fr-table fr-table-compact">
@@ -727,12 +729,12 @@ function BenchTab({
               <tbody>
                 {report.checks.map((check) => (
                   <tr key={check.quantity}>
-                    <td>{check.quantity.replace(/_m$/, '').replace(/_/g, ' ')}</td>
+                    <td>{QUANTITY_LABEL[check.quantity]?.[lang] ?? check.quantity}</td>
                     <td>
-                      {check.stated[0]} to {check.stated[1]} m
+                      {check.stated[0]} {lang === 'es' ? 'a' : 'to'} {check.stated[1]} m
                     </td>
                     <td>
-                      {check.reconstructed[0]} to {check.reconstructed[1]} m
+                      {check.reconstructed[0]} {lang === 'es' ? 'a' : 'to'} {check.reconstructed[1]} m
                     </td>
                     <td className={check.ok ? 'fr-ok' : 'fr-bad'}>{check.ok ? 'PASS' : 'FAIL'}</td>
                   </tr>
@@ -807,7 +809,7 @@ function RockTab({ blast }: { blast: BlastRow }) {
         </div>
         <p className="fr-note fr-note-warn">
           {lang === 'es'
-            ? `Los dos esquemas publicados difieren en ${Math.abs(factorA - factorB).toFixed(2)} en el factor de roca sobre esta misma roca. El tamano predicho es lineal en ese factor.`
+            ? `Los dos esquemas publicados difieren en ${Math.abs(factorA - factorB).toFixed(2)} en el factor de roca sobre esta misma roca. El tamaño predicho es lineal en ese factor.`
             : `The two published schemes differ by ${Math.abs(factorA - factorB).toFixed(2)} in the rock factor on this same rock. Predicted size is linear in that factor.`}
         </p>
       </div>

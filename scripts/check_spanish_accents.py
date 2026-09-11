@@ -112,12 +112,23 @@ for base, fixed in list(REQUIRED.items()):
 for correct in ("mecanicista", "mecanicistas"):
     REQUIRED.pop(correct, None)
 
-QUOTED = r"(['\"])((?:\\.|(?!\1).)*)\1"
-JSX_PATTERNS = [
-    re.compile(r"\bes\s*\?\s*" + QUOTED, re.S),
-    re.compile(r"lang\s*===\s*'es'\s*\?\s*" + QUOTED, re.S),
-    re.compile(r"\b(?:\w*_)?es\s*:\s*" + QUOTED, re.S),
+# Single quotes, double quotes AND backticks.
+#
+# A template literal is where a product puts the Spanish that carries numbers, so leaving it out
+# is a blind spot exactly where the interesting strings are. One sat there unaccented on the App
+# route through every run of this guard: a sentence about a hole diameter with the number
+# interpolated, invisible because the patterns only looked at quoted strings.
+#
+# One pattern per delimiter rather than one alternation carrying a backreference. A character
+# class of three delimiters with a backreferencing body backtracks catastrophically on a file full
+# of backticks, and the first attempt at this hung the guard outright instead of reporting.
+_BODIES = [
+    r"'((?:\\.|[^'\\])*)'",
+    r'"((?:\\.|[^"\\])*)"',
+    r"`((?:\\.|[^`\\])*)`",
 ]
+_HEADS = [r"\bes\s*\?\s*", r"lang\s*===\s*'es'\s*\?\s*", r"\b(?:\w*_)?es\s*:\s*"]
+JSX_PATTERNS = [re.compile(head + body, re.S) for head in _HEADS for body in _BODIES]
 WORD = re.compile(r"[A-Za-zÀ-ſ]+")
 
 
@@ -138,11 +149,13 @@ def spanish_strings() -> list[tuple[str, str]]:
         seen = set()
         for pattern in JSX_PATTERNS:
             for m in pattern.finditer(text):
-                if (m.start(2), m.end(2)) in seen:
+                # Group ONE: each pattern captures only the string body now, because the delimiter is
+                # fixed per pattern instead of being captured and back-referenced.
+                if (m.start(1), m.end(1)) in seen:
                     continue
-                seen.add((m.start(2), m.end(2)))
-                line = text.count("\n", 0, m.start(2)) + 1
-                found.append((f"{path.relative_to(ROOT).as_posix()}:{line}", m.group(2)))
+                seen.add((m.start(1), m.end(1)))
+                line = text.count("\n", 0, m.start(1)) + 1
+                found.append((f"{path.relative_to(ROOT).as_posix()}:{line}", m.group(1)))
 
     # The case registry writes its Spanish as Python literals, some of them implicitly concatenated
     # across lines. Ask the module which strings are Spanish rather than guessing from the source.
