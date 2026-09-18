@@ -5,7 +5,7 @@
 [![Live](https://img.shields.io/badge/live-fragmenta.fasl--work.com-informational)](https://fragmenta.fasl-work.com)
 
 Blast-fragmentation prediction on real measured blasts. Twelve competing models, three ways of
-splitting the data, and the honest statistic named.
+splitting the data, and the statistic named (variance explained, not squared correlation).
 
 **[fragmenta.fasl-work.com](https://fragmenta.fasl-work.com)**
 
@@ -28,7 +28,7 @@ seen are the two whose coefficients are **fixed rather than fitted**.
 
 Variance explained about the identity line.
 
-The classical model **improves** under the honest protocol, from negative on a random split to 0.311
+The classical model **improves** under the leave-one-site-out protocol, from negative on a random split to 0.311
 with a site held out, because it has nothing to overfit. That inverts the usual reading of it as the
 weak baseline.
 
@@ -108,7 +108,7 @@ written `NaN` into JSON that no browser can parse.
 
 16 cases across six categories, each stating in both languages why it is in the matrix. Four exist so
 the product **refuses** rather than answers, and they are the first ones to look at when judging
-whether it is honest:
+whether its refusals are right:
 
 - **geometry negative control**, six blasts whose absolute scale no source publishes;
 - **degenerate negative control**, six designs where the stemming exceeds the bench, refused by every
@@ -131,7 +131,7 @@ the bake fails if any of the case's own blasts appear in its training rows.
 Numeric values are experimental facts reused with citation. The source articles are not
 redistributed, and a CI guard fails the build if one is ever committed.
 
-## Honest scope
+## Scope
 
 No mechanistic simulation: there is no discrete-element or hybrid stress blasting model here, and a
 hand-rolled approximation under those names would be worse than nothing. No non-ideal detonics. No
