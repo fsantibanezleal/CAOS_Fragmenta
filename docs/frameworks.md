@@ -14,7 +14,7 @@ What this product depends on, and what it deliberately does not.
 
 The engine being a separate repo is the point rather than an accident. A product declares no package
 of its own, so anything a third party could use to predict blast fragmentation without caring about
-Fragmenta belongs upstream. Keeping that boundary honest is what stops this repo growing a private
+Fragmenta belongs upstream. Keeping that boundary strict is what stops this repo growing a private
 copy of the science that nobody else can check.
 
 ## What it does not use, and why that is a decision

@@ -164,8 +164,8 @@ function RockFactor({ es }: { es: boolean }) {
 
       <p>
         {es
-          ? 'Los tres esquemas se muestran lado a lado, con su fuente en cada uno. Presentar uno como EL factor de roca ocultaría la subjetividad que es el contenido honesto de este parámetro.'
-          : 'All three schemes ship side by side with the source on each. Presenting one as THE rock factor would hide the subjectivity that is the honest content of this parameter.'}
+          ? 'Los tres esquemas se muestran lado a lado, con su fuente en cada uno. Presentar uno como EL factor de roca ocultaría la subjetividad que es el contenido real de este parámetro.'
+          : 'All three schemes ship side by side with the source on each. Presenting one as THE rock factor would hide the subjectivity that is the real content of this parameter.'}
       </p>
 
       <h3>{es ? 'Un cuarto esquema, recuperado de los datos' : 'A fourth scheme, recovered from the data'}</h3>

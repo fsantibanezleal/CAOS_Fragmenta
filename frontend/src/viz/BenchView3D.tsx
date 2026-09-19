@@ -514,7 +514,7 @@ export function BenchView3D({
         {label ? <span className="fr-bench-label">{label}</span> : null}
       </div>
       {/*
-        The permanent honesty overlay. Not dismissible, because the moment it can be dismissed this
+        The permanent caveat overlay. Not dismissible, because the moment it can be dismissed this
         view starts looking like evidence for something it cannot support.
       */}
       <p className="fr-note fr-note-warn" data-bench-disclaimer="timing-is-choreography">

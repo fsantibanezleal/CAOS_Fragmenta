@@ -4,7 +4,7 @@ A case here is a coherent set of blasts that answers one question. Ten are real 
 one is a real out-of-envelope field set, and five are synthetic, two of which are controls.
 
 Two of these cases exist specifically to make the product refuse rather than answer, and they are
-the ones to look at first when judging whether it is honest.
+the ones to look at first when judging whether its refusals are right.
 """
 
 from __future__ import annotations

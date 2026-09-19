@@ -1,5 +1,5 @@
 /**
- * The panels that carry the product's honesty: refusals, uncertainty, provenance and the decision.
+ * The panels that carry the product's caveats: refusals, uncertainty, provenance and the decision.
  *
  * These are not chrome. An abstention that renders as a blank cell is indistinguishable from a
  * missing feature, and a learned number without its withheld site is indistinguishable from a

@@ -1,7 +1,7 @@
 """Stage 5, train: fit the learned arms, once, on the leakage-safe training rows.
 
 The rows used here are the whole published corpus MINUS the case's own site when the case is a real
-campaign. That is the leave-one-site-out protocol applied at bake time, and it is the only honest way
+campaign. That is the leave-one-site-out protocol applied at bake time, and it is the only leakage-free way
 to show a learned prediction on a case whose blasts the model could otherwise have memorised.
 
 The benchmark stage runs the full protocol sweep separately. This stage exists so that what the App

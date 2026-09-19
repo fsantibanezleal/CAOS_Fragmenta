@@ -23,8 +23,8 @@ PROTOCOL_LABELS: dict[str, tuple[str, str]] = {
         "Deduplicado y luego aleatorio",
     ),
     "leave-one-site-out": (
-        "Leave one site out, the honest protocol",
-        "Dejar un sitio fuera, el protocolo honesto",
+        "Leave one site out, an unseen site in every fold",
+        "Dejar un sitio fuera, un sitio no visto en cada partición",
     ),
 }
 

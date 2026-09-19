@@ -1,6 +1,6 @@
 """Stage 6, infer: every arm over every blast and every variant, into one shared schema.
 
-Two rules make this stage the honest part of the product rather than a table generator.
+Two rules make this stage the part of the product that can refuse, rather than a table generator.
 
 An arm that cannot answer **abstains with a reason**, and the abstention is carried through to the
 artifact and onto the screen. A blast with no resolvable geometry, a design with no charge column,
