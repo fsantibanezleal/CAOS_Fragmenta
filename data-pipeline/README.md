@@ -34,7 +34,7 @@ None of them is a no-op. Each is deterministic, typed and seeded, and each write
 next one consumes. The full account is in
 [`docs/architecture/01_the-bake.md`](../docs/architecture/01_the-bake.md).
 
-Two of them carry the product honesty.
+Two of them carry the product's guarantees.
 
 `train` fits every learned model on the corpus **minus the case own campaign**, and then asserts it:
 the bake fails if any of the case blasts appear in its training rows. Without that, the App would

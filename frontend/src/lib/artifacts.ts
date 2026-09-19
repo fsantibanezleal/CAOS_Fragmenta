@@ -272,8 +272,8 @@ export const PROTOCOL_LABEL: Record<string, Record<Lang, string>> = {
   },
   'dedup-random': { en: 'Deduplicated, then random', es: 'Deduplicado y luego aleatorio' },
   'leave-one-site-out': {
-    en: 'Leave one site out, the honest protocol',
-    es: 'Dejar un sitio fuera, el protocolo honesto',
+    en: 'Leave one site out, an unseen site in every fold',
+    es: 'Dejar un sitio fuera, un sitio no visto en cada partición',
   },
 };
 

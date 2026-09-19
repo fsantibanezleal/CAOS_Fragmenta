@@ -2,6 +2,19 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.04.002] - 2026-09-19
+
+### Changed
+
+- The App (EN and ES), the page description, the pipeline, the docs wiki and a test comment no
+  longer use the word "honest"; each passage says what it means. The leave-one-site-out label reads
+  "an unseen site in every fold" ("un sitio no visto en cada partición"), the Introduction section
+  is "Scope" ("Alcance"), the description names the statistic (variance explained, not squared
+  correlation), and the controls are the cases to read when judging whether the refusals are right.
+- The shared shell's callout style keeps its internal name; it is never rendered as text.
+- Artifacts re-baked at 0.04.002: only `app_version` and each file's digest change; every number is
+  identical.
+
 ## [0.04.001] - 2026-09-11
 
 ### Fixed

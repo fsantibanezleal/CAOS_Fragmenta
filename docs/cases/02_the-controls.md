@@ -1,7 +1,7 @@
 # The controls
 
 Four cases exist so that the product **refuses** rather than answers, and they are the first ones to
-look at when judging whether it is honest.
+look at when judging whether its refusals are right.
 
 Each control is attached only to the cases that can trigger it. A control block on every case would
 look thorough and mean nothing.
@@ -16,8 +16,8 @@ diameter and no absolute dimension of any kind, so nothing fixes its scale.
 Every model that needs a rock volume and a charge mass **abstains** there, with a reason string
 naming the campaign and saying what is missing. A test asserts that none of them answered.
 
-A number there would be an invention. This is the case that keeps the classical models honest, and it
-is why the geometry module raises rather than returning a plausible default.
+A number there would be an invention. This is the case that makes the classical models abstain
+rather than invent, and it is why the geometry module raises rather than returning a plausible default.
 
 ## The degenerate negative control
 

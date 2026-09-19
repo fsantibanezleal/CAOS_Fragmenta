@@ -72,7 +72,7 @@ export interface PredictionCell {
   reason: string | null;
   extrapolated: boolean;
   group: 1 | 2 | null;
-  /** Coefficient of variation across the network's simulations. Its honest uncertainty. */
+  /** Coefficient of variation across the network's simulations: the uncertainty it reports. */
   cv?: number | null;
   n_simulations?: number | null;
 }
