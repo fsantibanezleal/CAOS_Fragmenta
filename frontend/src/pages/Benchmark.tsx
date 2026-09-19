@@ -1,7 +1,7 @@
 /**
  * Benchmark: across every blast there is, which model is actually worth trusting.
  *
- * This is where the product's central claim lives, and it leads with the honest protocol rather than
+ * This is where the product's central claim lives, and it leads with leave-one-site-out rather than
  * with the flattering one.
  */
 
@@ -88,7 +88,7 @@ export default function Benchmark() {
 
   // An arm that abstains on every row of a protocol has no score there, and a null in the series is
   // drawn as a gap rather than as a zero. The rock-stiffness router is exactly that case: it routes,
-  // it does not predict, so it abstains on all 97 rows under the honest protocol.
+  // it does not predict, so it abstains on all 97 rows under leave-one-site-out.
   const collapseSeries: SeriesSpec[] = arms.map((arm) => ({
     id: arm,
     label: ARM_BY_ID.get(arm)?.label[lang] ?? arm,
@@ -208,7 +208,7 @@ export default function Benchmark() {
           : 'It is a statement about what this corpus can support: 97 blasts from ten campaigns are enough to fit a model that interpolates between campaigns it has seen, and not enough to fit one that reaches a new one.'}
       </p>
 
-      <h3>{es ? 'El modelo clásico mejora bajo el protocolo honesto' : 'The classical model improves under the honest protocol'}</h3>
+      <h3>{es ? 'El modelo clásico mejora al excluir un sitio' : 'The classical model improves when a site is held out'}</h3>
       <p>
         {es
           ? `De ${formatScore(benchmark.protocols['random-8020'].arms.kuznetsov?.r2_identity)} en una partición aleatoria a ${formatScore(benchmark.protocols['leave-one-site-out'].arms.kuznetsov?.r2_identity)} al excluir un sitio. El modelo no cambio. Cambio la comparación: en una partición aleatoria compite contra modelos que memorizaron casi duplicados de las filas de prueba.`

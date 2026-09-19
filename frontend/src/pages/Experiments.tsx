@@ -65,8 +65,8 @@ export default function Experiments() {
       <h2>{es ? 'La matriz de cobertura' : 'The coverage matrix'}</h2>
       <p>
         {es
-          ? `${index.n_cases} casos en ${byCategory.size} categorías. Cuatro de ellos existen para que el producto se niegue a responder en vez de responder, y son los primeros que conviene mirar al juzgar si es honesto.`
-          : `${index.n_cases} cases across ${byCategory.size} categories. Four of them exist so that the product refuses to answer rather than answering, and they are the first ones to look at when judging whether it is honest.`}
+          ? `${index.n_cases} casos en ${byCategory.size} categorías. Cuatro de ellos existen para que el producto se niegue a responder en vez de responder, y son los primeros que conviene mirar al juzgar si sus negativas son correctas.`
+          : `${index.n_cases} cases across ${byCategory.size} categories. Four of them exist so that the product refuses to answer rather than answering, and they are the first ones to look at when judging whether its refusals are right.`}
       </p>
       <div className="fr-scroll-x">
         <table className="fr-table fr-table-wide">
@@ -381,12 +381,12 @@ function ProtocolSlope({
       />
       <p className="fr-fine">
         {es
-          ? `Brecha mediana entre el protocolo aleatorio y el honesto: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. La línea punteada es el único modelo que no cae.`
-          : `Median gap between the random protocol and the honest one: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. The dashed line is the one model that does not fall.`}
+          ? `Brecha mediana entre el protocolo aleatorio y el de un sitio fuera: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. La línea punteada es el único modelo que no cae.`
+          : `Median gap between the random protocol and leave-one-site-out: ${benchmark.verdict.median_protocol_gap.toFixed(3)}. The dashed line is the one model that does not fall.`}
       </p>
       <p className="fr-fine">
         {formatScore(benchmark.verdict.best_learned_r2_identity)}{' '}
-        {es ? 'es el mejor aprendido bajo el protocolo honesto; el nulo está en' : 'is the best learned model under the honest protocol; the null sits at'}{' '}
+        {es ? 'es el mejor aprendido al excluir un sitio; el nulo está en' : 'is the best learned model with a site held out; the null sits at'}{' '}
         {formatScore(benchmark.verdict.null_r2_identity)}.
       </p>
     </>

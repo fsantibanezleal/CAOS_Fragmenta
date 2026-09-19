@@ -96,7 +96,7 @@ Both run in CI. Both bake into a **sandbox**, never the canonical tree, and that
 check that can overwrite the artifacts it is checking can silently make itself pass, and the failure
 mode is a suite that is green because it rewrote the thing it was verifying.
 
-### What this costs, honestly
+### What this costs
 
 The published artifacts were baked on one machine, and a reader who re-bakes on another will get
 numbers that agree with them to seven or eight significant digits rather than to the last bit. For
@@ -131,7 +131,7 @@ ambiguous.
 - that every control block marked with a verdict passed;
 - that **every abstaining cell carries a reason**. One unexplained refusal fails the whole bake.
 
-That last one is the rule the product's honesty rests on. A refusal without a reason renders as a
+That last one is the rule the product's refusals rest on. A refusal without a reason renders as a
 blank cell, and a blank cell is indistinguishable from a missing feature.
 
 ## 6. What the bake produces

@@ -58,8 +58,8 @@ export default function Introduction() {
 
       <p>
         {es
-          ? 'El modelo clásico incluso mejora bajo el protocolo honesto, de negativo en una partición aleatoria a 0.311 al excluir un sitio, porque no tiene nada que sobreajustar. Eso invierte la lectura habitual del modelo clásico como la línea base débil.'
-          : 'The classical model even improves under the honest protocol, from negative on a random split to 0.311 with a site held out, because it has nothing to overfit. That inverts the usual reading of the classical model as the weak baseline.'}
+          ? 'El modelo clásico incluso mejora al excluir un sitio, de negativo en una partición aleatoria a 0.311, porque no tiene nada que sobreajustar. Eso invierte la lectura habitual del modelo clásico como la línea base débil.'
+          : 'The classical model even improves with a site held out, from negative on a random split to 0.311, because it has nothing to overfit. That inverts the usual reading of the classical model as the weak baseline.'}
       </p>
 
       <OverviewDiagram />
@@ -88,7 +88,7 @@ export default function Introduction() {
         <Link to="/implementation">{es ? 'Cómo se comprueba' : 'How that is checked'}</Link>.
       </p>
 
-      <h2>{es ? 'Alcance honesto' : 'Honest scope'}</h2>
+      <h2>{es ? 'Alcance' : 'Scope'}</h2>
       <ul className="fr-list">
         <li>
           {es

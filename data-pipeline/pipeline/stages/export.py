@@ -43,7 +43,7 @@ def _prediction_row(prediction: bf.Prediction) -> dict:
         "reason": prediction.abstain_reason,
         "extrapolated": prediction.extrapolated,
         "group": prediction.group,
-        # The network's simulation spread is the honest uncertainty on a learned prediction, and it
+        # The network's simulation spread is the uncertainty of a learned prediction, and it
         # reaches the screen only if it is exported here.
         "cv": prediction.detail.get("coefficient_of_variation"),
         "n_simulations": prediction.detail.get("n_simulations"),

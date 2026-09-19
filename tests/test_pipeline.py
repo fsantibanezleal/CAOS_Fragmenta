@@ -259,7 +259,7 @@ def test_every_reconstructable_blast_carries_its_absolute_pattern(artifacts):
 
 
 # ---------------------------------------------------------------------------------------------
-# Scores and honesty
+# Scores and the statistics they name
 # ---------------------------------------------------------------------------------------------
 
 def test_no_score_block_reports_a_bare_variance_figure(artifacts):
