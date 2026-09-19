@@ -67,7 +67,7 @@ const TABS = ['predict', 'distribution', 'bench', 'rock', 'explain', 'decide'];
  * The App route's instrument is a parity plot, which has to be SQUARE: unequal scales put the
  * identity line at an angle a reader interprets as bias. A square's area on a 16:9 screen is capped
  * by the pane HEIGHT, and the pane is the viewport minus the header, the footer, the tab strip and
- * the page padding. At 1600x900 that leaves about 680px, so the largest honest square is about 0.32
+ * the page padding. At 1600x900 that leaves about 680px, so the largest square that fits is about 0.32
  * of the screen; at 2560x1440 it reaches 0.36. Reaching 0.50 would need a side of 848px in a 680px
  * pane, which is not a layout problem.
  *

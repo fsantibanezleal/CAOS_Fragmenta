@@ -1,4 +1,4 @@
-# Reading a number honestly
+# Reading a number
 
 The single most useful page here, and the shortest.
 
@@ -67,7 +67,7 @@ argument rather than guessing, because the right unit depends on the claim being
 
 ## What none of this tells you
 
-That a model is right about your mine. The best that can honestly be said, from this corpus, is:
+That a model is right about your mine. The most that can be said, from this corpus, is:
 
 - two fixed-coefficient models transfer to a campaign they have never seen, at 0.802 and 0.311;
 - no fitted model does;
