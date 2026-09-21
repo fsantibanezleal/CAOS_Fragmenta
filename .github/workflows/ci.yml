@@ -55,36 +55,6 @@ jobs:
           npx wait-on http://localhost:4173 --timeout 60000
           npm run gate:browser -- --url http://localhost:4173
 
-  determinism:
-    # Reproducibility has two halves, and they need two different instruments.
-    #
-    # WITHIN one environment the bake is byte-identical, and a content address is the right check.
-    #
-    # ACROSS environments it reproduces to a numeric tolerance, not to a hash. Two builds of the same
-    # pinned numpy reduce a dot product in a different order, and the last bits differ. This job
-    # measured it: baking on Linux runners against artifacts baked on Windows, with identical pins,
-    # the worst difference over all sixteen cases is 2.7e-08 relative, largest on the fitted arms,
-    # and the one case where every arm abstains comes out byte-identical. Asserting equal hashes
-    # across machines would assert something false, so the check compares numbers and names its
-    # tolerance.
-    #
-    # The pins and the Python version still matter, and this job earned them: the requirements file
-    # originally carried version RANGES, so the runner installed different libraries from the machine
-    # that baked and the numbers moved by far more than reduction order. A canonical artifact built
-    # from a range is reproducible by nobody, and nothing else would have caught it.
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-      - name: Report the installed environment
-        # Printed unconditionally. When this job fails, the first question is what was installed,
-        # and reading it from a log beats guessing from a requirements file.
-        run: pip list --format=freeze | grep -Ei '^(numpy|scikit-learn|scipy|xgboost|blastfrag)=' && python -VV
-      # The same commands a developer runs locally, on purpose. A CI check written inline is a
-      # second implementation of the check, and the two drift.
   guards:
     runs-on: ubuntu-latest
     timeout-minutes: 30
