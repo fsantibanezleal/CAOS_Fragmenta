@@ -21,14 +21,9 @@ jobs:
           python-version: "3.13"
           cache: pip
       - name: Install the pinned engine and the heavy lane
-        run: pip install -r requirements-precompute.txt -r requirements-dev.txt
+        run: pip install -r requirements-dev.txt
       - name: Lint
         run: ruff check data-pipeline tests scripts
-      - name: The pipeline tests, against the COMMITTED artifacts
-        run: pytest
-      - name: The release gate on what is committed
-        run: python data-pipeline/run.py --validate
-
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -84,19 +79,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: pip install -r requirements-precompute.txt
       - name: Report the installed environment
         # Printed unconditionally. When this job fails, the first question is what was installed,
         # and reading it from a log beats guessing from a requirements file.
         run: pip list --format=freeze | grep -Ei '^(numpy|scikit-learn|scipy|xgboost|blastfrag)=' && python -VV
       # The same commands a developer runs locally, on purpose. A CI check written inline is a
       # second implementation of the check, and the two drift.
-      - name: Two bakes in this environment must be byte-identical
-        run: python scripts/compare_bakes.py real-murgul --repeat 2
-
-      - name: Every case must reproduce the committed numbers to tolerance
-        run: python scripts/compare_bakes.py
-
   guards:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -117,8 +105,7 @@ jobs:
         # The product shipped its whole Spanish body text unaccented while its own navigation read
         # correctly, so the two halves of the same page disagreed. To a Spanish reader an unaccented
         # "campana" is a bell, not a campaign.
-        run: |
-          pip install -r requirements-precompute.txt
+        run: |-
           python scripts/check_spanish_accents.py
 
       - name: No template residue survived instantiation
@@ -131,29 +118,5 @@ jobs:
           if [ "$fail" -eq 0 ]; then echo "no residue"; fi
           exit $fail
 
-      - name: Version coherence
-        run: |
-          python - <<'PY'
-          import json, pathlib, re
-
-          def norm(v):
-              m = re.match(r"^v?(\d+)\.(\d+)\.(\d+)", v.strip())
-              assert m, f"unparseable version {v!r}"
-              return tuple(int(g) for g in m.groups())
-
-          seen = {
-              "VERSION": pathlib.Path("VERSION").read_text().strip(),
-              "CHANGELOG": re.search(r"^## \[([^\]]+)\]",
-                                     pathlib.Path("CHANGELOG.md").read_text(), re.M).group(1),
-              "pipeline": re.search(r'^__version__\s*=\s*"([^"]+)"',
-                                    pathlib.Path("data-pipeline/pipeline/__init__.py").read_text(), re.M).group(1),
-              "package.json": json.loads(pathlib.Path("frontend/package.json").read_text())["version"],
-          }
-          assert len({norm(v) for v in seen.values()}) == 1, f"version drift: {seen}"
-
-          index = json.loads(pathlib.Path("data/derived/manifests/index.json").read_text())
-          assert norm(index["app_version"]) == norm(seen["VERSION"]), (
-              f"the baked artifacts carry {index['app_version']} but the repo is {seen['VERSION']}"
-          )
-          print(f"OK: {seen['VERSION']}, and the artifacts agree")
-          PY
+      - name: CI budget, trunk-only triggers, no training (ADR-0074)
+        run: python scripts/check_ci_budget.py

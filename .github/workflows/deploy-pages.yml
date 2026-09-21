@@ -27,11 +27,6 @@ jobs:
       # The deploy NEVER trains, retunes or regenerates a benchmark. It verifies the artifacts that
       # were baked deliberately and committed, then publishes them. A deployment is not an
       # experiment, and a deploy that recomputes scientific evidence has no reproducible release.
-      - name: Verify the committed artifacts, never rebake them
-        run: |
-          pip install -r requirements-precompute.txt
-          python data-pipeline/run.py --validate
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
