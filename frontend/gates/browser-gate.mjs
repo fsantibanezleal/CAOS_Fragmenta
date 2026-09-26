@@ -91,7 +91,10 @@ const VIEWPORTS = [
 ];
 
 // Noise from the host page rather than from this product. Anything else is a failure.
-const IGNORE = [/favicon/i, /Download the React DevTools/i, /ResizeObserver loop/i];
+// The favicon is NOT exempt any more. It used to be, and the exemption hid that the site had no
+// favicon at all: every first visit logged a 404 and every tab showed a blank icon. The headless
+// build never asked for one, so nothing noticed until the gate ran on a full Chrome.
+const IGNORE = [/Download the React DevTools/i, /ResizeObserver loop/i];
 
 let failures = 0;
 const report = [];
@@ -155,6 +158,9 @@ async function inspect(page) {
       // the scroll container, so the root stays exactly the viewport height on every route and a
       // check against it passes whatever the page does. Ask the real scroller.
       bodyOverflowY: document.body.scrollHeight - document.body.clientHeight,
+      // Shell known defect 4: the language the DOCUMENT declares, which is what a screen reader and
+      // a search engine read. The setting in storage is not evidence of it.
+      docLang: document.documentElement.lang,
       bodyOverflowX: document.body.scrollWidth - document.body.clientWidth,
       // Rule 6: every CONTROL in the rail is reachable without scrolling it. The reading pane inside
       // the rail may scroll, because it is reading and not controls.
@@ -209,7 +215,11 @@ async function inspect(page) {
   });
 }
 
-const browser = await chromium.launch();
+// GATE_CHANNEL=chrome runs on the installed Google Chrome instead of Playwright's pinned build, for a
+// machine where that build is not downloaded. CI leaves it unset and uses the pinned build.
+const browser = await chromium.launch(
+  process.env.GATE_CHANNEL ? { channel: process.env.GATE_CHANNEL } : {},
+);
 
 for (const [w, h] of VIEWPORTS) {
   for (const theme of ['light', 'dark']) {
@@ -270,6 +280,24 @@ for (const [w, h] of VIEWPORTS) {
         const info = await inspect(page);
 
         if (info.lang !== lang) fail(where, `asked for ${lang} and the page is in ${info.lang}`);
+        if (info.docLang !== lang)
+          fail(where, `the page reads ${lang} but the document declares lang="${info.docLang}"`);
+
+        // Shell known defect 1: the document cannot scroll. Measured the way the defect record says,
+        // with the content height taken through <body> as well, because the defect is precisely what
+        // pins documentElement.scrollHeight to the viewport and makes a tall page look like it fits.
+        if (route !== '/' && route !== '/app') {
+          const scroll = await page.evaluate(() => {
+            const content = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+            const tall = content > window.innerHeight + 2;
+            window.scrollTo(0, 1200);
+            const moved = window.scrollY;
+            window.scrollTo(0, 0);
+            return { tall, moved, content };
+          });
+          if (scroll.tall && scroll.moved <= 0)
+            fail(where, `${scroll.content}px of content and scrollTo moved 0px, so the document cannot scroll`);
+        }
         if (info.theme !== theme) fail(where, `asked for the ${theme} theme and the page is ${info.theme}`);
 
         if (problems.length) fail(where, problems.slice(0, 3).join(' | '));
