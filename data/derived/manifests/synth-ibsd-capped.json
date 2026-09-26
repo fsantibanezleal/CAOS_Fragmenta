@@ -9,10 +9,10 @@
  "case_id": "synth-ibsd-capped",
  "category": "structural-control",
  "controls": {},
- "digest": "d0a334ec793677d103ac2550461da43d087dc104dda03418d1d613aa2f58f065",
+ "digest": "cacdebf5a78625c9e1f23ce482383fa5fc06c1feca928960763426f83ace552a",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "coarse tail dominated by the block size, not by the powder factor",

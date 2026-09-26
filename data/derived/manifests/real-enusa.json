@@ -9,10 +9,10 @@
  "case_id": "real-enusa",
  "category": "real-campaign",
  "controls": {},
- "digest": "73a3ae264f12fe3ff186c15d94df937898385a2696a85d5579988fc30b14d6b5",
+ "digest": "70d7bb8887e8cfd45d2cd623fb075f3b04ab6009655f416fb4fd2d4e3c705c7e",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "coarse, 0.26 to 0.64 m measured",

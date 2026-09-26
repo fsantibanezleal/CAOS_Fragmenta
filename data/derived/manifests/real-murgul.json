@@ -9,10 +9,10 @@
  "case_id": "real-murgul",
  "category": "real-campaign",
  "controls": {},
- "digest": "2f7af281b7f9f46c9fa19e0dc99bc13c8f502a7403b60ff0b63fd4dc03f8edaa",
+ "digest": "0d44b75b1c637da3ba47eed1ae7f76a4097371d7950b0850619fbbdea7540211",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "medium, 0.23 to 0.38 m measured",
