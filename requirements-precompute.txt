@@ -10,10 +10,9 @@
 # Bumping any pin below means re-running the full bake and committing the artifacts in the same
 # change, because every number in every artifact came from these versions.
 #
-# The science lives in blastfrag, a SEPARATE published repo this product consumes. A product declares
-# no package of its own. Installed from a git tag until the PyPI trusted publisher is registered, at
-# which point this becomes `blastfrag==0.2.0`.
-blastfrag @ git+https://github.com/fsantibanezleal/CAOS_BlastFrag@v0.02.000
+# The science lives in blastfrag, a SEPARATE published package this product consumes (PyPI, trusted
+# publishing since 2026-09-26). A product declares no package of its own.
+blastfrag==0.2.2
 
 numpy==2.5.3
 scikit-learn==1.9.0

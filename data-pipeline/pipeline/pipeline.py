@@ -105,7 +105,9 @@ def bake_case(case: Case, *, seed: int = 0, root: Path | None = None) -> BakeRes
         "controls": evaluation.controls,
         "n_scoreable": evaluation.n_scoreable,
     }
-    manifest_path = MANIFEST_ROOT / f"{case.id}.json"
+    # The manifest lives beside the artifact it describes, under the same root: a sandbox bake
+    # (scripts/compare_bakes.py) must never write into the canonical data/derived/manifests.
+    manifest_path = root / "manifests" / f"{case.id}.json"
     write_json(manifest_path, manifest)
 
     controls_passed = all(

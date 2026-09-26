@@ -2,6 +2,20 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.04.005] - 2026-09-26
+
+### Changed
+
+- The engine is consumed from PyPI: `blastfrag==0.2.2` replaces the git tag pin (hard rule 0; the trusted publisher
+  exists since 2026-09-26). The sixteen cases and the benchmark were re-baked under it: every number is identical
+  (`scripts/compare_bakes.py`, worst relative error 0), only the provenance fields moved (engine 0.02.002, digests).
+
+### Fixed
+
+- `compare_bakes.py` wrote the per-case manifests into the canonical `data/derived/manifests` while baking into its
+  sandbox, because the pipeline resolved the manifest path from a module constant instead of the bake root. The
+  manifest now lives under the root it was baked in, and a sandbox comparison leaves the working tree untouched.
+
 ## [0.04.004] - 2026-09-26
 
 ### Fixed
