@@ -1,5 +1,5 @@
 {
- "app_version": "0.04.003",
+ "app_version": "0.04.004",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 66060,
@@ -9,7 +9,7 @@
  "case_id": "real-dongri-buzurg",
  "category": "real-campaign",
  "controls": {},
- "digest": "4c32a0562602a0fbbf88f1f91d51a01b7e2c0ced666d4144b16cdf315d30cb43",
+ "digest": "1e91012c12cf2d4714f0d8a39115a3eccc2413c2f54b75bde7570e864b483890",
  "engine": {
   "package": "blastfrag",
   "version": "0.02.000"
