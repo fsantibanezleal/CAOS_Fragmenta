@@ -15,10 +15,10 @@
    "passed": true
   }
  },
- "digest": "7ff6bf1be0c99d95c2fedd342b0d18de942d1e7fd73d2f70139874abedee868a",
+ "digest": "5c36da1654ad99f88853d949a1f6ba1363fabf092e7e401e937f92551a62fafa",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "the generating arm recovers its own truth to within 1e-9",

@@ -1,7 +1,7 @@
 {
  "app_version": "0.04.004",
  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
- "digest": "4a0de241e8171aa04b9577e81960bd8b9383a6f61c818b8499a51775e43a691a",
+ "digest": "4985a560e1f2d97d5e480cbc1f46cdfd81883a6e06b73adbefa8de683ae79dbe",
  "duplicate_groups": [
   [
    "En1",
@@ -35,7 +35,7 @@
    "Sm7"
   ]
  ],
- "engine_version": "0.02.000",
+ "engine_version": "0.02.002",
  "kill_criterion": "The learned tier counts as generalising across sites only if the best learned arm's variance explained under leave-one-site-out is BOTH positive and at least 0.10 above the null model's. Both halves are required: a margin over a null that is itself deeply negative is not skill, it is two models failing by different amounts.",
  "network_seed_sweep": {
   "max": 0.6357654363562831,

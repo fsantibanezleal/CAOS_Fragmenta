@@ -16,10 +16,10 @@
    "passed": true
   }
  },
- "digest": "e1dd873afbb070b39667e1c6cfd7e4ee972cca5f5a1a3405d99eae8af763cc67",
+ "digest": "c56fa95d46c02c0c42236ee2999e52d96c771ed7266c89a28676259fbb78df54",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "every arm abstains, with a reason",

@@ -9,10 +9,10 @@
  "case_id": "real-mrica",
  "category": "real-campaign",
  "controls": {},
- "digest": "ffc509623a934c6f3a84d59293ba67b48e0170140336d5392c43c574f173cae4",
+ "digest": "0fb3ab3a97edd4febdd6d192546c27b0ad3de860315433088685319b1d93affb",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "fine, 0.13 to 0.21 m measured",

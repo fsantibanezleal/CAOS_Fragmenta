@@ -9,10 +9,10 @@
  "case_id": "real-ozmert",
  "category": "real-campaign",
  "controls": {},
- "digest": "74175919567ac8b23cd36f526ade04303ba0dca9612d1f5e9a73170bc5686db8",
+ "digest": "366f25f3c894b46252cdadf265c00e2ab22ed899ad7a81f8f44d17ea0eb2a716",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "fine, 0.12 to 0.30 m measured",
