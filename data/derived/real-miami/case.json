@@ -142,7 +142,7 @@
    "passed": true
   }
  },
- "digest": "c9826da33406727152b4c3592e7c2fda932428782fbfe3b8c781234674d4c091",
+ "digest": "04e7507bb1055aa9b6f00c72b09141b1338812bf2193d6ae62c87269ca56523c",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -832,7 +832,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": "Miami",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Miami",

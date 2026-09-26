@@ -638,7 +638,7 @@
   }
  },
  "controls": {},
- "digest": "5f6932a55aae57f1de8251299f1af4b14c1b7c9010d2676c54d73bcf20f9492a",
+ "digest": "156481483d8b003600b890ecbc70ca36c1982838fa9a4b5f2548e1ba04bee623",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -4551,7 +4551,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": "Akdaglar",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Akdaglar",

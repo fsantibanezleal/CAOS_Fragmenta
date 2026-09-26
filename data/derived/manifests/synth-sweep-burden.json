@@ -9,10 +9,10 @@
  "case_id": "synth-sweep-burden",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "a45e72564a27ef474fc19c53835e24b459b2ed452db6cec469999739d1ce0b3a",
+ "digest": "c2146c28d85447980313226be5871aacf807012489ae3e8b0675be6f610ae33f",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "monotonic: coarser as the burden widens",
