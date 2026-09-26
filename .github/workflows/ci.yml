@@ -40,20 +40,12 @@ jobs:
       - name: Type-check and build
         run: cd frontend && npm run build
 
-      - name: Install the browser the gate drives
-        run: cd frontend && npx playwright install --with-deps chromium
-
-      - name: The browser gate on the BUILT site, every route, both themes, both languages
-        # This job exists because everything upstream of it was green while the deployed site
-        # rendered a blank page. Two copies of react-router were installed, the shell's useLocation
-        # read a different context than the app's Router provided, and every route threw before
-        # painting a character. Every unit test passed, every artifact validated, and the site
-        # returned 200 on every URL. A 200 on a single-page app means a file was served.
-        run: |
-          cd frontend
-          npx vite preview --port 4173 --strictPort &
-          npx wait-on http://localhost:4173 --timeout 60000
-          npm run gate:browser -- --url http://localhost:4173
+      # The browser gate is NOT here, and that is deliberate. ADR-0074 rule 6 allows one expensive
+      # verification, once, and it ran twice: here on every push and again in the deploy. It lives in
+      # the deploy, because that is the one place where a failure can stop a broken site from being
+      # published. A develop push is validated locally before it is made, which is the record of
+      # validation under ADR-0074 rule 3:
+      #   GATE_CHANNEL=chrome npm run gate:browser -- --url http://localhost:4173
 
   guards:
     runs-on: ubuntu-latest
