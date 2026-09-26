@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "d0a334ec793677d103ac2550461da43d087dc104dda03418d1d613aa2f58f065",
+ "digest": "cacdebf5a78625c9e1f23ce482383fa5fc06c1feca928960763426f83ace552a",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3166,7 +3166,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",

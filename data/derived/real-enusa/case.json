@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "73a3ae264f12fe3ff186c15d94df937898385a2696a85d5579988fc30b14d6b5",
+ "digest": "70d7bb8887e8cfd45d2cd623fb075f3b04ab6009655f416fb4fd2d4e3c705c7e",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3191,7 +3191,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": "Enusa",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Enusa",

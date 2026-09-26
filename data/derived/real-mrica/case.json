@@ -330,7 +330,7 @@
   }
  },
  "controls": {},
- "digest": "ffc509623a934c6f3a84d59293ba67b48e0170140336d5392c43c574f173cae4",
+ "digest": "0fb3ab3a97edd4febdd6d192546c27b0ad3de860315433088685319b1d93affb",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -3055,7 +3055,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": "Mrica",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Mrica",

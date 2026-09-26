@@ -16,10 +16,10 @@
    "unstamped": []
   }
  },
- "digest": "f5458563d781a4e7539043a518563c36d1a8a8e124b6fe05558568ba6e1f87ff",
+ "digest": "e429c77382d6ad7e3b95dd036627bc4e042721412612b53c7c1474d40afaff02",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
