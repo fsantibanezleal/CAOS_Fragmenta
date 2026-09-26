@@ -14,6 +14,24 @@
   --fr-gap: 12px;
 }
 
+/* Shell known defect 1 (caos-app-shell 0.6.x): the document cannot scroll.
+ *
+ * The shell sets `html, body, #root { height: 100% }` and, separately, `overflow-x: hidden` on html
+ * and body. A box cannot be visible on one axis and hidden on the other, so overflow-y computes to
+ * auto and both elements become viewport-tall scroll containers. The mouse wheel still scrolls
+ * `body`, which is why it shipped, but `window.scrollTo` and in-page anchors do nothing: measured
+ * here on /methodology, 2040px of content and a `scrollTo(0, 1200)` that moved 0px.
+ *
+ * Recorded in CAOS_MANAGE conventions/shell-known-defects.md, entry 1. Remove this block when a shell
+ * release carries the fix, and not before. The App route is unaffected, because `.app-shell.fixed`
+ * sizes itself with 100dvh, a viewport unit that does not depend on this percentage chain. */
+html,
+body,
+#root {
+  height: auto;
+  min-height: 100%;
+}
+
 /* ---------------------------------------------------------------------------------------------
  * The workbench route
  * ------------------------------------------------------------------------------------------- */
