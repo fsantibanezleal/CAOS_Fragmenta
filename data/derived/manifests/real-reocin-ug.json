@@ -9,10 +9,10 @@
  "case_id": "real-reocin-ug",
  "category": "real-campaign",
  "controls": {},
- "digest": "bdec27a2d8e468ab62ab7c36f1703298b81a3de1dd84c98ee7f82c1aaae76ce6",
+ "digest": "2c3a650a20a12530c07ce4ede0d4e7837f420128b74380e54f6f879db536f0f2",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "coarse, 0.51 to 0.69 m measured",

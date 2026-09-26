@@ -169,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "f5458563d781a4e7539043a518563c36d1a8a8e124b6fe05558568ba6e1f87ff",
+ "digest": "e429c77382d6ad7e3b95dd036627bc4e042721412612b53c7c1474d40afaff02",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -744,7 +744,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",

@@ -9,10 +9,10 @@
  "case_id": "real-soma",
  "category": "real-campaign",
  "controls": {},
- "digest": "d45a4aee1d817f117e020cb7f33337d2f1e2a2014a1510d5c056af2df9748d3b",
+ "digest": "7af3962947bea72816bc786df7b14269df0c892db11133d01c186e06c4164e65",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "fine, 0.15 to 0.28 m measured",

@@ -9,10 +9,10 @@
  "case_id": "synth-sweep-powder",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "35a4b43ad25cd5f9ce11b64fad262b52f96de8473ee3313cadef8d340f9e1bc1",
+ "digest": "8890a778f6516133dcc2b0edfc1f48fe5fde1e60e7e51bd24b5809fb39362cbf",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "monotonic: finer as the powder factor rises",

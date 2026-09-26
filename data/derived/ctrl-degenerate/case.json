@@ -203,7 +203,7 @@
    "passed": true
   }
  },
- "digest": "e1dd873afbb070b39667e1c6cfd7e4ee972cca5f5a1a3405d99eae8af763cc67",
+ "digest": "c56fa95d46c02c0c42236ee2999e52d96c771ed7266c89a28676259fbb78df54",
  "distributions": {},
  "geometry_report": {},
  "null_mean_m": 0.3025773195876289,
@@ -886,7 +886,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",

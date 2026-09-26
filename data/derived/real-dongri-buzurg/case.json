@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "1e91012c12cf2d4714f0d8a39115a3eccc2413c2f54b75bde7570e864b483890",
+ "digest": "2a25a79b3c40458b169a03bdfd3a0e08b7151c1ce02897860292d561610d86d6",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2809,7 +2809,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": "Dongri-Buzurg",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Dongri-Buzurg",

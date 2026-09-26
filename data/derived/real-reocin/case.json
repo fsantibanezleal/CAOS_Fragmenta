@@ -302,7 +302,7 @@
   }
  },
  "controls": {},
- "digest": "1f1fb7f9427bd27849520c536f369490c833ac7c915e726c6ec39f9a8edebf4b",
+ "digest": "99cec1bc1e937d5fce3e4cda1a9fe866b41bd87107d2024214fbd8626898c192",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2919,7 +2919,7 @@
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.000"
+   "version": "0.02.002"
   },
   "held_out_site": "Reocin",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Reocin",

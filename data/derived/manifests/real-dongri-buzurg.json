@@ -9,10 +9,10 @@
  "case_id": "real-dongri-buzurg",
  "category": "real-campaign",
  "controls": {},
- "digest": "1e91012c12cf2d4714f0d8a39115a3eccc2413c2f54b75bde7570e864b483890",
+ "digest": "2a25a79b3c40458b169a03bdfd3a0e08b7151c1ce02897860292d561610d86d6",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.000"
+  "version": "0.02.002"
  },
  "expected_band": {
   "en": "medium, 0.23 to 0.76 m measured",
