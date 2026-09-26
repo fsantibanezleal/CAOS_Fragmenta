@@ -2,6 +2,23 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.04.003] - 2026-09-26
+
+### Fixed
+
+- The document declares the language the interface shows (shell known defect 4, caos-app-shell
+  0.6.x): a `DocumentLanguage` component above the routes writes `document.documentElement.lang`
+  from the shell's language store, so a Spanish page is read, indexed and translated as Spanish. It
+  is removed when a shell release writes the language itself.
+- A favicon. The browser gate no longer exempts it, and a first visit no longer logs a 404.
+
+### Changed
+
+- The browser gate checks the document language, and runs on the installed Chrome when
+  `GATE_CHANNEL=chrome` (machines without Playwright's pinned build). It leaves CI for the deploy,
+  the one place a failure can stop a broken site from being published (ADR-0074 rule 6); a develop
+  push is validated locally.
+
 ## [0.04.002] - 2026-09-19
 
 ### Changed
