@@ -1,18 +1,18 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 62983,
+  "bytes": 65947,
   "format": "json",
   "path": "synth-sweep-burden/case.json"
  },
  "case_id": "synth-sweep-burden",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "c2146c28d85447980313226be5871aacf807012489ae3e8b0675be6f610ae33f",
+ "digest": "503b84df5852483d8fad5a82521c3a10f98d5ec43b98c9c1d743c0f166a41231",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "monotonic: coarser as the burden widens",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 62983,
+  "trace_bytes": 65947,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -32,6 +32,7 @@
  },
  "held_out_site": null,
  "lane": "live",
+ "models_scope": "corpus",
  "n_scoreable": 0,
  "n_training_rows": 97,
  "provenance": {

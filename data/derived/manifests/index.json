@@ -1,19 +1,19 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "benchmark": {
-  "bytes": 19484,
-  "digest": "4985a560e1f2d97d5e480cbc1f46cdfd81883a6e06b73adbefa8de683ae79dbe",
+  "bytes": 207425,
+  "digest": "389c7d01f25d6c681ccd93da0b76b2e7558a3f7ac9cf3f0be28a9c3333705972",
   "path": "benchmark.json",
-  "verdict": "THE LEARNED TIER DOES NOT GENERALISE ACROSS SITES. Every learned arm has NEGATIVE variance explained under leave-one-site-out; the best of them, xgboost, scores -0.034, which is worse than predicting a constant. Its 0.182 margin over the null is two models failing by different amounts, not skill."
+  "verdict": "THE VERDICT DEPENDS ON THE ROW SET. Over all 97 blasts the best learned arm under leave-one-site-out, xgboost, scores -0.034 and the learned tier does not meet the criterion. Over the 91 blasts whose pattern geometry is resolvable, the rows on which the classical arms are also scored, stacking scores 0.034, 0.266 above the null, and the tier meets it. The blasts that separate the two row sets come from Miami. Apart from arms whose source fitted them on this corpus, no arm has a site-resampled 95 percent interval above zero: with ten sites, none of them is distinguishable from predicting the corpus mean. The null's held-out predictions correlate with the measurements at -0.79: holding out a coarse site lowers the training mean, so any margin over the null under this protocol is larger than the skill it measures."
  },
  "cases": [
   {
    "artifact_path": "ctrl-degenerate/case.json",
-   "bytes": 35426,
+   "bytes": 38111,
    "case_id": "ctrl-degenerate",
    "category": "negative-control",
    "controls_passed": true,
-   "digest": "c56fa95d46c02c0c42236ee2999e52d96c771ed7266c89a28676259fbb78df54",
+   "digest": "ee7cc95d81859d18c35a07d9b64f15c8b286033aa96112bc121dd54de7fb9c75",
    "lane": "live",
    "manifest_path": "manifests/ctrl-degenerate.json",
    "real_or_synthetic": "synthetic",
@@ -25,11 +25,11 @@
   },
   {
    "artifact_path": "ctrl-oracle/case.json",
-   "bytes": 62262,
+   "bytes": 65387,
    "case_id": "ctrl-oracle",
    "category": "positive-control",
    "controls_passed": true,
-   "digest": "5c36da1654ad99f88853d949a1f6ba1363fabf092e7e401e937f92551a62fafa",
+   "digest": "0f93cbaa7391cec50cb1da99df317dcae18d87afb39d734d099333fdad464496",
    "lane": "live",
    "manifest_path": "manifests/ctrl-oracle.json",
    "real_or_synthetic": "synthetic",
@@ -41,11 +41,11 @@
   },
   {
    "artifact_path": "real-akdaglar/case.json",
-   "bytes": 100874,
+   "bytes": 106471,
    "case_id": "real-akdaglar",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "156481483d8b003600b890ecbc70ca36c1982838fa9a4b5f2548e1ba04bee623",
+   "digest": "4d0f606b0866ff09e193164b12051b6407a5fbc91fde62bea0843aaadaf48875",
    "lane": "live",
    "manifest_path": "manifests/real-akdaglar.json",
    "real_or_synthetic": "real",
@@ -57,11 +57,11 @@
   },
   {
    "artifact_path": "real-dongri-buzurg/case.json",
-   "bytes": 66060,
+   "bytes": 69388,
    "case_id": "real-dongri-buzurg",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "2a25a79b3c40458b169a03bdfd3a0e08b7151c1ce02897860292d561610d86d6",
+   "digest": "feda836b0e7327359605acb755562ab7a9e0ab1f87924b4a3a81894d65dfc77b",
    "lane": "live",
    "manifest_path": "manifests/real-dongri-buzurg.json",
    "real_or_synthetic": "real",
@@ -73,11 +73,11 @@
   },
   {
    "artifact_path": "real-enusa/case.json",
-   "bytes": 73530,
+   "bytes": 77328,
    "case_id": "real-enusa",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "70d7bb8887e8cfd45d2cd623fb075f3b04ab6009655f416fb4fd2d4e3c705c7e",
+   "digest": "b75dbdae381d915386e3c4403678231a42979c89d95a8992f26a402634111d06",
    "lane": "live",
    "manifest_path": "manifests/real-enusa.json",
    "real_or_synthetic": "real",
@@ -89,11 +89,11 @@
   },
   {
    "artifact_path": "real-granite-ne/case.json",
-   "bytes": 31517,
+   "bytes": 34150,
    "case_id": "real-granite-ne",
    "category": "extrapolation-control",
    "controls_passed": true,
-   "digest": "e429c77382d6ad7e3b95dd036627bc4e042721412612b53c7c1474d40afaff02",
+   "digest": "c7628cdd88bcc888e921606a61aac3e496c03f9e7179acf711eceb55c7f0b871",
    "lane": "live",
    "manifest_path": "manifests/real-granite-ne.json",
    "real_or_synthetic": "real",
@@ -105,11 +105,11 @@
   },
   {
    "artifact_path": "real-miami/case.json",
-   "bytes": 36737,
+   "bytes": 39209,
    "case_id": "real-miami",
    "category": "negative-control",
    "controls_passed": true,
-   "digest": "04e7507bb1055aa9b6f00c72b09141b1338812bf2193d6ae62c87269ca56523c",
+   "digest": "abf9ad2ea03c47e6bde8338990fe3db0d202844775c8c7a4f5c729c65633cb23",
    "lane": "live",
    "manifest_path": "manifests/real-miami.json",
    "real_or_synthetic": "real",
@@ -121,11 +121,11 @@
   },
   {
    "artifact_path": "real-mrica/case.json",
-   "bytes": 70624,
+   "bytes": 74274,
    "case_id": "real-mrica",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "0fb3ab3a97edd4febdd6d192546c27b0ad3de860315433088685319b1d93affb",
+   "digest": "303113ac0246704c83f8b066993ecaca76b23dccad8037268c7d6c03954d7aeb",
    "lane": "live",
    "manifest_path": "manifests/real-mrica.json",
    "real_or_synthetic": "real",
@@ -137,11 +137,11 @@
   },
   {
    "artifact_path": "real-murgul/case.json",
-   "bytes": 60814,
+   "bytes": 63730,
    "case_id": "real-murgul",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "0d44b75b1c637da3ba47eed1ae7f76a4097371d7950b0850619fbbdea7540211",
+   "digest": "e777574c853bc7400358e9ed20dac9a4bfbd3e044e52e0d385f5e05e8c560ee9",
    "lane": "live",
    "manifest_path": "manifests/real-murgul.json",
    "real_or_synthetic": "real",
@@ -153,11 +153,11 @@
   },
   {
    "artifact_path": "real-ozmert/case.json",
-   "bytes": 60123,
+   "bytes": 63105,
    "case_id": "real-ozmert",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "366f25f3c894b46252cdadf265c00e2ab22ed899ad7a81f8f44d17ea0eb2a716",
+   "digest": "1afdb4a080506d7bb110c29b331fe1dfba358a664056d728f1ff082fda1fe46a",
    "lane": "live",
    "manifest_path": "manifests/real-ozmert.json",
    "real_or_synthetic": "real",
@@ -169,11 +169,11 @@
   },
   {
    "artifact_path": "real-reocin/case.json",
-   "bytes": 67933,
+   "bytes": 71416,
    "case_id": "real-reocin",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "99cec1bc1e937d5fce3e4cda1a9fe866b41bd87107d2024214fbd8626898c192",
+   "digest": "5514fced59bc68059adb6bb1d3b432a6ab9ed8c0105619810d2578f3f1acc26f",
    "lane": "live",
    "manifest_path": "manifests/real-reocin.json",
    "real_or_synthetic": "real",
@@ -185,11 +185,11 @@
   },
   {
    "artifact_path": "real-reocin-ug/case.json",
-   "bytes": 57406,
+   "bytes": 60200,
    "case_id": "real-reocin-ug",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "2c3a650a20a12530c07ce4ede0d4e7837f420128b74380e54f6f879db536f0f2",
+   "digest": "6ccc7603ba08aaf82278a61ed4162f8e95b719a80a580b1704e20dc3ae197671",
    "lane": "live",
    "manifest_path": "manifests/real-reocin-ug.json",
    "real_or_synthetic": "real",
@@ -201,11 +201,11 @@
   },
   {
    "artifact_path": "real-soma/case.json",
-   "bytes": 60326,
+   "bytes": 63278,
    "case_id": "real-soma",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "7af3962947bea72816bc786df7b14269df0c892db11133d01c186e06c4164e65",
+   "digest": "290d159c5f152ba9952aacc63b83f59a5826ebca0586a4cfaf3ffac4ba55cc72",
    "lane": "live",
    "manifest_path": "manifests/real-soma.json",
    "real_or_synthetic": "real",
@@ -217,11 +217,11 @@
   },
   {
    "artifact_path": "synth-ibsd-capped/case.json",
-   "bytes": 65077,
+   "bytes": 68041,
    "case_id": "synth-ibsd-capped",
    "category": "structural-control",
    "controls_passed": true,
-   "digest": "cacdebf5a78625c9e1f23ce482383fa5fc06c1feca928960763426f83ace552a",
+   "digest": "c56a1d6e5a9f462e485a0db79aa13bf2ccddeae580ab1b577c3659a85449fb48",
    "lane": "live",
    "manifest_path": "manifests/synth-ibsd-capped.json",
    "real_or_synthetic": "synthetic",
@@ -233,11 +233,11 @@
   },
   {
    "artifact_path": "synth-sweep-burden/case.json",
-   "bytes": 62983,
+   "bytes": 65947,
    "case_id": "synth-sweep-burden",
    "category": "parameter-sweep",
    "controls_passed": true,
-   "digest": "c2146c28d85447980313226be5871aacf807012489ae3e8b0675be6f610ae33f",
+   "digest": "503b84df5852483d8fad5a82521c3a10f98d5ec43b98c9c1d743c0f166a41231",
    "lane": "live",
    "manifest_path": "manifests/synth-sweep-burden.json",
    "real_or_synthetic": "synthetic",
@@ -249,11 +249,11 @@
   },
   {
    "artifact_path": "synth-sweep-powder/case.json",
-   "bytes": 64142,
+   "bytes": 67101,
    "case_id": "synth-sweep-powder",
    "category": "parameter-sweep",
    "controls_passed": true,
-   "digest": "8890a778f6516133dcc2b0edfc1f48fe5fde1e60e7e51bd24b5809fb39362cbf",
+   "digest": "a6554089c2258f91939002eec04ea205cc47c532c14e923a76672817e1cc958d",
    "lane": "live",
    "manifest_path": "manifests/synth-sweep-powder.json",
    "real_or_synthetic": "synthetic",
@@ -265,7 +265,174 @@
   }
  ],
  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
- "engine_version": "0.02.002",
+ "engine_version": "0.03.000",
+ "models": [
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 223788,
+   "digest": "ef333f06dcef26579805364120da99ad741751a1793e36860551d536ff9697df",
+   "path": "models/Akdaglar.json",
+   "scope": "Akdaglar"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 241488,
+   "digest": "803b4dcc8e053383f12e33721d6034fee95beee582a6b9c96e67ebfc7e98bcff",
+   "path": "models/Dongri-Buzurg.json",
+   "scope": "Dongri-Buzurg"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 238371,
+   "digest": "5e6e3423c805edd0675482a14a9f4d0dd71bf68fe13232f8f8b90ccd88578c09",
+   "path": "models/Enusa.json",
+   "scope": "Enusa"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 250126,
+   "digest": "0625435a5c39a18238f00f41334871e678e49c40744e897ae853580cd5c0962e",
+   "path": "models/Miami.json",
+   "scope": "Miami"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 239510,
+   "digest": "11a4650db34cb32330cdda1e18d787139e45c3cfebac9d432252de2ddbb3ba6e",
+   "path": "models/Mrica.json",
+   "scope": "Mrica"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 247719,
+   "digest": "c51c06b60488b0163ffadc0369767023a96a142c93824a7025125164d266c6b6",
+   "path": "models/Murgul.json",
+   "scope": "Murgul"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 247500,
+   "digest": "0e3205cd6ce418535a1158bd27a337c5dfb5fce1b1b6a80b844e89944c183639",
+   "path": "models/Ozmert.json",
+   "scope": "Ozmert"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 240032,
+   "digest": "f4fcf07b39ee68ea23149a7f9b4a9389007144db6c381706a684b6226f556f7e",
+   "path": "models/Reocin.json",
+   "scope": "Reocin"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 248525,
+   "digest": "84d2e207077e54a6ef3c63b8a3032b31da16024c3ca0e8e43b24f5041b84c0b2",
+   "path": "models/Reocin-UG.json",
+   "scope": "Reocin-UG"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 253813,
+   "digest": "2b379117f81425b0f12f13c35ee2efc2f225164ad92148492aeb66da059c732c",
+   "path": "models/Soma.json",
+   "scope": "Soma"
+  },
+  {
+   "arms": [
+    "kuznetsov-transfer",
+    "published-neural-net",
+    "random-forest",
+    "refitted-regression",
+    "stacking",
+    "svr-rbf",
+    "xgboost"
+   ],
+   "bytes": 261957,
+   "digest": "77ea879f42bef72365ab22c89172eef27c99a9376b3bd685d6bb115f60335f5c",
+   "path": "models/corpus.json",
+   "scope": "corpus"
+  }
+ ],
  "n_cases": 16,
  "schema": "fragmenta.index/v1"
 }

@@ -43,6 +43,9 @@ def _factories() -> dict[str, Callable[[], bf.Arm]]:
             "xgboost": GradientBoosting,
             "stacking": StackingEnsemble,
             "refitted-regression": bf.RefittedRegression,
+            # Not learned, but fitted: its rock-factor line is fitted on the same training rows, so
+            # on a real campaign it must withhold that campaign exactly as the learned arms do.
+            "kuznetsov-transfer": bf.KuznetsovTransfer,
         }
     )
     return LEARNED_FACTORIES
