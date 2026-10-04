@@ -9,7 +9,7 @@ import { Callout, Refs, useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useState } from 'react';
 
 import { SECTION_REFS } from '../data/citations';
-import { ARM_BY_ID, formatScore, formatSize, loadBenchmark, PROTOCOL_LABEL } from '../lib/artifacts';
+import { ARM_BY_ID, formatScore, formatSize, IN_SAMPLE_ARMS, loadBenchmark, PROTOCOL_LABEL } from '../lib/artifacts';
 import type { BenchmarkArtifact, ReproductionBlock } from '../lib/contract.types';
 import { LineChart, type SeriesSpec } from '../viz/Charts';
 
@@ -22,9 +22,11 @@ const PROTOCOL_SHORT: Record<number, Record<string, string>> = {
   2: { en: 'held out', es: 'excluido' },
 };
 
-// The two arms with fixed coefficients are the argument, so they are drawn thick, and the null is
-// dashed because it is a reference rather than a competitor.
-const EMPHASISED = new Set(['published-regression', 'kuznetsov']);
+// The classical equation is the argument, so it is drawn thick. The null is dashed because it is a
+// reference rather than a competitor, and so is the published regression: its coefficients were
+// fitted on these same 97 blasts, so it is in sample in every column (see IN_SAMPLE_ARMS). Until
+// 0.04.006 it was drawn thick beside the classical equation as the second arm that transfers.
+const EMPHASISED = new Set(['kuznetsov']);
 
 /**
  * The verdict, in the reader's language.
@@ -82,6 +84,7 @@ export default function Benchmark() {
   if (error) return <div className="fr-error" role="alert">{error}</div>;
   if (!benchmark) return <div className="fr-loading">{es ? 'Cargando' : 'Loading'}</div>;
 
+  const losoScore = (arm: string) => benchmark.protocols['leave-one-site-out'].arms[arm]?.r2_identity;
   const arms = Object.keys(benchmark.protocols['leave-one-site-out'].arms).filter(
     (arm) => arm !== 'oracle',
   );
@@ -97,7 +100,7 @@ export default function Benchmark() {
       return value === undefined || value === null ? null : Math.max(value, -1.05);
     }),
     width: EMPHASISED.has(arm) ? 3 : 1.5,
-    dashed: arm === 'null',
+    dashed: arm === 'null' || arm in IN_SAMPLE_ARMS,
   }));
 
   return (
@@ -116,13 +119,13 @@ export default function Benchmark() {
 
       {/* The finding is a COLLAPSE, and a table asks the reader to do the subtraction themselves.
           One line per model across the three protocols puts it on a slope: the fitted arms fall off
-          a cliff at the third column, the two with fixed coefficients do not, and the null sits
-          flat underneath. Zero is drawn, because the sign is the whole argument. */}
+          a cliff at the third column, the classical equation does not, and the null sits flat
+          underneath. Zero is drawn, because the sign is the whole argument. */}
       <h2>{es ? 'La caída, por protocolo' : 'The collapse, protocol by protocol'}</h2>
       <p className="fr-fine">
         {es
-          ? 'Una línea por modelo. Bajo cero el modelo es peor que predecir una constante. El eje se corta en -1: cuatro modelos caen mucho más abajo que eso y se dibujan en el piso, con su valor exacto en la tabla siguiente. Un tramo faltante es un modelo que se abstuvo en todas las filas de ese protocolo.'
-          : 'One line per model. Below zero the model is worse than predicting a constant. The axis is cut at -1: four arms fall far below that and are drawn at the floor, with their exact value in the table below. A missing segment is a model that abstained on every row of that protocol.'}
+          ? 'Una línea por modelo. Bajo cero el modelo es peor que predecir una constante. El eje se corta en -1: cuatro modelos caen mucho más abajo que eso y se dibujan en el piso, con su valor exacto en la tabla siguiente. Un tramo faltante es un modelo que se abstuvo en todas las filas de ese protocolo. Las líneas discontinuas son referencias y no competidores: la constante, y la regresión publicada, cuyos coeficientes se ajustaron sobre estos 97 tiros, así que nunca ve un sitio nuevo.'
+          : 'One line per model. Below zero the model is worse than predicting a constant. The axis is cut at -1: four arms fall far below that and are drawn at the floor, with their exact value in the table below. A missing segment is a model that abstained on every row of that protocol. Dashed lines are references, not competitors: the constant, and the published regression, whose coefficients were fitted on these 97 blasts, so it never meets an unseen site.'}
       </p>
       <LineChart
         x={[0, 1, 2]}
@@ -143,8 +146,8 @@ export default function Benchmark() {
       <h2>{es ? 'Los tres protocolos' : 'The three protocols'}</h2>
       <p className="fr-fine">
         {es
-          ? 'Varianza explicada respecto de la línea de identidad. Abstenciones entre paréntesis.'
-          : 'Variance explained about the identity line. Abstentions in brackets.'}
+          ? 'Varianza explicada respecto de la línea de identidad. Abstenciones entre paréntesis. Un asterisco marca un puntaje dentro de la muestra: los coeficientes de la regresión publicada se ajustaron sobre estos 97 tiros.'
+          : 'Variance explained about the identity line. Abstentions in brackets. An asterisk marks a score in sample: the published regression’s coefficients were fitted on these 97 blasts.'}
       </p>
       <div className="fr-scroll-x">
         <table className="fr-table fr-table-wide">
@@ -164,16 +167,23 @@ export default function Benchmark() {
               const gap = benchmark.verdict.protocol_gap_random_minus_grouped[arm];
               const grouped = benchmark.protocols['leave-one-site-out'].arms[arm];
               return (
-                <tr key={arm} className={(grouped?.r2_identity ?? -1) > 0 ? 'fr-row-good' : ''}>
+                <tr key={arm} className={(grouped?.r2_identity ?? -1) > 0 && !(arm in IN_SAMPLE_ARMS) ? 'fr-row-good' : ''}>
                   <td>{meta ? meta.label[lang] : arm}</td>
                   <td className="fr-fine">{grouped?.tier}</td>
                   {PROTOCOL_ORDER.map((protocol) => {
                     const cell = benchmark.protocols[protocol].arms[arm];
                     const value = cell?.r2_identity;
+                    const inSample = IN_SAMPLE_ARMS[arm];
                     return (
-                      <td key={protocol} className={(value ?? -1) > 0 ? 'fr-ok' : 'fr-bad'}>
+                      <td
+                        key={protocol}
+                        className={inSample ? 'fr-fine' : (value ?? -1) > 0 ? 'fr-ok' : 'fr-bad'}
+                        title={inSample?.[lang]}
+                        data-in-sample={inSample ? 'true' : undefined}
+                      >
                         {formatScore(value)}
                         {cell?.n_abstained ? <span className="fr-fine"> ({cell.n_abstained})</span> : null}
+                        {inSample ? <sup>*</sup> : null}
                       </td>
                     );
                   })}
@@ -189,16 +199,17 @@ export default function Benchmark() {
 
       <h2>{es ? 'Lo que dice la tabla' : 'What the table says'}</h2>
 
-      <h3>{es ? 'Solo sobreviven los modelos que no se ajustan' : 'Only the models that are not fitted survive'}</h3>
+      <h3>{es ? 'Solo la ecuación clásica llega a un sitio nuevo' : 'Only the classical equation reaches a new site'}</h3>
       <p>
         {es
-          ? 'Dos modelos resisten, y ambos tienen coeficientes FIJOS. Los exponentes de la regresión publicada son constantes de un artículo; la única cantidad libre de la ecuación clásica es un factor de roca por sitio. Todo modelo que se ajusta a este corpus fracasa al salir de el.'
-          : 'Two models hold up, and both have FIXED coefficients. The published regression’s exponents are constants from a paper; the classical equation’s only free quantity is a per-site rock factor. Every model that fits itself to this corpus fails to leave it.'}
+          ? `Un solo modelo resiste en un sitio que nunca vio: la ecuación clásica de tamaño medio, con ${formatScore(losoScore('kuznetsov'))}. Su única cantidad libre es un factor de roca por sitio, despejado de las predicciones de Kuznetsov que el artículo fuente imprime y no de los tamaños medidos. La regresión publicada marca ${formatScore(losoScore('published-regression'))} con el mismo protocolo, pero eso no es transferencia: Hudaverdi et al. ajustaron sus coeficientes sobre estos mismos 97 tiros, así que ningún sitio es nuevo para ella. Reajustada sin cada sitio, la misma forma funcional marca ${formatScore(losoScore('refitted-regression'))}. Su evidencia fuera de la muestra son los conjuntos de prueba de los propios artículos, 13 y 12 tiros de los mismos sitios, más abajo. Todo modelo que se ajusta a este corpus fracasa al salir de él.`
+          : `One model holds up on a site it has never seen: the classical mean-size equation, at ${formatScore(losoScore('kuznetsov'))}. Its only free quantity is a per-site rock factor, back-solved from the Kuznetsov predictions the source paper prints rather than from the measured sizes. The published regression scores ${formatScore(losoScore('published-regression'))} under the same protocol, but that is not transfer: Hudaverdi et al. fitted its coefficients on these same 97 blasts, so no site is new to it. Refitted without each site, the same functional form scores ${formatScore(losoScore('refitted-regression'))}. Its out-of-sample evidence is the source papers’ own hold-outs, 13 and 12 blasts from the same sites, below. Every model that fits itself to this corpus fails to leave it.`}
       </p>
-      <ul className="fr-list">
+      <ul className="fr-list" data-testid="positive-across-sites">
         {benchmark.verdict.arms_with_positive_variance_explained_across_sites.map(([arm, value]) => (
-          <li key={arm}>
+          <li key={arm} data-in-sample={arm in IN_SAMPLE_ARMS ? 'true' : undefined}>
             <b>{ARM_BY_ID.get(arm)?.label[lang] ?? arm}</b>: {value.toFixed(3)}
+            {IN_SAMPLE_ARMS[arm] ? <span className="fr-fine"> ({IN_SAMPLE_ARMS[arm][lang]})</span> : null}
           </li>
         ))}
       </ul>

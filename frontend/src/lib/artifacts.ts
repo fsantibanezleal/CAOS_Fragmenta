@@ -151,8 +151,8 @@ export const ARMS: ArmMeta[] = [
     tier: 'statistical',
     label: { en: 'Published regression', es: 'Regresión publicada' },
     blurb: {
-      en: 'Two power laws, one per stiffness group, with the exponents taken verbatim from the source. The only arm here that holds up on a site it has never seen.',
-      es: 'Dos leyes de potencia, una por grupo de rigidez, con los exponentes tomados literalmente de la fuente. El único modelo aquí que resiste en un sitio que nunca vio.',
+      en: 'Two power laws, one per stiffness group, with the exponents taken verbatim from the source. The source fitted them on these same 97 blasts, so every score it gets here is in sample; under leave-one-site-out its fair comparator is the refitted regression.',
+      es: 'Dos leyes de potencia, una por grupo de rigidez, con los exponentes tomados literalmente de la fuente. La fuente las ajustó sobre estos mismos 97 tiros, así que todo puntaje que obtiene aquí es dentro de la muestra; al excluir un sitio, su comparación justa es la regresión reajustada.',
     },
     distribution: false,
     source: 'Hudaverdi et al. 2010, Eqs. 9 and 10',
@@ -254,6 +254,24 @@ export const ARMS: ArmMeta[] = [
 ];
 
 export const ARM_BY_ID = new Map(ARMS.map((arm) => [arm.id, arm]));
+
+/**
+ * Arms whose coefficients were fitted on the training corpus itself, by the source paper rather than
+ * by this product. No protocol here holds out a blast they have not seen, so their scores are in
+ * sample under every protocol, leave-one-site-out included.
+ *
+ * Until 0.04.006 the published regression's 0.802 under leave-one-site-out was the headline's
+ * evidence that "fixed" coefficients transfer to an unseen site. Hudaverdi et al. fitted those
+ * coefficients on these same 97 blasts; refitted without each site, the same form scores -4.075.
+ * The engine's verdict still lists it among the arms positive across sites, so every view that
+ * shows that list marks it from here.
+ */
+export const IN_SAMPLE_ARMS: Record<string, Record<Lang, string>> = {
+  'published-regression': {
+    en: 'in sample: its coefficients were fitted on these 97 blasts',
+    es: 'dentro de la muestra: sus coeficientes se ajustaron sobre estos 97 tiros',
+  },
+};
 
 export const TIER_LABEL: Record<Tier, Record<Lang, string>> = {
   control: { en: 'Controls', es: 'Controles' },

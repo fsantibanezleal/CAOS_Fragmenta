@@ -119,7 +119,7 @@ export function OverviewDiagram() {
       <Box x={438} y={92} w={190} h={60} title={es ? 'Tres protocolos' : 'Three protocols'} lines={['random, dedup,', 'leave one site out']} accent={WARN} />
       <Arrow from={[632, 46]} to={[672, 70]} />
       <Arrow from={[632, 122]} to={[672, 98]} />
-      <Box x={676} y={40} w={200} h={78} title={es ? 'El veredicto' : 'The verdict'} lines={['0 of 6 learned arms', 'positive across sites', 'the 2 fixed ones hold']} accent={DANGER} />
+      <Box x={676} y={40} w={200} h={78} title={es ? 'El veredicto' : 'The verdict'} lines={es ? ['0 de 6 aprendidos', 'positivos entre sitios', 'solo el clásico resiste'] : ['0 of 6 learned arms', 'positive across sites', 'only the classical holds']} accent={DANGER} />
 
       <line x1={416} y1={8} x2={416} y2={200} stroke={MUTED} strokeDasharray="4 4" strokeWidth={1} />
       <text x={300} y={196} fill={MUTED} fontSize={10.5} textAnchor="middle">

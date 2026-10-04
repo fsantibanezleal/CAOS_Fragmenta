@@ -996,6 +996,11 @@ body,
   color: var(--color-bad);
 }
 
+/* A score that is not a result about an unseen site: the published regression's in-sample fit. */
+.fr-callout-figures li.fr-neutral b {
+  color: var(--color-fg-subtle);
+}
+
 .fr-callout-figures span {
   font-size: 0.7rem;
   color: var(--color-fg-subtle);
