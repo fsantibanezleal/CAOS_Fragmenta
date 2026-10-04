@@ -69,7 +69,9 @@ argument rather than guessing, because the right unit depends on the claim being
 
 That a model is right about your mine. The most that can be said, from this corpus, is:
 
-- two fixed-coefficient models transfer to a campaign they have never seen, at 0.802 and 0.311;
+- one model, the classical mean-size equation, transfers to a campaign it has never seen, at 0.311;
+- the published regression's 0.802 under the same protocol is in sample (its coefficients were
+  fitted on these 97 blasts), so it is not evidence of transfer;
 - no fitted model does;
 - and 97 blasts from ten campaigns are enough to fit something that interpolates between campaigns it
   has seen, and not enough to fit something that reaches a new one.
