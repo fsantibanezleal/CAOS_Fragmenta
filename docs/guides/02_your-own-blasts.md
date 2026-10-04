@@ -95,10 +95,15 @@ product was validated.
 
 On the evidence in this product, and only on that evidence:
 
-- for a mine unlike the ten in the corpus, the **published regression** transfers best, at 0.802
-  variance explained under leave-one-site-out;
-- the **classical model** is second at 0.311, and it needs a rock factor you have to supply;
-- **no fitted model** transfers at all. Every one scores below predicting a constant.
+- for a mine unlike the ten in the corpus, the **classical model** is the only one shown to
+  transfer, at 0.311 variance explained under leave-one-site-out, and it needs a rock factor you
+  have to supply;
+- the **published regression** has no transfer result here. Its 0.802 under the same protocol is
+  in sample, because its coefficients were fitted on these same 97 blasts; its out-of-sample evidence
+  is the source papers' hold-outs (0.854 and 0.827 on 13 and 12 blasts from the same sites), which
+  says how it interpolates between those ten campaigns, not how it reaches yours;
+- **no fitted model** transfers at all. Every one scores below predicting a constant, the refitted
+  regression at -4.075.
 
 If you have enough of your own measured blasts to fit something, fit it on your own blasts. What this
 corpus shows is that a model fitted on ten other campaigns will not reach yours.

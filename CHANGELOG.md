@@ -2,6 +2,20 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.04.006] - 2026-10-04
+
+### Fixed
+
+- The published regression's leave-one-site-out score was presented as transfer to an unseen site.
+  Hudaverdi et al. fitted its coefficients on these same 97 blasts, so its 0.802 is its in-sample fit
+  (0.8018 over all 97); refitted without each site, the same form scores -4.075. The README, the
+  Introduction, the Benchmark and two guides now say that only the classical mean-size equation
+  (0.311) holds up on a site it has never seen, and that the regression's out-of-sample evidence is
+  the source papers' own hold-outs (0.854 and 0.827 on 13 and 12 blasts from the same sites). The
+  regression is marked in sample wherever the cross-site result is shown, and is drawn dashed, as a
+  reference, in the protocol chart. No number changed and nothing was re-baked; the engine's verdict
+  list, which makes the same claim, is tracked in `blastfrag`. (#22)
+
 ## [0.04.005] - 2026-09-26
 
 ### Changed
