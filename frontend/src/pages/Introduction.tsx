@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import { SECTION_REFS } from '../data/citations';
-import { loadBenchmark } from '../lib/artifacts';
+import { ARM_BY_ID, IN_SAMPLE_ARMS, loadBenchmark } from '../lib/artifacts';
 import type { BenchmarkArtifact } from '../lib/contract.types';
 import { OverviewDiagram } from '../viz/Diagrams';
 
@@ -37,17 +37,28 @@ export default function Introduction() {
       <div className="fr-callout fr-callout-strong">
         <p>
           {es
-            ? 'Al dejar fuera una campaña completa, ninguno de los seis modelos aprendidos explica varianza alguna: todos quedan por debajo de predecir una constante. Los dos únicos modelos que resisten en un sitio que nunca vieron son los dos cuyos coeficientes son fijos en vez de ajustados.'
-            : 'With a whole campaign held out, not one of the six learned models explains any variance: every one falls below predicting a constant. The only two models that hold up on a site they have never seen are the two whose coefficients are fixed rather than fitted.'}
+            ? 'Al dejar fuera una campaña completa, ninguno de los seis modelos aprendidos explica varianza alguna: todos quedan por debajo de predecir una constante. El único modelo que resiste en un sitio que nunca vio es la ecuación clásica de tamaño medio. La regresión publicada marca más, pero dentro de la muestra: sus coeficientes se ajustaron sobre estos mismos tiros, y reajustada sin cada sitio queda muy por debajo de cero.'
+            : 'With a whole campaign held out, not one of the six learned models explains any variance: every one falls below predicting a constant. The only model that holds up on a site it has never seen is the classical mean-size equation. The published regression scores higher, but in sample: its coefficients were fitted on these same blasts, and refitted without each site it falls far below zero.'}
         </p>
         {benchmark ? (
           <ul className="fr-callout-figures">
-            {benchmark.verdict.arms_with_positive_variance_explained_across_sites.map(([arm, value]) => (
-              <li key={arm}>
-                <b>{value.toFixed(3)}</b>
-                <span>{arm.replace(/-/g, ' ')}</span>
-              </li>
-            ))}
+            {/* The arm that transfers first; an in-sample score after it, muted, because it is
+                not a result about an unseen site (see IN_SAMPLE_ARMS). */}
+            {[...benchmark.verdict.arms_with_positive_variance_explained_across_sites]
+              .sort(([a], [b]) => Number(a in IN_SAMPLE_ARMS) - Number(b in IN_SAMPLE_ARMS))
+              .map(([arm, value]) => (
+                <li
+                  key={arm}
+                  className={arm in IN_SAMPLE_ARMS ? 'fr-neutral' : undefined}
+                  data-in-sample={arm in IN_SAMPLE_ARMS ? 'true' : undefined}
+                >
+                  <b>{value.toFixed(3)}</b>
+                  <span>
+                    {ARM_BY_ID.get(arm)?.label[es ? 'es' : 'en'] ?? arm}
+                    {IN_SAMPLE_ARMS[arm] ? `, ${es ? 'dentro de la muestra' : 'in sample'}` : ''}
+                  </span>
+                </li>
+              ))}
             <li className="fr-bad">
               <b>{benchmark.verdict.n_learned_arms_positive} / {benchmark.verdict.n_learned_arms}</b>
               <span>{es ? 'aprendidos positivos' : 'learned arms positive'}</span>

@@ -22,8 +22,10 @@ what stops this repo growing a private copy of the science that nobody else can 
 ## The one-paragraph version
 
 With a whole campaign held out, not one of the six learned models explains any variance. The only
-two that transfer to an unseen site are the two whose coefficients are fixed rather than fitted, and
-the classical model gets *better* when held out by site because it has nothing to overfit. The
+model that transfers to an unseen site is the classical mean-size equation, and it gets *better* when
+held out by site because it has nothing to overfit. The published regression scores higher under
+the same protocol, but in sample: its coefficients were fitted on these same 97 blasts, and refitted
+without each site the same form scores -4.075. The
 gap between a random split and a site-held-out split has a median of 0.88 across the learned models.
 
 That is the product. Everything else here is the apparatus that makes the claim checkable.
