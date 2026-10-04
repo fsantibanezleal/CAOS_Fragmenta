@@ -14,19 +14,28 @@ splitting the data, and the statistic named (variance explained, not squared cor
 ## The result
 
 With a whole campaign held out, **not one of the six learned models explains any variance**. Every
-one falls below predicting a constant. The only two models that hold up on a site they have never
-seen are the two whose coefficients are **fixed rather than fitted**.
+one falls below predicting a constant. The only model that holds up on a site it has never seen is
+the **classical mean-size equation**, whose one free quantity, a per-site rock factor, is back-solved
+from the Kuznetsov predictions the source paper prints rather than from the measured sizes.
 
 | Model | Random 80/20 | Deduplicated | Leave one site out |
 |---|---|---|---|
 | classical mean size | -0.027 | 0.116 | **0.311** |
-| published regression | 0.632 | 0.861 | **0.802** |
+| published regression, in sample | 0.632 | 0.861 | 0.802 |
+| refitted regression | 0.513 | 0.823 | -4.075 |
 | random forest | 0.649 | 0.859 | -0.231 |
 | gradient boosting | 0.694 | 0.728 | -0.034 |
 | stacking ensemble | 0.667 | 0.885 | -0.951 |
 | null: predict the mean | -0.052 | -0.007 | -0.216 |
 
 Variance explained about the identity line.
+
+The published regression's row is **not** a transfer result. Hudaverdi et al. fitted its
+coefficients on these same 97 blasts, so no protocol here holds out a blast it has not seen: its
+0.802 under leave-one-site-out is its in-sample fit (0.8018 over all 97). Refitted without each site,
+the same functional form scores -4.075. Its out-of-sample evidence is the source papers' own
+hold-outs, 13 and 12 blasts from the same sites, where the equation recomputed here explains 0.854
+and 0.827 of the variance. Until 0.04.006 this README counted it as the second model that transfers.
 
 The classical model **improves** under the leave-one-site-out protocol, from negative on a random split to 0.311
 with a site held out, because it has nothing to overfit. That inverts the usual reading of it as the
