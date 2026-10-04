@@ -101,6 +101,36 @@ def run(root: Path) -> ValidationReport:
                             f"{case_id}/{arm}/{blast_id}: abstained with no reason given"
                         )
 
+    # The fitted models the browser runs: present, readable by a browser, unedited, and the ones the
+    # cases point at.
+    listed = {entry["scope"]: entry for entry in index.get("models", [])}
+    model_bytes = 0
+    for scope, entry in listed.items():
+        path = root / entry["path"]
+        if not path.exists():
+            problems.append(f"models/{scope}: listed in the index but not on disk")
+            continue
+        raw = path.read_text(encoding="utf-8")
+        for token in ("NaN", "Infinity"):
+            if token in raw:
+                problems.append(f"models/{scope}: contains {token}, which no browser can parse")
+        payload = json.loads(raw)
+        stored = payload.pop("digest", None)
+        if stored != digest(payload) or stored != entry.get("digest"):
+            problems.append(f"models/{scope}: digest does not match its content or its index entry")
+        model_bytes += path.stat().st_size
+    for entry in index.get("cases", []):
+        artifact_path = root / entry["artifact_path"]
+        if not artifact_path.exists():
+            continue
+        live = json.loads(artifact_path.read_text(encoding="utf-8")).get("live_models")
+        if not live:
+            problems.append(f"{entry['case_id']}: carries no live_models block")
+        elif live.get("scope") not in listed:
+            problems.append(f"{entry['case_id']}: points at models scope {live.get('scope')!r}, not listed")
+        elif live.get("digest") != listed[live["scope"]].get("digest"):
+            problems.append(f"{entry['case_id']}: its models digest disagrees with the index")
+
     return ValidationReport(
         ok=not problems,
         n_cases=len(index.get("cases", [])),
@@ -111,6 +141,8 @@ def run(root: Path) -> ValidationReport:
             "controls": controls,
             "n_abstentions": n_abstentions,
             "engine_version": index.get("engine_version"),
+            "model_scopes": len(listed),
+            "model_bytes": model_bytes,
             "app_version": index.get("app_version"),
         },
     )

@@ -1,18 +1,18 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 64142,
+  "bytes": 67101,
   "format": "json",
   "path": "synth-sweep-powder/case.json"
  },
  "case_id": "synth-sweep-powder",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "8890a778f6516133dcc2b0edfc1f48fe5fde1e60e7e51bd24b5809fb39362cbf",
+ "digest": "a6554089c2258f91939002eec04ea205cc47c532c14e923a76672817e1cc958d",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "monotonic: finer as the powder factor rises",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 64142,
+  "trace_bytes": 67101,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -32,6 +32,7 @@
  },
  "held_out_site": null,
  "lane": "live",
+ "models_scope": "corpus",
  "n_scoreable": 0,
  "n_training_rows": 97,
  "provenance": {

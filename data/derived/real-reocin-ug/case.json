@@ -190,7 +190,7 @@
   }
  },
  "controls": {},
- "digest": "2c3a650a20a12530c07ce4ede0d4e7837f420128b74380e54f6f879db536f0f2",
+ "digest": "6ccc7603ba08aaf82278a61ed4162f8e95b719a80a580b1704e20dc3ae197671",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1695,6 +1695,20 @@
    "reconstructable": true
   }
  },
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "84d2e207077e54a6ef3c63b8a3032b31da16024c3ca0e8e43b24f5041b84c0b2",
+  "path": "models/Reocin-UG.json",
+  "scope": "Reocin-UG"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -1919,6 +1933,62 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.582667
+   }
+  },
+  "kuznetsov-transfer": {
+   "Ru1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.563112
+   },
+   "Ru2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.546461
+   },
+   "Ru3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.546461
+   },
+   "Ru4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.665072
+   },
+   "Ru5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.495632
+   },
+   "Ru6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.504816
    }
   },
   "published-neural-net": {
@@ -2153,7 +2223,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.091154
+    "x50_m": 0.548844
    },
    "Ru2": {
     "abstained": false,
@@ -2162,7 +2232,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.077267
+    "x50_m": 0.547926
    },
    "Ru3": {
     "abstained": false,
@@ -2171,7 +2241,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.077267
+    "x50_m": 0.547926
    },
    "Ru4": {
     "abstained": false,
@@ -2180,7 +2250,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.035017
+    "x50_m": 0.563209
    },
    "Ru5": {
     "abstained": false,
@@ -2189,7 +2259,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.075719
+    "x50_m": 0.563522
    },
    "Ru6": {
     "abstained": false,
@@ -2198,7 +2268,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.061784
+    "x50_m": 0.539532
    }
   },
   "svr-rbf": {
@@ -2371,11 +2441,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": "Reocin-UG",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Reocin-UG",
@@ -2394,7 +2464,7 @@
    "pearson_r2": 0.05165724292905473,
    "r2_identity": -0.9651369609628464,
    "r2_identity_interval": [
-    -5.3271861200664645,
+    -5.1207161543847395,
     -0.1104605352401109
    ],
    "r2_identity_point": -0.9651369609628464,
@@ -2450,7 +2520,7 @@
    "pearson_r2": 0.05165724292905473,
    "r2_identity": -0.9651369609628464,
    "r2_identity_interval": [
-    -5.3271861200664645,
+    -5.1207161543847395,
     -0.1104605352401109
    ],
    "r2_identity_point": -0.9651369609628464,
@@ -2493,7 +2563,7 @@
    "pearson_r2": 0.05165724292905473,
    "r2_identity": -0.9651369609628464,
    "r2_identity_interval": [
-    -5.3271861200664645,
+    -5.1207161543847395,
     -0.1104605352401109
    ],
    "r2_identity_point": -0.9651369609628464,
@@ -2526,6 +2596,49 @@
     }
    ]
   },
+  "kuznetsov-transfer": {
+   "bias_m": -0.03974095579637645,
+   "mae_m": 0.06240568961549194,
+   "mape_pct": 9.888587744042368,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 6,
+   "pearson_r2": 0.05165724292905448,
+   "r2_identity": -0.6774649483543991,
+   "r2_identity_interval": [
+    -4.533805138930296,
+    0.6512202596647573
+   ],
+   "r2_identity_point": -0.6774649483543991,
+   "rmse_m": 0.08580330572497304,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Ru6",
+     "error_m": -0.18518430119385654,
+     "error_pct": -26.838304520848776,
+     "measured_m": 0.69,
+     "predicted_m": 0.5048156988061434,
+     "site": "Reocin-UG"
+    },
+    {
+     "blast_id": "Ru1",
+     "error_m": -0.07688809131134311,
+     "error_pct": -12.013764267397361,
+     "measured_m": 0.64,
+     "predicted_m": 0.5631119086886569,
+     "site": "Reocin-UG"
+    },
+    {
+     "blast_id": "Ru5",
+     "error_m": -0.04436754373040552,
+     "error_pct": -8.216211801926947,
+     "measured_m": 0.54,
+     "predicted_m": 0.4956324562695945,
+     "site": "Reocin-UG"
+    }
+   ]
+  },
   "null": {
    "bias_m": -0.2907560137457044,
    "mae_m": 0.2907560137457044,
@@ -2537,7 +2650,7 @@
    "r2_identity": -19.262064196547616,
    "r2_identity_interval": [
     -74.0767826549049,
-    -12.485935512328084
+    -13.423588901429406
    ],
    "r2_identity_point": -19.262064196547616,
    "rmse_m": 0.29820789462752517,
@@ -2579,8 +2692,8 @@
    "pearson_r2": 0.0014421002578007666,
    "r2_identity": -8.389028155865864,
    "r2_identity_interval": [
-    -50.35704429439564,
-    -3.5874559076837524
+    -43.37638869094748,
+    -3.589200308004996
    ],
    "r2_identity_point": -8.389028155865864,
    "rmse_m": 0.20299606240206877,
@@ -2622,8 +2735,8 @@
    "pearson_r2": 0.164864389070898,
    "r2_identity": 0.07025779770143992,
    "r2_identity_interval": [
-    -1.5188905293815478,
-    0.2898476249820998
+    -1.4480012723670908,
+    0.2862298992688157
    ],
    "r2_identity_point": 0.07025779770143992,
    "rmse_m": 0.06387906715974516,
@@ -2665,8 +2778,8 @@
    "pearson_r2": 0.09171789312467013,
    "r2_identity": -0.7443635164276474,
    "r2_identity_interval": [
-    -5.538545236017491,
-    -0.02271025700215401
+    -5.486970427870139,
+    -0.024930660395506832
    ],
    "r2_identity_point": -0.7443635164276474,
    "rmse_m": 0.08749752942473546,
@@ -2708,7 +2821,7 @@
    "pearson_r2": 0.07807147149284623,
    "r2_identity": -240.63491029008912,
    "r2_identity_interval": [
-    -806.4622789827858,
+    -783.3740869438367,
     -165.12595831639692
    ],
    "r2_identity_point": -240.63491029008912,
@@ -2742,44 +2855,44 @@
    ]
   },
   "stacking": {
-   "bias_m": -0.5236317424085771,
-   "mae_m": 0.5236317424085771,
-   "mape_pct": 87.97502946973232,
+   "bias_m": -0.041506618535482986,
+   "mae_m": 0.0646314859319654,
+   "mape_pct": 10.218143460568983,
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 6,
-   "pearson_r2": 0.15167161488220599,
-   "r2_identity": -62.75291167634586,
+   "pearson_r2": 0.06542630567188915,
+   "r2_identity": -0.4772628334871958,
    "r2_identity_interval": [
-    -228.92401752321308,
-    -43.73831295512696
+    -3.5680149394348635,
+    0.14888373979419917
    ],
-   "r2_identity_point": -62.75291167634586,
-   "rmse_m": 0.5289654484847085,
+   "r2_identity_point": -0.4772628334871958,
+   "rmse_m": 0.08052044731532772,
    "scoreable": true,
    "worst_rows": [
     {
      "blast_id": "Ru6",
-     "error_m": -0.6282156088754874,
-     "error_pct": -91.04574041673732,
+     "error_m": -0.15046769939659277,
+     "error_pct": -21.80691295602794,
      "measured_m": 0.69,
-     "predicted_m": 0.061784391124512505,
-     "site": "Reocin-UG"
-    },
-    {
-     "blast_id": "Ru4",
-     "error_m": -0.604983153878479,
-     "error_pct": -94.52861779351235,
-     "measured_m": 0.64,
-     "predicted_m": 0.035016846121521006,
+     "predicted_m": 0.5395323006034072,
      "site": "Reocin-UG"
     },
     {
      "blast_id": "Ru1",
-     "error_m": -0.5488456711287018,
-     "error_pct": -85.75713611385964,
+     "error_m": -0.09115587231967937,
+     "error_pct": -14.2431050499499,
      "measured_m": 0.64,
-     "predicted_m": 0.09115432887129826,
+     "predicted_m": 0.5488441276803206,
+     "site": "Reocin-UG"
+    },
+    {
+     "blast_id": "Ru4",
+     "error_m": -0.07679074168607303,
+     "error_pct": -11.99855338844891,
+     "measured_m": 0.64,
+     "predicted_m": 0.563209258313927,
      "site": "Reocin-UG"
     }
    ]
@@ -2794,8 +2907,8 @@
    "pearson_r2": 0.034412331885146946,
    "r2_identity": -38.65414186743724,
    "r2_identity_interval": [
-    -140.7001744725831,
-    -26.057893191851722
+    -140.64719720793423,
+    -27.3994297801382
    ],
    "r2_identity_point": -38.65414186743724,
    "rmse_m": 0.41717816654328743,
@@ -2837,7 +2950,7 @@
    "pearson_r2": 0.05165724292905473,
    "r2_identity": -0.9651369609628464,
    "r2_identity_interval": [
-    -5.3271861200664645,
+    -5.1207161543847395,
     -0.1104605352401109
    ],
    "r2_identity_point": -0.9651369609628464,
@@ -2880,8 +2993,8 @@
    "pearson_r2": 0.05677504672516491,
    "r2_identity": -0.4448345158403453,
    "r2_identity_interval": [
-    -3.6084112635163414,
-    0.159563354957597
+    -3.453162645245038,
+    0.1558018703920909
    ],
    "r2_identity_point": -0.4448345158403453,
    "rmse_m": 0.0796317659785016,
@@ -2955,6 +3068,16 @@
    "spacing-wide": 0.6586797324425134,
    "stemming-long": 0.6132312666047628
   },
+  "kuznetsov-transfer": {
+   "base": 0.5535923775369569,
+   "blocky": 0.5535923775369569,
+   "burden-tight": 0.5103869535920441,
+   "burden-wide": 0.5936616869371593,
+   "powder-down": 0.6642292070120183,
+   "powder-up": 0.4688414263498531,
+   "spacing-wide": 0.5706725408013943,
+   "stemming-long": 0.5312965129722428
+  },
   "published-neural-net": {
    "base": 0.40682897127039275,
    "blocky": 0.29305481160244395,
@@ -2996,14 +3119,14 @@
    "stemming-long": 1.7805056389911091
   },
   "stacking": {
-   "base": 0.06970159092475617,
-   "blocky": 0.06793466906065833,
-   "burden-tight": 0.07302596479336963,
-   "burden-wide": 0.06970159092475617,
-   "powder-down": 0.038153527795626946,
-   "powder-up": 0.0641155878770376,
-   "spacing-wide": 0.07203069750208636,
-   "stemming-long": 0.0766385398854032
+   "base": 0.5518267147978504,
+   "blocky": 0.5478377019713707,
+   "burden-tight": 0.5593318401072164,
+   "burden-wide": 0.5518267147978504,
+   "powder-down": 0.5695989749823384,
+   "powder-up": 0.5585518445411856,
+   "spacing-wide": 0.5522432032796906,
+   "stemming-long": 0.549550206094635
   },
   "svr-rbf": {
    "base": 0.18145427698794048,

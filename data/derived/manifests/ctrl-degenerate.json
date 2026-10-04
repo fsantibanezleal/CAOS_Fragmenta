@@ -1,8 +1,8 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 35426,
+  "bytes": 38111,
   "format": "json",
   "path": "ctrl-degenerate/case.json"
  },
@@ -16,10 +16,10 @@
    "passed": true
   }
  },
- "digest": "c56fa95d46c02c0c42236ee2999e52d96c771ed7266c89a28676259fbb78df54",
+ "digest": "ee7cc95d81859d18c35a07d9b64f15c8b286033aa96112bc121dd54de7fb9c75",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "every arm abstains, with a reason",
@@ -62,7 +62,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 35426,
+  "trace_bytes": 38111,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -70,6 +70,7 @@
  },
  "held_out_site": null,
  "lane": "live",
+ "models_scope": "corpus",
  "n_scoreable": 0,
  "n_training_rows": 97,
  "provenance": {

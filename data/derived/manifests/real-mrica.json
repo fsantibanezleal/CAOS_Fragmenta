@@ -1,18 +1,18 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 70624,
+  "bytes": 74274,
   "format": "json",
   "path": "real-mrica/case.json"
  },
  "case_id": "real-mrica",
  "category": "real-campaign",
  "controls": {},
- "digest": "0fb3ab3a97edd4febdd6d192546c27b0ad3de860315433088685319b1d93affb",
+ "digest": "303113ac0246704c83f8b066993ecaca76b23dccad8037268c7d6c03954d7aeb",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "fine, 0.13 to 0.21 m measured",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 70624,
+  "trace_bytes": 74274,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -32,6 +32,7 @@
  },
  "held_out_site": "Mrica",
  "lane": "live",
+ "models_scope": "Mrica",
  "n_scoreable": 11,
  "n_training_rows": 86,
  "provenance": {

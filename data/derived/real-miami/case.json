@@ -142,7 +142,7 @@
    "passed": true
   }
  },
- "digest": "04e7507bb1055aa9b6f00c72b09141b1338812bf2193d6ae62c87269ca56523c",
+ "digest": "abf9ad2ea03c47e6bde8338990fe3db0d202844775c8c7a4f5c729c65633cb23",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -151,6 +151,20 @@
    "reason": "NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
    "reconstructable": false
   }
+ },
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "0625435a5c39a18238f00f41334871e678e49c40744e897ae853580cd5c0962e",
+  "path": "models/Miami.json",
+  "scope": "Miami"
  },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
@@ -323,6 +337,62 @@
    }
   },
   "kuznetsov": {
+   "Mi1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi6": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   }
+  },
+  "kuznetsov-transfer": {
    "Mi1": {
     "abstained": true,
     "cv": null,
@@ -610,7 +680,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.328586
+    "x50_m": 0.390814
    },
    "Mi2": {
     "abstained": false,
@@ -619,7 +689,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.319834
+    "x50_m": 0.38852
    },
    "Mi3": {
     "abstained": false,
@@ -628,7 +698,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.333791
+    "x50_m": 0.358427
    },
    "Mi4": {
     "abstained": false,
@@ -637,7 +707,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.319866
+    "x50_m": 0.388517
    },
    "Mi5": {
     "abstained": false,
@@ -646,7 +716,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.339235
+    "x50_m": 0.357989
    },
    "Mi6": {
     "abstained": false,
@@ -655,7 +725,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.328586
+    "x50_m": 0.390814
    }
   },
   "svr-rbf": {
@@ -828,11 +898,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": "Miami",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Miami",
@@ -881,6 +951,19 @@
    "worst_rows": []
   },
   "kuznetsov": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 6,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "kuznetsov-transfer": {
    "bias_m": null,
    "mae_m": null,
    "mape_pct": null,
@@ -946,8 +1029,8 @@
    "pearson_r2": 1.634073889024758e-06,
    "r2_identity": -127.2417458543992,
    "r2_identity_interval": [
-    -5895.834049066415,
-    -81.5421132423386
+    -5444.424929122981,
+    -82.21359528563373
    ],
    "r2_identity_point": -127.2417458543992,
    "rmse_m": 0.313558083649116,
@@ -989,8 +1072,8 @@
    "pearson_r2": 0.9501011123041915,
    "r2_identity": 0.8436591410802755,
    "r2_identity_interval": [
-    -1.4110922949851514,
-    0.8781038677630906
+    -1.2717889841313794,
+    0.8779312808433115
    ],
    "r2_identity_point": 0.8436591410802755,
    "rmse_m": 0.010948119709419913,
@@ -1032,8 +1115,8 @@
    "pearson_r2": 0.1556732767058772,
    "r2_identity": -84.1660882322539,
    "r2_identity_interval": [
-    -3696.442985848083,
-    -56.71032593368203
+    -3695.070476020884,
+    -56.722557494055756
    ],
    "r2_identity_point": -84.1660882322539,
    "rmse_m": 0.25552690852053395,
@@ -1109,44 +1192,44 @@
    ]
   },
   "stacking": {
-   "bias_m": 0.24831616672708132,
-   "mae_m": 0.24831616672708132,
-   "mape_pct": 472.80516425360173,
+   "bias_m": 0.29917989612114343,
+   "mae_m": 0.29917989612114343,
+   "mape_pct": 569.7428744644682,
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 6,
-   "pearson_r2": 0.023406742201802208,
-   "r2_identity": -80.41372965056573,
+   "pearson_r2": 0.16517308891441201,
+   "r2_identity": -117.47459679823767,
    "r2_identity_interval": [
-    -3954.080952441338,
-    -49.99051544672797
+    -5513.815780938449,
+    -73.16867072098545
    ],
-   "r2_identity_point": -80.41372965056573,
-   "rmse_m": 0.2498343305714817,
+   "r2_identity_point": -117.47459679823767,
+   "rmse_m": 0.3013810282880829,
    "scoreable": true,
    "worst_rows": [
     {
      "blast_id": "Mi6",
-     "error_m": 0.3085856264844965,
-     "error_pct": 1542.9281324224823,
+     "error_m": 0.3708136404762867,
+     "error_pct": 1854.0682023814334,
      "measured_m": 0.02,
-     "predicted_m": 0.3285856264844965,
-     "site": "Miami"
-    },
-    {
-     "blast_id": "Mi3",
-     "error_m": 0.24379062256913878,
-     "error_pct": 270.8784695212653,
-     "measured_m": 0.09,
-     "predicted_m": 0.3337906225691388,
+     "predicted_m": 0.3908136404762867,
      "site": "Miami"
     },
     {
      "blast_id": "Mi4",
-     "error_m": 0.2398660998562695,
-     "error_pct": 299.83262482033683,
+     "error_m": 0.3085170801440849,
+     "error_pct": 385.64635018010614,
      "measured_m": 0.08,
-     "predicted_m": 0.3198660998562695,
+     "predicted_m": 0.3885170801440849,
+     "site": "Miami"
+    },
+    {
+     "blast_id": "Mi2",
+     "error_m": 0.29851966533481944,
+     "error_pct": 331.68851703868825,
+     "measured_m": 0.09,
+     "predicted_m": 0.38851966533481946,
      "site": "Miami"
     }
    ]
@@ -1161,8 +1244,8 @@
    "pearson_r2": 0.16577041395497377,
    "r2_identity": -44.82872230980349,
    "r2_identity_interval": [
-    -2235.040311176755,
-    -24.520702036109896
+    -1987.4923211782484,
+    -24.5241810868079
    ],
    "r2_identity_point": -44.82872230980349,
    "rmse_m": 0.18744426843958004,
@@ -1217,8 +1300,8 @@
    "pearson_r2": 0.1705515285279509,
    "r2_identity": -116.74485039587451,
    "r2_identity_interval": [
-    -5680.225658499695,
-    -72.1398809612257
+    -5487.5774573687295,
+    -72.80890088318176
    ],
    "r2_identity_point": -116.74485039587451,
    "rmse_m": 0.300451413659797,
@@ -1292,6 +1375,16 @@
    "spacing-wide": null,
    "stemming-long": null
   },
+  "kuznetsov-transfer": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
   "published-neural-net": {
    "base": 0.38974131195909245,
    "blocky": 0.39261578090064186,
@@ -1333,14 +1426,14 @@
    "stemming-long": 0.15249513624582267
   },
   "stacking": {
-   "base": 0.3283161667270813,
-   "blocky": 0.3283161667270813,
-   "burden-tight": 0.3299859037668895,
-   "burden-wide": 0.330411360455109,
-   "powder-down": 0.32777774292865663,
-   "powder-up": 0.3280799404742823,
-   "spacing-wide": 0.3291930669831105,
-   "stemming-long": 0.32927636325579634
+   "base": 0.37917989612114344,
+   "blocky": 0.37917989612114344,
+   "burden-tight": 0.37486823490771437,
+   "burden-wide": 0.37408391245755945,
+   "powder-down": 0.37455118146587996,
+   "powder-up": 0.37879353897979234,
+   "spacing-wide": 0.37666266670613663,
+   "stemming-long": 0.39347450417482593
   },
   "svr-rbf": {
    "base": 0.264381395711564,
