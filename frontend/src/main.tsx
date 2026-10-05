@@ -71,20 +71,22 @@ const config: ShellConfig = {
   fixedRoutes: ['/', '/app'],
   architecture,
   footer: {
-    // COMPACT, and the word is load-bearing (ADR-0016 section 2: one wrapping line).
+    // ONE line at the reading width (ADR-0016 section 2, the Lidar3D footer). The long forms live
+    // where there is room for them: every source with its DOI on Implementation, the scope and what
+    // is not modelled on Introduction and Benchmark. Measured by the browser gate, which fails if
+    // the footer wraps at 1600 px on a documentation route.
     //
-    // What was here ran to four wrapped lines each, and the footer measured 116px. On a route the
-    // shell locks to the viewport that is 13% of a 900px screen permanently gone from the
-    // instrument, which is the space ADR-0071 rule 8 is trying to protect. The long forms are not
-    // lost: the full provenance with every DOI is on Implementation, and the full disclaimer with
-    // what is and is not modelled is on Benchmark, which is where there is room to read them.
+    // The budget is measured, not guessed: at the 1200 px reading width the shell's fixed parts and
+    // its gaps leave 344 px in English and 259 px in Spanish for these two strings. The data sources
+    // are cited on every page that uses them, with their DOIs.
     provenance: {
-      en: 'Engine: blastfrag (MIT). Data: 116 published blasts, reused with citation; the source articles are not redistributed.',
-      es: 'Motor: blastfrag (MIT). Datos: 116 tiros publicados, reutilizados con cita; los artículos no se redistribuyen.',
+      en: 'Engine: blastfrag (MIT)',
+      es: 'Motor: blastfrag (MIT)',
     },
+    license: { en: 'MIT', es: 'MIT' },
     disclaimer: {
-      en: 'Every prediction is a model, shown with its statistic beside it. Not for production blast design.',
-      es: 'Toda predicción es un modelo, con su estadístico al lado. No apta para diseño de voladura de producción.',
+      en: 'Research use only',
+      es: 'Solo investigación',
     },
   },
 };
