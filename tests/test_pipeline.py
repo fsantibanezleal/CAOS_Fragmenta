@@ -504,6 +504,68 @@ def test_the_verdict_reports_that_it_depends_on_the_row_set(benchmark):
     assert "published-regression" not in dict(verdict["arms_with_positive_variance_explained_across_sites"])
 
 
+# ---------------------------------------------------------------------------------------------
+# Schema v3, the engine's 0.4.0 (docs/design/features/benchmark-0-4/)
+# ---------------------------------------------------------------------------------------------
+
+def test_the_capped_arm_is_benchmarked_with_its_declared_provenance(benchmark):
+    provenance = benchmark["provenance"]["kuznetsov-capped"]
+    assert provenance["declared_not_published"] is True and provenance["caps"] == "kuznetsov"
+    assert provenance["uses_site_constant"] is True
+    assert all("kuznetsov-capped" in p["arms"] for p in benchmark["protocols"].values())
+    held_out = benchmark["protocols"]["leave-one-site-out"]["arms"]
+    capped, classical = held_out["kuznetsov-capped"], held_out["kuznetsov"]
+    moved = sorted(b for b, v in capped["predictions"].items() if v != classical["predictions"][b])
+    assert moved == ["Rc1", "Rc2", "Rc3"]
+    assert capped["r2_identity"] > classical["r2_identity"]
+
+
+def test_every_arm_carries_its_common_support_score(benchmark):
+    n = benchmark["n_repeats"]
+    for name, protocol in benchmark["protocols"].items():
+        for arm, block in protocol["arms"].items():
+            common = block["common"]
+            assert "group-discriminant" not in common["arms"] and "kuznetsov" in common["arms"], (name, arm)
+            if protocol["repeated"]:
+                assert len(common["draws_r2_identity"]) == n and common["n_rows"]["n"] == n, (name, arm)
+            else:
+                assert common["n_rows"] == 79 and common["n_sites"] == 9, arm
+    # Reported beside the declared row sets, never deciding the verdict.
+    assert set(benchmark["verdict"]["supports"]) == {"all", "geometry"}
+
+
+def test_the_width_sweep_is_baked_beside_the_published_widths(benchmark):
+    sweep = benchmark["network_width_sweep"]
+    assert sweep["widths"] == list(range(6, 16)) and sweep["n_simulations"] == 8
+    assert sweep["published_widths"] == {"1": 9, "2": 7}
+    for group, entry in sweep["published_protocol"].items():
+        assert entry["published_optimum"] == {"1": 9, "2": 7}[group]
+        assert entry["best_hidden"] in sweep["widths"] and len(entry["table"]) == 10
+    rows = sweep["leave_one_site_out"]
+    published = [row for row in rows if row["published"]]
+    assert len(rows) == 11 and len(published) == 1 and published[0]["hidden"] == {"1": 9, "2": 7}
+    # The published pair is the network as the benchmark runs it, so the two agree.
+    network = benchmark["protocols"]["leave-one-site-out"]["arms"]["published-neural-net"]
+    assert published[0]["supports"]["all"]["r2_identity"] == pytest.approx(network["r2_identity"], abs=1e-9)
+
+
+def test_the_bake_pins_blas_to_one_thread():
+    """Set in run.py before numpy is imported, and in effect: the prefix alone leaves numpy on one thread."""
+    import os
+    import subprocess
+
+    source = (ROOT / "data-pipeline" / "run.py").read_text(encoding="utf-8")
+    prefix = source.split("\nimport argparse")[0]
+    probe = prefix + (
+        "\nimport numpy, threadpoolctl"
+        "\nprint(max(p['num_threads'] for p in threadpoolctl.threadpool_info()))\n"
+    )
+    pinned = {"OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"}
+    env = {k: v for k, v in os.environ.items() if k not in pinned}
+    out = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True, env=env, check=True)
+    assert out.stdout.strip() == "1", out.stdout + out.stderr
+
+
 def test_the_transfer_rung_is_benchmarked_and_reported_per_case(benchmark, artifacts):
     transfer = benchmark["protocols"]["leave-one-site-out"]["arms"]["kuznetsov-transfer"]
     assert transfer["r2_identity"] > 0.25

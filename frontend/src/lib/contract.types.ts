@@ -10,7 +10,7 @@
 
 export const CASE_SCHEMA = 'fragmenta.case/v1';
 export const INDEX_SCHEMA = 'fragmenta.index/v1';
-export const BENCHMARK_SCHEMA = 'fragmenta.benchmark/v2';
+export const BENCHMARK_SCHEMA = 'fragmenta.benchmark/v3';
 export const MODELS_SCHEMA = 'fragmenta.models/v1';
 
 export type Lang = 'en' | 'es';
@@ -244,6 +244,14 @@ export interface RepeatedArmBlock {
   repeats: DrawSummary;
   rmse_repeats: DrawSummary;
   draws: number[];
+  /** The same draws on the rows every size-predicting arm answered (schema v3); never decides the verdict. */
+  common: {
+    repeats: DrawSummary;
+    rmse_repeats: DrawSummary;
+    n_rows: DrawSummary;
+    draws_r2_identity: (number | null)[];
+    arms: string[];
+  };
 }
 
 export type Support = 'all' | 'geometry';
@@ -265,6 +273,14 @@ export interface GroupedArmBlock extends EngineScore {
   supports: Record<Support, { score: EngineScore; interval_95: [number, number] | null; n_sites: number }>;
   per_site: Record<string, SiteError>;
   predictions: Record<string, number | null>;
+  /** The pooled score on the rows every size-predicting arm answered (schema v3), with its site interval. */
+  common: {
+    score: EngineScore;
+    interval_95: [number, number] | null;
+    n_rows: number;
+    n_sites: number;
+    arms: string[];
+  };
 }
 
 export interface ProtocolBlock {
@@ -296,6 +312,9 @@ export interface ArmProvenance {
   in_sample_corpus: boolean;
   uses_site_constant: boolean;
   router_in_sample: boolean;
+  /** Set on the in-situ cap (schema v3): the arm it caps, and that the cap is a declared choice. */
+  caps?: string;
+  declared_not_published?: boolean;
 }
 
 export interface ImportanceReport {
@@ -369,6 +388,23 @@ export interface BenchmarkArtifact {
       string,
       { measured_m: number; published_m: number; min_m: number | null; max_m: number | null }
     >;
+  };
+  /** The published network's hidden width (schema v3): the source's protocol, and every width held out by site. */
+  network_width_sweep: {
+    widths: number[];
+    n_simulations: number;
+    seed: number;
+    published_widths: Record<string, number>;
+    published_protocol: Record<
+      string,
+      {
+        best_hidden: number;
+        best_rmse: number;
+        published_optimum: number;
+        table: { hidden: number; rmse: number; correlation: number }[];
+      }
+    >;
+    leave_one_site_out: { hidden: Record<string, number>; published: boolean; supports: Record<Support, EngineScore> }[];
   };
   duplicate_groups: string[][];
   sites: string[];
