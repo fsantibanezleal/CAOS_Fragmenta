@@ -415,11 +415,23 @@ function ArmComparison({
         <thead>
           <tr>
             <th>{lang === 'es' ? 'modelo' : 'model'}</th>
-            <th title="variance explained about the identity line">
-              {lang === 'es' ? 'var. explicada' : 'variance explained'}
+            <th
+              title={
+                lang === 'es'
+                  ? 'varianza explicada respecto de la recta identidad'
+                  : 'variance explained about the identity line'
+              }
+            >
+              R²<sub>id</sub>
             </th>
-            <th title="the square of the correlation, which is what the source papers report">
-              {lang === 'es' ? 'corr. cuadrada' : 'squared corr.'}
+            <th
+              title={
+                lang === 'es'
+                  ? 'la correlación al cuadrado, que reportan los artículos fuente'
+                  : 'the squared correlation, which the source papers report'
+              }
+            >
+              r²
             </th>
             <th>RMSE</th>
             <th>{lang === 'es' ? 'abst.' : 'abst.'}</th>
@@ -476,8 +488,8 @@ function ArmComparison({
       })}
       <p className="fr-fine">
         {lang === 'es'
-          ? 'Las dos columnas de varianza son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo clásico.'
-          : 'The two variance columns are different quantities, and on the published hold-out they differ by a factor of two and a half for the classical model.'}
+          ? 'R²id es la varianza explicada respecto de la recta identidad, el puntaje que reporta este producto; r² es la correlación al cuadrado, la que reportan los artículos fuente. Son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo clásico.'
+          : 'R²id is the variance explained about the identity line, the score this product reports; r² is the squared correlation, the one the source papers report. They are different quantities, and on the published hold-out they differ by a factor of two and a half for the classical model.'}
       </p>
     </div>
   );
