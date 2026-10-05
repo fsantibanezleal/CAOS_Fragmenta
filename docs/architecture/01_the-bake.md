@@ -74,7 +74,23 @@ At version 0.04 this was measured by baking all sixteen cases on Windows and on 
 numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1): the worst relative difference was 2.7e-08, on
 `real-reocin-ug`; typical cases differed in 30 to 100 fields at around 1e-09; and `ctrl-degenerate`,
 where every arm abstains, was byte-identical, which is the control on the explanation (a case with no
-arithmetic does not drift). **That cross-platform measurement has not been repeated for 0.05.000.**
+arithmetic does not drift).
+
+At version 0.06.000 it was measured again, Windows 11 (Python 3.13.14) against Ubuntu 24.04 under WSL2
+(Python 3.13.16), with the same pins and BLAS on one thread: every case and its models file reproduces.
+The worst difference in a case is 2.7e-08, on `real-reocin-ug` again; typical cases differ in 30 to 110
+fields; `ctrl-degenerate` has no number that differs. The models files, compared for the first time,
+differ in about 1,400 to 1,600 fields each, the worst at 7.0e-07 on a network weight of magnitude
+2.8e-4 that moved by 2.0e-10: a relative difference inflates near zero, so a near-zero weight is where
+the tolerance is closest.
+
+The same run found that the comparison could not pass across environments at all since 0.05.000. Each
+case carries the digest of its training scope's models file, a hash that moves with the last bit of any
+number in that file, and the tool compared it as a string; every case failed with every number within
+tolerance. Nothing noticed, because the cross-environment run had not been repeated since 0.04. The tool
+now skips the two digests computed over numbers and compares the numbers they cover, the case's and its
+models file's; the corpus digest, a hash of the input, is still compared exactly, and a test holds that
+split.
 
 ```bash
 python scripts/compare_bakes.py                           # every case against the committed artifacts

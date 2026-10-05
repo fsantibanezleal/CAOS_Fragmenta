@@ -710,29 +710,31 @@ def test_rebaking_reproduces_the_committed_numbers_to_tolerance(artifacts, tmp_p
 
     A content address is a discrete answer to a continuous question. Two builds of the same pinned
     numpy reduce a dot product in a different order and the last bits differ. Measured between
-    Windows and Linux runners on identical pins, over all sixteen cases: the worst difference is
-    2.7e-08 relative, most of it on the fitted arms, and the one case where every arm abstains comes
-    out byte-identical.
+    Windows and Linux on identical pins, over all sixteen cases: the worst difference is 2.7e-08
+    relative at 0.04 and 2.745e-08 at 0.06.000, most of it on the fitted arms, and the one case
+    where every arm abstains has no number that differs.
 
     Asserting equal hashes here would therefore assert something false. Asserting nothing would let
     a changed model through. The tolerance sits between the two, five orders below the percent-scale
     move a different model would make and two orders above the measured floating-point noise.
 
+    The comparison is the tool's: the case's numbers and its models file's, with the two digests
+    computed over those numbers skipped. Until 0.06.000 this test compared the case's pointer to its
+    models file as a string, digest included, so it could pass only on the machine that baked.
+
     Written to a sandbox, for the same reason as the test above.
     """
-    from compare_bakes import RELATIVE_TOLERANCE, compare
+    from compare_bakes import RELATIVE_TOLERANCE, compare_bake
     from pipeline.pipeline import bake_case
 
     case = get_case("real-murgul")
     bake_case(case, seed=0, root=tmp_path)
-    baked = json.loads((tmp_path / "real-murgul" / "case.json").read_text(encoding="utf-8"))
+    assert artifacts["real-murgul"]["live_models"]["path"] == "models/Murgul.json"
 
-    committed = dict(artifacts["real-murgul"])
-    baked.pop("digest", None)
-    committed.pop("digest", None)
-
-    problems, numeric = compare(baked, committed)
+    problems, numeric, model_problems, model_numeric = compare_bake(tmp_path, "real-murgul")
     assert not problems, problems
+    assert not model_problems, model_problems
+    numeric = sorted(numeric + model_numeric, reverse=True)
     worst = numeric[0] if numeric else None
     assert worst is None or worst[0] <= RELATIVE_TOLERANCE, (
         f"{worst[1]} re-baked as {worst[2]!r} against the committed {worst[3]!r}, "
@@ -740,3 +742,36 @@ def test_rebaking_reproduces_the_committed_numbers_to_tolerance(artifacts, tmp_p
         "is a different model rather than a different machine."
     )
     assert (DERIVED / "real-murgul" / "case.json").stat().st_size > 0
+
+
+def test_the_bake_comparison_skips_only_the_digests_computed_over_numbers():
+    """A digest over numbers moves with their last bit, so the numbers are compared instead.
+
+    The corpus digest is a hash of the input, the same file on every machine, so it must still match.
+    """
+    from compare_bakes import compare, without_computed_digests
+
+    committed = {
+        "digest": "a",
+        "live_models": {"digest": "b", "path": "models/X.json"},
+        "provenance": {"corpus_digest": "c"},
+        "x": 1.0,
+    }
+    rebaked = {
+        "digest": "z",
+        "live_models": {"digest": "y", "path": "models/X.json"},
+        "provenance": {"corpus_digest": "c"},
+        "x": 1.0 + 1e-12,
+    }
+    problems, numeric = compare(without_computed_digests(rebaked), without_computed_digests(committed))
+    assert problems == [] and [key for _, key, _, _ in numeric] == ["x"]
+    assert committed["live_models"]["digest"] == "b", "the comparison must not modify what it reads"
+
+    rebaked["provenance"]["corpus_digest"] = "another corpus"
+    problems, _ = compare(without_computed_digests(rebaked), without_computed_digests(committed))
+    assert len(problems) == 1 and "provenance.corpus_digest" in problems[0]
+
+    rebaked["provenance"]["corpus_digest"] = "c"
+    rebaked["live_models"]["path"] = "models/Y.json"
+    problems, _ = compare(without_computed_digests(rebaked), without_computed_digests(committed))
+    assert len(problems) == 1 and "live_models.path" in problems[0]
