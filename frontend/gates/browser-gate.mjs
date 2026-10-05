@@ -22,7 +22,13 @@
 //     sets data-chart-* itself, because sampling pixels cannot tell an empty canvas from a canvas
 //     that never mounted;
 //   - the workbench opens all six tabs and each one renders the panels it owns;
-//   - the idle page is at rest: no chart rebuilding itself when nobody is touching it.
+//   - the idle page is at rest: no chart rebuilding itself when nobody is touching it;
+//   - on every documentation route, the footer is ONE line at 1600 px (ADR-0016 section 2), and
+//     every sub-tab is opened by a pointer click and every figure in it MEASURED: no text on another
+//     text, no text crossing a box it does not belong to, no text outside the drawing. Until
+//     0.05.000 the gate never clicked a documentation sub-tab and never measured a figure, which is
+//     how a note running through the Group 2 box of the router diagram shipped;
+//   - the architecture modal's drawings, measured the same way.
 //
 // Usage:
 //   npm run build && npx vite preview --port 4173 &
@@ -60,7 +66,7 @@ const ROUTES = [
   '/benchmark',
   '/benchmark/',
 ];
-const TABS = ['predict', 'distribution', 'bench', 'rock', 'explain', 'decide'];
+const TABS = ['predict', 'distribution', 'bench', 'rock', 'whatif', 'decide'];
 /**
  * ADR-0071 rule 8 asks for at least 0.50 of the viewport, and this product cannot reach it.
  *
@@ -108,6 +114,65 @@ function fail(where, message) {
 function pass(where, detail) {
   report.push(`ok   ${where}${detail ? ': ' + detail : ''}`);
   console.log(`  ok   ${where}${detail ? ': ' + detail : ''}`);
+}
+
+/**
+ * Every figure on screen, measured. Returns a list of human-readable hits.
+ *
+ * Text inside a `[data-figure-box]` group must stay inside that group's own rect. Any other text (a
+ * free label, the notes band) must not intersect any box rect. No two texts may intersect, and no
+ * text may leave its SVG. One pixel of tolerance, because text bounding boxes are rounded.
+ */
+async function measureFigures(page, scope = 'figure svg, .arch-modal svg, [role="dialog"] svg') {
+  return page.evaluate((selector) => {
+    const hits = [];
+    const svgs = [...document.querySelectorAll(selector)].filter((svg) => {
+      const r = svg.getBoundingClientRect();
+      return r.width > 40 && r.height > 20;
+    });
+    const inter = (a, b, t = 1) => a.left < b.right - t && b.left < a.right - t && a.top < b.bottom - t && b.top < a.bottom - t;
+    const inside = (a, b, t = 1.5) => a.left >= b.left - t && a.right <= b.right + t && a.top >= b.top - t && a.bottom <= b.bottom + t;
+    svgs.forEach((svg, k) => {
+      const name = svg.getAttribute('aria-label') || `figure ${k + 1}`;
+      const frame = svg.getBoundingClientRect();
+      // A text that is not rendered (the other language's layout, display:none) reports a zero box
+      // at the page origin and is not on screen; only rendered text is measured.
+      const texts = [...svg.querySelectorAll('text')]
+        .filter((t) => (t.textContent || '').trim() && t.getClientRects().length > 0 && t.getBoundingClientRect().width > 0)
+        .map((t) => ({ el: t, s: (t.textContent || '').trim().slice(0, 40), b: t.getBoundingClientRect(), own: t.closest('[data-figure-box]') }));
+      const boxes = [...svg.querySelectorAll('[data-figure-box] > rect')].map((r) => ({ g: r.parentElement, b: r.getBoundingClientRect() }));
+      // Generic rects for drawings that are not built from the layout helper (the modal's files).
+      const anyRects = boxes.length ? [] : [...svg.querySelectorAll('rect')].map((r) => r.getBoundingClientRect()).filter((b) => b.width > 30 && b.height > 18 && b.width < frame.width * 0.95);
+      for (let i = 0; i < texts.length; i += 1) {
+        const a = texts[i];
+        if (a.b.left < frame.left - 1 || a.b.right > frame.right + 1 || a.b.top < frame.top - 1 || a.b.bottom > frame.bottom + 1) hits.push(`${name}: "${a.s}" leaves the drawing`);
+        for (let j = i + 1; j < texts.length; j += 1) {
+          if (inter(a.b, texts[j].b)) hits.push(`${name}: "${a.s}" overlaps "${texts[j].s}"`);
+        }
+        if (a.own) {
+          const mine = boxes.find((x) => x.g === a.own);
+          if (mine && !inside(a.b, mine.b)) hits.push(`${name}: "${a.s}" spills out of its box`);
+        } else {
+          for (const box of boxes) if (inter(a.b, box.b)) hits.push(`${name}: "${a.s}" sits on a box`);
+        }
+        for (const rect of anyRects) if (inter(a.b, rect, 1) && !inside(a.b, rect, 1)) hits.push(`${name}: "${a.s}" crosses a box edge`);
+      }
+    });
+    return { n: svgs.length, hits };
+  }, scope);
+}
+
+/** The footer's wrapped height, in lines of its own text. */
+async function footerLines(page) {
+  return page.evaluate(() => {
+    const meta = document.querySelector('.site-footer .footer-meta');
+    if (!meta) return null;
+    // Rows by height, not by distinct tops: the version label is set smaller, so its top sits a few
+    // pixels off the rest of a single row, and counting tops called one row two.
+    const lh = parseFloat(getComputedStyle(meta).lineHeight) || parseFloat(getComputedStyle(meta).fontSize) * 1.5;
+    const height = meta.getBoundingClientRect().height;
+    return { rows: Math.max(1, Math.round(height / lh)), height: Math.round(height), lh: Math.round(lh) };
+  });
 }
 
 /** What the page says about itself, read from the DOM rather than guessed from pixels. */
@@ -347,6 +412,80 @@ for (const [w, h] of VIEWPORTS) {
         if (SHOTS) {
           const name = `${route.replace(/\//g, '_') || '_root'}-${theme}-${lang}-${w}x${h}.png`;
           await page.screenshot({ path: `${SHOTS}/${name}`, fullPage: false });
+        }
+
+        // Documentation routes at the reading width: the footer is one line, and every sub-tab is
+        // opened and every figure in it measured. Figures scale with their viewBox, so their text
+        // geometry does not depend on the viewport; one width is enough.
+        const isDoc = route !== '/' && route !== '/app';
+        if (isDoc && w === 1600) {
+          const footer = await footerLines(page);
+          if (!footer) fail(where, 'no footer');
+          else if (footer.rows > 1) fail(where, `the footer wraps onto ${footer.rows} rows (${footer.height}px); ADR-0016 section 2 asks for one`);
+          else pass(`${where} footer`, `one row, ${footer.height}px`);
+
+          const subtabs = page.locator('.subtabs-vertical .subtablist [role="tab"]');
+          const count = await subtabs.count();
+          const seen = [];
+          const doTab = async (label) => {
+            const figures = await measureFigures(page, 'figure svg');
+            seen.push(figures.n);
+            if (figures.hits.length) fail(`${where} ${label}`, figures.hits.slice(0, 4).join(' | '));
+            const info = await inspect(page);
+            if (info.brokenPanels.length) fail(`${where} ${label}`, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
+            for (const chart of info.charts) {
+              const total = Object.values(chart.declared).reduce((a, b) => a + b, 0);
+              if (!total) fail(`${where} ${label}`, `the ${chart.chart} chart declared nothing drawn`);
+            }
+            if (SHOTS) {
+              const name = `${route.replace(/\//g, '_')}-${label.replace(/[^a-z0-9]+/gi, '-')}-${theme}-${lang}.png`;
+              await page.screenshot({ path: `${SHOTS}/${name}`, fullPage: true });
+            }
+          };
+          if (!count) {
+            await doTab('page');
+          }
+          for (let i = 0; i < count; i += 1) {
+            const tab = subtabs.nth(i);
+            const label = ((await tab.textContent()) || `tab ${i + 1}`).trim();
+            await tab.click();
+            await page.waitForTimeout(500);
+            if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
+            await doTab(label);
+          }
+          pass(`${where} figures`, `${count || 1} sections, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
+          problems.length = 0;
+        }
+      }
+
+      // The architecture modal, once per theme and language at the reading width.
+      if (w === 1600) {
+        const where = `${w}x${h} ${theme} ${lang} architecture`;
+        await page.goto(BASE + '/introduction', { waitUntil: 'networkidle', timeout: 60000 });
+        await page.waitForTimeout(800);
+        // The label is "Architecture / How it works" in English and "Arquitectura / Cómo funciona" in
+        // Spanish; the first version of this check matched only the English spelling.
+        const open = page.locator('header button[aria-label*="rchitect"], header button[aria-label*="rquitect"]');
+        if (!(await open.count())) {
+          fail(where, 'no architecture button in the header');
+        } else {
+          await open.first().click();
+          await page.waitForTimeout(900);
+          const modalTabs = page.locator('[role="dialog"] [role="tab"]');
+          const n = await modalTabs.count();
+          let measured = 0;
+          for (let i = 0; i < Math.max(n, 1); i += 1) {
+            if (n) {
+              await modalTabs.nth(i).click();
+              await page.waitForTimeout(700);
+            }
+            const figures = await measureFigures(page, '[role="dialog"] svg');
+            measured += figures.n;
+            if (figures.hits.length) fail(`${where} tab ${i + 1}`, figures.hits.slice(0, 4).join(' | '));
+          }
+          if (!measured) fail(where, 'the modal showed no drawing');
+          else pass(where, `${n} tabs, ${measured} drawings measured`);
+          await page.keyboard.press('Escape');
         }
       }
 

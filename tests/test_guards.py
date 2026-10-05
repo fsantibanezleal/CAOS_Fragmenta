@@ -108,3 +108,19 @@ def test_the_accent_guard_rejects_a_decomposed_accent():
 
 def test_the_accent_guard_rejects_a_mis_encoded_string():
     assert problems_in("x", "fragmentaci\ufffdn")
+
+
+def test_the_architecture_drawings_are_generated_from_the_committed_artifacts():
+    """The modal's drawings carry numbers; the generator in check mode proves they match the bake.
+
+    Until 0.05.000 they were hand-placed and two of them still stated withdrawn claims after the
+    benchmark had changed. Regenerate with: python scripts/build_architecture_svgs.py
+    """
+    import subprocess
+
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_architecture_svgs.py"), "--check"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
