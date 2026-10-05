@@ -79,6 +79,8 @@ export interface ArmMeta {
   blurb: Record<Lang, string>;
   /** Whether it predicts a full size distribution or only a mean size. */
   distribution: boolean;
+  /** The arm whose mean size this one reuses, as the engine's `shares_mean_size_with`; it adds a curve shape only. */
+  sharesMeanSizeWith?: string;
   source: string;
 }
 
@@ -125,6 +127,7 @@ export const ARMS: ArmMeta[] = [
       es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham. Mismo tamaño medio que el brazo clásico; solo agrega la forma, y ninguna curva medida la valida.',
     },
     distribution: true,
+    sharesMeanSizeWith: 'kuznetsov',
     source: 'Amoako, Jha and Zhong 2022, doi:10.3390/mining2020013, Eqs. 3, 5 and 7',
   },
   {
@@ -136,6 +139,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Agrega un límite superior explícito, que acota la cola gruesa y reforma la rama de finos. Mismo tamaño medio que el brazo clásico; ninguna curva medida valida la forma.',
     },
     distribution: true,
+    sharesMeanSizeWith: 'kuznetsov',
     source: 'Ouchterlony 2005, as printed in Amoako 2022 Eqs. 10 and 11',
   },
   {
@@ -147,6 +151,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Separa la curva: la fractura por tracción produce los fragmentos gruesos y la fractura por corte alrededor del barreno produce los finos. Sus constantes de rama no están publicadas y aquí se fijan.',
     },
     distribution: true,
+    sharesMeanSizeWith: 'kuznetsov',
     source: 'structure from Amoako 2022 section 3; branch constants not published',
   },
   {

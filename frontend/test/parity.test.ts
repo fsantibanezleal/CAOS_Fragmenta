@@ -342,6 +342,30 @@ test('every arm in every shipped artifact has an entry in the arm catalogue', ()
   assert.deepEqual(missing, [], `arms with no catalogue entry: ${missing.join(', ')}`);
 });
 
+test('an arm declared as sharing a mean size predicts it and scores as its source on every case', () => {
+  // The App folds these arms into a sentence under their source's row; that is only true if it holds here.
+  const shared = ARMS.filter((a) => a.sharesMeanSizeWith);
+  assert.deepEqual(shared.map((a) => a.id).sort(), ['crush-zone', 'kuz-ram', 'swebrec']);
+  let compared = 0;
+  cases.forEach((artifact, i) => {
+    const caseId = index.cases[i].case_id;
+    for (const arm of shared) {
+      const source = arm.sharesMeanSizeWith as string;
+      const own = artifact.scores[arm.id];
+      const theirs = artifact.scores[source];
+      assert.equal(own?.scoreable, theirs?.scoreable, `${caseId} ${arm.id}: scoreable`);
+      for (const field of ['r2_identity', 'pearson_r2', 'rmse_m', 'n_scored', 'n_abstained'] as const) {
+        assert.equal(own?.[field], theirs?.[field], `${caseId} ${arm.id}: ${field}`);
+      }
+      for (const [blastId, cell] of Object.entries(artifact.predictions[arm.id] ?? {})) {
+        assert.equal(cell.x50_m, artifact.predictions[source]?.[blastId]?.x50_m, `${caseId} ${arm.id} ${blastId}`);
+      }
+      compared += 1;
+    }
+  });
+  assert.equal(compared, shared.length * cases.length);
+});
+
 test('every field in every shipped artifact is named in the TypeScript contract mirror', () => {
   // The docs claimed "the web build fails on drift". It does not, and cannot: TypeScript is
   // structural, so a JSON file carrying a field the interface never declares type-checks perfectly
