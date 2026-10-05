@@ -101,6 +101,23 @@ def test_the_accent_guard_leaves_context_dependent_words_alone():
         assert word not in REQUIRED, word
 
 
+def test_the_spanish_surface_writes_the_verb_esta_where_a_participle_follows():
+    """Before a participle, a gerund or a preposition only the verb can stand; a word list cannot see it."""
+    assert problems_in("x", "la instalación esta rota")
+    assert problems_in("x", "el producto esta inventando números")
+    assert problems_in("x", "Su módulo esta bajo el mínimo")
+    assert problems_in("x", "los datos estan en el corpus")
+    assert not problems_in("x", "ningún resultado de esta página es confiable")
+    assert not problems_in("x", "esta corrida y esta medida son demostrativos")
+    assert not problems_in("x", "la instalación está rota")
+    from check_spanish_accents import spanish_strings
+
+    found = [
+        p for where, text in spanish_strings() for p in problems_in(where, text) if "needs the verb" in p
+    ]
+    assert found == []
+
+
 def test_the_accent_guard_rejects_a_decomposed_accent():
     """e + combining acute looks right in most editors and renders wrongly in some fonts."""
     assert problems_in("x", "fragmentacio\u0301n")

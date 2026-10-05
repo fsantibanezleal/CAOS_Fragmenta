@@ -24,3 +24,5 @@ select = ["E", "F", "W", "I"]
 # the 110-column limit.
 "scripts/build_architecture_svgs.py" = ["E501"]
 "scripts/build_docs_results.py" = ["E501"]
+# The template's SDD gate, kept verbatim so it stays the base's (ADR-0078).
+"scripts/check_sdd.py" = ["E501"]
