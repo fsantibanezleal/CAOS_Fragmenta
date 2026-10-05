@@ -107,7 +107,7 @@ PowerShell and bash. The engine is published separately: `pip install blastfrag`
 | Python tests (pipeline, contracts, docs generators, framework examples, guards) | `pytest` | before every push |
 | parity and portable models | `cd frontend && npm test` | CI and the deploy |
 | release gate on the artifacts | `python data-pipeline/run.py --validate` (`scripts/check_artifacts.py`) | after every bake, and in the deploy |
-| browser gate (every route, tab, theme, language; figure and footer measurement) | `npm run gate:browser -- --url http://localhost:4173` | before a push, and in the deploy on the build it publishes |
+| browser gate (every route, tab, theme, language; figure, table, tab-strip and footer measurement) | `npm run gate:browser -- --url http://localhost:4173`, once as is and once with `GATE_FONTS=dejavu` (the deploy runner's fonts) | before a push, and in the deploy on the build it publishes |
 | lint, guards, content standards, Spanish accents, CI budget | `ruff check data-pipeline tests scripts`, `python scripts/check_*.py` | CI |
 
 CI never trains, bakes or runs the Python suite (ADR-0074); the deploy verifies and publishes the

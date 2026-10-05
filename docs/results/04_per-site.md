@@ -2,7 +2,7 @@
 
 # Per site
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 Root mean square error, metres, of each arm on each campaign it did not see. A dash is an abstention.
 
