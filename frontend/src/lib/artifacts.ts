@@ -6,7 +6,7 @@
  * design, and its agreement with these numbers is a gate rather than an assumption.
  */
 
-import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang } from './contract.types';
+import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang, ModelsFile } from './contract.types';
 
 // `import.meta.env` is injected by the bundler and does not exist when this module is imported
 // from plain Node, which is how the parity tests read the arm catalogue. Guarding it is what makes
@@ -61,6 +61,9 @@ async function fetchJson<T>(path: string): Promise<T> {
 export const loadIndex = () => fetchJson<CaseIndex>('/data/manifests/index.json');
 export const loadCase = (caseId: string) => fetchJson<CaseArtifact>(`/data/${caseId}/case.json`);
 export const loadBenchmark = () => fetchJson<BenchmarkArtifact>('/data/benchmark.json');
+/** The fitted models of one training scope: a withheld site, or `corpus`. Loaded only when needed. */
+export const loadModels = (scope: string) =>
+  fetchJson<ModelsFile>(`/data/models/${encodeURIComponent(scope)}.json`);
 
 /* ------------------------------------------------------------------------------------------- */
 /* The shared vocabulary                                                                        */
@@ -94,21 +97,32 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'kuznetsov',
     tier: 'classical',
-    label: { en: 'Classical mean size', es: 'Tamaño medio clásico' },
+    label: { en: 'Classical mean size, site factor', es: 'Tamaño medio clásico, factor del sitio' },
     blurb: {
-      en: 'The 1973 equation with the explosive-strength correction. Needs a rock volume and a charge mass, so it abstains where the scale is unpublished.',
-      es: 'La ecuación de 1973 con la corrección por potencia del explosivo. Necesita volumen de roca y masa de carga, así que se abstiene donde no se publica la escala.',
+      en: 'The 1973 equation with the explosive-strength correction. Its rock factor is recovered from the published predictions for the blast’s own site. Needs a rock volume and a charge mass, so it abstains where the scale is unpublished.',
+      es: 'La ecuación de 1973 con la corrección por potencia del explosivo. Su factor de roca se recupera de las predicciones publicadas para el propio sitio del tiro. Necesita volumen de roca y masa de carga, así que se abstiene donde no se publica la escala.',
     },
     distribution: false,
     source: 'Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957, Eq. 1',
+  },
+  {
+    id: 'kuznetsov-transfer',
+    tier: 'classical',
+    label: { en: 'Classical mean size, transfer factor', es: 'Tamaño medio clásico, factor transferido' },
+    blurb: {
+      en: 'The same equation with the rock factor predicted from Young’s modulus by a line fitted over the training sites only, so nothing about the target site is used. A calibration of this product, not a published relation.',
+      es: 'La misma ecuación con el factor de roca predicho desde el módulo de Young por una recta ajustada solo sobre los sitios de entrenamiento, así que no se usa nada del sitio objetivo. Una calibración de este producto, no una relación publicada.',
+    },
+    distribution: false,
+    source: 'Kuznetsov 1973 with Cunningham’s correction; rock-factor line fitted here',
   },
   {
     id: 'kuz-ram',
     tier: 'classical',
     label: { en: 'Classical distribution', es: 'Distribución clásica' },
     blurb: {
-      en: 'The classical mean size with a two-parameter Rosin-Rammler curve around it, shaped by the Cunningham uniformity index.',
-      es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham.',
+      en: 'The classical mean size with a two-parameter Rosin-Rammler curve around it, shaped by the Cunningham uniformity index. Same mean size as the classical arm; only the shape is added, and no measured curve validates it.',
+      es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham. Mismo tamaño medio que el brazo clásico; solo agrega la forma, y ninguna curva medida la valida.',
     },
     distribution: true,
     source: 'Amoako, Jha and Zhong 2022, doi:10.3390/mining2020013, Eqs. 3, 5 and 7',
@@ -118,8 +132,8 @@ export const ARMS: ArmMeta[] = [
     tier: 'classical',
     label: { en: 'Three-parameter distribution', es: 'Distribución de tres parámetros' },
     blurb: {
-      en: 'Adds an explicit upper size limit, which fixes the coarse tail the two-parameter form gets wrong and predicts a heavier fines branch.',
-      es: 'Agrega un límite superior explícito, que corrige la cola gruesa que la forma de dos parámetros equivoca y predice más finos.',
+      en: 'Adds an explicit upper size limit, which bounds the coarse tail and reshapes the fines branch. Same mean size as the classical arm; no measured curve validates the shape.',
+      es: 'Agrega un límite superior explícito, que acota la cola gruesa y reforma la rama de finos. Mismo tamaño medio que el brazo clásico; ninguna curva medida valida la forma.',
     },
     distribution: true,
     source: 'Ouchterlony 2005, as printed in Amoako 2022 Eqs. 10 and 11',
@@ -245,8 +259,8 @@ export const ARMS: ArmMeta[] = [
     tier: 'learned',
     label: { en: 'Stacking ensemble', es: 'Ensamble apilado' },
     blurb: {
-      en: 'The 2025 state of the art on this corpus: forest and boosting under a linear meta-learner, with cross-validation removed exactly as published.',
-      es: 'El estado del arte 2025 sobre este corpus: bosque y potenciación bajo un meta-modelo lineal, sin validación cruzada tal como se publicó.',
+      en: 'The 2025 state of the art on this corpus: forest and boosting under a linear meta-learner fitted on their in-sample predictions, as published. Fitted that way it gives the boosting learner almost all the weight and behaves like it.',
+      es: 'El estado del arte 2025 sobre este corpus: bosque y potenciación bajo un meta-modelo lineal ajustado sobre sus predicciones en muestra, como se publicó. Ajustado así, le da casi todo el peso al aprendiz de potenciación y se comporta como él.',
     },
     distribution: false,
     source: 'Sui et al. 2025, section 4',
@@ -263,8 +277,8 @@ export const ARM_BY_ID = new Map(ARMS.map((arm) => [arm.id, arm]));
  * Until 0.04.006 the published regression's 0.802 under leave-one-site-out was the headline's
  * evidence that "fixed" coefficients transfer to an unseen site. Hudaverdi et al. fitted those
  * coefficients on these same 97 blasts; refitted without each site, the same form scores -4.075.
- * The engine's verdict still lists it among the arms positive across sites, so every view that
- * shows that list marks it from here.
+ * Since blastfrag 0.3.0 the engine reports it under `in_sample_arms` and the artifact's provenance
+ * carries `in_sample_corpus`; this map supplies the reader-facing wording.
  */
 export const IN_SAMPLE_ARMS: Record<string, Record<Lang, string>> = {
   'published-regression': {
