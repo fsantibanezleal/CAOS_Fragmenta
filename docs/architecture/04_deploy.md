@@ -26,9 +26,12 @@ recomputes a benchmark.
    build (`npm run build`), whose copy step fails if a declared case or models file did not ship.
 3. **Runs the browser gate on the artifact about to be published** (`gates/browser-gate.mjs` against a
    local preview of the build): every route and every App tab, both themes, both languages, three
-   viewport sizes; the declared content of every chart; the footer on one row; and, on every
-   documentation sub-tab and in the architecture modal, a measurement of every figure (text on text,
-   text leaving its box or the drawing, text on a box, and any drawn line or path crossing text).
+   viewport sizes; the declared content of every chart; no tab strip cut, no table wider than its
+   container, no two rows of the model comparison with identical scores; the footer on one row with
+   every separator between two items; no two citations run together; and, on every documentation
+   sub-tab and in the
+   architecture modal, a measurement of every figure (text on text, text leaving its box or the
+   drawing, text on a box, and any drawn line or path crossing text).
 4. **Publishes** the build only if all of that passed:
 
 $$
