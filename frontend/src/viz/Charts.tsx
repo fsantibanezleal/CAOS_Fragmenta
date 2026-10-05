@@ -106,8 +106,8 @@ const HINTS = {
     es: 'Mueva el puntero sobre la curva para leer los valores',
   },
   parity: {
-    en: 'Hover a point for its blast, its error and its site. Click to select it.',
-    es: 'Pase el puntero por un punto para ver su tiro, su error y su sitio. Haga clic para seleccionarlo.',
+    en: 'Point at a blast for its error and site; click to select it.',
+    es: 'Apunte a un tiro para ver su error y su sitio; clic para elegirlo.',
   },
 } as const;
 
@@ -286,7 +286,7 @@ export function DistributionChart({
             ))}
           </>
         ) : (
-          <span className="fr-readout-hint">{HINTS.curve[lang] ?? HINTS.curve.en}</span>
+          <span className="fr-readout-hint" title={HINTS.curve[lang] ?? HINTS.curve.en}>{HINTS.curve[lang] ?? HINTS.curve.en}</span>
         )}
       </div>
     </div>
@@ -501,7 +501,7 @@ export function ParityChart({
             {hover.extrapolated ? <span className="fr-badge fr-badge-warn">extrapolated</span> : null}
           </>
         ) : (
-          <span className="fr-readout-hint">{HINTS.parity[lang] ?? HINTS.parity.en}</span>
+          <span className="fr-readout-hint" title={HINTS.parity[lang] ?? HINTS.parity.en}>{HINTS.parity[lang] ?? HINTS.parity.en}</span>
         )}
       </div>
     </div>
@@ -716,7 +716,7 @@ export function LineChart({
             ))}
           </>
         ) : (
-          <span className="fr-readout-hint">{HINTS.line[lang] ?? HINTS.line.en}</span>
+          <span className="fr-readout-hint" title={HINTS.line[lang] ?? HINTS.line.en}>{HINTS.line[lang] ?? HINTS.line.en}</span>
         )}
       </div>
     </div>

@@ -77,7 +77,7 @@ export default function Focus() {
           <ArrowLeft size={15} aria-hidden="true" />
           {es ? 'Taller' : 'Workbench'}
         </Link>
-        <h1>{artifact.case.title[lang]}</h1>
+        <h1 title={artifact.case.title[lang]}>{artifact.case.title[lang]}</h1>
         <select
           className="fr-select fr-select-compact"
           value={armId}

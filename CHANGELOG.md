@@ -20,6 +20,9 @@ none differs from the 0.05.000 bake. (#25)
   the full names in the tooltip (in both languages, English-only before) and in the note below; and a
   score of magnitude 1000 or more prints as a power of ten (the refitted regression's -117792.670 on
   Murgul, which set the column's width, reads -1.2×10⁵).
+- The parity plot's hint was cut by its ellipsis in Spanish at 1280x800 on every platform ("Haga clic
+  para selecciona..."). It is shorter in both languages, every readout hint and the focus view's title
+  carry their whole text as a title, and the gate fails on any text an ellipsis cuts without one.
 - The Implementation page said the footer repeats the bake's application version; it now says what
   holds it there: a re-bake test that requires the same numbers and versions, so every release
   re-bakes its artifacts.
