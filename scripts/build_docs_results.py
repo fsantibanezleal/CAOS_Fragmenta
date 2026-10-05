@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -349,6 +350,14 @@ def blocks(b: dict, index: dict) -> dict[str, str]:
         "benchmark each held-out campaign is predicted by a line refitted without it.",
     ])
     pub = b["verdict"]["published_random_split_figures"]
+    v = b["verdict"]
+    gaps = v["protocol_gap_random_minus_grouped"]
+    learned = [k for k in ORDER if grouped.get(k, {}).get("tier") == "learned" and k in gaps]
+    out["protocol-gap"] = (
+        f"Median over {v['median_protocol_gap_over']} of the random 80/20 median minus the site-held-out score: "
+        f"{f(v['median_protocol_gap'])}; per arm from {f(min(gaps[k] for k in learned))} "
+        f"({NAMES[min(learned, key=gaps.get)]}) to {f(max(gaps[k] for k in learned))} ({NAMES[max(learned, key=gaps.get)]})."
+    )
     out["published-splits"] = "\n".join(
         f"- {NAMES.get(k, k)}: published {p['published']:.3f} on one random split; the reproduced draws have a median "
         f"of {f(p['median_draw'])}, and {round(p['share_of_draws_below'] * 100)} of 100 fall below the published figure."
@@ -389,8 +398,9 @@ def main() -> int:
     stale = []
     rendered = pages(b, index)
     facts = blocks(b, index)
-    for path in sorted(DOCS.rglob("*.md")):
-        name = path.relative_to(DOCS).as_posix()
+    # The wiki, and the repository README, which states the result too.
+    for path in [*sorted(DOCS.rglob("*.md")), ROOT / "README.md"]:
+        name = Path(os.path.relpath(path, DOCS)).as_posix()
         if name in rendered:
             continue
         current = path.read_text(encoding="utf-8")

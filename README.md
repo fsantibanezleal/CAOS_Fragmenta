@@ -1,158 +1,161 @@
 # Fragmenta
 
+**Live: [fragmenta.fasl-work.com](https://fragmenta.fasl-work.com)**
+
 [![CI](https://github.com/fsantibanezleal/CAOS_Fragmenta/actions/workflows/ci.yml/badge.svg)](https://github.com/fsantibanezleal/CAOS_Fragmenta/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Live](https://img.shields.io/badge/live-fragmenta.fasl--work.com-informational)](https://fragmenta.fasl-work.com)
 
-Blast-fragmentation prediction on real measured blasts. Twelve competing models, three ways of
-splitting the data, and the statistic named (variance explained, not squared correlation).
+Fragmenta predicts the mean fragment size x50 of a bench blast from its design and its rock, with ten
+published predictors from the 1973 classical equation to the 2025 stacking ensemble, and measures what
+each prediction is worth at a mine the model has not seen. It is a test bench over 97 published bench
+blasts from ten campaigns in five countries, with two published hold-outs and five field blasts outside
+the corpus envelope, and a web application where every model, the learned ones included, recomputes
+live on a design you change.
 
-**[fragmenta.fasl-work.com](https://fragmenta.fasl-work.com)**
-
----
+It is for blast engineers deciding how far to trust a fragmentation prediction, for researchers
+comparing a predictor on this corpus, and for anyone citing one of the published scores. It is not a
+mechanistic simulator and not a production design tool.
 
 ## The result
 
-With a whole campaign held out, **not one of the six learned models explains any variance**. Every
-one falls below predicting a constant. The only model that holds up on a site it has never seen is
-the **classical mean-size equation**, whose one free quantity, a per-site rock factor, is back-solved
-from the Kuznetsov predictions the source paper prints rather than from the measured sizes.
+Every predictor runs under three protocols on the same rows: 100 random 80/20 draws (the protocol the
+literature reports), 100 draws after collapsing repeated input vectors, and ten whole-campaign hold-outs
+with intervals from resampling campaigns. The learned tier is judged by a fixed, test-pinned criterion:
+positive variance explained under leave one site out, and at least 0.10 above the null.
 
-| Model | Random 80/20 | Deduplicated | Leave one site out |
-|---|---|---|---|
-| classical mean size | -0.027 | 0.116 | **0.311** |
-| published regression, in sample | 0.632 | 0.861 | 0.802 |
-| refitted regression | 0.513 | 0.823 | -4.075 |
-| random forest | 0.649 | 0.859 | -0.231 |
-| gradient boosting | 0.694 | 0.728 | -0.034 |
-| stacking ensemble | 0.667 | 0.885 | -0.951 |
-| null: predict the mean | -0.052 | -0.007 | -0.216 |
+<!-- facts:verdict -->
+Over every blast (97), the best learned arm held out by site is gradient boosting at -0.034 (-2.23 to 0.42), and the criterion is not met. Over the 91 blasts with resolvable geometry it is stacking ensemble at 0.034 (-1.81 to 0.54), 0.266 above the null, and the criterion is met. The null's held-out predictions correlate with the measurements at -0.79.
+<!-- /facts -->
 
-Variance explained about the identity line.
+<!-- facts:protocol-gap -->
+Median over the learned arms of the random 80/20 median minus the site-held-out score: 0.984; per arm from 0.738 (stacking ensemble) to 4.940 (support vector, polynomial).
+<!-- /facts -->
 
-The published regression's row is **not** a transfer result. Hudaverdi et al. fitted its
-coefficients on these same 97 blasts, so no protocol here holds out a blast it has not seen: its
-0.802 under leave-one-site-out is its in-sample fit (0.8018 over all 97). Refitted without each site,
-the same functional form scores -4.075. Its out-of-sample evidence is the source papers' own
-hold-outs, 13 and 12 blasts from the same sites, where the equation recomputed here explains 0.854
-and 0.827 of the variance. Until 0.04.006 this README counted it as the second model that transfers.
+<!-- facts:published-splits -->
+- stacking ensemble: published 0.943 on one random split; the reproduced draws have a median of 0.703, and 100 of 100 fall below the published figure.
+- support vector, polynomial: published 0.578 on one random split; the reproduced draws have a median of 0.395, and 83 of 100 fall below the published figure.
+<!-- /facts -->
 
-The classical model **improves** under the leave-one-site-out protocol, from negative on a random split to 0.311
-with a site held out, because it has nothing to overfit. That inverts the usual reading of it as the
-weak baseline.
+What that supports, and what it does not:
 
-Deduplication is not the explanation: collapsing the 17 duplicated feature vectors and splitting
-randomly *raises* the learned scores. The shared **site** is what was holding them up.
+- **The learned models lose most of their random-split score when a whole campaign is held out**, on
+  both row sets and for every learned arm. Collapsing duplicated inputs does not explain the gap; the
+  shared campaign does.
+- **With ten campaigns, no arm that was not fitted on the corpus itself has a site-resampled interval
+  above zero.** The classical equation scores about 0.30 under every protocol, and about the same with
+  its rock factor predicted from the modulus over the other sites, so its score is not borrowed from the
+  held-out site; its interval still spans zero.
+- **The published regression's held-out score is in sample**: its source fitted it on these same 97
+  blasts. Refitted without each site, the same functional form collapses.
+- **Whether the learned tier meets the criterion depends on six blasts** (the Miami campaign, which has
+  no recoverable geometry), and the product reports it that way.
 
-## Why the protocol is the experiment
+The numbers in this section are rendered from the committed benchmark by
+`scripts/build_docs_results.py`, and a test fails if they go stale. Every tool's role and evidence is
+in [docs/relevance.md](docs/relevance.md); the full tables are in [docs/results.md](docs/results.md).
 
-The 2025 state of the art on this corpus reports 0.943 from a random 80/20 split of 97 rows, 17 of
-which duplicate another row's feature vector. The same paper records that cross-validation was tried
-and removed because it "had a poor prediction effect on the test set", which is the symptom this
-predicts.
+## Other findings
 
-Nothing in the literature reports what these models do under a split that does not leak. That is
-what this product measures, with the kill criterion declared before the run.
+- **The corpus had five transcription errors** against the published tables, two on the measured size.
+  The paper prints its own summary statistics; the integrity gate now reproduces them on every load.
+- **The corpus is dimensionless, so the classical equation could not run on it.** The source prose gives
+  a hole diameter for eight of ten campaigns, a ninth follows from its bench height, and the
+  reconstruction holds against all fifteen dimensional constraints the same prose states.
+- **The rock factors both papers say they estimated were never printed.** Back-solved from the published
+  predictions, they barely vary within a site, which checks the reconstruction in turn.
+- **The published equations beat their own papers' tables** on both published hold-outs; where the two
+  papers disagree, the recomputation matches the 2010 figure on four of five rows.
+- **The published network's hold-out score is not robust to the seed**: reproduced to its specification
+  over 30 seeds, every seed falls below the published figure.
 
-## Four other findings
+## The application
 
-**The corpus had five transcription errors** against the published tables, two of them on the
-variable being predicted. The tell was that the source paper prints its own descriptive statistics
-and nothing was reading them. That check now runs on every load.
+| Route | What it is |
+|---|---|
+| App | a workbench for one case: Predict, Distribution, Bench (the reconstructed bench in 3D), Rock, What if (every arm live on your design), Decide (P80 against a crusher specification) |
+| Introduction | the problem, the relations, the question, the data, the scope |
+| Methodology | every predictor term by term, with its source, and the protocols and metrics |
+| Implementation | the data and the gate, the geometry, the bake, leakage control, the live lanes, the deploy |
+| Experiments | the design, the metrics, coverage, protocol sensitivity, per site, the design response, diagnostics |
+| Benchmark | the verdict, every arm, the published hold-outs, the network seeds, robustness, a live re-scoring in the browser, provenance and caveats |
 
-**The corpus is dimensionless, so the classical model could not run on it at all.** It needs a rock
-volume and a charge mass per hole. The source's own prose gives a hole diameter for eight of its ten
-sites, which closes the system, and the reconstruction is asserted against **fifteen** dimensional
-constraints the same prose states. Nine sites reconstruct; the tenth publishes nothing absolute, so
-its six blasts are the geometry negative control and every model that needs a volume abstains there.
+English and Spanish, light and dark. Every number on the documentation pages is read from the committed
+artifacts.
 
-**The rock factors both papers say they estimated were never printed.** Back-solving them recovers
-values that are near constant within each site, which validates the reconstruction in turn.
-
-**The published equation beats the numbers its own papers printed for it**, by 0.107 and 0.119 in
-variance explained on their two hold-outs. Where the two papers disagree with each other, the
-recomputation lands on the earlier one four times out of four.
-
-## Running it
+## Quick start
 
 ```bash
-python -m venv .venv && .venv/bin/pip install -r requirements-precompute.txt
-python data-pipeline/run.py            # bake every case plus the benchmark
-python data-pipeline/run.py --validate # re-check what is already on disk
-pytest                                 # tests run against the COMMITTED artifacts
+python -m venv .venv
+.venv/Scripts/pip install -r requirements-precompute.txt -r requirements-dev.txt   # .venv/bin/ on Linux and macOS
+
+python data-pipeline/run.py             # bake the cases, the models and the benchmark
+python data-pipeline/run.py --validate  # re-check what is on disk
+pytest                                  # tests against the committed artifacts
 
 cd frontend && npm ci
-npm test                               # the parity gate between the two engines
-npm run dev
+npm test                                # parity of the browser engine and the portable models
+npm run dev                             # http://localhost:5173
 ```
 
-The bake is a pure function of the case registry, the pinned engine version and the seed. Re-running
-it in the same environment produces byte-identical artifacts. Re-running it on a different operating
-system reproduces every published number to better than 3e-8 relative, measured across all sixteen
-cases. Both halves are gated in CI, and the second is a measurement rather than a hope: see
-[`docs/architecture/01_the-bake.md`](docs/architecture/01_the-bake.md).
+`scripts/setup.*`, `scripts/dev.*`, `scripts/precompute.*` and `scripts/smoke.*` wrap these for
+PowerShell and bash. The engine is published separately: `pip install blastfrag`.
+
+## Tests and gates
+
+| Check | Command | Where it runs |
+|---|---|---|
+| Python tests (pipeline, contracts, docs generators, framework examples, guards) | `pytest` | before every push |
+| parity and portable models | `cd frontend && npm test` | CI and the deploy |
+| release gate on the artifacts | `python data-pipeline/run.py --validate` (`scripts/check_artifacts.py`) | after every bake, and in the deploy |
+| browser gate (every route, tab, theme, language; figure and footer measurement) | `npm run gate:browser -- --url http://localhost:4173` | before a push, and in the deploy on the build it publishes |
+| lint, guards, content standards, Spanish accents, CI budget | `ruff check data-pipeline tests scripts`, `python scripts/check_*.py` | CI |
+
+CI never trains, bakes or runs the Python suite (ADR-0074); the deploy verifies and publishes the
+committed artifacts.
 
 ## How it is built
 
 The science lives in **[blastfrag](https://github.com/fsantibanezleal/CAOS_BlastFrag)**, a separately
-published package this product pins and consumes. A product declares no package of its own: anything
-a third party could use to predict fragmentation without caring about Fragmenta belongs upstream.
-
-What is here is the product.
+published package this product pins exactly and consumes. This repository holds the product:
 
 | | |
 |---|---|
-| `data-pipeline/` | the case registry and the nine staged bake, none of them a no-op |
-| `data/derived/` | 16 content-addressed case artifacts plus a cross-case benchmark, 1.2 MB |
-| `frontend/` | the six-route SPA, plus a TypeScript reimplementation of the closed-form models |
+| `data-pipeline/` | the case registry and the staged bake: ingest, preprocess, dataset, features, train, infer, evaluate, export (with each scope's portable models), validate; then the benchmark |
+| `data/derived/` | 16 case artifacts, 11 models files, the benchmark and the index, content-addressed |
+| `frontend/` | the React application on the shared CAOS app shell, the TypeScript closed forms and the portable-model walker, the browser gate |
 | `docs/` | the wiki |
 
-**Nothing is computed at deploy time.** The web replays committed artifacts, and the browser
-recomputes the closed forms only so that changing a design moves the curve. That the two engines
-agree is a **gate**: 15 parity checks score the TypeScript against the baked numbers point for point
-and fail the build on a divergence. It found a ship-blocker on its first run, where Python had
-written `NaN` into JSON that no browser can parse.
-
-## The case matrix
-
-16 cases across six categories, each stating in both languages why it is in the matrix. Four exist so
-the product **refuses** rather than answers, and they are the first ones to look at when judging
-whether its refusals are right:
-
-- **geometry negative control**, six blasts whose absolute scale no source publishes;
-- **degenerate negative control**, six designs where the stemming exceeds the bench, refused by every
-  model including the ratio-only ones, because the guard sits at the design level;
-- **extrapolation control**, five field blasts below the corpus minimum on its most important feature,
-  every prediction stamped;
-- **positive control**, truth generated by a known model which recovers it at zero error.
-
-Every learned model shown on a real campaign was trained on the corpus **minus that campaign**, and
-the bake fails if any of the case's own blasts appear in its training rows.
+Offline training and measurement, replay of committed artifacts, and two live lanes in the browser (the
+closed forms, held to the bake by a parity test; the fitted models, walked exactly from their exported
+form and held to the original models by fixtures). See [docs/architecture.md](docs/architecture.md).
 
 ## Data and licence
 
 | Set | Rows | Source |
 |---|---|---|
-| training corpus | 97 | Hudaverdi, Kulatilake and Kuzu 2010, `doi:10.1002/nag.957` |
-| published hold-out | 14 | the union of two published sets, `doi:10.1007/s10706-012-9496-3` |
-| field hold-out | 5 | Sui et al. 2025, `doi:10.3390/app15031254`, CC BY |
+| training corpus | 97 | Hudaverdi, Kulatilake and Kuzu 2010, [doi:10.1002/nag.957](https://doi.org/10.1002/nag.957) |
+| published hold-outs | 14 | two published sets, [doi:10.1002/nag.957](https://doi.org/10.1002/nag.957), [doi:10.1007/s10706-012-9496-3](https://doi.org/10.1007/s10706-012-9496-3) |
+| field blasts | 5 | Sui et al. 2025, [doi:10.3390/app15031254](https://doi.org/10.3390/app15031254), CC BY 4.0 |
 
-Numeric values are experimental facts reused with citation. The source articles are not
-redistributed, and a CI guard fails the build if one is ever committed.
+Numeric values are experimental facts reused with citation; the articles are not redistributed, and a
+guard fails the build if one is committed. The data contract (fields, units, bounds, extrapolation,
+missing values, outliers) is in [docs/data/04_data-contract.md](docs/data/04_data-contract.md).
 
 ## Scope
 
-No mechanistic simulation: there is no discrete-element or hybrid stress blasting model here, and a
-hand-rolled approximation under those names would be worse than nothing. No non-ideal detonics. No
-flyrock, no ground vibration, no downstream comminution model.
+No mechanistic simulation (discrete-element, grain-based or hybrid stress models), no non-ideal
+detonation, no flyrock, ground vibration or comminution model. The initiation sequence on the Bench tab
+is drawn and enters no prediction: the timing factor of the modified classical model is a scalar.
+Constants that no held source prints, such as that timing factor and the crush-zone branch, are user
+parameters with stated ranges. No passing curve is validated here, because no available dataset carries
+a measured one.
 
-**The initiation sequence is choreography.** The timing factor in the modified classical model is a
-scalar with no spatial structure, so changing the tie-in moves the animation and moves no prediction.
-The screen says so, permanently.
+## Documentation
 
-Model constants that no held source prints, including that timing factor and the crush-zone branch
-parameters, are exposed as user-supplied values with documented ranges rather than invented.
+[docs/README.md](docs/README.md) is the index: methods, protocols, data, relevance, results,
+architecture, frameworks (each with installation, usage and applying pages, and runnable examples),
+cases and guides.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). The engine, blastfrag, is MIT as well.
