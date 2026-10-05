@@ -190,7 +190,7 @@ async function measureFigures(page, scope = 'figure svg, .arch-modal svg, [role=
   }, scope);
 }
 
-/** The footer's wrapped height, in lines of its own text. */
+/** The footer's wrapped height, in lines of its own text, and any separator left alone at a gap. */
 async function footerLines(page) {
   return page.evaluate(() => {
     const meta = document.querySelector('.site-footer .footer-meta');
@@ -199,8 +199,33 @@ async function footerLines(page) {
     // pixels off the rest of a single row, and counting tops called one row two.
     const lh = parseFloat(getComputedStyle(meta).lineHeight) || parseFloat(getComputedStyle(meta).fontSize) * 1.5;
     const height = meta.getBoundingClientRect().height;
-    return { rows: Math.max(1, Math.round(height / lh)), height: Math.round(height), lh: Math.round(lh) };
+    // Shell defect 14: the shell pushes the version right with an auto margin and leaves its "·" behind.
+    const gap = parseFloat(getComputedStyle(meta).columnGap) || 12;
+    const items = [...meta.children].filter((el) => el.getClientRects().length > 0);
+    const dangling = [];
+    items.forEach((el, i) => {
+      if (el.getAttribute('aria-hidden') !== 'true') return;
+      const r = el.getBoundingClientRect();
+      const after = (items[i - 1]?.textContent || '').trim();
+      for (const nb of [items[i - 1], items[i + 1]]) {
+        if (!nb) return void dangling.push(`after "${after}", at an end of the footer`);
+        const q = nb.getBoundingClientRect();
+        const apart = Math.max(q.left - r.right, r.left - q.right);
+        const offRow = Math.abs(q.top + q.bottom - r.top - r.bottom) / 2 > lh / 2;
+        if (apart > 2 * gap + 2 || offRow) return void dangling.push(`after "${after}", ${Math.round(apart)}px from its neighbour`);
+      }
+    });
+    return { rows: Math.max(1, Math.round(height / lh)), height: Math.round(height), lh: Math.round(lh), dangling };
   });
+}
+
+/** Inline citations written back to back, which render as "(A)(B)". */
+async function adjacentCitations(page) {
+  return page.evaluate(() =>
+    [...document.querySelectorAll('cite.cite-inline')]
+      .filter((c) => c.previousSibling instanceof Element && c.previousSibling.matches('cite.cite-inline'))
+      .map((c) => `${c.previousSibling.textContent}${c.textContent}`),
+  );
 }
 
 /** What the page says about itself, read from the DOM rather than guessed from pixels. */
@@ -304,6 +329,27 @@ async function inspect(page) {
             ).size,
         ),
       ),
+      // The shell's tablist hides vertical overflow, so a strip squeezed by a tall panel cuts its tabs.
+      clippedTabRows: [...document.querySelectorAll('[role="tablist"]')]
+        .filter((list) => list.getClientRects().length && list.scrollHeight > list.clientHeight + 1)
+        .map((list) => `${list.querySelector('[role="tab"]')?.textContent?.trim()}: ${list.clientHeight}px of ${list.scrollHeight}px`),
+      // A table wider than its container is cut unless it sits in a declared horizontal scroller.
+      tablesCut: [...document.querySelectorAll('table.fr-table')]
+        .filter((t) => t.getClientRects().length && !t.closest('.fr-scroll-x'))
+        .filter((t) => t.offsetWidth > t.parentElement.clientWidth + 1)
+        .map((t) => `${t.closest('[class*="fr-"]:not(table)')?.className || 'table'}: ${t.offsetWidth}px in ${t.parentElement.clientWidth}px`),
+      // Rows with the same scores read as models that agree; arms that share a mean size get no row.
+      duplicateArmRows: (() => {
+        const seen = new Map();
+        const dup = [];
+        for (const tr of document.querySelectorAll('.fr-armtable tbody tr')) {
+          const cells = [...tr.cells].map((c) => c.textContent.trim());
+          const key = cells.slice(1).join('|');
+          if (seen.has(key)) dup.push(`${seen.get(key)} = ${cells[0]}`);
+          else seen.set(key, cells[0]);
+        }
+        return dup;
+      })(),
     };
   });
 }
@@ -322,6 +368,15 @@ for (const [w, h] of VIEWPORTS) {
         colorScheme: theme,
         locale: lang === 'es' ? 'es-CL' : 'en-GB',
       });
+      // Settings go in before any page script runs: a reload after setting them cancelled the first
+      // route's own data fetch on a cold cache (net::ERR_ABORTED), a race of the gate, not the site.
+      await context.addInitScript(
+        ([t, l]) => {
+          localStorage.setItem('caos.theme', t);
+          localStorage.setItem('caos.lang', l);
+        },
+        [theme, lang],
+      );
       const page = await context.newPage();
       const problems = [];
       page.on('console', (m) => {
@@ -329,7 +384,8 @@ for (const [w, h] of VIEWPORTS) {
       });
       page.on('pageerror', (e) => problems.push('pageerror: ' + e.message));
       page.on('requestfailed', (r) => {
-        if (!IGNORE.some((x) => x.test(r.url()))) problems.push('request failed: ' + r.url());
+        if (!IGNORE.some((x) => x.test(r.url())))
+          problems.push(`request failed (${r.failure()?.errorText ?? 'no reason given'}): ${r.url()}`);
       });
       // A 404 is a SUCCESSFUL http exchange, so requestfailed never sees it. And on a static host
       // with a single-page fallback, a missing artifact comes back as the app's own index.html with
@@ -355,19 +411,11 @@ for (const [w, h] of VIEWPORTS) {
       for (const route of ROUTES) {
         const where = `${w}x${h} ${theme} ${lang} ${route}`;
         problems.length = 0;
+        // The shell persists both settings under the EXACT keys the init script writes. The first
+        // version of this gate guessed 'caos-lang' and 'caos-theme' with hyphens, so every "es" run
+        // rendered English and the gate reported passing checks in a language it had never displayed.
+        // A gate has to verify its own subject, which is why the language is asserted below.
         await page.goto(BASE + route, { waitUntil: 'networkidle', timeout: 60000 });
-        // The shell persists both settings under these EXACT keys. The first version of this gate
-        // guessed 'caos-lang' and 'caos-theme' with hyphens, so every "es" run rendered English and
-        // the gate reported passing checks in a language it had never displayed. A gate has to
-        // verify its own subject, which is why the language is asserted below rather than assumed.
-        await page.evaluate(
-          ([t, l]) => {
-            localStorage.setItem('caos.theme', t);
-            localStorage.setItem('caos.lang', l);
-          },
-          [theme, lang],
-        );
-        await page.reload({ waitUntil: 'networkidle', timeout: 60000 });
         await page.waitForTimeout(1200);
 
         const info = await inspect(page);
@@ -450,7 +498,8 @@ for (const [w, h] of VIEWPORTS) {
           const footer = await footerLines(page);
           if (!footer) fail(where, 'no footer');
           else if (footer.rows > 1) fail(where, `the footer wraps onto ${footer.rows} rows (${footer.height}px); ADR-0016 section 2 asks for one`);
-          else pass(`${where} footer`, `one row, ${footer.height}px`);
+          else if (footer.dangling.length) fail(where, `a footer separator stands alone: ${footer.dangling.join(' | ')}`);
+          else pass(`${where} footer`, `one row, ${footer.height}px, every separator between two items`);
 
           const subtabs = page.locator('.subtabs-vertical .subtablist [role="tab"]');
           const count = await subtabs.count();
@@ -459,6 +508,8 @@ for (const [w, h] of VIEWPORTS) {
             const figures = await measureFigures(page, 'figure svg');
             seen.push(figures.n);
             if (figures.hits.length) fail(`${where} ${label}`, figures.hits.slice(0, 4).join(' | '));
+            const runTogether = await adjacentCitations(page);
+            if (runTogether.length) fail(`${where} ${label}`, `citations with no space between: ${runTogether.slice(0, 3).join(' | ')}`);
             const info = await inspect(page);
             if (info.brokenPanels.length) fail(`${where} ${label}`, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
             for (const chart of info.charts) {
@@ -535,6 +586,9 @@ for (const [w, h] of VIEWPORTS) {
         else if (info.brokenPanels.length)
           fail(where, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
         else if (info.tabRows !== 1) fail(where, `the tab strip wrapped onto ${info.tabRows} rows`);
+        else if (info.clippedTabRows.length) fail(where, `a tab strip is cut: ${info.clippedTabRows.join(' | ')}`);
+        else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
+        else if (info.duplicateArmRows.length) fail(where, `comparison rows with identical scores: ${info.duplicateArmRows.join(' | ')}`);
         else if (!info.panels.length && !info.charts.length && info.benchHoles === null)
           fail(where, 'the tab rendered neither a panel nor a chart');
         else

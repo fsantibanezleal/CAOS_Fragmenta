@@ -2,7 +2,7 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
-## [0.05.000] - 2026-10-04
+## [0.05.000] - 2026-10-05
 
 An adversarial review of the implementation, the models, the data, the pipeline and the results. The
 headline it replaces ("not one of the six learned models explains any variance with a campaign held
@@ -51,6 +51,25 @@ each arm was fitted on. (#25)
 - Overlays: a strike-through crossed the protocol figure's text, and an arrow crossed a box in the web
   flow drawing; the browser gate now also tests every drawn line and path against every text.
 - The What if tab's variant chart overprinted its labels; variants are drawn as labelled rows.
+- Adjacent citations rendered run together, "(Hudaverdi et al. 2010)(Amoako et al. 2022)", in 25 places
+  over the five pages, because JSX drops whitespace that holds a newline; the browser gate now fails on
+  two citations with nothing between them.
+- The footer left a "·" alone before its gap (shared shell defect 14: the shell pushes the version
+  right with an auto margin and keeps the separator before it on the left); hidden by an override, and
+  the footer check now fails on any separator that is not between two items on its row.
+- The browser gate reports why a request failed, not only which one.
+- The App's model comparison listed the classical distribution, the three-parameter distribution and
+  the two-branch crush zone as rows of their own, with the classical mean size's exact scores: four
+  rows that read as four models agreeing. They reuse that mean size and add only a curve shape, so they
+  are now one sentence under its row (`sharesMeanSizeWith` in the arm catalogue, as the engine's
+  `shares_mean_size_with`); a parity test checks on every committed case that they predict the same
+  mean size and score the same, and the browser gate fails on two comparison rows with identical scores.
+- The comparison table was 41 px wider than its column at 1600x900 and cut its last column; the tier
+  badge now sits under the model name and the headers wrap. The gate fails on any table wider than its
+  container outside a declared scroller.
+- The App's tab strip was squeezed on the Predict tab (28 of its 32 px shown, the active tab cut):
+  the shell's tab list hides vertical overflow, which lets a flex column shrink it under a tall panel.
+  It keeps its height now, and the gate fails on any tab strip whose content is cut.
 - Lint on the Python 3.11 target (a nested-quote f-string), and the CI step that claimed to install the
   engine.
 
