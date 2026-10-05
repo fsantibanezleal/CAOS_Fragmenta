@@ -61,6 +61,7 @@ committed benchmark by `scripts/build_docs_results.py`, so it moves with the bak
 | [Frameworks](frameworks.md) | each library the product runs on: installation, how it is used here, how to apply it to other data |
 | [Cases](cases.md) | the sixteen cases, why each one is in the matrix, and the four controls |
 | [Guides](guides.md) | running the bake, bringing your own blasts, reading a number, the What if tab, regenerating the docs and drawings |
+| [Design](design/SDD.md) | the software design document (ADR-0075): problem and non-goals, contracts, lanes, ladder, cases, oracles, deploy driver, risks, ADR fit; every requirement in `design/features/` names the test or gate that holds it |
 
 ## How this wiki stays true
 
