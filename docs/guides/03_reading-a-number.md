@@ -1,77 +1,67 @@
 # Reading a number
 
-The single most useful page here, and the shortest.
+Five questions to ask of any score on this site, or in the literature on this corpus.
 
 ---
 
-## Two different things are called R2
+## 1. Which statistic?
 
-On the same twelve blasts, the classical model scores **0.570** under one reading and **0.232** under
-the other.
+Two different things are called R2:
 
 | Name here | What it is | What it answers |
 |---|---|---|
-| squared correlation | the square of the correlation between predicted and measured | how well the model **ranks** blasts |
-| variance explained | one minus the residual sum of squares over the total, about the **1:1 line** | how much of the variance the model **actually explains as a prediction** |
+| variance explained, $R^2_{\mathrm{id}}$ | one minus the residual sum of squares over the total, about the 1:1 line | how much of the variance the predictions explain, bias and scale included |
+| squared correlation, $r^2$ | the square of the correlation between predicted and measured | how well the predictions rank the blasts, ignoring bias and scale |
 
-A model can correlate at 0.755 and still be badly biased. The classical model on this hold-out is
-exactly that model, and the figure the literature reports for it is the first one.
+On the published twelve-blast hold-out, the printed classical column scores 0.570 on the second and
+0.232 on the first. The literature on this corpus mostly reports the second. Every figure on this site
+carries its name; "variance explained" always means the first ([protocols/01](../protocols/01_metrics.md)).
 
-Every figure this product returns carries the name of what it is. There is no bare R2 anywhere.
+## 2. Compared with what?
 
-## A model is only good compared to something
+A null model that predicts the training mean runs beside every arm. On the published hold-out the
+printed classical column has an RMSE of 0.128 m against the null's 0.147 m: about 13 percent better than
+a constant. Under leave one site out, the null itself is negatively correlated with the measurements
+(holding out a coarse site lowers the training mean), so a margin over it overstates skill; that is why
+the criterion also asks for a positive score ([protocols/04](../protocols/04_criterion-and-row-sets.md)).
 
-A **null model** that predicts the training mean runs beside every other model on every case.
+## 3. Which protocol, and one draw or many?
 
-On the published hold-out it scores a root mean square error of 0.147 m. The classical model scores
-0.128 m. So the classical model beats predicting a constant by **13 percent**, which is the single
-most useful number about it and is not reported anywhere in its literature.
+The same arm on the same rows, for the stacked ensemble:
 
-## Ask which protocol produced it
+<!-- facts:arm-stacking -->
+Evidence for **stacking ensemble** in the committed benchmark (variance explained about the identity line):
 
-The same model, on the same rows, scores very differently depending on how the data was split:
+- random 80/20, 100 draws: median 0.703, 5th to 95th percentile 0.47 to 0.85;
+- deduplicated, 100 draws: median 0.699;
+- held out by site, every blast: -0.035 (site-resampled 95 percent interval -2.25 to 0.42);
+- held out by site, the 91 blasts with geometry: 0.034 (-1.81 to 0.54);
+- error by held-out campaign: lowest at Reocin-UG (0.081 m RMSE), highest at Murgul (0.367 m).
+<!-- /facts -->
 
-| | stacking ensemble |
-|---|---|
-| random 80/20 | 0.667 |
-| deduplicated, then random | 0.885 |
-| leave one site out | **-0.951** |
+The random split is the protocol the literature reports, and one draw of it spans a wide range; the
+site hold-out asks whether the model reaches a mine it has not seen. Ask which one produced a number, and
+whether it is one draw or the median of many ([protocols/02](../protocols/02_three-protocols.md)).
 
-The third is the practitioner question: can this model reach a mine it has not seen? The first is the
-one the literature reports.
+## 4. On which rows, and what did the arm know?
 
-Neither is wrong. They answer different questions, and only one of them is yours.
+- **The row set.** The classical arms abstain on the six Miami blasts, which have no geometry. A score
+  over 91 rows and one over 97 are not comparable; the benchmark reports both.
+- **What was withheld.** Every learned prediction on a real campaign comes from a model fitted without
+  that campaign; the App says which one.
+- **What was fitted in sample.** The router and the published regression were fitted by their source on
+  these 97 blasts, so no split hides a blast from them; the classical site factor was recovered from
+  published predictions for the same site. Each arm's provenance says so, and the tables carry it.
 
-## Ask what was withheld
+## 5. What does the interval resample?
 
-Every learned prediction on this site shows which campaign was **held out of its training**. A model
-trained on a campaign and then shown predicting that campaign is displaying a memory, and a memory
-looks exactly like a very good model.
+The corpus is clustered: one quarry supplies 22 of the 97 rows. An interval that resamples rows treats
+them as independent and comes out narrower than the data support. The site-held-out intervals here
+resample campaigns, and with ten campaigns they are wide; a difference smaller than the intervals is not
+reported as a finding ([protocols/03](../protocols/03_intervals.md)).
 
 ## Read the refusals
 
-282 of the 1824 prediction cells are refusals, each with a reason. A refusal is a result: it says the
-model could not answer and why, rather than filling the gap with something plausible.
-
-If a model answers everything and another abstains on a fifth of the rows, they have not been
-compared. The counts are on every score block for that reason.
-
-## An interval, and what unit it resamples
-
-The corpus is heavily clustered: one quarry supplies 22 of the 97 rows. An interval computed by
-resampling rows treats those 22 as 22 independent draws, which they are not, and comes out too
-narrow.
-
-Under a site-held-out protocol the resampling unit is the **site**. The engine takes that as an
-argument rather than guessing, because the right unit depends on the claim being made.
-
-## What none of this tells you
-
-That a model is right about your mine. The most that can be said, from this corpus, is:
-
-- one model, the classical mean-size equation, transfers to a campaign it has never seen, at 0.311;
-- the published regression's 0.802 under the same protocol is in sample (its coefficients were
-  fitted on these 97 blasts), so it is not evidence of transfer;
-- no fitted model does;
-- and 97 blasts from ten campaigns are enough to fit something that interpolates between campaigns it
-  has seen, and not enough to fit something that reaches a new one.
+Of the 1976 prediction cells in the case artifacts, 294 are abstentions, each with a reason in the
+artifact and on hover in the App. An abstention says the arm could not answer and why. Two arms with
+different abstention counts have not been scored on the same rows; the counts are on every score.

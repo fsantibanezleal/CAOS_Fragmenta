@@ -26,15 +26,23 @@ from typing import Any
 __all__ = ["dumps", "write_json"]
 
 
-def dumps(payload: Any) -> str:
-    """Serialise a payload the one way this product serialises anything readable."""
+def dumps(payload: Any, *, compact: bool = False) -> str:
+    """Serialise a payload the one way this product serialises anything readable.
+
+    ``compact`` drops the indentation, for the model files, whose flat tree arrays would otherwise
+    put every number on its own line and grow by about a third.
+    """
+    if compact:
+        return json.dumps(
+            payload, sort_keys=True, separators=(",", ":"), default=str, allow_nan=False
+        )
     return json.dumps(payload, indent=1, sort_keys=True, default=str, allow_nan=False)
 
 
-def write_json(path: Path, payload: Any) -> int:
+def write_json(path: Path, payload: Any, *, compact: bool = False) -> int:
     """Write a payload and return the size of the file that is actually on disk."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    text = dumps(payload)
+    text = dumps(payload, compact=compact)
     # newline="" leaves the string untouched, so the LF written here is the LF that lands.
     path.write_text(text, encoding="utf-8", newline="")
     return len(text.encode("utf-8"))

@@ -65,6 +65,23 @@ def test_the_bake_was_made_from_the_installed_corpus(index):
     assert index["corpus_digest"] == bf.datasets.DATASET_DIGEST
 
 
+def test_the_release_gate_rejects_an_edited_benchmark(tmp_path):
+    """The benchmark is the file the verdict comes from; until 0.05.000 the gate never read it.
+
+    The check runs on a copy, so the test cannot rewrite the artifact it is checking.
+    """
+    import shutil
+
+    shutil.copytree(DERIVED, tmp_path / "derived")
+    path = tmp_path / "derived" / "benchmark.json"
+    text = path.read_text(encoding="utf-8")
+    assert '"n_boot": 2000' in text
+    path.write_text(text.replace('"n_boot": 2000', '"n_boot": 2001'), encoding="utf-8", newline="")
+    report = validate.run(tmp_path / "derived")
+    assert not report.ok
+    assert any(p.startswith("benchmark: content digest") for p in report.problems)
+
+
 # ---------------------------------------------------------------------------------------------
 # The case matrix
 # ---------------------------------------------------------------------------------------------
@@ -348,6 +365,7 @@ def test_the_crush_zone_says_its_constants_are_not_published(artifacts):
 
 def test_the_benchmark_carries_the_verdict_and_the_criterion(benchmark):
     assert "positive" in benchmark["kill_criterion"]
+    # The top-level fields are the all-blasts support, the row set the criterion was first applied to.
     assert benchmark["verdict"]["generalises_across_sites"] is False
     assert benchmark["verdict"]["n_learned_arms_positive"] == 0
 
@@ -365,7 +383,8 @@ def test_the_published_reproduction_gain_is_baked(benchmark):
 
 def test_the_seed_sweep_is_baked_with_its_range(benchmark):
     sweep = benchmark["network_seed_sweep"]
-    assert sweep["n_seeds"] >= 12
+    # Thirty: the width the engine's own test pins, so the page and the package quote one run.
+    assert sweep["n_seeds"] == 30
     assert sweep["published_above_every_seed"] is True
     assert sweep["min"] < sweep["median"] < sweep["max"] < sweep["published"]
 
@@ -381,6 +400,158 @@ def test_the_duplicate_groups_are_baked(benchmark):
     groups = benchmark["duplicate_groups"]
     assert len(groups) == 7
     assert sum(len(g) for g in groups) == 17
+
+
+def test_the_random_protocols_are_baked_as_a_spread_not_a_draw(benchmark):
+    """0.04.x baked one 19-row draw per random protocol and two page claims rested on it."""
+    assert benchmark["n_repeats"] == 100
+    for protocol in ("random-8020", "dedup-random"):
+        block = benchmark["protocols"][protocol]
+        assert block["repeated"] is True and block["n_folds"] == 100
+        forest = block["arms"]["random-forest"]
+        assert len(forest["draws"]) == 100
+        assert forest["r2_identity"] == forest["repeats"]["median"]
+        assert forest["repeats"]["p05"] < forest["repeats"]["median"] < forest["repeats"]["p95"]
+    kuznetsov = benchmark["protocols"]["random-8020"]["arms"]["kuznetsov"]
+    held_out = benchmark["protocols"]["leave-one-site-out"]["arms"]["kuznetsov"]["r2_identity"]
+    assert abs(kuznetsov["r2_identity"] - held_out) < 0.02
+
+
+def test_every_site_held_out_score_carries_both_supports_and_an_interval(benchmark):
+    for arm, block in benchmark["protocols"]["leave-one-site-out"]["arms"].items():
+        if arm in {"group-discriminant"}:
+            continue
+        for support in ("all", "geometry"):
+            entry = block["supports"][support]
+            assert entry["interval_95"] is None or entry["interval_95"][0] <= entry["interval_95"][1]
+        assert set(block["per_site"]) == set(benchmark["sites"])
+        assert len(block["predictions"]) == 97
+
+
+def test_the_verdict_reports_that_it_depends_on_the_row_set(benchmark):
+    verdict = benchmark["verdict"]
+    assert verdict["depends_on_support"] is True
+    assert verdict["supports"]["all"]["generalises_across_sites"] is False
+    assert verdict["supports"]["geometry"]["generalises_across_sites"] is True
+    assert verdict["sites_outside_geometry_support"] == ["Miami"]
+    assert verdict["arms_with_interval_above_zero"] == []
+    assert [row[0] for row in verdict["in_sample_arms"]] == ["published-regression"]
+    assert "published-regression" not in dict(verdict["arms_with_positive_variance_explained_across_sites"])
+
+
+def test_the_transfer_rung_is_benchmarked_and_reported_per_case(benchmark, artifacts):
+    transfer = benchmark["protocols"]["leave-one-site-out"]["arms"]["kuznetsov-transfer"]
+    assert transfer["r2_identity"] > 0.25
+    fit = benchmark["diagnostics"]["transfer_fit"]
+    assert fit["slope"] > 0 and len(fit["fit_sites"]) == 9
+    for case_id, artifact in artifacts.items():
+        assert "kuznetsov-transfer" in artifact["predictions"], case_id
+
+
+def test_the_site_metadata_states_measurement_only_where_the_source_does(benchmark):
+    meta = benchmark["site_meta"]
+    assert meta["Akdaglar"]["measurement"].startswith("Wipfrag")
+    assert meta["Murgul"]["measurement"] is None
+    assert meta["Miami"]["hole_diameter_mm"] is None
+    # The modulus is a site constant in this corpus, which the docs rely on.
+    assert all(len(entry["E_GPa"]) == 1 for entry in meta.values())
+
+
+def test_the_diagnostics_are_baked_and_report_without_filtering(benchmark):
+    diagnostics = benchmark["diagnostics"]
+    assert diagnostics["outliers"]["applied_as_filter"] is False
+    assert len(diagnostics["outliers"]["flagged"]) == 5
+    rf = diagnostics["native_importance"]["random-forest"]["values"]
+    assert max(rf, key=rf.get) == "E_GPa"
+    for name, report in diagnostics["resampling_importance"].items():
+        shares = [v for v in report["share"].values() if v is not None]
+        assert abs(sum(shares) - 1.0) < 1e-9, name
+
+
+# ---------------------------------------------------------------------------------------------
+# The fitted models the browser runs
+# ---------------------------------------------------------------------------------------------
+
+@pytest.fixture(scope="module")
+def model_files(index):
+    return {
+        entry["scope"]: json.loads((DERIVED / entry["path"]).read_text(encoding="utf-8"))
+        for entry in index["models"]
+    }
+
+
+def _resolve(document: dict, arms: dict) -> dict:
+    """Undo the by-reference storage of the stacked model's base learners."""
+    if document["kind"] != "stacking":
+        return document
+    forest, boosting = arms[document["forest"]["ref"]], arms[document["boosting"]["ref"]]
+    return document | {
+        "forest": {"trees": forest["trees"]},
+        "boosting": {"base_score": boosting["base_score"], "trees": boosting["trees"]},
+    }
+
+
+def test_there_is_one_model_file_per_campaign_plus_the_corpus(index, model_files):
+    assert set(model_files) == {b.site for b in bf.load_training_corpus()} | {"corpus"}
+    for scope, payload in model_files.items():
+        if scope == "corpus":
+            assert payload["held_out_site"] is None and payload["n_training_rows"] == 97
+        else:
+            assert payload["held_out_site"] == scope
+            assert payload["n_training_rows"] == 97 - sum(
+                1 for b in bf.load_training_corpus() if b.site == scope
+            )
+
+
+def test_every_case_points_at_the_model_file_of_its_own_training_scope(artifacts, model_files):
+    for case_id, artifact in artifacts.items():
+        live = artifact["live_models"]
+        held_out = artifact["provenance"]["held_out_site"]
+        assert live["scope"] == (held_out or "corpus"), case_id
+        assert live["digest"] == model_files[live["scope"]]["digest"]
+
+
+def test_the_portable_models_reproduce_the_fitted_models_at_every_fixture(model_files):
+    """The fixtures are the ORIGINAL fitted models' predictions; the reference reader must match them.
+
+    The TypeScript walker is held to the same fixtures in the frontend tests, so a port cannot agree
+    with the reader and still drift from the model.
+    """
+    for scope, payload in model_files.items():
+        arms = payload["arms"]
+        inputs = payload["fixtures"]["inputs"]
+        for name, expected in payload["fixtures"]["expected"].items():
+            document = _resolve(arms[name], arms)
+            for row, value in zip(inputs, expected):
+                got, _ = bf.predict_portable(document, row["features"])
+                if value is None:
+                    assert got is None, (scope, name, row["blast_id"])
+                    continue
+                exact = {"forest", "xgboost", "stacking", "power-law"}
+                tolerance = 0.0 if document["kind"] in exact else 1e-12
+                assert abs(got - value) <= tolerance * abs(value), (scope, name, row["blast_id"], got, value)
+
+
+def test_the_case_predictions_are_what_the_shipped_models_return(artifacts, model_files):
+    """What the App replays and what it computes live are the same model, to the replay's rounding."""
+    checked = 0
+    for case_id, artifact in artifacts.items():
+        payload = model_files[artifact["live_models"]["scope"]]
+        arms = payload["arms"]
+        for name in ("random-forest", "xgboost", "published-neural-net", "svr-rbf"):
+            if name not in arms:
+                continue
+            document = _resolve(arms[name], arms)
+            for blast in artifact["blasts"]:
+                cell = artifact["predictions"][name][blast["blast_id"]]
+                if cell["x50_m"] is None or blast.get("degenerate_reason"):
+                    continue
+                features = [blast["features"][f] for f in bf.FEATURES]
+                got, _ = bf.predict_portable(document, features)
+                where = (case_id, name, blast["blast_id"])
+                assert got is not None and abs(got - cell["x50_m"]) <= 5e-7, where
+                checked += 1
+    assert checked > 300
 
 
 # ---------------------------------------------------------------------------------------------

@@ -2,69 +2,74 @@
 
 ```bash
 python -m venv .venv
-.venv/bin/pip install -r requirements-precompute.txt
+.venv/Scripts/pip install -r requirements-precompute.txt -r requirements-dev.txt   # .venv/bin/ elsewhere
 
-python data-pipeline/run.py                  # every case plus the cross-case benchmark
-python data-pipeline/run.py --case real-murgul   # one case, for a fast loop
-python data-pipeline/run.py --no-benchmark   # cases only, skipping the slow sweep
-python data-pipeline/run.py --validate       # re-check what is already on disk, bake nothing
+python data-pipeline/run.py                        # every case, the models and the benchmark
+python data-pipeline/run.py --case real-murgul     # one case, for a fast loop
+python data-pipeline/run.py --no-benchmark         # cases and models only
+python data-pipeline/run.py --validate             # re-check what is on disk, bake nothing
+python data-pipeline/run.py --n-seeds 30           # the network seed sweep width (30 is the default)
 ```
 
-A full bake takes about two minutes on a laptop. Most of it is the learned tier: every real campaign
-retrains six models on the corpus minus that campaign, which is nine separate fits of each.
+`scripts/precompute.ps1` and `scripts/precompute.sh` wrap the full bake. Most of the time goes to the
+benchmark (100 draws of two random protocols, ten site folds, and the 30-seed network sweep), and within
+it to the network's Levenberg-Marquardt training; the engine measures its own benchmark at about two and
+a half minutes on a desktop CPU.
 
 ## What it writes
 
-| | |
+| File | What it is |
 |---|---|
-| `data/derived/<case>/case.json` | one per case, content-addressed |
-| `data/derived/manifests/<case>.json` | provenance, flags, the lane verdict, the controls |
-| `data/derived/manifests/index.json` | what the web reads first |
-| `data/derived/benchmark.json` | the protocol sweep, the reproductions, the seed sweep |
+| `data/derived/<case>/case.json` | one per case: blasts, patterns, predictions or abstentions, scores, curves, variants, controls, provenance |
+| `data/derived/models/<scope>.json` | one per training scope: the fitted learned arms, exported, with fixtures |
+| `data/derived/manifests/<case>.json` | the case's lane measurement, flags, controls and provenance |
+| `data/derived/manifests/index.json` | what the web reads first: every file with its size and digest |
+| `data/derived/benchmark.json` | the cross-case benchmark (`fragmenta.benchmark/v2`) |
 
-All of it is committed. The web reads only these files.
+All of it is committed; the web reads only these files.
 
 ## It fails rather than shipping something wrong
 
-The last thing `bake_all` does is run the release gate, and it raises if the gate fails. So a bake
-either produces a complete, hashed, self-consistent set of artifacts or it produces an error.
+The last thing the bake does is run the release gate over everything it wrote, and it raises if the gate
+fails. Things that stop it: a corpus that no longer reproduces its source's summary table or whose digest
+moved; a reconstructed dimension outside the range the source states; a learned model whose training rows
+contain the case it predicts; a control that did not pass; an abstention without a reason; a non-finite
+float; a digest that does not match its file or the index; a case pointing at a models file that is not
+its own scope's.
 
-Things that stop it:
+## After a bake
 
-- a corpus that no longer reproduces its source paper descriptive statistics, or whose digest moved;
-- a reconstructed dimension outside the range the source states for that site;
-- a learned model whose training rows contain the case it is about to predict;
-- a control that did not pass;
-- an abstaining cell with no reason;
-- a non-finite float anywhere in an artifact.
+```bash
+pytest                                   # against the committed artifacts
+python scripts/build_docs_results.py     # the docs results pages and fact blocks
+python scripts/build_architecture_svgs.py
+cd frontend && npm test && npm run build
+```
+
+Then commit the artifacts, the regenerated docs and drawings together. The tests fail if the docs or the
+drawings disagree with the artifacts ([05](05_regenerating.md)).
 
 ## Determinism
 
-A bake is a pure function of the case registry, the pinned engine version and the seed. Run twice in
-the SAME environment it produces byte-identical artifacts and leaves git clean.
+Run twice in the same environment, the bake writes byte-identical artifacts:
 
-    python scripts/compare_bakes.py real-murgul --repeat 2
+```bash
+python scripts/compare_bakes.py real-murgul --repeat 2
+```
 
-If those two bakes disagree, something is reading a wall clock, iterating a set, or stopping on a
-time limit. A CI job runs the same command, so this cannot rot silently.
+If two bakes differ, something is reading a wall clock, iterating an unordered set, or stopping on a
+time limit. On a different operating system the bake reproduces to a numeric tolerance instead, because
+two builds of the same numpy can reduce in a different order; `python scripts/compare_bakes.py` compares
+every number in every case and fails above a relative 1e-6 ([architecture/01](../architecture/01_the-bake.md)).
+Both bake into a temporary directory, never the canonical tree. They run on a developer machine before a
+release; CI does not bake (ADR-0074).
 
-Run on a DIFFERENT operating system it reproduces to a numeric tolerance instead, because two builds
-of the same pinned numpy sum a dot product in a different order. That is not a defect and pinning
-cannot remove it. The check is the same script without `--repeat`, which compares every number in
-every case and fails above the tolerance:
+## Upgrading the engine or the training stack
 
-    python scripts/compare_bakes.py
-
-Whichever you run, the comparison bakes into a temporary directory, and that is not incidental. A
-check that can overwrite the canonical artifacts can silently make itself pass.
-
-## Changing the engine version
-
-The engine is pinned by git tag in `requirements-precompute.txt`. Bumping it means:
-
-1. change the pin;
-2. re-run the full bake, because every number in every artifact came from that engine;
-3. commit the artifacts along with the pin, so the two cannot disagree.
+1. change the exact pin in `requirements-precompute.txt`;
+2. re-run the full bake, because every number came from the pinned versions;
+3. run the tests and regenerate the docs and drawings;
+4. commit the pin, the artifacts and the docs in one change.
 
 The release gate checks that the artifacts and the installed engine agree on the corpus digest, which
-catches the case where the pin moved and the bake did not.
+catches a pin that moved without a bake.
