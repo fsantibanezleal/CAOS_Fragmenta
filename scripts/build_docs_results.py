@@ -289,6 +289,26 @@ def blocks(b: dict) -> dict[str, str]:
             f"| {n} | {f(arms[k].get('r2_identity'))} | {f(arms[k].get('pearson_r2'))} | {f(arms[k].get('rmse_m'), 4)} |"
         )
     out["holdout-2012"] = "\n".join(rows)
+    L = b["protocols"]["leave-one-site-out"]["arms"]
+    rows = [
+        "| held-out campaign | E, GPa | A recovered for the site | A from the line on all sites | "
+        "site-factor arm, RMSE m | transfer arm, RMSE m |",
+        "|---|---|---|---|---|---|",
+    ]
+    for site in b["sites"]:
+        m = b["site_meta"][site]
+        a = L["kuznetsov"]["per_site"][site].get("rmse_m")
+        t = L["kuznetsov-transfer"]["per_site"][site].get("rmse_m")
+        rows.append(
+            f"| {site} | {', '.join(str(e) for e in m['E_GPa'])} | "
+            f"{'no geometry' if m['rock_factor_recovered'] is None else f(m['rock_factor_recovered'], 2)} | "
+            f"{f(m['rock_factor_transfer'], 2)} | {'abstains' if a is None else f(a)} | {'abstains' if t is None else f(t)} |"
+        )
+    out["rock-routes"] = "\n".join(rows + [
+        "",
+        "The line column uses the fit on all nine sites with a recovered factor, for comparison; in the "
+        "benchmark each held-out campaign is predicted by a line refitted without it.",
+    ])
     pub = b["verdict"]["published_random_split_figures"]
     out["published-splits"] = "\n".join(
         f"- {NAMES.get(k, k)}: published {p['published']:.3f} on one random split; the reproduced draws have a median "
@@ -298,17 +318,27 @@ def blocks(b: dict) -> dict[str, str]:
     return out
 
 
-BLOCK = re.compile(r"(<!-- facts:([a-z0-9-]+) -->\n)(.*?)(\n<!-- /facts -->)", re.S)
+# The body is lazy and may not cross another opener, so an empty block followed by a second block is
+# two blocks, not one block that swallowed the other.
+BLOCK = re.compile(
+    r"^(<!-- facts:([a-z0-9-]+) -->)\n(?:(?:(?!^<!-- facts:).)*?\n)??(<!-- /facts -->)$", re.S | re.M
+)
+OPENER = re.compile(r"^<!-- facts:", re.M)
 
 
 def fill(text: str, facts: dict[str, str], where: str) -> str:
+    """Replace the body of every fact block; an unknown key or an unclosed block fails."""
+
     def repl(m: re.Match) -> str:
         key = m.group(2)
         if key not in facts:
             raise SystemExit(f"{where}: unknown fact block '{key}'")
-        return m.group(1) + facts[key] + m.group(4)
+        return f"{m.group(1)}\n{facts[key]}\n{m.group(3)}"
 
-    return BLOCK.sub(repl, text)
+    filled, n = BLOCK.subn(repl, text)
+    if n != len(OPENER.findall(text)):
+        raise SystemExit(f"{where}: a fact block is not closed by '<!-- /facts -->' on its own line")
+    return filled
 
 
 def main() -> int:
@@ -325,7 +355,7 @@ def main() -> int:
         if name in rendered:
             continue
         current = path.read_text(encoding="utf-8")
-        if "<!-- facts:" in current:
+        if OPENER.search(current):
             rendered[name] = fill(current, facts, name)
     for name, text in rendered.items():
         path = DOCS / name

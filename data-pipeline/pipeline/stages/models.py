@@ -9,7 +9,11 @@ A **scope** is the set of training rows a model saw. A real campaign's scope is 
 campaign, named by the withheld site, so a model shown predicting a campaign never saw it. Every other
 case trains on the whole corpus, scope ``corpus``. Cases that share a scope share one file.
 
-Two details keep the file honest and small:
+The polynomial support-vector arm is left out by choice, not because the engine cannot export it: the
+What if tab shows one kernel model, and the radial one is the better of the two under every protocol
+of the benchmark. Its baked predictions are on every page as before.
+
+Two details keep the file faithful to the fitted models and small:
 
 * **Fixtures.** For every arm, the prediction of the ORIGINAL fitted model (not of the portable reader)
   at each of the 116 shipped blasts, at full precision. The TypeScript walker is tested against these,
