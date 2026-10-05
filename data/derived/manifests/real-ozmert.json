@@ -1,18 +1,18 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 60123,
+  "bytes": 63105,
   "format": "json",
   "path": "real-ozmert/case.json"
  },
  "case_id": "real-ozmert",
  "category": "real-campaign",
  "controls": {},
- "digest": "366f25f3c894b46252cdadf265c00e2ab22ed899ad7a81f8f44d17ea0eb2a716",
+ "digest": "1afdb4a080506d7bb110c29b331fe1dfba358a664056d728f1ff082fda1fe46a",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "fine, 0.12 to 0.30 m measured",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 60123,
+  "trace_bytes": 63105,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -32,6 +32,7 @@
  },
  "held_out_site": "Ozmert",
  "lane": "live",
+ "models_scope": "Ozmert",
  "n_scoreable": 7,
  "n_training_rows": 90,
  "provenance": {

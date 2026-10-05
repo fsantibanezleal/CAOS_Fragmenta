@@ -23,7 +23,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Bake the Fragmenta artifacts.")
     parser.add_argument("--case", action="append", help="bake only these case ids")
     parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--n-seeds", type=int, default=12, help="network reproduction sweep width")
+    parser.add_argument("--n-seeds", type=int, default=30, help="network reproduction sweep width")
     parser.add_argument("--no-benchmark", action="store_true")
     parser.add_argument("--validate", action="store_true", help="only re-check what is on disk")
     args = parser.parse_args()

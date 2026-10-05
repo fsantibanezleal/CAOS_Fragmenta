@@ -7,6 +7,7 @@ and leaves git clean.
 
 from __future__ import annotations
 
+import json
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,7 +19,7 @@ from .cases.fragmenta_cases import Case
 from .core.gate import classify_lane
 from .core.jsonio import write_json
 from .registry import list_cases
-from .stages import benchmark, evaluate, export, infer, ingest, preprocess, train, validate
+from .stages import benchmark, evaluate, export, infer, ingest, models, preprocess, train, validate
 
 __all__ = ["STAGES", "BakeResult", "bake_all", "bake_case"]
 
@@ -59,6 +60,11 @@ def bake_case(case: Case, *, seed: int = 0, root: Path | None = None) -> BakeRes
     trained = train.run(case, seed=seed)
     train.leakage_assertions(case, trained, [p.blast for p in prepared.prepared])
 
+    # The fitted arms of this case's training scope, for the browser's live lane. Cases that share a
+    # scope write the same bytes, because the fit is deterministic.
+    models_payload = models.build(trained)
+    models.write(root, models_payload)
+
     inferred = infer.run(case, prepared, trained.arms)
     evaluation = evaluate.run(case, prepared, inferred)
 
@@ -71,6 +77,12 @@ def bake_case(case: Case, *, seed: int = 0, root: Path | None = None) -> BakeRes
         n_training_rows=trained.n_training_rows,
         engine_version=bf.__version__,
         app_version=__version__,
+        live_models={
+            "scope": models_payload["scope"],
+            "path": f"models/{models_payload['scope']}.json",
+            "digest": models_payload["digest"],
+            "arms": sorted(models_payload["arms"]),
+        },
     )
     artifact_path, size = export.write_artifact(root, case.id, payload)
 
@@ -101,6 +113,7 @@ def bake_case(case: Case, *, seed: int = 0, root: Path | None = None) -> BakeRes
         "provenance": ingested.provenance,
         "held_out_site": trained.held_out_site,
         "n_training_rows": trained.n_training_rows,
+        "models_scope": models_payload["scope"],
         "arms_that_failed_to_fit": trained.failed,
         "controls": evaluation.controls,
         "n_scoreable": evaluation.n_scoreable,
@@ -140,7 +153,7 @@ def _measure_live_cost(prepared: preprocess.PreprocessResult) -> float:
 
 def bake_all(
     *, seed: int = 0, cases: Sequence[Case] | None = None, with_benchmark: bool = True,
-    n_seeds: int = 12,
+    n_seeds: int = 30,
 ) -> list[BakeResult]:
     """Bake every case, the cross-case benchmark, then the index the web reads first.
 
@@ -175,6 +188,13 @@ def bake_all(
                 for r, case in zip(results, selected)
             ),
             key=lambda entry: entry["case_id"],
+        ),
+        "models": models.listing(
+            DATA_ROOT,
+            [
+                json.loads(r.manifest_path.read_text(encoding="utf-8"))["models_scope"]
+                for r in results
+            ],
         ),
     }
     if with_benchmark:
