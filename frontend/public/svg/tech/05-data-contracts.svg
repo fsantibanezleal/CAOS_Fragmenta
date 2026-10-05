@@ -1,95 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" class="arch-svg" role="img" aria-label="The two data contracts, the integrity gate, and the release gate">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 318" width="900" class="arch-svg" role="img" aria-label="The two data contracts">
   <style>
     .arch-svg text { font-family: var(--font-sans, Inter, "Segoe UI", system-ui, sans-serif); }
-    .arch-svg .mono { font-family: var(--font-mono, ui-monospace, Consolas, monospace); }
     .arch-svg .bx { fill: var(--color-surface-2); stroke: var(--color-border); stroke-width: 1.2; }
-    .arch-svg .bx-hi { stroke: var(--color-accent); stroke-width: 1.8; }
+    .arch-svg .bx-accent { stroke: var(--color-accent); stroke-width: 1.8; }
     .arch-svg .bx-good { stroke: var(--color-good); stroke-width: 1.8; }
     .arch-svg .bx-bad { stroke: var(--color-bad); stroke-width: 1.8; }
     .arch-svg .bx-warn { stroke: var(--color-warn); stroke-width: 1.8; }
     .arch-svg .ttl { fill: var(--color-fg); font-size: 14px; font-weight: 700; }
-    .arch-svg .hd { fill: var(--color-fg); font-size: 12px; font-weight: 650; }
-    .arch-svg .cd { fill: var(--color-accent); font-size: 9.5px; }
-    .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .bad { fill: var(--color-bad); font-size: 10.5px; font-weight: 600; }
-    .arch-svg .good { fill: var(--color-good); font-size: 10.5px; font-weight: 600; }
-    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.6; }
+    .arch-svg .hd { fill: var(--color-fg); font-size: 12.5px; font-weight: 600; }
+    .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10.5px; }
+    .arch-svg .nt { fill: var(--color-fg-subtle); font-size: 11px; }
+    .arch-svg .band { stroke: var(--color-border); stroke-dasharray: 3 4; }
+    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.5; }
   </style>
   <defs>
-    <marker id="fa5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L8,4 L0,8 z" fill="var(--color-fg-faint)"/>
     </marker>
   </defs>
-
-  <text class="ttl" x="22" y="26"><tspan class="l-en">Contract 1, ingestion: two bands, and they are not the same band</tspan><tspan class="l-es" x="22">Contrato 1, ingreso: dos bandas, y no son la misma</tspan></text>
-
-  <rect class="bx bx-bad" x="20" y="42" width="270" height="96" rx="10"/>
-  <text class="hd" x="32" y="64">REJECT</text>
-  <text class="mu" x="32" y="84"><tspan class="l-en">outside the contract range. A Young modulus</tspan><tspan class="l-es" x="32">fuera del rango del contrato. Un modulo de</tspan></text>
-  <text class="mu" x="32" y="98"><tspan class="l-en">of 60000 is a unit error, not an unusual blast.</tspan><tspan class="l-es" x="32">60000 es un error de unidad, no un tiro raro.</tspan></text>
-  <text class="mono cd" x="32" y="120">E in [0.5, 150] GPa, Pf in [0.05, 3] kg/m3</text>
-
-  <rect class="bx bx-warn" x="304" y="42" width="270" height="96" rx="10"/>
-  <text class="hd" x="316" y="64">FLAG and STAMP</text>
-  <text class="mu" x="316" y="84"><tspan class="l-en">outside the fitted envelope. Admitted only on</tspan><tspan class="l-es" x="316">fuera de la envolvente ajustada. Se admite solo</tspan></text>
-  <text class="mu" x="316" y="98"><tspan class="l-en">an explicit opt-in, and every prediction on it</tspan><tspan class="l-es" x="316">con permiso explicito, y toda prediccion sobre</tspan></text>
-  <text class="mu" x="316" y="112"><tspan class="l-en">is marked as an extrapolation on the screen.</tspan><tspan class="l-es" x="316">ella se marca como extrapolacion en pantalla.</tspan></text>
-  <text class="mono cd" x="316" y="132">E in [9.57, 60] GPa is the corpus range</text>
-
-  <rect class="bx bx-bad" x="588" y="42" width="296" height="96" rx="10"/>
-  <text class="hd" x="600" y="64">NEVER CLIP</text>
-  <text class="mu" x="600" y="84"><tspan class="l-en">A clipped input produces a confident prediction</tspan><tspan class="l-es" x="600">Una entrada recortada produce una prediccion</tspan></text>
-  <text class="mu" x="600" y="98"><tspan class="l-en">for a design nobody entered, and it looks exactly</tspan><tspan class="l-es" x="600">confiada para un diseno que nadie ingreso, y se</tspan></text>
-  <text class="mu" x="600" y="112"><tspan class="l-en">like a prediction for one that was.</tspan><tspan class="l-es" x="600">ve igual que una para uno que si.</tspan></text>
-
-  <path class="flow" d="M155,142 L155,176" marker-end="url(#fa5)"/>
-
-  <text class="ttl" x="22" y="196"><tspan class="l-en">The integrity gate, which found five defects</tspan><tspan class="l-es" x="22">La compuerta de integridad, que encontro cinco defectos</tspan></text>
-
-  <rect class="bx bx-good" x="20" y="210" width="300" height="112" rx="10"/>
-  <text class="hd" x="32" y="232"><tspan class="l-en">Half one: reproduce the paper</tspan><tspan class="l-es" x="32">Mitad uno: reproducir el articulo</tspan></text>
-  <text class="mu" x="32" y="252"><tspan class="l-en">Recompute the minimum, maximum, mean and</tspan><tspan class="l-es" x="32">Recalcular el minimo, maximo, media y desviacion</tspan></text>
-  <text class="mu" x="32" y="266"><tspan class="l-en">standard deviation of all seven features from</tspan><tspan class="l-es" x="32">estandar de las siete variables desde las filas</tspan></text>
-  <text class="mu" x="32" y="280"><tspan class="l-en">the shipped rows, at the precision each was</tspan><tspan class="l-es" x="32">enviadas, a la precision con que cada una fue</tspan></text>
-  <text class="mu" x="32" y="294"><tspan class="l-en">printed to.</tspan><tspan class="l-es" x="32">impresa.</tspan></text>
-  <text class="good" x="32" y="314"><tspan class="l-en">It says the file still IS the published table.</tspan><tspan class="l-es" x="32">Dice que el archivo SIGUE SIENDO la tabla.</tspan></text>
-
-  <rect class="bx bx-good" x="334" y="210" width="300" height="112" rx="10"/>
-  <text class="hd" x="346" y="232"><tspan class="l-en">Half two: a pinned digest</tspan><tspan class="l-es" x="346">Mitad dos: un resumen fijado</tspan></text>
-  <text class="mu" x="346" y="252"><tspan class="l-en">A mean over 97 rows is a weak detector for a</tspan><tspan class="l-es" x="346">Una media sobre 97 filas es un detector debil</tspan></text>
-  <text class="mu" x="346" y="266"><tspan class="l-en">single-cell change: correcting one powder factor</tspan><tspan class="l-es" x="346">para el cambio de una celda: corregir un factor</tspan></text>
-  <text class="mu" x="346" y="280"><tspan class="l-en">moves it by 0.0006, well inside any rounding.</tspan><tspan class="l-es" x="346">de carga la mueve 0.0006, dentro del redondeo.</tspan></text>
-  <text class="mono cd" x="346" y="298">sha256 over the canonical row serialisation</text>
-  <text class="good" x="346" y="314"><tspan class="l-en">It says the file has not MOVED since.</tspan><tspan class="l-es" x="346">Dice que el archivo no se ha MOVIDO.</tspan></text>
-
-  <rect class="bx bx-bad" x="648" y="210" width="236" height="112" rx="10"/>
-  <text class="hd" x="660" y="232"><tspan class="l-en">What it caught</tspan><tspan class="l-es" x="660">Lo que atrapo</tspan></text>
-  <text class="bad" x="660" y="254">5 transcription defects</text>
-  <text class="mu" x="660" y="272"><tspan class="l-en">two of them on the variable</tspan><tspan class="l-es" x="660">dos de ellos sobre la variable</tspan></text>
-  <text class="mu" x="660" y="286"><tspan class="l-en">being predicted. One row had its</tspan><tspan class="l-es" x="660">que se predice. Una fila tenia su</tspan></text>
-  <text class="mu" x="660" y="300"><tspan class="l-en">own block size copied into the</tspan><tspan class="l-es" x="660">tamano de bloque copiado en la</tspan></text>
-  <text class="mu" x="660" y="314"><tspan class="l-en">neighbouring column.</tspan><tspan class="l-es" x="660">columna vecina.</tspan></text>
-
-  <line x1="20" y1="340" x2="880" y2="340" stroke="var(--color-border)" stroke-width="1"/>
-
-  <text class="ttl" x="22" y="366"><tspan class="l-en">Contract 2, the artifact, and the release gate</tspan><tspan class="l-es" x="22">Contrato 2, el artefacto, y la compuerta de publicacion</tspan></text>
-
-  <rect class="bx bx-hi" x="20" y="380" width="270" height="76" rx="10"/>
-  <text class="mono cd" x="32" y="402">stages/export.py -> case.json</text>
-  <text class="mu" x="32" y="422"><tspan class="l-en">content-addressed; the digest is part of</tspan><tspan class="l-es" x="32">direccionado por contenido; el resumen es</tspan></text>
-  <text class="mu" x="32" y="436"><tspan class="l-en">the file and is re-checked on release</tspan><tspan class="l-es" x="32">parte del archivo y se re-verifica al publicar</tspan></text>
-
-  <path class="flow" d="M294,418 L326,418" marker-end="url(#fa5)"/>
-
-  <rect class="bx bx-hi" x="330" y="380" width="270" height="76" rx="10"/>
-  <text class="mono cd" x="342" y="402">lib/contract.types.ts</text>
-  <text class="mu" x="342" y="422"><tspan class="l-en">the TypeScript mirror. A field renamed on</tspan><tspan class="l-es" x="342">el espejo en TypeScript. Un campo renombrado</tspan></text>
-  <text class="mu" x="342" y="436"><tspan class="l-en">one side fails the build, not the chart.</tspan><tspan class="l-es" x="342">en un lado falla la compilacion, no el grafico.</tspan></text>
-
-  <path class="flow" d="M604,418 L636,418" marker-end="url(#fa5)"/>
-
-  <rect class="bx bx-good" x="640" y="380" width="244" height="76" rx="10"/>
-  <text class="hd" x="652" y="400"><tspan class="l-en">Every cell has a number or a reason</tspan><tspan class="l-es" x="652">Cada celda: un numero o una razon</tspan></text>
-  <text class="mono cd" x="652" y="420">1824 cells, 282 of them refusals</text>
-  <text class="mu" x="652" y="440"><tspan class="l-en">The gate fails the bake on ONE unexplained abstention.</tspan><tspan class="l-es" x="652">La compuerta falla ante UNA abstencion sin explicar.</tspan></text>
+<g class="l-en">
+<text class="ttl" x="22" y="28">The two contracts and the gates between them</text>
+<rect class="bx bx-warn" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">Contract 1, what gets in</text>
+<text class="mu" x="32.0" y="104.0">REJECT outside the contract range (E in</text>
+<text class="mu" x="32.0" y="118.0">0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)</text>
+<text class="mu" x="32.0" y="132.0">FLAG and stamp outside the envelope;</text>
+<text class="mu" x="32.0" y="146.0">never clip</text>
+<rect class="bx bx-good" x="22.0" y="168.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="189.0">Integrity gate</text>
+<text class="mu" x="32.0" y="208.0">reproduce the paper&#x27;s own summary table,</text>
+<text class="mu" x="32.0" y="222.0">plus a pinned digest; it found five</text>
+<text class="mu" x="32.0" y="236.0">transcription errors</text>
+<rect class="bx bx-accent" x="312.0" y="64.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="85.0">Contract 2, what goes out</text>
+<text class="mu" x="322.0" y="104.0">case, benchmark and model files, each</text>
+<text class="mu" x="322.0" y="118.0">content-addressed, listed with its</text>
+<text class="mu" x="322.0" y="132.0">digest in the index</text>
+<rect class="bx" x="312.0" y="154.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="175.0">A typed mirror</text>
+<text class="mu" x="322.0" y="194.0">the browser&#x27;s contract types; a field</text>
+<text class="mu" x="322.0" y="208.0">that appears in an artifact and not in</text>
+<text class="mu" x="322.0" y="222.0">the mirror fails the tests</text>
+<rect class="bx bx-good" x="602.0" y="64.0" width="276.0" height="80.0" rx="6"/>
+<text class="hd" x="612.0" y="85.0">Release gate</text>
+<text class="mu" x="612.0" y="104.0">re-read and re-hash every file; every</text>
+<text class="mu" x="612.0" y="118.0">predicted cell carries a number or a</text>
+<text class="mu" x="612.0" y="132.0">reason, never neither</text>
+<rect class="bx bx-good" x="602.0" y="154.0" width="276.0" height="80.0" rx="6"/>
+<text class="hd" x="612.0" y="175.0">Model fixtures</text>
+<text class="mu" x="612.0" y="194.0">the original models&#x27; predictions at 116</text>
+<text class="mu" x="612.0" y="208.0">blasts; the browser walker must reproduce</text>
+<text class="mu" x="612.0" y="222.0">them</text>
+<line class="flow" x1="157.0" y1="158.0" x2="157.0" y2="166.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="292.0" y1="208.0" x2="310.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="447.0" y1="144.0" x2="447.0" y2="152.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="104.0" x2="600.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="740.0" y1="144.0" x2="740.0" y2="152.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="260.0" x2="878" y2="260.0"/>
+<text class="nt" x="22" y="278.0">The integrity gate exists because the corpus as first assembled disagreed with the published tables in five cells, two on the measured</text>
+<text class="nt" x="22" y="293.0">size; the tell was a powder-factor maximum of 1.47 against the 1.26 the paper prints.</text>
+</g>
+<g class="l-es">
+<text class="ttl" x="22" y="28">Los dos contratos y las compuertas entre ellos</text>
+<rect class="bx bx-warn" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">Contrato 1, qué entra</text>
+<text class="mu" x="32.0" y="104.0">RECHAZA fuera del rango (E de 0.5 a 150</text>
+<text class="mu" x="32.0" y="118.0">GPa, Pf de 0.05 a 3 kg/m3)</text>
+<text class="mu" x="32.0" y="132.0">MARCA y sella fuera de la envolvente;</text>
+<text class="mu" x="32.0" y="146.0">nunca recorta</text>
+<rect class="bx bx-good" x="22.0" y="168.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="189.0">Compuerta de integridad</text>
+<text class="mu" x="32.0" y="208.0">reproduce la tabla resumen del artículo,</text>
+<text class="mu" x="32.0" y="222.0">más un resumen fijado; encontró cinco</text>
+<text class="mu" x="32.0" y="236.0">errores de transcripción</text>
+<rect class="bx bx-accent" x="312.0" y="64.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="85.0">Contrato 2, qué sale</text>
+<text class="mu" x="322.0" y="104.0">archivos de caso, benchmark y modelos,</text>
+<text class="mu" x="322.0" y="118.0">cada uno por contenido, listados con su</text>
+<text class="mu" x="322.0" y="132.0">resumen en el índice</text>
+<rect class="bx" x="312.0" y="154.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="175.0">Un espejo tipado</text>
+<text class="mu" x="322.0" y="194.0">los tipos del navegador; un campo que</text>
+<text class="mu" x="322.0" y="208.0">aparece en un artefacto y no en el</text>
+<text class="mu" x="322.0" y="222.0">espejo hace fallar las pruebas</text>
+<rect class="bx bx-good" x="602.0" y="64.0" width="276.0" height="80.0" rx="6"/>
+<text class="hd" x="612.0" y="85.0">Compuerta de publicación</text>
+<text class="mu" x="612.0" y="104.0">relee y rehashea cada archivo; cada celda</text>
+<text class="mu" x="612.0" y="118.0">predicha lleva un número o una razón,</text>
+<text class="mu" x="612.0" y="132.0">nunca ninguna</text>
+<rect class="bx bx-good" x="602.0" y="154.0" width="276.0" height="80.0" rx="6"/>
+<text class="hd" x="612.0" y="175.0">Fijaciones de modelos</text>
+<text class="mu" x="612.0" y="194.0">las predicciones de los modelos</text>
+<text class="mu" x="612.0" y="208.0">originales en 116 tiros; el recorrido del</text>
+<text class="mu" x="612.0" y="222.0">navegador debe reproducirlas</text>
+<line class="flow" x1="157.0" y1="158.0" x2="157.0" y2="166.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="292.0" y1="208.0" x2="310.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="447.0" y1="144.0" x2="447.0" y2="152.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="104.0" x2="600.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="740.0" y1="144.0" x2="740.0" y2="152.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="260.0" x2="878" y2="260.0"/>
+<text class="nt" x="22" y="278.0">La compuerta de integridad existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas,</text>
+<text class="nt" x="22" y="293.0">dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1.47 frente al 1.26 que imprime el artículo.</text>
+</g>
 </svg>

@@ -1,85 +1,115 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" class="arch-svg" role="img" aria-label="The web flow: routes, the workbench tabs, and the focus view">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 428" width="900" class="arch-svg" role="img" aria-label="The web flow">
   <style>
     .arch-svg text { font-family: var(--font-sans, Inter, "Segoe UI", system-ui, sans-serif); }
-    .arch-svg .mono { font-family: var(--font-mono, ui-monospace, Consolas, monospace); }
     .arch-svg .bx { fill: var(--color-surface-2); stroke: var(--color-border); stroke-width: 1.2; }
-    .arch-svg .bx-hi { stroke: var(--color-accent); stroke-width: 1.8; }
+    .arch-svg .bx-accent { stroke: var(--color-accent); stroke-width: 1.8; }
     .arch-svg .bx-good { stroke: var(--color-good); stroke-width: 1.8; }
     .arch-svg .bx-bad { stroke: var(--color-bad); stroke-width: 1.8; }
+    .arch-svg .bx-warn { stroke: var(--color-warn); stroke-width: 1.8; }
     .arch-svg .ttl { fill: var(--color-fg); font-size: 14px; font-weight: 700; }
-    .arch-svg .hd { fill: var(--color-fg); font-size: 12px; font-weight: 650; }
-    .arch-svg .cd { fill: var(--color-accent); font-size: 9.5px; }
-    .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.6; }
+    .arch-svg .hd { fill: var(--color-fg); font-size: 12.5px; font-weight: 600; }
+    .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10.5px; }
+    .arch-svg .nt { fill: var(--color-fg-subtle); font-size: 11px; }
+    .arch-svg .band { stroke: var(--color-border); stroke-dasharray: 3 4; }
+    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.5; }
   </style>
   <defs>
-    <marker id="fa3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L8,4 L0,8 z" fill="var(--color-fg-faint)"/>
     </marker>
   </defs>
-
-  <text class="ttl" x="22" y="26"><tspan class="l-en">Six routes, and one that escapes the chrome</tspan><tspan class="l-es" x="22">Seis rutas, y una que escapa del marco</tspan></text>
-
-  <rect class="bx bx-hi" x="20" y="44" width="180" height="150" rx="10"/>
-  <text class="hd" x="32" y="66"><tspan class="l-en">App, the workbench</tspan><tspan class="l-es" x="32">App, el taller</tspan></text>
-  <text class="mono cd" x="32" y="86">/?case=&lt;id&gt;</text>
-  <text class="mu" x="32" y="106"><tspan class="l-en">ONE selected case</tspan><tspan class="l-es" x="32">UN caso seleccionado</tspan></text>
-  <text class="mu" x="32" y="122"><tspan class="l-en">a 320px rail plus</tspan><tspan class="l-es" x="32">una barra de 320px mas</tspan></text>
-  <text class="mu" x="32" y="138"><tspan class="l-en">six sibling tabs</tspan><tspan class="l-es" x="32">seis pestanas hermanas</tspan></text>
-  <text class="mu" x="32" y="162"><tspan class="l-en">Anything that summarises</tspan><tspan class="l-es" x="32">Todo lo que resume entre</tspan></text>
-  <text class="mu" x="32" y="176"><tspan class="l-en">ACROSS cases is elsewhere.</tspan><tspan class="l-es" x="32">CASOS vive en otra parte.</tspan></text>
-
-  <path class="flow" d="M204,119 L236,119" marker-end="url(#fa3)"/>
-
-  <rect class="bx" x="240" y="44" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="60">Predict</text>
-  <rect class="bx" x="240" y="72" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="88">Distribution</text>
-  <rect class="bx" x="240" y="100" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="116">Bench</text>
-  <rect class="bx" x="240" y="128" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="144">Rock</text>
-  <rect class="bx" x="240" y="156" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="172">Explain</text>
-  <rect class="bx" x="240" y="184" width="120" height="24" rx="6"/><text class="mono cd" x="250" y="200">Decide</text>
-
-  <text class="mu" x="240" y="228"><tspan class="l-en">grouped by the QUESTION, not by</tspan><tspan class="l-es" x="240">agrupadas por la PREGUNTA, no por</tspan></text>
-  <text class="mu" x="240" y="242"><tspan class="l-en">the model list. Thirteen models as</tspan><tspan class="l-es" x="240">la lista de modelos. Trece modelos</tspan></text>
-  <text class="mu" x="240" y="256"><tspan class="l-en">thirteen tabs is a list, not an</tspan><tspan class="l-es" x="240">como trece pestanas son una lista,</tspan></text>
-  <text class="mu" x="240" y="270"><tspan class="l-en">architecture.</tspan><tspan class="l-es" x="240">no una arquitectura.</tspan></text>
-
-  <path class="flow" d="M364,119 L396,119" marker-end="url(#fa3)"/>
-
-  <rect class="bx bx-good" x="400" y="80" width="180" height="78" rx="10"/>
-  <text class="hd" x="412" y="102"><tspan class="l-en">Model selector</tspan><tspan class="l-es" x="412">Selector de modelo</tspan></text>
-  <text class="mono cd" x="412" y="122">select with optgroup</text>
-  <text class="mu" x="412" y="140"><tspan class="l-en">a categorised one-of-N is a</tspan><tspan class="l-es" x="412">un uno-de-N categorizado es</tspan></text>
-  <text class="mu" x="412" y="152"><tspan class="l-en">select, not thirteen buttons</tspan><tspan class="l-es" x="412">un select, no trece botones</tspan></text>
-
-  <rect class="bx" x="600" y="44" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="59">/introduction</text>
-  <rect class="bx" x="600" y="70" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="85">/methodology</text>
-  <rect class="bx" x="600" y="96" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="111">/implementation</text>
-  <rect class="bx" x="600" y="122" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="137">/experiments</text>
-  <rect class="bx" x="600" y="148" width="140" height="22" rx="6"/><text class="mono cd" x="610" y="163">/benchmark</text>
-  <text class="mu" x="600" y="190"><tspan class="l-en">cross-case evidence lives</tspan><tspan class="l-es" x="600">la evidencia entre casos vive</tspan></text>
-  <text class="mu" x="600" y="204"><tspan class="l-en">on the last two only</tspan><tspan class="l-es" x="600">solo en las dos ultimas</tspan></text>
-
-  <rect class="bx bx-bad" x="760" y="80" width="124" height="90" rx="10"/>
-  <text class="hd" x="772" y="102"><tspan class="l-en">Focus</tspan><tspan class="l-es" x="772">Pantalla completa</tspan></text>
-  <text class="mono cd" x="772" y="122">/focus/&lt;case&gt;</text>
-  <text class="mu" x="772" y="142"><tspan class="l-en">renders OUTSIDE</tspan><tspan class="l-es" x="772">se dibuja FUERA</tspan></text>
-  <text class="mu" x="772" y="156"><tspan class="l-en">the shell</tspan><tspan class="l-es" x="772">del armazon</tspan></text>
-
-  <line x1="20" y1="290" x2="880" y2="290" stroke="var(--color-border)" stroke-width="1"/>
-
-  <text class="ttl" x="22" y="318"><tspan class="l-en">Two things that were easy to get wrong</tspan><tspan class="l-es" x="22">Dos cosas faciles de equivocar</tspan></text>
-
-  <rect class="bx bx-bad" x="20" y="332" width="420" height="106" rx="10"/>
-  <text class="hd" x="32" y="354"><tspan class="l-en">A cold deep link into the focus route</tspan><tspan class="l-es" x="32">Un enlace directo en frio a pantalla completa</tspan></text>
-  <text class="mu" x="32" y="376"><tspan class="l-en">The header and footer are exactly the chrome a full-screen</tspan><tspan class="l-es" x="32">El encabezado y el pie son justamente el marco del que una</tspan></text>
-  <text class="mu" x="32" y="390"><tspan class="l-en">view exists to escape, so it cannot be a child of the shell.</tspan><tspan class="l-es" x="32">vista completa escapa, asi que no puede colgar del armazon.</tspan></text>
-  <text class="mu" x="32" y="410"><tspan class="l-en">It therefore applies the theme ITSELF. Without that, a link</tspan><tspan class="l-es" x="32">Por eso aplica el tema POR SI MISMA. Sin eso, un enlace</tspan></text>
-  <text class="mu" x="32" y="424"><tspan class="l-en">opened directly boots in the wrong palette every time.</tspan><tspan class="l-es" x="32">abierto directo arranca siempre con la paleta equivocada.</tspan></text>
-
-  <rect class="bx bx-bad" x="456" y="332" width="428" height="106" rx="10"/>
-  <text class="hd" x="468" y="354"><tspan class="l-en">A 200 response, not just a rendered page</tspan><tspan class="l-es" x="468">Una respuesta 200, no solo una pagina dibujada</tspan></text>
-  <text class="mu" x="468" y="376"><tspan class="l-en">A static host serves a fallback page for an unknown path, so</tspan><tspan class="l-es" x="468">Un host estatico sirve una pagina de reserva para una ruta</tspan></text>
-  <text class="mu" x="468" y="390"><tspan class="l-en">the app appears and the status is still 404. A shared link is</tspan><tspan class="l-es" x="468">desconocida: la app aparece y el estado sigue siendo 404. Un</tspan></text>
-  <text class="mu" x="468" y="410"><tspan class="l-en">then a 404 to every crawler. The build writes a real file at</tspan><tspan class="l-es" x="468">enlace compartido es un 404 para todo rastreador. La</tspan></text>
-  <text class="mu" x="468" y="424"><tspan class="l-en">each route path so the server answers 200.</tspan><tspan class="l-es" x="468">compilacion escribe un archivo real por ruta para responder 200.</tspan></text>
+<g class="l-en">
+<text class="ttl" x="22" y="28">Six routes and one view outside the chrome</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">App: one selected case</text>
+<text class="mu" x="32.0" y="104.0">a rail with the case and the arm selectors,</text>
+<text class="mu" x="32.0" y="118.0">and six tabs grouped by the question</text>
+<rect class="bx" x="22.0" y="140.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="161.0">The six tabs</text>
+<text class="mu" x="32.0" y="180.0">Predict, Distribution, Bench, Rock, What if,</text>
+<text class="mu" x="32.0" y="194.0">Decide</text>
+<rect class="bx bx-good" x="22.0" y="216.0" width="300.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="237.0">What if</text>
+<text class="mu" x="32.0" y="256.0">every arm, learned ones included, recomputes</text>
+<text class="mu" x="32.0" y="270.0">live on your design from the case&#x27;s own</text>
+<text class="mu" x="32.0" y="284.0">fitted models</text>
+<rect class="bx" x="352.0" y="64.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="85.0">Introduction</text>
+<text class="mu" x="362.0" y="104.0">why fragmentation matters, the</text>
+<text class="mu" x="362.0" y="118.0">relations, the question, the scope</text>
+<rect class="bx" x="352.0" y="140.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="161.0">Methodology, 7 sections</text>
+<text class="mu" x="362.0" y="180.0">every predictor term by term,</text>
+<text class="mu" x="362.0" y="194.0">protocols and metrics</text>
+<rect class="bx" x="352.0" y="216.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="237.0">Implementation, 8 sections</text>
+<text class="mu" x="362.0" y="256.0">data, geometry, bake, leakage, live</text>
+<text class="mu" x="362.0" y="270.0">lanes, deploy</text>
+<rect class="bx bx-warn" x="352.0" y="292.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="313.0">Experiments and Benchmark</text>
+<text class="mu" x="362.0" y="332.0">the only routes that summarise across</text>
+<text class="mu" x="362.0" y="346.0">cases</text>
+<rect class="bx" x="642.0" y="64.0" width="236.0" height="80.0" rx="6"/>
+<text class="hd" x="652.0" y="85.0">Focus view</text>
+<text class="mu" x="652.0" y="104.0">one case full screen, outside the</text>
+<text class="mu" x="652.0" y="118.0">header and footer, applying the</text>
+<text class="mu" x="652.0" y="132.0">theme itself</text>
+<rect class="bx" x="642.0" y="154.0" width="236.0" height="66.0" rx="6"/>
+<text class="hd" x="652.0" y="175.0">Every view reads values</text>
+<text class="mu" x="652.0" y="194.0">readouts under the pointer, never</text>
+<text class="mu" x="652.0" y="208.0">on top of the drawing</text>
+<line class="flow" x1="172.0" y1="130.0" x2="172.0" y2="138.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="172.0" y1="206.0" x2="172.0" y2="214.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="322.0" y1="97.0" x2="640.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="370.0" x2="878" y2="370.0"/>
+<text class="nt" x="22" y="388.0">The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every</text>
+<text class="nt" x="22" y="403.0">route and every section in both themes and languages before a deploy publishes.</text>
+</g>
+<g class="l-es">
+<text class="ttl" x="22" y="28">Seis rutas y una vista fuera del marco</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">App: un caso seleccionado</text>
+<text class="mu" x="32.0" y="104.0">un riel con los selectores de caso y brazo, y</text>
+<text class="mu" x="32.0" y="118.0">seis pestañas agrupadas por la pregunta</text>
+<rect class="bx" x="22.0" y="140.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="161.0">Las seis pestañas</text>
+<text class="mu" x="32.0" y="180.0">Predecir, Distribución, Banco, Roca, Qué pasa</text>
+<text class="mu" x="32.0" y="194.0">si, Decidir</text>
+<rect class="bx bx-good" x="22.0" y="216.0" width="300.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="237.0">Qué pasa si</text>
+<text class="mu" x="32.0" y="256.0">todo brazo, aprendidos incluidos, se</text>
+<text class="mu" x="32.0" y="270.0">recalcula en vivo sobre su diseño con los</text>
+<text class="mu" x="32.0" y="284.0">modelos ajustados del caso</text>
+<rect class="bx" x="352.0" y="64.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="85.0">Introducción</text>
+<text class="mu" x="362.0" y="104.0">por qué importa, las relaciones, la</text>
+<text class="mu" x="362.0" y="118.0">pregunta, el alcance</text>
+<rect class="bx" x="352.0" y="140.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="161.0">Metodología, 7 secciones</text>
+<text class="mu" x="362.0" y="180.0">cada predictor término a término,</text>
+<text class="mu" x="362.0" y="194.0">protocolos y métricas</text>
+<rect class="bx" x="352.0" y="216.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="237.0">Implementación, 8 secciones</text>
+<text class="mu" x="362.0" y="256.0">datos, geometría, horneado, fuga,</text>
+<text class="mu" x="362.0" y="270.0">carriles vivos, despliegue</text>
+<rect class="bx bx-warn" x="352.0" y="292.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="313.0">Experimentos y Benchmark</text>
+<text class="mu" x="362.0" y="332.0">las únicas rutas que resumen entre</text>
+<text class="mu" x="362.0" y="346.0">casos</text>
+<rect class="bx" x="642.0" y="64.0" width="236.0" height="80.0" rx="6"/>
+<text class="hd" x="652.0" y="85.0">Vista de foco</text>
+<text class="mu" x="652.0" y="104.0">un caso a pantalla completa, fuera</text>
+<text class="mu" x="652.0" y="118.0">del encabezado y el pie, aplicando</text>
+<text class="mu" x="652.0" y="132.0">el tema por sí misma</text>
+<rect class="bx" x="642.0" y="154.0" width="236.0" height="66.0" rx="6"/>
+<text class="hd" x="652.0" y="175.0">Cada vista lee valores</text>
+<text class="mu" x="652.0" y="194.0">lecturas bajo el puntero, nunca</text>
+<text class="mu" x="652.0" y="208.0">sobre el dibujo</text>
+<line class="flow" x1="172.0" y1="130.0" x2="172.0" y2="138.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="172.0" y1="206.0" x2="172.0" y2="214.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="322.0" y1="97.0" x2="640.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="370.0" x2="878" y2="370.0"/>
+<text class="nt" x="22" y="388.0">El hospedaje estático sirve un archivo real en cada ruta, así que un enlace profundo compartido responde 200; la compilación los</text>
+<text class="nt" x="22" y="403.0">escribe. Una compuerta de navegador abre cada ruta y cada sección en ambos temas e idiomas antes de publicar.</text>
+</g>
 </svg>

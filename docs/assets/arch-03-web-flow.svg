@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 428" width="900" class="arch-svg" role="img" aria-label="The web flow">
+  <style>
+    .arch-svg text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .arch-svg .bx { fill: #f0f3f6; stroke: #d0d7de; stroke-width: 1.2; }
+    .arch-svg .bx-accent { stroke: #0969da; stroke-width: 1.8; }
+    .arch-svg .bx-good { stroke: #1a7f37; stroke-width: 1.8; }
+    .arch-svg .bx-bad { stroke: #cf222e; stroke-width: 1.8; }
+    .arch-svg .bx-warn { stroke: #9a6700; stroke-width: 1.8; }
+    .arch-svg .ttl { fill: #1f2328; font-size: 14px; font-weight: 700; }
+    .arch-svg .hd { fill: #1f2328; font-size: 12.5px; font-weight: 600; }
+    .arch-svg .mu { fill: #57606a; font-size: 10.5px; }
+    .arch-svg .nt { fill: #57606a; font-size: 11px; }
+    .arch-svg .band { stroke: #d0d7de; stroke-dasharray: 3 4; }
+    .arch-svg .flow { fill: none; stroke: #6e7781; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6e7781"/>
+    </marker>
+  </defs>
+<rect x="0" y="0" width="900" height="428" fill="#ffffff"/>
+<text class="ttl" x="22" y="28">Six routes and one view outside the chrome</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">App: one selected case</text>
+<text class="mu" x="32.0" y="104.0">a rail with the case and the arm selectors,</text>
+<text class="mu" x="32.0" y="118.0">and six tabs grouped by the question</text>
+<rect class="bx" x="22.0" y="140.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="161.0">The six tabs</text>
+<text class="mu" x="32.0" y="180.0">Predict, Distribution, Bench, Rock, What if,</text>
+<text class="mu" x="32.0" y="194.0">Decide</text>
+<rect class="bx bx-good" x="22.0" y="216.0" width="300.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="237.0">What if</text>
+<text class="mu" x="32.0" y="256.0">every arm, learned ones included, recomputes</text>
+<text class="mu" x="32.0" y="270.0">live on your design from the case&#x27;s own</text>
+<text class="mu" x="32.0" y="284.0">fitted models</text>
+<rect class="bx" x="352.0" y="64.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="85.0">Introduction</text>
+<text class="mu" x="362.0" y="104.0">why fragmentation matters, the</text>
+<text class="mu" x="362.0" y="118.0">relations, the question, the scope</text>
+<rect class="bx" x="352.0" y="140.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="161.0">Methodology, 7 sections</text>
+<text class="mu" x="362.0" y="180.0">every predictor term by term,</text>
+<text class="mu" x="362.0" y="194.0">protocols and metrics</text>
+<rect class="bx" x="352.0" y="216.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="237.0">Implementation, 8 sections</text>
+<text class="mu" x="362.0" y="256.0">data, geometry, bake, leakage, live</text>
+<text class="mu" x="362.0" y="270.0">lanes, deploy</text>
+<rect class="bx bx-warn" x="352.0" y="292.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="313.0">Experiments and Benchmark</text>
+<text class="mu" x="362.0" y="332.0">the only routes that summarise across</text>
+<text class="mu" x="362.0" y="346.0">cases</text>
+<rect class="bx" x="642.0" y="64.0" width="236.0" height="80.0" rx="6"/>
+<text class="hd" x="652.0" y="85.0">Focus view</text>
+<text class="mu" x="652.0" y="104.0">one case full screen, outside the</text>
+<text class="mu" x="652.0" y="118.0">header and footer, applying the</text>
+<text class="mu" x="652.0" y="132.0">theme itself</text>
+<rect class="bx" x="642.0" y="154.0" width="236.0" height="66.0" rx="6"/>
+<text class="hd" x="652.0" y="175.0">Every view reads values</text>
+<text class="mu" x="652.0" y="194.0">readouts under the pointer, never</text>
+<text class="mu" x="652.0" y="208.0">on top of the drawing</text>
+<line class="flow" x1="172.0" y1="130.0" x2="172.0" y2="138.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="172.0" y1="206.0" x2="172.0" y2="214.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="322.0" y1="97.0" x2="640.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="370.0" x2="878" y2="370.0"/>
+<text class="nt" x="22" y="388.0">The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every</text>
+<text class="nt" x="22" y="403.0">route and every section in both themes and languages before a deploy publishes.</text>
+</svg>
