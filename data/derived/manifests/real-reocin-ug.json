@@ -1,18 +1,18 @@
 {
- "app_version": "0.05.001",
+ "app_version": "0.06.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 60200,
+  "bytes": 62669,
   "format": "json",
   "path": "real-reocin-ug/case.json"
  },
  "case_id": "real-reocin-ug",
  "category": "real-campaign",
  "controls": {},
- "digest": "4178f5c2744a2d610edb934a7afb8a2179a2b9f7a453a3d1f210a9551ac46ca1",
+ "digest": "46964d817f46481f4c30a0ab1199ea16275fdd53f25e4f9745b17da6ee18a6fa",
  "engine": {
   "package": "blastfrag",
-  "version": "0.03.000"
+  "version": "0.04.000"
  },
  "expected_band": {
   "en": "coarse, 0.51 to 0.69 m measured",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 60200,
+  "trace_bytes": 62669,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

@@ -1,8 +1,8 @@
 {
- "app_version": "0.05.001",
+ "app_version": "0.06.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 65387,
+  "bytes": 68189,
   "format": "json",
   "path": "ctrl-oracle/case.json"
  },
@@ -15,10 +15,10 @@
    "passed": true
   }
  },
- "digest": "a77da06bd902829ca7c0f3500ba52126cf9dc228f52b1eb6116a85ffa608a5ff",
+ "digest": "3e25b19ccf2903e2072331b019ef39a80d2b254ab667393978d6d72275f47279",
  "engine": {
   "package": "blastfrag",
-  "version": "0.03.000"
+  "version": "0.04.000"
  },
  "expected_band": {
   "en": "the generating arm recovers its own truth to within 1e-9",
@@ -30,7 +30,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 65387,
+  "trace_bytes": 68189,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

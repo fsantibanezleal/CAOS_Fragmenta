@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "acc70dacfcc5da77bb2599387b6e0463ea9046886c673f740d889763b3c476eb",
+ "digest": "45021e3de4ad1ee03f7436e47e396c92d8a8df9bdc09edd89f431b9db510250c",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1848,7 +1848,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "30a17584842e11d53410ff65d8db98cee2727a800b1c63e30b52b36f127def6a",
+  "digest": "d309582a2940733b4a74802114fc8c203e952608d5a13757d44c105c3aefb03c",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -2193,6 +2193,116 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.202779
+   },
+   "SI02": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI03": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI04": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI05": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI06": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI07": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI08": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI09": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI11": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   },
+   "SI12": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202779
+   }
+  },
+  "kuznetsov-capped": {
+   "SI01": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.1
    },
    "SI02": {
     "abstained": false,
@@ -3286,11 +3396,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",
@@ -3320,6 +3430,12 @@
    "scoreable": false
   },
   "kuznetsov": {
+   "abstain_reasons": [],
+   "n_abstained": 0,
+   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "scoreable": false
+  },
+  "kuznetsov-capped": {
    "abstain_reasons": [],
    "n_abstained": 0,
    "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
@@ -3424,6 +3540,16 @@
    "powder-up": 0.17173482594965642,
    "spacing-wide": 0.20903517471095667,
    "stemming-long": 0.20277877606409078
+  },
+  "kuznetsov-capped": {
+   "base": 0.1942138780587499,
+   "blocky": 0.19838054472541655,
+   "burden-tight": 0.17970672791751308,
+   "burden-wide": 0.20766801030532986,
+   "powder-down": 0.23136257259283333,
+   "powder-up": 0.16575692378718507,
+   "spacing-wide": 0.19994891015171026,
+   "stemming-long": 0.1942138780587499
   },
   "kuznetsov-transfer": {
    "base": 0.24286162411872683,

@@ -1,7 +1,5 @@
 # Requirements: the product on blastfrag 0.4.0
 
-Status: planned
-
 Designed 2026-10-05, before its code (ADR-0075). The engine's 0.4.0 features are designed in its own SDD
 (`features/in-situ-cap/`, `features/width-sweep/`, `features/common-support/` in CAOS_BlastFrag); this is what the
 product bakes, mirrors and shows of them. EARS.

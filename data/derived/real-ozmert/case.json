@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "4b11c07bba5636f1f2b87c93e1494805b1add96d4ceecc623f211b994c251edc",
+ "digest": "7a71d98e9f038086f50b40f5b0ef7c7211cd5fb5c23fd339da099027d49b94cb",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1746,7 +1746,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "0d3b2e8a8824dcac02b968a0c3f32cd87f63b0d9849a4d2c817cd73a9e1b77f2",
+  "digest": "81aa8c1211c8213a096649d59e68345c1d5b68eaf157015cf4102af5f226b9d9",
   "path": "models/Ozmert.json",
   "scope": "Ozmert"
  },
@@ -1948,6 +1948,71 @@
    }
   },
   "kuznetsov": {
+   "Oz1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.230717
+   },
+   "Oz2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.198376
+   },
+   "Oz3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.198376
+   },
+   "Oz4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.157881
+   },
+   "Oz5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.231916
+   },
+   "Oz6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.221599
+   },
+   "Oz7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.198376
+   }
+  },
+  "kuznetsov-capped": {
    "Oz1": {
     "abstained": false,
     "cv": null,
@@ -2599,11 +2664,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Ozmert",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Ozmert",
@@ -2712,6 +2777,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": 0.013891609606323454,
+   "mae_m": 0.0595495090177735,
+   "mape_pct": 35.26730283260016,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 7,
+   "pearson_r2": 0.13781432672450095,
+   "r2_identity": 0.09104725552543569,
+   "r2_identity_interval": [
+    -5.407130763200095,
+    0.29886472773526923
+   ],
+   "r2_identity_point": 0.09104725552543569,
+   "rmse_m": 0.061243949294263376,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Oz6",
+     "error_m": -0.07840100170539233,
+     "error_pct": -26.133667235130776,
+     "measured_m": 0.3,
+     "predicted_m": 0.22159899829460766,
+     "site": "Ozmert"
+    },
+    {
+     "blast_id": "Oz7",
+     "error_m": 0.0783761251733302,
+     "error_pct": 65.31343764444183,
+     "measured_m": 0.12,
+     "predicted_m": 0.1983761251733302,
+     "site": "Ozmert"
+    },
+    {
+     "blast_id": "Oz5",
+     "error_m": 0.06191553966434876,
+     "error_pct": 36.420905684911034,
+     "measured_m": 0.17,
+     "predicted_m": 0.23191553966434877,
+     "site": "Ozmert"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": 0.013891609606323454,
    "mae_m": 0.0595495090177735,
    "mape_pct": 35.26730283260016,
@@ -3217,6 +3325,16 @@
    "stemming-long": 0.20532018103489488
   },
   "kuznetsov": {
+   "base": 0.20532018103489488,
+   "blocky": 0.20532018103489488,
+   "burden-tight": 0.1892958537030637,
+   "burden-wide": 0.2201813644503828,
+   "powder-down": 0.24635393579505668,
+   "powder-up": 0.17388716037439272,
+   "spacing-wide": 0.21165499046482736,
+   "stemming-long": 0.20532018103489488
+  },
+  "kuznetsov-capped": {
    "base": 0.20532018103489488,
    "blocky": 0.20532018103489488,
    "burden-tight": 0.1892958537030637,

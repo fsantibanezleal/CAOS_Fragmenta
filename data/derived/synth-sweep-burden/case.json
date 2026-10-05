@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "b032d4332e6bcdafa598f44a6214ab9ddf18e986058517dc19d5fdbee3d2aa26",
+ "digest": "16a4d3e4383c1d8a2284492d3f11dcd1d79be5066ae897e04e9775ae6821f5a8",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1848,7 +1848,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "30a17584842e11d53410ff65d8db98cee2727a800b1c63e30b52b36f127def6a",
+  "digest": "d309582a2940733b4a74802114fc8c203e952608d5a13757d44c105c3aefb03c",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -2185,6 +2185,116 @@
    }
   },
   "kuznetsov": {
+   "SB01": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.238066
+   },
+   "SB02": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.250372
+   },
+   "SB03": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.262102
+   },
+   "SB04": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.273328
+   },
+   "SB05": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.284112
+   },
+   "SB06": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.2945
+   },
+   "SB07": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.304535
+   },
+   "SB08": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.314249
+   },
+   "SB09": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.323672
+   },
+   "SB10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.332828
+   },
+   "SB11": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.341739
+   },
+   "SB12": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.350423
+   }
+  },
+  "kuznetsov-capped": {
    "SB01": {
     "abstained": false,
     "cv": null,
@@ -3286,11 +3396,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",
@@ -3320,6 +3430,12 @@
    "scoreable": false
   },
   "kuznetsov": {
+   "abstain_reasons": [],
+   "n_abstained": 0,
+   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "scoreable": false
+  },
+  "kuznetsov-capped": {
    "abstain_reasons": [],
    "n_abstained": 0,
    "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
@@ -3412,6 +3528,16 @@
    "stemming-long": 0.2974938436434387
   },
   "kuznetsov": {
+   "base": 0.2974938436434387,
+   "blocky": 0.2974938436434387,
+   "burden-tight": 0.27427577172416223,
+   "burden-wide": 0.3190266055623085,
+   "powder-down": 0.35694873678250194,
+   "powder-up": 0.25194970820344925,
+   "spacing-wide": 0.3066725166631115,
+   "stemming-long": 0.2974938436434387
+  },
+  "kuznetsov-capped": {
    "base": 0.2974938436434387,
    "blocky": 0.2974938436434387,
    "burden-tight": 0.27427577172416223,

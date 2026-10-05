@@ -142,7 +142,7 @@
    "passed": true
   }
  },
- "digest": "32bc8e06cfd782d1fb1124401c3b4f6003ee065bdf5bc8521b9f6187dfea61fc",
+ "digest": "9d0d84fcdd0026a8961758b77566848630cb6356ce184eff2f68e85fc352f71c",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -162,7 +162,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "1c8cbdebacfd0340c93739c96955da1ed1e73874a0429432b68a8a02f6d4b35f",
+  "digest": "81291ec30c78d0ddbe2093c527bd2a855dca4c36325288e27b23607c5a4a09e8",
   "path": "models/Miami.json",
   "scope": "Miami"
  },
@@ -337,6 +337,62 @@
    }
   },
   "kuznetsov": {
+   "Mi1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   },
+   "Mi6": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "x50_m": null
+   }
+  },
+  "kuznetsov-capped": {
    "Mi1": {
     "abstained": true,
     "cv": null,
@@ -898,11 +954,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Miami",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Miami",
@@ -951,6 +1007,19 @@
    "worst_rows": []
   },
   "kuznetsov": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 6,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "kuznetsov-capped": {
    "bias_m": null,
    "mae_m": null,
    "mape_pct": null,
@@ -1366,6 +1435,16 @@
    "stemming-long": null
   },
   "kuznetsov": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "kuznetsov-capped": {
    "base": null,
    "blocky": null,
    "burden-tight": null,

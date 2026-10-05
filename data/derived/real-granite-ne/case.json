@@ -153,7 +153,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "Five production blasts measured with image analysis, and the only real set in this product that lies OUTSIDE the fitted envelope. Its Young modulus of 5.6 GPa sits below the corpus minimum of 9.57, on the feature two independent studies rank most important. Every prediction here is stamped as an extrapolation. It is also the only set that publishes its absolute pattern, so it checks the geometry reconstruction instead of consuming it.",
-   "es": "Cinco tiros de producci\u00f3n medidos por an\u00e1lisis de imagen, y el \u00fanico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su m\u00f3dulo de Young de 5.6 GPa esta bajo el m\u00ednimo del corpus, 9.57, en la variable que dos estudios independientes califican como la m\u00e1s importante. Toda predicci\u00f3n aqu\u00ed se marca como extrapolaci\u00f3n. Es tambi\u00e9n el \u00fanico conjunto que publica su malla absoluta, as\u00ed que verifica la reconstrucci\u00f3n geom\u00e9trica en vez de consumirla."
+   "es": "Cinco tiros de producci\u00f3n medidos por an\u00e1lisis de imagen, y el \u00fanico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su m\u00f3dulo de Young de 5.6 GPa est\u00e1 bajo el m\u00ednimo del corpus, 9.57, en la variable que dos estudios independientes califican como la m\u00e1s importante. Toda predicci\u00f3n aqu\u00ed se marca como extrapolaci\u00f3n. Es tambi\u00e9n el \u00fanico conjunto que publica su malla absoluta, as\u00ed que verifica la reconstrucci\u00f3n geom\u00e9trica en vez de consumirla."
   },
   "site": "Granite-NE",
   "title": {
@@ -169,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "8c3ed8b0e17d8ccac115392659f7ea43c973d315b320f13cf29bb001078f48dd",
+ "digest": "650537572a88909d58a0f902429aefb4e5a11b7e40db249bbfbdc99a77a6cdb3",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -182,7 +182,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "30a17584842e11d53410ff65d8db98cee2727a800b1c63e30b52b36f127def6a",
+  "digest": "d309582a2940733b4a74802114fc8c203e952608d5a13757d44c105c3aefb03c",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -330,6 +330,53 @@
    }
   },
   "kuznetsov": {
+   "NE1": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE2": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE3": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE4": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   },
+   "NE5": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": "no rock factor is available for Granite-NE",
+    "x50_m": null
+   }
+  },
+  "kuznetsov-capped": {
    "NE1": {
     "abstained": true,
     "cv": null,
@@ -801,11 +848,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",
@@ -854,6 +901,19 @@
    "worst_rows": []
   },
   "kuznetsov": {
+   "bias_m": null,
+   "mae_m": null,
+   "mape_pct": null,
+   "n_abstained": 5,
+   "n_extrapolated": 0,
+   "n_scored": 0,
+   "pearson_r2": null,
+   "r2_identity": null,
+   "rmse_m": null,
+   "scoreable": true,
+   "worst_rows": []
+  },
+  "kuznetsov-capped": {
    "bias_m": null,
    "mae_m": null,
    "mape_pct": null,
@@ -1299,6 +1359,16 @@
    "stemming-long": null
   },
   "kuznetsov": {
+   "base": null,
+   "blocky": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null,
+   "stemming-long": null
+  },
+  "kuznetsov-capped": {
    "base": null,
    "blocky": null,
    "burden-tight": null,

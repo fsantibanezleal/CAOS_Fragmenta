@@ -1,8 +1,8 @@
 {
- "app_version": "0.05.001",
+ "app_version": "0.06.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 34150,
+  "bytes": 35686,
   "format": "json",
   "path": "real-granite-ne/case.json"
  },
@@ -16,10 +16,10 @@
    "unstamped": []
   }
  },
- "digest": "8c3ed8b0e17d8ccac115392659f7ea43c973d315b320f13cf29bb001078f48dd",
+ "digest": "650537572a88909d58a0f902429aefb4e5a11b7e40db249bbfbdc99a77a6cdb3",
  "engine": {
   "package": "blastfrag",
-  "version": "0.03.000"
+  "version": "0.04.000"
  },
  "expected_band": {
   "en": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
@@ -57,7 +57,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 34150,
+  "trace_bytes": 35686,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

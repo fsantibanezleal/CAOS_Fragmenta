@@ -330,7 +330,7 @@
   }
  },
  "controls": {},
- "digest": "9d4d49db1bc81fd6fb1c9187654b92856d538dff5764fd2ae1a6f3898e685e59",
+ "digest": "5a6bb9316db3ff82eac89b0b34953a251d05879163c17978eb6565843a647cf3",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1845,7 +1845,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "536116f9f82b36cf9889a67536d1c11b4f88ec10a96d7d293183c39d225d4062",
+  "digest": "5370d39ac543c4aedaa95de14ee3205b3397b71640c4f6adc307182f5bc524fa",
   "path": "models/Mrica.json",
   "scope": "Mrica"
  },
@@ -2155,6 +2155,107 @@
    }
   },
   "kuznetsov": {
+   "Mr1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.238339
+   },
+   "Mr10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.291025
+   },
+   "Mr11": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.32987
+   },
+   "Mr2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.232376
+   },
+   "Mr3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.238339
+   },
+   "Mr4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.229536
+   },
+   "Mr5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.262782
+   },
+   "Mr6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.297271
+   },
+   "Mr7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.219012
+   },
+   "Mr8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.333657
+   },
+   "Mr9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.302623
+   }
+  },
+  "kuznetsov-capped": {
    "Mr1": {
     "abstained": false,
     "cv": null,
@@ -3166,11 +3267,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Mrica",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Mrica",
@@ -3279,6 +3380,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": 0.1040754785817601,
+   "mae_m": 0.1040754785817601,
+   "mape_pct": 64.56951632734803,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 11,
+   "pearson_r2": 0.1496973216645349,
+   "r2_identity": -22.817851010325104,
+   "r2_identity_interval": [
+    -77.2190595558851,
+    -13.082493624883911
+   ],
+   "r2_identity_point": -22.817851010325104,
+   "rmse_m": 0.11065060537462243,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Mr6",
+     "error_m": 0.14727113450811177,
+     "error_pct": 98.18075633874119,
+     "measured_m": 0.15,
+     "predicted_m": 0.29727113450811177,
+     "site": "Mrica"
+    },
+    {
+     "blast_id": "Mr8",
+     "error_m": 0.14365747821729363,
+     "error_pct": 75.60919906173349,
+     "measured_m": 0.19,
+     "predicted_m": 0.33365747821729363,
+     "site": "Mrica"
+    },
+    {
+     "blast_id": "Mr9",
+     "error_m": 0.1426225104078193,
+     "error_pct": 89.13906900488705,
+     "measured_m": 0.16,
+     "predicted_m": 0.3026225104078193,
+     "site": "Mrica"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": 0.1040754785817601,
    "mae_m": 0.1040754785817601,
    "mape_pct": 64.56951632734803,
@@ -3784,6 +3928,16 @@
    "stemming-long": 0.27043911494539646
   },
   "kuznetsov": {
+   "base": 0.27043911494539646,
+   "blocky": 0.27043911494539646,
+   "burden-tight": 0.2493325443230024,
+   "burden-wide": 0.2900136412762626,
+   "powder-down": 0.3244870524851486,
+   "powder-up": 0.22903686094075068,
+   "spacing-wide": 0.2787830597390529,
+   "stemming-long": 0.27043911494539646
+  },
+  "kuznetsov-capped": {
    "base": 0.27043911494539646,
    "blocky": 0.27043911494539646,
    "burden-tight": 0.2493325443230024,
