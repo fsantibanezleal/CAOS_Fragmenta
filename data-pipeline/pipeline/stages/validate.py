@@ -101,6 +101,28 @@ def run(root: Path) -> ValidationReport:
                             f"{case_id}/{arm}/{blast_id}: abstained with no reason given"
                         )
 
+    # The benchmark: the cross-case evidence every documentation page reads. Until 0.05.000 this gate
+    # re-read the cases and the models and never the benchmark, so an edited benchmark.json, the one
+    # file the verdict comes from, would have passed it.
+    bench_entry = index.get("benchmark")
+    if bench_entry:
+        bench_path = root / bench_entry["path"]
+        if not bench_path.exists():
+            problems.append("benchmark: listed in the index but not on disk")
+        else:
+            raw = bench_path.read_text(encoding="utf-8")
+            for token in ("NaN", "Infinity"):
+                if token in raw:
+                    problems.append(f"benchmark: contains {token}, which no browser can parse")
+            payload = json.loads(raw)
+            stored = payload.pop("digest", None)
+            if stored != digest(payload):
+                problems.append("benchmark: content digest does not match, the artifact was edited")
+            if stored != bench_entry.get("digest"):
+                problems.append("benchmark: the index digest disagrees with the artifact's own")
+            if payload.get("corpus_digest") != bf.datasets.DATASET_DIGEST:
+                problems.append("benchmark: baked from a different corpus than the one installed")
+
     # The fitted models the browser runs: present, readable by a browser, unedited, and the ones the
     # cases point at.
     listed = {entry["scope"]: entry for entry in index.get("models", [])}
