@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "ebdff6b0555ce18d1e97670e501c7af5489fe09bd9635dbeedf762c8d0df3574",
+ "digest": "88dce479507decbb6ed5a99fb241237695ec0453196c724a22a31d6b483573a8",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1873,7 +1873,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "525f2db09eeb3bbe268220c523cbe615666cc207cbafb236bd8bb92648da3c3f",
+  "digest": "8b5d135aaab503b3202bf05189020b401dd085659bb1e4a18eeaa8edd43517e9",
   "path": "models/Enusa.json",
   "scope": "Enusa"
  },
@@ -2210,6 +2210,116 @@
    }
   },
   "kuznetsov": {
+   "En1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.439872
+   },
+   "En10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.527781
+   },
+   "En11": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.557682
+   },
+   "En12": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.557682
+   },
+   "En2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.439872
+   },
+   "En3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.439872
+   },
+   "En4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.439872
+   },
+   "En5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.439872
+   },
+   "En6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.633259
+   },
+   "En7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.557682
+   },
+   "En8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.486051
+   },
+   "En9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.486051
+   }
+  },
+  "kuznetsov-capped": {
    "En1": {
     "abstained": false,
     "cv": null,
@@ -3311,11 +3421,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Enusa",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Enusa",
@@ -3424,6 +3534,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": 0.10462890341986887,
+   "mae_m": 0.12170332799808199,
+   "mape_pct": 34.93088531765734,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 12,
+   "pearson_r2": 0.016687012603991892,
+   "r2_identity": -1.6428563551644215,
+   "r2_identity_interval": [
+    -17.93225557631591,
+    0.06077056511750092
+   ],
+   "r2_identity_point": -1.6428563551644215,
+   "rmse_m": 0.14683142640673497,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "En6",
+     "error_m": 0.2632593895353029,
+     "error_pct": 71.15118636089268,
+     "measured_m": 0.37,
+     "predicted_m": 0.6332593895353029,
+     "site": "Enusa"
+    },
+    {
+     "blast_id": "En11",
+     "error_m": 0.24768187083405407,
+     "error_pct": 79.89737768840455,
+     "measured_m": 0.31,
+     "predicted_m": 0.5576818708340541,
+     "site": "Enusa"
+    },
+    {
+     "blast_id": "En9",
+     "error_m": 0.2260514532566001,
+     "error_pct": 86.94286663715387,
+     "measured_m": 0.26,
+     "predicted_m": 0.4860514532566001,
+     "site": "Enusa"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": 0.10462890341986887,
    "mae_m": 0.12170332799808199,
    "mape_pct": 34.93088531765734,
@@ -3929,6 +4082,16 @@
    "stemming-long": 0.46240522987512017
   },
   "kuznetsov": {
+   "base": 0.5004622367532022,
+   "blocky": 0.5004622367532022,
+   "burden-tight": 0.46140338409423864,
+   "burden-wide": 0.5366859584323229,
+   "powder-down": 0.6004808739185513,
+   "powder-up": 0.4238451222134922,
+   "spacing-wide": 0.5159031587352966,
+   "stemming-long": 0.46240522987512017
+  },
+  "kuznetsov-capped": {
    "base": 0.5004622367532022,
    "blocky": 0.5004622367532022,
    "burden-tight": 0.46140338409423864,

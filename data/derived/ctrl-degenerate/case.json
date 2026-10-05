@@ -187,7 +187,7 @@
   "real_or_synthetic": "synthetic",
   "reason": {
    "en": "A design that is not a blast: the stemming exceeds the hole, so there is no charge to detonate. Every arm must refuse it rather than return a plausible-looking number. If any arm answers here, the product is fabricating.",
-   "es": "Un dise\u00f1o que no es un tiro: el taco excede la perforaci\u00f3n, de modo que no hay carga que detonar. Todo modelo debe rechazarlo en vez de devolver un n\u00famero veros\u00edmil. Si alg\u00fan modelo responde aqu\u00ed, el producto esta fabricando."
+   "es": "Un dise\u00f1o que no es un tiro: el taco excede la perforaci\u00f3n, de modo que no hay carga que detonar. Todo modelo debe rechazarlo en vez de devolver un n\u00famero veros\u00edmil. Si alg\u00fan modelo responde aqu\u00ed, el producto est\u00e1 inventando n\u00fameros."
   },
   "site": null,
   "title": {
@@ -203,7 +203,7 @@
    "passed": true
   }
  },
- "digest": "b0c43e73a8c12cb0368eea18cdfd33fdbeac4cd92268fd6843c89bb09d5e96ab",
+ "digest": "e7641532d19a10b36ae25b057694aade41213aad1d0b5e1160bfccbc962d147f",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -216,7 +216,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "30a17584842e11d53410ff65d8db98cee2727a800b1c63e30b52b36f127def6a",
+  "digest": "d309582a2940733b4a74802114fc8c203e952608d5a13757d44c105c3aefb03c",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -391,6 +391,62 @@
    }
   },
   "kuznetsov": {
+   "DG01": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "x50_m": null
+   },
+   "DG02": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "x50_m": null
+   },
+   "DG03": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "x50_m": null
+   },
+   "DG04": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "x50_m": null
+   },
+   "DG05": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "x50_m": null
+   },
+   "DG06": {
+    "abstained": true,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "x50_m": null
+   }
+  },
+  "kuznetsov-capped": {
    "DG01": {
     "abstained": true,
     "cv": null,
@@ -952,11 +1008,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",
@@ -990,6 +1046,14 @@
    "scoreable": false
   },
   "kuznetsov": {
+   "abstain_reasons": [
+    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+   ],
+   "n_abstained": 6,
+   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "scoreable": false
+  },
+  "kuznetsov-capped": {
    "abstain_reasons": [
     "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
    ],
@@ -1096,6 +1160,14 @@
    "spacing-wide": null
   },
   "kuznetsov": {
+   "base": null,
+   "burden-tight": null,
+   "burden-wide": null,
+   "powder-down": null,
+   "powder-up": null,
+   "spacing-wide": null
+  },
+  "kuznetsov-capped": {
    "base": null,
    "burden-tight": null,
    "burden-wide": null,

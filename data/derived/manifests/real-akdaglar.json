@@ -1,18 +1,18 @@
 {
- "app_version": "0.05.001",
+ "app_version": "0.06.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 106471,
+  "bytes": 111730,
   "format": "json",
   "path": "real-akdaglar/case.json"
  },
  "case_id": "real-akdaglar",
  "category": "real-campaign",
  "controls": {},
- "digest": "fa074793a3f36e4c777484954a7b2aa572e27c8a3918073c1634d0d556766616",
+ "digest": "7f3c7f67a4307f3cf03a33c886ee032298eb9128522484018ff80052448a86d8",
  "engine": {
   "package": "blastfrag",
-  "version": "0.03.000"
+  "version": "0.04.000"
  },
  "expected_band": {
   "en": "fine, 0.14 to 0.22 m measured",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 106471,
+  "trace_bytes": 111730,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

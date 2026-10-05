@@ -2,6 +2,68 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.06.000] - 2026-10-05
+
+Baked on `blastfrag==0.4.0`, which adds three things to the benchmark: the classical arm capped at
+the in-situ block, every arm's score on the rows every size-predicting arm answers, and a sweep of the
+published network's hidden width. Benchmark schema `fragmenta.benchmark/v3`. This is the first release
+whose design document came before its code (ADR-0075); the document covers everything earlier
+retroactively, and says so. (#14)
+
+### Added
+
+- `kuznetsov-capped`, the classical mean size capped at the in-situ block, `min(x50, XB)`, as its own
+  arm. Its provenance says the cap is a declared choice, not a published relation, and which arm it
+  caps. It binds on three corpus blasts (Rc1 to Rc3, where the classical prediction exceeds the
+  0.68 m block) and moves the classical arm from 0.311 to 0.352 held out by site. It runs live on the
+  Distribution tab, which draws the block on the curve, and in What if, and it appears in the
+  Benchmark, Methodology and Experiments pages and in the wiki.
+- Common support: on every protocol, each arm's score on the rows every size-predicting arm answers
+  (79 blasts from nine sites held out by site), beside its own score. It is reported and never
+  decides the verdict, because those rows are selected by the arms' own refusals.
+- The network width sweep: hidden widths 6 to 15 on the source's protocol, which picks 8 and 11
+  where the paper reports 9 and 7, and every width held out by site, where every one scores below
+  zero. On the Benchmark's "The published network" sub-tab and in the network's method page.
+- The software design document (`docs/design/SDD.md`) and its feature folders, each requirement in
+  EARS form naming the test or gate that holds it; `scripts/check_sdd.py` checks that every named
+  gate exists, in CI.
+- Non-circularity tests: no synthetic design carries a measured size or a score, none enters the
+  benchmark, the designs depend on no arm, and the positive control is circular by design and says so.
+- Two Spanish guards a word list cannot provide: the verb "está" where a participle, a gerund or a
+  preposition follows, and the pronoun "él" before punctuation.
+- Three browser-gate checks: one unit per size column, no empty band above the rail's last control,
+  and the width sweep drawn on its sub-tab. The first two were run against the live 0.05.001 first,
+  where both fail.
+- Generated fact blocks for the bake's output (counts and sizes) and the site's payload, in place of
+  typed sizes that had gone stale.
+
+### Changed
+
+- Every fragment size is stated in centimetres to one decimal. The unit was picked by magnitude,
+  which put "22 mm" above "11.0 cm" in the model comparison's RMSE column, and millimetres beside
+  centimetres in a readout whenever its sizes straddled 10 cm.
+- The rail's reading pane no longer grows to fill the rail. It pushed the full-screen link to the
+  bottom of the screen under an empty band, up to 243 px at 1600x900 on the live site.
+- The bake pins BLAS to one thread before numpy loads. A multi-threaded BLAS spun on the network's
+  small matrices (one width-15 fit took more than six minutes on a loaded workstation against about
+  two seconds on one thread). The full bake took 745 s, against about 18 minutes before, and the pin
+  changed no number.
+
+### Fixed
+
+- The cross-environment bake comparison could not pass since 0.05.000: each case carries the digest
+  of its models file, a hash that moves with the last bit of any number in the file, and
+  `scripts/compare_bakes.py` compared it as a string. Re-measured on Ubuntu 24.04 under WSL2 against
+  the Windows bake, every case failed with every number within tolerance. The tool now compares the
+  numbers that digest covers, the case's and its models file's, and keeps comparing the corpus digest
+  exactly. Every case and its models file reproduces: the worst difference is 2.745e-08 in a case and
+  7.0e-07 in a models file, on a near-zero network weight. The re-bake test had the same blind spot
+  and could pass only on the machine that baked.
+- Spanish: "está" without its accent in three case reasons ("5.6 GPa está bajo el mínimo", "el
+  producto está inventando números", "la instalación está rota"), and "sobre él" on the Distribution
+  tab.
+- The manifest module still declared the retired benchmark schema v1; the constant is gone.
+
 ## [0.05.001] - 2026-10-05
 
 0.05.000 was tagged and never published: the deploy's browser gate, on the Linux runner, failed it on

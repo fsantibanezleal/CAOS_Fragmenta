@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "1a501936edb78f4d998df513f3d9e058062ff306bcf4f93b890499a504a33000",
+ "digest": "74096d9a6e918d4ca3b9b65aa907ba5c7f7ad61ff6f5337178e90270ebb082fe",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1746,7 +1746,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "9e3d262111474c82df6c7142eb9368b231b9c2499ba2a0d55e1b5a8e12f89048",
+  "digest": "3719db5cc5817431bdab98205e3ac58de8bcd62823751a2def1f1e31c6f92bcd",
   "path": "models/Soma.json",
   "scope": "Soma"
  },
@@ -1948,6 +1948,71 @@
    }
   },
   "kuznetsov": {
+   "Sm1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   },
+   "Sm2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   },
+   "Sm3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   },
+   "Sm4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   },
+   "Sm5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   },
+   "Sm6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   },
+   "Sm7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.349764
+   }
+  },
+  "kuznetsov-capped": {
    "Sm1": {
     "abstained": false,
     "cv": null,
@@ -2599,11 +2664,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.06.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Soma",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Soma",
@@ -2712,6 +2777,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": 0.12547828744330516,
+   "mae_m": 0.12547828744330516,
+   "mape_pct": 61.92751311065149,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 7,
+   "pearson_r2": null,
+   "r2_identity": -9.69215113524536,
+   "r2_identity_interval": [
+    -52.55302134987965,
+    -5.497334670293212
+   ],
+   "r2_identity_point": -9.69215113524536,
+   "rmse_m": 0.13179260379711405,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Sm1",
+     "error_m": 0.19976400172901945,
+     "error_pct": 133.17600115267965,
+     "measured_m": 0.15,
+     "predicted_m": 0.34976400172901945,
+     "site": "Soma"
+    },
+    {
+     "blast_id": "Sm2",
+     "error_m": 0.15976400172901944,
+     "error_pct": 84.08631669948392,
+     "measured_m": 0.19,
+     "predicted_m": 0.34976400172901945,
+     "site": "Soma"
+    },
+    {
+     "blast_id": "Sm4",
+     "error_m": 0.12976400172901945,
+     "error_pct": 58.9836371495543,
+     "measured_m": 0.22,
+     "predicted_m": 0.34976400172901945,
+     "site": "Soma"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": 0.12547828744330516,
    "mae_m": 0.12547828744330516,
    "mape_pct": 61.92751311065149,
@@ -3217,6 +3325,16 @@
    "stemming-long": 0.34976400172901945
   },
   "kuznetsov": {
+   "base": 0.34976400172901945,
+   "blocky": 0.34976400172901945,
+   "burden-tight": 0.32246647635013626,
+   "burden-wide": 0.3750801053659366,
+   "powder-down": 0.41966521747187036,
+   "powder-up": 0.2962176867139372,
+   "spacing-wide": 0.3605553827088918,
+   "stemming-long": 0.34976400172901945
+  },
+  "kuznetsov-capped": {
    "base": 0.34976400172901945,
    "blocky": 0.34976400172901945,
    "burden-tight": 0.32246647635013626,
