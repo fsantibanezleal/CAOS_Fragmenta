@@ -2,7 +2,7 @@
 
 # Every arm, every protocol
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 Variance explained about the identity line. Random protocols: the median of the draws and their 5th to 95th percentiles. Held out by site: the pooled score over the ten folds with its site-resampled 95 percent interval, on every blast and on the blasts with resolvable geometry.
 
