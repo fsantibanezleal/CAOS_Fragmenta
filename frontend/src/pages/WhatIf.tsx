@@ -19,7 +19,6 @@ import { degenerateReason, kuznetsovX50M, patternFromRatios, PLAUSIBLE_X50_M, pu
 import { ARM_BY_ID, FEATURE_LABEL, formatSize } from '../lib/artifacts';
 import type { BlastRow, CaseArtifact, Lang } from '../lib/contract.types';
 import { useModels } from '../lib/facts';
-import { LineChart, type SeriesSpec } from '../viz/Charts';
 import { Panel } from '../viz/Panels';
 
 const FEATURES: (keyof LiveBlast)[] = ['S_over_B', 'H_over_B', 'B_over_D', 'T_over_B', 'Pf_kg_m3', 'XB_m', 'E_GPa'];
@@ -235,17 +234,38 @@ export function WhatIfTab({ artifact, blast }: { artifact: CaseArtifact; blast: 
   );
 }
 
-/** The baked response of each arm to the case's variants: one lever moved at a time. */
+/**
+ * The baked response of one arm to the case's variants: one lever moved at a time.
+ *
+ * The variants are categories, not points on an axis, so each one is a row with its name beside it
+ * and the arm's prediction as a dot, against a line at the design as fired. A line chart joined them
+ * as if they were a sequence, and their names overprinted each other along the x axis.
+ */
 function VariantResponse({ artifact }: { artifact: CaseArtifact }) {
   const lang = useShellLang();
   const es = lang === 'es';
   const [arm, setArm] = useState('kuznetsov');
+  const [hover, setHover] = useState<string | null>(null);
   const curves = artifact.variant_curves[arm] ?? {};
   const variants = artifact.variants;
-  const series: SeriesSpec[] = [
-    { id: 'response', label: es ? 'tamaño medio predicho, horneado' : 'predicted mean size, baked', values: variants.map((v) => curves[v.id] ?? null) },
-  ];
   const arms = Object.keys(artifact.variant_curves).filter((a) => ROWS.includes(a));
+  const base = curves.base ?? null;
+  const values = variants.map((v) => curves[v.id]).filter((v): v is number => typeof v === 'number');
+  const hi = Math.max(0.1, ...values) * 1.1;
+  const W = 720;
+  const L = 230;
+  const R = 700;
+  const rowH = 24;
+  const H = 12 + variants.length * rowH + 26;
+  const x = (v: number) => L + (Math.min(v, hi) / hi) * (R - L);
+  const ticks = [0, hi / 4, hi / 2, (3 * hi) / 4].map((t) => Math.round(t * 100) / 100);
+  const active = hover ? variants.find((v) => v.id === hover) : undefined;
+  const activeValue = active ? curves[active.id] : undefined;
+  const change = (v: number | null | undefined) =>
+    typeof v === 'number' && typeof base === 'number' && base > 0 ? (v / base - 1) * 100 : null;
+  const pctText = (p: number | null) =>
+    p === null ? '' : Math.abs(p) < 0.05 ? (es ? 'igual que el diseño' : 'same as designed') : `${p > 0 ? '+' : ''}${p.toFixed(1)} %`;
+
   return (
     <>
       <h3 className="fr-stage-title">{es ? 'Una palanca por vez, horneado' : 'One lever at a time, baked'}</h3>
@@ -257,15 +277,56 @@ function VariantResponse({ artifact }: { artifact: CaseArtifact }) {
           ))}
         </select>
       </label>
-      <LineChart
-        x={variants.map((_, i) => i)}
-        series={series}
-        xLabel={es ? 'variante' : 'variant'}
-        yLabel="x50"
-        xTickFormat={(v) => variants[Math.round(v)]?.label[lang] ?? ''}
-        valueFormat={(v) => formatSize(v)}
-        height={240}
-      />
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className="fr-svg"
+        role="img"
+        aria-label={es ? 'Respuesta a cada variante' : 'Response to each variant'}
+        data-chart="variants"
+        data-chart-rows={variants.length}
+        data-chart-dots={values.length}
+        onPointerLeave={() => setHover(null)}
+      >
+        {ticks.map((t) => (
+          <g key={t}>
+            <line x1={x(t)} y1={8} x2={x(t)} y2={12 + variants.length * rowH} stroke="var(--color-border)" strokeDasharray="2 4" />
+            <text x={x(t)} y={12 + variants.length * rowH + 16} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">{`${Math.round(t * 100)} cm`}</text>
+          </g>
+        ))}
+        {typeof base === 'number' ? (
+          <line x1={x(base)} y1={8} x2={x(base)} y2={12 + variants.length * rowH} stroke="var(--color-fg-subtle)" strokeWidth={1.5} />
+        ) : null}
+        {variants.map((v, i) => {
+          const cy = 12 + i * rowH + rowH / 2;
+          const value = curves[v.id];
+          return (
+            <g key={v.id} onPointerEnter={() => setHover(v.id)}>
+              <rect x={0} y={cy - rowH / 2} width={W} height={rowH} fill={hover === v.id ? 'var(--color-accent-soft)' : 'transparent'} />
+              <text x={L - 10} y={cy + 4} fill="var(--color-fg)" fontSize={11.5} textAnchor="end">{v.label[lang]}</text>
+              {typeof value === 'number' ? (
+                <circle cx={x(value)} cy={cy} r={5.5} fill={v.id === 'base' ? 'var(--color-fg-subtle)' : 'var(--color-accent)'} />
+              ) : (
+                <text x={L + 6} y={cy + 4} fill="var(--color-fg-faint)" fontSize={10.5}>{es ? 'se abstiene' : 'abstains'}</text>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+      <div className="fr-readout">
+        {active ? (
+          <>
+            <b>{active.label[lang]}</b>
+            {' · '}
+            {typeof activeValue === 'number' ? `${formatSize(activeValue)} · ${pctText(change(activeValue))}` : es ? 'se abstiene' : 'abstains'}
+          </>
+        ) : (
+          <span className="fr-fine">
+            {es
+              ? 'Cada fila mueve una sola palanca del diseño tal como se disparó (línea gris). Pase el puntero sobre una fila para leer el cambio.'
+              : 'Each row moves one lever of the design as fired (grey line). Point at a row to read the change.'}
+          </span>
+        )}
+      </div>
     </>
   );
 }
