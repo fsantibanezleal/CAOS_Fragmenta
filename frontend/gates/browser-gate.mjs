@@ -335,6 +335,17 @@ async function inspect(page) {
       clippedTabRows: [...document.querySelectorAll('[role="tablist"]')]
         .filter((list) => list.getClientRects().length && list.scrollHeight > list.clientHeight + 1)
         .map((list) => `${list.querySelector('[role="tab"]')?.textContent?.trim()}: ${list.clientHeight}px of ${list.scrollHeight}px`),
+      // Text an ellipsis cuts must carry its whole text where a pointer reaches it.
+      truncated: [...document.querySelectorAll('body *')]
+        .filter(
+          (el) =>
+            el.childElementCount === 0 &&
+            el.getClientRects().length &&
+            el.scrollWidth > el.clientWidth + 1 &&
+            getComputedStyle(el).textOverflow === 'ellipsis' &&
+            el.getAttribute('title') !== el.textContent.trim(),
+        )
+        .map((el) => el.textContent.trim().slice(0, 48)),
       // A table wider than its container is cut unless it sits in a declared horizontal scroller.
       tablesCut: [...document.querySelectorAll('table.fr-table')]
         .filter((t) => t.getClientRects().length && !t.closest('.fr-scroll-x'))
@@ -476,6 +487,7 @@ for (const [w, h] of VIEWPORTS) {
           );
         }
         if (info.bodyOverflowX > 1) fail(where, `the page is ${info.bodyOverflowX}px wider than the screen`);
+        if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
 
         if (route === '/' || route === '/app') {
           // The App route is locked to the viewport, so NOTHING may scroll the page itself.
@@ -604,6 +616,7 @@ for (const [w, h] of VIEWPORTS) {
         else if (info.tabRows !== 1) fail(where, `the tab strip wrapped onto ${info.tabRows} rows`);
         else if (info.clippedTabRows.length) fail(where, `a tab strip is cut: ${info.clippedTabRows.join(' | ')}`);
         else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
+        else if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
         else if (info.duplicateArmRows.length) fail(where, `comparison rows with identical scores: ${info.duplicateArmRows.join(' | ')}`);
         else if (!info.panels.length && !info.charts.length && info.benchHoles === null)
           fail(where, 'the tab rendered neither a panel nor a chart');
