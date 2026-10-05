@@ -60,7 +60,9 @@ python scripts/compare_bakes.py real-murgul --repeat 2
 If two bakes differ, something is reading a wall clock, iterating an unordered set, or stopping on a
 time limit. On a different operating system the bake reproduces to a numeric tolerance instead, because
 two builds of the same numpy can reduce in a different order; `python scripts/compare_bakes.py` compares
-every number in every case and fails above a relative 1e-6 ([architecture/01](../architecture/01_the-bake.md)).
+every number in every case and in its models file, and fails above a relative 1e-6. Measured at
+0.06.000 between Windows and Linux: 2.7e-08 at worst in a case, 7.0e-07 in a models file, on a
+near-zero network weight ([architecture/01](../architecture/01_the-bake.md)).
 Both bake into a temporary directory, never the canonical tree. They run on a developer machine before a
 release; CI does not bake (ADR-0074).
 
