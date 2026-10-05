@@ -371,6 +371,18 @@ test('every field in every shipped artifact is named in the TypeScript contract 
     'benchmark.published_reproduction', 'benchmark.published_reproduction.*',
     'benchmark.site_counts', 'benchmark.verdict.protocol_gap_random_minus_grouped',
     'index.case_paths', 'index.cases.title',
+    // Schema v2 (0.05.000): maps keyed by an arm, a site, a blast, a support or a feature.
+    'benchmark.protocols.*.arms.*.per_site', 'benchmark.protocols.*.arms.*.predictions',
+    'benchmark.protocols.*.arms.*.supports', 'benchmark.verdict.supports',
+    'benchmark.provenance', 'benchmark.site_meta',
+    'benchmark.verdict.intervals_95', 'benchmark.verdict.intervals_95.*',
+    'benchmark.verdict.dedup_minus_random_median', 'benchmark.verdict.published_random_split_figures',
+    'benchmark.diagnostics.native_importance', 'benchmark.diagnostics.native_importance.*.values',
+    'benchmark.diagnostics.outliers.anomaly_score', 'benchmark.diagnostics.outliers.flagged_by_site',
+    'benchmark.diagnostics.published_importance', 'benchmark.diagnostics.published_importance.*',
+    'benchmark.diagnostics.resampling_importance',
+    'benchmark.diagnostics.resampling_importance.*.mean_increase_in_mse',
+    'benchmark.diagnostics.resampling_importance.*.share',
     // ControlBlock is deliberately open: `[key: string]: unknown`. Each control reports the counts
     // that make sense for the thing it controls, and forcing them into one shape would flatten
     // what each one measures.
