@@ -128,7 +128,13 @@ _BODIES = [
     r"`((?:\\.|[^`\\])*)`",
 ]
 _HEADS = [r"\bes\s*\?\s*", r"lang\s*===\s*'es'\s*\?\s*", r"\b(?:\w*_)?es\s*:\s*"]
+# A bilingual helper call, t('english', 'spanish'): the SECOND argument is the Spanish. The diagrams
+# and the architecture-drawing generator write their Spanish this way, and until 0.05.000 none of it
+# was scanned.
+_HEADS.append(r"\bt\(\s*(?:'(?:\\.|[^'\\])*'|" + r'"(?:\\.|[^"\\])*"' + r"|`(?:\\.|[^`\\])*`)\s*,\s*")
 JSX_PATTERNS = [re.compile(head + body, re.S) for head in _HEADS for body in _BODIES]
+# Code inside a template literal is not Spanish: `${b.engine_version}` is an identifier.
+INTERPOLATION = re.compile(r"\$\{[^}]*\}")
 WORD = re.compile(r"[A-Za-zÀ-ſ]+")
 
 
@@ -142,8 +148,9 @@ def spanish_strings() -> list[tuple[str, str]]:
     """Every Spanish literal in the product, as (where, text)."""
     found: list[tuple[str, str]] = []
 
-    for path in sorted(set(tracked("frontend/src/**"))):
-        if path.suffix not in {".ts", ".tsx"} or path.name == SELF:
+    sources = set(tracked("frontend/src/**")) | {ROOT / "scripts" / "build_architecture_svgs.py"}
+    for path in sorted(sources):
+        if path.suffix not in {".ts", ".tsx", ".py"} or path.name == SELF or not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
         seen = set()
@@ -198,7 +205,7 @@ def problems_in(where: str, text: str) -> list[str]:
         problems.append(f"{where}: a decomposed accent, which some fonts render wrongly")
     if "�" in text:
         problems.append(f"{where}: a replacement character, so this string was mis-encoded")
-    for m in WORD.finditer(text):
+    for m in WORD.finditer(INTERPOLATION.sub(" ", text)):
         fixed = REQUIRED.get(m.group(0).lower())
         if fixed:
             problems.append(f"{where}: '{m.group(0)}' should be '{fixed}'")
