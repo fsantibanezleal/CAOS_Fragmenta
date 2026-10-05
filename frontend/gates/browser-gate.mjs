@@ -29,6 +29,8 @@
 //     0.05.000 the gate never clicked a documentation sub-tab and never measured a figure, which is
 //     how a note running through the Group 2 box of the router diagram shipped;
 //   - the architecture modal's drawings, measured the same way.
+//   - every size column states one unit, the rail leaves no empty band above its last control, and
+//     the Benchmark's published-network sub-tab carries the width sweep, drawn (0.06.000).
 //
 // Usage:
 //   npm run build && npx vite preview --port 4173 &
@@ -363,6 +365,56 @@ async function inspect(page) {
         }
         return dup;
       })(),
+      // HY-001: one unit per column. Until 0.06.000 the unit was picked by magnitude, which put
+      // "22 mm" above "11.0 cm" in the model comparison's RMSE column, so a reader comparing two
+      // rows compared two units first.
+      mixedUnits: (() => {
+        const unitOf = (text) => /^[-+\u2212]?\d[\d.,]*\s*(mm|cm|m)$/.exec(text.trim())?.[1] ?? null;
+        const out = [];
+        for (const table of document.querySelectorAll('table')) {
+          if (!table.getClientRects().length) continue;
+          const columns = new Map();
+          for (const tr of table.querySelectorAll('tbody tr')) {
+            [...tr.cells].forEach((cell, i) => {
+              const unit = unitOf(cell.textContent || '');
+              if (!unit) return;
+              if (!columns.has(i)) columns.set(i, new Set());
+              columns.get(i).add(unit);
+            });
+          }
+          for (const [i, units] of columns) {
+            if (units.size < 2) continue;
+            const head = table.querySelector('thead tr')?.cells[i]?.textContent?.trim() || `column ${i + 1}`;
+            out.push(`${head}: ${[...units].join(' and ')}`);
+          }
+        }
+        return out;
+      })(),
+      // HY-002: no band of empty rail above its last control. The reading pane grew to fill the rail
+      // until 0.06.000, so on a short case the full-screen link sat at the bottom of the screen under
+      // an empty band. The pane's box reached the link, so its VISIBLE bottom is measured: its last
+      // child's bottom plus that child's margin and the pane's own padding and border.
+      railGaps: (() => {
+        const rail = document.querySelector('.fr-rail');
+        if (!rail) return null;
+        const items = [...rail.children].filter((el) => el.getClientRects().length);
+        const visibleBottom = (el) => {
+          const box = el.getBoundingClientRect();
+          const kids = [...el.children].filter((c) => c.getClientRects().length);
+          if (!kids.length) return box.bottom;
+          const last = kids.reduce((a, b) => (b.getBoundingClientRect().bottom > a.getBoundingClientRect().bottom ? b : a));
+          const own = getComputedStyle(el);
+          const content =
+            last.getBoundingClientRect().bottom +
+            parseFloat(getComputedStyle(last).marginBottom) +
+            parseFloat(own.paddingBottom) +
+            parseFloat(own.borderBottomWidth);
+          return Math.min(box.bottom, content);
+        };
+        const gaps = items.slice(1).map((el, i) => Math.round(el.getBoundingClientRect().top - visibleBottom(items[i])));
+        if (gaps.length < 2) return null;
+        return { last: gaps[gaps.length - 1], others: Math.max(...gaps.slice(0, -1)) };
+      })(),
     };
   });
 }
@@ -488,6 +540,7 @@ for (const [w, h] of VIEWPORTS) {
         }
         if (info.bodyOverflowX > 1) fail(where, `the page is ${info.bodyOverflowX}px wider than the screen`);
         if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
+        if (info.mixedUnits.length) fail(where, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
 
         if (route === '/' || route === '/app') {
           // The App route is locked to the viewport, so NOTHING may scroll the page itself.
@@ -497,6 +550,10 @@ for (const [w, h] of VIEWPORTS) {
             fail(where, `${info.railControlsBelowFold}px of rail controls below the fold (ADR-0071 rule 6)`);
           if (!info.caseSelectOptgroups)
             fail(where, 'the case control is not a select with optgroups (ADR-0071 rule 7)');
+          if (!info.railGaps) fail(where, 'the rail has too few controls to measure its gaps');
+          else if (info.railGaps.last > info.railGaps.others + 4)
+            fail(where, `${info.railGaps.last}px of empty rail above its last control, against ${info.railGaps.others}px between the others`);
+          else pass(`${where} rail`, `${info.railGaps.last}px above the last control, ${info.railGaps.others}px between the others`);
           if (info.instrumentFraction < INSTRUMENT_FLOOR)
             fail(
               where,
@@ -532,6 +589,7 @@ for (const [w, h] of VIEWPORTS) {
           const subtabs = page.locator('.subtabs-vertical .subtablist [role="tab"]');
           const count = await subtabs.count();
           const seen = [];
+          let sweepChecked = false;
           const doTab = async (label) => {
             const figures = await measureFigures(page, 'figure svg');
             seen.push(figures.n);
@@ -540,6 +598,26 @@ for (const [w, h] of VIEWPORTS) {
             if (runTogether.length) fail(`${where} ${label}`, `citations with no space between: ${runTogether.slice(0, 3).join(' | ')}`);
             const info = await inspect(page);
             if (info.brokenPanels.length) fail(`${where} ${label}`, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
+            if (info.mixedUnits.length) fail(`${where} ${label}`, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
+            // EN-008: the network's own sub-tab carries the width sweep, drawn and declared.
+            if (route.startsWith('/benchmark') && /published network|red publicada/i.test(label)) {
+              sweepChecked = true;
+              const sweep = await page.evaluate(() => {
+                const el = document.querySelector('[data-width-sweep]');
+                if (!el) return null;
+                const chart = el.querySelector('[data-chart]');
+                const drawn = chart
+                  ? [...chart.attributes]
+                      .filter((a) => a.name.startsWith('data-chart-'))
+                      .reduce((sum, a) => sum + (Number(a.value) || 0), 0)
+                  : 0;
+                return { widths: Number(el.getAttribute('data-width-sweep')) || 0, drawn };
+              });
+              if (!sweep) fail(`${where} ${label}`, 'the width sweep is not on the published-network sub-tab');
+              else if (!sweep.widths || !sweep.drawn)
+                fail(`${where} ${label}`, `the width sweep declares ${sweep.widths} widths and its chart ${sweep.drawn} drawn`);
+              else pass(`${where} ${label} width sweep`, `${sweep.widths} widths drawn`);
+            }
             for (const chart of info.charts) {
               const total = Object.values(chart.declared).reduce((a, b) => a + b, 0);
               if (!total) fail(`${where} ${label}`, `the ${chart.chart} chart declared nothing drawn`);
@@ -560,6 +638,9 @@ for (const [w, h] of VIEWPORTS) {
             if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
             await doTab(label);
           }
+          // A renamed sub-tab must not skip the check silently.
+          if (route.startsWith('/benchmark') && !sweepChecked)
+            fail(where, 'no sub-tab named "The published network" ("La red publicada") to check the width sweep on');
           pass(`${where} figures`, `${count || 1} sections, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
           problems.length = 0;
         }
@@ -618,6 +699,7 @@ for (const [w, h] of VIEWPORTS) {
         else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
         else if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
         else if (info.duplicateArmRows.length) fail(where, `comparison rows with identical scores: ${info.duplicateArmRows.join(' | ')}`);
+        else if (info.mixedUnits.length) fail(where, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
         else if (!info.panels.length && !info.charts.length && info.benchHoles === null)
           fail(where, 'the tab rendered neither a panel nor a chart');
         else

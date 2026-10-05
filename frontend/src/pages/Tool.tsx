@@ -563,7 +563,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
           {blast.geometry_reason ??
             blast.degenerate_reason ??
             (lang === 'es'
-              ? 'Este tiro no tiene geometría absoluta ni factor de roca, así que ningún modelo de distribución puede correr sobre el.'
+              ? 'Este tiro no tiene geometría absoluta ni factor de roca, así que ningún modelo de distribución puede correr sobre él.'
               : 'This blast has neither an absolute geometry nor a rock factor, so no distribution model can run on it.')}
         </p>
       </Panel>

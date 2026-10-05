@@ -380,10 +380,15 @@ export const FEATURE_LABEL: Record<string, Record<Lang, string>> = {
   E_GPa: { en: 'Young modulus, GPa', es: 'Módulo de Young, GPa' },
 };
 
-/** Format a fragment size for a readout: millimetres below 10 cm, centimetres above. */
+/**
+ * Format a fragment size, always in centimetres to one decimal.
+ *
+ * Until 0.06.000 the unit was picked by magnitude (millimetres below 10 cm), which put "22 mm" above
+ * "11.0 cm" in one table column and "45 mm" beside "11.0 cm" in one readout. One unit for every size
+ * in the product makes any two of them comparable at a glance; the browser gate checks the columns.
+ */
 export function formatSize(metres: number | null | undefined): string {
   if (metres === null || metres === undefined || !Number.isFinite(metres)) return 'n/a';
-  if (metres < 0.1) return `${(metres * 1000).toFixed(0)} mm`;
   return `${(metres * 100).toFixed(1)} cm`;
 }
 
