@@ -65,6 +65,23 @@ def test_the_bake_was_made_from_the_installed_corpus(index):
     assert index["corpus_digest"] == bf.datasets.DATASET_DIGEST
 
 
+def test_the_release_gate_rejects_an_edited_benchmark(tmp_path):
+    """The benchmark is the file the verdict comes from; until 0.05.000 the gate never read it.
+
+    The check runs on a copy, so the test cannot rewrite the artifact it is checking.
+    """
+    import shutil
+
+    shutil.copytree(DERIVED, tmp_path / "derived")
+    path = tmp_path / "derived" / "benchmark.json"
+    text = path.read_text(encoding="utf-8")
+    assert '"n_boot": 2000' in text
+    path.write_text(text.replace('"n_boot": 2000', '"n_boot": 2001'), encoding="utf-8", newline="")
+    report = validate.run(tmp_path / "derived")
+    assert not report.ok
+    assert any(p.startswith("benchmark: content digest") for p in report.problems)
+
+
 # ---------------------------------------------------------------------------------------------
 # The case matrix
 # ---------------------------------------------------------------------------------------------
