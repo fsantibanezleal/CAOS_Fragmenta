@@ -34,6 +34,7 @@
 //   npm run build && npx vite preview --port 4173 &
 //   node gates/browser-gate.mjs --url http://localhost:4173
 //   node gates/browser-gate.mjs --url https://fragmenta.fasl-work.com --shots ./out
+//   GATE_FONTS=dejavu node gates/browser-gate.mjs --url http://localhost:4173   (the runner's fonts)
 import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright';
 
@@ -279,6 +280,7 @@ async function inspect(page) {
       // Shell known defect 4: the language the DOCUMENT declares, which is what a screen reader and
       // a search engine read. The setting in storage is not evidence of it.
       docLang: document.documentElement.lang,
+      font: getComputedStyle(document.body).fontFamily,
       bodyOverflowX: document.body.scrollWidth - document.body.clientWidth,
       // Rule 6: every CONTROL in the rail is reachable without scrolling it. The reading pane inside
       // the rail may scroll, because it is reading and not controls.
@@ -377,6 +379,18 @@ for (const [w, h] of VIEWPORTS) {
         },
         [theme, lang],
       );
+      // GATE_FONTS=dejavu sets text in the deploy runner's fonts (DejaVu Sans; Courier New has Liberation
+      // Mono's metrics), so a Windows run sees the wraps that only the Linux gate saw before.
+      if (process.env.GATE_FONTS === 'dejavu') {
+        await context.addInitScript(() => {
+          document.addEventListener('DOMContentLoaded', () => {
+            const style = document.createElement('style');
+            style.textContent =
+              ':root{--font-sans:"DejaVu Sans",sans-serif !important;--font-mono:"Courier New",monospace !important}';
+            document.head.appendChild(style);
+          });
+        });
+      }
       const page = await context.newPage();
       const problems = [];
       page.on('console', (m) => {
@@ -423,6 +437,8 @@ for (const [w, h] of VIEWPORTS) {
         if (info.lang !== lang) fail(where, `asked for ${lang} and the page is in ${info.lang}`);
         if (info.docLang !== lang)
           fail(where, `the page reads ${lang} but the document declares lang="${info.docLang}"`);
+        if (process.env.GATE_FONTS === 'dejavu' && !info.font.includes('DejaVu'))
+          fail(where, `asked for the runner's fonts and the page is set in ${info.font}`);
 
         // Shell known defect 1: the document cannot scroll. Measured the way the defect record says,
         // with the content height taken through <body> as well, because the defect is precisely what
