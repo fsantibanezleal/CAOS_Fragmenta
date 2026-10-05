@@ -292,6 +292,18 @@ def blocks(b: dict) -> dict[str, str]:
             f"| {n} | {f(arms[k].get('r2_identity'))} | {f(arms[k].get('pearson_r2'))} | {f(arms[k].get('rmse_m'), 4)} |"
         )
     out["holdout-2012"] = "\n".join(rows)
+    camp = [
+        "| campaign | mine | rock | E, GPa | hole diameter, mm | blasts | mean measured x50, m | measurement, where stated |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for site in b["sites"]:
+        m = b["site_meta"][site]
+        camp.append(
+            f"| {site} | {m['mine'] or '-'} | {m['rock'] or '-'} | {', '.join(str(e) for e in m['E_GPa'])} | "
+            f"{m['hole_diameter_mm'] or 'not published'} | {m['n_blasts']} | {f(m['mean_x50_m'])} | "
+            f"{m['measurement'] or 'not stated'} |"
+        )
+    out["campaigns"] = "\n".join(camp)
     L = b["protocols"]["leave-one-site-out"]["arms"]
     rows = [
         "| held-out campaign | E, GPa | A recovered for the site | A from the line on all sites | "
