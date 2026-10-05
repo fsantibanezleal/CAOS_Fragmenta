@@ -42,7 +42,8 @@ import {
   type LiveBlast,
 } from '../engine/live';
 import { BenchView3D } from '../viz/BenchView3D';
-import { DistributionChart, LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
+import { WhatIfTab } from './WhatIf';
+import { DistributionChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import {
   AbstentionPanel,
   DecisionPanel,
@@ -151,10 +152,12 @@ export default function Tool() {
       ),
     },
     {
-      id: 'explain',
-      label: lang === 'es' ? 'Explicar' : 'Explain',
+      // The live lane for every arm, learned ones included, from this case's own fitted models.
+      // Replaced the one-lever-at-a-time Explain tab in 0.05.000; that chart is kept inside it.
+      id: 'whatif',
+      label: lang === 'es' ? 'Qué pasa si' : 'What if',
       content: (
-        <TabBoundary id="explain"><ExplainTab artifact={artifact} armId={armId} /></TabBoundary>
+        <TabBoundary id="whatif"><WhatIfTab artifact={artifact} blast={blast} /></TabBoundary>
       ),
     },
     {
@@ -893,119 +896,6 @@ function RockCard({
   );
 }
 
-/* ------------------------------------------------------------------------------------------- */
-/* Explain                                                                                       */
-/* ------------------------------------------------------------------------------------------- */
-
-function ExplainTab({ artifact, armId }: { artifact: CaseArtifact; armId: string }) {
-  const lang = useShellLang();
-  const curves = artifact.variant_curves[armId] ?? {};
-  const variants = artifact.variants;
-  const base = curves.base ?? null;
-
-  const x = variants.map((_, i) => i);
-  const series: SeriesSpec[] = [
-    {
-      id: 'response',
-      label: lang === 'es' ? 'tamaño medio predicho' : 'predicted mean size',
-      values: variants.map((v) => curves[v.id] ?? null),
-    },
-  ];
-
-  return (
-    <div className="fr-grid fr-grid-2">
-      <div className="fr-stage">
-        <h3 className="fr-stage-title">
-          {lang === 'es' ? 'Respuesta a cada palanca' : 'Response to each lever'}
-        </h3>
-        <LineChart
-          x={x}
-          series={series}
-          xLabel={lang === 'es' ? 'variante' : 'variant'}
-          yLabel={lang === 'es' ? 'x50, m' : 'x50, m'}
-          xTickFormat={(v) => variants[Math.round(v)]?.label[lang] ?? ''}
-          valueFormat={(v) => formatSize(v)}
-          height={300}
-        />
-        <table className="fr-table">
-          <thead>
-            <tr>
-              <th>{lang === 'es' ? 'variante' : 'variant'}</th>
-              <th>{lang === 'es' ? 'campo' : 'field'}</th>
-              <th>{lang === 'es' ? 'factor' : 'factor'}</th>
-              <th>x50</th>
-              <th>{lang === 'es' ? 'cambio' : 'change'}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {variants.map((variant) => {
-              const value = curves[variant.id];
-              const change = base && value ? (value - base) / base : null;
-              return (
-                <tr key={variant.id}>
-                  <td>{variant.label[lang]}</td>
-                  <td>
-                    <code>{variant.field === 'none' ? '-' : variant.field}</code>
-                  </td>
-                  <td>{variant.factor.toFixed(2)}</td>
-                  <td>{formatSize(value)}</td>
-                  <td className={change === null ? '' : change > 0 ? 'fr-warn' : 'fr-ok'}>
-                    {change === null ? '-' : `${change > 0 ? '+' : ''}${(change * 100).toFixed(1)}%`}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="fr-side">
-        <Panel
-          id="how-to-read"
-          title={lang === 'es' ? 'Cómo leer esto' : 'How to read this'}
-          note={
-            lang === 'es'
-              ? 'Una variante es un diseño que no se ha disparado, así que no tiene medición y nunca se puntúa contra la del tiro original.'
-              : 'A variant is a design that has not been fired, so it has no measurement and is never scored against the original blast’s.'
-          }
-        >
-          <p className="fr-note">
-            {lang === 'es'
-              ? 'Cada variante mueve un solo campo por un multiplicador, de modo que la respuesta a esa palanca queda aislada. Las campañas reales varían varias cosas a la vez.'
-              : 'Each variant moves a single field by a multiplier, so the response to that lever is isolated. Real campaigns vary several things at once.'}
-          </p>
-        </Panel>
-        <Panel id="signs" title={lang === 'es' ? 'Signos que deben cumplirse' : 'Signs that must hold'}>
-          <ul className="fr-list">
-            <li>
-              {lang === 'es'
-                ? 'Más explosivo debe predecir roca más fina.'
-                : 'More explosive must predict finer rock.'}
-            </li>
-            <li>
-              {lang === 'es'
-                ? 'Un bordo más amplio debe predecir roca más gruesa.'
-                : 'A wider burden must predict coarser rock.'}
-            </li>
-            <li>
-              {lang === 'es'
-                ? 'Bloques in situ mayores deben predecir roca más gruesa.'
-                : 'Larger in situ blocks must predict coarser rock.'}
-            </li>
-          </ul>
-          <p className="fr-fine">
-            {lang === 'es'
-              ? 'Estos tres se comprueban en la suite de pruebas del producto. Si alguno se invierte, hay un signo equivocado en alguna parte.'
-              : 'All three are asserted in the product’s test suite. If any inverts, a sign is wrong somewhere.'}
-          </p>
-        </Panel>
-        <AbstentionPanel artifact={artifact} arm={armId} />
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------------------------------- */
-/* Decide                                                                                        */
 /* ------------------------------------------------------------------------------------------- */
 
 function DecideTab({
