@@ -8,4 +8,8 @@ That split is deliberate. A product declares no package of its own, so anything 
 use to predict blast fragmentation without caring about Fragmenta belongs upstream.
 """
 
-__version__ = "0.06.000"  # display X.XX.XXX; the PEP 440 form lives in frontend/package.json
+from pathlib import Path
+
+# VERSION is the one source of the version (display form X.XX.XXX); the PEP 440 form lives in
+# frontend/package.json. A literal here drifted once already: the dormant API still said an old release.
+__version__ = (Path(__file__).resolve().parents[2] / "VERSION").read_text(encoding="utf-8").strip()

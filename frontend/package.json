@@ -14,14 +14,15 @@
     "gate:browser": "node gates/browser-gate.mjs"
   },
   "dependencies": {
-    "@fasl-work/caos-app-shell": "^0.6.0",
+    "@fasl-work/caos-app-shell": "0.7.2",
     "katex": "^0.16.11",
     "lucide-react": "^0.469.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.1.1",
     "three": "^0.171.0",
-    "uplot": "^1.6.31"
+    "uplot": "^1.6.31",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@types/node": "^22.20.0",

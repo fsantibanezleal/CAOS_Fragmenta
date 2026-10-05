@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the five architecture-modal drawings from the committed artifacts.
 
-    python scripts/build_architecture_svgs.py          write frontend/public/svg/tech/*.svg
+    python scripts/build_architecture_svgs.py          write frontend/src/architecture/*.svg
     python scripts/build_architecture_svgs.py --check  fail if a committed drawing is out of date
 
 It also writes ``docs/assets/arch-*.svg``: the English layout with FIXED colours, because a markdown
@@ -32,7 +32,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DERIVED = ROOT / "data" / "derived"
-OUT = ROOT / "frontend" / "public" / "svg" / "tech"
+OUT = ROOT / "frontend" / "src" / "architecture"
 DOCS_ASSETS = ROOT / "docs" / "assets"
 
 # The light palette of the shared shell, for drawings that cannot read the theme.

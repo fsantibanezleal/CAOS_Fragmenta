@@ -2,4 +2,7 @@
 never run this. Activate only on an ADR-0002 trigger. A thin read-only layer over data/derived, never a
 re-implementation of the engine."""
 
-__version__ = "0.04.006"
+from pathlib import Path
+
+# VERSION is the one source; this literal had stayed at a release four versions old.
+__version__ = (Path(__file__).resolve().parents[1] / "VERSION").read_text(encoding="utf-8").strip()
