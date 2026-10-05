@@ -9,6 +9,10 @@ Schema v2 (0.05.000) carries what the engine's 0.3.0 benchmark measures: the spr
 draws per arm, every leave-one-site-out score on two supports with a site-resampled interval, the
 error on each held-out site, every out-of-fold prediction, what each arm was fitted on, and the
 diagnostics. Every number a page shows about the corpus as a whole comes from here.
+
+Schema v3 (0.06.000) adds what the engine's 0.4.0 measures: the capped classical arm (a declared choice),
+every arm's score on the rows every size-predicting arm answered (`common`, reported beside the declared
+supports and never deciding the verdict), and the network's hidden-width sweep.
 """
 
 from __future__ import annotations
@@ -23,7 +27,7 @@ from .export import digest
 
 __all__ = ["BENCHMARK_SCHEMA", "SITE_MEASUREMENT", "build", "write"]
 
-BENCHMARK_SCHEMA = "fragmenta.benchmark/v2"
+BENCHMARK_SCHEMA = "fragmenta.benchmark/v3"
 
 #: How each campaign measured its fragment sizes, ONLY where the source says so. Hudaverdi,
 #: Kulatilake and Kuzu 2010 section 3 states it for the two Istanbul quarries and for Soma; for the
@@ -69,6 +73,8 @@ def build(*, seed: int = 0, n_seeds: int = 30, n_repeats: int = 100, n_boot: int
                     "repeats": row.detail["repeats"],
                     "rmse_repeats": row.detail["rmse_repeats"],
                     "draws": row.detail["draws_r2_identity"],
+                    # The same draws on the rows every size-predicting arm answered (engine 0.4.0).
+                    "common": row.detail["common"],
                 }
             else:
                 block["arms"][row.arm] = {
@@ -77,6 +83,7 @@ def build(*, seed: int = 0, n_seeds: int = 30, n_repeats: int = 100, n_boot: int
                     "supports": row.detail["supports"],
                     "per_site": row.detail["per_site"],
                     "predictions": row.detail["predictions"],
+                    "common": row.detail["common"],
                 }
         protocols[protocol.protocol] = block
 
@@ -135,6 +142,8 @@ def build(*, seed: int = 0, n_seeds: int = 30, n_repeats: int = 100, n_boot: int
         "protocols": protocols,
         "published_reproduction": _published_reproduction(),
         "network_seed_sweep": _network_seed_sweep(corpus, n_seeds=n_seeds),
+        # The published widths, reproduced under the source's protocol and held out by site (engine 0.4.0).
+        "network_width_sweep": bf.network_width_sweep(corpus, bf.load_holdout(protocol="2012"), seed=seed),
         "duplicate_groups": bf.duplicate_groups(corpus),
         "sites": sites,
         "site_counts": {site: site_meta[site]["n_blasts"] for site in sites},

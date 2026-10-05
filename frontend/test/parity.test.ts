@@ -15,6 +15,7 @@ import test from 'node:test';
 
 import {
   assignGroup,
+  cappedAtInSituBlock,
   DISCRIMINANT_BOUNDARY,
   discriminantScore,
   kuznetsovX50M,
@@ -78,6 +79,63 @@ test('the classical mean size matches the baked value on every reconstructable b
     }
   }
   assert.ok(checked > 80, `only ${checked} blasts were checked, which proves too little`);
+});
+
+test('the capped classical mean size matches the baked value on every reconstructable blast', () => {
+  let checked = 0;
+  let bound = 0;
+  for (const artifact of cases) {
+    const row = artifact.predictions['kuznetsov-capped'] ?? {};
+    for (const blast of artifact.blasts) {
+      const cell = row[blast.blast_id];
+      if (!cell || cell.x50_m === null || !blast.pattern || blast.rock_factor === null) continue;
+      const classical = kuznetsovX50M(
+        {
+          burdenM: blast.pattern.burden_m,
+          spacingM: blast.pattern.spacing_m,
+          benchHeightM: blast.pattern.bench_height_m,
+          stemmingM: blast.pattern.stemming_m,
+          holeDiameterMm: blast.pattern.hole_diameter_mm,
+          powderFactor: blast.features.Pf_kg_m3,
+        },
+        blast.rock_factor,
+      );
+      const live = cappedAtInSituBlock(classical, blast.features.XB_m);
+      assert.ok(
+        Math.abs(live - cell.x50_m) < 5e-4,
+        `${artifact.case.id}/${blast.blast_id}: TypeScript ${live} against Python ${cell.x50_m}`,
+      );
+      assert.ok(cell.x50_m <= blast.features.XB_m + 1e-9, `${blast.blast_id}: above its in-situ block`);
+      if (classical > blast.features.XB_m) bound += 1;
+      checked += 1;
+    }
+  }
+  assert.ok(checked > 80, `only ${checked} blasts were checked, which proves too little`);
+  assert.ok(bound > 0, 'the cap bound on no blast, so this test proves nothing about it');
+});
+
+test('the capped classical arm equals the classical arm wherever its cap does not bind', () => {
+  let folded = 0;
+  let differing = 0;
+  cases.forEach((artifact, i) => {
+    const caseId = index.cases[i].case_id;
+    const capped = artifact.predictions['kuznetsov-capped'];
+    const base = artifact.predictions.kuznetsov;
+    assert.ok(capped && base, `${caseId}: the capped arm is missing`);
+    const binds = artifact.blasts.some((b) => (base[b.blast_id]?.x50_m ?? -1) > b.features.XB_m);
+    if (binds) {
+      differing += 1;
+      return;
+    }
+    for (const field of ['r2_identity', 'pearson_r2', 'rmse_m', 'n_scored', 'n_abstained'] as const) {
+      assert.equal(artifact.scores['kuznetsov-capped']?.[field], artifact.scores.kuznetsov?.[field], `${caseId}: ${field}`);
+    }
+    for (const [blastId, cell] of Object.entries(capped)) {
+      assert.equal(cell.x50_m, base[blastId]?.x50_m, `${caseId} ${blastId}`);
+    }
+    folded += 1;
+  });
+  assert.ok(folded > 0 && differing > 0, `${folded} cases where the cap never binds, ${differing} where it does`);
 });
 
 test('the published regression matches the baked value on every blast', () => {
@@ -407,6 +465,10 @@ test('every field in every shipped artifact is named in the TypeScript contract 
     'benchmark.diagnostics.resampling_importance',
     'benchmark.diagnostics.resampling_importance.*.mean_increase_in_mse',
     'benchmark.diagnostics.resampling_importance.*.share',
+    // Schema v3 (0.06.000): the width sweep, keyed by a stiffness group or a support.
+    'benchmark.network_width_sweep.published_protocol', 'benchmark.network_width_sweep.published_widths',
+    'benchmark.network_width_sweep.leave_one_site_out.hidden',
+    'benchmark.network_width_sweep.leave_one_site_out.supports',
     // ControlBlock is deliberately open: `[key: string]: unknown`. Each control reports the counts
     // that make sense for the thing it controls, and forcing them into one shape would flatten
     // what each one measures.
