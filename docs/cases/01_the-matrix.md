@@ -57,6 +57,16 @@ Their hole diameter is a choice this product makes, 165 mm, the most common diam
 the registry says so. Without it the classical arms would abstain on every synthetic case; abstention is
 right where the scale is unknown, and here the scale was chosen.
 
+**Why no arm is scored on its own output.** A synthetic truth produced by one of the arms would hand that
+arm a perfect score. The research plan therefore had the synthetic truth come from a model unlike any arm;
+as built, the design cases carry no truth at all, so no arm is ever scored on them, and the benchmark is
+computed on the 97 corpus blasts only. The one exception is deliberate: the positive control's truth is the
+published regression's own output, because its job is to show that the harness returns what it was given,
+and its write-up says it tests the harness rather than the science. Four tests hold this
+(`tests/test_pipeline.py`, the non-circularity block): no design carries a measurement or a score, no
+synthetic blast enters the benchmark, every design rebuilds with every arm's prediction disabled, and the
+positive control's truth is exactly the regression's.
+
 ## 6. Every case at a glance
 
 <!-- facts:cases -->
