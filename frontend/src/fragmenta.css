@@ -40,6 +40,20 @@ body,
   display: none;
 }
 
+/* The App route's compact footer on every route. At the shell's 0.85rem the ADR-0016 items need
+ * 1243px in Spanish under DejaVu Sans (the Linux fallback for the system stack) against 1152px, so the
+ * documentation footer wrapped on Linux while fitting on Windows. */
+.site-footer .footer-inner {
+  padding: 0.45rem 1.5rem;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.site-footer .footer-meta {
+  column-gap: 0.5rem;
+}
+
 /* ---------------------------------------------------------------------------------------------
  * The workbench route
  * ------------------------------------------------------------------------------------------- */
