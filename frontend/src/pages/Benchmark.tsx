@@ -528,7 +528,7 @@ function LiveCheck({ es, lang, b }: TabProps) {
         {es
           ? 'Esta sección no lee un puntaje horneado: carga los modelos ajustados sobre los 97 tiros, los corre en su navegador sobre tiros reales que no están en el corpus, y puntúa ahí mismo. Dos conjuntos: los doce tiros de validación de 2012, de los mismos sitios que el entrenamiento, y los cinco tiros de campo de 2025, en una roca más blanda que cualquiera del corpus.'
           : 'This section reads no baked score: it loads the models fitted on the 97 blasts, runs them in your browser on real blasts that are not in the corpus, and scores them on the spot. Two sets: the twelve 2012 hold-out blasts, from the same sites as the training rows, and the five 2025 field blasts, in a rock softer than any in the corpus.'}{' '}
-        <Cite id="kulatilake2012" />
+        <Cite id="kulatilake2012" />{' '}
         <Cite id="sui2025" />
       </p>
       <div className="fr-inline-controls">

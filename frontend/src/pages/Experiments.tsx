@@ -81,7 +81,7 @@ function Design({ es }: TabProps) {
         {es
           ? 'Todo lo que se ajusta, se ajusta solo con las filas de entrenamiento de cada partición: la escala de las entradas, los pesos, los árboles, la recta del factor de roca de transferencia. Lo que no se puede ajustar sin el corpus se declara: el enrutador y la regresión publicada vienen ajustados por su fuente sobre los 97 tiros, y el factor de roca recuperado usa predicciones publicadas del propio sitio. El criterio de descarte se declaró antes de correr; lo que cambió en 0.05 es lo que se informa a su lado.'
           : 'Everything that is fitted is fitted on each split’s training rows only: the input scaling, the weights, the trees, the transfer rock-factor line. What cannot be fitted without the corpus is declared: the router and the published regression come fitted by their source on the 97 blasts, and the recovered rock factor uses published predictions for the site itself. The kill criterion was declared before the run; what changed in 0.05 is what is reported beside it.'}{' '}
-        <Cite id="roberts2017" />
+        <Cite id="roberts2017" />{' '}
         <Cite id="kapoor2023" />
       </p>
       <Callout variant="honest" title={es ? 'Lo que cambió en 0.05, y por qué' : 'What changed in 0.05, and why'}>
@@ -126,7 +126,7 @@ function Metrics({ es, b }: TabProps) {
         {es
           ? 'El intervalo de un puntaje agrupado remuestrea campañas: se sortean diez campañas con reposición, se juntan sus tiros con sus predicciones fuera de pliegue y se recalcula el puntaje; los percentiles 2.5 y 97.5 de las 2000 repeticiones son el intervalo. Es un bootstrap por conglomerados, y es el adecuado cuando las filas de una campaña no son independientes.'
           : 'The interval of a pooled score resamples campaigns: ten campaigns are drawn with replacement, their blasts are gathered with their out-of-fold predictions, and the score is recomputed; the 2.5th and 97.5th percentiles of the 2000 repetitions are the interval. It is a cluster bootstrap, the appropriate one when the rows of a campaign are not independent.'}{' '}
-        <Cite id="efron1979" />
+        <Cite id="efron1979" />{' '}
         <Cite id="field2007" />
       </p>
       <Callout variant="note" title={es ? 'Lo que una curva necesitaría' : 'What a curve would need'}>
@@ -460,7 +460,7 @@ function Diagnostics({ es, lang, b }: TabProps) {
         {es
           ? `Un bosque de aislamiento separa cada punto con cortes aleatorios y lo califica por cuántos cortes necesita; los puntos raros se aíslan rápido. Huan y colegas pasaron una criba así sobre un superconjunto de 105 muestras de este corpus y marcaron cinco, que eliminaron. Aquí se corre sobre las siete variables y el logaritmo del tamaño medido, con la misma tasa, y marca ${flagged.length}: todos de las campañas más inusuales del corpus. Se informa y nunca se aplica como filtro, porque quitar esas filas quitaría la parte más difícil de la pregunta entre sitios.`
           : `An isolation forest separates each point with random cuts and scores it by how many cuts it takes; unusual points are isolated quickly. Huan and colleagues ran such a screen on a 105-sample superset of this corpus and flagged five, which they removed. Here it runs on the seven features and the logarithm of the measured size, at the same rate, and flags ${flagged.length}: all from the most unusual campaigns in the corpus. It is reported and never applied as a filter, because removing those rows would remove the hardest part of the cross-site question.`}{' '}
-        <Cite id="liu2008" />
+        <Cite id="liu2008" />{' '}
         <Cite id="huan2025" />
       </p>
       <table className="fr-table">
@@ -485,8 +485,8 @@ function Diagnostics({ es, lang, b }: TabProps) {
         {es
           ? 'Dos vistas de qué entradas pesan. La primera lee la importancia interna de un bosque y de un modelo de potenciación ajustados sobre los 97 tiros, para compararla con la que publica la fuente de 2025. La segunda pregunta cuánto empeora cada brazo en una campaña que no vio cuando una entrada de esa campaña se reemplaza por valores de las de entrenamiento.'
           : 'Two views of which inputs matter. The first reads the internal importance of a forest and a boosting model fitted on the 97 blasts, to compare it with what the 2025 source publishes. The second asks how much worse each arm does on a campaign it has not seen when one of that campaign’s inputs is replaced by values from the training campaigns.'}{' '}
-        <Cite id="breiman2001" />
-        <Cite id="chen2016" />
+        <Cite id="breiman2001" />{' '}
+        <Cite id="chen2016" />{' '}
         <Cite id="sui2025" />
       </p>
       <RatioTable

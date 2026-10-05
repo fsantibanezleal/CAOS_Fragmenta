@@ -75,7 +75,7 @@ function Classical({ es, b }: TabProps) {
         {es
           ? 'Kuznetsov publicó en 1973 una relación entre el diámetro medio de los fragmentos, la energía del explosivo y el volumen de roca que rompe cada barreno. Con la corrección de Cunningham por la potencia del explosivo es la base de la familia Kuz-Ram, y las dos fuentes de este producto la imprimen así, con el tamaño en centímetros, el volumen en metros cúbicos y la carga en kilogramos de equivalente TNT:'
           : 'Kuznetsov published in 1973 a relation between the mean fragment diameter, the explosive energy and the rock volume each hole breaks. With Cunningham’s explosive-strength correction it is the basis of the Kuz-Ram family, and both of this product’s sources print it this way, with the size in centimetres, the volume in cubic metres and the charge in kilograms of TNT equivalent:'}{' '}
-        <Cite id="kuznetsov1973" />
+        <Cite id="kuznetsov1973" />{' '}
         <Cite id="hudaverdi2010" />
       </p>
       <Equation
@@ -109,7 +109,7 @@ function Classical({ es, b }: TabProps) {
         {es
           ? `Dónde falla. Sobre el conjunto de validación publicado de doce tiros, la columna clásica que imprime el artículo de 2012 explica ${f(classical?.r2_identity)} de la varianza respecto de la identidad, con una correlación al cuadrado de ${f(classical?.pearson_r2)}; su error cuadrático medio de ${f(classical?.rmse_m)} m mejora en ${gain === null ? 'n/a' : Math.round(gain * 100)} por ciento al de predecir una constante. Es el peor de los tres modelos de esa tabla. Su falla mejor documentada es subestimar los finos. Bajo los protocolos de este producto puntúa cerca de 0.30 en todos: ${f(F?.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana y ${f(F?.site('kuznetsov'))} con su sitio excluido.`
           : `Where it fails. On the published twelve-blast hold-out, the classical column the 2012 paper prints explains ${f(classical?.r2_identity)} of the variance about the identity line, with a squared correlation of ${f(classical?.pearson_r2)}; its root mean square error of ${f(classical?.rmse_m)} m improves on predicting a constant by ${gain === null ? 'n/a' : Math.round(gain * 100)} percent. It is the worst of the three models in that table. Its best-documented failure is under-predicting fines. Under this product’s protocols it scores about 0.30 in all of them: ${f(F?.random('kuznetsov')?.r2_identity)} at the median random split and ${f(F?.site('kuznetsov'))} with its site held out.`}{' '}
-        <Cite id="kulatilake2012" />
+        <Cite id="kulatilake2012" />{' '}
         <Cite id="amoako2022" />
       </p>
       <ClassicalFlowDiagram />
@@ -226,7 +226,7 @@ function Distributions({ es }: TabProps) {
         {es
           ? 'La forma de tres parámetros, Swebrec, agrega un límite superior explícito, que aquí es el mayor entre bordo y espaciamiento, y una ondulación b que forma la rama de finos. Amoako y colegas escriben que es más adaptable y predice mejor los finos; Babaeian y colegas reportan una mina de bauxita, 24 tiros medidos por imágenes, donde la de dos parámetros quedó más cerca de la medición.'
           : 'The three-parameter Swebrec form adds an explicit upper limit, here the larger of burden and spacing, and an undulation b that shapes the fines branch. Amoako and colleagues write that it is more adaptable and predicts fines better; Babaeian and colleagues report a bauxite mine, 24 blasts measured by image analysis, where the two-parameter form landed closer to the measurement.'}{' '}
-        <Cite id="ouchterlony2005" />
+        <Cite id="ouchterlony2005" />{' '}
         <Cite id="babaeian2019" />
       </p>
       <Equation
@@ -315,7 +315,7 @@ function Network({ es, b }: TabProps) {
         {es
           ? 'Kulatilake, Hudaverdi y Wu especifican su red por completo: siete entradas, una capa oculta de unidades logísticas, una salida lineal, entrenada por separado en cada grupo de rigidez, con entradas y objetivo normalizados por mínimo y máximo. Justifican la capa oculta única con el resultado de aproximación universal de Cybenko, y eligen el algoritmo de Levenberg-Marquardt tras comparar cuatro, por su estabilidad y por llegar al mínimo en menos ciclos.'
           : 'Kulatilake, Hudaverdi and Wu specify their network completely: seven inputs, one hidden layer of logistic units, a linear output, trained separately on each stiffness group, with inputs and target normalised by minimum and maximum. They justify the single hidden layer with Cybenko’s universal-approximation result, and choose Levenberg-Marquardt after comparing four algorithms, for its stability and for reaching the minimum in fewer cycles.'}{' '}
-        <Cite id="kulatilake2012" />
+        <Cite id="kulatilake2012" />{' '}
         <Cite id="cybenko1989" />
       </p>
       <Equation
@@ -367,8 +367,8 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
         {es
           ? 'Dos fuentes ajustan regresión por vectores de soporte sobre este mismo corpus y llegan a conclusiones opuestas sobre el núcleo. Amoako y colegas buscan en 2700 combinaciones de cuatro núcleos y eligen uno radial con C 5.25 y épsilon 0.04; Sui y colegas usan uno polinomial de grado 5 con C 1 y lo reportan como el peor de sus tres aprendices. Ambos se reproducen. La regresión es una expansión en vectores de soporte, con las entradas estandarizadas:'
           : 'Two sources fit support-vector regression to this same corpus and reach opposite conclusions about the kernel. Amoako and colleagues search 2700 combinations of four kernels and choose a radial one with C 5.25 and epsilon 0.04; Sui and colleagues use a degree-5 polynomial with C 1 and report it as the worst of their three learners. Both are reproduced. The regression is an expansion over support vectors, with the inputs standardised:'}{' '}
-        <Cite id="amoako2022" />
-        <Cite id="sui2025" />
+        <Cite id="amoako2022" />{' '}
+        <Cite id="sui2025" />{' '}
         <Cite id="smola2004" />
       </p>
       <Equation
@@ -379,7 +379,7 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
         {es
           ? 'El bosque aleatorio promedia árboles crecidos sobre muestras bootstrap con subconjuntos aleatorios de variables; la potenciación por gradiente suma árboles pequeños, cada uno ajustado al residuo de los anteriores, escalados por una tasa de aprendizaje. Los parámetros finales publicados son 76 árboles con semilla 27 para el bosque, y tasa 0.5 con semilla 42 para la potenciación, que la fuente misma reporta como sobreajustada.'
           : 'The random forest averages trees grown on bootstrap samples with random subsets of the inputs; gradient boosting adds small trees, each fitted to the residual of the ones before, scaled by a learning rate. The published final parameters are 76 trees at seed 27 for the forest and a rate of 0.5 at seed 42 for the boosting, which the source itself reports as overfitting.'}{' '}
-        <Cite id="breiman2001" />
+        <Cite id="breiman2001" />{' '}
         <Cite id="chen2016" />
       </p>
       <Equation
@@ -434,7 +434,7 @@ function Protocols({ es, b }: TabProps) {
         {es
           ? `Tres protocolos parten las mismas filas. El aleatorio reproduce el publicado y el deduplicado colapsa antes los vectores repetidos; ambos se sortean ${b?.n_repeats ?? 'n/a'} veces y se informan por su mediana y sus percentiles 5 y 95. El tercero retiene una campaña completa por vez y puntúa juntas las predicciones fuera de pliegue de las diez campañas, de modo que cada tiro cuenta una vez. Retener grupos enteros es la forma de validar con datos agrupados que recomiendan Roberts y colegas.`
           : `Three protocols split the same rows. The random one reproduces the published protocol and the deduplicated one first collapses the repeated vectors; both are drawn ${b?.n_repeats ?? 'n/a'} times and reported by their median and their 5th and 95th percentiles. The third holds out one whole campaign at a time and scores the out-of-fold predictions of all ten campaigns together, so that every blast counts once. Holding out whole groups is how Roberts and colleagues recommend validating on grouped data.`}{' '}
-        <Cite id="roberts2017" />
+        <Cite id="roberts2017" />{' '}
         <Cite id="kapoor2023" />
       </p>
       <Equation
@@ -445,7 +445,7 @@ function Protocols({ es, b }: TabProps) {
         {es
           ? `El intervalo remuestrea sitios, no filas: se sortean diez sitios con reposición ${b?.n_boot ?? 'n/a'} veces, se recalcula el puntaje agrupado y se toman los percentiles 2.5 y 97.5. Remuestrear filas trataría los 22 tiros de una cantera como 22 observaciones independientes. Cada puntaje agrupado se informa además sobre dos conjuntos de filas: todos los tiros, y los ${v?.supports.geometry.n_blasts ?? 'n/a'} con geometría resoluble, que son los únicos donde responden los brazos clásicos.`
           : `The interval resamples sites, not rows: ten sites are drawn with replacement ${b?.n_boot ?? 'n/a'} times, the pooled score is recomputed, and the 2.5th and 97.5th percentiles are taken. Resampling rows would treat the 22 blasts of one quarry as 22 independent observations. Every pooled score is also reported on two row sets: every blast, and the ${v?.supports.geometry.n_blasts ?? 'n/a'} with resolvable geometry, the only rows the classical arms can answer.`}{' '}
-        <Cite id="efron1979" />
+        <Cite id="efron1979" />{' '}
         <Cite id="field2007" />
       </p>
       <Equation

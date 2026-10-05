@@ -64,7 +64,7 @@ export default function Introduction() {
           {es
             ? 'Las dos fuentes dividen los parámetros de una voladura en controlables y no controlables. Los controlables los fija el ingeniero: la geometría (diámetro de perforación, bordo, espaciamiento, altura de banco, taco, pasadura), el explosivo (tipo, potencia, factor de carga) y el tiempo (retardos y secuencia de iniciación). Los no controlables son la roca y el macizo: resistencia, módulo elástico, densidad, número, orientación y espaciamiento de las discontinuidades.'
             : 'Both sources divide the parameters of a blast into controllable and uncontrollable. The engineer sets the controllable ones: the geometry (hole diameter, burden, spacing, bench height, stemming, subdrill), the explosive (type, strength, powder factor) and the timing (delays and initiation sequence). The uncontrollable ones are the rock and the rock mass: strength, elastic modulus, density, and the number, orientation and spacing of the discontinuities.'}{' '}
-          <Cite id="hudaverdi2010" />
+          <Cite id="hudaverdi2010" />{' '}
           <Cite id="amoako2022" />
         </p>
         <BenchSectionDiagram />
@@ -83,7 +83,7 @@ export default function Introduction() {
           {es
             ? 'Tres relaciones recorren todo el producto. La primera es la ecuación clásica de tamaño medio, de Kuznetsov con la corrección de Cunningham por potencia del explosivo, tal como la imprimen las fuentes:'
             : 'Three relations run through the whole product. The first is the classical mean-size equation, Kuznetsov with Cunningham’s explosive-strength correction, as the sources print it:'}{' '}
-          <Cite id="kuznetsov1973" />
+          <Cite id="kuznetsov1973" />{' '}
           <Cite id="hudaverdi2010" />
         </p>
         <Equation
@@ -134,8 +134,8 @@ export default function Introduction() {
           {es
             ? 'La familia clásica se ha extendido muchas veces y una revisión de 2019 recorre esas extensiones. Desde 2012, además, una serie de modelos aprendidos se ha ajustado sobre el mismo corpus de 97 tiros: una red neuronal publicada con su especificación completa, regresión por vectores de soporte, bosques, potenciación y, en 2025, un ensamble apilado que reporta 0.943 de una sola partición aleatoria 80/20.'
             : 'The classical family has been extended many times, and a 2019 review surveys those extensions. Since 2012, a series of learned models has also been fitted to the same 97-blast corpus: a published neural network with its full specification, support-vector regression, forests, boosting and, in 2025, a stacked ensemble that reports 0.943 from one random 80/20 split.'}{' '}
-          <Cite id="ouchterlony2019" />
-          <Cite id="kulatilake2012" />
+          <Cite id="ouchterlony2019" />{' '}
+          <Cite id="kulatilake2012" />{' '}
           <Cite id="sui2025" />
         </p>
         <p>
@@ -208,8 +208,8 @@ export default function Introduction() {
           {es
             ? 'Dos conjuntos de prueba publicados acompañan al corpus, 14 tiros en total de los mismos sitios, uno de ellos con las predicciones de tres modelos impresas en la misma tabla. Un tercero son cinco tiros de producción en una mina de granito del noreste de China, de un artículo de acceso abierto, con un módulo de 5.6 GPa, por debajo del mínimo del corpus. Los valores numéricos son hechos experimentales reutilizados con cita; los artículos no se redistribuyen. El escaneo tridimensional es una alternativa al análisis de imágenes para medir un montón tronado, y se menciona como el canal de medición que mejoraría un corpus futuro.'
             : 'Two published hold-outs accompany the corpus, 14 blasts in all from the same sites, one of them with three models’ predictions printed in the same table. A third set is five production blasts at a granite mine in north-east China, from an open-access paper, with a modulus of 5.6 GPa, below the corpus minimum. The numeric values are experimental facts reused with citation; the articles are not redistributed. Three-dimensional scanning is an alternative to image analysis for measuring a muckpile and is noted as the measurement channel a future corpus could use.'}{' '}
-          <Cite id="kulatilake2012" />
-          <Cite id="sui2025" />
+          <Cite id="kulatilake2012" />{' '}
+          <Cite id="sui2025" />{' '}
           <Cite id="li2023" />
         </p>
         {refs('intro-data')}
