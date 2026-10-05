@@ -375,7 +375,15 @@ export function formatSigned(value: number | null | undefined, digits = 3): stri
   return `${value >= 0 ? '+' : ''}${value.toFixed(digits)}`;
 }
 
+const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+
 export function formatScore(value: number | null | undefined, digits = 3): string {
   if (value === null || value === undefined || !Number.isFinite(value)) return 'n/a';
+  // A refit collapses to -117792.670 on an unseen site; printed in full it widened every table it was in.
+  if (Math.abs(value) >= 1000) {
+    const [mantissa, exponent] = value.toExponential(1).split('e');
+    const power = [...String(Number(exponent))].map((c) => (c === '-' ? '⁻' : SUPERSCRIPT[Number(c)])).join('');
+    return `${mantissa}×10${power}`;
+  }
   return value.toFixed(digits);
 }
