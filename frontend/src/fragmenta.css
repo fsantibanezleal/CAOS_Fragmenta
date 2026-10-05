@@ -32,6 +32,14 @@ body,
   min-height: 100%;
 }
 
+/* Shell known defect 14 (caos-app-shell 0.6.8 to 0.6.13): the "·" before `.footer-build` stays on the
+ * left while the auto margin pushes the version right, so it ends the left group alone before the gap.
+ * The gap already separates the groups. CAOS_MANAGE conventions/shell-known-defects.md, entry 14;
+ * the browser gate's footer check fails on any separator that is not between two items. */
+.footer-meta > span[aria-hidden='true']:has(+ .footer-build) {
+  display: none;
+}
+
 /* ---------------------------------------------------------------------------------------------
  * The workbench route
  * ------------------------------------------------------------------------------------------- */
@@ -111,6 +119,12 @@ body,
   min-height: 0;
   display: flex;
   flex-direction: column;
+}
+
+/* The shell's tablist hides vertical overflow, which drops its minimum height to 0, so a tall panel
+ * squeezed it and cut the tabs. */
+.fr-main > .tabs > .tablist {
+  flex: 0 0 auto;
 }
 
 /* `:not([hidden])` is load-bearing. The shell keeps EVERY tab panel mounted and hides the inactive
@@ -747,6 +761,39 @@ body,
 
 .fr-armtable {
   margin-top: 4px;
+}
+
+/* The comparison sits in the score column, about 440px wide, so the tier badge goes under the name
+ * and the headers wrap instead of pushing the last column out of the column. */
+.fr-armtable .fr-table th {
+  white-space: normal;
+  vertical-align: bottom;
+}
+
+.fr-armtable .fr-table th,
+.fr-armtable .fr-table td {
+  padding-inline: 5px;
+}
+
+.fr-armtable .fr-table td:not(:first-child) {
+  white-space: nowrap;
+}
+
+.fr-arm-name {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.fr-inline-arm {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .fr-bar {

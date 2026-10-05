@@ -396,11 +396,18 @@ function ArmComparison({
   onArm: (id: string) => void;
 }) {
   const lang = useShellLang();
-  const rows = ARMS.filter((a) => artifact.scores[a.id]?.scoreable).sort(
-    (a, b) =>
-      (artifact.scores[b.id].r2_identity ?? -99) - (artifact.scores[a.id].r2_identity ?? -99),
-  );
+  const scored = ARMS.filter((a) => artifact.scores[a.id]?.scoreable);
+  // A curve-shape arm reuses another arm's mean size, so it scores identically and gets no row.
+  const shapes = scored.filter((a) => a.sharesMeanSizeWith);
+  const rows = scored
+    .filter((a) => !a.sharesMeanSizeWith)
+    .sort(
+      (a, b) =>
+        (artifact.scores[b.id].r2_identity ?? -99) - (artifact.scores[a.id].r2_identity ?? -99),
+    );
   if (!rows.length) return null;
+  const selectedRow = ARMS.find((a) => a.id === armId)?.sharesMeanSizeWith ?? armId;
+  const shapeTargets = [...new Set(shapes.map((a) => a.sharesMeanSizeWith as string))];
   return (
     <div className="fr-armtable">
       <h4>{lang === 'es' ? 'Todos los modelos en este caso' : 'Every model on this case'}</h4>
@@ -408,7 +415,6 @@ function ArmComparison({
         <thead>
           <tr>
             <th>{lang === 'es' ? 'modelo' : 'model'}</th>
-            <th>{lang === 'es' ? 'nivel' : 'tier'}</th>
             <th title="variance explained about the identity line">
               {lang === 'es' ? 'var. explicada' : 'variance explained'}
             </th>
@@ -425,7 +431,7 @@ function ArmComparison({
             return (
               <tr
                 key={arm.id}
-                className={arm.id === armId ? 'fr-row-selected' : ''}
+                className={arm.id === selectedRow ? 'fr-row-selected' : ''}
                 onClick={() => onArm(arm.id)}
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -433,8 +439,8 @@ function ArmComparison({
                 }}
                 role="button"
               >
-                <td>{arm.label[lang]}</td>
                 <td>
+                  <span className="fr-arm-name">{arm.label[lang]}</span>
                   <TierBadge tier={arm.tier} />
                 </td>
                 <td className={(score.r2_identity ?? 0) > 0 ? 'fr-ok' : 'fr-bad'}>
@@ -448,6 +454,26 @@ function ArmComparison({
           })}
         </tbody>
       </table>
+      {shapeTargets.map((target) => {
+        const own = shapes.filter((a) => a.sharesMeanSizeWith === target);
+        const names = own.map((a) => (
+          <button key={a.id} type="button" className="fr-inline-arm" onClick={() => onArm(a.id)}>
+            {a.label[lang]}
+          </button>
+        ));
+        const joined = names.flatMap((n, i) =>
+          i === 0 ? [n] : [i === names.length - 1 ? (lang === 'es' ? ' y ' : ' and ') : ', ', n],
+        );
+        const targetLabel = ARMS.find((a) => a.id === target)?.label[lang] ?? target;
+        return (
+          <p key={target} className="fr-fine" data-shared-mean-size={own.length}>
+            {joined}
+            {lang === 'es'
+              ? ` usan el tamaño medio de «${targetLabel}» y solo agregan la forma de la curva, así que en este caso puntúan exactamente igual que esa fila; sus curvas están en la pestaña Distribución.`
+              : ` use the mean size of "${targetLabel}" and add only the shape of the curve, so on this case they score exactly as that row; their curves are on the Distribution tab.`}
+          </p>
+        );
+      })}
       <p className="fr-fine">
         {lang === 'es'
           ? 'Las dos columnas de varianza son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo clásico.'
