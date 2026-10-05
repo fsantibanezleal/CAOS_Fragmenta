@@ -1,104 +1,112 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" class="arch-svg" role="img" aria-label="What Fragmenta is: the problem, the corpus, the ladder, the verdict">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 446" width="900" class="arch-svg" role="img" aria-label="What Fragmenta is">
   <style>
     .arch-svg text { font-family: var(--font-sans, Inter, "Segoe UI", system-ui, sans-serif); }
-    .arch-svg .mono { font-family: var(--font-mono, ui-monospace, Consolas, monospace); }
     .arch-svg .bx { fill: var(--color-surface-2); stroke: var(--color-border); stroke-width: 1.2; }
-    .arch-svg .bx-hi { stroke: var(--color-accent); stroke-width: 1.8; }
+    .arch-svg .bx-accent { stroke: var(--color-accent); stroke-width: 1.8; }
     .arch-svg .bx-good { stroke: var(--color-good); stroke-width: 1.8; }
     .arch-svg .bx-bad { stroke: var(--color-bad); stroke-width: 1.8; }
     .arch-svg .bx-warn { stroke: var(--color-warn); stroke-width: 1.8; }
     .arch-svg .ttl { fill: var(--color-fg); font-size: 14px; font-weight: 700; }
-    .arch-svg .hd { fill: var(--color-fg); font-size: 12px; font-weight: 650; }
-    .arch-svg .it { fill: var(--color-fg); font-size: 11px; }
-    .arch-svg .cd { fill: var(--color-accent); font-size: 9.5px; }
-    .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10px; }
-    .arch-svg .bad { fill: var(--color-bad); font-size: 10.5px; font-weight: 600; }
-    .arch-svg .good { fill: var(--color-good); font-size: 10.5px; font-weight: 600; }
-    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.6; }
+    .arch-svg .hd { fill: var(--color-fg); font-size: 12.5px; font-weight: 600; }
+    .arch-svg .mu { fill: var(--color-fg-subtle); font-size: 10.5px; }
+    .arch-svg .nt { fill: var(--color-fg-subtle); font-size: 11px; }
+    .arch-svg .band { stroke: var(--color-border); stroke-dasharray: 3 4; }
+    .arch-svg .flow { fill: none; stroke: var(--color-fg-faint); stroke-width: 1.5; }
   </style>
   <defs>
-    <marker id="fa1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L8,4 L0,8 z" fill="var(--color-fg-faint)"/>
     </marker>
   </defs>
-
-  <text class="ttl" x="22" y="30" >
-    <tspan class="l-en">What Fragmenta is</tspan><tspan class="l-es" x="22">Que es Fragmenta</tspan>
-  </text>
-
-  <rect class="bx bx-hi" x="20" y="52" width="200" height="128" rx="10"/>
-  <text class="hd" x="34" y="76"><tspan class="l-en">The question</tspan><tspan class="l-es" x="34">La pregunta</tspan></text>
-  <text class="it" x="34" y="98"><tspan class="l-en">For this rock and this</tspan><tspan class="l-es" x="34">Para esta roca y este</tspan></text>
-  <text class="it" x="34" y="114"><tspan class="l-en">bench, which pattern hits</tspan><tspan class="l-es" x="34">banco, que malla alcanza</tspan></text>
-  <text class="it" x="34" y="130"><tspan class="l-en">the P80 my crusher wants?</tspan><tspan class="l-es" x="34">el P80 de mi chancadora?</tspan></text>
-  <text class="mu" x="34" y="154"><tspan class="l-en">And how much should I</tspan><tspan class="l-es" x="34">Y cuanta confianza</tspan></text>
-  <text class="mu" x="34" y="168"><tspan class="l-en">trust the answer?</tspan><tspan class="l-es" x="34">merece la respuesta?</tspan></text>
-
-  <path class="flow" d="M224,116 L262,116" marker-end="url(#fa1)"/>
-
-  <rect class="bx bx-good" x="266" y="52" width="210" height="128" rx="10"/>
-  <text class="hd" x="280" y="76"><tspan class="l-en">The evidence</tspan><tspan class="l-es" x="280">La evidencia</tspan></text>
-  <text class="mono cd" x="280" y="98">97 real bench blasts</text>
-  <text class="mono cd" x="280" y="114">10 campaigns, 4 continents</text>
-  <text class="mono cd" x="280" y="130">14-blast published hold-out</text>
-  <text class="mono cd" x="280" y="146">5 field blasts, out of envelope</text>
-  <text class="mu" x="280" y="168"><tspan class="l-en">x50 measured by image analysis</tspan><tspan class="l-es" x="280">x50 medido por analisis de imagen</tspan></text>
-
-  <path class="flow" d="M480,116 L518,116" marker-end="url(#fa1)"/>
-
-  <rect class="bx bx-hi" x="522" y="30" width="180" height="80" rx="10"/>
-  <text class="hd" x="536" y="52"><tspan class="l-en">Twelve models</tspan><tspan class="l-es" x="536">Doce modelos</tspan></text>
-  <text class="mono cd" x="536" y="72">classical to ensemble</text>
-  <text class="mono cd" x="536" y="88">4 tiers, 2 controls</text>
-  <text class="mu" x="536" y="102">1973 to 2025</text>
-
-  <rect class="bx bx-warn" x="522" y="122" width="180" height="80" rx="10"/>
-  <text class="hd" x="536" y="144"><tspan class="l-en">Three protocols</tspan><tspan class="l-es" x="536">Tres protocolos</tspan></text>
-  <text class="mono cd" x="536" y="164">random 80/20</text>
-  <text class="mono cd" x="536" y="180">deduplicated</text>
-  <text class="mono cd" x="536" y="196">leave one site out</text>
-
-  <path class="flow" d="M706,70 L742,104" marker-end="url(#fa1)"/>
-  <path class="flow" d="M706,162 L742,128" marker-end="url(#fa1)"/>
-
-  <rect class="bx bx-bad" x="746" y="66" width="140" height="100" rx="10"/>
-  <text class="hd" x="758" y="88"><tspan class="l-en">The verdict</tspan><tspan class="l-es" x="758">El veredicto</tspan></text>
-  <text class="bad" x="758" y="110">0 of 6</text>
-  <text class="mu" x="758" y="126"><tspan class="l-en">learned models</tspan><tspan class="l-es" x="758">modelos aprendidos</tspan></text>
-  <text class="mu" x="758" y="140"><tspan class="l-en">positive across sites</tspan><tspan class="l-es" x="758">positivos entre sitios</tspan></text>
-  <text class="good" x="758" y="158">2 fixed ones hold</text>
-
-  <line x1="20" y1="212" x2="880" y2="212" stroke="var(--color-border)" stroke-width="1"/>
-
-  <text class="ttl" x="22" y="242"><tspan class="l-en">What it is NOT</tspan><tspan class="l-es" x="22">Lo que NO es</tspan></text>
-
-  <rect class="bx" x="20" y="256" width="210" height="86" rx="10"/>
-  <text class="hd" x="34" y="278"><tspan class="l-en">Not a simulator</tspan><tspan class="l-es" x="34">No es un simulador</tspan></text>
-  <text class="mu" x="34" y="298"><tspan class="l-en">no discrete elements, no</tspan><tspan class="l-es" x="34">sin elementos discretos, sin</tspan></text>
-  <text class="mu" x="34" y="312"><tspan class="l-en">hybrid stress blasting model,</tspan><tspan class="l-es" x="34">modelo hibrido de tension,</tspan></text>
-  <text class="mu" x="34" y="326"><tspan class="l-en">no non-ideal detonics</tspan><tspan class="l-es" x="34">sin detonica no ideal</tspan></text>
-
-  <rect class="bx" x="242" y="256" width="210" height="86" rx="10"/>
-  <text class="hd" x="256" y="278"><tspan class="l-en">Timing is choreography</tspan><tspan class="l-es" x="256">El tiempo es coreografia</tspan></text>
-  <text class="mu" x="256" y="298"><tspan class="l-en">the timing factor is a scalar</tspan><tspan class="l-es" x="256">el factor de tiempo es un</tspan></text>
-  <text class="mu" x="256" y="312"><tspan class="l-en">on the mean size, with no</tspan><tspan class="l-es" x="256">escalar sobre el tamano medio,</tspan></text>
-  <text class="mu" x="256" y="326"><tspan class="l-en">spatial structure at all</tspan><tspan class="l-es" x="256">sin estructura espacial</tspan></text>
-
-  <rect class="bx" x="464" y="256" width="210" height="86" rx="10"/>
-  <text class="hd" x="478" y="278"><tspan class="l-en">No downstream model</tspan><tspan class="l-es" x="478">Sin modelo aguas abajo</tspan></text>
-  <text class="mu" x="478" y="298"><tspan class="l-en">no flyrock, no ground</tspan><tspan class="l-es" x="478">sin proyeccion de rocas, sin</tspan></text>
-  <text class="mu" x="478" y="312"><tspan class="l-en">vibration, no crusher and</tspan><tspan class="l-es" x="478">vibracion, sin chancadora</tspan></text>
-  <text class="mu" x="478" y="326"><tspan class="l-en">no mill</tspan><tspan class="l-es" x="478">ni molino</tspan></text>
-
-  <rect class="bx bx-warn" x="686" y="256" width="200" height="86" rx="10"/>
-  <text class="hd" x="700" y="278"><tspan class="l-en">Unprinted constants</tspan><tspan class="l-es" x="700">Constantes no publicadas</tspan></text>
-  <text class="mu" x="700" y="298"><tspan class="l-en">the timing factor and the</tspan><tspan class="l-es" x="700">el factor de tiempo y las</tspan></text>
-  <text class="mu" x="700" y="312"><tspan class="l-en">crush-zone branch constants</tspan><tspan class="l-es" x="700">constantes de la zona triturada</tspan></text>
-  <text class="mu" x="700" y="326"><tspan class="l-en">are yours, never invented</tspan><tspan class="l-es" x="700">son suyas, nunca inventadas</tspan></text>
-
-  <text class="hd" x="22" y="380"><tspan class="l-en">Why the comparison is the product</tspan><tspan class="l-es" x="22">Por que la comparacion es el producto</tspan></text>
-  <text class="mu" x="22" y="402"><tspan class="l-en">Two different quantities are called R2 in this literature. On the same twelve blasts the classical model scores 0.570 under one</tspan><tspan class="l-es" x="22">En esta literatura se llama R2 a dos cantidades distintas. Sobre los mismos doce tiros el modelo clasico saca 0.570 bajo una</tspan></text>
-  <text class="mu" x="22" y="418"><tspan class="l-en">reading and 0.232 under the other, and it beats predicting a constant by only 13 percent on RMSE. Every figure here is named,</tspan><tspan class="l-es" x="22">lectura y 0.232 bajo la otra, y le gana a predecir una constante por solo un 13 por ciento en RMSE. Cada cifra aqui va nombrada,</tspan></text>
-  <text class="mu" x="22" y="434"><tspan class="l-en">and a model that predicts a constant runs beside every other arm on every case.</tspan><tspan class="l-es" x="22">y un modelo que predice una constante corre junto a todos los demas en cada caso.</tspan></text>
-  <text class="mono mu" x="22" y="458">blastfrag (engine, separate repo) + CAOS_Fragmenta (this product)</text>
+<g class="l-en">
+<text class="ttl" x="22" y="28">What Fragmenta is</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">The question</text>
+<text class="mu" x="32.0" y="104.0">For this rock and this bench, which</text>
+<text class="mu" x="32.0" y="118.0">pattern delivers the P80 the crusher is</text>
+<text class="mu" x="32.0" y="132.0">specified for, and how far can the</text>
+<text class="mu" x="32.0" y="146.0">prediction be trusted?</text>
+<rect class="bx bx-good" x="22.0" y="170.0" width="270.0" height="122.0" rx="6"/>
+<text class="hd" x="32.0" y="191.0">The evidence</text>
+<text class="mu" x="32.0" y="210.0">97 published bench blasts, 10 campaigns</text>
+<text class="mu" x="32.0" y="224.0">in 5 countries</text>
+<text class="mu" x="32.0" y="238.0">14-blast published hold-out, 5 field</text>
+<text class="mu" x="32.0" y="252.0">blasts</text>
+<text class="mu" x="32.0" y="266.0">measurement method stated for 3</text>
+<text class="mu" x="32.0" y="280.0">campaigns</text>
+<rect class="bx bx-accent" x="312.0" y="64.0" width="270.0" height="66.0" rx="6"/>
+<text class="hd" x="322.0" y="85.0">Ten predictors</text>
+<text class="mu" x="322.0" y="104.0">the 1973 equation to the 2025 ensemble,</text>
+<text class="mu" x="322.0" y="118.0">plus a null and an oracle</text>
+<rect class="bx bx-warn" x="312.0" y="142.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="163.0">Three protocols</text>
+<text class="mu" x="322.0" y="182.0">100 random draws, 100 deduplicated, and</text>
+<text class="mu" x="322.0" y="196.0">10 whole-campaign hold-outs with</text>
+<text class="mu" x="322.0" y="210.0">site-resampled intervals</text>
+<rect class="bx bx-bad" x="602.0" y="64.0" width="276.0" height="150.0" rx="6"/>
+<text class="hd" x="612.0" y="85.0">What it finds</text>
+<text class="mu" x="612.0" y="104.0">learned arms explain a median 0.36 to</text>
+<text class="mu" x="612.0" y="118.0">0.75 on random splits and lose 0.74 to</text>
+<text class="mu" x="612.0" y="132.0">4.94 with a site held out</text>
+<text class="mu" x="612.0" y="146.0">the classical equation scores about 0.30</text>
+<text class="mu" x="612.0" y="160.0">under every protocol (0.311 held out by</text>
+<text class="mu" x="612.0" y="174.0">site)</text>
+<text class="mu" x="612.0" y="188.0">no arm fitted without the corpus has an</text>
+<text class="mu" x="612.0" y="202.0">interval above zero</text>
+<rect class="bx" x="22.0" y="310.0" width="856.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="331.0">What it is not</text>
+<text class="mu" x="32.0" y="350.0">No mechanistic simulation, no non-ideal detonation, no flyrock, no vibration, no downstream comminution model; the initiation sequence</text>
+<text class="mu" x="32.0" y="364.0">is drawn and enters no prediction; constants no source prints are user parameters.</text>
+<line class="flow" x1="292.0" y1="231.0" x2="310.0" y2="97.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="97.0" x2="600.0" y2="109.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="182.0" x2="600.0" y2="184.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="388.0" x2="878" y2="388.0"/>
+<text class="nt" x="22" y="406.0">Two quantities are called R2 in this literature. Every score here is variance explained about the identity line, shown with the squared</text>
+<text class="nt" x="22" y="421.0">correlation and with a null that predicts the training mean.</text>
+</g>
+<g class="l-es">
+<text class="ttl" x="22" y="28">Qué es Fragmenta</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">La pregunta</text>
+<text class="mu" x="32.0" y="104.0">¿Para esta roca y este banco, qué malla</text>
+<text class="mu" x="32.0" y="118.0">entrega el P80 que pide la chancadora, y</text>
+<text class="mu" x="32.0" y="132.0">cuánto se puede confiar en la</text>
+<text class="mu" x="32.0" y="146.0">predicción?</text>
+<rect class="bx bx-good" x="22.0" y="170.0" width="270.0" height="108.0" rx="6"/>
+<text class="hd" x="32.0" y="191.0">La evidencia</text>
+<text class="mu" x="32.0" y="210.0">97 tiros de banco publicados, 10</text>
+<text class="mu" x="32.0" y="224.0">campañas en 5 países</text>
+<text class="mu" x="32.0" y="238.0">14 de validación publicados, 5 de campo</text>
+<text class="mu" x="32.0" y="252.0">método de medición declarado en 3</text>
+<text class="mu" x="32.0" y="266.0">campañas</text>
+<rect class="bx bx-accent" x="312.0" y="64.0" width="270.0" height="66.0" rx="6"/>
+<text class="hd" x="322.0" y="85.0">Diez predictores</text>
+<text class="mu" x="322.0" y="104.0">de la ecuación de 1973 al ensamble de</text>
+<text class="mu" x="322.0" y="118.0">2025, más un nulo y un oráculo</text>
+<rect class="bx bx-warn" x="312.0" y="142.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="163.0">Tres protocolos</text>
+<text class="mu" x="322.0" y="182.0">100 sorteos aleatorios, 100 deduplicados</text>
+<text class="mu" x="322.0" y="196.0">y 10 retenciones de campaña completa con</text>
+<text class="mu" x="322.0" y="210.0">intervalos por sitio</text>
+<rect class="bx bx-bad" x="602.0" y="64.0" width="276.0" height="150.0" rx="6"/>
+<text class="hd" x="612.0" y="85.0">Lo que encuentra</text>
+<text class="mu" x="612.0" y="104.0">los aprendidos explican una mediana de</text>
+<text class="mu" x="612.0" y="118.0">0.36 a 0.75 al azar y pierden de 0.74 a</text>
+<text class="mu" x="612.0" y="132.0">4.94 con el sitio excluido</text>
+<text class="mu" x="612.0" y="146.0">la ecuación clásica puntúa cerca de 0.30</text>
+<text class="mu" x="612.0" y="160.0">en todo protocolo (0.311 con el sitio</text>
+<text class="mu" x="612.0" y="174.0">excluido)</text>
+<text class="mu" x="612.0" y="188.0">ningún brazo ajustado sin el corpus tiene</text>
+<text class="mu" x="612.0" y="202.0">un intervalo sobre cero</text>
+<rect class="bx" x="22.0" y="296.0" width="856.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="317.0">Lo que no es</text>
+<text class="mu" x="32.0" y="336.0">Sin simulación mecanicista, sin detonación no ideal, sin proyección de rocas, sin vibración, sin modelo de conminución; la secuencia</text>
+<text class="mu" x="32.0" y="350.0">de iniciación se dibuja y no entra en ninguna predicción; las constantes que ninguna fuente imprime son parámetros del usuario.</text>
+<line class="flow" x1="292.0" y1="224.0" x2="310.0" y2="97.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="97.0" x2="600.0" y2="109.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="182.0" x2="600.0" y2="184.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="374.0" x2="878" y2="374.0"/>
+<text class="nt" x="22" y="392.0">En esta literatura se llama R2 a dos cantidades. Cada puntaje aquí es varianza explicada respecto de la identidad, junto a la</text>
+<text class="nt" x="22" y="407.0">correlación al cuadrado y a un nulo que predice la media de entrenamiento.</text>
+</g>
 </svg>
