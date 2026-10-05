@@ -87,7 +87,10 @@ def pages(b: dict, index: dict) -> dict[str, str]:
 
     s = v["supports"]
     lines = [GENERATED, "", "# The verdict", "", head, "",
-             "The kill criterion, declared before the first run and unchanged since:", "",
+             "The kill criterion. It was first written, before the first run, as a margin over the null alone; that "
+             "run declared success for a best learned arm at -0.034 against a null at -0.216, an arm worse than a "
+             "constant, so the positivity half was added. The sentence has not changed since, and an engine test "
+             "pins its hash:", "",
              f"> {v['criterion']}", "",
              "| | every blast | blasts with resolvable geometry |", "|---|---|---|",
              f"| blasts | {s['all']['n_blasts']} | {s['geometry']['n_blasts']} |",
