@@ -175,6 +175,71 @@ def test_the_positive_control_recovers_its_own_truth_exactly(artifacts):
     assert control["passed"] is True
 
 
+# ---------------------------------------------------------------------------------------------
+# The synthetic cases are not circular (docs/design/features/non-circularity/)
+# ---------------------------------------------------------------------------------------------
+
+SYNTHETIC_DESIGNS = ("synth-sweep-burden", "synth-sweep-powder", "synth-ibsd-capped", "ctrl-degenerate")
+
+
+def test_no_synthetic_design_carries_a_measured_size_or_a_score(artifacts):
+    for case_id in SYNTHETIC_DESIGNS:
+        payload = artifacts[case_id]
+        assert payload["case"]["real_or_synthetic"] == "synthetic", case_id
+        assert all(b["x50_measured_m"] is None for b in payload["blasts"]), case_id
+        assert not any(score["scoreable"] for score in payload["scores"].values()), case_id
+
+
+def test_no_synthetic_blast_enters_the_benchmark(benchmark):
+    corpus_ids = {b.blast_id for b in bf.load_training_corpus()}
+    assert {row["blast_id"] for row in benchmark["corpus_rows"]} == corpus_ids
+    held_out = benchmark["protocols"]["leave-one-site-out"]["arms"]
+    assert all(set(arm["predictions"]) <= corpus_ids for arm in held_out.values())
+
+
+def test_the_synthetic_designs_do_not_depend_on_any_arm(monkeypatch):
+    """Rebuild every synthetic design with every arm's prediction disabled: none may need one."""
+    from pipeline.model.blasts import synthetic_sweep
+
+    def snapshot():
+        return {
+            case_id: [(b.blast_id, b.features(), b.x50_m) for b in synthetic_sweep(get_case(case_id))]
+            for case_id in SYNTHETIC_DESIGNS
+        }
+
+    before = snapshot()
+
+    def refuse(*_args, **_kwargs):
+        raise AssertionError("a synthetic design asked an arm for a prediction")
+
+    def subclasses(cls):
+        for sub in cls.__subclasses__():
+            yield sub
+            yield from subclasses(sub)
+
+    import blastfrag.learned  # noqa: F401  (registers the learned arms as subclasses)
+
+    for arm_class in [bf.Arm, *subclasses(bf.Arm)]:
+        monkeypatch.setattr(arm_class, "predict_one", refuse, raising=False)
+        monkeypatch.setattr(arm_class, "predict", refuse, raising=False)
+    assert snapshot() == before
+    assert all(x50 is None for rows in before.values() for _id, _features, x50 in rows)
+
+
+def test_the_positive_control_is_circular_by_design_and_says_so(artifacts):
+    from pipeline.model.blasts import oracle_truth
+
+    truth = oracle_truth()
+    assert len(truth) == 8
+    regression = bf.PublishedRegression()
+    assert all(b.x50_m == regression.predict_one(b).x50_m and b.meta["oracle"] for b in truth)
+    case = get_case("ctrl-oracle")
+    assert case.category == "positive-control"
+    assert "tests the harness rather than the science" in case.reason_en
+    assert "Prueba el andamiaje, no la ciencia" in case.reason_es
+    assert artifacts["ctrl-oracle"]["controls"]["positive_control"]["passed"] is True
+
+
 def test_the_extrapolation_control_stamps_every_prediction(artifacts):
     control = artifacts["real-granite-ne"]["controls"]["extrapolation_control"]
     assert control["n_predictions"] > 20
