@@ -137,6 +137,15 @@ class Box:
         return self.x + self.w / 2, self.y - 2
 
 
+def picker(es: bool):
+    """The bilingual text picker each drawing builder uses: t("english", "español")."""
+
+    def t(en: str, sp: str) -> str:
+        return sp if es else en
+
+    return t
+
+
 def column(x: float, w: float, y0: float, gap: float, specs: list[tuple]) -> list[Box]:
     out, y = [], y0
     for spec in specs:
@@ -220,7 +229,7 @@ def facts() -> dict:
 
 
 def tab1(F: dict, es: bool) -> tuple[str, float]:
-    t = (lambda e, s: s if es else e)
+    t = picker(es)
     left = column(22, 270, 64, 12, [
         (t("The question", "La pregunta"), [t("For this rock and this bench, which pattern delivers the P80 the crusher is specified for, and how far can the prediction be trusted?", "¿Para esta roca y este banco, qué malla entrega el P80 que pide la chancadora, y cuánto se puede confiar en la predicción?")], "accent"),
         (t("The evidence", "La evidencia"), [t("97 published bench blasts, 10 campaigns in 5 countries", "97 tiros de banco publicados, 10 campañas en 5 países"), t("14-blast published hold-out, 5 field blasts", "14 de validación publicados, 5 de campo"), t("measurement method stated for 3 campaigns", "método de medición declarado en 3 campañas")], "good"),
@@ -248,7 +257,7 @@ def tab1(F: dict, es: bool) -> tuple[str, float]:
 
 
 def tab2(F: dict, es: bool) -> tuple[str, float]:
-    t = (lambda e, s: s if es else e)
+    t = picker(es)
     offline = column(22, 270, 64, 10, [
         (t("Engine package", "Paquete motor"), [f"blastfrag {F['engine']} (PyPI)", t("models, corpora, protocols, metrics, export", "modelos, corpus, protocolos, métricas, exportación")], "accent"),
         (t("Staged bake", "Horneado por etapas"), [t("ingest, preprocess, split, features, train, infer, evaluate, export, validate", "ingesta, preproceso, partición, variables, entrenamiento, inferencia, evaluación, exportación, validación")]),
@@ -275,7 +284,7 @@ def tab2(F: dict, es: bool) -> tuple[str, float]:
 
 
 def tab3(F: dict, es: bool) -> tuple[str, float]:
-    t = (lambda e, s: s if es else e)
+    t = picker(es)
     app = column(22, 300, 64, 10, [
         (t("App: one selected case", "App: un caso seleccionado"), [t("a rail with the case and the arm selectors, and six tabs grouped by the question", "un riel con los selectores de caso y brazo, y seis pestañas agrupadas por la pregunta")], "accent"),
         (t("The six tabs", "Las seis pestañas"), [t("Predict, Distribution, Bench, Rock, What if, Decide", "Predecir, Distribución, Banco, Roca, Qué pasa si, Decidir")]),
@@ -306,7 +315,7 @@ def tab3(F: dict, es: bool) -> tuple[str, float]:
 
 
 def tab4(F: dict, es: bool) -> tuple[str, float]:
-    t = (lambda e, s: s if es else e)
+    t = picker(es)
     a = column(22, 270, 64, 10, [
         (t("A dimensionless corpus", "Un corpus adimensional"), [t("seven ratios and no dimensions; the classical equation needs volume and charge per hole", "siete razones y ninguna dimensión; la ecuación clásica necesita volumen y carga por barreno")], "bad"),
         (t("The prose closes it", "La prosa lo cierra"), ["B = (B/D)·D, V = B·S·H, Q = Pf·V", t("a diameter for 8 of 10 sites, a 9th from its bench height", "un diámetro en 8 de 10 sitios, un noveno desde su altura de banco")]),
@@ -331,7 +340,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
 
 
 def tab5(F: dict, es: bool) -> tuple[str, float]:
-    t = (lambda e, s: s if es else e)
+    t = picker(es)
     c1 = column(22, 270, 64, 10, [
         (t("Contract 1, what gets in", "Contrato 1, qué entra"), [t("REJECT outside the contract range (E in 0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)", "RECHAZA fuera del rango (E de 0.5 a 150 GPa, Pf de 0.05 a 3 kg/m3)"), t("FLAG and stamp outside the envelope; never clip", "MARCA y sella fuera de la envolvente; nunca recorta")], "warn"),
         (t("Integrity gate", "Compuerta de integridad"), [t("reproduce the paper's own summary table, plus a pinned digest; it found five transcription errors", "reproduce la tabla resumen del artículo, más un resumen fijado; encontró cinco errores de transcripción")], "good"),
