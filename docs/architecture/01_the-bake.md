@@ -1,146 +1,117 @@
 # The bake
 
-Nine stages, none of them a no-op, ending in a gate that can refuse the whole release.
+One runner bakes every case through nine stages, writes each training scope's fitted models, builds the
+cross-case benchmark, writes the index, and runs the release gate over everything it wrote.
+
+```bash
+python data-pipeline/run.py             # bake all 16 cases, the models and the benchmark
+python data-pipeline/run.py --validate  # re-run the release gate on what is on disk
+```
+
+![The offline pipeline](../assets/fig-the-offline-pipeline.svg)
 
 ---
 
 ## 1. Why the bake is separate from the deploy
 
-A deployment is not an experiment. The bake is a deliberate, versioned operation that produces
-scientific evidence; the deploy verifies that evidence and publishes it. Collapsing the two means a
-release has no reproducible artifact behind it, because the numbers were made by whichever runner
-happened to pick up the job.
+The bake produces the scientific evidence: every prediction, score, interval and fitted model the site
+shows. It runs deliberately, against pinned versions, on a developer machine, and its output is
+committed. The deploy verifies that committed output and publishes it; it never trains or recomputes a
+benchmark (ADR-0074), so a release always has a reproducible artifact behind it and the numbers do not
+depend on which runner picked up a job.
 
-So the deploy workflow runs `python data-pipeline/run.py --validate` and never `run.py`.
+## 2. The stages of a case
 
-## 2. The stages
-
-| Stage | What it does | What would make it a no-op, and does not |
+| Stage | What it does | What it refuses |
 |---|---|---|
-| `ingest` | loads a case's blasts through the engine's contract, records provenance and flags | accepting a row that fails the contract |
-| `preprocess` | recovers absolute geometry, resolves the rock factor, re-asserts the narrative constraints | reconstructing without checking |
-| `dataset` | builds the three split protocols with the leakage guards asserted | trusting the engine's own guards without restating the dependency |
-| `feature_extraction` | the seven ratios plus derived absolutes, each arm keeping its own normalisation | unifying two normalisations that are not interchangeable |
-| `train` | fits every learned arm on the corpus **minus this case's site** | training on everything and showing the result as a prediction |
-| `infer` | every arm over every blast and every variant, abstaining with a reason | returning a number where the model cannot answer |
-| `evaluate` | both variance statistics, a null model, bootstrap intervals, the controls | reporting one statistic under a bare label |
-| `export` | content-addressed JSON, non-finite floats as null | writing `NaN`, which no browser can parse |
-| `validate` | re-reads, re-hashes, re-checks the controls and the abstentions | passing without reading what was written |
+| `ingest` | loads the case's blasts through the engine's contract, records provenance and flags | a row outside the contract bounds; an out-of-envelope row unless the case opts in |
+| `preprocess` | recovers the absolute pattern, resolves the rock factor, re-asserts the source's dimensional constraints | reconstructing without checking |
+| `dataset` | builds the training rows for the case: the corpus minus the case's own campaign for a real case | a training set that contains a blast of the case |
+| `feature_extraction` | the seven ratios plus the derived absolutes; each arm keeps its own normalisation | unifying normalisations that are not interchangeable |
+| `train` | fits every learned arm and the transfer line on those training rows | training on everything and showing the result as a prediction |
+| `infer` | every arm over every blast and every design variant, each cell a number or an abstention with its reason | a number where the model cannot answer |
+| `evaluate` | variance explained and correlation, the null beside every arm, the case's controls | a statistic under a bare label |
+| `export` | the content-addressed case artifact and manifest; the case's models file (stage `models`) | `NaN` or `Infinity`, which no browser can parse |
+| `validate` | re-reads, re-hashes and re-checks what was written | passing without reading what was written |
 
-## 3. Determinism, and the two claims it actually supports
+The `models` stage (`stages/models.py`) runs inside the bake of each case: it exports the fitted arms
+of that case's training scope through the engine's portable export, with fixtures of the original
+models' predictions at the 116 shipped blasts ([05](05_portable-models.md)). Cases that share a scope
+share one file; the eleven scopes are the ten campaigns withheld one at a time, and the whole corpus.
 
-A bake is a pure function of the case registry, the pinned environment and the seed. That sentence
-supports two different claims, and they need two different instruments.
+## 3. The benchmark build
 
-### Within one environment: byte-identical
+After the cases, `stages/benchmark.py` runs the engine's benchmark on the corpus: 100 random draws, 100
+deduplicated draws, the ten-fold leave-one-site-out with intervals from 2000 site resamples, the
+verdict on both row sets, the per-site errors, the arm provenance and the diagnostics. It adds the
+published reproductions (the 2010 and 2012 hold-outs, the row in both sets), the 30-seed sweep of the
+published network, the per-site metadata, and the corpus, hold-out and field rows the Benchmark page
+re-scores in the browser. The result is `benchmark.json` (`fragmenta.benchmark/v2`). Most of the
+bake's time goes here, mostly to the network's Levenberg-Marquardt training.
 
-Two bakes on the same machine produce the same bytes, and the check is a content address, which is
-exactly the right instrument for a discrete question.
+## 4. Determinism, and the two claims it supports
 
-Three things could break this and each is handled:
+A bake is a function of the case registry, the pinned environment (`requirements-precompute.txt`:
+`blastfrag`, `numpy`, `scikit-learn` and `xgboost` pinned exactly) and the seed. That supports two
+different claims, measured with two instruments.
 
-- **dictionary ordering** in the serialisation, closed by sorting keys;
-- **a wall clock** anywhere in a manifest, which is why the lane gate records budgets and a verdict
-  rather than a measured runtime;
-- **a stopping rule that depends on CPU speed**, which is why the learned arms stop on a numerical
-  criterion rather than a time limit.
+**Within one environment, byte-identical.** Two bakes on the same machine write the same bytes, and a
+test bakes one case twice into a sandbox and compares them. Four things could break this and each is
+handled: dictionary ordering (keys are sorted); a wall clock in a manifest (budgets and a verdict are
+recorded, not a measured runtime); a stopping rule that depends on CPU speed (the learned arms stop on
+numerical criteria); and newline translation (`Path.write_text` writes CRLF on Windows, so every file
+goes through one writer that fixes LF).
 
-A fourth was found late and is worth naming, because nothing would have caught it. `Path.write_text`
-translates newlines on Windows, so the same bake wrote the same NUMBERS into files whose BYTES
-differed by platform. The digest is taken over the payload rather than over the file, so it never
-noticed, and the byte size the manifest declared was wrong on one of the two platforms. Every file
-this pipeline ships now goes through one writer that fixes the line ending at LF.
+**Across environments, to a tolerance.** Two builds of the same pinned numpy can reduce a dot product in
+a different order; the last bits differ at about 1e-16, an iterative solver amplifies that, and no pin
+removes it. The cross-environment check therefore compares numbers, not hashes:
 
-### Across environments: to a tolerance, not to a hash
+$$
+\frac{|a - b|}{\max(|a|, |b|)} \le 10^{-6}\quad \text{for every number in every artifact}
+$$
 
-Re-baking on a different operating system does **not** reproduce the same bytes, and asserting that
-it does would be asserting something false.
+At version 0.04 this was measured by baking all sixteen cases on Windows and on Linux (Python 3.13,
+numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1): the worst relative difference was 2.7e-08, on
+`real-reocin-ug`; typical cases differed in 30 to 100 fields at around 1e-09; and `ctrl-degenerate`,
+where every arm abstains, was byte-identical, which is the control on the explanation (a case with no
+arithmetic does not drift). **That cross-platform measurement has not been repeated for 0.05.000.**
 
-Two builds of the same pinned numpy reduce a dot product in a different order. The last bits of the
-result differ, at a relative scale of about 1e-16, and no version pin can remove that because it is
-not a version difference. An iterative solver then amplifies it over its iterations.
+```bash
+python scripts/compare_bakes.py                           # every case against the committed artifacts
+python scripts/compare_bakes.py real-murgul --repeat 2    # byte identity within this environment
+```
 
-This is measured, not assumed. Baking all sixteen cases on Windows and on Linux runners, both on
-Python 3.13 with numpy 2.5.3, scikit-learn 1.9.0 and xgboost 3.4.1:
+Both bake into a sandbox, never the canonical tree, so a check cannot overwrite the artifacts it is
+checking. Under ADR-0074 they run on a developer machine before a release, not in CI.
 
-| | |
-|---|---|
-| two bakes on the same runner | identical, byte for byte |
-| worst difference across all sixteen cases | 2.7e-08 relative, on `real-reocin-ug` |
-| typical case | 30 to 100 fields differ, worst around 1e-09 |
-| `ctrl-degenerate` | identical, byte for byte |
+## 5. The leakage assertion
 
-Two details in that table are worth more than the headline number.
+For a real campaign, the learned arms are fitted on the corpus minus that campaign. The bake asserts
+that none of the case's blasts appear in its training rows and that the withheld site is absent, stamps
+the withheld site on the artifact (`held_out_site`), and points the case at the models file of that
+scope. A violation stops the bake.
 
-`ctrl-degenerate` is the case where every arm abstains, so the artifact contains refusals and no
-predictions. It comes out byte-identical. That is the control on the explanation: if the drift were
-structural rather than arithmetic, a case with no arithmetic in it would drift too.
+For a synthetic case or the field set, nothing is withheld, because those blasts are not in the corpus;
+the artifact says so in words rather than leaving the field empty.
 
-And the difference is **not** confined to one arm, which is what a single case first suggested. It is
-largest and most consistent on the fitted arms, `published-neural-net` and `refitted-regression`,
-then `svr-rbf` and `stacking`. But on `real-soma` and `synth-sweep-burden` the closed forms move as
-well, `kuznetsov`, `kuz-ram`, `swebrec` and `crush-zone` among them, because a closed form here is
-still evaluated on a reconstructed geometry that is itself several floating-point operations deep.
-Every arm whose value passes through a chain of arithmetic can pick up the last bit. Only an arm that
-returns a refusal cannot.
+The assertion does not make campaigns independent: the two Reocin campaigns share a rock (45 GPa) and
+information no protocol can remove.
 
-So the cross-environment gate compares numbers and names its tolerance: **1e-6 relative**, roughly
-two orders above the worst measured difference and five below the percent-scale move a genuinely
-different model would make. It is also far finer than anything anyone reads: predictions are exported
-rounded to a micrometre and displayed in centimetres.
+## 6. The release gate
 
-    python scripts/compare_bakes.py            # every case, every number, against what is committed
-    python scripts/compare_bakes.py real-murgul --repeat 2   # byte-identity within this environment
+`validate` re-reads every artifact from disk and checks the content digests (file and index) of every
+case, the benchmark and every models file; the corpus digest against the installed engine; that no
+artifact contains `NaN` or `Infinity`; that each real case's withheld site is its own; that every
+control passed; that every abstention has a reason; and that each case points at its own scope's models
+file. The full list is in [data/04](../data/04_data-contract.md). One failure fails the bake.
 
-Both run in CI. Both bake into a **sandbox**, never the canonical tree, and that is not incidental: a
-check that can overwrite the artifacts it is checking can silently make itself pass, and the failure
-mode is a suite that is green because it rewrote the thing it was verifying.
+## 7. What the bake produces
 
-### What this costs
+| | Count | Size |
+|---|---|---|
+| case artifacts | 16 | about 1.0 MB in all |
+| manifests | 16 plus the index | small |
+| benchmark | 1 | about 229 kB |
+| models files | 11 | about 2.7 MB in all, about 240 kB each |
 
-The published artifacts were baked on one machine, and a reader who re-bakes on another will get
-numbers that agree with them to seven or eight significant digits rather than to the last bit. For
-every number this product reports that is far past the point of meaning: the corpus itself carries
-x50 to two or three significant digits. But it is a real limit on the word "reproducible", and it is
-better stated than implied.
-
-## 4. The leakage assertion
-
-The single most important provenance field on this product is `held_out_site`.
-
-For a real campaign, the learned arms are fitted on the corpus **minus that campaign**. The bake then
-asserts that none of the case's own blasts appear in its training rows, and that the withheld site is
-genuinely absent. A violation raises and the bake stops.
-
-Without it, the App would show a learned model predicting blasts it was fitted on. That is a memory
-rather than a prediction, and it looks exactly like a very good model.
-
-For a synthetic case or the out-of-envelope field set, nothing is withheld, because those blasts are
-not in the corpus at all. The artifact says so in words rather than leaving the field null and
-ambiguous.
-
-## 5. The release gate
-
-`validate` re-reads every artifact from disk and checks:
-
-- the content digest against the one stored inside the file, so a hand-edited artifact fails;
-- the same digest against the index entry, so a stale index fails;
-- that no artifact contains `NaN`, `Infinity` or `-Infinity`;
-- that the index was baked from the same corpus that is installed;
-- that the withheld site on each case really is that case's own site;
-- that every control block marked with a verdict passed;
-- that **every abstaining cell carries a reason**. One unexplained refusal fails the whole bake.
-
-That last one is the rule the product's refusals rest on. A refusal without a reason renders as a
-blank cell, and a blank cell is indistinguishable from a missing feature.
-
-## 6. What the bake produces
-
-| | |
-|---|---|
-| 16 case artifacts | `data/derived/<case>/case.json`, 31 to 101 kB each |
-| 16 manifests | `data/derived/manifests/<case>.json` |
-| one index | `data/derived/manifests/index.json`, what the web reads first |
-| one benchmark | `data/derived/benchmark.json`, the cross-case evidence |
-
-About 1.2 MB in total, 1824 prediction cells, 282 of them refusals.
+The cases carry 1976 prediction cells, 294 of them abstentions, each with its reason.
