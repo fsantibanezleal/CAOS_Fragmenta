@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 446" width="900" class="arch-svg" role="img" aria-label="What Fragmenta is">
+  <style>
+    .arch-svg text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .arch-svg .bx { fill: #f0f3f6; stroke: #d0d7de; stroke-width: 1.2; }
+    .arch-svg .bx-accent { stroke: #0969da; stroke-width: 1.8; }
+    .arch-svg .bx-good { stroke: #1a7f37; stroke-width: 1.8; }
+    .arch-svg .bx-bad { stroke: #cf222e; stroke-width: 1.8; }
+    .arch-svg .bx-warn { stroke: #9a6700; stroke-width: 1.8; }
+    .arch-svg .ttl { fill: #1f2328; font-size: 14px; font-weight: 700; }
+    .arch-svg .hd { fill: #1f2328; font-size: 12.5px; font-weight: 600; }
+    .arch-svg .mu { fill: #57606a; font-size: 10.5px; }
+    .arch-svg .nt { fill: #57606a; font-size: 11px; }
+    .arch-svg .band { stroke: #d0d7de; stroke-dasharray: 3 4; }
+    .arch-svg .flow { fill: none; stroke: #6e7781; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6e7781"/>
+    </marker>
+  </defs>
+<rect x="0" y="0" width="900" height="446" fill="#ffffff"/>
+<text class="ttl" x="22" y="28">What Fragmenta is</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">The question</text>
+<text class="mu" x="32.0" y="104.0">For this rock and this bench, which</text>
+<text class="mu" x="32.0" y="118.0">pattern delivers the P80 the crusher is</text>
+<text class="mu" x="32.0" y="132.0">specified for, and how far can the</text>
+<text class="mu" x="32.0" y="146.0">prediction be trusted?</text>
+<rect class="bx bx-good" x="22.0" y="170.0" width="270.0" height="122.0" rx="6"/>
+<text class="hd" x="32.0" y="191.0">The evidence</text>
+<text class="mu" x="32.0" y="210.0">97 published bench blasts, 10 campaigns</text>
+<text class="mu" x="32.0" y="224.0">in 5 countries</text>
+<text class="mu" x="32.0" y="238.0">14-blast published hold-out, 5 field</text>
+<text class="mu" x="32.0" y="252.0">blasts</text>
+<text class="mu" x="32.0" y="266.0">measurement method stated for 3</text>
+<text class="mu" x="32.0" y="280.0">campaigns</text>
+<rect class="bx bx-accent" x="312.0" y="64.0" width="270.0" height="66.0" rx="6"/>
+<text class="hd" x="322.0" y="85.0">Ten predictors</text>
+<text class="mu" x="322.0" y="104.0">the 1973 equation to the 2025 ensemble,</text>
+<text class="mu" x="322.0" y="118.0">plus a null and an oracle</text>
+<rect class="bx bx-warn" x="312.0" y="142.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="163.0">Three protocols</text>
+<text class="mu" x="322.0" y="182.0">100 random draws, 100 deduplicated, and</text>
+<text class="mu" x="322.0" y="196.0">10 whole-campaign hold-outs with</text>
+<text class="mu" x="322.0" y="210.0">site-resampled intervals</text>
+<rect class="bx bx-bad" x="602.0" y="64.0" width="276.0" height="150.0" rx="6"/>
+<text class="hd" x="612.0" y="85.0">What it finds</text>
+<text class="mu" x="612.0" y="104.0">learned arms explain a median 0.36 to</text>
+<text class="mu" x="612.0" y="118.0">0.75 on random splits and lose 0.74 to</text>
+<text class="mu" x="612.0" y="132.0">4.94 with a site held out</text>
+<text class="mu" x="612.0" y="146.0">the classical equation scores about 0.30</text>
+<text class="mu" x="612.0" y="160.0">under every protocol (0.311 held out by</text>
+<text class="mu" x="612.0" y="174.0">site)</text>
+<text class="mu" x="612.0" y="188.0">no arm fitted without the corpus has an</text>
+<text class="mu" x="612.0" y="202.0">interval above zero</text>
+<rect class="bx" x="22.0" y="310.0" width="856.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="331.0">What it is not</text>
+<text class="mu" x="32.0" y="350.0">No mechanistic simulation, no non-ideal detonation, no flyrock, no vibration, no downstream comminution model; the initiation sequence</text>
+<text class="mu" x="32.0" y="364.0">is drawn and enters no prediction; constants no source prints are user parameters.</text>
+<line class="flow" x1="292.0" y1="231.0" x2="310.0" y2="97.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="97.0" x2="600.0" y2="109.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="182.0" x2="600.0" y2="184.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="388.0" x2="878" y2="388.0"/>
+<text class="nt" x="22" y="406.0">Two quantities are called R2 in this literature. Every score here is variance explained about the identity line, shown with the squared</text>
+<text class="nt" x="22" y="421.0">correlation and with a null that predicts the training mean.</text>
+</svg>

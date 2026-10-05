@@ -1,18 +1,18 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 66060,
+  "bytes": 69388,
   "format": "json",
   "path": "real-dongri-buzurg/case.json"
  },
  "case_id": "real-dongri-buzurg",
  "category": "real-campaign",
  "controls": {},
- "digest": "2a25a79b3c40458b169a03bdfd3a0e08b7151c1ce02897860292d561610d86d6",
+ "digest": "feda836b0e7327359605acb755562ab7a9e0ab1f87924b4a3a81894d65dfc77b",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "medium, 0.23 to 0.76 m measured",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 66060,
+  "trace_bytes": 69388,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -32,6 +32,7 @@
  },
  "held_out_site": "Dongri-Buzurg",
  "lane": "live",
+ "models_scope": "Dongri-Buzurg",
  "n_scoreable": 9,
  "n_training_rows": 88,
  "provenance": {

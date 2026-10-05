@@ -10,7 +10,8 @@
 
 export const CASE_SCHEMA = 'fragmenta.case/v1';
 export const INDEX_SCHEMA = 'fragmenta.index/v1';
-export const BENCHMARK_SCHEMA = 'fragmenta.benchmark/v1';
+export const BENCHMARK_SCHEMA = 'fragmenta.benchmark/v2';
+export const MODELS_SCHEMA = 'fragmenta.models/v1';
 
 export type Lang = 'en' | 'es';
 export type Bilingual = Record<Lang, string>;
@@ -182,6 +183,8 @@ export interface CaseArtifact {
   null_mean_m: number;
   controls: Record<string, ControlBlock>;
   geometry_report: Record<string, GeometrySiteReport>;
+  /** The fitted models this case's learned predictions came from, for the live lane. */
+  live_models: { scope: string; path: string; digest: string; arms: string[] } | null;
 }
 
 export interface IndexEntry {
@@ -206,11 +209,114 @@ export interface CaseIndex {
   n_cases: number;
   cases: IndexEntry[];
   benchmark?: { path: string; bytes: number; digest: string; verdict: string };
+  models?: { scope: string; path: string; bytes: number; digest: string; arms: string[] }[];
+}
+
+/** The named figures of one score, as the engine writes them. */
+export interface EngineScore {
+  n_scored: number;
+  n_abstained: number;
+  n_extrapolated: number;
+  pearson_r: number | null;
+  pearson_r2: number | null;
+  r2_identity: number | null;
+  rmse_m: number | null;
+  mae_m: number | null;
+  mape_pct: number | null;
+  bias_m: number | null;
+}
+
+export interface DrawSummary {
+  n: number;
+  p05?: number;
+  p25?: number;
+  median?: number;
+  p75?: number;
+  p95?: number;
+  mean?: number;
+}
+
+/** A random protocol: 100 draws, each scored on its own. `r2_identity` is the median draw. */
+export interface RepeatedArmBlock {
+  tier: string;
+  r2_identity: number | null;
+  seed0: EngineScore;
+  repeats: DrawSummary;
+  rmse_repeats: DrawSummary;
+  draws: number[];
+}
+
+export type Support = 'all' | 'geometry';
+
+export interface SiteError {
+  n_blasts: number;
+  n_scored: number;
+  mean_measured_m: number | null;
+  mean_predicted_m?: number;
+  rmse_m?: number;
+  mae_m?: number;
+  bias_m?: number;
+  abstain_reason?: string | null;
+}
+
+/** Leave-one-site-out, pooled over the ten folds; the top-level fields are the all-blasts support. */
+export interface GroupedArmBlock extends EngineScore {
+  tier: string;
+  supports: Record<Support, { score: EngineScore; interval_95: [number, number] | null; n_sites: number }>;
+  per_site: Record<string, SiteError>;
+  predictions: Record<string, number | null>;
 }
 
 export interface ProtocolBlock {
   n_folds: number;
-  arms: Record<string, ScoreBlock & { tier: string }>;
+  repeated: boolean;
+  arms: Record<string, RepeatedArmBlock | GroupedArmBlock>;
+}
+
+export interface CriterionOnSupport {
+  n_blasts: number;
+  best_learned_arm: string;
+  best_learned_r2_identity: number;
+  best_learned_interval_95: [number, number] | null;
+  null_r2_identity: number;
+  null_pearson_r: number | null;
+  margin_over_null: number;
+  best_learned_is_positive: boolean;
+  n_learned_arms_positive: number;
+  n_learned_arms: number;
+  generalises_across_sites: boolean;
+}
+
+export interface ArmProvenance {
+  tier: string;
+  lane: string;
+  source: string;
+  shares_mean_size_with: string | null;
+  fitted_on: string;
+  in_sample_corpus: boolean;
+  uses_site_constant: boolean;
+  router_in_sample: boolean;
+}
+
+export interface ImportanceReport {
+  method: string;
+  n_repeats: number;
+  n_rows: number;
+  baseline_mse: number | null;
+  mean_increase_in_mse: Record<string, number | null>;
+  share: Record<string, number | null>;
+}
+
+export interface SiteMeta {
+  n_blasts: number;
+  mean_x50_m: number;
+  E_GPa: number[];
+  mine: string | null;
+  rock: string | null;
+  hole_diameter_mm: number | null;
+  rock_factor_recovered: number | null;
+  rock_factor_transfer: number;
+  measurement: string | null;
 }
 
 export interface BenchmarkArtifact {
@@ -220,26 +326,31 @@ export interface BenchmarkArtifact {
   engine_version: string;
   corpus_digest: string;
   seed: number;
+  n_repeats: number;
+  n_boot: number;
   kill_criterion: string;
-  verdict: {
+  verdict: Omit<CriterionOnSupport, 'n_blasts'> & {
     criterion: string;
     outcome: string;
-    generalises_across_sites: boolean;
-    best_learned_arm: string;
-    best_learned_r2_identity: number;
-    null_r2_identity: number;
-    margin_over_null: number;
-    // Whether the best learned arm's score is above zero at all. The kill criterion needs BOTH this
-    // and the margin, because a margin over a null that is itself deeply negative is two models
-    // failing by different amounts rather than skill. The artifact has carried it since the bake
-    // was written; the mirror did not, which is drift in the direction that hides a field.
-    best_learned_is_positive: boolean;
-    n_learned_arms_positive: number;
-    n_learned_arms: number;
+    supports: Record<Support, CriterionOnSupport>;
+    depends_on_support: boolean;
+    sites_outside_geometry_support: string[];
+    in_sample_arms: [string, number, string][];
+    site_constant_arms: string[];
     arms_with_positive_variance_explained_across_sites: [string, number][];
+    intervals_95: Record<string, Record<Support, [number, number] | null>>;
+    arms_with_interval_above_zero: string[];
     protocol_gap_random_minus_grouped: Record<string, number>;
+    protocol_gap_basis: string;
     median_protocol_gap: number;
+    median_protocol_gap_over: string;
+    dedup_minus_random_median: Record<string, number>;
+    published_random_split_figures: Record<
+      string,
+      { published: number; share_of_draws_below: number; median_draw: number }
+    >;
   };
+  provenance: Record<string, ArmProvenance>;
   protocols: Record<string, ProtocolBlock>;
   published_reproduction: {
     [key: string]: unknown;
@@ -262,6 +373,131 @@ export interface BenchmarkArtifact {
   duplicate_groups: string[][];
   sites: string[];
   site_counts: Record<string, number>;
+  site_meta: Record<string, SiteMeta>;
+  diagnostics: {
+    outliers: {
+      method: string;
+      inputs: string[];
+      contamination: number;
+      n_estimators: number;
+      standardised: boolean;
+      seed: number;
+      n_blasts: number;
+      flagged: string[];
+      flagged_by_site: Record<string, number>;
+      anomaly_score: Record<string, number>;
+      applied_as_filter: false;
+    };
+    native_importance: Record<string, { kind: string; values: Record<string, number> } | null>;
+    published_importance: Record<string, Record<string, number>>;
+    resampling_importance: Record<string, ImportanceReport>;
+    transfer_fit: { intercept: number; slope: number; fit_sites: string[]; form: string };
+  };
+  /** The 97 corpus rows behind the pooled scores: measured size, site and the seven features. */
+  corpus_rows?: { blast_id: string; site: string; x50_m: number; features: number[] }[];
+  /** The published hold-out and field blasts, with what each source printed for them. */
+  holdout_rows?: {
+    blast_id: string;
+    site: string;
+    set: 'published-2012' | 'published-2010-only' | 'field-2025';
+    x50_m: number;
+    features: number[];
+    in_training_table: boolean;
+    published: { classical?: number | null; regression?: number | null; neural_net?: number | null };
+  }[];
+}
+
+/** Narrow an arm block to the site-held-out form. */
+export const isGrouped = (block: RepeatedArmBlock | GroupedArmBlock | undefined): block is GroupedArmBlock =>
+  !!block && 'supports' in block;
+
+/** Narrow an arm block to the repeated-draw form. */
+export const isRepeated = (block: RepeatedArmBlock | GroupedArmBlock | undefined): block is RepeatedArmBlock =>
+  !!block && 'repeats' in block;
+
+/* ------------------------------------------------------------------------------------------- */
+/* The portable models, written by the engine's export and read by src/engine/learned.ts        */
+/* ------------------------------------------------------------------------------------------- */
+
+export interface FlatTree {
+  left: number[];
+  right: number[];
+  feature: number[];
+  t: number[];
+}
+
+interface PortableBase {
+  schema: 'blastfrag.portable/v1';
+  arm: string;
+  engine_version: string;
+  features: string[];
+  plausible_x50_m: [number, number];
+}
+
+export interface Router {
+  coefficients: number[];
+  constant: number;
+  boundary: number;
+}
+
+export interface Standardise {
+  mean: number[];
+  sd: number[];
+}
+
+export type PortableModel =
+  | (PortableBase & {
+      kind: 'network';
+      router: Router;
+      groups: Record<
+        string,
+        { minimum: number[]; maximum: number[]; target_low: number; target_high: number; n_hidden: number; networks: number[][] }
+      >;
+    })
+  | (PortableBase & {
+      kind: 'svr';
+      standardise: Standardise;
+      kernel: 'rbf' | 'poly';
+      gamma: number;
+      degree: number;
+      coef0: number;
+      support_vectors: number[][];
+      dual_coef: number[];
+      intercept: number;
+    })
+  | (PortableBase & { kind: 'forest'; standardise: Standardise; trees: FlatTree[] })
+  | (PortableBase & { kind: 'xgboost'; standardise: Standardise; base_score: number; trees: FlatTree[] })
+  | (PortableBase & {
+      kind: 'stacking';
+      standardise: Standardise;
+      forest: { trees: FlatTree[] } | { ref: string };
+      boosting: { base_score: number; trees: FlatTree[] } | { ref: string };
+      meta: { coef: number[]; intercept: number };
+    })
+  | (PortableBase & {
+      kind: 'power-law';
+      router: Router;
+      groups: Record<string, { intercept: number; exponents: number[] }>;
+    })
+  | (PortableBase & {
+      kind: 'kuznetsov-transfer';
+      rock_factor: { intercept: number; slope: number; fit_sites: string[] };
+      timing_factor: number;
+    });
+
+export interface ModelsFile {
+  schema: typeof MODELS_SCHEMA;
+  scope: string;
+  held_out_site: string | null;
+  n_training_rows: number;
+  engine: { package: string; version: string };
+  app_version: string;
+  arms: Record<string, PortableModel>;
+  fixtures: {
+    inputs: { blast_id: string; site: string; features: number[] }[];
+    expected: Record<string, (number | null)[]>;
+  };
+  digest: string;
 }
 
 export interface ReproductionBlock {

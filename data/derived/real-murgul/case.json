@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "0d44b75b1c637da3ba47eed1ae7f76a4097371d7950b0850619fbbdea7540211",
+ "digest": "e777574c853bc7400358e9ed20dac9a4bfbd3e044e52e0d385f5e05e8c560ee9",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1749,6 +1749,20 @@
    "reconstructable": true
   }
  },
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "c51c06b60488b0163ffadc0369767023a96a142c93824a7025125164d266c6b6",
+  "path": "models/Murgul.json",
+  "scope": "Murgul"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -2009,6 +2023,71 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.387089
+   }
+  },
+  "kuznetsov-transfer": {
+   "Mg1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.356756
+   },
+   "Mg2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.356756
+   },
+   "Mg3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.421079
+   },
+   "Mg4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.421079
+   },
+   "Mg5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.456816
+   },
+   "Mg6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.456816
+   },
+   "Mg7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.456816
    }
   },
   "published-neural-net": {
@@ -2279,7 +2358,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.31492
+    "x50_m": 0.675123
    },
    "Mg2": {
     "abstained": false,
@@ -2288,7 +2367,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.311016
+    "x50_m": 0.671347
    },
    "Mg3": {
     "abstained": false,
@@ -2297,7 +2376,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.307129
+    "x50_m": 0.677319
    },
    "Mg4": {
     "abstained": false,
@@ -2306,7 +2385,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.314835
+    "x50_m": 0.675299
    },
    "Mg5": {
     "abstained": false,
@@ -2315,7 +2394,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.313967
+    "x50_m": 0.674753
    },
    "Mg6": {
     "abstained": false,
@@ -2324,7 +2403,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.310997
+    "x50_m": 0.671493
    },
    "Mg7": {
     "abstained": false,
@@ -2333,7 +2412,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.310997
+    "x50_m": 0.671493
    }
   },
   "svr-rbf": {
@@ -2533,11 +2612,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": "Murgul",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Murgul",
@@ -2556,8 +2635,8 @@
    "pearson_r2": 0.8670719769056442,
    "r2_identity": 0.2378867519967034,
    "r2_identity_interval": [
-    -2.4284519692081252,
-    0.6558046084190099
+    -1.942243516835211,
+    0.65578502782375
    ],
    "r2_identity_point": 0.2378867519967034,
    "rmse_m": 0.052260549437777096,
@@ -2612,8 +2691,8 @@
    "pearson_r2": 0.8670719769056442,
    "r2_identity": 0.2378867519967034,
    "r2_identity_interval": [
-    -2.4284519692081252,
-    0.6558046084190099
+    -1.942243516835211,
+    0.65578502782375
    ],
    "r2_identity_point": 0.2378867519967034,
    "rmse_m": 0.052260549437777096,
@@ -2655,8 +2734,8 @@
    "pearson_r2": 0.8670719769056442,
    "r2_identity": 0.2378867519967034,
    "r2_identity_interval": [
-    -2.4284519692081252,
-    0.6558046084190099
+    -1.942243516835211,
+    0.65578502782375
    ],
    "r2_identity_point": 0.2378867519967034,
    "rmse_m": 0.052260549437777096,
@@ -2684,6 +2763,49 @@
      "error_pct": 18.935638846524846,
      "measured_m": 0.3,
      "predicted_m": 0.3568069165395745,
+     "site": "Murgul"
+    }
+   ]
+  },
+  "kuznetsov-transfer": {
+   "bias_m": 0.10658833291168705,
+   "mae_m": 0.10658833291168705,
+   "mape_pct": 36.86027429170535,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 7,
+   "pearson_r2": 0.8670719769056446,
+   "r2_identity": -2.3599749389057187,
+   "r2_identity_interval": [
+    -10.944037702287174,
+    -1.122507791753232
+   ],
+   "r2_identity_point": -2.3599749389057187,
+   "rmse_m": 0.10973173217608555,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Mg3",
+     "error_m": 0.15107885943187743,
+     "error_pct": 55.95513312291756,
+     "measured_m": 0.27,
+     "predicted_m": 0.42107885943187745,
+     "site": "Murgul"
+    },
+    {
+     "blast_id": "Mg1",
+     "error_m": 0.1267561413020151,
+     "error_pct": 55.11136578348482,
+     "measured_m": 0.23,
+     "predicted_m": 0.3567561413020151,
+     "site": "Murgul"
+    },
+    {
+     "blast_id": "Mg4",
+     "error_m": 0.12107885943187746,
+     "error_pct": 40.35961981062582,
+     "measured_m": 0.3,
+     "predicted_m": 0.42107885943187745,
      "site": "Murgul"
     }
    ]
@@ -2741,7 +2863,7 @@
    "pearson_r2": 0.40316146871413444,
    "r2_identity": -29.808691853138484,
    "r2_identity_interval": [
-    -122.67797459893043,
+    -109.34465575923605,
     -23.470431179939183
    ],
    "r2_identity_point": -29.808691853138484,
@@ -2784,8 +2906,8 @@
    "pearson_r2": 0.9276623487489295,
    "r2_identity": 0.8589520972399556,
    "r2_identity_interval": [
-    0.2706338824378648,
-    0.9423996828134166
+    0.2773214981677542,
+    0.9414264122503563
    ],
    "r2_identity_point": 0.8589520972399556,
    "rmse_m": 0.02248265169044691,
@@ -2827,8 +2949,8 @@
    "pearson_r2": 0.06145759229604771,
    "r2_identity": -18.274296614028465,
    "r2_identity_interval": [
-    -66.15099228068001,
-    -13.239211817294738
+    -58.7094069236834,
+    -13.24202121954174
    ],
    "r2_identity_point": -18.274296614028465,
    "rmse_m": 0.2628170188872936,
@@ -2899,44 +3021,44 @@
    ]
   },
   "stacking": {
-   "bias_m": 0.0005513682555810172,
-   "mae_m": 0.05599133480902996,
-   "mape_pct": 18.78674463655167,
+   "bias_m": 0.36240403301523466,
+   "mae_m": 0.36240403301523466,
+   "mape_pct": 124.82704903264744,
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 7,
-   "pearson_r2": 3.23195386640413e-07,
-   "r2_identity": -0.0020129716854639934,
+   "pearson_r2": 0.14217675680654293,
+   "r2_identity": -36.67770932445852,
    "r2_identity_interval": [
-    -2.470925782262671,
-    0.0398366963176523
+    -131.58480887453499,
+    -27.37440677570131
    ],
-   "r2_identity_point": -0.0020129716854639934,
-   "rmse_m": 0.05992401273789649,
+   "r2_identity_point": -36.67770932445852,
+   "rmse_m": 0.3674569461765087,
    "scoreable": true,
    "worst_rows": [
     {
      "blast_id": "Mg1",
-     "error_m": 0.08491978249745599,
-     "error_pct": 36.921644564111304,
+     "error_m": 0.4451232337572866,
+     "error_pct": 193.5318407640376,
      "measured_m": 0.23,
-     "predicted_m": 0.314919782497456,
+     "predicted_m": 0.6751232337572866,
      "site": "Murgul"
     },
     {
-     "blast_id": "Mg7",
-     "error_m": -0.0690032302128547,
-     "error_pct": -18.158744792856503,
-     "measured_m": 0.38,
-     "predicted_m": 0.3109967697871453,
+     "blast_id": "Mg2",
+     "error_m": 0.42134745198448265,
+     "error_pct": 168.53898079379306,
+     "measured_m": 0.25,
+     "predicted_m": 0.6713474519844826,
      "site": "Murgul"
     },
     {
-     "blast_id": "Mg5",
-     "error_m": -0.0660334225113619,
-     "error_pct": -17.377216450358397,
-     "measured_m": 0.38,
-     "predicted_m": 0.3139665774886381,
+     "blast_id": "Mg3",
+     "error_m": 0.407318618694787,
+     "error_pct": 150.85874766473594,
+     "measured_m": 0.27,
+     "predicted_m": 0.677318618694787,
      "site": "Murgul"
     }
    ]
@@ -2951,8 +3073,8 @@
    "pearson_r2": 0.7654006007047959,
    "r2_identity": -8.060753510869983,
    "r2_identity_interval": [
-    -32.43782214603173,
-    -5.535990404567686
+    -29.324870042136506,
+    -5.536272912976859
    ],
    "r2_identity_point": -8.060753510869983,
    "rmse_m": 0.18019650931570985,
@@ -2994,8 +3116,8 @@
    "pearson_r2": 0.8670719769056442,
    "r2_identity": 0.2378867519967034,
    "r2_identity_interval": [
-    -2.4284519692081252,
-    0.6558046084190099
+    -1.942243516835211,
+    0.65578502782375
    ],
    "r2_identity_point": 0.2378867519967034,
    "rmse_m": 0.052260549437777096,
@@ -3037,7 +3159,7 @@
    "pearson_r2": 0.14213362642397112,
    "r2_identity": -36.25059338117638,
    "r2_identity_interval": [
-    -140.06229870806143,
+    -130.05821483272544,
     -27.048538063045648
    ],
    "r2_identity_point": -36.25059338117638,
@@ -3112,6 +3234,16 @@
    "spacing-wide": 0.3651409537073,
    "stemming-long": 0.3542123271168301
   },
+  "kuznetsov-transfer": {
+   "base": 0.4180169043402585,
+   "blocky": 0.4180169043402585,
+   "burden-tight": 0.3853925433464962,
+   "burden-wide": 0.4482731892064757,
+   "powder-down": 0.5015586343925275,
+   "powder-up": 0.3540215682542583,
+   "spacing-wide": 0.4309141140258267,
+   "stemming-long": 0.4180169043402585
+  },
   "published-neural-net": {
    "base": 0.6392779629171476,
    "blocky": 0.6884405110479603,
@@ -3153,14 +3285,14 @@
    "stemming-long": 1.3506184292342107
   },
   "stacking": {
-   "base": 0.31197993968415244,
-   "blocky": 0.19962292598139286,
-   "burden-tight": 0.3041912906640039,
-   "burden-wide": 0.3138333799444935,
-   "powder-down": 0.31075852900496476,
-   "powder-up": 0.31197993968415244,
-   "spacing-wide": 0.3235359408087136,
-   "stemming-long": 0.2955674707385641
+   "base": 0.6738326044438061,
+   "blocky": 0.5735500150599495,
+   "burden-tight": 0.6763723823981465,
+   "burden-wide": 0.6738542176951342,
+   "powder-down": 0.6711401363914218,
+   "powder-up": 0.6738326044438061,
+   "spacing-wide": 0.6784515529336324,
+   "stemming-long": 0.6783478575713536
   },
   "svr-rbf": {
    "base": 0.4888408475838338,

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 318" width="900" class="arch-svg" role="img" aria-label="The two data contracts">
+  <style>
+    .arch-svg text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .arch-svg .bx { fill: #f0f3f6; stroke: #d0d7de; stroke-width: 1.2; }
+    .arch-svg .bx-accent { stroke: #0969da; stroke-width: 1.8; }
+    .arch-svg .bx-good { stroke: #1a7f37; stroke-width: 1.8; }
+    .arch-svg .bx-bad { stroke: #cf222e; stroke-width: 1.8; }
+    .arch-svg .bx-warn { stroke: #9a6700; stroke-width: 1.8; }
+    .arch-svg .ttl { fill: #1f2328; font-size: 14px; font-weight: 700; }
+    .arch-svg .hd { fill: #1f2328; font-size: 12.5px; font-weight: 600; }
+    .arch-svg .mu { fill: #57606a; font-size: 10.5px; }
+    .arch-svg .nt { fill: #57606a; font-size: 11px; }
+    .arch-svg .band { stroke: #d0d7de; stroke-dasharray: 3 4; }
+    .arch-svg .flow { fill: none; stroke: #6e7781; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6e7781"/>
+    </marker>
+  </defs>
+<rect x="0" y="0" width="900" height="318" fill="#ffffff"/>
+<text class="ttl" x="22" y="28">The two contracts and the gates between them</text>
+<rect class="bx bx-warn" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">Contract 1, what gets in</text>
+<text class="mu" x="32.0" y="104.0">REJECT outside the contract range (E in</text>
+<text class="mu" x="32.0" y="118.0">0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)</text>
+<text class="mu" x="32.0" y="132.0">FLAG and stamp outside the envelope;</text>
+<text class="mu" x="32.0" y="146.0">never clip</text>
+<rect class="bx bx-good" x="22.0" y="168.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="189.0">Integrity gate</text>
+<text class="mu" x="32.0" y="208.0">reproduce the paper&#x27;s own summary table,</text>
+<text class="mu" x="32.0" y="222.0">plus a pinned digest; it found five</text>
+<text class="mu" x="32.0" y="236.0">transcription errors</text>
+<rect class="bx bx-accent" x="312.0" y="64.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="85.0">Contract 2, what goes out</text>
+<text class="mu" x="322.0" y="104.0">case, benchmark and model files, each</text>
+<text class="mu" x="322.0" y="118.0">content-addressed, listed with its</text>
+<text class="mu" x="322.0" y="132.0">digest in the index</text>
+<rect class="bx" x="312.0" y="154.0" width="270.0" height="80.0" rx="6"/>
+<text class="hd" x="322.0" y="175.0">A typed mirror</text>
+<text class="mu" x="322.0" y="194.0">the browser&#x27;s contract types; a field</text>
+<text class="mu" x="322.0" y="208.0">that appears in an artifact and not in</text>
+<text class="mu" x="322.0" y="222.0">the mirror fails the tests</text>
+<rect class="bx bx-good" x="602.0" y="64.0" width="276.0" height="80.0" rx="6"/>
+<text class="hd" x="612.0" y="85.0">Release gate</text>
+<text class="mu" x="612.0" y="104.0">re-read and re-hash every file; every</text>
+<text class="mu" x="612.0" y="118.0">predicted cell carries a number or a</text>
+<text class="mu" x="612.0" y="132.0">reason, never neither</text>
+<rect class="bx bx-good" x="602.0" y="154.0" width="276.0" height="80.0" rx="6"/>
+<text class="hd" x="612.0" y="175.0">Model fixtures</text>
+<text class="mu" x="612.0" y="194.0">the original models&#x27; predictions at 116</text>
+<text class="mu" x="612.0" y="208.0">blasts; the browser walker must reproduce</text>
+<text class="mu" x="612.0" y="222.0">them</text>
+<line class="flow" x1="157.0" y1="158.0" x2="157.0" y2="166.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="292.0" y1="208.0" x2="310.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="447.0" y1="144.0" x2="447.0" y2="152.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="582.0" y1="104.0" x2="600.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="740.0" y1="144.0" x2="740.0" y2="152.0" marker-end="url(#arch-arrow)"/>
+<line class="band" x1="22" y1="260.0" x2="878" y2="260.0"/>
+<text class="nt" x="22" y="278.0">The integrity gate exists because the corpus as first assembled disagreed with the published tables in five cells, two on the measured</text>
+<text class="nt" x="22" y="293.0">size; the tell was a powder-factor maximum of 1.47 against the 1.26 the paper prints.</text>
+</svg>

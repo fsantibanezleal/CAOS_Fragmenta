@@ -20,7 +20,10 @@ jobs:
           # artifacts, so the environment has to be the one that produced them.
           python-version: "3.13"
           cache: pip
-      - name: Install the pinned engine and the heavy lane
+      # Only the linter and the test runner (requirements-dev.txt). The engine and the training
+      # stack are not installed here: the tests run locally before a push (ADR-0074 rule 3), and
+      # the artifacts are verified by the deploy, which installs only the engine and numpy.
+      - name: Install the linter
         run: pip install -r requirements-dev.txt
       - name: Lint
         run: ruff check data-pipeline tests scripts

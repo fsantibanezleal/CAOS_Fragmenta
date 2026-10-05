@@ -302,7 +302,7 @@
   }
  },
  "controls": {},
- "digest": "99cec1bc1e937d5fce3e4cda1a9fe866b41bd87107d2024214fbd8626898c192",
+ "digest": "5514fced59bc68059adb6bb1d3b432a6ab9ed8c0105619810d2578f3f1acc26f",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1807,6 +1807,20 @@
    "reconstructable": true
   }
  },
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "f4fcf07b39ee68ea23149a7f9b4a9389007144db6c381706a684b6226f556f7e",
+  "path": "models/Reocin.json",
+  "scope": "Reocin"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -2175,6 +2189,98 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.758997
+   }
+  },
+  "kuznetsov-transfer": {
+   "Rc1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.564329
+   },
+   "Rc10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.562007
+   },
+   "Rc2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.599443
+   },
+   "Rc3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.631663
+   },
+   "Rc4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.579005
+   },
+   "Rc5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.628392
+   },
+   "Rc6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.547971
+   },
+   "Rc7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.597723
+   },
+   "Rc8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.619643
+   },
+   "Rc9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.594826
    }
   },
   "published-neural-net": {
@@ -2553,7 +2659,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.065878
+    "x50_m": 0.623617
    },
    "Rc10": {
     "abstained": false,
@@ -2562,7 +2668,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.135993
+    "x50_m": 0.329511
    },
    "Rc2": {
     "abstained": false,
@@ -2571,7 +2677,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.141683
+    "x50_m": 0.37189
    },
    "Rc3": {
     "abstained": false,
@@ -2580,7 +2686,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.14215
+    "x50_m": 0.369824
    },
    "Rc4": {
     "abstained": false,
@@ -2589,7 +2695,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.170325
+    "x50_m": 0.369579
    },
    "Rc5": {
     "abstained": false,
@@ -2598,7 +2704,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.172188
+    "x50_m": 0.337656
    },
    "Rc6": {
     "abstained": false,
@@ -2607,7 +2713,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.166623
+    "x50_m": 0.323456
    },
    "Rc7": {
     "abstained": false,
@@ -2616,7 +2722,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.152787
+    "x50_m": 0.377797
    },
    "Rc8": {
     "abstained": false,
@@ -2625,7 +2731,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.143462
+    "x50_m": 0.338347
    },
    "Rc9": {
     "abstained": false,
@@ -2634,7 +2740,7 @@
     "group": 1,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.146979
+    "x50_m": 0.377719
    }
   },
   "svr-rbf": {
@@ -2915,11 +3021,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": "Reocin",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Reocin",
@@ -2938,8 +3044,8 @@
    "pearson_r2": 0.01700844331665615,
    "r2_identity": -0.7018986328345693,
    "r2_identity_interval": [
-    -7.455314323922861,
-    0.08911543512697662
+    -7.293412758951381,
+    0.08681908605578921
    ],
    "r2_identity_point": -0.7018986328345693,
    "rmse_m": 0.21643257141691655,
@@ -2994,8 +3100,8 @@
    "pearson_r2": 0.01700844331665615,
    "r2_identity": -0.7018986328345693,
    "r2_identity_interval": [
-    -7.455314323922861,
-    0.08911543512697662
+    -7.293412758951381,
+    0.08681908605578921
    ],
    "r2_identity_point": -0.7018986328345693,
    "rmse_m": 0.21643257141691655,
@@ -3037,8 +3143,8 @@
    "pearson_r2": 0.01700844331665615,
    "r2_identity": -0.7018986328345693,
    "r2_identity_interval": [
-    -7.455314323922861,
-    0.08911543512697662
+    -7.293412758951381,
+    0.08681908605578921
    ],
    "r2_identity_point": -0.7018986328345693,
    "rmse_m": 0.21643257141691655,
@@ -3070,6 +3176,49 @@
     }
    ]
   },
+  "kuznetsov-transfer": {
+   "bias_m": -0.023499711301026592,
+   "mae_m": 0.14846148500320588,
+   "mape_pct": 23.517663988064506,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 10,
+   "pearson_r2": 0.017008443316656505,
+   "r2_identity": -0.004277821893409861,
+   "r2_identity_interval": [
+    -0.9811495552397355,
+    0.1397176152828186
+   ],
+   "r2_identity_point": -0.004277821893409861,
+   "rmse_m": 0.1662580607663707,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Rc5",
+     "error_m": -0.3316080850465628,
+     "error_pct": -34.54250885901696,
+     "measured_m": 0.96,
+     "predicted_m": 0.6283919149534372,
+     "site": "Reocin"
+    },
+    {
+     "blast_id": "Rc6",
+     "error_m": -0.2120287959655741,
+     "error_pct": -27.898525784943963,
+     "measured_m": 0.76,
+     "predicted_m": 0.5479712040344259,
+     "site": "Reocin"
+    },
+    {
+     "blast_id": "Rc4",
+     "error_m": -0.17099496059653085,
+     "error_pct": -22.799328079537446,
+     "measured_m": 0.75,
+     "predicted_m": 0.5790050394034691,
+     "site": "Reocin"
+    }
+   ]
+  },
   "null": {
    "bias_m": -0.3134226804123711,
    "mae_m": 0.3134226804123711,
@@ -3080,8 +3229,8 @@
    "pearson_r2": null,
    "r2_identity": -3.5690225474813007,
    "r2_identity_interval": [
-    -9.39389977365257,
-    -2.301238268940646
+    -9.29717497062834,
+    -2.302563651573929
    ],
    "r2_identity_point": -3.5690225474813007,
    "rmse_m": 0.35462342928362095,
@@ -3123,8 +3272,8 @@
    "pearson_r2": 0.220381459961473,
    "r2_identity": -3.8951225841812445,
    "r2_identity_interval": [
-    -10.0749947720619,
-    -2.514393092293781
+    -9.905960487923995,
+    -2.536497642176311
    ],
    "r2_identity_point": -3.8951225841812445,
    "rmse_m": 0.3670604228284555,
@@ -3166,8 +3315,8 @@
    "pearson_r2": 0.21635413710215118,
    "r2_identity": 0.16251918512077013,
    "r2_identity_interval": [
-    -0.7252340537557296,
-    0.3879621939659146
+    -0.6961685655781508,
+    0.38467976281576344
    ],
    "r2_identity_point": 0.16251918512077013,
    "rmse_m": 0.15182497142675813,
@@ -3209,8 +3358,8 @@
    "pearson_r2": 0.287792435039532,
    "r2_identity": -1.9518890069285213,
    "r2_identity_interval": [
-    -5.491545908567224,
-    -1.108927601774203
+    -5.428453126834557,
+    -1.1102850651614913
    ],
    "r2_identity_point": -1.9518890069285213,
    "rmse_m": 0.28503998496123417,
@@ -3252,8 +3401,8 @@
    "pearson_r2": 0.2587558337693645,
    "r2_identity": -3.315389604168529,
    "r2_identity_interval": [
-    -8.686938084398355,
-    -2.1337124686324627
+    -8.631346359494488,
+    -2.1418011257774627
    ],
    "r2_identity_point": -3.315389604168529,
    "rmse_m": 0.34464007814694825,
@@ -3286,44 +3435,44 @@
    ]
   },
   "stacking": {
-   "bias_m": -0.47219326990437394,
-   "mae_m": 0.47219326990437394,
-   "mape_pct": 75.87611327429182,
+   "bias_m": -0.2340603494343995,
+   "mae_m": 0.2667837308229466,
+   "mape_pct": 39.64018061581383,
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 10,
-   "pearson_r2": 0.4034614041327431,
-   "r2_identity": -7.910727712589221,
+   "pearson_r2": 0.12407010448987973,
+   "r2_identity": -2.5930487889664295,
    "r2_identity_interval": [
-    -20.485661661533413,
-    -5.347070181130398
+    -6.776854050731683,
+    -1.6462061804470598
    ],
-   "r2_identity_point": -7.910727712589221,
-   "rmse_m": 0.49523617553779903,
+   "r2_identity_point": -2.5930487889664295,
+   "rmse_m": 0.3144758732677469,
    "scoreable": true,
    "worst_rows": [
     {
      "blast_id": "Rc5",
-     "error_m": -0.7878121309821275,
-     "error_pct": -82.06376364397163,
+     "error_m": -0.6223438772977901,
+     "error_pct": -64.8274872185198,
      "measured_m": 0.96,
-     "predicted_m": 0.17218786901787242,
+     "predicted_m": 0.33765612270220985,
      "site": "Reocin"
     },
     {
      "blast_id": "Rc6",
-     "error_m": -0.5933770783485475,
-     "error_pct": -78.07593136165099,
+     "error_m": -0.43654391392910324,
+     "error_pct": -57.43998867488201,
      "measured_m": 0.76,
-     "predicted_m": 0.1666229216514526,
+     "predicted_m": 0.32345608607089676,
      "site": "Reocin"
     },
     {
-     "blast_id": "Rc9",
-     "error_m": -0.5930212688287937,
-     "error_pct": -80.13800930118833,
-     "measured_m": 0.74,
-     "predicted_m": 0.14697873117120636,
+     "blast_id": "Rc4",
+     "error_m": -0.380421248057248,
+     "error_pct": -50.72283307429973,
+     "measured_m": 0.75,
+     "predicted_m": 0.369578751942752,
      "site": "Reocin"
     }
    ]
@@ -3338,8 +3487,8 @@
    "pearson_r2": 0.04260943639343624,
    "r2_identity": -3.1340821007018107,
    "r2_identity_interval": [
-    -8.50524617732167,
-    -1.9254708898162058
+    -8.497732480611218,
+    -1.94090223502972
    ],
    "r2_identity_point": -3.1340821007018107,
    "rmse_m": 0.33732250998075514,
@@ -3381,8 +3530,8 @@
    "pearson_r2": 0.01700844331665615,
    "r2_identity": -0.7018986328345693,
    "r2_identity_interval": [
-    -7.455314323922861,
-    0.08911543512697662
+    -7.293412758951381,
+    0.08681908605578921
    ],
    "r2_identity_point": -0.7018986328345693,
    "rmse_m": 0.21643257141691655,
@@ -3424,8 +3573,8 @@
    "pearson_r2": 0.12511821790655026,
    "r2_identity": -2.5811153994083207,
    "r2_identity_interval": [
-    -6.793631350256199,
-    -1.6359170736018016
+    -6.754321787757742,
+    -1.6379476159997925
    ],
    "r2_identity_point": -2.5811153994083207,
    "rmse_m": 0.313953213478242,
@@ -3499,6 +3648,16 @@
    "spacing-wide": 0.7793558700635839,
    "stemming-long": 0.7504773782959484
   },
+  "kuznetsov-transfer": {
+   "base": 0.5925002886989734,
+   "blocky": 0.5925002886989734,
+   "burden-tight": 0.5462582752619056,
+   "burden-wide": 0.6353857733099016,
+   "powder-down": 0.7109129621110758,
+   "powder-up": 0.5017928203821443,
+   "spacing-wide": 0.6107808902315139,
+   "stemming-long": 0.5881488275398699
+  },
   "published-neural-net": {
    "base": 0.3962697900174666,
    "blocky": 0.3016695310886351,
@@ -3540,14 +3699,14 @@
    "stemming-long": 0.27374552295000487
   },
   "stacking": {
-   "base": 0.1438067300956261,
-   "blocky": 0.13337162183845788,
-   "burden-tight": 0.1438067300956261,
-   "burden-wide": 0.13662670246695743,
-   "powder-down": 0.14912882250481868,
-   "powder-up": 0.14145030007431023,
-   "spacing-wide": 0.14607583664343599,
-   "stemming-long": 0.1415364926186415
+   "base": 0.38193965056560053,
+   "blocky": 0.3834048910318789,
+   "burden-tight": 0.38193965056560053,
+   "burden-wide": 0.3806444634196391,
+   "powder-down": 0.3612785943779501,
+   "powder-up": 0.35392999294613364,
+   "spacing-wide": 0.37954168052831805,
+   "stemming-long": 0.36448501789818205
   },
   "svr-rbf": {
    "base": 0.3238010440111817,

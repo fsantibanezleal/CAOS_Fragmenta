@@ -1,8 +1,8 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 36737,
+  "bytes": 39209,
   "format": "json",
   "path": "real-miami/case.json"
  },
@@ -15,10 +15,10 @@
    "passed": true
   }
  },
- "digest": "04e7507bb1055aa9b6f00c72b09141b1338812bf2193d6ae62c87269ca56523c",
+ "digest": "abf9ad2ea03c47e6bde8338990fe3db0d202844775c8c7a4f5c729c65633cb23",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "the classical arm abstains on all six; the ratio arms answer",
@@ -30,7 +30,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 36737,
+  "trace_bytes": 39209,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -38,6 +38,7 @@
  },
  "held_out_site": "Miami",
  "lane": "live",
+ "models_scope": "Miami",
  "n_scoreable": 6,
  "n_training_rows": 91,
  "provenance": {

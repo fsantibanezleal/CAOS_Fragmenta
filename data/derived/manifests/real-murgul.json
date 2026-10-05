@@ -1,18 +1,18 @@
 {
- "app_version": "0.04.004",
+ "app_version": "0.05.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 60814,
+  "bytes": 63730,
   "format": "json",
   "path": "real-murgul/case.json"
  },
  "case_id": "real-murgul",
  "category": "real-campaign",
  "controls": {},
- "digest": "0d44b75b1c637da3ba47eed1ae7f76a4097371d7950b0850619fbbdea7540211",
+ "digest": "e777574c853bc7400358e9ed20dac9a4bfbd3e044e52e0d385f5e05e8c560ee9",
  "engine": {
   "package": "blastfrag",
-  "version": "0.02.002"
+  "version": "0.03.000"
  },
  "expected_band": {
   "en": "medium, 0.23 to 0.38 m measured",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 60814,
+  "trace_bytes": 63730,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
@@ -32,6 +32,7 @@
  },
  "held_out_site": "Murgul",
  "lane": "live",
+ "models_scope": "Murgul",
  "n_scoreable": 7,
  "n_training_rows": 90,
  "provenance": {
