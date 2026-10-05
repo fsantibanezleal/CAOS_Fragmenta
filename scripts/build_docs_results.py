@@ -101,8 +101,8 @@ def pages(b: dict, index: dict) -> dict[str, str]:
              f"| margin over the null | {f(s['all']['margin_over_null'])} | {f(s['geometry']['margin_over_null'])} |",
              f"| meets the criterion | {'yes' if s['all']['generalises_across_sites'] else 'no'} | {'yes' if s['geometry']['generalises_across_sites'] else 'no'} |",
              "", "The outcome the engine writes, verbatim:", "", f"> {v['outcome']}", "",
-             f"Arms in sample (fitted by their source on this corpus): " + ", ".join(f"{NAMES.get(a[0])} ({f(a[1])})" for a in v["in_sample_arms"]) + ".",
-             f"Arms reading a constant derived from the held-out site itself: " + ", ".join(NAMES.get(a, a) for a in v["site_constant_arms"]) + ".",
+             "Arms in sample (fitted by their source on this corpus): " + ", ".join(f"{NAMES.get(a[0])} ({f(a[1])})" for a in v["in_sample_arms"]) + ".",
+             "Arms reading a constant derived from the held-out site itself: " + ", ".join(NAMES.get(a, a) for a in v["site_constant_arms"]) + ".",
              f"Arms with a site-resampled interval above zero, in-sample arms excluded: {', '.join(v['arms_with_interval_above_zero']) or 'none'}.",
              ""]
     out["results/01_verdict.md"] = "\n".join(lines)
@@ -123,9 +123,10 @@ def pages(b: dict, index: dict) -> dict[str, str]:
             else "training rows"
         )
         rr = "abstains" if not r.get("n") else f"{f(r['median'])} ({f(r['p05'], 2)} to {f(r['p95'], 2)})"
+        abstained = f" ({g['n_abstained']} abst.)" if g.get("n_abstained") else ""
         rows.append(
             f"| {NAMES[arm]} | {flag} | {rr} | {f(D[arm]['repeats'].get('median'))} | "
-            f"{f(g['supports']['all']['score']['r2_identity'])}{f' ({g['n_abstained']} abst.)' if g.get('n_abstained') else ''} | {iv(g['supports']['all']['interval_95'])} | "
+            f"{f(g['supports']['all']['score']['r2_identity'])}{abstained} | {iv(g['supports']['all']['interval_95'])} | "
             f"{f(g['supports']['geometry']['score']['r2_identity'])} | {iv(g['supports']['geometry']['interval_95'])} | {f(g.get('rmse_m'))} |"
         )
     out["results/02_every-arm.md"] = "\n".join([GENERATED, "", "# Every arm, every protocol", "", head, "",
@@ -251,10 +252,33 @@ def arm_block(b: dict, arm: str) -> str:
     return "\n".join(lines)
 
 
-def blocks(b: dict) -> dict[str, str]:
-    """Every fact block a hand-written page may embed, rendered from the artifact."""
+def cases_block(index: dict) -> str:
+    """One row per case, read from the case artifacts the index lists."""
+    rows = [
+        "| case | category | blasts | learned arms fitted without | answered | abstained | controls |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for entry in index["cases"]:
+        c = json.loads((DERIVED / entry["artifact_path"]).read_text(encoding="utf-8"))
+        cells = [cell for row in c["predictions"].values() for cell in row.values()]
+        abst = sum(1 for cell in cells if cell["x50_m"] is None)
+        held = c["provenance"].get("held_out_site") or "nothing (not in the corpus)"
+        controls = ", ".join(
+            f"{name.replace('_', ' ')}: {'passed' if block.get('passed') else 'FAILED'}"
+            for name, block in c["controls"].items()
+        ) or "-"
+        rows.append(
+            f"| `{entry['case_id']}` | {entry['category']} | {len(c['blasts'])} | {held} | "
+            f"{len(cells) - abst} | {abst} | {controls} |"
+        )
+    return "\n".join(rows)
+
+
+def blocks(b: dict, index: dict) -> dict[str, str]:
+    """Every fact block a hand-written page may embed, rendered from the artifacts."""
     grouped = b["protocols"]["leave-one-site-out"]["arms"]
     out = {f"arm-{arm}": arm_block(b, arm) for arm in ORDER if arm in grouped}
+    out["cases"] = cases_block(index)
     s = b["verdict"]["supports"]
     a, g = s["all"], s["geometry"]
     out["verdict"] = (
@@ -364,7 +388,7 @@ def main() -> int:
     index = json.loads((DERIVED / "manifests" / "index.json").read_text(encoding="utf-8"))
     stale = []
     rendered = pages(b, index)
-    facts = blocks(b)
+    facts = blocks(b, index)
     for path in sorted(DOCS.rglob("*.md")):
         name = path.relative_to(DOCS).as_posix()
         if name in rendered:

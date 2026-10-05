@@ -527,7 +527,8 @@ def test_the_portable_models_reproduce_the_fitted_models_at_every_fixture(model_
                 if value is None:
                     assert got is None, (scope, name, row["blast_id"])
                     continue
-                tolerance = 0.0 if document["kind"] in {"forest", "xgboost", "stacking", "power-law"} else 1e-12
+                exact = {"forest", "xgboost", "stacking", "power-law"}
+                tolerance = 0.0 if document["kind"] in exact else 1e-12
                 assert abs(got - value) <= tolerance * abs(value), (scope, name, row["blast_id"], got, value)
 
 
@@ -547,7 +548,8 @@ def test_the_case_predictions_are_what_the_shipped_models_return(artifacts, mode
                     continue
                 features = [blast["features"][f] for f in bf.FEATURES]
                 got, _ = bf.predict_portable(document, features)
-                assert got is not None and abs(got - cell["x50_m"]) <= 5e-7, (case_id, name, blast["blast_id"])
+                where = (case_id, name, blast["blast_id"])
+                assert got is not None and abs(got - cell["x50_m"]) <= 5e-7, where
                 checked += 1
     assert checked > 300
 

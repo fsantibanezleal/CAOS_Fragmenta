@@ -17,3 +17,10 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# The two generators are tables of bilingual prose and markdown rows; a long line there is a sentence,
+# and wrapping it would split the text the accent guard and a reader read whole. Code elsewhere keeps
+# the 110-column limit.
+"scripts/build_architecture_svgs.py" = ["E501"]
+"scripts/build_docs_results.py" = ["E501"]
