@@ -2,7 +2,7 @@
 
 # The verdict
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 The kill criterion. It was first written, before the first run, as a margin over the null alone; that run declared success for a best learned arm at -0.034 against a null at -0.216, an arm worse than a constant, so the positivity half was added. The sentence has not changed since, and an engine test pins its hash:
 
