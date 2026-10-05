@@ -2,6 +2,33 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.05.001] - 2026-10-05
+
+0.05.000 was tagged and never published: the deploy's browser gate, on the Linux runner, failed it on
+36 checks that never failed on Windows. The shell sets text in the system font stack, which Linux
+resolves to DejaVu Sans, wider than Segoe UI. A Linux visitor would have seen the same breaks. The
+artifacts were re-baked under 0.05.001 for their version stamps: of 419,184 numbers across 45 files,
+none differs from the 0.05.000 bake. (#25)
+
+### Fixed
+
+- The documentation footer wrapped onto two rows at 1600x900 under DejaVu Sans (its ADR-0016 items
+  need 1157 px in English and 1243 px in Spanish against 1152 px). Every route now uses the App
+  route's compact footer (0.74 rem, tighter gaps), with room to spare in both languages.
+- The App's model comparison was 29 px (English) and 47 px (Spanish) wider than its 326 px column at
+  1280x800 under DejaVu Sans. Its two variance headers are now the docs' notation, R²id and r², with
+  the full names in the tooltip (in both languages, English-only before) and in the note below; and a
+  score of magnitude 1000 or more prints as a power of ten (the refitted regression's -117792.670 on
+  Murgul, which set the column's width, reads -1.2×10⁵).
+- The Implementation page said the footer repeats the bake's application version; it now says what
+  holds it there: a re-bake test that requires the same numbers and versions, so every release
+  re-bakes its artifacts.
+
+### Added
+
+- `GATE_FONTS=dejavu` runs the browser gate with the runner's fonts on any machine, so a wrap that only
+  Linux shows is caught before the deploy.
+
 ## [0.05.000] - 2026-10-05
 
 An adversarial review of the implementation, the models, the data, the pipeline and the results. The
