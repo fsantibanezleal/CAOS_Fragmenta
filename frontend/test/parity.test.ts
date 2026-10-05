@@ -31,7 +31,7 @@ import {
   degenerateReason,
   type LiveBlast,
 } from '../src/engine/live';
-import { ARMS } from '../src/lib/artifacts';
+import { ARMS, formatSize } from '../src/lib/artifacts';
 import type { CaseArtifact, CaseIndex } from '../src/lib/contract.types';
 
 const DERIVED = join(process.cwd(), '..', 'data', 'derived');
@@ -496,4 +496,13 @@ test('every field in every shipped artifact is named in the TypeScript contract 
   walk(index, ['index']);
 
   assert.deepEqual([...missing].sort(), [], `fields the mirror never names: ${[...missing].sort().join(', ')}`);
+});
+
+test('every fragment size is stated in one unit, whatever its magnitude', () => {
+  // Until 0.06.000 the unit was picked by magnitude: "22 mm" sat above "11.0 cm" in one column.
+  assert.equal(formatSize(0.022), '2.2 cm');
+  assert.equal(formatSize(0.11), '11.0 cm');
+  assert.equal(formatSize(0.96), '96.0 cm');
+  assert.equal(formatSize(null), 'n/a');
+  for (const metres of [0.004, 0.0999, 0.1, 0.45, 1.2]) assert.match(formatSize(metres), /^\d+\.\d cm$/);
 });

@@ -110,8 +110,10 @@ body,
 
 /* The one place in the rail allowed to scroll, and only because it is READING rather than controls.
  * It is also the only element that can absorb a long case reason without pushing a control off. */
+/* Shrinks and scrolls when the case is long; never GROWS. Growing filled the rail and pushed the
+ * full-screen link to the bottom under an empty band (HY-002, measured by the browser gate). */
 .fr-railpane {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-height: 0;
   overflow-y: auto;
 }

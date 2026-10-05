@@ -148,6 +148,9 @@ VERB_FOLLOWERS = frozenset(
 ESTA_BEFORE = re.compile(r"\b(esta|estan)\s+([a-záéíóúñ]+)", re.IGNORECASE)
 
 
+EL_BEFORE_PUNCTUATION = re.compile(r"\b[Ee]l\s*[.,;:)?!]")
+
+
 def tracked(pattern: str) -> list[Path]:
     out = subprocess.run(["git", "ls-files", pattern], cwd=ROOT, capture_output=True, text=True,
                          check=True).stdout
@@ -219,6 +222,9 @@ def problems_in(where: str, text: str) -> list[str]:
         fixed = REQUIRED.get(m.group(0).lower())
         if fixed:
             problems.append(f"{where}: '{m.group(0)}' should be '{fixed}'")
+    # The article "el" cannot end a clause, so before punctuation it is the pronoun ("sobre el." shipped).
+    for m in EL_BEFORE_PUNCTUATION.finditer(INTERPOLATION.sub(" ", text)):
+        problems.append(f"{where}: '{m.group(0)}' needs the pronoun, 'él'")
     for m in ESTA_BEFORE.finditer(INTERPOLATION.sub(" ", text)):
         follower = m.group(2).lower()
         if follower in VERB_FOLLOWERS or follower.endswith(("ando", "iendo", "yendo")):

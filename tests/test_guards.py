@@ -118,6 +118,20 @@ def test_the_spanish_surface_writes_the_verb_esta_where_a_participle_follows():
     assert found == []
 
 
+def test_the_spanish_surface_writes_the_pronoun_el_before_punctuation():
+    """The article never ends a clause, so "el" before a stop is the pronoun missing its accent."""
+    assert problems_in("x", "ningún modelo puede correr sobre el.")
+    assert problems_in("x", "lo que se dice de el, se repite")
+    assert not problems_in("x", "ningún modelo puede correr sobre él.")
+    assert not problems_in("x", "el modelo y el tiro")
+    from check_spanish_accents import spanish_strings
+
+    found = [
+        p for where, text in spanish_strings() for p in problems_in(where, text) if "needs the pronoun" in p
+    ]
+    assert found == []
+
+
 def test_the_accent_guard_rejects_a_decomposed_accent():
     """e + combining acute looks right in most editors and renders wrongly in some fonts."""
     assert problems_in("x", "fragmentacio\u0301n")
