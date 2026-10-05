@@ -2,6 +2,73 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.05.000] - 2026-10-04
+
+An adversarial review of the implementation, the models, the data, the pipeline and the results. The
+headline it replaces ("not one of the six learned models explains any variance with a campaign held
+out; the classical equation improves when a site is held out") rested on one random draw per protocol
+and on different row sets for the classical and the learned arms. The benchmark now repeats its random
+protocols, reports every grouped score on two row sets with site-resampled intervals, and states what
+each arm was fitted on. (#25)
+
+### Changed
+
+- Baked on `blastfrag==0.3.0`: 100 random and 100 deduplicated draws per arm (median and 5th to 95th
+  percentiles instead of one draw), leave-one-site-out pooled on two row sets (all 97 blasts, and the 91
+  with resolvable geometry), site-resampled 95 percent intervals (2000 resamples), arm provenance
+  (`in_sample_corpus`, `router_in_sample`, `uses_site_constant`), per-site errors, diagnostics (an
+  Isolation Forest screen, native and held-out-site resampling importance), and a 30-seed network sweep.
+  Benchmark schema `fragmenta.benchmark/v2`.
+- The verdict now depends on the row set and says so: over every blast the learned tier does not meet
+  the criterion, over the 91 with geometry it does, by 0.034 against intervals that span zero.
+- The stacked ensemble is built as published (meta-learner on in-sample predictions); the earlier
+  out-of-fold construction, and its -0.951, are gone.
+- A transfer arm, `kuznetsov-transfer`: the classical equation with its rock factor predicted from the
+  modulus over the training sites only. It scores within about 0.01 of the site-factor arm, so the
+  classical score is not borrowed from the held-out site.
+- Every learned arm runs live in the browser: the bake exports each training scope's fitted models
+  (`data/derived/models/<scope>.json`, `fragmenta.models/v1`) and `frontend/src/engine/learned.ts`
+  walks them, exactly for the tree models and to a relative 1e-12 for the network and the kernel, held
+  by fixtures of the original models at 116 blasts. A new App tab, What if, recomputes every arm on a
+  changed design; the Benchmark page re-scores the published hold-out in the browser.
+- The five documentation pages are rewritten from the artifacts (Introduction, Methodology,
+  Implementation, Experiments, Benchmark), every corpus number read from the committed files, with
+  Crossref-verified citations scoped per section.
+- Every diagram sizes itself from its text, with notes below the drawing; the architecture drawings are
+  generated from the artifacts in both languages.
+- The footer fits one row at every tested width.
+
+### Fixed
+
+- The release gate never read the benchmark artifact, the file the verdict comes from; it now checks its
+  digest against its own and the index's, its corpus digest, and non-finite tokens.
+- The deploy workflow described an artifact check that did not exist; it now runs the release gate
+  (`scripts/check_artifacts.py`) on the engine and numpy only, before building.
+- The kill criterion's history is stated as it happened: written as a margin over the null, its
+  positivity half added after the first run declared success for an arm worse than a constant.
+- The Methodology page said the two papers disagree on four rows; they disagree on five, and the
+  recomputation matches the 2010 figure on four.
+- Overlays: a strike-through crossed the protocol figure's text, and an arrow crossed a box in the web
+  flow drawing; the browser gate now also tests every drawn line and path against every text.
+- The What if tab's variant chart overprinted its labels; variants are drawn as labelled rows.
+- Lint on the Python 3.11 target (a nested-quote f-string), and the CI step that claimed to install the
+  engine.
+
+### Documentation
+
+- The `docs/` wiki rebuilt to ADR-0056: methods (seven pages), protocols (four), data and the data
+  contract (four), a relevance page (the role, decision, limits and evidence of every tool), generated
+  results (six), architecture (five, including portable models), frameworks (ten nodes, each with
+  installation, usage and applying pages, and four runnable Python examples), cases, and five guides.
+- Numbers that move with a bake are generated: `scripts/build_docs_results.py` renders the results
+  pages and fills `<!-- facts:... -->` blocks in hand-written pages and this README; tests run it, the
+  drawing generator and the four examples in check mode.
+
+### Not repeated
+
+- The cross-platform determinism measurement (worst relative difference 2.7e-08 between Windows and
+  Linux) was made at 0.04 and has not been repeated for this release.
+
 ## [0.04.006] - 2026-10-04
 
 ### Fixed
