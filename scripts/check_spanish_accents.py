@@ -138,6 +138,16 @@ INTERPOLATION = re.compile(r"\$\{[^}]*\}")
 WORD = re.compile(r"[A-Za-zÀ-ſ]+")
 
 
+#: "esta" is a demonstrative and "está" the verb, which is why the word list leaves both alone. A
+#: demonstrative is followed by a noun, so before a gerund, a preposition or these words only the verb can
+#: stand: "la instalación esta rota" shipped in a case write-up.
+VERB_FOLLOWERS = frozenset(
+    "en a de por sobre bajo entre fuera dentro cerca lejos sin bien mal rota roto rotas rotos "
+    "completamente listo lista claro clara".split()
+)
+ESTA_BEFORE = re.compile(r"\b(esta|estan)\s+([a-záéíóúñ]+)", re.IGNORECASE)
+
+
 def tracked(pattern: str) -> list[Path]:
     out = subprocess.run(["git", "ls-files", pattern], cwd=ROOT, capture_output=True, text=True,
                          check=True).stdout
@@ -209,6 +219,11 @@ def problems_in(where: str, text: str) -> list[str]:
         fixed = REQUIRED.get(m.group(0).lower())
         if fixed:
             problems.append(f"{where}: '{m.group(0)}' should be '{fixed}'")
+    for m in ESTA_BEFORE.finditer(INTERPOLATION.sub(" ", text)):
+        follower = m.group(2).lower()
+        if follower in VERB_FOLLOWERS or follower.endswith(("ando", "iendo", "yendo")):
+            verb = {"esta": "está", "estan": "están"}[m.group(1).lower()]
+            problems.append(f"{where}: '{m.group(0)}' needs the verb, '{verb} {m.group(2)}'")
     return problems
 
 

@@ -332,7 +332,7 @@ def _real_cases() -> list[Case]:
             reason_es=(
                 "Cinco tiros de producción medidos por análisis de imagen, y el único conjunto real "
                 "de este producto que queda FUERA de la envolvente ajustada. Su módulo de Young de "
-                "5.6 GPa esta bajo el mínimo del corpus, 9.57, en la variable que dos estudios "
+                "5.6 GPa está bajo el mínimo del corpus, 9.57, en la variable que dos estudios "
                 "independientes califican como la más importante. Toda predicción aquí se marca "
                 "como extrapolación. Es también el único conjunto que publica su malla absoluta, "
                 "así que verifica la reconstrucción geométrica en vez de consumirla."
@@ -442,7 +442,7 @@ _SYNTHETIC: tuple[Case, ...] = (
         reason_es=(
             "Un diseño que no es un tiro: el taco excede la perforación, de modo que no hay carga "
             "que detonar. Todo modelo debe rechazarlo en vez de devolver un número verosímil. Si "
-            "algún modelo responde aquí, el producto esta fabricando."
+            "algún modelo responde aquí, el producto está inventando números."
         ),
         expected_band=_band(
             "every arm abstains, with a reason",
@@ -469,7 +469,7 @@ _SYNTHETIC: tuple[Case, ...] = (
         reason_es=(
             "Verdad de terreno generada por un modelo conocido, que ese mismo modelo debe recuperar "
             "dentro de tolerancia. Prueba el andamiaje, no la ciencia: si el modelo que produjo "
-            "estos números no puede reproducirlos, la instalación esta rota y ningún otro resultado "
+            "estos números no puede reproducirlos, la instalación está rota y ningún otro resultado "
             "de esta página es confiable."
         ),
         expected_band=_band(
