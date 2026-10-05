@@ -25,8 +25,9 @@ depends on which ten campaigns happened to be in the corpus.
 ## 2. Why sites and not blasts
 
 Resampling blasts would treat the 22 blasts of one quarry as 22 independent observations of how a
-model transfers to a new mine. They are one observation of that, repeated. With blasts as the unit the
-interval comes out narrow and wrong; with sites it is wide and states what ten campaigns can support.
+model transfers to a new mine. They are one observation of that, repeated. With blasts as the unit
+the resampling would ignore that dependence, and the interval would come out narrower than the data
+support; with sites it is wide, and states what ten campaigns can support.
 
 ## 3. What ten sites can separate
 
