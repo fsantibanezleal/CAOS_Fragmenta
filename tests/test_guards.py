@@ -124,3 +124,44 @@ def test_the_architecture_drawings_are_generated_from_the_committed_artifacts():
         text=True,
     )
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_the_docs_results_and_fact_blocks_are_generated_from_the_committed_benchmark():
+    """Every number in docs/results/ and in a facts block is the benchmark's; a stale one fails.
+
+    Regenerate with: python scripts/build_docs_results.py
+    """
+    import subprocess
+
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_docs_results.py"), "--check"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_the_framework_examples_in_the_docs_run_and_agree_with_the_engine():
+    """The wiki's runnable examples run against the pinned stack, and their numbers match the bake.
+
+    Each one fits small models (seconds), so it runs locally with the rest of the suite; it is not run
+    in CI, which never runs the test suite (ADR-0074). The assertions are the cross-checks the pages
+    cite: plain scikit-learn reproduces the engine's site-held-out forest, the portable booster is
+    exact, and the printed classical column scores 0.232 against a squared correlation of 0.570.
+    """
+    import subprocess
+
+    out = {}
+    for name in ("01_blastfrag", "02_scikit-learn", "03_xgboost", "04_numpy"):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "docs" / "frameworks" / name / "example.py")],
+            capture_output=True,
+            text=True,
+            timeout=600,
+        )
+        assert result.returncode == 0, f"{name}: {result.stdout}{result.stderr}"
+        out[name] = result.stdout
+    assert "leave one site out, kuznetsov: 0.311" in out["01_blastfrag"]
+    assert "leave one site out, pooled: -0.231" in out["02_scikit-learn"]
+    assert "worst difference over the corpus: 0.0e+00 m" in out["03_xgboost"]
+    assert "variance explained 0.232, squared correlation 0.570" in out["04_numpy"]
