@@ -38,8 +38,10 @@ product is built on, and how to use them on other data.
 Over every blast (97), the best learned arm held out by site is gradient boosting at -0.034 (-2.23 to 0.42), and the criterion is not met. Over the 91 blasts with resolvable geometry it is stacking ensemble at 0.034 (-1.81 to 0.54), 0.266 above the null, and the criterion is met. The null's held-out predictions correlate with the measurements at -0.79.
 <!-- /facts -->
 
-The kill criterion was declared before the first run and is unchanged; whether the learned tier meets
-it depends on whether the six Miami blasts, which have no recoverable geometry, are scored. The
+The kill criterion was first written before the first run as a margin over the null; its positivity
+half was added after that run, which had declared success for an arm worse than a constant, and the
+sentence has been fixed and test-pinned since. Whether the learned tier meets it depends on whether
+the six Miami blasts, which have no recoverable geometry, are scored. The
 classical equation explains about 0.30 of the variance under every protocol, including with its
 rock factor predicted from the modulus by a line fitted on the other sites. Published random-split
 figures sit high among reproductions of their own protocol; the details are in

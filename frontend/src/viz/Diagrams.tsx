@@ -84,8 +84,6 @@ interface BoxSpec {
   tone?: Tone;
   /** Body lines in a proportional font (prose) rather than monospace (quantities, formulas). */
   prose?: boolean;
-  /** Drawn struck through: the anti-pattern a protocol figure exists to rule out. */
-  struck?: boolean;
 }
 
 interface Placed extends BoxSpec {
@@ -182,12 +180,6 @@ function BoxEl({ box }: { box: Placed }) {
           </text>
         );
       })}
-      {box.struck ? (
-        <>
-          <line x1={box.x + 4} y1={box.y + 4} x2={box.x + box.w - 4} y2={box.y + box.h - 4} stroke={BAD} strokeWidth={2} />
-          <line x1={box.x + box.w - 4} y1={box.y + 4} x2={box.x + 4} y2={box.y + box.h - 4} stroke={BAD} strokeWidth={2} />
-        </>
-      ) : null}
     </g>
   );
 }
@@ -952,12 +944,18 @@ export function PortableModelDiagram() {
 /* Experiments                                                                                   */
 /* ------------------------------------------------------------------------------------------- */
 
-/** The leakage-safe protocol, beside the protocol it rules out, struck through. */
+/**
+ * The leakage-safe protocol, beside the practices it rules out.
+ *
+ * The ruled-out boxes are marked by colour and by their column heading. They used to be struck
+ * through with two diagonal lines, which crossed their own text: a line over text is an overlay too,
+ * even though the figure measurement, which compares text with text, could not see it.
+ */
 export function SafeProtocolDiagram() {
   const t = useT();
   const bad = column(12, 420, 40, 12, [
-    { title: t('Random rows to test', 'Filas al azar a prueba'), tone: 'bad', struck: true, lines: [t('a test row shares its campaign, rock,', 'una fila de prueba comparte campaña, roca,'), t('rig and measurement with training rows', 'equipo y medición con filas de entrenamiento')], prose: true },
-    { title: t('Tune on the test set, report it', 'Ajustar en prueba e informarla'), tone: 'bad', struck: true, lines: [t('choosing a setting because the test score', 'elegir un ajuste porque el puntaje de prueba'), t('improved makes that score a training score', 'mejoró lo vuelve un puntaje de entrenamiento')], prose: true },
+    { title: t('Random rows to test', 'Filas al azar a prueba'), tone: 'bad', lines: [t('a test row shares its campaign, rock,', 'una fila de prueba comparte campaña, roca,'), t('rig and measurement with training rows', 'equipo y medición con filas de entrenamiento')], prose: true },
+    { title: t('Tune on the test set, report it', 'Ajustar en prueba e informarla'), tone: 'bad', lines: [t('choosing a setting because the test score', 'elegir un ajuste porque el puntaje de prueba'), t('improved makes that score a training score', 'mejoró lo vuelve un puntaje de entrenamiento')], prose: true },
   ]);
   const good = column(468, 420, 40, 12, [
     { title: t('Hold out a whole campaign', 'Retener una campaña entera'), tone: 'good', lines: [t('every fitted quantity, including scaling and', 'toda magnitud ajustada, incluidas la escala y'), t('the rock-factor line, from the other nine sites', 'la recta del factor de roca, de los otros nueve')], prose: true },
@@ -969,8 +967,8 @@ export function SafeProtocolDiagram() {
       height={bottomOf(boxes) + 12}
       label={t('The protocol, and what it rules out', 'El protocolo, y lo que descarta')}
       caption={t(
-        'Left, struck through: the two practices behind a random-split headline on a clustered corpus. Right: what this product does instead. Random splits are still run, a hundred times, so the size of the difference is measured rather than argued.',
-        'A la izquierda, tachado: las dos prácticas detrás de un titular de partición aleatoria sobre un corpus agrupado. A la derecha: lo que hace este producto en su lugar. Las particiones aleatorias se corren igual, cien veces, para medir el tamaño de la diferencia en vez de discutirlo.',
+        'Left, in red: the two practices behind a random-split headline on a clustered corpus. Right: what this product does instead. Random splits are still run, a hundred times, so the size of the difference is measured rather than argued.',
+        'A la izquierda, en rojo: las dos prácticas detrás de un titular de partición aleatoria sobre un corpus agrupado. A la derecha: lo que hace este producto en su lugar. Las particiones aleatorias se corren igual, cien veces, para medir el tamaño de la diferencia en vez de discutirlo.',
       )}
     >
       {() => (

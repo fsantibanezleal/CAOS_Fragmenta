@@ -157,6 +157,34 @@ async function measureFigures(page, scope = 'figure svg, .arch-modal svg, [role=
         }
         for (const rect of anyRects) if (inter(a.b, rect, 1) && !inside(a.b, rect, 1)) hits.push(`${name}: "${a.s}" crosses a box edge`);
       }
+      // A stroke over text is an overlay too. The protocol figure once struck its ruled-out boxes
+      // through with two diagonals that crossed their own text, and none of the checks above, which
+      // compare text with text and text with boxes, could see it. Every drawn line, path and polyline
+      // of a diagram (not of a data chart, whose gridlines may pass behind tick labels by design) is
+      // sampled every few pixels along its length and tested against every rendered text, inset by a
+      // little so a stroke that only grazes a glyph box's padding is not called a crossing.
+      if (svg.hasAttribute('data-figure') || svg.closest('.arch-modal, [role="dialog"]')) {
+        const strokes = [...svg.querySelectorAll('line, path, polyline, polygon')].filter(
+          (el) => !el.closest('defs, marker') && el.getClientRects().length > 0 && typeof el.getTotalLength === 'function',
+        );
+        for (const el of strokes) {
+          const style = getComputedStyle(el);
+          if (style.stroke === 'none' || !(parseFloat(style.strokeWidth) > 0) || style.visibility === 'hidden') continue;
+          const ctm = el.getScreenCTM();
+          if (!ctm) continue;
+          const length = el.getTotalLength();
+          const n = Math.max(2, Math.ceil((length * Math.abs(ctm.a || 1)) / 3));
+          const pts = [];
+          for (let s = 0; s <= n; s += 1) pts.push(new DOMPoint(el.getPointAtLength((length * s) / n).x, el.getPointAtLength((length * s) / n).y).matrixTransform(ctm));
+          for (const t of texts) {
+            const r = { left: t.b.left + 1, right: t.b.right - 1, top: t.b.top + 2.5, bottom: t.b.bottom - 2.5 };
+            if (pts.some((p) => p.x > r.left && p.x < r.right && p.y > r.top && p.y < r.bottom)) {
+              hits.push(`${name}: a drawn ${el.tagName} crosses "${t.s}"`);
+              break;
+            }
+          }
+        }
+      }
     });
     return { n: svgs.length, hits };
   }, scope);
