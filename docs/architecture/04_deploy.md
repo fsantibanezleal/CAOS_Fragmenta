@@ -32,6 +32,8 @@ recomputes a benchmark.
    sub-tab and in the
    architecture modal, a measurement of every figure (text on text, text leaving its box or the
    drawing, text on a box, and any drawn line or path crossing text).
+   The runner is Linux, where the shell's system font stack resolves to DejaVu Sans, wider than the
+   fonts on Windows or macOS; `GATE_FONTS=dejavu` runs the same gate with those fonts on any machine.
 4. **Publishes** the build only if all of that passed:
 
 $$
