@@ -88,3 +88,6 @@ jobs:
 
       - name: The design document, every requirement naming a gate that exists (ADR-0075)
         run: python scripts/check_sdd.py
+
+      - name: One deploy place, GitHub Pages, and no files of another (ADR-0055)
+        run: python scripts/check_deploy_place.py
