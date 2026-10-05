@@ -12,9 +12,14 @@ python data-pipeline/run.py --n-seeds 30           # the network seed sweep widt
 ```
 
 `scripts/precompute.ps1` and `scripts/precompute.sh` wrap the full bake. Most of the time goes to the
-benchmark (100 draws of two random protocols, ten site folds, and the 30-seed network sweep), and within
-it to the network's Levenberg-Marquardt training; the engine measures its own benchmark at about two and
-a half minutes on a desktop CPU.
+benchmark (100 draws of two random protocols, ten site folds, the 30-seed network sweep and the
+ten-width network sweep), and within it to the network's Levenberg-Marquardt training. The full bake of
+0.06.000 took 745 s on the development workstation.
+
+`run.py` pins BLAS to one thread before numpy loads, and a test holds the pin. Without it, a
+multi-threaded BLAS spun on the network's small matrices: one fit took more than six minutes against
+about two seconds on one thread. A script that imports the engine directly should set
+`OPENBLAS_NUM_THREADS=1` (and `OMP_NUM_THREADS`, `MKL_NUM_THREADS`) itself.
 
 ## What it writes
 
@@ -24,7 +29,7 @@ a half minutes on a desktop CPU.
 | `data/derived/models/<scope>.json` | one per training scope: the fitted learned arms, exported, with fixtures |
 | `data/derived/manifests/<case>.json` | the case's lane measurement, flags, controls and provenance |
 | `data/derived/manifests/index.json` | what the web reads first: every file with its size and digest |
-| `data/derived/benchmark.json` | the cross-case benchmark (`fragmenta.benchmark/v2`) |
+| `data/derived/benchmark.json` | the cross-case benchmark (`fragmenta.benchmark/v3`) |
 
 All of it is committed; the web reads only these files.
 

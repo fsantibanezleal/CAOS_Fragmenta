@@ -12,7 +12,9 @@
 - **Benchmark.** Schema `fragmenta.benchmark/v3`. Each arm keeps the engine's `detail["common"]` as `common`;
   the payload gains `network_width_sweep`. The contract mirror (`frontend/src/lib/contract.types.ts`) declares both.
 - **Pages.** Benchmark: a common-support column in the every-arm table and a width-sweep chart in the network-seeds
-  tab. Methodology: the cap in the classical tab, the sweep in the network tab. Distribution tab: the in-situ block
+  tab (as built: the tab is renamed "The published network", and the chart carries the null as a reference line,
+  because "no width does better than the null" should be read off the drawing). Methodology: the cap in the
+  classical tab, the sweep in the network tab. Distribution tab: the in-situ block
   drawn on the curve. The wiki: `docs/results/` gains the sweep and the common-support column through the
   generator; `docs/methods/02_classical-mean-size.md` and `06_neural-network.md` gain their sections.
 - **Release.** 0.06.000: the artifacts re-baked under the new engine; `scripts/compare_bakes.py` and a

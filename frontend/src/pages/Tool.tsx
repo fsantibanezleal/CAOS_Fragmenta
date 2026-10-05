@@ -399,14 +399,24 @@ function ArmComparison({
   const scored = ARMS.filter((a) => artifact.scores[a.id]?.scoreable);
   // A curve-shape arm reuses another arm's mean size, so it scores identically and gets no row.
   const shapes = scored.filter((a) => a.sharesMeanSizeWith);
+  // A capped arm equals the arm it caps on a case where the cap binds on no blast; it gets a row only where it differs.
+  const same = (a: string, b: string) =>
+    (['r2_identity', 'pearson_r2', 'rmse_m', 'n_scored', 'n_abstained'] as const).every(
+      (k) => artifact.scores[a]?.[k] === artifact.scores[b]?.[k],
+    );
+  const foldedCaps = scored.filter((a) => a.cappedFrom && same(a.id, a.cappedFrom));
   const rows = scored
-    .filter((a) => !a.sharesMeanSizeWith)
+    .filter((a) => !a.sharesMeanSizeWith && !foldedCaps.includes(a))
     .sort(
       (a, b) =>
         (artifact.scores[b.id].r2_identity ?? -99) - (artifact.scores[a.id].r2_identity ?? -99),
     );
   if (!rows.length) return null;
-  const selectedRow = ARMS.find((a) => a.id === armId)?.sharesMeanSizeWith ?? armId;
+  const selectedMeta = ARMS.find((a) => a.id === armId);
+  const selectedRow =
+    selectedMeta?.sharesMeanSizeWith ??
+    (selectedMeta && foldedCaps.includes(selectedMeta) ? selectedMeta.cappedFrom : undefined) ??
+    armId;
   const shapeTargets = [...new Set(shapes.map((a) => a.sharesMeanSizeWith as string))];
   return (
     <div className="fr-armtable">
@@ -486,6 +496,19 @@ function ArmComparison({
           </p>
         );
       })}
+      {foldedCaps.map((a) => {
+        const base = ARMS.find((b) => b.id === a.cappedFrom)?.label[lang] ?? a.cappedFrom;
+        return (
+          <p key={a.id} className="fr-fine" data-folded-cap={a.id}>
+            <button type="button" className="fr-inline-arm" onClick={() => onArm(a.id)}>
+              {a.label[lang]}
+            </button>
+            {lang === 'es'
+              ? ` coincide con «${base}» en este caso: ninguna predicción supera aquí su bloque in situ.`
+              : ` equals "${base}" on this case: no prediction here exceeds its in-situ block.`}
+          </p>
+        );
+      })}
       <p className="fr-fine">
         {lang === 'es'
           ? 'R²id es la varianza explicada respecto de la recta identidad, el puntaje que reporta este producto; r² es la correlación al cuadrado, la que reportan los artículos fuente. Son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo clásico.'
@@ -527,6 +550,11 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
       crush: crushZone(x50, n, { crossoverM: 0.01, finesUniformity: 0.8, finesFraction }, grid),
     };
   }, [blast, undulation, finesFraction]);
+  const blockLabel = lang === 'es' ? 'bloque in situ' : 'in-situ block';
+  const blockMarker = useMemo(
+    () => [{ sizeM: blast.features.XB_m, label: blockLabel }],
+    [blast.features.XB_m, blockLabel],
+  );
 
   if (!live) {
     return (
@@ -579,12 +607,13 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
               ? [{ sizeM: blast.x50_measured_m, passing: 0.5 }]
               : []
           }
+          sizeMarkers={blockMarker}
           height={360}
         />
         <p className="fr-fine">
           {lang === 'es'
-            ? 'El punto rojo es el tamaño medio medido de este tiro, en el 50 por ciento pasante por definición. La curva completa medida no se publica en la fuente.'
-            : 'The red point is this blast’s measured mean size, at 50 percent passing by definition. The full measured curve is not published in the source.'}
+            ? 'El punto rojo es el tamaño medio medido de este tiro, en el 50 por ciento pasante por definición. La curva completa medida no se publica en la fuente. La línea vertical es el bloque in situ: bajo el límite declarado del motor, la masa que una curva pone por encima de él se lee como bloques sin romper de ese tamaño.'
+            : 'The red point is this blast’s measured mean size, at 50 percent passing by definition. The full measured curve is not published in the source. The vertical line is the in-situ block: under the engine’s declared cap, the mass a curve places above it is read as unbroken blocks of that size.'}
         </p>
       </div>
       <div className="fr-side">

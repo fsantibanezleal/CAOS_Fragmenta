@@ -33,7 +33,8 @@ Non-goals, each something a reader could reasonably assume:
   corpus load. The product adds the case registry (`data-pipeline/pipeline/cases/fragmenta_cases.py`): every case
   states why it is in the matrix, in both languages, with at least six variants over a real physical family.
 - **Artifacts (contract 2)**: `data/derived/<case>/case.json`, `data/derived/benchmark.json`
-  (`fragmenta.benchmark/v2`, v3 from 0.06.000), `data/derived/models/<scope>.json` (`fragmenta.models/v1`, the
+  (`fragmenta.benchmark/v3` from 0.06.000, which added the capped arm, every arm's common-support score and the
+  network width sweep to v2), `data/derived/models/<scope>.json` (`fragmenta.models/v1`, the
   engine's portable export per training scope) and `data/derived/manifests/index.json`. Each is
   content-addressed (SHA-256 over a sorted-key serialisation) and carries the app and engine versions and the
   corpus digest. The web declares the same shapes in `frontend/src/lib/contract.types.ts`, and a parity test reads
@@ -45,9 +46,17 @@ Non-goals, each something a reader could reasonably assume:
 
 - **Offline**: `data-pipeline/run.py` bakes sixteen cases, eleven models files and the benchmark against exact pins
   (numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1). The benchmark's 100-draw protocols and the network's
-  Levenberg-Marquardt fits put it offline; it never runs in CI (ADR-0074).
-- **Replayed**: the committed artifacts, 4.0 MB in all (2.7 MB of portable models, 229 KB of benchmark, about
-  1 MB of cases), copied into the site and fetched with the version in the address.
+  Levenberg-Marquardt fits put it offline; it never runs in CI (ADR-0074). It pins BLAS to one thread before numpy
+  loads: on the network's small matrices a multi-threaded BLAS spun, and one fit at width 15 took more than six
+  minutes on a loaded workstation against about two seconds on one thread. The full bake of 0.06.000 took 745 s on
+  the development workstation (2026-10-05).
+- **Replayed**: the committed artifacts, copied into the site and fetched with the version in the address. Their
+  size, measured on the committed files:
+
+<!-- facts:payload -->
+The committed artifacts come to about 4.2 MB: 2.7 MB of portable models, 368 kB of benchmark, 1.1 MB of cases and the manifests.
+<!-- /facts -->
+
 - **Live, closed forms**: `frontend/src/engine/live.ts` recomputes the classical mean size, the regressions, the
   router and the curves on a design the reader changes; a parity test holds them to the baked numbers.
 - **Live, learned**: `frontend/src/engine/learned.ts` walks the exported models of the case's training scope,
@@ -86,8 +95,8 @@ browser's live lanes.
 ## Deploy driver
 
 GitHub Pages at `fragmenta.fasl-work.com`: a static site with every artifact committed, no server state, no
-secret and no request-time compute (ADR-0002 does not trigger). The measurement is the payload above (4.0 MB of
-artifacts) and the live lanes running in the reader's browser. The deploy verifies the artifacts, tests and builds
+secret and no request-time compute (ADR-0002 does not trigger). The measurement is the payload stated under Lanes
+and the live lanes running in the reader's browser. The deploy verifies the artifacts, tests and builds
 the site, runs the browser gate on the artifact it is about to publish (on Linux, where text is set in DejaVu
 Sans), and only then publishes.
 

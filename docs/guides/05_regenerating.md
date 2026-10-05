@@ -20,8 +20,10 @@ A hand-written page can embed a number that moves with the bake:
 
 The generator fills the block from the benchmark and the check fails when the committed text differs.
 The keys are the ones `blocks()` returns in `scripts/build_docs_results.py`: `verdict`, `arm-<arm id>`
-for every benchmark arm, `seed-sweep`, `transfer-line`, `holdout-2012`, `published-splits`,
-`rock-routes`, `campaigns`. An unknown key, or a block not closed on its own line, fails the generator.
+for every benchmark arm, `cases`, `seed-sweep`, `width-sweep`, `cap`, `transfer-line`, `holdout-2012`,
+`published-splits`, `rock-routes`, `campaigns`, `protocol-gap`, and two measured on the committed files
+rather than read from the benchmark: `bake-output` (counts and sizes of what the bake writes) and
+`payload` (the site's data). An unknown key, or a block not closed on its own line, fails the generator.
 
 ## The drawings
 

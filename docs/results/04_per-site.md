@@ -2,7 +2,7 @@
 
 # Per site
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.06.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 Root mean square error, metres, of each arm on each campaign it did not see. A dash is an abstention.
 
@@ -11,6 +11,7 @@ Root mean square error, metres, of each arm on each campaign it did not see. A d
 | null, predict the training mean | 0.172 | 0.193 | 0.140 | 0.239 | 0.155 | 0.061 | 0.136 | 0.387 | 0.317 | 0.094 |
 | classical mean size, site factor | 0.054 | 0.330 | 0.147 | - | 0.111 | 0.052 | 0.061 | 0.216 | 0.093 | 0.132 |
 | classical mean size, transfer factor | 0.057 | 0.290 | 0.175 | - | 0.213 | 0.110 | 0.061 | 0.166 | 0.086 | 0.076 |
+| classical mean size, capped at the in-situ block (declared) | 0.054 | 0.330 | 0.147 | - | 0.111 | 0.052 | 0.061 | 0.185 | 0.093 | 0.132 |
 | published regression | 0.040 | 0.160 | 0.091 | 0.011 | 0.034 | 0.022 | 0.063 | 0.152 | 0.064 | 0.036 |
 | refitted regression | 0.088 | 0.207 | 0.306 | 0.086 | 0.077 | 1.618 | 0.069 | 0.345 | 1.030 | 0.048 |
 | published neural network | 0.143 | 0.216 | 0.352 | 0.314 | 0.124 | 0.332 | 0.080 | 0.367 | 0.203 | 0.044 |
