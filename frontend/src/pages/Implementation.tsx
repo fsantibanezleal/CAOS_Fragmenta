@@ -137,7 +137,7 @@ function Data({ es }: TabProps) {
         {es
           ? 'Tres conjuntos reales se cargan por el mismo contrato: los 97 tiros del corpus, los 14 de validación publicados y los cinco de campo. El contrato rechaza lo que no puede ser una voladura (un factor de carga fuera de 0.05 a 3 kg/m³, por ejemplo) y marca, sin recortar, lo que queda fuera de la envolvente de entrenamiento; toda predicción sobre una fila marcada lleva el sello de extrapolación.'
           : 'Three real sets load through one contract: the 97 corpus blasts, the 14 published hold-out blasts and the five field blasts. The contract rejects what cannot be a blast (a powder factor outside 0.05 to 3 kg/m³, for example) and flags, without clipping, what lies outside the training envelope; every prediction on a flagged row carries the extrapolation stamp.'}{' '}
-        <Cite id="hudaverdi2010" />
+        <Cite id="hudaverdi2010" />{' '}
         <Cite id="sui2025" />
       </p>
       <p>
@@ -355,7 +355,7 @@ function LiveEquations({ es }: TabProps) {
         {es
           ? 'Las formas cerradas se reescribieron en TypeScript para que cambiar un diseño mueva la curva sin esperar a un servidor: la ecuación clásica de tamaño medio, el índice de uniformidad, las curvas de dos y tres parámetros, la composición de dos ramas, la función discriminante, las dos leyes de potencia publicadas y la guarda que rechaza un diseño cuyo taco se come el banco.'
           : 'The closed forms were rewritten in TypeScript so that changing a design moves the curve without waiting on a server: the classical mean-size equation, the uniformity index, the two- and three-parameter curves, the two-branch composition, the discriminant function, the two published power laws and the guard that refuses a design whose stemming swallows the bench.'}{' '}
-        <Cite id="amoako2022" />
+        <Cite id="amoako2022" />{' '}
         <Cite id="hudaverdi2010" />
       </p>
       <p>
@@ -394,8 +394,8 @@ function LiveModels({ es, index }: TabProps) {
         {es
           ? 'Los brazos aprendidos se ajustan sin conexión con numpy, scikit-learn y xgboost, que un navegador no tiene, y ONNX Runtime Web no trae un núcleo para ensambles de árboles. Así que el motor exporta cada modelo ajustado como JSON plano (los pesos de la red, los vectores de soporte, y cada árbol como cuatro arreglos: hijo izquierdo, hijo derecho, variable y umbral u hoja), y la App los recorre en TypeScript.'
           : 'The learned arms are fitted offline with numpy, scikit-learn and xgboost, which a browser does not have, and ONNX Runtime Web has no tree-ensemble kernel. So the engine exports each fitted model as plain JSON (the network’s weights, the support vectors, and every tree as four arrays: left child, right child, feature, and threshold or leaf), and the App walks them in TypeScript.'}{' '}
-        <Cite id="breiman2001" />
-        <Cite id="chen2016" />
+        <Cite id="breiman2001" />{' '}
+        <Cite id="chen2016" />{' '}
         <Cite id="smola2004" />
       </p>
       <PortableModelDiagram />
