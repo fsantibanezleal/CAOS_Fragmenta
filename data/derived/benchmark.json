@@ -1,6 +1,1366 @@
 {
  "app_version": "0.05.000",
  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
+ "corpus_rows": [
+  {
+   "blast_id": "En1",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.78,
+    0.48,
+    0.58,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.37
+  },
+  {
+   "blast_id": "En2",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.78,
+    0.48,
+    0.58,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.37
+  },
+  {
+   "blast_id": "En3",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.78,
+    0.48,
+    1.08,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.33
+  },
+  {
+   "blast_id": "En4",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.78,
+    0.48,
+    1.11,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.42
+  },
+  {
+   "blast_id": "En5",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.78,
+    0.48,
+    1.08,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.46
+  },
+  {
+   "blast_id": "En6",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    1.17,
+    0.27,
+    1.08,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.37
+  },
+  {
+   "blast_id": "En7",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    1.06,
+    0.33,
+    1.08,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.64
+  },
+  {
+   "blast_id": "En8",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.91,
+    0.41,
+    1.11,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.42
+  },
+  {
+   "blast_id": "En9",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.91,
+    0.41,
+    1.11,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.26
+  },
+  {
+   "blast_id": "En10",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.99,
+    0.36,
+    1.08,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.42
+  },
+  {
+   "blast_id": "En11",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    1.06,
+    0.33,
+    1.11,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.31
+  },
+  {
+   "blast_id": "En12",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    1.06,
+    0.33,
+    1.11,
+    60.0
+   ],
+   "site": "Enusa",
+   "x50_m": 0.38
+  },
+  {
+   "blast_id": "Rc1",
+   "features": [
+    1.17,
+    1.5,
+    26.2,
+    1.08,
+    0.33,
+    0.68,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.46
+  },
+  {
+   "blast_id": "Rc2",
+   "features": [
+    1.17,
+    1.5,
+    26.2,
+    1.12,
+    0.3,
+    0.68,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.48
+  },
+  {
+   "blast_id": "Rc3",
+   "features": [
+    1.17,
+    1.58,
+    26.2,
+    1.22,
+    0.28,
+    0.68,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.48
+  },
+  {
+   "blast_id": "Rc4",
+   "features": [
+    1.17,
+    1.96,
+    26.2,
+    1.3,
+    0.34,
+    1.56,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.75
+  },
+  {
+   "blast_id": "Rc5",
+   "features": [
+    1.17,
+    1.75,
+    26.2,
+    1.31,
+    0.29,
+    1.56,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.96
+  },
+  {
+   "blast_id": "Rc6",
+   "features": [
+    1.17,
+    1.75,
+    26.2,
+    1.16,
+    0.36,
+    1.56,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.76
+  },
+  {
+   "blast_id": "Rc7",
+   "features": [
+    1.17,
+    1.67,
+    26.2,
+    1.22,
+    0.31,
+    1.8,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.53
+  },
+  {
+   "blast_id": "Rc8",
+   "features": [
+    1.17,
+    1.83,
+    26.2,
+    1.34,
+    0.3,
+    1.8,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.56
+  },
+  {
+   "blast_id": "Rc9",
+   "features": [
+    1.17,
+    1.83,
+    26.2,
+    1.29,
+    0.32,
+    1.8,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.74
+  },
+  {
+   "blast_id": "Rc10",
+   "features": [
+    1.17,
+    1.83,
+    26.2,
+    1.23,
+    0.35,
+    1.8,
+    45.0
+   ],
+   "site": "Reocin",
+   "x50_m": 0.44
+  },
+  {
+   "blast_id": "Mg1",
+   "features": [
+    1.0,
+    2.67,
+    27.27,
+    0.89,
+    0.75,
+    0.83,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.23
+  },
+  {
+   "blast_id": "Mg2",
+   "features": [
+    1.0,
+    2.67,
+    27.27,
+    0.89,
+    0.75,
+    0.78,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.25
+  },
+  {
+   "blast_id": "Mg3",
+   "features": [
+    1.0,
+    2.4,
+    30.3,
+    0.8,
+    0.61,
+    1.02,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.27
+  },
+  {
+   "blast_id": "Mg4",
+   "features": [
+    1.0,
+    2.4,
+    30.3,
+    0.8,
+    0.61,
+    0.75,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.3
+  },
+  {
+   "blast_id": "Mg5",
+   "features": [
+    1.1,
+    2.4,
+    30.3,
+    0.8,
+    0.55,
+    1.18,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.38
+  },
+  {
+   "blast_id": "Mg6",
+   "features": [
+    1.1,
+    2.4,
+    30.3,
+    0.8,
+    0.55,
+    1.24,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.37
+  },
+  {
+   "blast_id": "Mg7",
+   "features": [
+    1.1,
+    2.4,
+    30.3,
+    0.8,
+    0.55,
+    1.33,
+    50.0
+   ],
+   "site": "Murgul",
+   "x50_m": 0.38
+  },
+  {
+   "blast_id": "Ru1",
+   "features": [
+    1.13,
+    5.0,
+    39.47,
+    1.93,
+    0.31,
+    2.0,
+    45.0
+   ],
+   "site": "Reocin-UG",
+   "x50_m": 0.64
+  },
+  {
+   "blast_id": "Ru2",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    3.67,
+    0.3,
+    2.0,
+    45.0
+   ],
+   "site": "Reocin-UG",
+   "x50_m": 0.54
+  },
+  {
+   "blast_id": "Ru3",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    3.7,
+    0.3,
+    2.0,
+    45.0
+   ],
+   "site": "Reocin-UG",
+   "x50_m": 0.51
+  },
+  {
+   "blast_id": "Ru4",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    4.67,
+    0.22,
+    2.0,
+    45.0
+   ],
+   "site": "Reocin-UG",
+   "x50_m": 0.64
+  },
+  {
+   "blast_id": "Ru5",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    3.11,
+    0.35,
+    2.0,
+    45.0
+   ],
+   "site": "Reocin-UG",
+   "x50_m": 0.54
+  },
+  {
+   "blast_id": "Ru6",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    3.22,
+    0.34,
+    2.0,
+    45.0
+   ],
+   "site": "Reocin-UG",
+   "x50_m": 0.69
+  },
+  {
+   "blast_id": "Mr1",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    0.8,
+    0.49,
+    1.67,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Mr2",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    0.8,
+    0.51,
+    1.67,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Mr3",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    0.8,
+    0.49,
+    1.67,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.13
+  },
+  {
+   "blast_id": "Mr4",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    0.8,
+    0.52,
+    1.67,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Mr5",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    0.8,
+    0.42,
+    1.67,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.13
+  },
+  {
+   "blast_id": "Mr6",
+   "features": [
+    1.4,
+    6.0,
+    32.89,
+    0.8,
+    0.36,
+    1.67,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Mr7",
+   "features": [
+    1.2,
+    6.0,
+    32.89,
+    0.6,
+    0.56,
+    1.03,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.18
+  },
+  {
+   "blast_id": "Mr8",
+   "features": [
+    1.4,
+    6.0,
+    32.89,
+    0.6,
+    0.3,
+    1.03,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.19
+  },
+  {
+   "blast_id": "Mr9",
+   "features": [
+    1.4,
+    6.0,
+    32.89,
+    0.6,
+    0.35,
+    1.03,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.16
+  },
+  {
+   "blast_id": "Mr10",
+   "features": [
+    1.16,
+    5.0,
+    39.47,
+    0.5,
+    0.39,
+    1.03,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Mr11",
+   "features": [
+    1.16,
+    5.0,
+    39.47,
+    0.5,
+    0.32,
+    1.03,
+    32.0
+   ],
+   "site": "Mrica",
+   "x50_m": 0.21
+  },
+  {
+   "blast_id": "Db1",
+   "features": [
+    1.25,
+    3.5,
+    20.0,
+    1.75,
+    0.73,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.44
+  },
+  {
+   "blast_id": "Db2",
+   "features": [
+    1.25,
+    5.1,
+    20.0,
+    1.75,
+    0.7,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.76
+  },
+  {
+   "blast_id": "Db3",
+   "features": [
+    1.38,
+    3.0,
+    20.0,
+    1.75,
+    0.62,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.35
+  },
+  {
+   "blast_id": "Db4",
+   "features": [
+    1.5,
+    5.5,
+    20.0,
+    1.75,
+    0.56,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.55
+  },
+  {
+   "blast_id": "Db5",
+   "features": [
+    1.75,
+    4.75,
+    20.0,
+    1.75,
+    0.39,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.35
+  },
+  {
+   "blast_id": "Db6",
+   "features": [
+    1.25,
+    4.75,
+    20.0,
+    1.75,
+    0.33,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.23
+  },
+  {
+   "blast_id": "Db7",
+   "features": [
+    1.25,
+    5.0,
+    20.0,
+    1.75,
+    0.44,
+    1.0,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.4
+  },
+  {
+   "blast_id": "Db8",
+   "features": [
+    1.2,
+    2.4,
+    25.0,
+    1.4,
+    0.28,
+    0.5,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.35
+  },
+  {
+   "blast_id": "Db9",
+   "features": [
+    1.4,
+    3.2,
+    25.0,
+    1.4,
+    0.31,
+    0.5,
+    9.57
+   ],
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.29
+  },
+  {
+   "blast_id": "Mi1",
+   "features": [
+    1.0,
+    2.5,
+    22.22,
+    1.69,
+    0.71,
+    0.17,
+    10.0
+   ],
+   "site": "Miami",
+   "x50_m": 0.1
+  },
+  {
+   "blast_id": "Mi2",
+   "features": [
+    1.0,
+    1.67,
+    33.33,
+    0.72,
+    0.46,
+    0.1,
+    10.0
+   ],
+   "site": "Miami",
+   "x50_m": 0.09
+  },
+  {
+   "blast_id": "Mi3",
+   "features": [
+    1.0,
+    1.67,
+    33.33,
+    1.25,
+    0.27,
+    0.1,
+    10.0
+   ],
+   "site": "Miami",
+   "x50_m": 0.09
+  },
+  {
+   "blast_id": "Mi4",
+   "features": [
+    1.0,
+    1.67,
+    33.33,
+    0.7,
+    0.47,
+    0.1,
+    10.0
+   ],
+   "site": "Miami",
+   "x50_m": 0.08
+  },
+  {
+   "blast_id": "Mi5",
+   "features": [
+    1.0,
+    1.67,
+    33.33,
+    1.28,
+    0.26,
+    0.1,
+    10.0
+   ],
+   "site": "Miami",
+   "x50_m": 0.1
+  },
+  {
+   "blast_id": "Mi6",
+   "features": [
+    1.0,
+    2.5,
+    22.22,
+    1.69,
+    0.71,
+    0.02,
+    10.0
+   ],
+   "site": "Miami",
+   "x50_m": 0.02
+  },
+  {
+   "blast_id": "Sm1",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    0.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Sm2",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    0.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.19
+  },
+  {
+   "blast_id": "Sm3",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    0.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.23
+  },
+  {
+   "blast_id": "Sm4",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    1.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.22
+  },
+  {
+   "blast_id": "Sm5",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    1.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.24
+  },
+  {
+   "blast_id": "Sm6",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    1.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.26
+  },
+  {
+   "blast_id": "Sm7",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    1.5,
+    13.25
+   ],
+   "site": "Soma",
+   "x50_m": 0.28
+  },
+  {
+   "blast_id": "Ad1",
+   "features": [
+    1.2,
+    4.4,
+    28.09,
+    1.2,
+    0.58,
+    0.77,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad2",
+   "features": [
+    1.2,
+    4.8,
+    28.09,
+    1.2,
+    0.66,
+    0.56,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Ad3",
+   "features": [
+    1.2,
+    4.8,
+    28.09,
+    1.2,
+    0.72,
+    0.29,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.14
+  },
+  {
+   "blast_id": "Ad4",
+   "features": [
+    1.2,
+    4.0,
+    28.09,
+    1.6,
+    0.49,
+    0.81,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.16
+  },
+  {
+   "blast_id": "Ad5",
+   "features": [
+    1.14,
+    6.82,
+    24.72,
+    1.36,
+    0.84,
+    1.43,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.21
+  },
+  {
+   "blast_id": "Ad6",
+   "features": [
+    1.14,
+    6.36,
+    24.72,
+    1.36,
+    0.82,
+    1.77,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.21
+  },
+  {
+   "blast_id": "Ad7",
+   "features": [
+    1.25,
+    3.5,
+    22.47,
+    1.25,
+    0.75,
+    1.03,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad8",
+   "features": [
+    1.25,
+    3.25,
+    22.47,
+    1.25,
+    0.71,
+    0.83,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.19
+  },
+  {
+   "blast_id": "Ad9",
+   "features": [
+    1.25,
+    3.5,
+    22.47,
+    1.25,
+    0.76,
+    1.68,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.18
+  },
+  {
+   "blast_id": "Ad10",
+   "features": [
+    1.25,
+    3.5,
+    22.47,
+    1.25,
+    0.76,
+    1.24,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad11",
+   "features": [
+    1.14,
+    3.18,
+    24.72,
+    1.14,
+    0.69,
+    0.67,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.14
+  },
+  {
+   "blast_id": "Ad12",
+   "features": [
+    1.14,
+    3.18,
+    24.72,
+    1.14,
+    0.69,
+    2.01,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.2
+  },
+  {
+   "blast_id": "Ad13",
+   "features": [
+    1.12,
+    2.8,
+    28.09,
+    1.0,
+    0.54,
+    0.96,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad14",
+   "features": [
+    1.0,
+    2.4,
+    28.09,
+    1.0,
+    0.56,
+    0.83,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.14
+  },
+  {
+   "blast_id": "Ad15",
+   "features": [
+    1.1,
+    3.75,
+    21.74,
+    1.0,
+    1.02,
+    1.64,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad16",
+   "features": [
+    1.1,
+    3.5,
+    22.47,
+    1.25,
+    0.86,
+    2.35,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad17",
+   "features": [
+    1.25,
+    3.75,
+    17.98,
+    1.56,
+    1.24,
+    1.53,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.19
+  },
+  {
+   "blast_id": "Ad18",
+   "features": [
+    1.0,
+    4.0,
+    18.42,
+    1.71,
+    1.26,
+    0.73,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.15
+  },
+  {
+   "blast_id": "Ad19",
+   "features": [
+    1.0,
+    4.0,
+    18.42,
+    1.71,
+    1.26,
+    1.47,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Ad20",
+   "features": [
+    1.14,
+    4.0,
+    18.42,
+    1.71,
+    1.1,
+    1.19,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.19
+  },
+  {
+   "blast_id": "Ad21",
+   "features": [
+    1.11,
+    4.44,
+    18.95,
+    1.67,
+    1.25,
+    1.71,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.22
+  },
+  {
+   "blast_id": "Ad22",
+   "features": [
+    1.28,
+    3.61,
+    18.95,
+    1.67,
+    0.89,
+    0.56,
+    16.9
+   ],
+   "site": "Akdaglar",
+   "x50_m": 0.2
+  },
+  {
+   "blast_id": "Oz1",
+   "features": [
+    1.0,
+    2.83,
+    33.71,
+    1.0,
+    0.48,
+    0.45,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.27
+  },
+  {
+   "blast_id": "Oz2",
+   "features": [
+    1.2,
+    2.4,
+    28.09,
+    1.0,
+    0.53,
+    0.86,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.14
+  },
+  {
+   "blast_id": "Oz3",
+   "features": [
+    1.2,
+    2.4,
+    28.09,
+    1.0,
+    0.53,
+    0.44,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.14
+  },
+  {
+   "blast_id": "Oz4",
+   "features": [
+    1.25,
+    4.5,
+    22.47,
+    1.5,
+    0.76,
+    0.66,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.2
+  },
+  {
+   "blast_id": "Oz5",
+   "features": [
+    1.11,
+    3.33,
+    30.34,
+    1.11,
+    0.47,
+    0.47,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Oz6",
+   "features": [
+    1.2,
+    3.2,
+    28.09,
+    1.2,
+    0.48,
+    1.11,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.3
+  },
+  {
+   "blast_id": "Oz7",
+   "features": [
+    1.2,
+    2.4,
+    28.09,
+    1.0,
+    0.53,
+    0.88,
+    15.0
+   ],
+   "site": "Ozmert",
+   "x50_m": 0.12
+  }
+ ],
  "diagnostics": {
   "native_importance": {
    "random-forest": {
@@ -310,7 +1670,7 @@
    "slope": 0.5029089801679779
   }
  },
- "digest": "389c7d01f25d6c681ccd93da0b76b2e7558a3f7ac9cf3f0be28a9c3333705972",
+ "digest": "2778cc087d9d3bed10fa5257bc652ee2b83da5180d221405de7d3b4215d08846",
  "duplicate_groups": [
   [
    "En1",
@@ -345,6 +1705,387 @@
   ]
  ],
  "engine_version": "0.03.000",
+ "holdout_rows": [
+  {
+   "blast_id": "En13",
+   "features": [
+    1.24,
+    1.33,
+    27.27,
+    0.78,
+    0.48,
+    1.11,
+    60.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.44,
+    "neural_net": 0.42,
+    "regression": 0.39
+   },
+   "set": "published-2012",
+   "site": "Enusa",
+   "x50_m": 0.47
+  },
+  {
+   "blast_id": "Ru7",
+   "features": [
+    1.13,
+    5.0,
+    39.47,
+    3.11,
+    0.31,
+    2.0,
+    45.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.65,
+    "neural_net": 0.63,
+    "regression": 0.51
+   },
+   "set": "published-2012",
+   "site": "Reocin-UG",
+   "x50_m": 0.64
+  },
+  {
+   "blast_id": "Mg8",
+   "features": [
+    1.1,
+    2.4,
+    30.3,
+    0.8,
+    0.55,
+    1.23,
+    50.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.39,
+    "neural_net": 0.37,
+    "regression": 0.4
+   },
+   "set": "published-2012",
+   "site": "Murgul",
+   "x50_m": 0.44
+  },
+  {
+   "blast_id": "Mg9",
+   "features": [
+    1.0,
+    2.67,
+    27.27,
+    0.89,
+    0.75,
+    0.77,
+    50.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.3,
+    "neural_net": 0.28,
+    "regression": 0.24
+   },
+   "set": "published-2012",
+   "site": "Murgul",
+   "x50_m": 0.25
+  },
+  {
+   "blast_id": "Rc1",
+   "features": [
+    1.17,
+    1.5,
+    26.2,
+    1.08,
+    0.33,
+    0.68,
+    45.0
+   ],
+   "in_training_table": true,
+   "published": {
+    "classical": 0.72,
+    "neural_net": 0.43,
+    "regression": 0.52
+   },
+   "set": "published-2012",
+   "site": "Reocin",
+   "x50_m": 0.46
+  },
+  {
+   "blast_id": "Mr12",
+   "features": [
+    1.25,
+    6.25,
+    31.58,
+    0.63,
+    0.48,
+    1.03,
+    32.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.24,
+    "neural_net": 0.12,
+    "regression": 0.16
+   },
+   "set": "published-2012",
+   "site": "Mrica",
+   "x50_m": 0.2
+  },
+  {
+   "blast_id": "Db10",
+   "features": [
+    1.15,
+    4.35,
+    20.0,
+    1.75,
+    0.89,
+    1.0,
+    9.57
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.08,
+    "neural_net": 0.33,
+    "regression": 0.16
+   },
+   "set": "published-2012",
+   "site": "Dongri-Buzurg",
+   "x50_m": 0.35
+  },
+  {
+   "blast_id": "Mi7",
+   "features": [
+    1.0,
+    1.67,
+    33.33,
+    0.7,
+    0.47,
+    0.09,
+    10.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": null,
+    "neural_net": null,
+    "regression": null
+   },
+   "set": "published-2010-only",
+   "site": "Miami",
+   "x50_m": 0.08
+  },
+  {
+   "blast_id": "Sm8",
+   "features": [
+    1.25,
+    2.5,
+    28.57,
+    0.83,
+    0.42,
+    0.5,
+    13.25
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.35,
+    "neural_net": 0.19,
+    "regression": 0.19
+   },
+   "set": "published-2012",
+   "site": "Soma",
+   "x50_m": 0.18
+  },
+  {
+   "blast_id": "Oz8",
+   "features": [
+    1.2,
+    2.4,
+    28.09,
+    1.0,
+    0.53,
+    0.82,
+    15.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.2,
+    "neural_net": 0.15,
+    "regression": 0.17
+   },
+   "set": "published-2012",
+   "site": "Ozmert",
+   "x50_m": 0.23
+  },
+  {
+   "blast_id": "Oz9",
+   "features": [
+    1.11,
+    3.33,
+    30.34,
+    1.11,
+    0.47,
+    0.54,
+    15.0
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.23,
+    "neural_net": 0.19,
+    "regression": 0.16
+   },
+   "set": "published-2012",
+   "site": "Ozmert",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "Ad23",
+   "features": [
+    1.11,
+    4.44,
+    18.95,
+    1.67,
+    1.25,
+    1.63,
+    16.9
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.11,
+    "neural_net": 0.21,
+    "regression": 0.18
+   },
+   "set": "published-2012",
+   "site": "Akdaglar",
+   "x50_m": 0.21
+  },
+  {
+   "blast_id": "Ad24",
+   "features": [
+    1.28,
+    3.61,
+    18.95,
+    1.67,
+    0.89,
+    0.61,
+    16.9
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": 0.13,
+    "neural_net": 0.19,
+    "regression": 0.14
+   },
+   "set": "published-2012",
+   "site": "Akdaglar",
+   "x50_m": 0.2
+  },
+  {
+   "blast_id": "Ad25",
+   "features": [
+    1.2,
+    2.8,
+    28.09,
+    1.0,
+    0.5,
+    1.49,
+    16.9
+   ],
+   "in_training_table": false,
+   "published": {
+    "classical": null,
+    "neural_net": null,
+    "regression": null
+   },
+   "set": "published-2010-only",
+   "site": "Akdaglar",
+   "x50_m": 0.17
+  },
+  {
+   "blast_id": "NE1",
+   "features": [
+    1.2143,
+    2.1429,
+    28.0,
+    1.0714,
+    0.62,
+    1.11,
+    5.6
+   ],
+   "in_training_table": false,
+   "published": {},
+   "set": "field-2025",
+   "site": "Granite-NE",
+   "x50_m": 0.1456
+  },
+  {
+   "blast_id": "NE2",
+   "features": [
+    1.2857,
+    2.1429,
+    28.0,
+    1.0714,
+    0.64,
+    1.11,
+    5.6
+   ],
+   "in_training_table": false,
+   "published": {},
+   "set": "field-2025",
+   "site": "Granite-NE",
+   "x50_m": 0.163
+  },
+  {
+   "blast_id": "NE3",
+   "features": [
+    1.4286,
+    2.1429,
+    28.0,
+    1.0714,
+    0.61,
+    1.11,
+    5.6
+   ],
+   "in_training_table": false,
+   "published": {},
+   "set": "field-2025",
+   "site": "Granite-NE",
+   "x50_m": 0.1962
+  },
+  {
+   "blast_id": "NE4",
+   "features": [
+    1.3571,
+    2.1429,
+    28.0,
+    1.0714,
+    0.57,
+    1.11,
+    5.6
+   ],
+   "in_training_table": false,
+   "published": {},
+   "set": "field-2025",
+   "site": "Granite-NE",
+   "x50_m": 0.1997
+  },
+  {
+   "blast_id": "NE5",
+   "features": [
+    1.3571,
+    2.1429,
+    28.0,
+    1.0714,
+    0.62,
+    1.11,
+    5.6
+   ],
+   "in_training_table": false,
+   "published": {},
+   "set": "field-2025",
+   "site": "Granite-NE",
+   "x50_m": 0.1786
+  }
+ ],
  "kill_criterion": "The learned tier counts as generalising across sites only if the best learned arm's variance explained under leave-one-site-out is BOTH positive and at least 0.10 above the null model's. Both halves are required: a margin over a null that is itself deeply negative is not skill, it is two models failing by different amounts.",
  "n_boot": 2000,
  "n_repeats": 100,

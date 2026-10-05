@@ -140,10 +140,53 @@ def build(*, seed: int = 0, n_seeds: int = 30, n_repeats: int = 100, n_boot: int
         "site_counts": {site: site_meta[site]["n_blasts"] for site in sites},
         "site_meta": site_meta,
         "diagnostics": diagnostics,
+        # The rows behind the pooled scores and the published hold-outs, so a page can draw them and
+        # the browser can re-score them live with the exported models.
+        "corpus_rows": [
+            {"blast_id": b.blast_id, "site": b.site, "x50_m": b.x50_m, "features": list(b.features())}
+            for b in corpus
+        ],
+        "holdout_rows": _holdout_rows(),
     }
     payload = _serialisable(payload)
     payload["digest"] = digest(payload)
     return payload
+
+
+def _holdout_rows() -> list[dict]:
+    """The published hold-out blasts and the field blasts, with what each source printed for them."""
+    in_2012 = {b.blast_id for b in bf.load_holdout(protocol="2012")}
+    rows = []
+    for blast in bf.load_holdout(protocol="union"):
+        published = blast.meta.get("published", {})
+        rows.append(
+            {
+                "blast_id": blast.blast_id,
+                "site": blast.site,
+                "set": "published-2012" if blast.blast_id in in_2012 else "published-2010-only",
+                "x50_m": blast.x50_m,
+                "features": list(blast.features()),
+                "in_training_table": bool(blast.meta.get("in_training_table")),
+                "published": {
+                    "classical": published.get("kuzram_2012"),
+                    "regression": published.get("regression_2012"),
+                    "neural_net": published.get("nn_mean_2012"),
+                },
+            }
+        )
+    for blast in bf.load_field_holdout():
+        rows.append(
+            {
+                "blast_id": blast.blast_id,
+                "site": blast.site,
+                "set": "field-2025",
+                "x50_m": blast.x50_m,
+                "features": list(blast.features()),
+                "in_training_table": False,
+                "published": {},
+            }
+        )
+    return rows
 
 
 def _published_reproduction() -> dict:
