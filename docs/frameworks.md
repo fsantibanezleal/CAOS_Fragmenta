@@ -1,38 +1,64 @@
 # Frameworks
 
-What this product depends on, and what it deliberately does not.
+Every library this product runs on, documented the same way: what it is, why it is here and what would
+replace it (the node page), then how to install it, how this product uses it, and how to apply it to
+other data (the node's folder). The four Python nodes carry a runnable `example.py`, run against the
+pinned versions for this release.
 
-## What it uses
+## The engine and the training stack (offline)
 
-| | Role |
-|---|---|
-| `blastfrag` | the engine: every model, the corpora, the split protocols, the metric suite. A separate published repo, pinned by tag. |
-| numpy | the only hard dependency of that engine |
-| scikit-learn, xgboost | the learned tier, in the heavy lane only, never at deploy |
-| React, uPlot, three.js, KaTeX | the web surface |
-| the shared app shell | header, footer, theme, language, tabs, citations, the architecture modal |
+1. [**01 · blastfrag**](frameworks/01_blastfrag.md): the engine. Models, corpora, protocols, metrics,
+   diagnostics, the portable export. Published on PyPI, pinned exactly.
+2. [**02 · scikit-learn**](frameworks/02_scikit-learn.md): the forest, the support-vector arms, the
+   scaler, the stacking meta-learner, the Isolation Forest.
+3. [**03 · XGBoost**](frameworks/03_xgboost.md): the gradient-boosting arm, the stack's dominant
+   learner.
+4. [**04 · numpy**](frameworks/04_numpy.md): the engine's only hard dependency; the Levenberg-Marquardt
+   network, the refit's least squares, the transfer line, the diagnostics.
 
-The engine being a separate repo is the point rather than an accident. A product declares no package
-of its own, so anything a third party could use to predict blast fragmentation without caring about
-Fragmenta belongs upstream. Keeping that boundary strict is what stops this repo growing a private
-copy of the science that nobody else can check.
+## The web (in the browser)
 
-## What it does not use, and why that is a decision
+5. [**05 · React and the shared app shell**](frameworks/05_react-and-the-shell.md): the six routes, the
+   header and footer, theme and language, sub-tabs, equations, citations, the architecture modal.
+6. [**06 · uPlot**](frameworks/06_uplot.md): the interactive line and scatter charts.
+7. [**07 · three.js**](frameworks/07_three.md): the reconstructed bench in three dimensions.
+8. [**08 · KaTeX**](frameworks/08_katex.md): every equation on the documentation pages.
+9. [**09 · Vite, TypeScript and the Node test runner**](frameworks/09_vite-and-tests.md): the build, the
+   type check, the parity and model tests.
+10. [**10 · Playwright**](frameworks/10_playwright.md): the browser gate and the figure export.
 
-**No discrete-element, grain-based or hybrid stress blasting model.** These are mechanistic
-simulations of rock breakage and they would be the strongest tier this product could have. No engine,
-no licence and no reference output was available for this work. A hand-rolled approximation shipped
-under one of those names would be a fabricated method rather than a cheap version of a real one, and
-the product says it has no mechanistic tier instead.
+## Pinned versions for this release
 
-**No reproduction of the 2025 convolutional hybrid.** It reports strong figures on a superset of this
-corpus. Its optimiser update rule is not transcribable with confidence from the copy available, so it
-is cited as prior art with its published numbers, attributed, and is not a model of this product.
+| Library | Version | Where pinned |
+|---|---|---|
+| blastfrag | 0.3.0 | `requirements-precompute.txt` (exact) |
+| numpy | 2.5.3 | `requirements-precompute.txt` (exact) |
+| scikit-learn | 1.9.0 | `requirements-precompute.txt` (exact) |
+| xgboost | 3.4.1 | `requirements-precompute.txt` (exact) |
+| Python | 3.13 | the bake's environment; CI and the deploy use the same |
+| React, react-dom | 19.3 | `frontend/package-lock.json` |
+| react-router | 7.18 | `frontend/package-lock.json` |
+| @fasl-work/caos-app-shell | 0.6.8 | `frontend/package-lock.json` |
+| uPlot | 1.6.32 | `frontend/package-lock.json` |
+| three.js | 0.171 | `frontend/package-lock.json` |
+| KaTeX | 0.16.47 | `frontend/package-lock.json` |
+| Vite | 6.4 | `frontend/package-lock.json` |
+| TypeScript | 5.9 | `frontend/package-lock.json` |
+| Playwright | 1.56 | `frontend/package-lock.json` |
 
-**No non-ideal detonics, no flyrock, no ground vibration, no comminution model.** Each is a real
-discipline that this one feeds or is fed by, and none of them is modelled here.
+The Python pins are exact because every number in every artifact came from these versions: bumping
+one means re-running the whole bake and committing the artifacts in the same change.
 
-**No serialised model file.** The learned models are trained during the bake and their predictions
-are what ships. A serialised forest would be a second source of truth with nothing checking it
-against the first. The models the browser does run are the closed forms, and those have a parity
-gate; a checkpoint with no equivalent gate would not.
+## What the product deliberately does not use
+
+- **No mechanistic simulator** (discrete-element, grain-based or hybrid stress blasting models). No
+  engine, licence or reference output was available for this work. A hand-written approximation
+  under one of those names would be a fabricated method, so the product states that it has no
+  mechanistic tier.
+- **No reproduction of the 2025 convolutional hybrid** (Huan et al. 2025). Its optimiser's update rule
+  cannot be transcribed with confidence from the copy available; it is cited with its published
+  figures.
+- **No ONNX Runtime Web.** It has no tree-ensemble kernel, and the forests and the booster are most of
+  what the browser runs. The portable export ([architecture/05](architecture/05_portable-models.md))
+  replaces it, with fixtures that hold the browser to the fitted models.
+- **No server.** Everything that fits runs offline; the site is static ([architecture/04](architecture/04_deploy.md)).
