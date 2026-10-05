@@ -4,7 +4,7 @@
 
 Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
-The kill criterion, declared before the first run and unchanged since:
+The kill criterion. It was first written, before the first run, as a margin over the null alone; that run declared success for a best learned arm at -0.034 against a null at -0.216, an arm worse than a constant, so the positivity half was added. The sentence has not changed since, and an engine test pins its hash:
 
 > The learned tier counts as generalising across sites only if the best learned arm's variance explained under leave-one-site-out is BOTH positive and at least 0.10 above the null model's. Both halves are required: a margin over a null that is itself deeply negative is not skill, it is two models failing by different amounts.
 

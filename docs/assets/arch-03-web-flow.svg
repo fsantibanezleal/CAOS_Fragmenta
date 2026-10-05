@@ -60,7 +60,7 @@
 <text class="mu" x="652.0" y="208.0">on top of the drawing</text>
 <line class="flow" x1="172.0" y1="130.0" x2="172.0" y2="138.0" marker-end="url(#arch-arrow)"/>
 <line class="flow" x1="172.0" y1="206.0" x2="172.0" y2="214.0" marker-end="url(#arch-arrow)"/>
-<line class="flow" x1="322.0" y1="97.0" x2="640.0" y2="104.0" marker-end="url(#arch-arrow)"/>
+<path class="flow" fill="none" d="M 262.0 64.0 V 46.0 H 682.0 V 64.0" marker-end="url(#arch-arrow)"/>
 <line class="band" x1="22" y1="370.0" x2="878" y2="370.0"/>
 <text class="nt" x="22" y="388.0">The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every</text>
 <text class="nt" x="22" y="403.0">route and every section in both themes and languages before a deploy publishes.</text>

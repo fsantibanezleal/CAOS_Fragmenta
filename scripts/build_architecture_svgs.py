@@ -151,6 +151,16 @@ def arrow(a: tuple[float, float], b: tuple[float, float]) -> str:
     return f'<line class="flow" x1="{a[0]:.1f}" y1="{a[1]:.1f}" x2="{b[0]:.1f}" y2="{b[1]:.1f}" marker-end="url(#arch-arrow)"/>'
 
 
+def elbow(a: tuple[float, float], b: tuple[float, float], via_y: float) -> str:
+    """An arrow routed up to ``via_y``, across, and down: for two boxes with a column between them.
+
+    A straight arrow between non-adjacent columns runs through the middle column's text; the browser
+    gate measures strokes against text and fails it.
+    """
+    d = f"M {a[0]:.1f} {a[1]:.1f} V {via_y:.1f} H {b[0]:.1f} V {b[1]:.1f}"
+    return f'<path class="flow" fill="none" d="{d}" marker-end="url(#arch-arrow)"/>'
+
+
 def layout(title: str, columns: list[list[Box]], arrows: list[str], notes: list[str], heads: list[tuple[float, str]] = ()) -> tuple[str, float]:
     boxes = [b for col in columns for b in col]
     parts = [f'<text class="ttl" x="22" y="28">{escape(title)}</text>']
@@ -281,7 +291,13 @@ def tab3(F: dict, es: bool) -> tuple[str, float]:
         (t("Focus view", "Vista de foco"), [t("one case full screen, outside the header and footer, applying the theme itself", "un caso a pantalla completa, fuera del encabezado y el pie, aplicando el tema por sí misma")]),
         (t("Every view reads values", "Cada vista lee valores"), [t("readouts under the pointer, never on top of the drawing", "lecturas bajo el puntero, nunca sobre el dibujo")]),
     ])
-    arrows = [arrow(app[0].bottom(), app[1].top()), arrow(app[1].bottom(), app[2].top()), arrow(app[0].right(), focus[0].left())]
+    # App to the focus view passes over the documentation column, so it is routed through the free
+    # band between the title and the boxes rather than straight through the Introduction box.
+    arrows = [
+        arrow(app[0].bottom(), app[1].top()),
+        arrow(app[1].bottom(), app[2].top()),
+        elbow((app[0].x + app[0].w * 0.8, app[0].y), (focus[0].x + 40, focus[0].y), app[0].y - 18),
+    ]
     notes = [t(
         "The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every route and every section in both themes and languages before a deploy publishes.",
         "El hospedaje estático sirve un archivo real en cada ruta, así que un enlace profundo compartido responde 200; la compilación los escribe. Una compuerta de navegador abre cada ruta y cada sección en ambos temas e idiomas antes de publicar.",

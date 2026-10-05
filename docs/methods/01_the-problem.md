@@ -87,8 +87,9 @@ reported performance.
 
 So this product puts the ten predictors under three protocols on the same rows (see
 [protocols](../protocols.md)), repeats the random ones a hundred times, holds out whole campaigns in
-the third, reports a site-resampled interval on every grouped score, and states before the run what
-result would count as the learned tier generalising across sites.
+the third, reports a site-resampled interval on every grouped score, and judges the learned tier by a
+fixed, test-pinned sentence that says what result would count as generalising across sites
+([protocols/04](../protocols/04_criterion-and-row-sets.md) records how that sentence came to be).
 
 ![One table, three ways to split it](../assets/fig-one-table-three-ways-to-split-it.svg)
 
