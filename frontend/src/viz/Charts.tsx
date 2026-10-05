@@ -85,6 +85,8 @@ export interface DistributionChartProps {
   /** Draggable percentile markers, as fractions. */
   markers?: { fraction: number; label: string }[];
   measured?: { sizeM: number; passing: number }[];
+  /** Vertical size markers, such as the in-situ block, where the cap reads mass above it as unbroken blocks. */
+  sizeMarkers?: { sizeM: number; label: string }[];
   height?: number;
 }
 
@@ -141,6 +143,7 @@ export function DistributionChart({
   series,
   markers = [],
   measured = [],
+  sizeMarkers = [],
   height = 320,
 }: DistributionChartProps) {
   const [ref, box] = useBox<HTMLDivElement>();
@@ -179,14 +182,15 @@ export function DistributionChart({
           ticks: { stroke: grid },
           values: (_u, ticks) =>
             ticks.map((t) => (t < 0.1 ? `${(t * 1000).toFixed(0)}mm` : `${(t * 100).toFixed(0)}cm`)),
-          label: 'fragment size',
+          // Painted on the canvas, so no translation pass reaches it: the language is chosen here.
+          label: lang === 'es' ? 'tamaño de fragmento' : 'fragment size',
           labelSize: 22,
         },
         {
           stroke: text,
           grid: { stroke: grid, width: 1 },
           ticks: { stroke: grid },
-          label: 'percent passing',
+          label: lang === 'es' ? 'porcentaje pasante' : 'percent passing',
           labelSize: 26,
         },
       ],
@@ -232,6 +236,22 @@ export function DistributionChart({
               ctx.font = '11px ui-monospace, monospace';
               ctx.fillText(marker.label, u.bbox.left + 6, y - 4);
             }
+            // Size markers: a vertical line at a size, labelled at the top of the plot.
+            for (const marker of sizeMarkers) {
+              const x = u.valToPos(marker.sizeM, 'x', true);
+              if (!Number.isFinite(x) || x < u.bbox.left || x > u.bbox.left + u.bbox.width) continue;
+              ctx.strokeStyle = token('--color-warn', '#b7791f');
+              ctx.setLineDash([5, 4]);
+              ctx.beginPath();
+              ctx.moveTo(x, u.bbox.top);
+              ctx.lineTo(x, u.bbox.top + u.bbox.height);
+              ctx.stroke();
+              ctx.setLineDash([]);
+              ctx.fillStyle = token('--color-warn', '#b7791f');
+              ctx.font = '11px ui-monospace, monospace';
+              const width = ctx.measureText(marker.label).width;
+              ctx.fillText(marker.label, Math.max(u.bbox.left + 4, x - width - 6), u.bbox.top + 14);
+            }
             // Measured points, if this case has any.
             for (const point of measured) {
               const x = u.valToPos(point.sizeM, 'x', true);
@@ -255,12 +275,13 @@ export function DistributionChart({
       points: sizesM.length,
       markers: markers.length,
       measured: measured.length,
+      size_markers: sizeMarkers.length,
     });
     return () => {
       plotRef.current?.destroy();
       plotRef.current = null;
     };
-  }, [ref, box.w, box.h, sizesM, series, markers, measured, height, epoch]);
+  }, [ref, box.w, box.h, sizesM, series, markers, measured, sizeMarkers, height, epoch, lang]);
 
   return (
     <div className="fr-chart">

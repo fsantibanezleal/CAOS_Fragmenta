@@ -49,6 +49,10 @@ What that supports, and what it does not:
   blasts. Refitted without each site, the same functional form collapses.
 - **Whether the learned tier meets the criterion depends on six blasts** (the Miami campaign, which has
   no recoverable geometry), and the product reports it that way.
+- **Each arm is also scored on the rows every size-predicting arm answers**, so two arms can be
+  compared on the same blasts. That score is reported beside the arm's own and never decides the
+  verdict, because those rows are selected by the arms' own refusals
+  ([every arm](docs/results/02_every-arm.md)).
 
 The numbers in this section are rendered from the committed benchmark by
 `scripts/build_docs_results.py`, and a test fails if they go stale. Every tool's role and evidence is
@@ -66,7 +70,20 @@ in [docs/relevance.md](docs/relevance.md); the full tables are in [docs/results.
 - **The published equations beat their own papers' tables** on both published hold-outs; where the two
   papers disagree, the recomputation matches the 2010 figure on four of five rows.
 - **The published network's hold-out score is not robust to the seed**: reproduced to its specification
-  over 30 seeds, every seed falls below the published figure.
+  over 30 seeds, every seed falls below the published figure. Nor is its width the one its own
+  protocol picks, and held out by site no width does better than the null:
+
+<!-- facts:width-sweep -->
+Reproduced on the 2012 hold-out, the source's width selection picks 8 hidden units for the high-modulus group and 11 for the low, against the published 9 and 7. Held out by site, every width from 6 to 15 scores from -1.486 to -0.568, and the published pair -0.626; the null, which predicts the training mean, scores -0.216.
+<!-- /facts -->
+
+- **The classical equation can predict a mean size larger than the in-situ block it breaks.** Capping
+  it at the block is a declared choice, not a published relation, so it is benchmarked as its own arm
+  beside the uncapped one:
+
+<!-- facts:cap -->
+The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the classical arm from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
+<!-- /facts -->
 
 ## The application
 

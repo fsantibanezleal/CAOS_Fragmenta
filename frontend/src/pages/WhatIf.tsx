@@ -15,7 +15,7 @@ import { useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useMemo, useState } from 'react';
 
 import { fittedArms, predictModel } from '../engine/learned';
-import { degenerateReason, kuznetsovX50M, patternFromRatios, PLAUSIBLE_X50_M, publishedRegression, type LiveBlast } from '../engine/live';
+import { cappedAtInSituBlock, degenerateReason, kuznetsovX50M, patternFromRatios, PLAUSIBLE_X50_M, publishedRegression, type LiveBlast } from '../engine/live';
 import { ARM_BY_ID, FEATURE_LABEL, formatSize } from '../lib/artifacts';
 import type { BlastRow, CaseArtifact, Lang } from '../lib/contract.types';
 import { useModels } from '../lib/facts';
@@ -48,6 +48,7 @@ const RANGE: Record<keyof LiveBlast, [number, number, number]> = {
 const ROWS = [
   'kuznetsov',
   'kuznetsov-transfer',
+  'kuznetsov-capped',
   'published-regression',
   'refitted-regression',
   'published-neural-net',
@@ -95,6 +96,9 @@ export function WhatIfTab({ artifact, blast }: { artifact: CaseArtifact; blast: 
       blast.rock_factor === null
         ? { value: null, reason: es ? 'sin factor de roca recuperado para este sitio' : 'no recovered rock factor for this site' }
         : plausible(kuznetsovX50M(pattern, blast.rock_factor));
+    // The cap reads the design's own in-situ block, so moving that slider below the classical size shows it bind.
+    out['kuznetsov-capped'] =
+      out.kuznetsov.value === null ? out.kuznetsov : plausible(cappedAtInSituBlock(out.kuznetsov.value, design.XB_m));
     out['published-regression'] = plausible(publishedRegression(design).x50M);
     if (models) {
       const arms = fittedArms(models);

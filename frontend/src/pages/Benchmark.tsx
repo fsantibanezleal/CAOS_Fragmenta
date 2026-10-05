@@ -12,7 +12,7 @@ import { useMemo, useState } from 'react';
 import { SECTION_REFS } from '../data/citations';
 import { fittedArms, predictModel } from '../engine/learned';
 import { ARM_BY_ID, formatSize, IN_SAMPLE_ARMS } from '../lib/artifacts';
-import type { BenchmarkArtifact, Lang, ReproductionBlock } from '../lib/contract.types';
+import type { BenchmarkArtifact, GroupedArmBlock, Lang, ReproductionBlock } from '../lib/contract.types';
 import { f, facts, iv, useBenchmark, useModels } from '../lib/facts';
 import { LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import { SupportsDiagram } from '../viz/Diagrams';
@@ -30,6 +30,7 @@ const label = (arm: string, lang: Lang) => ARM_BY_ID.get(arm)?.label[lang] ?? ar
 const ORDER = [
   'kuznetsov',
   'kuznetsov-transfer',
+  'kuznetsov-capped',
   'published-regression',
   'refitted-regression',
   'published-neural-net',
@@ -81,7 +82,7 @@ export default function Benchmark() {
     { id: 'verdict', label: es ? 'El veredicto' : 'The verdict', content: <Verdict {...props} /> },
     { id: 'arms', label: es ? 'Cada brazo' : 'Every arm', content: <Arms {...props} /> },
     { id: 'published', label: es ? 'Validaciones publicadas' : 'Published hold-outs', content: <Published {...props} /> },
-    { id: 'network', label: es ? 'Semillas de la red' : 'Network seeds', content: <Seeds {...props} /> },
+    { id: 'network', label: es ? 'La red publicada' : 'The published network', content: <Seeds {...props} /> },
     { id: 'robustness', label: es ? 'Robustez' : 'Robustness', content: <Robustness {...props} /> },
     { id: 'live', label: es ? 'Comprobación en vivo' : 'Live check', content: <LiveCheck {...props} /> },
     { id: 'provenance', label: es ? 'Procedencia y salvedades' : 'Provenance and caveats', content: <Provenance {...props} /> },
@@ -214,6 +215,9 @@ function Arms({ es, lang, b }: TabProps) {
               <th>{es ? 'sitio excluido, todos' : 'site held out, all'}</th>
               <th>{es ? 'abst.' : 'abst.'}</th>
               <th>{es ? 'con geometría' : 'with geometry'}</th>
+              <th title={es ? 'las filas que respondió todo brazo que predice un tamaño' : 'the rows every size-predicting arm answered'}>
+                {es ? 'filas comunes' : 'common rows'}
+              </th>
               <th>RMSE</th>
               <th>{es ? 'ajustado con' : 'fitted on'}</th>
             </tr>
@@ -232,6 +236,9 @@ function Arms({ es, lang, b }: TabProps) {
                   </td>
                   <td>{g?.n_abstained || ''}</td>
                   <td>{f(g?.supports.geometry.score.r2_identity)}</td>
+                  <td>
+                    {f(g?.common?.score.r2_identity)} <span className="fr-fine">{iv(g?.common?.interval_95, 2, es)}</span>
+                  </td>
                   <td>{formatSize(g?.rmse_m)}</td>
                   <td className="fr-fine">
                     {p?.in_sample_corpus
@@ -253,12 +260,103 @@ function Arms({ es, lang, b }: TabProps) {
           ? 'La regresión publicada se ajustó sobre estos 97 tiros, así que su columna con el sitio excluido es un ajuste dentro de la muestra y no transferencia. El brazo clásico de factor del sitio usa información del propio sitio; el de transferencia no, y puntúa casi lo mismo. Los brazos con abstenciones se puntúan sobre menos filas, por eso la columna con geometría compara a todos sobre las mismas.'
           : 'The published regression was fitted on these 97 blasts, so its site-held-out column is an in-sample fit and not transfer. The site-factor classical arm uses information about the site itself; the transfer arm does not, and scores almost the same. Arms with abstentions are scored on fewer rows, which is why the with-geometry column compares them all on the same ones.'}
       </Callout>
+      <CommonRowsNote es={es} b={b} />
       {refs('b-protocols', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
+
+/** The published network's hidden width: the source's own selection, reproduced, and every width held out by site. */
+function WidthSweep({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
+  const ws = b.network_width_sweep;
+  const held = ws.leave_one_site_out.filter((row) => !row.published);
+  const pub = ws.leave_one_site_out.find((row) => row.published);
+  const nullScore = (b.protocols['leave-one-site-out'].arms.null as GroupedArmBlock).r2_identity;
+  const series: SeriesSpec[] = [
+    { id: 'all', label: es ? 'cada tiro' : 'every blast', values: held.map((row) => row.supports.all.r2_identity) },
+    { id: 'geometry', label: es ? 'con geometría' : 'with geometry', values: held.map((row) => row.supports.geometry.r2_identity) },
+    {
+      id: 'published',
+      label: es ? `par publicado (${ws.published_widths['1']} y ${ws.published_widths['2']})` : `published pair (${ws.published_widths['1']} and ${ws.published_widths['2']})`,
+      values: held.map(() => pub?.supports.all.r2_identity ?? null),
+      dashed: true,
+    },
+    {
+      id: 'null',
+      label: es ? 'nulo: la media de entrenamiento' : 'null: the training mean',
+      values: held.map(() => nullScore),
+      dashed: true,
+    },
+  ];
+  const groups: [string, string][] = [
+    ['1', es ? '1, módulo alto' : '1, high modulus'],
+    ['2', es ? '2, módulo bajo' : '2, low modulus'],
+  ];
+  return (
+    <div data-width-sweep={held.length}>
+      <h3>{es ? 'El ancho de la capa oculta' : 'The width of the hidden layer'}</h3>
+      <p>
+        {es
+          ? `La fuente barrió de ${ws.widths[0]} a ${ws.widths[ws.widths.length - 1]} unidades ocultas, ${ws.n_simulations} simulaciones cada una, y eligió el ancho de cada grupo sobre su propio conjunto de validación. El mismo procedimiento, reproducido, no cae en los anchos publicados; y con el sitio excluido ningún ancho explica varianza alguna ni supera al nulo, que predice la media de entrenamiento.`
+          : `The source swept ${ws.widths[0]} to ${ws.widths[ws.widths.length - 1]} hidden units, ${ws.n_simulations} simulations each, and chose each group's width on its own hold-out. The same procedure, reproduced, does not land on the published widths; and held out by site no width explains any variance or does better than the null, which predicts the training mean.`}
+      </p>
+      <LineChart
+        x={held.map((row) => row.hidden['1'])}
+        series={series}
+        xLabel={es ? 'unidades ocultas, igual en ambos grupos' : 'hidden units, the same in both groups'}
+        yLabel={es ? 'varianza explicada, sitio excluido' : 'variance explained, site held out'}
+        height={240}
+        legend
+        zeroLine
+        xTicks={held.map((row) => row.hidden['1'])}
+        xTickFormat={(v) => String(Math.round(v))}
+        valueFormat={(v) => f(v)}
+      />
+      <table className="fr-table">
+        <thead>
+          <tr>
+            <th>{es ? 'grupo' : 'group'}</th>
+            <th>{es ? 'publicado' : 'published'}</th>
+            <th>{es ? 'reproducido' : 'reproduced'}</th>
+            <th>{es ? 'RMSE en el reproducido, cm' : 'RMSE at the reproduced width, cm'}</th>
+            <th>{es ? 'RMSE en el publicado, cm' : 'RMSE at the published width, cm'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map(([g, name]) => {
+            const e = ws.published_protocol[g];
+            const atPublished = e.table.find((row) => row.hidden === e.published_optimum)?.rmse ?? null;
+            return (
+              <tr key={g}>
+                <td>{name}</td>
+                <td>{e.published_optimum}</td>
+                <td>{e.best_hidden}</td>
+                <td>{(e.best_rmse * 100).toFixed(1)}</td>
+                <td>{atPublished === null ? 'n/a' : (atPublished * 100).toFixed(1)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/** The common rows: what they are, how many, and why the criterion never reads them. */
+function CommonRowsNote({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
+  const common = b.protocols['leave-one-site-out'].arms.null as GroupedArmBlock;
+  const n = common.common.n_rows;
+  const sites = common.common.n_sites;
+  return (
+    <Callout variant="note" title={es ? 'Las filas comunes' : 'The common rows'}>
+      {es
+        ? `Aun con geometría, cada brazo descarta sus propias abstenciones, así que dos brazos de esta tabla se puntúan sobre filas distintas cuando uno rehúsa una predicción fuera del rango plausible. La columna de filas comunes puntúa a todos sobre las filas que respondió todo brazo que predice un tamaño: con el sitio excluido, ${n} tiros de ${sites} sitios. Esas filas las eligen los propios rechazos de los brazos, y un brazo rehúsa donde extrapola, así que las filas que quedan fuera son las difíciles y todo puntaje sube en ellas. Por eso el criterio se evalúa solo sobre los dos conjuntos declarados antes de la corrida, nunca sobre estas.`
+        : `Even with geometry, each arm drops its own abstentions, so two arms in this table are scored on different rows when one refuses a prediction outside the plausible range. The common-rows column scores every arm on the rows every size-predicting arm answered: held out by site, ${n} blasts from ${sites} sites. Those rows are chosen by the arms' own refusals, and an arm refuses where it extrapolates, so the rows left out are the hard ones and every score rises on them. That is why the criterion is evaluated only on the two row sets declared before the run, never on these.`}
+    </Callout>
+  );
+}
 
 function Published({ es, b }: TabProps) {
   const arms = b.published_reproduction.published_holdout_arms;
@@ -416,6 +514,7 @@ function Seeds({ es, lang, b }: TabProps) {
           ? 'No se afirma que el resultado publicado sea falso. Lo que el barrido establece es que no es robusto a la semilla; las filas marcadas, donde lo publicado queda fuera de todo lo que alcanzó la reproducción, son las que la propia fuente reporta como sus más inestables.'
           : 'It is not claimed that the published result is wrong. What the sweep establishes is that it is not robust to the seed; the marked rows, where the published value falls outside everything the reproduction reached, are the rows the source itself reports as its most unstable.'}
       </Callout>
+      <WidthSweep es={es} b={b} />
       {refs('b-network', es)}
     </section>
   );

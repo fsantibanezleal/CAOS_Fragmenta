@@ -304,7 +304,7 @@ function ProtocolSensitivity({ es, lang, b }: TabProps) {
           </tr>
         </thead>
         <tbody>
-          {[...F.learned, 'kuznetsov', 'kuznetsov-transfer'].map((arm) => (
+          {[...F.learned, 'kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped'].map((arm) => (
             <tr key={arm}>
               <td>{label(arm, lang)}</td>
               <td>{f(F.random(arm)?.r2_identity)}</td>
@@ -332,7 +332,7 @@ function BySite({ es, lang, b }: TabProps) {
   const F = facts(b);
   const sites = b.sites;
   const nullRow = F.grouped('null')?.per_site;
-  const arms = ['kuznetsov', 'kuznetsov-transfer', 'published-regression', 'refitted-regression', ...F.learned];
+  const arms = ['kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped', 'published-regression', 'refitted-regression', ...F.learned];
   const rows = arms.map((a) => ({
     id: a,
     label: label(a, lang),
@@ -393,7 +393,7 @@ function Response({ es, lang }: TabProps) {
   const sweep = (artifact: CaseArtifact | null, field: 'Pf_kg_m3' | 'B_over_D') => {
     if (!artifact) return null;
     const x = artifact.blasts.map((blast) => blast.features[field]);
-    const arms = ['kuznetsov', 'kuznetsov-transfer', 'published-regression', 'random-forest', 'stacking', 'published-neural-net'];
+    const arms = ['kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped', 'published-regression', 'random-forest', 'stacking', 'published-neural-net'];
     const series: SeriesSpec[] = arms
       .filter((a) => artifact.predictions[a])
       .map((a) => ({ id: a, label: label(a, lang), values: artifact.blasts.map((blast) => artifact.predictions[a][blast.blast_id]?.x50_m ?? null) }));

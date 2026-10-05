@@ -81,6 +81,8 @@ export interface ArmMeta {
   distribution: boolean;
   /** The arm whose mean size this one reuses, as the engine's `shares_mean_size_with`; it adds a curve shape only. */
   sharesMeanSizeWith?: string;
+  /** The arm this one caps at the in-situ block (the engine's `InSituCap`); equal to it wherever the cap does not bind. */
+  cappedFrom?: string;
   source: string;
 }
 
@@ -117,6 +119,21 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: false,
     source: 'Kuznetsov 1973 with Cunningham’s correction; rock-factor line fitted here',
+  },
+  {
+    id: 'kuznetsov-capped',
+    tier: 'classical',
+    label: {
+      en: 'Classical mean size, capped at the in-situ block',
+      es: 'Tamaño medio clásico, limitado al bloque in situ',
+    },
+    blurb: {
+      en: 'The classical mean size with the site factor, capped at the blast’s in-situ block size, because a blast breaks blocks and does not fuse them. A declared choice of the engine, not a published relation: it changes a prediction only where the classical one exceeds the block, which on the corpus is three Reocin blasts.',
+      es: 'El tamaño medio clásico con el factor del sitio, limitado al tamaño de bloque in situ del tiro, porque una voladura rompe bloques y no los une. Una elección declarada del motor, no una relación publicada: cambia una predicción solo donde la clásica supera el bloque, que en el corpus son tres tiros de Reocin.',
+    },
+    distribution: false,
+    cappedFrom: 'kuznetsov',
+    source: 'Kuznetsov 1973 with Cunningham’s correction (Hudaverdi et al. 2010 Eq. 1), capped at the in-situ block size: a declared choice of blastfrag 0.4.0',
   },
   {
     id: 'kuz-ram',

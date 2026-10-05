@@ -2,7 +2,7 @@
 
 # Every arm, every protocol
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.06.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 Variance explained about the identity line. Random protocols: the median of the draws and their 5th to 95th percentiles. Held out by site: the pooled score over the ten folds with its site-resampled 95 percent interval, on every blast and on the blasts with resolvable geometry.
 
@@ -12,6 +12,7 @@ Variance explained about the identity line. Random protocols: the median of the 
 | oracle, return the measurement | the measurement it returns | 1.000 (1.00 to 1.00) | 1.000 | 1.000 | 1.00 to 1.00 | 1.000 | 1.00 to 1.00 | 0.000 |
 | classical mean size, site factor | own-site factor | 0.303 (-0.59 to 0.74) | 0.310 | 0.311 (6 abst.) | -0.96 to 0.70 | 0.311 | -0.97 to 0.69 | 0.153 |
 | classical mean size, transfer factor | training rows | 0.312 (-0.57 to 0.69) | 0.331 | 0.298 (6 abst.) | -1.10 to 0.72 | 0.298 | -1.10 to 0.71 | 0.154 |
+| classical mean size, capped at the in-situ block (declared) | own-site factor | 0.399 (-0.49 to 0.75) | 0.360 | 0.352 (6 abst.) | -0.95 to 0.74 | 0.352 | -0.96 to 0.73 | 0.148 |
 | group router | in sample | abstains | n/a | n/a (97 abst.) | n/a | n/a | n/a | n/a |
 | published regression | in sample | 0.805 (0.65 to 0.93) | 0.837 | 0.802 | 0.57 to 0.90 | 0.781 | 0.50 to 0.88 | 0.083 |
 | refitted regression | training rows, router in sample | 0.686 (0.39 to 0.87) | 0.715 | -4.075 (4 abst.) | -19.48 to 0.02 | -4.601 | -21.92 to 0.09 | 0.431 |
@@ -21,3 +22,23 @@ Variance explained about the identity line. Random protocols: the median of the 
 | random forest | training rows | 0.749 (0.55 to 0.90) | 0.753 | -0.231 | -2.78 to 0.38 | -0.233 | -2.88 to 0.40 | 0.208 |
 | gradient boosting | training rows | 0.704 (0.48 to 0.85) | 0.702 | -0.034 | -2.23 to 0.42 | 0.034 | -1.78 to 0.53 | 0.191 |
 | stacking ensemble | training rows | 0.703 (0.47 to 0.85) | 0.699 | -0.035 | -2.25 to 0.42 | 0.034 | -1.81 to 0.54 | 0.191 |
+
+## On the rows every arm answers
+
+Each score above drops its own arm's abstentions, so arms in one table are scored on different rows. Here every arm is scored on the rows every size-predicting arm answered: held out by site, 79 blasts from 9 sites; in the random draws, a median of 17 test rows. These rows are selected by the arms' own refusals, and an arm refuses where it extrapolates, so the rows dropped are the hard ones and every score rises here. That is why the criterion is evaluated only on the two row sets declared before the run, never on these.
+
+| arm | random, median on common rows | held out by site, common rows | interval |
+|---|---|---|---|
+| null, predict the training mean | -0.041 | -0.229 | -1.49 to -0.16 |
+| oracle, return the measurement | 1.000 | 1.000 | 1.00 to 1.00 |
+| classical mean size, site factor | 0.320 | 0.318 | -0.93 to 0.67 |
+| classical mean size, transfer factor | 0.293 | 0.293 | -1.11 to 0.69 |
+| classical mean size, capped at the in-situ block (declared) | 0.419 | 0.364 | -0.93 to 0.72 |
+| published regression | 0.773 | 0.766 | 0.45 to 0.87 |
+| refitted regression | 0.671 | -3.715 | -22.09 to 0.10 |
+| published neural network | 0.329 | -0.491 | -2.85 to 0.13 |
+| support vector, radial | 0.656 | -0.329 | -1.68 to 0.01 |
+| support vector, polynomial | 0.344 | -4.837 | -17.69 to -1.05 |
+| random forest | 0.741 | -0.167 | -2.92 to 0.46 |
+| gradient boosting | 0.693 | 0.212 | -0.65 to 0.48 |
+| stacking ensemble | 0.691 | 0.215 | -0.66 to 0.49 |

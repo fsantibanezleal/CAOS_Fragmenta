@@ -9,7 +9,7 @@ import type { SubTabDef } from '@fasl-work/caos-app-shell';
 import { Link } from 'react-router';
 
 import { SECTION_REFS } from '../data/citations';
-import type { BenchmarkArtifact, ModelsFile, ReproductionBlock } from '../lib/contract.types';
+import type { BenchmarkArtifact, GroupedArmBlock, ModelsFile, ReproductionBlock } from '../lib/contract.types';
 import { f, facts, iv, useBenchmark, useModels } from '../lib/facts';
 import {
   ClassicalFlowDiagram,
@@ -112,6 +112,7 @@ function Classical({ es, b }: TabProps) {
         <Cite id="kulatilake2012" />{' '}
         <Cite id="amoako2022" />
       </p>
+      <CapParagraphs es={es} b={b} />
       <ClassicalFlowDiagram />
       <Callout variant="honest" title={es ? 'Una coincidencia que no es evidencia' : 'An agreement that is not evidence'}>
         {es
@@ -124,6 +125,58 @@ function Classical({ es, b }: TabProps) {
 }
 
 /* ------------------------------------------------------------------------------------------- */
+
+/** The published width, reproduced under the source's own procedure and held out by site. */
+function WidthParagraph({ es, b }: { es: boolean; b: BenchmarkArtifact | null }) {
+  const ws = b?.network_width_sweep;
+  if (!ws) return null;
+  const held = ws.leave_one_site_out
+    .filter((row) => !row.published)
+    .map((row) => row.supports.all.r2_identity)
+    .filter((v): v is number => v !== null);
+  if (!held.length) return null;
+  const pub = ws.leave_one_site_out.find((row) => row.published)?.supports.all.r2_identity;
+  const nullScore = (b?.protocols['leave-one-site-out'].arms.null as GroupedArmBlock | undefined)?.r2_identity;
+  const p = ws.published_protocol;
+  return (
+    <p>
+      {es
+        ? `Ese ancho se eligió sobre las mismas filas con que luego se informó. Reproducido el procedimiento de la fuente sobre el conjunto de 2012, elige ${p['1'].best_hidden} unidades en el grupo de módulo alto y ${p['2'].best_hidden} en el bajo, no ${p['1'].published_optimum} y ${p['2'].published_optimum}; con el sitio excluido, todo ancho de ${ws.widths[0]} a ${ws.widths[ws.widths.length - 1]} puntúa entre ${f(Math.min(...held))} y ${f(Math.max(...held))}, y el par publicado ${f(pub)}, contra ${f(nullScore)} del nulo. El ancho no explica ni rescata la falla de la red al transferir.`
+        : `That width was chosen on the rows it was then reported on. Reproduced on the 2012 set, the source's procedure picks ${p['1'].best_hidden} units for the high-modulus group and ${p['2'].best_hidden} for the low, not ${p['1'].published_optimum} and ${p['2'].published_optimum}; held out by site, every width from ${ws.widths[0]} to ${ws.widths[ws.widths.length - 1]} scores between ${f(Math.min(...held))} and ${f(Math.max(...held))}, and the published pair ${f(pub)}, against the null's ${f(nullScore)}. The width neither explains nor rescues the network's failure to transfer.`}{' '}
+      <Cite id="kulatilake2012" />
+    </p>
+  );
+}
+
+/** The in-situ cap: a declared choice of the engine, where it binds, and what it moves. */
+function CapParagraphs({ es, b }: { es: boolean; b: BenchmarkArtifact | null }) {
+  const held = b?.protocols['leave-one-site-out'].arms;
+  const capped = held?.['kuznetsov-capped'] as GroupedArmBlock | undefined;
+  const classical = held?.kuznetsov as GroupedArmBlock | undefined;
+  const moved =
+    capped && classical
+      ? Object.keys(capped.predictions).filter((k) => capped.predictions[k] !== classical.predictions[k]).sort()
+      : [];
+  return (
+    <>
+      <p>
+        {es
+          ? 'Una voladura rompe bloques y no los une, así que ningún fragmento puede ser mayor que el bloque in situ del que salió. Las fuentes describen la voladura justamente como la transformación de la distribución de bloques in situ en la de fragmentos, pero la ecuación clásica nunca lee el tamaño de bloque. Ninguna fuente disponible imprime un límite, así que el motor implementa uno como una elección declarada, no como una relación publicada:'
+          : 'A blast breaks blocks and does not fuse them, so no fragment can be larger than the in-situ block it came from. The sources describe blasting as exactly that transformation, from the in-situ block size distribution to the blasted one, yet the classical equation never reads the block size. No source held for this work prints a cap, so the engine implements one as a declared choice, not a published relation:'}{' '}
+        <Cite id="hudaverdi2010" />
+      </p>
+      <Equation
+        tex={String.raw`x_{50,\mathrm{cap}} = \min\left(x_{50},\; X_B\right)`}
+        caption={es ? 'El límite in situ, una elección declarada de blastfrag 0.4.0; X_B es el tamaño de bloque in situ.' : 'The in-situ cap, a declared choice of blastfrag 0.4.0; X_B is the in-situ block size.'}
+      />
+      <p>
+        {es
+          ? `En el corpus el límite actúa en ${moved.length} tiros (${moved.join(', ') || 'n/a'}), donde la predicción clásica supera el bloque; ningún tamaño medido en ninguna parte lo supera. Con el sitio excluido lleva el brazo clásico de ${f(classical?.r2_identity)} a ${f(capped?.r2_identity)}, con un intervalo que sigue cruzando el cero (${iv(capped?.supports.all.interval_95, 2, true)}). Ninguna curva medida valida la forma limitada; solo se puntúa su efecto en el tamaño medio.`
+          : `On the corpus the cap binds on ${moved.length} blasts (${moved.join(', ') || 'n/a'}), where the classical prediction exceeds the block; no measured size anywhere exceeds it. Held out by site it moves the classical arm from ${f(classical?.r2_identity)} to ${f(capped?.r2_identity)}, with an interval that still spans zero (${iv(capped?.supports.all.interval_95)}). No measured curve validates the capped shape; only its effect on the mean size is scored.`}
+      </p>
+    </>
+  );
+}
 
 function RockFactor({ es, b }: TabProps) {
   const sites = b ? Object.entries(b.site_meta).sort((x, y) => (y[1].E_GPa[0] ?? 0) - (x[1].E_GPa[0] ?? 0)) : [];
@@ -332,6 +385,7 @@ function Network({ es, b }: TabProps) {
           : 'The width N was swept from 6 to 15, the range two published heuristics allow, with eight simulations at each width; the published optima are 9 units for the high-modulus group and 7 for the low one, and those are the widths this product uses. The architecture is generous relative to the data: 7 units on 62 blasts is 64 free parameters, and 9 on 35 is 82. Each network’s output is clamped to the range of the training targets before denormalising, and the eight are averaged.'}{' '}
         <Cite id="marquardt1963" />
       </p>
+      <WidthParagraph es={es} b={b} />
       <p>
         {es
           ? `Reproducida con su especificación sobre ${sweep?.n_seeds ?? 'n/a'} semillas, la varianza explicada en el conjunto de validación publicado va de ${f(sweep?.min)} a ${f(sweep?.max)}, con mediana ${f(sweep?.median)}. El ${f(sweep?.published)} publicado queda por encima de todas. El déficit se concentra en dos filas, las que la propia fuente reporta como sus más inestables, con coeficientes de variación de 0.56 y 0.76 entre sus ocho simulaciones.`

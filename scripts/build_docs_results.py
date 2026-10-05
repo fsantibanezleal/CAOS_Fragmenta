@@ -36,6 +36,7 @@ NAMES = {
     "oracle": "oracle, return the measurement",
     "kuznetsov": "classical mean size, site factor",
     "kuznetsov-transfer": "classical mean size, transfer factor",
+    "kuznetsov-capped": "classical mean size, capped at the in-situ block (declared)",
     "group-discriminant": "group router",
     "published-regression": "published regression",
     "refitted-regression": "refitted regression",
@@ -133,12 +134,12 @@ def pages(b: dict, index: dict) -> dict[str, str]:
     out["results/02_every-arm.md"] = "\n".join([GENERATED, "", "# Every arm, every protocol", "", head, "",
         "Variance explained about the identity line. Random protocols: the median of the draws and their 5th to 95th percentiles. "
         "Held out by site: the pooled score over the ten folds with its site-resampled 95 percent interval, on every blast and on the blasts with resolvable geometry.", "",
-        *rows, ""])
+        *rows, "", *common_table(b), ""])
 
     gaps = v["protocol_gap_random_minus_grouped"]
     shift = v["dedup_minus_random_median"]
     rows = ["| arm | random median | deduplicated minus random | random minus held out by site |", "|---|---|---|---|"]
-    for arm in learned + ["kuznetsov", "kuznetsov-transfer", "published-regression", "refitted-regression"]:
+    for arm in learned + ["kuznetsov", "kuznetsov-transfer", "kuznetsov-capped", "published-regression", "refitted-regression"]:
         rows.append(f"| {NAMES[arm]} | {f(R[arm]['r2_identity'])} | {'n/a' if arm not in shift else f'{shift[arm]:+.3f}'} | {f(gaps.get(arm))} |")
     pub = v["published_random_split_figures"]
     pub_rows = [f"- {NAMES.get(a, a)}: published {p['published']:.3f}, median of the reproduced draws {f(p['median_draw'])}, "
@@ -149,7 +150,7 @@ def pages(b: dict, index: dict) -> dict[str, str]:
 
     sites = b["sites"]
     rows = ["| arm | " + " | ".join(sites) + " |", "|---|" + "---|" * len(sites)]
-    for arm in ["null", "kuznetsov", "kuznetsov-transfer", "published-regression", "refitted-regression"] + learned:
+    for arm in ["null", "kuznetsov", "kuznetsov-transfer", "kuznetsov-capped", "published-regression", "refitted-regression"] + learned:
         ps = L[arm]["per_site"]
         rows.append(f"| {NAMES[arm]} | " + " | ".join("-" if ps[x].get("rmse_m") is None else f(ps[x]["rmse_m"]) for x in sites) + " |")
     rows.append("| mean measured x50 | " + " | ".join(f(b["site_meta"][x]["mean_x50_m"]) for x in sites) + " |")
@@ -187,6 +188,7 @@ def pages(b: dict, index: dict) -> dict[str, str]:
               "| blast | measured, m | published, m | range across seeds, m |", "|---|---|---|---|"]
     for k, row in sw["per_blast"].items():
         lines.append(f"| {k} | {f(row['measured_m'], 2)} | {f(row['published_m'], 2)} | {f(row['min_m'], 3)} to {f(row['max_m'], 3)} |")
+    lines += ["", *width_sweep_section(b)]
     out["results/05_published-reproductions.md"] = "\n".join(lines + [""])
 
     d = b["diagnostics"]
@@ -207,6 +209,63 @@ def pages(b: dict, index: dict) -> dict[str, str]:
               f"Transfer rock-factor line, fitted on all {len(d['transfer_fit']['fit_sites'])} sites with a recovered factor: ln A = {d['transfer_fit']['intercept']:.4f} + {d['transfer_fit']['slope']:.4f} ln E.", ""]
     out["results/06_diagnostics.md"] = "\n".join(lines)
     return out
+
+
+def common_table(b: dict) -> list[str]:
+    """Every arm on the rows every size-predicting arm answered: reported beside the declared row sets."""
+    R = b["protocols"]["random-8020"]["arms"]
+    L = b["protocols"]["leave-one-site-out"]["arms"]
+    held = L["null"]["common"]
+    rows = ["| arm | random, median on common rows | held out by site, common rows | interval |", "|---|---|---|---|"]
+    for arm in ORDER:
+        if arm not in L or arm == "group-discriminant":
+            continue
+        c = L[arm]["common"]
+        rows.append(
+            f"| {NAMES[arm]} | {f(R[arm]['common']['repeats'].get('median'))} | {f(c['score']['r2_identity'])} | {iv(c['interval_95'])} |"
+        )
+    return [
+        "## On the rows every arm answers",
+        "",
+        "Each score above drops its own arm's abstentions, so arms in one table are scored on different rows. Here every arm "
+        f"is scored on the rows every size-predicting arm answered: held out by site, {held['n_rows']} blasts from "
+        f"{held['n_sites']} sites; in the random draws, a median of {f(R['null']['common']['n_rows'].get('median'), 0)} test rows. "
+        "These rows are selected by the arms' own refusals, and an arm refuses where it extrapolates, so the rows dropped are "
+        "the hard ones and every score rises here. That is why the criterion is evaluated only on the two row sets declared "
+        "before the run, never on these.",
+        "",
+        *rows,
+    ]
+
+
+def width_sweep_section(b: dict) -> list[str]:
+    """The published network's hidden width, under the source's protocol and held out by site."""
+    sw = b["network_width_sweep"]
+    pub = sw["published_widths"]
+    proto = sw["published_protocol"]
+    lines = [
+        "## The network's hidden width",
+        "",
+        f"The source swept {sw['widths'][0]} to {sw['widths'][-1]} hidden units, {sw['n_simulations']} simulations each, and chose "
+        f"{pub['1']} for the high-modulus group and {pub['2']} for the low on its hold-out. The same procedure, reproduced on the "
+        "2012 hold-out:",
+        "",
+        "| group | published | reproduced | RMSE at the reproduced width, m | RMSE at the published width, m |",
+        "|---|---|---|---|---|",
+    ]
+    for g, name in (("1", "1, high modulus"), ("2", "2, low modulus")):
+        e = proto[g]
+        at = {row["hidden"]: row["rmse"] for row in e["table"]}
+        lines.append(
+            f"| {name} | {e['published_optimum']} | {e['best_hidden']} | {f(e['best_rmse'], 3)} | {f(at.get(e['published_optimum']), 3)} |"
+        )
+    lines += ["", "Every width held out by site, the same width in both groups, pooled over the ten folds:", "",
+              "| hidden width | every blast | blasts with geometry |", "|---|---|---|"]
+    for row in sw["leave_one_site_out"]:
+        h = row["hidden"]
+        label = f"{h['1']} and {h['2']}, the published pair" if row["published"] else f"{h['1']}"
+        lines.append(f"| {label} | {f(row['supports']['all']['r2_identity'])} | {f(row['supports']['geometry']['r2_identity'])} |")
+    return lines
 
 
 def arm_block(b: dict, arm: str) -> str:
@@ -290,6 +349,76 @@ def blocks(b: dict, index: dict) -> dict[str, str]:
         f"({iv(g['best_learned_interval_95'])}), {f(g['margin_over_null'])} above the null, and the criterion is "
         f"{'met' if g['generalises_across_sites'] else 'not met'}. The null's held-out predictions correlate with the "
         f"measurements at {f(a['null_pearson_r'], 2)}."
+    )
+    # The in-situ cap, a declared choice: where it binds and what it moves (schema v3).
+    capped, classical = grouped["kuznetsov-capped"], grouped["kuznetsov"]
+    rnd = b["protocols"]["random-8020"]["arms"]
+    moved = sorted(k for k, v in capped["predictions"].items() if v != classical["predictions"][k])
+    blasts = {
+        blast["blast_id"]: blast
+        for entry in index["cases"]
+        for blast in json.loads((DERIVED / entry["artifact_path"]).read_text(encoding="utf-8"))["blasts"]
+        if entry["case_id"].startswith("real-")
+    }
+    detail = "; ".join(
+        f"{k} predicted at {f(classical['predictions'][k])} m against a {f(blasts[k]['features']['XB_m'], 2)} m block "
+        f"and measured at {f(blasts[k]['x50_measured_m'], 2)} m"
+        for k in moved
+    )
+    out["cap"] = (
+        f"The cap binds on {len(moved)} corpus blasts, where the classical prediction exceeds the in-situ block: {detail}. "
+        f"Held out by site it moves the classical arm from {f(classical['r2_identity'])} to "
+        f"{f(capped['r2_identity'])} (site-resampled interval {iv(capped['supports']['all']['interval_95'])}), and the "
+        f"median of the random draws from {f(rnd['kuznetsov']['r2_identity'])} to {f(rnd['kuznetsov-capped']['r2_identity'])}."
+    )
+    ws = b["network_width_sweep"]
+    held = [row for row in ws["leave_one_site_out"] if not row["published"]]
+    pub_row = next(row for row in ws["leave_one_site_out"] if row["published"])
+    scores = [row["supports"]["all"]["r2_identity"] for row in held]
+    pp = ws["published_protocol"]
+    out["width-sweep"] = (
+        f"Reproduced on the 2012 hold-out, the source's width selection picks {pp['1']['best_hidden']} hidden units for the "
+        f"high-modulus group and {pp['2']['best_hidden']} for the low, against the published {pp['1']['published_optimum']} "
+        f"and {pp['2']['published_optimum']}. Held out by site, every width from {ws['widths'][0]} to {ws['widths'][-1]} "
+        f"scores from {f(min(scores))} to {f(max(scores))}, and the published pair {f(pub_row['supports']['all']['r2_identity'])}; "
+        f"the null, which predicts the training mean, scores {f(grouped['null']['r2_identity'])}."
+    )
+    # What the bake writes, measured on the committed files. LF bytes, so a checkout that turned the
+    # endings into CRLF measures the same sizes as the bake wrote.
+    def size(paths) -> int:
+        return sum(len(p.read_bytes().replace(b"\r\n", b"\n")) for p in paths)
+
+    def kb(n: float) -> str:
+        return f"{round(n / 1000)} kB"
+
+    def mb(n: float) -> str:
+        return f"{n / 1e6:.1f} MB"
+
+    case_paths = [DERIVED / entry["artifact_path"] for entry in index["cases"]]
+    model_paths = sorted((DERIVED / "models").glob("*.json"))
+    case_bytes, model_bytes = size(case_paths), size(model_paths)
+    bench_bytes = size([DERIVED / "benchmark.json"])
+    all_bytes = size([p for p in DERIVED.rglob("*") if p.is_file()])
+    cells = [
+        cell
+        for p in case_paths
+        for row in json.loads(p.read_text(encoding="utf-8"))["predictions"].values()
+        for cell in row.values()
+    ]
+    abstained = sum(1 for cell in cells if cell["x50_m"] is None)
+    out["bake-output"] = "\n".join([
+        "| | Count | Size |",
+        "|---|---|---|",
+        f"| case artifacts | {len(case_paths)} | about {mb(case_bytes)} in all |",
+        f"| manifests | {len(index['cases'])} plus the index | small |",
+        f"| benchmark | 1 | about {kb(bench_bytes)} |",
+        f"| models files | {len(model_paths)} | about {mb(model_bytes)} in all, about {kb(model_bytes / len(model_paths))} each |",
+        "",
+        f"The cases carry {len(cells)} prediction cells, {abstained} of them abstentions, each with its reason.",
+    ])
+    out["payload"] = (
+        f"The committed artifacts come to about {mb(all_bytes)}: {mb(model_bytes)} of portable models, "
+        f"{kb(bench_bytes)} of benchmark, {mb(case_bytes)} of cases and the manifests."
     )
     sw = b["network_seed_sweep"]
     out["seed-sweep"] = (

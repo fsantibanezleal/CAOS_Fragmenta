@@ -158,6 +158,17 @@ def test_the_docs_results_and_fact_blocks_are_generated_from_the_committed_bench
     assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_the_results_pages_report_the_cap_common_support_and_the_width_sweep():
+    """Schema v3's three additions reach the wiki, beside the content the generator already checks."""
+    every_arm = (ROOT / "docs" / "results" / "02_every-arm.md").read_text(encoding="utf-8")
+    assert "capped at the in-situ block (declared)" in every_arm
+    assert "## On the rows every arm answers" in every_arm and "never on these" in every_arm
+    reproductions = (ROOT / "docs" / "results" / "05_published-reproductions.md").read_text(encoding="utf-8")
+    assert "## The network's hidden width" in reproductions and "the published pair" in reproductions
+    per_site = (ROOT / "docs" / "results" / "04_per-site.md").read_text(encoding="utf-8")
+    assert "capped at the in-situ block" in per_site
+
+
 def test_the_framework_examples_in_the_docs_run_and_agree_with_the_engine():
     """The wiki's runnable examples run against the pinned stack, and their numbers match the bake.
 
