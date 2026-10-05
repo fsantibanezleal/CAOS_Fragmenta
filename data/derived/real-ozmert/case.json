@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "366f25f3c894b46252cdadf265c00e2ab22ed899ad7a81f8f44d17ea0eb2a716",
+ "digest": "1afdb4a080506d7bb110c29b331fe1dfba358a664056d728f1ff082fda1fe46a",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1736,6 +1736,20 @@
    "reconstructable": true
   }
  },
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "0e3205cd6ce418535a1158bd27a337c5dfb5fce1b1b6a80b844e89944c183639",
+  "path": "models/Ozmert.json",
+  "scope": "Ozmert"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -1996,6 +2010,71 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.198376
+   }
+  },
+  "kuznetsov-transfer": {
+   "Oz1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.199543
+   },
+   "Oz2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.171571
+   },
+   "Oz3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.171571
+   },
+   "Oz4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.136548
+   },
+   "Oz5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.200579
+   },
+   "Oz6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.191656
+   },
+   "Oz7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.171571
    }
   },
   "published-neural-net": {
@@ -2266,7 +2345,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.410327
+    "x50_m": 0.099529
    },
    "Oz2": {
     "abstained": false,
@@ -2275,7 +2354,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.35446
+    "x50_m": 0.213084
    },
    "Oz3": {
     "abstained": false,
@@ -2284,7 +2363,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399771
+    "x50_m": 0.124714
    },
    "Oz4": {
     "abstained": false,
@@ -2293,7 +2372,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.363341
+    "x50_m": 0.198675
    },
    "Oz5": {
     "abstained": false,
@@ -2302,7 +2381,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.398541
+    "x50_m": 0.122851
    },
    "Oz6": {
     "abstained": false,
@@ -2311,7 +2390,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.37278
+    "x50_m": 0.195908
    },
    "Oz7": {
     "abstained": false,
@@ -2320,7 +2399,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.35446
+    "x50_m": 0.213084
    }
   },
   "svr-rbf": {
@@ -2520,11 +2599,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": "Ozmert",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Ozmert",
@@ -2543,8 +2622,8 @@
    "pearson_r2": 0.13781432672450095,
    "r2_identity": 0.09104725552543569,
    "r2_identity_interval": [
-    -6.615072826280738,
-    0.3020190219179336
+    -5.407130763200095,
+    0.29886472773526923
    ],
    "r2_identity_point": 0.09104725552543569,
    "rmse_m": 0.061243949294263376,
@@ -2599,8 +2678,8 @@
    "pearson_r2": 0.13781432672450095,
    "r2_identity": 0.09104725552543569,
    "r2_identity_interval": [
-    -6.615072826280738,
-    0.3020190219179336
+    -5.407130763200095,
+    0.29886472773526923
    ],
    "r2_identity_point": 0.09104725552543569,
    "rmse_m": 0.061243949294263376,
@@ -2642,8 +2721,8 @@
    "pearson_r2": 0.13781432672450095,
    "r2_identity": 0.09104725552543569,
    "r2_identity_interval": [
-    -6.615072826280738,
-    0.3020190219179336
+    -5.407130763200095,
+    0.29886472773526923
    ],
    "r2_identity_point": 0.09104725552543569,
    "rmse_m": 0.061243949294263376,
@@ -2675,6 +2754,49 @@
     }
    ]
   },
+  "kuznetsov-transfer": {
+   "bias_m": -0.013851298456166715,
+   "mae_m": 0.05536374396806652,
+   "mape_pct": 28.571688250520882,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 7,
+   "pearson_r2": 0.1378143267245009,
+   "r2_identity": 0.0889303386691892,
+   "r2_identity_interval": [
+    -2.2240278161993787,
+    0.2886520659492809
+   ],
+   "r2_identity_point": 0.0889303386691892,
+   "rmse_m": 0.06131522524927379,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Oz6",
+     "error_m": -0.10834350713978202,
+     "error_pct": -36.114502379927345,
+     "measured_m": 0.3,
+     "predicted_m": 0.19165649286021796,
+     "site": "Ozmert"
+    },
+    {
+     "blast_id": "Oz1",
+     "error_m": -0.07045711581205061,
+     "error_pct": -26.09522807853726,
+     "measured_m": 0.27,
+     "predicted_m": 0.1995428841879494,
+     "site": "Ozmert"
+    },
+    {
+     "blast_id": "Oz4",
+     "error_m": -0.06345202553298371,
+     "error_pct": -31.726012766491856,
+     "measured_m": 0.2,
+     "predicted_m": 0.1365479744670163,
+     "site": "Ozmert"
+    }
+   ]
+  },
   "null": {
    "bias_m": 0.11114874815905747,
    "mae_m": 0.11114874815905747,
@@ -2686,7 +2808,7 @@
    "r2_identity": -2.9938089349602053,
    "r2_identity_interval": [
     -41.118954206778504,
-    -0.812409278787289
+    -0.835820341970746
    ],
    "r2_identity_point": -2.9938089349602053,
    "rmse_m": 0.12837669114590264,
@@ -2728,8 +2850,8 @@
    "pearson_r2": 0.009424155732231057,
    "r2_identity": -0.5441075206997603,
    "r2_identity_interval": [
-    -3.291038806913228,
-    0.7167675425365811
+    -3.174871942290152,
+    0.7155048306152347
    ],
    "r2_identity_point": -0.5441075206997603,
    "rmse_m": 0.07982359897151425,
@@ -2771,8 +2893,8 @@
    "pearson_r2": 0.18579116620652528,
    "r2_identity": 0.04414132669272297,
    "r2_identity_interval": [
-    -2.0723037662110304,
-    0.549011990783548
+    -2.034834662549599,
+    0.5478437054928689
    ],
    "r2_identity_point": 0.04414132669272297,
    "rmse_m": 0.06280429982399512,
@@ -2814,8 +2936,8 @@
    "pearson_r2": 0.23466510308523233,
    "r2_identity": 0.16674955417405313,
    "r2_identity_interval": [
-    -3.6905175434799826,
-    0.40490179811220317
+    -2.9655896797477226,
+    0.40297442579068415
    ],
    "r2_identity_point": 0.16674955417405313,
    "rmse_m": 0.058638157136522276,
@@ -2857,8 +2979,8 @@
    "pearson_r2": 0.08413513141982905,
    "r2_identity": -0.14315217015147175,
    "r2_identity_interval": [
-    -2.6343636095787715,
-    0.4691362017820827
+    -2.634104494568902,
+    0.4631816583496244
    ],
    "r2_identity_point": -0.14315217015147175,
    "rmse_m": 0.06868225698522316,
@@ -2891,44 +3013,44 @@
    ]
   },
   "stacking": {
-   "bias_m": 0.18766858227265684,
-   "mae_m": 0.18766858227265684,
-   "mape_pct": 118.0655597364092,
+   "bias_m": -0.024593654588988923,
+   "mae_m": 0.07206995277068844,
+   "mape_pct": 38.13177216758304,
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 7,
-   "pearson_r2": 0.10663043633098471,
-   "r2_identity": -8.428374454047418,
+   "pearson_r2": 0.047305934897531765,
+   "r2_identity": -0.9511244156563077,
    "r2_identity_interval": [
-    -95.14441409180436,
-    -3.7093621121415046
+    -7.255581475352473,
+    0.014736390556671863
    ],
-   "r2_identity_point": -8.428374454047418,
-   "rmse_m": 0.19724724537578325,
+   "r2_identity_point": -0.9511244156563077,
+   "rmse_m": 0.08972945240836026,
    "scoreable": true,
    "worst_rows": [
     {
-     "blast_id": "Oz3",
-     "error_m": 0.25977102543675074,
-     "error_pct": 185.55073245482194,
-     "measured_m": 0.14,
-     "predicted_m": 0.39977102543675075,
+     "blast_id": "Oz1",
+     "error_m": -0.17047075299904055,
+     "error_pct": -63.13731592557057,
+     "measured_m": 0.27,
+     "predicted_m": 0.09952924700095947,
+     "site": "Ozmert"
+    },
+    {
+     "blast_id": "Oz6",
+     "error_m": -0.10409202973668052,
+     "error_pct": -34.69734324556018,
+     "measured_m": 0.3,
+     "predicted_m": 0.19590797026331946,
      "site": "Ozmert"
     },
     {
      "blast_id": "Oz7",
-     "error_m": 0.2344597532784184,
-     "error_pct": 195.38312773201534,
+     "error_m": 0.09308352181797416,
+     "error_pct": 77.56960151497846,
      "measured_m": 0.12,
-     "predicted_m": 0.3544597532784184,
-     "site": "Ozmert"
-    },
-    {
-     "blast_id": "Oz5",
-     "error_m": 0.22854116144652128,
-     "error_pct": 134.4359773214831,
-     "measured_m": 0.17,
-     "predicted_m": 0.3985411614465213,
+     "predicted_m": 0.21308352181797416,
      "site": "Ozmert"
     }
    ]
@@ -2943,8 +3065,8 @@
    "pearson_r2": 1.3576132455056241e-05,
    "r2_identity": -2.932934249823034,
    "r2_identity_interval": [
-    -17.31409485839291,
-    0.13097049400578964
+    -17.16631181408439,
+    0.11485151222096324
    ],
    "r2_identity_point": -2.932934249823034,
    "rmse_m": 0.1273945586665348,
@@ -2986,8 +3108,8 @@
    "pearson_r2": 0.13781432672450095,
    "r2_identity": 0.09104725552543569,
    "r2_identity_interval": [
-    -6.615072826280738,
-    0.3020190219179336
+    -5.407130763200095,
+    0.29886472773526923
    ],
    "r2_identity_point": 0.09104725552543569,
    "rmse_m": 0.061243949294263376,
@@ -3029,8 +3151,8 @@
    "pearson_r2": 0.045731643334414325,
    "r2_identity": -0.9194476981705391,
    "r2_identity_interval": [
-    -7.77820476907595,
-    0.03899937468378889
+    -7.013806254722091,
+    0.027048027664986204
    ],
    "r2_identity_point": -0.9194476981705391,
    "rmse_m": 0.08899808809802451,
@@ -3104,6 +3226,16 @@
    "spacing-wide": 0.21165499046482736,
    "stemming-long": 0.20532018103489488
   },
+  "kuznetsov-transfer": {
+   "base": 0.17757727297240472,
+   "blocky": 0.17757727297240472,
+   "burden-tight": 0.163718156277392,
+   "burden-wide": 0.19043041001311564,
+   "powder-down": 0.21306653775582887,
+   "powder-up": 0.15039148898350116,
+   "spacing-wide": 0.1830561215575621,
+   "stemming-long": 0.17757727297240472
+  },
   "published-neural-net": {
    "base": 0.15395955571492517,
    "blocky": 0.1540466454578698,
@@ -3145,14 +3277,14 @@
    "stemming-long": 0.154736415241274
   },
   "stacking": {
-   "base": 0.37909715370122826,
-   "blocky": 0.3676219898524861,
-   "burden-tight": 0.3790554435906022,
-   "burden-wide": 0.37913315391698693,
-   "powder-down": 0.3801055869674907,
-   "powder-up": 0.3772906559941927,
-   "spacing-wide": 0.3773813385698971,
-   "stemming-long": 0.3712970266085918
+   "base": 0.1668349168395825,
+   "blocky": 0.1960501511506873,
+   "burden-tight": 0.16704253944131622,
+   "burden-wide": 0.16633342139644802,
+   "powder-down": 0.16607363126926478,
+   "powder-up": 0.17054890457634464,
+   "spacing-wide": 0.17326376812620933,
+   "stemming-long": 0.1894228117198607
   },
   "svr-rbf": {
    "base": 0.1709332857338548,

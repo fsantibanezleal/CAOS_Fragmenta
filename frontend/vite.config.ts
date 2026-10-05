@@ -2,7 +2,10 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { readFileSync } from 'node:fs';
 
-const version = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
+// The DISPLAY version (0.05.000), read from the repo's VERSION file, which is the version source of
+// record. package.json carries the semver form (0.5.0) that npm requires, and showing that in the
+// footer printed `v0.4.6` where every other surface said 0.04.006.
+const version = readFileSync(new URL('../VERSION', import.meta.url), 'utf8').trim();
 
 export default defineConfig({
   // ROOT base, and the comment it replaces was the bug. `./` makes every asset URL relative to the

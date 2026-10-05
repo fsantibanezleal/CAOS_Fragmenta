@@ -163,15 +163,29 @@
  },
  "controls": {
   "extrapolation_control": {
-   "n_predictions": 35,
+   "n_predictions": 40,
    "n_unstamped": 0,
    "passed": true,
    "unstamped": []
   }
  },
- "digest": "e429c77382d6ad7e3b95dd036627bc4e042721412612b53c7c1474d40afaff02",
+ "digest": "c7628cdd88bcc888e921606a61aac3e496c03f9e7179acf711eceb55c7f0b871",
  "distributions": {},
  "geometry_report": {},
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "77ea879f42bef72365ab22c89172eef27c99a9376b3bd685d6bb115f60335f5c",
+  "path": "models/corpus.json",
+  "scope": "corpus"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -360,6 +374,53 @@
     "n_simulations": null,
     "reason": "no rock factor is available for Granite-NE",
     "x50_m": null
+   }
+  },
+  "kuznetsov-transfer": {
+   "NE1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.160245
+   },
+   "NE2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.158557
+   },
+   "NE3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.166349
+   },
+   "NE4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.17217
+   },
+   "NE5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": true,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.163242
    }
   },
   "published-neural-net": {
@@ -558,7 +619,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.295799
+    "x50_m": 0.39937
    },
    "NE2": {
     "abstained": false,
@@ -567,7 +628,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.307018
+    "x50_m": 0.368464
    },
    "NE3": {
     "abstained": false,
@@ -576,7 +637,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.309306
+    "x50_m": 0.36695
    },
    "NE4": {
     "abstained": false,
@@ -585,7 +646,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.308662
+    "x50_m": 0.368723
    },
    "NE5": {
     "abstained": false,
@@ -594,7 +655,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.308734
+    "x50_m": 0.368734
    }
   },
   "svr-rbf": {
@@ -740,11 +801,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",
@@ -804,6 +865,49 @@
    "rmse_m": null,
    "scoreable": true,
    "worst_rows": []
+  },
+  "kuznetsov-transfer": {
+   "bias_m": -0.012507424583140313,
+   "mae_m": 0.018365260196417443,
+   "mape_pct": 10.076611844248628,
+   "n_abstained": 0,
+   "n_extrapolated": 5,
+   "n_scored": 5,
+   "pearson_r2": 0.7451262998756429,
+   "r2_identity": -0.024819706172360068,
+   "r2_identity_interval": [
+    -10.334035462404632,
+    0.34547567749666286
+   ],
+   "r2_identity_point": -0.024819706172360068,
+   "rmse_m": 0.020586638391949092,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "NE3",
+     "error_m": -0.02985107833625597,
+     "error_pct": -15.214616889019352,
+     "measured_m": 0.1962,
+     "predicted_m": 0.16634892166374404,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE4",
+     "error_m": -0.02752965714088046,
+     "error_pct": -13.785506830686261,
+     "measured_m": 0.1997,
+     "predicted_m": 0.17217034285911953,
+     "site": "Granite-NE"
+    },
+    {
+     "blast_id": "NE5",
+     "error_m": -0.015358334821482716,
+     "error_pct": -8.599291613372182,
+     "measured_m": 0.1786,
+     "predicted_m": 0.1632416651785173,
+     "site": "Granite-NE"
+    }
+   ]
   },
   "null": {
    "bias_m": 0.1259573195876289,
@@ -945,7 +1049,7 @@
    "r2_identity": -40.31398908955331,
    "r2_identity_interval": [
     -201.0441744157794,
-    -27.57074985234555
+    -27.98883532147173
    ],
    "r2_identity_point": -40.31398908955331,
    "rmse_m": 0.13071043725132578,
@@ -1021,44 +1125,44 @@
    ]
   },
   "stacking": {
-   "bias_m": 0.1292837920554813,
-   "mae_m": 0.1292837920554813,
-   "mape_pct": 75.31755327838228,
+   "bias_m": 0.19782790948592302,
+   "mae_m": 0.19782790948592302,
+   "mape_pct": 115.69365778234658,
    "n_abstained": 0,
    "n_extrapolated": 5,
    "n_scored": 5,
-   "pearson_r2": 0.6983095763422204,
-   "r2_identity": -40.060260863669505,
+   "pearson_r2": 0.5988123665236834,
+   "r2_identity": -95.96119189040706,
    "r2_identity_interval": [
-    -237.04045357433495,
-    -25.03079601339392
+    -538.192537580603,
+    -70.18752520355426
    ],
-   "r2_identity_point": -40.060260863669505,
-   "rmse_m": 0.1303084426083848,
+   "r2_identity_point": -95.96119189040706,
+   "rmse_m": 0.20024453619770383,
    "scoreable": true,
    "worst_rows": [
     {
      "blast_id": "NE1",
-     "error_m": 0.15019890397134222,
-     "error_pct": 103.15858789240536,
+     "error_m": 0.2537697635499477,
+     "error_pct": 174.29242002056844,
      "measured_m": 0.1456,
-     "predicted_m": 0.29579890397134223,
+     "predicted_m": 0.3993697635499477,
      "site": "Granite-NE"
     },
     {
      "blast_id": "NE2",
-     "error_m": 0.14401823667283795,
-     "error_pct": 88.35474642505395,
+     "error_m": 0.20546354277621295,
+     "error_pct": 126.05125323694045,
      "measured_m": 0.163,
-     "predicted_m": 0.30701823667283795,
+     "predicted_m": 0.36846354277621296,
      "site": "Granite-NE"
     },
     {
      "blast_id": "NE5",
-     "error_m": 0.1301336253738394,
-     "error_pct": 72.86317210181377,
+     "error_m": 0.19013384013306808,
+     "error_pct": 106.45791720776488,
      "measured_m": 0.1786,
-     "predicted_m": 0.3087336253738394,
+     "predicted_m": 0.3687338401330681,
      "site": "Granite-NE"
     }
    ]
@@ -1073,7 +1177,7 @@
    "pearson_r2": 0.8374669485843907,
    "r2_identity": -19.83914875425091,
    "r2_identity_interval": [
-    -119.97937890023185,
+    -112.2749340274863,
     -9.068478932379495
    ],
    "r2_identity_point": -19.83914875425091,
@@ -1130,7 +1234,7 @@
    "r2_identity": -94.52492689139135,
    "r2_identity_interval": [
     -529.3149364940023,
-    -68.30315256717638
+    -69.10358017774331
    ],
    "r2_identity_point": -94.52492689139135,
    "rmse_m": 0.19875591363845393,
@@ -1204,6 +1308,16 @@
    "spacing-wide": null,
    "stemming-long": null
   },
+  "kuznetsov-transfer": {
+   "base": 0.1641125754168597,
+   "blocky": 0.1641125754168597,
+   "burden-tight": 0.151304318505657,
+   "burden-wide": 0.17599113051926119,
+   "powder-down": 0.19691088651697258,
+   "powder-up": 0.1389881383170811,
+   "spacing-wide": 0.1691759933676969,
+   "stemming-long": 0.1641125754168597
+  },
   "published-neural-net": {
    "base": 0.3622059600797215,
    "blocky": 0.28299849586376336,
@@ -1245,14 +1359,14 @@
    "stemming-long": 0.6087916907121557
   },
   "stacking": {
-   "base": 0.3059037920554813,
-   "blocky": 0.31023574564664014,
-   "burden-tight": 0.3078975283593527,
-   "burden-wide": 0.30576552648604227,
-   "powder-down": 0.30535324408676784,
-   "powder-up": 0.2875934406614842,
-   "spacing-wide": 0.3086758763155686,
-   "stemming-long": 0.3065612140524826
+   "base": 0.374447909485923,
+   "blocky": 0.3625212455544065,
+   "burden-tight": 0.3691598972983858,
+   "burden-wide": 0.3742217823782837,
+   "powder-down": 0.37383467638680246,
+   "powder-up": 0.4167875281132889,
+   "spacing-wide": 0.36685052648984257,
+   "stemming-long": 0.37118159169187115
   },
   "svr-rbf": {
    "base": 0.08550592810616627,

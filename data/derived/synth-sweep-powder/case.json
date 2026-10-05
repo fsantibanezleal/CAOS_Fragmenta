@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "8890a778f6516133dcc2b0edfc1f48fe5fde1e60e7e51bd24b5809fb39362cbf",
+ "digest": "a6554089c2258f91939002eec04ea205cc47c532c14e923a76672817e1cc958d",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1838,6 +1838,20 @@
   }
  },
  "geometry_report": {},
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "77ea879f42bef72365ab22c89172eef27c99a9376b3bd685d6bb115f60335f5c",
+  "path": "models/corpus.json",
+  "scope": "corpus"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -2278,6 +2292,116 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.169569
+   }
+  },
+  "kuznetsov-transfer": {
+   "SP01": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.613361
+   },
+   "SP02": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.489085
+   },
+   "SP03": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.414093
+   },
+   "SP04": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.363003
+   },
+   "SP05": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.325529
+   },
+   "SP06": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.296639
+   },
+   "SP07": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.273551
+   },
+   "SP08": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.254591
+   },
+   "SP09": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.238688
+   },
+   "SP10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.225116
+   },
+   "SP11": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.213372
+   },
+   "SP12": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.203087
    }
   },
   "published-neural-net": {
@@ -2728,7 +2852,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.330567
+    "x50_m": 0.35326
    },
    "SP02": {
     "abstained": false,
@@ -2737,7 +2861,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.350066
+    "x50_m": 0.299575
    },
    "SP03": {
     "abstained": false,
@@ -2746,7 +2870,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.37483
+    "x50_m": 0.237327
    },
    "SP04": {
     "abstained": false,
@@ -2755,7 +2879,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.394774
+    "x50_m": 0.184359
    },
    "SP05": {
     "abstained": false,
@@ -2764,7 +2888,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.393471
+    "x50_m": 0.188674
    },
    "SP06": {
     "abstained": false,
@@ -2773,7 +2897,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.394251
+    "x50_m": 0.18611
    },
    "SP07": {
     "abstained": false,
@@ -2782,7 +2906,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399546
+    "x50_m": 0.171845
    },
    "SP08": {
     "abstained": false,
@@ -2791,7 +2915,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399228
+    "x50_m": 0.172458
    },
    "SP09": {
     "abstained": false,
@@ -2800,7 +2924,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399228
+    "x50_m": 0.172458
    },
    "SP10": {
     "abstained": false,
@@ -2809,7 +2933,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399228
+    "x50_m": 0.172458
    },
    "SP11": {
     "abstained": false,
@@ -2818,7 +2942,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399193
+    "x50_m": 0.172453
    },
    "SP12": {
     "abstained": false,
@@ -2827,7 +2951,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.399318
+    "x50_m": 0.172472
    }
   },
   "svr-rbf": {
@@ -3162,11 +3286,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": null,
   "leakage_note": "this case is not in the training corpus, so nothing was withheld",
@@ -3196,6 +3320,12 @@
    "scoreable": false
   },
   "kuznetsov": {
+   "abstain_reasons": [],
+   "n_abstained": 0,
+   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "scoreable": false
+  },
+  "kuznetsov-transfer": {
    "abstain_reasons": [],
    "n_abstained": 0,
    "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
@@ -3295,6 +3425,16 @@
    "spacing-wide": 0.28045853917634644,
    "stemming-long": 0.27206444747655895
   },
+  "kuznetsov-transfer": {
+   "base": 0.3258428463846614,
+   "blocky": 0.3258428463846614,
+   "burden-tight": 0.30041226083342426,
+   "burden-wide": 0.3494275241320677,
+   "powder-down": 0.39096335904692564,
+   "powder-up": 0.2759586856028958,
+   "spacing-wide": 0.3358961802827198,
+   "stemming-long": 0.3258428463846614
+  },
   "published-neural-net": {
    "base": 0.2963119313271743,
    "blocky": 0.3282839738090677,
@@ -3336,14 +3476,14 @@
    "stemming-long": 0.2116265695533458
   },
   "stacking": {
-   "base": 0.3861415691202415,
-   "blocky": 0.39002852004915906,
-   "burden-tight": 0.38670327886621836,
-   "burden-wide": 0.3892026101673465,
-   "powder-down": 0.3779026481675846,
-   "powder-up": 0.3904867826960341,
-   "spacing-wide": 0.39333445980235787,
-   "stemming-long": 0.3778862606459367
+   "base": 0.206954098487278,
+   "blocky": 0.1959651021332365,
+   "burden-tight": 0.20498285004963387,
+   "burden-wide": 0.19866952109815236,
+   "powder-down": 0.2287300542853936,
+   "powder-up": 0.19576387196600298,
+   "spacing-wide": 0.18601083658003917,
+   "stemming-long": 0.2252051794959753
   },
   "svr-rbf": {
    "base": 0.3366822894113266,

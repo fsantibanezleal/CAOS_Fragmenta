@@ -60,6 +60,7 @@ def build_case_artifact(
     n_training_rows: int,
     engine_version: str,
     app_version: str,
+    live_models: dict | None = None,
 ) -> dict:
     blasts = []
     for item in prepared.prepared:
@@ -133,6 +134,8 @@ def build_case_artifact(
         "null_mean_m": evaluation.null_mean_m,
         "controls": evaluation.controls,
         "geometry_report": _serialisable(prepared.geometry_report),
+        # Where the browser finds the fitted models this case's learned predictions came from.
+        "live_models": live_models,
     }
     # Applied to the WHOLE payload, not only to the geometry report: a non-finite value can appear
     # in any metric block, and one of them anywhere makes the file unparseable in a browser.

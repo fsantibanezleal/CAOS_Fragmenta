@@ -36,6 +36,13 @@ if (!existsSync(benchmark)) {
 const { readFileSync } = await import('node:fs');
 const idx = JSON.parse(readFileSync(index, 'utf8'));
 const missing = idx.cases.filter((c) => !existsSync(join(PUB, 'data', c.artifact_path)));
+// The same for the fitted models the live lane loads: a case whose models file did not ship would
+// render its replayed numbers and silently show nothing in the What-if tab.
+const missingModels = (idx.models ?? []).filter((m) => !existsSync(join(PUB, 'data', m.path)));
+if (!idx.models?.length || missingModels.length) {
+  console.error(`[copy-data] models missing: ${missingModels.map((m) => m.scope).join(', ') || 'the index lists none'}`);
+  process.exit(1);
+}
 if (missing.length) {
   console.error(`[copy-data] ${missing.length} declared cases have no artifact: ${missing.map((c) => c.case_id).join(', ')}`);
   process.exit(1);

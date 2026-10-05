@@ -1,419 +1,476 @@
 /**
- * Methodology: every model, term by term, with its source and where it fails.
- *
- * Six family sub-tabs. Each carries the equations with every symbol defined, an explicit assumptions
- * block, a theme-aware diagram, and inline citations with real DOIs rather than a bibliography dump
- * at the bottom.
+ * Methodology: every predictor, term by term, with its source, how this product applies it, and
+ * where it fails. Seven families, one sub-tab each, every one with its equations, a figure, a
+ * callout and its own sources. Figures that depend on a measurement read it from the artifacts.
  */
 
 import { Callout, Cite, Equation, InlineMath, Refs, SubTabs, useShellLang } from '@fasl-work/caos-app-shell';
 import type { SubTabDef } from '@fasl-work/caos-app-shell';
+import { Link } from 'react-router';
 
 import { SECTION_REFS } from '../data/citations';
+import type { BenchmarkArtifact, ModelsFile, ReproductionBlock } from '../lib/contract.types';
+import { f, facts, iv, useBenchmark, useModels } from '../lib/facts';
 import {
   ClassicalFlowDiagram,
+  DistributionShapesDiagram,
+  EnsembleDiagram,
   GroupRouterDiagram,
-  LearnedFlowDiagram,
+  NetworkDiagram,
   ProtocolDiagram,
   RockFactorDiagram,
 } from '../viz/Diagrams';
 
+interface TabProps {
+  es: boolean;
+  b: BenchmarkArtifact | null;
+}
+
+const refs = (key: string, es: boolean) => <Refs ids={SECTION_REFS[key]} label={es ? 'Fuentes' : 'Sources'} />;
+
 export default function Methodology() {
-  const lang = useShellLang();
-  const es = lang === 'es';
+  const es = useShellLang() === 'es';
+  const b = useBenchmark();
+  const corpus = useModels('corpus');
 
   const tabs: SubTabDef[] = [
-    { id: 'classical', label: es ? 'Clásicos' : 'Classical', content: <Classical es={es} /> },
-    { id: 'rock', label: es ? 'Factor de roca' : 'Rock factor', content: <RockFactor es={es} /> },
-    {
-      id: 'distributions',
-      label: es ? 'Distribuciones' : 'Distributions',
-      content: <Distributions es={es} />,
-    },
-    {
-      id: 'statistical',
-      label: es ? 'Estadísticos' : 'Statistical',
-      content: <Statistical es={es} />,
-    },
-    { id: 'learned', label: es ? 'Aprendidos' : 'Learned', content: <Learned es={es} /> },
-    { id: 'protocol', label: es ? 'Protocolos' : 'Protocols', content: <Protocol es={es} /> },
+    { id: 'classical', label: es ? 'Tamaño medio clásico' : 'Classical mean size', content: <Classical es={es} b={b} /> },
+    { id: 'rock', label: es ? 'Factor de roca' : 'Rock factor', content: <RockFactor es={es} b={b} /> },
+    { id: 'distributions', label: es ? 'Distribuciones' : 'Distributions', content: <Distributions es={es} b={b} /> },
+    { id: 'statistical', label: es ? 'Enrutador y regresiones' : 'Router and regressions', content: <Statistical es={es} b={b} /> },
+    { id: 'network', label: es ? 'Red neuronal' : 'Neural network', content: <Network es={es} b={b} /> },
+    { id: 'ensembles', label: es ? 'Núcleos y ensambles' : 'Kernels and ensembles', content: <Ensembles es={es} b={b} corpus={corpus} /> },
+    { id: 'protocols', label: es ? 'Protocolos y métricas' : 'Protocols and metrics', content: <Protocols es={es} b={b} /> },
   ];
 
   return (
-    <div className="page-body prose">
-      <h1>{es ? 'Metodología' : 'Methodology'}</h1>
-      <p className="fr-lede">
-        {es
-          ? 'Doce modelos en cuatro niveles, cada uno transcrito de una fuente primaria con cada símbolo definido, y cada uno con una nota de dónde falla. Un nombre en un selector no es un método.'
-          : 'Twelve models across four tiers, each transcribed from a primary source with every symbol defined, and each with a note on where it fails. A name in a selector is not a method.'}
-      </p>
-      <SubTabs tabs={tabs} ariaLabel="method families" />
-      <Refs ids={SECTION_REFS.methodology} label={es ? "Fuentes de esta página" : "Sources for this page"} />
+    <div className="page-body wide prose">
+      <div className="page-head">
+        <h1>{es ? 'Metodología' : 'Methodology'}</h1>
+        <p className="lede">
+          {es
+            ? 'Diez predictores del tamaño medio en cuatro familias, cada uno transcrito de su fuente primaria con cada símbolo definido, junto con lo que este producto fija donde la fuente no dice nada, y dónde falla cada uno. La última sección define cómo se miden: la varianza explicada '
+            : 'Ten predictors of the mean size in four families, each transcribed from its primary source with every symbol defined, together with what this product sets where the source is silent, and where each one fails. The last section defines how they are measured: variance explained '}
+          <InlineMath tex="R^2_{\mathrm{id}}" />
+          {es ? ', bajo tres protocolos, con intervalos por remuestreo de sitios.' : ', under three protocols, with site-resampled intervals.'}
+        </p>
+      </div>
+      <SubTabs tabs={tabs} ariaLabel={es ? 'familias de métodos' : 'method families'} orientation="vertical" />
     </div>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
 
-function Classical({ es }: { es: boolean }) {
+function Classical({ es, b }: TabProps) {
+  const holdout = b?.published_reproduction.published_holdout_arms;
+  const classical = holdout?.classical;
+  const nul = holdout?.null;
+  const gain = classical?.rmse_m && nul?.rmse_m ? 1 - classical.rmse_m / nul.rmse_m : null;
+  const F = b ? facts(b) : null;
   return (
     <section>
       <h2>{es ? 'El tamaño medio clásico' : 'The classical mean size'}</h2>
       <p>
         {es
-          ? 'La ecuación de 1973 con la corrección de Cunningham por potencia del explosivo. Es cerrada, se evalúa en microsegundos, y sigue siendo el estándar de la industria. Esa combinación es exactamente la razón para probarla duro: un modelo así de barato tiende a creerse.'
-          : 'The 1973 equation with Cunningham’s explosive-strength correction. It is closed form, evaluates in microseconds, and is still the industry default. That combination is exactly why it is worth testing hard: a model this cheap tends to be believed.'}{' '}
+          ? 'Kuznetsov publicó en 1973 una relación entre el diámetro medio de los fragmentos, la energía del explosivo y el volumen de roca que rompe cada barreno. Con la corrección de Cunningham por la potencia del explosivo es la base de la familia Kuz-Ram, y las dos fuentes de este producto la imprimen así, con el tamaño en centímetros, el volumen en metros cúbicos y la carga en kilogramos de equivalente TNT:'
+          : 'Kuznetsov published in 1973 a relation between the mean fragment diameter, the explosive energy and the rock volume each hole breaks. With Cunningham’s explosive-strength correction it is the basis of the Kuz-Ram family, and both of this product’s sources print it this way, with the size in centimetres, the volume in cubic metres and the charge in kilograms of TNT equivalent:'}{' '}
+        <Cite id="kuznetsov1973" />{' '}
         <Cite id="hudaverdi2010" />
+      </p>
+      <Equation
+        tex={String.raw`x_{50} = A\left(\frac{V}{Q}\right)^{0.8} Q^{1/6}\left(\frac{\mathrm{RWS}}{115}\right)^{-19/30}`}
+        caption={es ? 'Hudaverdi et al. 2010, Ec. 1. A factor de roca, V volumen por barreno, Q masa de explosivo, RWS potencia relativa.' : 'Hudaverdi et al. 2010, Eq. 1. A rock factor, V volume per hole, Q explosive mass, RWS relative weight strength.'}
+      />
+      <p>
+        {es
+          ? 'Como V/Q es el recíproco del factor de carga K, Amoako, Jha y Zhong escriben la misma ecuación en K. Las dos formas coinciden en ese término y difieren en el exponente de potencia: −19/30 sobre RWS/115 en una y 19/20 sobre 115/RWS en la otra, lo que separa los resultados en cerca de 8 por ciento con RWS 140. El corpus no tiene ese problema en la práctica, porque todos sus tiros usaron ANFO (RWS 100), y despejar el factor de roca desde las predicciones publicadas lo zanja de todos modos: con la forma −19/30 el factor recuperado queda casi constante dentro de cada sitio, y con la otra no.'
+          : 'Because V/Q is the reciprocal of the powder factor K, Amoako, Jha and Zhong write the same equation in K. The two forms agree on that term and differ on the strength exponent, −19/30 on RWS/115 in one and 19/20 on 115/RWS in the other, which separates the results by about 8 percent at an RWS of 140. On this corpus it does not matter in practice, because every blast used ANFO (RWS 100), and back-solving the rock factor from the published predictions settles it anyway: with the −19/30 form the recovered factor is near constant within each site, and with the other it is not.'}{' '}
         <Cite id="amoako2022" />
       </p>
-
       <Equation
-        tex={String.raw`x_{50} \;=\; A \left(\frac{V}{Q}\right)^{0.8} Q^{1/6} \left(\frac{\mathrm{RWS}}{115}\right)^{-19/30}`}
-        caption={
-          es
-            ? 'Tamaño medio de fragmento, en centímetros en la ecuación original.'
-            : 'Mean fragment size, in centimetres in the original equation.'
-        }
+        tex={String.raw`x_{50} = A\,K^{-0.8}\,Q^{1/6}\left(\frac{115}{\mathrm{RWS}}\right)^{19/20},\qquad K = \frac{Q}{V}`}
+        caption={es ? 'La forma en factor de carga, Amoako et al. 2022, Ec. 3; mismo término energético, otro exponente de potencia.' : 'The powder-factor form, Amoako et al. 2022, Eq. 3; same energy term, a different strength exponent.'}
       />
-
-      <dl className="fr-symbols">
-        <dt><InlineMath tex="A" /></dt>
-        <dd>{es ? 'factor de roca, adimensional, entre 0.8 y 22' : 'rock factor, dimensionless, between 0.8 and 22'}</dd>
-        <dt><InlineMath tex="V" /></dt>
-        <dd>{es ? 'volumen de roca fragmentado por barreno, m3' : 'rock volume broken per hole, m3'}</dd>
-        <dt><InlineMath tex="Q" /></dt>
-        <dd>{es ? 'masa de explosivo en ese barreno, kg' : 'explosive mass in that hole, kg'}</dd>
-        <dt><InlineMath tex="\mathrm{RWS}" /></dt>
-        <dd>{es ? 'potencia relativa en peso; ANFO es 100 y TNT es 115' : 'weight strength relative to ANFO, which is 100; TNT is 115'}</dd>
-      </dl>
-
       <p>
         {es
-          ? 'Nótese que V/Q es el recíproco del factor de carga, y por eso las dos formas publicadas de esta ecuación, una en V/Q y otra en el factor de carga elevado a -0.8, coinciden en ese término.'
-          : 'Note that V/Q is the reciprocal of the powder factor, which is why the two published spellings of this equation, one in V/Q and one in the powder factor to the power -0.8, agree on that term.'}
+          ? 'Aplicarla al corpus exige dos cosas que el corpus no imprime. El volumen y la carga por barreno se obtienen de la malla en metros, que se recupera desde las razones y los diámetros declarados en la prosa de la fuente; '
+          : 'Applying it to the corpus needs two things the corpus does not print. The volume and charge per hole come from the pattern in metres, recovered from the ratios and the diameters stated in the source prose; '}
+        <Link to="/implementation">{es ? 'Implementación' : 'Implementation'}</Link>
+        {es
+          ? ' muestra cómo. El factor de roca se toma de una de dos vías: el valor recuperado para el sitio, que usa información de ese mismo sitio, o el predicho desde el módulo con una recta ajustada solo sobre los demás sitios, que es la forma que se usa para hablar de transferencia:'
+          : ' shows how. The rock factor comes by one of two routes: the value recovered for the site, which uses information about that same site, or the one predicted from the modulus by a line fitted over the other sites only, which is the form used when the question is transfer:'}
       </p>
-
-      <Callout variant="honest" title={es ? 'Un desacuerdo publicado, resuelto sobre este corpus' : 'A published disagreement, settled on this corpus'}>
-        {es
-          ? 'Las dos fuentes escriben el exponente de potencia del explosivo distinto: -19/30 sobre (E/115) en una, 19/20 sobre (115/RWS) en la otra. Difieren cerca de un 8 por ciento con RWS 140. Despejar el factor de roca desde las predicciones publicadas lo decide: con la forma -19/30 el factor recuperado queda casi constante dentro de cada sitio, y con la otra no.'
-          : 'The two sources write the explosive-strength exponent differently: -19/30 on (E/115) in one, 19/20 on (115/RWS) in the other. They differ by about 8 percent at an RWS of 140. Back-solving the rock factor from the published predictions decides it: with the -19/30 form the recovered factor is near constant within each site, and with the other it is not.'}
-      </Callout>
-
-      <h3>{es ? 'El índice de uniformidad' : 'The uniformity index'}</h3>
       <Equation
-        tex={String.raw`n = \left(2.2 - 14\frac{B}{d}\right)\sqrt{\frac{1 + S/B}{2}}\left(1 - \frac{W}{B}\right)\left(\left|\frac{\mathrm{BCL}-\mathrm{CCL}}{L}\right| + 0.1\right)^{0.1}\frac{L}{H}`}
-        caption={es ? 'Cunningham 1987. Multiplicar por 1.1 en malla trabada.' : 'Cunningham 1987. Multiply by 1.1 for a staggered pattern.'}
+        tex={String.raw`\ln \hat A = a + b \ln \bar E_s,\quad (a,b)\ \text{fitted over the training sites, one point per site}`}
+        caption={es ? 'El factor de roca de transferencia, una calibración de este producto y no una relación publicada.' : 'The transfer rock factor, a calibration of this product and not a published relation.'}
       />
-
-      <Callout variant="strong" title={es ? 'La trampa de unidades' : 'The unit trap'}>
+      <p>
         {es
-          ? 'La fuente da el bordo en METROS y el diámetro en MILÍMETROS, así que el B/d publicado vale cerca de 0.027 para un bordo de 4.5 m en un barreno de 165 mm. NO es la razón adimensional bordo sobre diámetro que tabula el corpus, que es mil veces mayor. Leido así, el término principal se vuelve 2.2 menos 382 y el índice cae a unos -380. Una prueba del producto verifica que el índice cae en su banda publicada sobre los 91 tiros reconstruibles, y eso es lo que atrapa este error.'
-          : 'The source states the burden in METRES and the diameter in MILLIMETRES, so the published B/d is about 0.027 for a 4.5 m burden on a 165 mm hole. It is NOT the dimensionless burden-to-diameter ratio the corpus tabulates, which is a thousand times larger. Read that way the leading term becomes 2.2 minus 382 and the index falls to about -380. A product test asserts the index lands in its published band on all 91 reconstructable blasts, and that is what catches this.'}
-      </Callout>
-
-      <h3>{es ? 'Supuestos' : 'Assumptions'}</h3>
-      <ul className="fr-list">
-        <li>{es ? 'Detonación ideal. La detónica no ideal queda fuera de alcance.' : 'Ideal detonation. Non-ideal detonics is out of scope.'}</li>
-        <li>
-          {es
-            ? 'Una sola columna de carga continua, que es lo que el ANFO es en estas mallas. El término de distribución de carga se reduce entonces a 0.1 elevado a 0.1, en vez de inventarse un reparto entre carga de fondo y de columna que el corpus no publica.'
-            : 'One continuous charge column, which is what ANFO in these patterns is. The charge-distribution term then reduces to 0.1 to the power 0.1, rather than inventing a bottom and column charge split the corpus does not publish.'}
-        </li>
-        <li>
-          {es
-            ? 'El factor de tiempo y las correcciones de 2005 no están tabuladas en ninguna fuente consultada. Valen 1 por defecto y las fija el usuario.'
-            : 'The timing factor and the 2005 corrections are not tabulated in any source held for this work. They default to 1 and are set by the user.'}
-        </li>
-      </ul>
-
+          ? `Dónde falla. Sobre el conjunto de validación publicado de doce tiros, la columna clásica que imprime el artículo de 2012 explica ${f(classical?.r2_identity)} de la varianza respecto de la identidad, con una correlación al cuadrado de ${f(classical?.pearson_r2)}; su error cuadrático medio de ${f(classical?.rmse_m)} m mejora en ${gain === null ? 'n/a' : Math.round(gain * 100)} por ciento al de predecir una constante. Es el peor de los tres modelos de esa tabla. Su falla mejor documentada es subestimar los finos. Bajo los protocolos de este producto puntúa cerca de 0.30 en todos: ${f(F?.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana y ${f(F?.site('kuznetsov'))} con su sitio excluido.`
+          : `Where it fails. On the published twelve-blast hold-out, the classical column the 2012 paper prints explains ${f(classical?.r2_identity)} of the variance about the identity line, with a squared correlation of ${f(classical?.pearson_r2)}; its root mean square error of ${f(classical?.rmse_m)} m improves on predicting a constant by ${gain === null ? 'n/a' : Math.round(gain * 100)} percent. It is the worst of the three models in that table. Its best-documented failure is under-predicting fines. Under this product’s protocols it scores about 0.30 in all of them: ${f(F?.random('kuznetsov')?.r2_identity)} at the median random split and ${f(F?.site('kuznetsov'))} with its site held out.`}{' '}
+        <Cite id="kulatilake2012" />{' '}
+        <Cite id="amoako2022" />
+      </p>
       <ClassicalFlowDiagram />
-
-      <h3>{es ? 'Dónde falla' : 'Where it fails'}</h3>
-      <p>
+      <Callout variant="honest" title={es ? 'Una coincidencia que no es evidencia' : 'An agreement that is not evidence'}>
         {es
-          ? 'Sobre el conjunto de validación publicado de doce tiros explica 0.232 de la varianza respecto de la identidad, con un RMSE de 0.128 m frente a los 0.147 m de predecir una constante. Le gana a una constante por un 13 por ciento, y es el peor de los tres modelos impresos en su propia tabla fuente. Su falla mejor documentada es subestimar los finos.'
-          : 'On the published twelve-blast hold-out it explains 0.232 of the variance about the identity line, with a root mean square error of 0.128 m against 0.147 m for predicting a constant. It beats a constant by 13 percent, and it is the worst of the three models printed in its own source table. Its best-documented failure is under-predicting fines.'}
-      </p>
+          ? 'Sobre el conjunto de validación publicado, el brazo clásico de este producto reproduce la columna clásica impresa casi exactamente, y eso es circular: los factores de roca se despejaron precisamente de esa columna. La evidencia de que la geometría y la forma de la ecuación son correctas es otra, que el factor recuperado casi no varíe dentro de cada sitio.'
+          : 'On the published hold-out, this product’s classical arm reproduces the printed classical column almost exactly, and that is circular: the rock factors were back-solved from that very column. The evidence that the geometry and the form of the equation are right is something else, that the recovered factor barely varies within each site.'}
+      </Callout>
+      {refs('m-classical', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
 
-function RockFactor({ es }: { es: boolean }) {
+function RockFactor({ es, b }: TabProps) {
+  const sites = b ? Object.entries(b.site_meta).sort((x, y) => (y[1].E_GPa[0] ?? 0) - (x[1].E_GPa[0] ?? 0)) : [];
   return (
     <section>
       <h2>{es ? 'El factor de roca' : 'The rock factor'}</h2>
       <p>
         {es
-          ? 'Un solo número adimensional carga con todo el "qué clase de roca es esta". Su forma original era una búsqueda de tres valores, que la propia literatura llama demasiado gruesa. La salida es un esquema de calificación, y ahí es donde una colección de fórmulas elegiría una en silencio.'
-          : 'One dimensionless number carries the whole of "what kind of rock is this". Its original form was a three-value lookup, which the literature itself calls too coarse. The way out is a rating scheme, and that is where a formula collection would quietly pick one.'}
+          ? 'Un solo número adimensional, A, carga con todo lo que la ecuación clásica sabe de la roca. En su forma original era una tabla de tres valores (7 para roca media, 10 para roca dura muy fisurada, 13 para roca muy dura poco fisurada), y el artículo de 2010 dice que esas categorías son demasiado amplias. La vía de Cunningham es el índice de tronabilidad de Lilly, que el artículo de 2010 imprime así:'
+          : 'One dimensionless number, A, carries everything the classical equation knows about the rock. In its original form it was a three-value table (7 for medium rock, 10 for hard, highly fissured rock, 13 for very hard, weakly fissured rock), and the 2010 paper says those categories are too wide. Cunningham’s route out is Lilly’s blastability index, which the 2010 paper prints as:'}{' '}
+        <Cite id="hudaverdi2010" />
       </p>
-
       <Equation
-        tex={String.raw`A = 0.06 \times \mathrm{BI}, \qquad \mathrm{BI} = 0.5\,(\mathrm{RMD} + \mathrm{JPS} + \mathrm{JPO} + \mathrm{RDI} + S)`}
-        caption={es ? 'El índice de tronabilidad de Lilly.' : 'Lilly’s blastability index.'}
+        tex={String.raw`A = 0.06\,\mathrm{BI},\qquad \mathrm{BI} = 0.5\,(\mathrm{RMD} + \mathrm{JPS} + \mathrm{JPO} + \mathrm{RDI} + S)`}
+        caption={es ? 'RMD descripción del macizo (10, 20, 50), JPS espaciamiento de juntas (10, 20, 50), JPO orientación (10 a 40), RDI = 25·densidad − 50, S = 0.05·UCS.' : 'RMD rock-mass description (10, 20, 50), JPS joint spacing (10, 20, 50), JPO orientation (10 to 40), RDI = 25·density − 50, S = 0.05·UCS.'}
       />
-
-      <Callout variant="honest" title={es ? 'Dos tablas bajo la misma atribución' : 'Two tables under the same attribution'}>
+      <p>
         {es
-          ? 'Dos fuentes primarias publican tablas de calificación atribuidas a Lilly, y no son la misma tabla. El término de resistencia es 0.05 por la resistencia a compresión simple en una, y esa resistencia dividida por 3 o por 5 según el módulo en la otra. Con 100 MPa eso da 5 frente a 33.3 o 20, lo que mueve el índice hasta 14 puntos y el factor de roca hasta 0.85. El tamaño predicho es lineal en ese factor.'
-          : 'Two primary sources publish rating tables attributed to Lilly, and they are not the same table. The strength term is 0.05 times the uniaxial compressive strength in one, and that strength divided by 3 or 5 by modulus in the other. At 100 MPa that is 5 against 33.3 or 20, which moves the index by up to 14 points and the rock factor by up to 0.85. Predicted size is linear in that factor.'}{' '}
+          ? 'Babaeian y colegas publican en 2019 una segunda tabla atribuida a Lilly, y no es la misma: el término de resistencia es la resistencia a compresión dividida por 3 bajo 50 GPa de módulo, o por 5 sobre 50 GPa, en vez de 0.05 veces la resistencia. Con 100 MPa eso da 5 frente a 33.3 o 20, mueve el índice hasta 14 puntos y el factor de roca hasta 0.85, y el tamaño predicho es lineal en ese factor. La misma fuente tabula una tercera vía, la de Hustrulid, que pasa directamente del índice de Protodyakonov a un factor de 3 a 13. Las tres vías se ofrecen lado a lado, cada una con su fuente.'
+          : 'Babaeian and colleagues published in 2019 a second table attributed to Lilly, and it is not the same table: the strength term is the compressive strength divided by 3 below 50 GPa of modulus, or by 5 above it, instead of 0.05 times the strength. At 100 MPa that is 5 against 33.3 or 20; it moves the index by up to 14 points and the rock factor by up to 0.85, and the predicted size is linear in the factor. The same source tabulates a third route, Hustrulid’s, which maps the Protodyakonov index straight onto a factor from 3 to 13. The three routes are offered side by side, each with its source.'}{' '}
         <Cite id="babaeian2019" />
-      </Callout>
-
-      <p>
-        {es
-          ? 'Los tres esquemas se muestran lado a lado, con su fuente en cada uno. Presentar uno como EL factor de roca ocultaría la subjetividad que es el contenido real de este parámetro.'
-          : 'All three schemes ship side by side with the source on each. Presenting one as THE rock factor would hide the subjectivity that is the real content of this parameter.'}
       </p>
-
-      <h3>{es ? 'Un cuarto esquema, recuperado de los datos' : 'A fourth scheme, recovered from the data'}</h3>
       <p>
         {es
-          ? 'Ambas fuentes dicen que el factor de roca "se estimó para cada tiro" y ninguna publica un valor. Invirtiendo la ecuación de tamaño medio sobre una predicción publicada se recupera:'
-          : 'Both sources say the rock factor "was estimated for each blast" and neither prints a value. Inverting the mean-size equation on a published prediction recovers it:'}
+          ? 'Ambos artículos dicen que el factor de roca se estimó para cada tiro, y ninguno imprime el valor. Invirtiendo la ecuación clásica sobre una predicción publicada, con la geometría recuperada, se obtiene:'
+          : 'Both papers say the rock factor was estimated for each blast, and neither prints the value. Inverting the classical equation on a published prediction, with the recovered geometry, gives:'}
       </p>
       <Equation
-        tex={String.raw`A = \frac{x_{50}}{(V/Q)^{0.8}\,Q^{1/6}\,(\mathrm{RWS}/115)^{-19/30}}`}
+        tex={String.raw`A = \frac{x_{50}^{\mathrm{pub}}}{(V/Q)^{0.8}\,Q^{1/6}\,(\mathrm{RWS}/115)^{-19/30}}`}
+        caption={es ? 'Factor de roca recuperado de la predicción clásica publicada, con x50 en centímetros.' : 'Rock factor recovered from the published classical prediction, with x50 in centimetres.'}
       />
       <p>
         {es
-          ? 'Los valores recuperados apenas se mueven dentro de cada sitio: la mayor dispersión es 3.7 por ciento, que es lo que produce redondear las predicciones publicadas a dos decimales. Un error en la reconstrucción geométrica los dispersaría. Ese único resultado valida la geometría, resuelve el desacuerdo de exponentes y recupera una constante que la literatura omitió.'
-          : 'The recovered values barely move within a site: the widest spread is 3.7 percent, which is what rounding the published predictions to two decimals produces. An error in the geometry reconstruction would scatter them. That one result validates the geometry, settles the exponent disagreement, and recovers a constant the literature omitted.'}
+          ? 'Los valores recuperados casi no se mueven dentro de un sitio: la mayor dispersión es 3.7 por ciento, lo que produce redondear las predicciones publicadas a dos decimales, y un error en la geometría los dispersaría. Ordenan la roca casi por rigidez, aunque no del todo: el esquisto plegado de 60 GPa de Enusa queda por debajo de los carbonatos de 45 GPa de Reocin. El brazo de transferencia ajusta una recta en logaritmos de esos factores contra el módulo de cada sitio, sin el sitio que se va a predecir; la tabla compara las dos vías.'
+          : 'The recovered values barely move within a site: the widest spread is 3.7 percent, which is what rounding the published predictions to two decimals produces, and an error in the geometry would scatter them. They order the rock almost by stiffness, though not entirely: the folded 60 GPa schist at Enusa sits below the 45 GPa carbonates at Reocin. The transfer arm fits a line in logarithms of these factors against each site’s modulus, without the site to be predicted; the table compares the two routes.'}
       </p>
-
-      <Callout variant="note" title={es ? 'Una inversión, nombrada en vez de suavizada' : 'One inversion, named rather than smoothed'}>
-        {es
-          ? 'Los factores recuperados correlacionan con el módulo de Young en 0.87, no cerca de uno, y hay una inversión que vale la pena nombrar: la roca más rígida del corpus, un esquisto plegado de 60 GPa, queda por debajo de los carbonatos de 45 GPa. La rigidez no es lo único que carga el factor de roca.'
-          : 'The recovered factors correlate with Young modulus at 0.87, not near one, and there is one inversion worth naming: the stiffest rock in the corpus, a folded schist at 60 GPa, sits below the carbonates at 45 GPa. Stiffness is not the only thing the rock factor carries.'}
-      </Callout>
-
+      {sites.length ? (
+        <div className="fr-scroll-x">
+          <table className="fr-table">
+            <thead>
+              <tr>
+                <th>{es ? 'sitio' : 'site'}</th>
+                <th>{es ? 'roca' : 'rock'}</th>
+                <th>E, GPa</th>
+                <th>{es ? 'A recuperado' : 'A recovered'}</th>
+                <th>{es ? 'A de transferencia (todos los sitios)' : 'A transfer (all sites)'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sites.map(([site, meta]) => (
+                <tr key={site}>
+                  <td>{site}</td>
+                  <td className="fr-fine">{meta.rock ?? '-'}</td>
+                  <td>{meta.E_GPa.join(', ')}</td>
+                  <td>{meta.rock_factor_recovered === null ? (es ? 'sin geometría' : 'no geometry') : f(meta.rock_factor_recovered, 2)}</td>
+                  <td>{f(meta.rock_factor_transfer, 2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
       <RockFactorDiagram />
+      <Callout variant="honest" title={es ? 'Derivados, no publicados' : 'Derived, not published'}>
+        {es
+          ? 'Los factores recuperados son un resultado de este trabajo, no valores de la fuente, y el de transferencia es una calibración. Cada predicción clásica lleva en su detalle qué factor usó y de dónde salió. La recta de transferencia no ve la estructura del macizo; la tabla de Lilly sí, pero ningún tiro del corpus trae los datos de juntas que pide.'
+          : 'The recovered factors are a result of this work, not values from the source, and the transfer factor is a calibration. Every classical prediction carries in its detail which factor it used and where it came from. The transfer line does not see the rock-mass structure; Lilly’s table does, but no blast in the corpus carries the joint data it asks for.'}
+      </Callout>
+      {refs('m-rock', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
 
-function Distributions({ es }: { es: boolean }) {
+function Distributions({ es }: TabProps) {
   return (
     <section>
       <h2>{es ? 'De un tamaño medio a una curva' : 'From a mean size to a curve'}</h2>
-
-      <h3>{es ? 'Dos parámetros' : 'Two parameters'}</h3>
-      <Equation
-        tex={String.raw`R(x) = \exp\!\left[-0.693\left(\frac{x}{x_{50}}\right)^{n}\right]`}
-        caption={es ? 'Fracción retenida sobre una malla x; lo que pasa es uno menos eso.' : 'Fraction retained above a mesh x; passing is one minus that.'}
-      />
       <p>
         {es
-          ? 'El 0.693 es el logaritmo natural de dos, y es lo que hace que x50 sea el tamaño al 50 por ciento pasante en vez del tamaño característico. El característico, por el que pasa el 63.2 por ciento, vale x50 dividido por 0.693 elevado a 1/n.'
-          : 'The 0.693 is the natural logarithm of two, which is what makes x50 the fifty-percent passing size rather than the characteristic size. The characteristic size, through which 63.2 percent passes, is x50 divided by 0.693 to the power 1/n.'}
-      </p>
-
-      <h3>{es ? 'Tres parámetros' : 'Three parameters'}</h3>
-      <Equation
-        tex={String.raw`P(x) = \frac{1}{1 + \left[\dfrac{\ln(x_{\max}/x)}{\ln(x_{\max}/x_{50})}\right]^{b}}`}
-        caption={es ? 'Ouchterlony 2005. x_max se toma como el mayor entre bordo y espaciamiento.' : 'Ouchterlony 2005. x_max is taken as the larger of burden and spacing.'}
-      />
-      <p>
-        {es
-          ? 'El límite superior explícito corrige la cola gruesa que la forma de dos parámetros equivoca, y la curvatura adicional corrige la rama de finos.'
-          : 'The explicit upper limit fixes the coarse tail the two-parameter form gets wrong, and the extra curvature fixes the fines branch.'}{' '}
+          ? 'Una chancadora se especifica contra el 80 por ciento pasante, un límite de sobretamaño y una fracción de finos, que son puntos de la curva lejos de la mediana. La forma de dos parámetros, Rosin-Rammler, escrita sobre el tamaño medio, da la fracción pasante y su uniformidad sale del índice de Cunningham:'
+          : 'A crusher is specified against the 80 percent passing size, an oversize limit and a fines fraction, which are points on the curve away from the median. The two-parameter Rosin-Rammler form, written on the mean size, gives the fraction passing, and its uniformity comes from Cunningham’s index:'}{' '}
         <Cite id="amoako2022" />
       </p>
-
-      <Callout variant="honest" title={es ? 'Un contraejemplo que viaja con el modelo' : 'A counter-example that travels with the model'}>
-        {es
-          ? 'La misma fuente que recomienda la forma de tres parámetros reporta un sitio donde la más simple ajustó mejor: sobre 24 tiros en una mina de bauxita medidos por análisis de imagen, el rango de la forma de dos parámetros quedó más cerca de la medición. Es más adaptable en general y no mejor en todas partes.'
-          : 'The same body of work that recommends the three-parameter form reports a site where the simpler one fitted better: over 24 blasts at one bauxite mine measured by image analysis, the two-parameter range landed closer to the measurement. It is more adaptable in general and not better everywhere.'}{' '}
-        <Cite id="babaeian2019" />
-      </Callout>
-
-      <h3>{es ? 'La composición de dos ramas' : 'The two-branch composition'}</h3>
+      <Equation
+        tex={String.raw`P(x) = 1 - \exp\!\left[-0.693\left(\frac{x}{x_{50}}\right)^{n}\right]`}
+        caption={es ? 'Amoako et al. 2022, Ec. 5. El 0.693 es ln 2, lo que hace de x50 el tamaño al 50 por ciento.' : 'Amoako et al. 2022, Eq. 5. The 0.693 is ln 2, which makes x50 the 50 percent size.'}
+      />
+      <Equation
+        tex={String.raw`n = \left(2.2 - 14\frac{B}{d}\right)\sqrt{\frac{1 + S/B}{2}}\left(1 - \frac{W}{B}\right)\left(\left|\frac{\mathrm{BCL}-\mathrm{CCL}}{L}\right| + 0.1\right)^{0.1}\frac{L}{H}`}
+        caption={es ? 'Cunningham 1987, Amoako et al. Ec. 7: B y S en m, d en mm, W desviación de perforación, L largo de carga; ×1.1 en malla trabada.' : 'Cunningham 1987, Amoako et al. Eq. 7: B and S in m, d in mm, W drilling deviation, L charge length; ×1.1 for a staggered pattern.'}
+      />
       <p>
         {es
-          ? 'Dos mecanismos actúan a la vez: la fractura por tracción produce los fragmentos gruesos y la fractura por corte en la zona triturada alrededor del barreno produce los finos. La rama gruesa es el modelo clásico; la fina modifica los parámetros de la distribución.'
-          : 'Two mechanisms act at once: tensile fracturing produces the coarse fragments and compressive-shear fracturing in the crushed zone around the hole produces the fines. The coarse branch is the classical model; the fine branch modifies the distribution’s parameters.'}
+          ? 'Dos decisiones de este producto. La carga es una columna continua de ANFO, así que el término de distribución de carga vale 0.1 elevado a 0.1 en vez de inventarse un reparto entre carga de fondo y de columna; y la desviación de perforación es cero porque ninguna fuente la publica. La trampa está en B/d: la fuente da el bordo en metros y el diámetro en milímetros, así que vale cerca de 0.027, no la razón de 27 que tabula el corpus.'
+          : 'Two decisions of this product. The charge is one continuous ANFO column, so the charge-distribution term is 0.1 to the power 0.1 rather than an invented split between bottom and column charge; and the drilling deviation is zero because no source publishes it. The trap is B/d: the source gives the burden in metres and the diameter in millimetres, so it is about 0.027, not the ratio of 27 the corpus tabulates.'}
       </p>
-
-      <Callout variant="strong" title={es ? 'La estructura tiene fuente, las constantes no' : 'The structure is sourced, the constants are not'}>
+      <p>
         {es
-          ? 'Los artículos que introdujeron estos modelos son actas de congreso que no se poseen para este trabajo; lo que sí se tiene es una descripción del mecanismo. Así que el tamaño de cruce, la uniformidad de la rama fina y la fracción de finos los fija el usuario, con valores por defecto declarados como puntos de partida plausibles y no como valores publicados. Cada curva que este modelo devuelve lleva esa distinción.'
-          : 'The papers that introduced these models are proceedings that are not held for this work; what is held is a description of the mechanism. So the crossover size, the fines-branch uniformity and the fines fraction are set by the user, with defaults stated as plausible starting values rather than published ones. Every curve this model returns carries that distinction.'}
+          ? 'La forma de tres parámetros, Swebrec, agrega un límite superior explícito, que aquí es el mayor entre bordo y espaciamiento, y una ondulación b que forma la rama de finos. Amoako y colegas escriben que es más adaptable y predice mejor los finos; Babaeian y colegas reportan una mina de bauxita, 24 tiros medidos por imágenes, donde la de dos parámetros quedó más cerca de la medición.'
+          : 'The three-parameter Swebrec form adds an explicit upper limit, here the larger of burden and spacing, and an undulation b that shapes the fines branch. Amoako and colleagues write that it is more adaptable and predicts fines better; Babaeian and colleagues report a bauxite mine, 24 blasts measured by image analysis, where the two-parameter form landed closer to the measurement.'}{' '}
+        <Cite id="ouchterlony2005" />{' '}
+        <Cite id="babaeian2019" />
+      </p>
+      <Equation
+        tex={String.raw`P(x) = \frac{1}{1 + \left[\dfrac{\ln(x_{\max}/x)}{\ln(x_{\max}/x_{50})}\right]^{b}},\qquad 0 < x < x_{\max}`}
+        caption={es ? 'Ouchterlony 2005, según Amoako et al. Ecs. 10 y 11; b = 2 por defecto, sin ajuste publicado para este corpus.' : 'Ouchterlony 2005, as printed in Amoako et al. Eqs. 10 and 11; b = 2 by default, with no published fit for this corpus.'}
+      />
+      <p>
+        {es
+          ? 'La tercera forma separa dos mecanismos: la fractura por tracción produce la fracción gruesa y la fractura por compresión y corte en la zona triturada alrededor del barreno produce los finos. La rama gruesa es la curva clásica; la fina tiene su propia uniformidad bajo un tamaño de cruce. La estructura tiene fuente; sus constantes no, porque los artículos de 1999 que las introducen son actas que no se tienen, así que el tamaño de cruce, la uniformidad y la fracción de finos los fija el usuario.'
+          : 'The third form separates two mechanisms: tensile fracturing produces the coarse fraction and compressive-shear fracturing in the crushed zone around the hole produces the fines. The coarse branch is the classical curve; the fine branch has its own uniformity below a crossover size. The structure is sourced; its constants are not, because the 1999 papers that introduce them are proceedings that are not held, so the crossover size, the uniformity and the fines fraction are set by the user.'}
+      </p>
+      <DistributionShapesDiagram />
+      <Callout variant="honest" title={es ? 'Formas sin validar' : 'Unvalidated shapes'}>
+        {es
+          ? 'Las tres formas comparten el tamaño medio de la ecuación clásica y solo difieren en la forma, así que para el tamaño medio son un predictor, no tres, y el benchmark lo cuenta una vez. Ningún conjunto disponible para este trabajo trae una curva pasante medida, de modo que ninguna forma se valida aquí; lo que validaría es un conjunto de tiros con el diseño y la curva medida por tamizado o por imágenes calibradas.'
+          : 'The three forms share the classical equation’s mean size and differ only in shape, so for the mean size they are one predictor, not three, and the benchmark counts it once. No dataset available for this work carries a measured passing curve, so no shape is validated here; what would validate one is a set of blasts with both the design and a curve measured by sieving or calibrated image analysis.'}
       </Callout>
+      {refs('m-distributions', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
 
-function Statistical({ es }: { es: boolean }) {
+function Statistical({ es, b }: TabProps) {
+  const r2010 = b?.published_reproduction['2010'] as ReproductionBlock | undefined;
+  const r2012 = b?.published_reproduction['2012'] as ReproductionBlock | undefined;
+  const F = b ? facts(b) : null;
   return (
     <section>
       <h2>{es ? 'El enrutador y las dos regresiones' : 'The router and the two regressions'}</h2>
       <p>
         {es
-          ? 'Los 97 tiros se separan por análisis de conglomerados en dos grupos: 35 de módulo alto, con media 51.14 GPa, y 62 de módulo bajo, con media 17.22 GPa. El análisis de la propia fuente muestra por qué funciona: el módulo domina la separación, y la razón espaciamiento sobre bordo no influye en absoluto en la pertenencia al grupo.'
-          : 'The 97 blasts separate by cluster analysis into two groups: 35 high-modulus blasts averaging 51.14 GPa and 62 low-modulus blasts averaging 17.22 GPa. The source’s own analysis shows why it works: the modulus dominates the split, and the spacing-to-burden ratio has no effect on group membership at all.'}{' '}
+          ? 'Hudaverdi y colegas separan los 97 tiros por análisis de conglomerados en dos grupos: 35 de módulo alto, con media de 51.14 GPa, y 62 de módulo bajo, con media de 17.22 GPa. El análisis discriminante de la fuente identifica el módulo como el separador dominante (lambda de Wilks 0.161) y encuentra que la razón espaciamiento sobre bordo no influye en la pertenencia. La función discriminante resultante es:'
+          : 'Hudaverdi and colleagues separate the 97 blasts by cluster analysis into two groups: 35 high-modulus blasts averaging 51.14 GPa and 62 low-modulus blasts averaging 17.22 GPa. The source’s discriminant analysis identifies the modulus as the dominant separator (Wilks’ lambda 0.161) and finds that the spacing-to-burden ratio has no effect on membership. The resulting discriminant function is:'}{' '}
         <Cite id="hudaverdi2010" />
       </p>
-
       <Equation
         tex={String.raw`L = 4.467\tfrac{S}{B} - 0.551\tfrac{H}{B} - 0.123\tfrac{B}{D} + 1.642\tfrac{T}{B} - 3.005\,P_f + 0.309\,X_B + 0.208\,E + 3.577`}
-        caption={es ? 'La función discriminante. Por encima de 11.821 es el grupo de módulo alto.' : 'The discriminant function. Above 11.821 is the high-modulus group.'}
+        caption={es ? 'Hudaverdi et al. 2010, Ec. 8. Grupo 1 cuando L supera 11.821, el punto medio entre los centroides.' : 'Hudaverdi et al. 2010, Eq. 8. Group 1 when L exceeds 11.821, the midpoint between the centroids.'}
       />
-
-      <Callout variant="note" title={es ? 'Se reproduce exactamente' : 'It reproduces exactly'}>
+      <p>
         {es
-          ? 'Cero errores de asignación en los 97 tiros de entrenamiento y en los 12 de validación. Los dos grupos quedan perfectamente separados, con máximo 10.318 en el grupo bajo y mínimo 13.067 en el alto. Eso importa más que la contabilidad: significa que el enrutador es una compuerta real y no una consulta de etiqueta, así que las ecuaciones por grupo funcionan sobre diseños nuevos.'
-          : 'Zero misassignments on all 97 training blasts and all 12 hold-out blasts. The two groups are perfectly separated, with a low-group maximum of 10.318 and a high-group minimum of 13.067. That matters beyond bookkeeping: it means the router is a real gate rather than a label lookup, so the group equations work on new designs.'}
-      </Callout>
-
+          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10.318 y el menor del alto, 13.067. Es una compuerta real, así que enruta diseños que no están en el corpus. Cada grupo tiene su ley de potencia, con siete exponentes:'
+          : 'It reproduces the published membership of all 109 labelled blasts with no error, and the groups do not overlap: the low group’s maximum is 10.318 and the high group’s minimum 13.067. It is a real gate, so it routes designs that are not in the corpus. Each group has its power law, with seven exponents:'}
+      </p>
+      <Equation
+        tex={String.raw`x_{50}^{(1)} = 208\left(\tfrac{S}{B}\right)^{2.788}\left(\tfrac{H}{B}\right)^{0.112}\left(\tfrac{B}{D}\right)^{0.027}\left(\tfrac{T}{B}\right)^{-0.321}P_f^{-0.360}X_B^{0.233}E^{-1.802}`}
+        caption={es ? 'Grupo 1, módulo alto, Ec. 9: R² 0.708 sobre 35 tiros, en metros.' : 'Group 1, high modulus, Eq. 9: R² 0.708 on 35 blasts, in metres.'}
+      />
+      <Equation
+        tex={String.raw`x_{50}^{(2)} = 0.60\left(\tfrac{S}{B}\right)^{0.547}\left(\tfrac{H}{B}\right)^{0.535}\left(\tfrac{B}{D}\right)^{0.427}\left(\tfrac{T}{B}\right)^{-0.101}P_f^{-0.115}X_B^{0.434}E^{-1.202}`}
+        caption={es ? 'Grupo 2, módulo bajo, Ec. 10: R² 0.739 sobre 62 tiros, en metros.' : 'Group 2, low modulus, Eq. 10: R² 0.739 on 62 blasts, in metres.'}
+      />
+      <p>
+        {es
+          ? 'Los dos coeficientes principales difieren por un factor de 347 y ambas ecuaciones devuelven metros. Parece un error de unidades y no lo es: los exponentes del módulo difieren en 0.6 sobre un rango de 9.57 a 60 GPa, y el término del módulo absorbe la diferencia. Se comprobó numéricamente antes de aceptar los coeficientes.'
+          : 'The two leading coefficients differ by a factor of 347 and both equations return metres. It looks like a unit slip and is not: the modulus exponents differ by 0.6 over a range of 9.57 to 60 GPa, and the modulus term absorbs the gap. This was checked numerically before the coefficients were accepted.'}
+      </p>
+      <p>
+        {es
+          ? `Ambos artículos imprimen estas ecuaciones y además una tabla de predicciones hechas con ellas. Recalcular las ecuaciones y puntuar sobre las mismas filas da más que las tablas: ${f(r2010?.recomputed.r2_identity)} frente a ${f(r2010?.as_published.r2_identity)} sobre los ${r2010?.n_rows ?? 'n/a'} tiros de 2010, y ${f(r2012?.recomputed.r2_identity)} frente a ${f(r2012?.as_published.r2_identity)} sobre los ${r2012?.n_rows ?? 'n/a'} de 2012. Los dos artículos imprimen cifras distintas para cinco filas pese a usar las mismas ecuaciones; el recálculo coincide con la cifra de 2010 en cuatro de ellas y nunca con la de 2012, y la quinta, Ad24, no coincide con ninguna por unos 0.02 m.`
+          : `Both papers print these equations and also a table of predictions made with them. Recomputing the equations and scoring on the same rows gives more than the tables: ${f(r2010?.recomputed.r2_identity)} against ${f(r2010?.as_published.r2_identity)} on the ${r2010?.n_rows ?? 'n/a'} blasts of 2010, and ${f(r2012?.recomputed.r2_identity)} against ${f(r2012?.as_published.r2_identity)} on the ${r2012?.n_rows ?? 'n/a'} of 2012. The two papers print different figures for five rows despite using the same equations; the recomputation matches the 2010 figure on four of them and never the 2012 one, and the fifth, Ad24, matches neither by about 0.02 m.`}{' '}
+        <Cite id="kulatilake2012" />
+      </p>
       <GroupRouterDiagram />
-
-      <h3>{es ? 'Las dos leyes de potencia' : 'The two power laws'}</h3>
-      <Equation
-        tex={String.raw`x_{50} = 208 \left(\tfrac{S}{B}\right)^{2.788}\left(\tfrac{H}{B}\right)^{0.112}\left(\tfrac{B}{D}\right)^{0.027}\left(\tfrac{T}{B}\right)^{-0.321} P_f^{-0.360} X_B^{0.233} E^{-1.802}`}
-        caption={es ? 'Grupo 1, módulo alto. R2 0.708 sobre 35 tiros.' : 'Group 1, high modulus. R2 0.708 on 35 blasts.'}
-      />
-      <Equation
-        tex={String.raw`x_{50} = 0.60 \left(\tfrac{S}{B}\right)^{0.547}\left(\tfrac{H}{B}\right)^{0.535}\left(\tfrac{B}{D}\right)^{0.427}\left(\tfrac{T}{B}\right)^{-0.101} P_f^{-0.115} X_B^{0.434} E^{-1.202}`}
-        caption={es ? 'Grupo 2, módulo bajo. R2 0.739 sobre 62 tiros.' : 'Group 2, low modulus. R2 0.739 on 62 blasts.'}
-      />
-
-      <Callout variant="note" title={es ? 'Un aparente error de unidades que no lo es' : 'An apparent unit error that is not one'}>
+      <Callout variant="honest" title={es ? 'Dentro de la muestra' : 'In sample'}>
         {es
-          ? 'Los dos coeficientes principales difieren por un factor de 347 y ambas ecuaciones devuelven metros. Parece un error y no lo es: los exponentes del módulo difieren en 0.6 sobre un rango de 9.57 a 60 GPa, y el término del módulo absorbe la diferencia. Se comprobó numéricamente antes de aceptar los coeficientes.'
-          : 'The two leading coefficients differ by a factor of 347 and both equations return metres. It looks like a slip and it is not: the modulus exponents differ by 0.6 over a range of 9.57 to 60 GPa, and the modulus term absorbs the gap. Checked numerically before the coefficients were accepted.'}
+          ? `La fuente ajustó el enrutador y las dos regresiones sobre estos mismos 97 tiros, así que ningún protocolo que parta este corpus les oculta un tiro: su ${f(F?.site('published-regression'))} con el sitio excluido es su ajuste dentro de la muestra. La prueba de transferencia de esa forma funcional es la regresión reajustada sin cada sitio, que da ${f(F?.site('refitted-regression'))}, y su evidencia fuera de la muestra son los dos conjuntos de validación publicados, de los mismos sitios.`
+          : `The source fitted the router and both regressions on these same 97 blasts, so no protocol that splits this corpus hides a blast from them: their ${f(F?.site('published-regression'))} with the site held out is their in-sample fit. The transfer test of that functional form is the regression refitted without each site, which scores ${f(F?.site('refitted-regression'))}, and its out-of-sample evidence is the two published hold-outs, from the same sites.`}
       </Callout>
-
-      <h3>{es ? 'El hallazgo' : 'The finding'}</h3>
-      <p>
-        {es
-          ? 'Ambos artículos imprimen estas ecuaciones Y una tabla de predicciones hechas con ellas. Recalcular las ecuaciones y puntuar sobre las mismas filas da un resultado materialmente mejor que cualquiera de las dos tablas: 0.854 contra el 0.747 propio del artículo de 2010, y 0.827 contra el 0.708 del de 2012. En las cuatro filas donde los dos artículos se contradicen, el recálculo cae sobre la cifra de 2010 las cuatro veces.'
-          : 'Both papers print these equations AND a table of predictions made with them. Recomputing the equations and scoring on the same rows gives a materially better result than either table: 0.854 against the 2010 paper’s own 0.747, and 0.827 against the 2012 paper’s 0.708. On the four rows where the two papers contradict each other, the recomputation lands on the 2010 figure all four times.'}{' '}
-        <Cite id="kulatilake2012" />
-      </p>
-
-      <p>
-        {es
-          ? 'Una fila no coincide con ninguno de los dos por un factor de dos, y dos modelos independientes se apartan de la fuente en la misma dirección sobre esa fila. Se probó la hipótesis de que una celda de entrada estuviera mal: ningún valor único reconcilia ambos modelos. La fila viaja con sus entradas publicadas y con su inconsistencia registrada.'
-          : 'One row matches neither by a factor of two, and two independent models disagree with the source in the same direction on that row. The hypothesis that one input cell is wrong was tested: no single value reconciles both models. The row travels with its published inputs and its inconsistency recorded.'}
-      </p>
+      {refs('m-statistical', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
 
-function Learned({ es }: { es: boolean }) {
+function Network({ es, b }: TabProps) {
+  const sweep = b?.network_seed_sweep;
+  const F = b ? facts(b) : null;
   return (
     <section>
-      <h2>{es ? 'Los modelos aprendidos' : 'The learned models'}</h2>
+      <h2>{es ? 'La red neuronal publicada' : 'The published neural network'}</h2>
       <p>
         {es
-          ? 'Tres de los cinco están completamente especificados en sus fuentes, hasta el ancho de la capa oculta, el algoritmo de entrenamiento, la normalización y los hiperparámetros. Eso los hace reproducciones y no reimplementaciones, y es lo que permite que una reproducción pueda discrepar del artículo de forma significativa.'
-          : 'Three of the five are fully specified in their sources, down to the hidden width, the training algorithm, the normalisation and the hyperparameters. That makes them reproductions rather than reimplementations, and it is what lets a reproduction disagree with a paper in a way that means something.'}{' '}
-        <Cite id="kulatilake2012" />
-        <Cite id="sui2025" />
+          ? 'Kulatilake, Hudaverdi y Wu especifican su red por completo: siete entradas, una capa oculta de unidades logísticas, una salida lineal, entrenada por separado en cada grupo de rigidez, con entradas y objetivo normalizados por mínimo y máximo. Justifican la capa oculta única con el resultado de aproximación universal de Cybenko, y eligen el algoritmo de Levenberg-Marquardt tras comparar cuatro, por su estabilidad y por llegar al mínimo en menos ciclos.'
+          : 'Kulatilake, Hudaverdi and Wu specify their network completely: seven inputs, one hidden layer of logistic units, a linear output, trained separately on each stiffness group, with inputs and target normalised by minimum and maximum. They justify the single hidden layer with Cybenko’s universal-approximation result, and choose Levenberg-Marquardt after comparing four algorithms, for its stability and for reaching the minimum in fewer cycles.'}{' '}
+        <Cite id="kulatilake2012" />{' '}
+        <Cite id="cybenko1989" />
       </p>
-
-      <h3>{es ? 'La red publicada' : 'The published network'}</h3>
-      <ul className="fr-list">
-        <li>{es ? 'siete entradas, una capa oculta, una salida lineal' : 'seven inputs, one hidden layer, one linear output'}</li>
-        <li>{es ? 'entrenada por separado en cada grupo de rigidez' : 'trained separately on each stiffness group'}</li>
-        <li>{es ? 'entradas y objetivo normalizados por mínimo y máximo' : 'inputs and target normalised by minimum and maximum'}</li>
-        <li>{es ? 'entrenamiento por Levenberg-Marquardt, elegido tras comparar cuatro algoritmos' : 'Levenberg-Marquardt training, chosen after comparing four algorithms'}</li>
-        <li>{es ? 'ancho oculto barrido de 6 a 15, ocho simulaciones en cada uno' : 'hidden width swept from 6 to 15, eight simulations at each'}</li>
-      </ul>
-
-      <Callout variant="strong" title={es ? 'La reproducción no alcanza el puntaje publicado' : 'The reproduction does not reach the published score'}>
+      <Equation
+        tex={String.raw`\hat y = \sum_{j=1}^{N} w^{(2)}_j\,\sigma\!\left(\sum_{i=1}^{7} w^{(1)}_{ij} z_i + b^{(1)}_j\right) + b^{(2)},\qquad z_i = \frac{x_i - x_i^{\min}}{x_i^{\max} - x_i^{\min}}`}
+        caption={es ? 'Paso hacia adelante 7-N-1 con normalización mín-máx (Ec. 11 de la fuente); σ es la función logística.' : 'The 7-N-1 forward pass with min-max normalisation (the source’s Eq. 11); σ is the logistic function.'}
+      />
+      <Equation
+        tex={String.raw`\left(J^{\top}J + \lambda I\right)\delta = -J^{\top} r`}
+        caption={es ? 'Paso de Levenberg-Marquardt: J jacobiano de los residuos r respecto de los pesos; λ sube si el paso empeora y baja si mejora.' : 'The Levenberg-Marquardt step: J the Jacobian of the residuals r with respect to the weights; λ rises when a step worsens the loss and falls when it improves it.'}
+      />
+      <p>
         {es
-          ? 'A lo largo de treinta semillas, la varianza explicada de la reproducción sobre el conjunto de validación publicado va de 0.167 a 0.636, con mediana cerca de 0.34. El 0.910 publicado queda por encima de todas ellas y ninguna semilla llega siquiera a 0.7. El déficit se concentra en las dos filas que la propia fuente reporta como sus más inestables, con coeficientes de variación de 0.56 y 0.76 en sus propias tablas. La afirmación es estrecha y verificable: el puntaje publicado no es robusto a la semilla.'
-          : 'Across thirty seeds, the reproduction’s variance explained on the published hold-out runs from 0.167 to 0.636, with a median near 0.34. The published 0.910 sits above every one of them and no seed reaches even 0.7. The shortfall concentrates in the two rows the source itself reports as its most unstable, with coefficients of variation of 0.56 and 0.76 in its own tables. The claim is narrow and checkable: the published score is not robust to the seed.'}
+          ? 'El ancho N se barrió de 6 a 15, el rango que permiten dos heurísticas publicadas, con ocho simulaciones por ancho; los óptimos publicados son 9 unidades en el grupo de módulo alto y 7 en el bajo, y son los que usa este producto. La arquitectura es generosa respecto de los datos: 7 unidades sobre 62 tiros son 64 parámetros libres, y 9 sobre 35 son 82. La salida de cada red se acota al rango de los objetivos de entrenamiento antes de desnormalizar, y las ocho se promedian.'
+          : 'The width N was swept from 6 to 15, the range two published heuristics allow, with eight simulations at each width; the published optima are 9 units for the high-modulus group and 7 for the low one, and those are the widths this product uses. The architecture is generous relative to the data: 7 units on 62 blasts is 64 free parameters, and 9 on 35 is 82. Each network’s output is clamped to the range of the training targets before denormalising, and the eight are averaged.'}{' '}
+        <Cite id="marquardt1963" />
+      </p>
+      <p>
+        {es
+          ? `Reproducida con su especificación sobre ${sweep?.n_seeds ?? 'n/a'} semillas, la varianza explicada en el conjunto de validación publicado va de ${f(sweep?.min)} a ${f(sweep?.max)}, con mediana ${f(sweep?.median)}. El ${f(sweep?.published)} publicado queda por encima de todas. El déficit se concentra en dos filas, las que la propia fuente reporta como sus más inestables, con coeficientes de variación de 0.56 y 0.76 entre sus ocho simulaciones.`
+          : `Reproduced to its specification over ${sweep?.n_seeds ?? 'n/a'} seeds, its variance explained on the published hold-out runs from ${f(sweep?.min)} to ${f(sweep?.max)}, with a median of ${f(sweep?.median)}. The published ${f(sweep?.published)} lies above every one. The shortfall concentrates in two rows, the two the source itself reports as its most unstable, with coefficients of variation of 0.56 and 0.76 across its eight simulations.`}
+      </p>
+      <p>
+        {es
+          ? `El acotamiento tiene una consecuencia al excluir un sitio: una red entrenada sin una campaña gruesa no puede predecir un tamaño mayor que el del tiro de entrenamiento más grueso. Las dos campañas de Reocin, las más gruesas del corpus, son donde eso pesa. Con cada sitio excluido, la red publicada explica ${f(F?.site('published-neural-net'))} de la varianza.`
+          : `The clamp has a consequence when a site is held out: a network trained without a coarse campaign cannot predict a size above the coarsest training blast. The two Reocin campaigns, the coarsest in the corpus, are where that bites. With each site held out, the published network explains ${f(F?.site('published-neural-net'))} of the variance.`}
+      </p>
+      <NetworkDiagram />
+      <Callout variant="honest" title={es ? 'Qué se afirma, y qué no' : 'What is claimed, and what is not'}>
+        {es
+          ? 'No se afirma que el resultado publicado sea falso: detalles no registrados, una inicialización o una tirada distinta de simulaciones podrían explicarlo. Lo que el barrido establece es que el puntaje publicado no es robusto a la semilla, en un método cuyo propio artículo lo muestra inestable entre anchos vecinos: en el grupo de módulo bajo, la correlación de su Tabla 7 pasa de 0.11 con seis unidades ocultas a 0.81 con siete y a 0.49 con ocho.'
+          : 'It is not claimed that the published result is wrong: unrecorded details, an initialisation scheme or a different simulation draw could account for it. What the sweep establishes is that the published score is not robust to the seed, on a method its own paper shows to be unstable between adjacent widths: in the low-modulus group, the correlation in its Table 7 goes from 0.11 with six hidden units to 0.81 with seven and 0.49 with eight.'}
       </Callout>
-
-      <p>
-        {es
-          ? 'La arquitectura es generosa respecto de los datos: siete unidades ocultas sobre 62 tiros son 64 parámetros libres, y nueve sobre 35 son 82. Ambos recuentos viajan en cada predicción.'
-          : 'The architecture is generous relative to the data: seven hidden units on 62 blasts is 64 free parameters, and nine on 35 is 82. Both counts ride on every prediction.'}
-      </p>
-
-      <h3>{es ? 'Los modelos de 2025' : 'The 2025 models'}</h3>
-      <p>
-        {es
-          ? 'Dos fuentes ajustan la regresión por vectores de soporte sobre este mismo corpus y llegan a conclusiones opuestas sobre el núcleo. Ambas se incluyen; promediarlas borraría el desacuerdo, que es la parte interesante. El bosque aleatorio, la potenciación por gradiente y el ensamble apilado se reproducen con los hiperparámetros finales publicados, incluido el sobreajuste que la propia fuente reporta, que se deja visible en vez de corregirse.'
-          : 'Two sources tune support vector regression on this same corpus and reach opposite conclusions about the kernel. Both ship; averaging them would erase the disagreement, which is the interesting part. The random forest, the gradient boosting and the stacking ensemble are reproduced with the published final hyperparameters, including the overfitting the source itself reports, which is left visible rather than corrected.'}
-      </p>
-
-      <Callout variant="note" title={es ? 'Lo que no se reprodujo, y por qué' : 'What was not reproduced, and why'}>
-        {es
-          ? 'Un híbrido de 2025 que combina una red convolucional, una máquina de vectores de soporte por mínimos cuadrados y un optimizador tipo Newton-Raphson reporta cifras fuertes sobre un superconjunto de este corpus. No se reproduce: la regla de actualización del optimizador no es transcribible con confianza desde la copia disponible, y una aproximación casera bajo ese nombre sería un método fabricado. Aparece citado con sus cifras publicadas, no como un modelo de este producto.'
-          : 'A 2025 hybrid combining a convolutional network, a least-squares support vector machine and a Newton-Raphson-based optimiser reports strong figures on a superset of this corpus. It is not reproduced: the optimiser’s update rule is not transcribable with confidence from the copy available, and a hand-rolled approximation under that name would be a fabricated method. It appears cited with its published figures, not as a model of this product.'}{' '}
-        <Cite id="huan2025" />
-      </Callout>
-
-      <LearnedFlowDiagram />
+      {refs('m-network', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
 
-function Protocol({ es }: { es: boolean }) {
+function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) {
+  const stack = corpus?.arms.stacking;
+  const weights = stack && stack.kind === 'stacking' ? stack.meta.coef : null;
+  const F = b ? facts(b) : null;
+  const pub = b?.verdict.published_random_split_figures.stacking;
   return (
     <section>
-      <h2>{es ? 'Por que el protocolo es el experimento' : 'Why the protocol is the experiment'}</h2>
+      <h2>{es ? 'Núcleos, bosques, potenciación y el ensamble' : 'Kernels, forests, boosting and the ensemble'}</h2>
       <p>
         {es
-          ? 'El estado del arte de 2025 sobre este corpus reporta una varianza explicada de 0.943 desde una partición aleatoria 80/20 de 97 filas. Diecisiete de esas filas duplican el vector de características de otra fila, así que una partición aleatoria coloca duplicados a ambos lados por construcción. El mismo artículo registra que probó validación cruzada y la quitó porque "el modelo con validación cruzada tuvo un efecto de predicción pobre sobre el conjunto de prueba", que es exactamente el síntoma que esto predice.'
-          : 'The 2025 state of the art on this corpus reports a variance explained of 0.943 from a random 80/20 split of 97 rows. Seventeen of those rows duplicate another row’s feature vector, so a random split places duplicates on both sides by construction. The same paper records that it tried cross-validation and removed it because "the cross-validated model had a poor prediction effect on the test set", which is exactly the symptom this predicts.'}{' '}
-        <Cite id="sui2025" />
+          ? 'Dos fuentes ajustan regresión por vectores de soporte sobre este mismo corpus y llegan a conclusiones opuestas sobre el núcleo. Amoako y colegas buscan en 2700 combinaciones de cuatro núcleos y eligen uno radial con C 5.25 y épsilon 0.04; Sui y colegas usan uno polinomial de grado 5 con C 1 y lo reportan como el peor de sus tres aprendices. Ambos se reproducen. La regresión es una expansión en vectores de soporte, con las entradas estandarizadas:'
+          : 'Two sources fit support-vector regression to this same corpus and reach opposite conclusions about the kernel. Amoako and colleagues search 2700 combinations of four kernels and choose a radial one with C 5.25 and epsilon 0.04; Sui and colleagues use a degree-5 polynomial with C 1 and report it as the worst of their three learners. Both are reproduced. The regression is an expansion over support vectors, with the inputs standardised:'}{' '}
+        <Cite id="amoako2022" />{' '}
+        <Cite id="sui2025" />{' '}
+        <Cite id="smola2004" />
       </p>
-
-      <ProtocolDiagram />
-
-      <h3>{es ? 'Tres protocolos' : 'Three protocols'}</h3>
-      <table className="fr-table">
-        <thead>
-          <tr>
-            <th>{es ? 'protocolo' : 'protocol'}</th>
-            <th>{es ? 'regla' : 'rule'}</th>
-            <th>{es ? 'que responde' : 'what it answers'}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{es ? 'aleatorio 80/20' : 'random 80/20'}</td>
-            <td>{es ? 'partición aleatoria con semilla' : 'seeded random partition'}</td>
-            <td>{es ? 'reproduce el protocolo publicado' : 'reproduces the published protocol'}</td>
-          </tr>
-          <tr>
-            <td>{es ? 'deduplicado' : 'deduplicated'}</td>
-            <td>{es ? 'colapsa vectores duplicados y luego parte' : 'collapse duplicate vectors, then split'}</td>
-            <td>{es ? 'aísla el efecto de los duplicados' : 'isolates the duplicate effect alone'}</td>
-          </tr>
-          <tr>
-            <td>{es ? 'dejar un sitio fuera' : 'leave one site out'}</td>
-            <td>{es ? 'una campaña completa fuera, diez pliegues' : 'a whole campaign held out, ten folds'}</td>
-            <td>{es ? 'puede llegar a una mina que no ha visto' : 'can it reach a mine it has not seen'}</td>
-          </tr>
-        </tbody>
-      </table>
-
+      <Equation
+        tex={String.raw`\hat y(\mathbf z) = \sum_{i} \alpha_i\,K(\mathbf s_i, \mathbf z) + c,\qquad K_{\mathrm{rbf}} = e^{-\gamma\lVert \mathbf s_i - \mathbf z\rVert^2},\quad K_{\mathrm{poly}} = (\gamma\,\mathbf s_i\!\cdot\!\mathbf z + c_0)^{5}`}
+        caption={es ? 'Regresión por vectores de soporte con pérdida insensible a épsilon; s vectores de soporte, α coeficientes duales.' : 'Epsilon-insensitive support-vector regression; s the support vectors, α the dual coefficients.'}
+      />
       <p>
         {es
-          ? 'El tercero es la pregunta del profesional. Las filas de una misma campaña comparten macizo rocoso, equipo de perforación, suministro de explosivo y operador de medición, y una sola cantera aporta 22 de las 97 filas.'
-          : 'The third is the practitioner’s question. Rows within one campaign share a rock mass, a drilling rig, an explosive supply and a measurement operator, and one quarry supplies 22 of the 97 rows.'}
+          ? 'El bosque aleatorio promedia árboles crecidos sobre muestras bootstrap con subconjuntos aleatorios de variables; la potenciación por gradiente suma árboles pequeños, cada uno ajustado al residuo de los anteriores, escalados por una tasa de aprendizaje. Los parámetros finales publicados son 76 árboles con semilla 27 para el bosque, y tasa 0.5 con semilla 42 para la potenciación, que la fuente misma reporta como sobreajustada.'
+          : 'The random forest averages trees grown on bootstrap samples with random subsets of the inputs; gradient boosting adds small trees, each fitted to the residual of the ones before, scaled by a learning rate. The published final parameters are 76 trees at seed 27 for the forest and a rate of 0.5 at seed 42 for the boosting, which the source itself reports as overfitting.'}{' '}
+        <Cite id="breiman2001" />{' '}
+        <Cite id="chen2016" />
       </p>
-
-      <Callout variant="honest" title={es ? 'El criterio de descarte, declarado antes de correr' : 'The kill criterion, declared before the run'}>
+      <Equation
+        tex={String.raw`\hat y_{\mathrm{RF}} = \frac{1}{M}\sum_{m=1}^{M} T_m(\mathbf z),\qquad \hat y_{\mathrm{XGB}} = b_0 + \sum_{k=1}^{K} \eta\, f_k(\mathbf z)`}
+        caption={es ? 'Bosque: promedio de M = 76 árboles. Potenciación: valor base más K árboles escalados por η = 0.5.' : 'Forest: average of M = 76 trees. Boosting: a base value plus K trees scaled by η = 0.5.'}
+      />
+      <p>
         {es
-          ? 'El nivel aprendido cuenta como generalizable entre sitios solo si la varianza explicada del mejor modelo aprendido bajo dejar-un-sitio-fuera es a la vez positiva y al menos 0.10 sobre la del modelo nulo. Ambas mitades son necesarias, y la segunda se agregó DESPUÉS de la primera corrida, porque esa corrida atrapó al criterio fallando en medir su propio objeto: entregó un mejor modelo aprendido en -0.034 contra un nulo en -0.216, y la regla declaró éxito. Una compuerta que puede aprobar con dos fracasos no es una compuerta.'
-          : 'The learned tier counts as generalising across sites only if the best learned model’s variance explained under leave-one-site-out is both positive and at least 0.10 above the null model’s. Both halves are required, and the second was added AFTER the first run, because that run caught the criterion failing to measure its own subject: it produced a best learned model at -0.034 against a null at -0.216 and the rule declared success. A gate that can pass on two failures is not a gate.'}
+          ? `El ensamble apilado combina el bosque y la potenciación con una regresión lineal. Sui y colegas escriben, al describir su construcción, que intentaron validación cruzada y la cancelaron porque el modelo resultante predecía peor en prueba. En un ensamble apilado, la validación cruzada que se puede cancelar es la que genera las entradas del combinador fuera de muestra, el paso que define el apilamiento según Wolpert; así que este producto ajusta el combinador sobre las predicciones en muestra de los dos aprendices. Ajustado así sobre todo el corpus, sus pesos son ${weights ? f(weights[1], 2) : 'n/a'} para la potenciación y ${weights ? f(weights[0], 2) : 'n/a'} para el bosque.`
+          : `The stacked ensemble combines the forest and the boosting model with a linear regression. Sui and colleagues write, while describing its construction, that they tried cross-validation and cancelled it because the resulting model predicted worse on the test set. In a stacked ensemble, the cross-validation that can be cancelled is the one that produces the combiner’s inputs out of sample, the step that defines stacking in Wolpert’s formulation; so this product fits the combiner on the two learners’ in-sample predictions. Fitted that way on the whole corpus, its weights are ${weights ? f(weights[1], 2) : 'n/a'} on the boosting model and ${weights ? f(weights[0], 2) : 'n/a'} on the forest.`}{' '}
+        <Cite id="wolpert1992" />
+      </p>
+      <Equation
+        tex={String.raw`\hat y_{\mathrm{stack}} = w_B\,\hat y_{\mathrm{XGB}} + w_F\,\hat y_{\mathrm{RF}} + c,\qquad (w_B, w_F, c) = \arg\min \sum_{i\in\mathrm{train}}\left(y_i - w_B\,\hat y_{\mathrm{XGB}}(\mathbf z_i) - w_F\,\hat y_{\mathrm{RF}}(\mathbf z_i) - c\right)^2`}
+        caption={es ? 'El combinador lineal ajustado sobre predicciones en muestra, como lo construye la fuente.' : 'The linear combiner fitted on in-sample predictions, as the source builds it.'}
+      />
+      <p>
+        {es
+          ? `Como la potenciación reproduce casi exactamente sus filas de entrenamiento, el combinador le da casi todo el peso, y el ensamble se comporta como su aprendiz de potenciación bajo todo protocolo: ${f(F?.random('stacking')?.r2_identity)} y ${f(F?.random('xgboost')?.r2_identity)} en la partición aleatoria mediana, ${f(F?.site('stacking'))} y ${f(F?.site('xgboost'))} con el sitio excluido. El 0.943 publicado para el ensamble queda por encima de ${pub ? Math.round(pub.share_of_draws_below * 100) : 'n/a'} de cada 100 reproducciones de su protocolo.`
+          : `Because the boosting model reproduces its training rows almost exactly, the combiner gives it almost all the weight, and the ensemble behaves like its boosting learner under every protocol: ${f(F?.random('stacking')?.r2_identity)} and ${f(F?.random('xgboost')?.r2_identity)} at the median random split, ${f(F?.site('stacking'))} and ${f(F?.site('xgboost'))} with the site held out. The 0.943 published for the ensemble lies above ${pub ? Math.round(pub.share_of_draws_below * 100) : 'n/a'} of 100 reproductions of its protocol.`}
+      </p>
+      <EnsembleDiagram boostingWeight={weights?.[1]} forestWeight={weights?.[0]} />
+      <Callout variant="honest" title={es ? 'Dos juegos de parámetros, y una lectura' : 'Two parameter sets, and one reading'}>
+        {es
+          ? 'La fuente imprime dos juegos de parámetros para sus aprendices: uno al afinarlos solos (bosque con semilla 1 y 50 árboles, potenciación con tasa 1.9) y el final al construir el ensamble. No dice sin ambigüedad cuál produjo sus cifras individuales de 0.797 y 0.758, así que los brazos individuales de este producto usan el final y no se presentan como reproducciones de esas dos cifras. Que la validación cruzada cancelada sea la del combinador es una lectura de este producto; la fuente no detalla el mecanismo.'
+          : 'The source prints two parameter sets for its learners: one when tuning them alone (forest at seed 1 with 50 trees, boosting at a rate of 1.9) and the final one when building the ensemble. It does not say unambiguously which produced its standalone figures of 0.797 and 0.758, so this product’s standalone arms use the final set and are not presented as reproductions of those two figures. That the cancelled cross-validation is the combiner’s is this product’s reading; the source does not spell out the mechanism.'}
       </Callout>
+      {refs('m-ensembles', es)}
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------- */
+
+function Protocols({ es, b }: TabProps) {
+  const F = b ? facts(b) : null;
+  const v = b?.verdict;
+  const classical = b?.published_reproduction.published_holdout_arms.classical;
+  return (
+    <section>
+      <h2>{es ? 'Protocolos y métricas' : 'Protocols and metrics'}</h2>
+      <p>
+        {es
+          ? `Toda predicción de este sitio se mide con la varianza explicada respecto de la línea de identidad, que penaliza el sesgo y la escala, y se acompaña de la correlación, que no los penaliza. Sobre los doce tiros de validación publicados, la columna clásica tiene una correlación al cuadrado de ${f(classical?.pearson_r2)} y una varianza explicada de ${f(classical?.r2_identity)}: la primera es la que reporta la literatura, la segunda la que un lector entiende por la palabra.`
+          : `Every prediction on this site is measured by variance explained about the identity line, which penalises bias and scale, and is shown with the correlation, which does not. On the twelve published hold-out blasts, the classical column has a squared correlation of ${f(classical?.pearson_r2)} and a variance explained of ${f(classical?.r2_identity)}: the first is what the literature reports, the second what a reader takes the word to mean.`}
+      </p>
+      <Equation
+        tex={String.raw`R^2_{\mathrm{id}} = 1 - \frac{\sum_i (y_i - \hat y_i)^2}{\sum_i (y_i - \bar y)^2},\qquad r = \frac{\sum_i (y_i - \bar y)(\hat y_i - \bar{\hat y})}{\sqrt{\sum_i (y_i - \bar y)^2\sum_i (\hat y_i - \bar{\hat y})^2}}`}
+        caption={es ? 'Varianza explicada y correlación de Pearson sobre las filas puntuadas; las abstenciones se cuentan y no se puntúan.' : 'Variance explained and Pearson correlation over the scored rows; abstentions are counted and not scored.'}
+      />
+      <p>
+        {es
+          ? `Tres protocolos parten las mismas filas. El aleatorio reproduce el publicado y el deduplicado colapsa antes los vectores repetidos; ambos se sortean ${b?.n_repeats ?? 'n/a'} veces y se informan por su mediana y sus percentiles 5 y 95. El tercero retiene una campaña completa por vez y puntúa juntas las predicciones fuera de pliegue de las diez campañas, de modo que cada tiro cuenta una vez. Retener grupos enteros es la forma de validar con datos agrupados que recomiendan Roberts y colegas.`
+          : `Three protocols split the same rows. The random one reproduces the published protocol and the deduplicated one first collapses the repeated vectors; both are drawn ${b?.n_repeats ?? 'n/a'} times and reported by their median and their 5th and 95th percentiles. The third holds out one whole campaign at a time and scores the out-of-fold predictions of all ten campaigns together, so that every blast counts once. Holding out whole groups is how Roberts and colleagues recommend validating on grouped data.`}{' '}
+        <Cite id="roberts2017" />{' '}
+        <Cite id="kapoor2023" />
+      </p>
+      <Equation
+        tex={String.raw`R^2_{\mathrm{LOSO}} = 1 - \frac{\sum_{i} \left(y_i - \hat y_i^{(-s(i))}\right)^2}{\sum_i (y_i - \bar y)^2}`}
+        caption={es ? 'Puntaje agrupado: ŷ con el superíndice −s(i) es la predicción de un modelo ajustado sin el sitio s(i) del tiro i.' : 'The pooled score: ŷ with superscript −s(i) is the prediction of a model fitted without the site s(i) of blast i.'}
+      />
+      <p>
+        {es
+          ? `El intervalo remuestrea sitios, no filas: se sortean diez sitios con reposición ${b?.n_boot ?? 'n/a'} veces, se recalcula el puntaje agrupado y se toman los percentiles 2.5 y 97.5. Remuestrear filas trataría los 22 tiros de una cantera como 22 observaciones independientes. Cada puntaje agrupado se informa además sobre dos conjuntos de filas: todos los tiros, y los ${v?.supports.geometry.n_blasts ?? 'n/a'} con geometría resoluble, que son los únicos donde responden los brazos clásicos.`
+          : `The interval resamples sites, not rows: ten sites are drawn with replacement ${b?.n_boot ?? 'n/a'} times, the pooled score is recomputed, and the 2.5th and 97.5th percentiles are taken. Resampling rows would treat the 22 blasts of one quarry as 22 independent observations. Every pooled score is also reported on two row sets: every blast, and the ${v?.supports.geometry.n_blasts ?? 'n/a'} with resolvable geometry, the only rows the classical arms can answer.`}{' '}
+        <Cite id="efron1979" />{' '}
+        <Cite id="field2007" />
+      </p>
+      <Equation
+        tex={String.raw`\left[\,q_{0.025},\ q_{0.975}\,\right]\ \text{of}\ \left\{R^2_{\mathrm{LOSO}}\big(\mathcal S^{*}_k\big)\right\}_{k=1}^{2000},\qquad \mathcal S^{*}_k \sim \text{10 sites drawn with replacement}`}
+        caption={es ? 'Intervalo por remuestreo de sitios (bootstrap por conglomerados).' : 'Site-resampled interval (a cluster bootstrap).'}
+      />
+      <p>
+        {es
+          ? `El criterio de descarte, con la redacción fija desde que la primera corrida le agregó la mitad de positividad (la historia está en Benchmark): «${b?.kill_criterion ?? ''}». Sobre todos los tiros, el mejor brazo aprendido explica ${f(v?.supports.all.best_learned_r2_identity)} y el criterio no se cumple; sobre los ${v?.supports.geometry.n_blasts ?? 'n/a'} con geometría, explica ${f(v?.supports.geometry.best_learned_r2_identity)} y se cumple. El nulo agrupado se correlaciona con las mediciones en ${f(v?.supports.all.null_pearson_r, 2)}: excluir un sitio grueso baja la media de entrenamiento, así que el nulo predice bajo justo donde la medición es alta, y el margen sobre él exagera la destreza.`
+          : `The kill criterion, in the wording fixed since the first run added its positivity half (the history is on Benchmark): “${b?.kill_criterion ?? ''}” Over every blast the best learned arm explains ${f(v?.supports.all.best_learned_r2_identity)} and the criterion is not met; over the ${v?.supports.geometry.n_blasts ?? 'n/a'} with geometry it explains ${f(v?.supports.geometry.best_learned_r2_identity)} and it is. The pooled null correlates with the measurements at ${f(v?.supports.all.null_pearson_r, 2)}: holding out a coarse site lowers the training mean, so the null predicts low exactly where the measurement is high, and the margin over it overstates skill.`}
+      </p>
+      <ProtocolDiagram
+        scores={{
+          random: F?.random('stacking')?.r2_identity,
+          dedup: F?.dedup('stacking')?.r2_identity,
+          site: F?.site('stacking'),
+          arm: es ? 'el ensamble apilado' : 'the stacked ensemble',
+        }}
+      />
+      <Callout variant="honest" title={es ? 'Lo que diez sitios pueden separar' : 'What ten sites can separate'}>
+        {es
+          ? `Fuera de los brazos ajustados por su fuente sobre este corpus, ningún intervalo queda por encima de cero: el clásico va de ${iv(F?.interval('kuznetsov'), 2, true)} y el mejor aprendido de ${iv(F?.interval(v?.supports.all.best_learned_arm ?? 'xgboost'), 2, true)}. Una diferencia entre dos brazos que no supera esos intervalos es una lectura de estimaciones puntuales, y este producto no la imprime como hallazgo.`
+          : `Outside the arms their source fitted on this corpus, no interval sits above zero: the classical arm runs ${iv(F?.interval('kuznetsov'))} and the best learned arm ${iv(F?.interval(v?.supports.all.best_learned_arm ?? 'xgboost'))}. A difference between two arms that does not clear those intervals is a reading of point estimates, and this product does not print it as a finding.`}
+      </Callout>
+      {refs('m-protocols', es)}
     </section>
   );
 }

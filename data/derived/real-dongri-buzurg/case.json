@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "2a25a79b3c40458b169a03bdfd3a0e08b7151c1ce02897860292d561610d86d6",
+ "digest": "feda836b0e7327359605acb755562ab7a9e0ab1f87924b4a3a81894d65dfc77b",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1805,6 +1805,20 @@
    "reconstructable": true
   }
  },
+ "live_models": {
+  "arms": [
+   "kuznetsov-transfer",
+   "published-neural-net",
+   "random-forest",
+   "refitted-regression",
+   "stacking",
+   "svr-rbf",
+   "xgboost"
+  ],
+  "digest": "803b4dcc8e053383f12e33721d6034fee95beee582a6b9c96e67ebfc7e98bcff",
+  "path": "models/Dongri-Buzurg.json",
+  "scope": "Dongri-Buzurg"
+ },
  "null_mean_m": 0.3025773195876289,
  "predictions": {
   "crush-zone": {
@@ -2137,6 +2151,89 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.171374
+   }
+  },
+  "kuznetsov-transfer": {
+   "Db1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.1266
+   },
+   "Db2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.138429
+   },
+   "Db3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.139111
+   },
+   "Db4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.166443
+   },
+   "Db5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.209567
+   },
+   "Db6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.220251
+   },
+   "Db7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.185141
+   },
+   "Db8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.242212
+   },
+   "Db9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.244445
    }
   },
   "published-neural-net": {
@@ -2479,7 +2576,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.4165
+    "x50_m": 0.225257
    },
    "Db2": {
     "abstained": false,
@@ -2488,7 +2585,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.422297
+    "x50_m": 0.245508
    },
    "Db3": {
     "abstained": false,
@@ -2497,7 +2594,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.408049
+    "x50_m": 0.230925
    },
    "Db4": {
     "abstained": false,
@@ -2506,7 +2603,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.426769
+    "x50_m": 0.248751
    },
    "Db5": {
     "abstained": false,
@@ -2515,7 +2612,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.436207
+    "x50_m": 0.274856
    },
    "Db6": {
     "abstained": false,
@@ -2524,7 +2621,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.455516
+    "x50_m": 0.3146
    },
    "Db7": {
     "abstained": false,
@@ -2533,7 +2630,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.435868
+    "x50_m": 0.273394
    },
    "Db8": {
     "abstained": false,
@@ -2542,7 +2639,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.468652
+    "x50_m": 0.276817
    },
    "Db9": {
     "abstained": false,
@@ -2551,7 +2648,7 @@
     "group": 2,
     "n_simulations": null,
     "reason": null,
-    "x50_m": 0.426531
+    "x50_m": 0.270503
    }
   },
   "svr-rbf": {
@@ -2805,11 +2902,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.04.004",
+  "app_version": "0.05.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.02.002"
+   "version": "0.03.000"
   },
   "held_out_site": "Dongri-Buzurg",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Dongri-Buzurg",
@@ -2828,8 +2925,8 @@
    "pearson_r2": 0.39403781517310554,
    "r2_identity": -3.889751207048648,
    "r2_identity_interval": [
-    -20.446877119009255,
-    -2.240163455843378
+    -19.876659056197152,
+    -2.27666670603835
    ],
    "r2_identity_point": -3.889751207048648,
    "rmse_m": 0.33013197565249214,
@@ -2884,8 +2981,8 @@
    "pearson_r2": 0.39403781517310554,
    "r2_identity": -3.889751207048648,
    "r2_identity_interval": [
-    -20.446877119009255,
-    -2.240163455843378
+    -19.876659056197152,
+    -2.27666670603835
    ],
    "r2_identity_point": -3.889751207048648,
    "rmse_m": 0.33013197565249214,
@@ -2927,8 +3024,8 @@
    "pearson_r2": 0.39403781517310554,
    "r2_identity": -3.889751207048648,
    "r2_identity_interval": [
-    -20.446877119009255,
-    -2.240163455843378
+    -19.876659056197152,
+    -2.27666670603835
    ],
    "r2_identity_point": -3.889751207048648,
    "rmse_m": 0.33013197565249214,
@@ -2960,6 +3057,49 @@
     }
    ]
   },
+  "kuznetsov-transfer": {
+   "bias_m": -0.2275332180465501,
+   "mae_m": 0.2275332180465501,
+   "mape_pct": 47.509596854634545,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 9,
+   "pearson_r2": 0.394037815173105,
+   "r2_identity": -2.7678653317196704,
+   "r2_identity_interval": [
+    -13.020255913169828,
+    -1.5257150234485324
+   ],
+   "r2_identity_point": -2.7678653317196704,
+   "rmse_m": 0.28979567237451326,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Db2",
+     "error_m": -0.621570883441669,
+     "error_pct": -81.78564255811435,
+     "measured_m": 0.76,
+     "predicted_m": 0.13842911655833098,
+     "site": "Dongri-Buzurg"
+    },
+    {
+     "blast_id": "Db4",
+     "error_m": -0.3835567903265241,
+     "error_pct": -69.73759824118619,
+     "measured_m": 0.55,
+     "predicted_m": 0.16644320967347595,
+     "site": "Dongri-Buzurg"
+    },
+    {
+     "blast_id": "Db1",
+     "error_m": -0.31339970842277787,
+     "error_pct": -71.22720645972224,
+     "measured_m": 0.44,
+     "predicted_m": 0.1266002915772221,
+     "site": "Dongri-Buzurg"
+    }
+   ]
+  },
   "null": {
    "bias_m": -0.11075601374570443,
    "mae_m": 0.1296792668957617,
@@ -2970,8 +3110,8 @@
    "pearson_r2": null,
    "r2_identity": -0.5503591786019342,
    "r2_identity_interval": [
-    -2.3933385266017964,
-    -0.09813663511706094
+    -2.391166735853729,
+    -0.10292143568396724
    ],
    "r2_identity_point": -0.5503591786019342,
    "rmse_m": 0.185891859611247,
@@ -3013,8 +3153,8 @@
    "pearson_r2": 0.016471123783595276,
    "r2_identity": -1.0928806444188255,
    "r2_identity_interval": [
-    -5.065674580844269,
-    -0.4358022190265265
+    -4.919813363515206,
+    -0.45420957319546923
    ],
    "r2_identity_point": -1.0928806444188255,
    "rmse_m": 0.21598144397414648,
@@ -3056,8 +3196,8 @@
    "pearson_r2": 0.05456658522428108,
    "r2_identity": -0.15364577543751445,
    "r2_identity_interval": [
-    -3.1044928365859024,
-    0.1825668735764927
+    -3.014177697459544,
+    0.16968184240518266
    ],
    "r2_identity_point": -0.15364577543751445,
    "rmse_m": 0.16035424068562334,
@@ -3099,8 +3239,8 @@
    "pearson_r2": 0.0037763103158338644,
    "r2_identity": -2.606836336170695,
    "r2_identity_interval": [
-    -13.759726738461186,
-    -1.4442998667952227
+    -13.434453343445593,
+    -1.4511633515612328
    ],
    "r2_identity_point": -2.606836336170695,
    "rmse_m": 0.2835354904369394,
@@ -3142,8 +3282,8 @@
    "pearson_r2": 0.03572895272028197,
    "r2_identity": -0.9315137145645698,
    "r2_identity_interval": [
-    -4.588373629959547,
-    -0.3910250745428636
+    -4.58764509420725,
+    -0.3910909390623533
    ],
    "r2_identity_point": -0.9315137145645698,
    "rmse_m": 0.20748805886434707,
@@ -3176,44 +3316,44 @@
    ]
   },
   "stacking": {
-   "bias_m": 0.019598688390283434,
-   "mae_m": 0.1272507666766511,
-   "mape_pct": 33.48830002140901,
+   "bias_m": -0.1510431612353459,
+   "mae_m": 0.16984313948711469,
+   "mape_pct": 35.87019247745684,
    "n_abstained": 0,
    "n_extrapolated": 0,
    "n_scored": 9,
-   "pearson_r2": 0.14780858079419912,
-   "r2_identity": -0.12385839104700391,
+   "pearson_r2": 0.298467091994398,
+   "r2_identity": -1.2448379974009063,
    "r2_identity_interval": [
-    -3.7649219311825863,
-    -0.033914732427984706
+    -5.263673151177532,
+    -0.6559469941060045
    ],
-   "r2_identity_point": -0.12385839104700391,
-   "rmse_m": 0.15827051148237348,
+   "r2_identity_point": -1.2448379974009063,
+   "rmse_m": 0.22368492282142005,
    "scoreable": true,
    "worst_rows": [
     {
      "blast_id": "Db2",
-     "error_m": -0.33770342186627816,
-     "error_pct": -44.434660771878704,
+     "error_m": -0.514491546682374,
+     "error_pct": -67.69625614241762,
      "measured_m": 0.76,
-     "predicted_m": 0.42229657813372184,
+     "predicted_m": 0.24550845331762602,
      "site": "Dongri-Buzurg"
     },
     {
-     "blast_id": "Db6",
-     "error_m": 0.22551605986828469,
-     "error_pct": 98.05046081229769,
-     "measured_m": 0.23,
-     "predicted_m": 0.4555160598682847,
+     "blast_id": "Db4",
+     "error_m": -0.3012486424168163,
+     "error_pct": -54.772480439421145,
+     "measured_m": 0.55,
+     "predicted_m": 0.24875135758318373,
      "site": "Dongri-Buzurg"
     },
     {
-     "blast_id": "Db9",
-     "error_m": 0.13653069232224346,
-     "error_pct": 47.07954907663568,
-     "measured_m": 0.29,
-     "predicted_m": 0.42653069232224344,
+     "blast_id": "Db1",
+     "error_m": -0.21474331147219416,
+     "error_pct": -48.80529806186231,
+     "measured_m": 0.44,
+     "predicted_m": 0.22525668852780584,
      "site": "Dongri-Buzurg"
     }
    ]
@@ -3228,8 +3368,8 @@
    "pearson_r2": 0.4131689770410601,
    "r2_identity": -1.799252569686669,
    "r2_identity_interval": [
-    -8.225059407837755,
-    -1.0224489159175416
+    -8.201127574467518,
+    -1.0271557095483586
    ],
    "r2_identity_point": -1.799252569686669,
    "rmse_m": 0.24978436599932125,
@@ -3271,8 +3411,8 @@
    "pearson_r2": 0.39403781517310554,
    "r2_identity": -3.889751207048648,
    "r2_identity_interval": [
-    -20.446877119009255,
-    -2.240163455843378
+    -19.876659056197152,
+    -2.27666670603835
    ],
    "r2_identity_point": -3.889751207048648,
    "rmse_m": 0.33013197565249214,
@@ -3314,8 +3454,8 @@
    "pearson_r2": 0.2992293757026419,
    "r2_identity": -1.2649619838096635,
    "r2_identity_interval": [
-    -5.4136502837399005,
-    -0.6663584443849457
+    -5.332046951176487,
+    -0.6685529032196459
    ],
    "r2_identity_point": -1.2649619838096635,
    "rmse_m": 0.22468530435854267,
@@ -3389,6 +3529,16 @@
    "spacing-wide": 0.13427797847942913,
    "stemming-long": 0.13025905408536856
   },
+  "kuznetsov-transfer": {
+   "base": 0.18580011528678322,
+   "blocky": 0.18580011528678322,
+   "burden-tight": 0.17129924230566418,
+   "burden-wide": 0.1992484260080095,
+   "powder-down": 0.2229327357951974,
+   "powder-up": 0.1573554741750526,
+   "spacing-wide": 0.19153266586446474,
+   "stemming-long": 0.18580011528678322
+  },
   "published-neural-net": {
    "base": 0.2627790868668048,
    "blocky": 0.2684560970270185,
@@ -3430,14 +3580,14 @@
    "stemming-long": 0.264588400694816
   },
   "stacking": {
-   "base": 0.4329320217236168,
-   "blocky": 0.4379511580056749,
-   "burden-tight": 0.4330574270219858,
-   "burden-wide": 0.4284668488011112,
-   "powder-down": 0.44101382234171116,
-   "powder-up": 0.42357838115692514,
-   "spacing-wide": 0.43361304179067234,
-   "stemming-long": 0.43385958025552757
+   "base": 0.26229017209798744,
+   "blocky": 0.27904032219926367,
+   "burden-tight": 0.26132854670668365,
+   "burden-wide": 0.2530763397523931,
+   "powder-down": 0.2817430357796994,
+   "powder-up": 0.24440012791981683,
+   "spacing-wide": 0.26442773528303015,
+   "stemming-long": 0.26230783483534875
   },
   "svr-rbf": {
    "base": 0.23810265364193178,
