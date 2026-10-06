@@ -34,6 +34,7 @@ import type { CaseArtifact, Lang } from '../lib/contract.types';
 import { notAvailable, num, value } from '../lib/format';
 import { DistributionChart, LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import { AbstentionPanel, DecisionPanel, ProvenancePanel, SimulationSpread, TierBadge } from '../viz/Panels';
+import { fitLabel, textWidth, ticksFor, useWidth, widestLabel } from '../viz/text';
 import { provenanceOf, type DistributionView, type Selection } from './model';
 
 const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
@@ -42,6 +43,15 @@ const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
 function StageBox({ width, height, children }: { width: number; height: number; children: React.ReactNode }) {
   return (
     <div className="fr-stagebox" style={{ width, height }}>
+      {children}
+    </div>
+  );
+}
+
+/** A stage's contents that scroll inside it, for a stage too short to hold them all at a readable size. */
+function ScrollBox({ width, height, children }: { width: number; height: number; children: React.ReactNode }) {
+  return (
+    <div className="fr-scrolly" style={{ width, height }}>
       {children}
     </div>
   );
@@ -243,42 +253,51 @@ function answering(sel: Selection): string[] {
 /** Variance explained per model on this case, drawn: the ranking the table lists, at a glance. */
 function RankingChart({ artifact, rows, selected }: { artifact: CaseArtifact; rows: string[]; selected: string }) {
   const lang = useShellLang();
-  const W = 600;
+  // Laid out at the width it is given. A fixed 600-unit drawing scaled into a phone's column set its labels at
+  // about five pixels.
+  const [ref, measured] = useWidth<HTMLDivElement>();
+  const W = measured || 600;
   const rowH = 18;
-  const left = 230;
+  const px = 11;
+  const labels = rows.map((arm) => ARM_BY_ID.get(arm)?.label[lang] ?? arm);
+  const fitted = labels.map((label) => fitLabel(label, Math.max(60, Math.round(W * 0.45) - 8), px, 1));
+  const left = Math.min(W * 0.45, Math.ceil(widestLabel(fitted.map((f) => f.lines[0]), px)) + 8);
   const H = rows.length * rowH + 26;
   // Clipped to [-1, 1]: a refit at -10^5 would flatten every other bar to nothing; its value is in the table.
   const x = (v: number) => left + ((Math.max(-1, Math.min(1, v)) + 1) / 2) * (W - left - 12);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={t(lang, 'Variance explained per model', 'Varianza explicada por modelo')} data-chart="ranking" data-chart-bars={rows.length}>
-      <line x1={x(0)} y1={4} x2={x(0)} y2={H - 20} stroke="var(--color-fg-subtle)" />
-      {[-1, -0.5, 0, 0.5, 1].map((v) => (
-        <text key={v} x={x(v)} y={H - 6} textAnchor="middle" fontSize={10} fill="var(--color-fg-faint)">{num(v, 1)}</text>
-      ))}
-      {rows.map((arm, i) => {
-        const value = artifact.scores[arm]?.r2_identity;
-        const y = 4 + i * rowH;
-        const clipped = typeof value === 'number' && (value < -1 || value > 1);
-        return (
-          <g key={arm}>
-            <text x={left - 8} y={y + 12} textAnchor="end" fontSize={11} fill={arm === selected ? 'var(--color-accent)' : 'var(--color-fg-subtle)'}>
-              {ARM_BY_ID.get(arm)?.label[lang] ?? arm}
-            </text>
-            {typeof value === 'number' ? (
-              <rect
-                x={Math.min(x(0), x(value))}
-                y={y + 3}
-                width={Math.max(1, Math.abs(x(value) - x(0)))}
-                height={rowH - 6}
-                fill={value > 0 ? 'var(--color-good)' : 'var(--color-bad)'}
-                opacity={arm === selected ? 1 : 0.65}
-              />
-            ) : null}
-            {clipped ? <text x={value! < 0 ? x(-1) + 4 : x(1) - 4} y={y + 12} fontSize={10} textAnchor={value! < 0 ? 'start' : 'end'} fill="var(--color-bg)">{value! < 0 ? '<' : '>'}</text> : null}
-          </g>
-        );
-      })}
-    </svg>
+    <div ref={ref} className="fr-ranking">
+      <svg width={W} height={H} role="img" aria-label={t(lang, 'Variance explained per model', 'Varianza explicada por modelo')} data-chart="ranking" data-chart-bars={rows.length}>
+        <line x1={x(0)} y1={4} x2={x(0)} y2={H - 20} stroke="var(--color-fg-subtle)" />
+        {[-1, -0.5, 0, 0.5, 1].map((v) => (
+          <text key={v} x={x(v)} y={H - 6} textAnchor="middle" fontSize={10} fill="var(--color-fg-faint)">{num(v, 1)}</text>
+        ))}
+        {rows.map((arm, i) => {
+          const value = artifact.scores[arm]?.r2_identity;
+          const y = 4 + i * rowH;
+          const clipped = typeof value === 'number' && (value < -1 || value > 1);
+          return (
+            <g key={arm}>
+              <text x={left - 8} y={y + 12} textAnchor="end" fontSize={px} fill={arm === selected ? 'var(--color-accent)' : 'var(--color-fg-subtle)'}>
+                {fitted[i].shortened ? <title>{labels[i]}</title> : null}
+                {fitted[i].lines[0]}
+              </text>
+              {typeof value === 'number' ? (
+                <rect
+                  x={Math.min(x(0), x(value))}
+                  y={y + 3}
+                  width={Math.max(1, Math.abs(x(value) - x(0)))}
+                  height={rowH - 6}
+                  fill={value > 0 ? 'var(--color-good)' : 'var(--color-bad)'}
+                  opacity={arm === selected ? 1 : 0.65}
+                />
+              ) : null}
+              {clipped ? <text x={value! < 0 ? x(-1) + 4 : x(1) - 4} y={y + 12} fontSize={10} textAnchor={value! < 0 ? 'start' : 'end'} fill="var(--color-bg)">{value! < 0 ? '<' : '>'}</text> : null}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
   );
 }
 
@@ -301,12 +320,21 @@ function AllModelsChart({ sel }: { sel: Selection }) {
   return (
     <Stage label={title}>
       {({ width, height }) => {
-        // The legend wraps under the plot: reserve its rows (an entry is its label plus its swatch and gap), the axis
-        // title and the readout. On a stage too short for both, the plot keeps a readable height and the legend
-        // scrolls into view inside the stage instead of being cut by the card.
-        const longest = Math.max(...series.map((x) => x.label.length));
-        const perRow = Math.max(1, Math.floor(width / (longest * 6.6 + 44)));
-        const legendRows = Math.ceil(series.length / perRow);
+        // The legend wraps under the plot: its rows are packed from the entries' measured widths (swatch, gap,
+        // label, padding), and the plot takes what the legend, the readout and the frame leave. A fixed width per
+        // character over-reserved, and left a band of empty card under the readout. On a stage too short for both,
+        // the plot keeps a readable height and the legend scrolls into view inside the stage.
+        let legendRows = 1;
+        let line = 0;
+        for (const s of series) {
+          const entry = 14 + 5 + textWidth(s.label, 11.52) + 14;
+          if (line > 0 && line + 10 + entry > width - 26) {
+            legendRows += 1;
+            line = entry;
+          } else {
+            line += (line > 0 ? 10 : 0) + entry;
+          }
+        }
         return (
           <div className="fr-scrolly" style={{ width, height }}>
             <LineChart
@@ -314,7 +342,7 @@ function AllModelsChart({ sel }: { sel: Selection }) {
               series={series}
               xLabel={t(lang, 'design of the case, in order', 'diseño del caso, en orden')}
               yLabel={t(lang, 'predicted x50, cm', 'x50 predicho, cm')}
-              height={Math.max(180, height - 80 - legendRows * 32)}
+              height={Math.max(180, height - 62 - legendRows * 25)}
               legend
               xTicks={index}
               xTickFormat={(v) => blasts[Math.round(v) - 1]?.blast_id ?? ''}
@@ -457,8 +485,13 @@ function CurvesView({ sel }: { sel: Selection }) {
       }}
     >
       <Stage label={title}>
-        {({ width, height }) => (
-          <StageBox width={width} height={height}>
+        {({ width, height }) => {
+          // On a short or narrow stage (a phone, where the shell gives a view a fixed height) the curve keeps a
+          // readable height and its key and percentiles scroll under it; cut by the card, they lost their last items.
+          const compact = height < 420 || width < 640;
+          const Box = compact ? ScrollBox : StageBox;
+          return (
+          <Box width={width} height={height}>
             <DistributionChart
               sizesM={GRID}
               series={series}
@@ -469,7 +502,7 @@ function CurvesView({ sel }: { sel: Selection }) {
               ]}
               measured={measured}
               sizeMarkers={[{ sizeM: sel.design.XB_m, label: t(lang, 'in-situ block', 'bloque in situ') }]}
-              height={Math.max(200, height - 84)}
+              height={compact ? 240 : Math.max(200, height - 84)}
             />
             {/* The live percentiles of the classical curve, under the curve they are read from. */}
             <p className="fr-readout" data-readout="percentiles">
@@ -480,8 +513,9 @@ function CurvesView({ sel }: { sel: Selection }) {
               <span className="fr-readout-item">{t(lang, 'uniformity', 'uniformidad')} <b>{num(curves.n, 2)}</b></span>
               <span className="fr-readout-item">{t(lang, 'passing 10 mm', 'pasa 10 mm')} <b>{num(passingAt(curves.classical, 0.01) * 100, 1)} %</b></span>
             </p>
-          </StageBox>
-        )}
+          </Box>
+          );
+        }}
       </Stage>
     </PlotCard>
   );
@@ -531,8 +565,8 @@ function DecideView({ sel }: { sel: Selection }) {
     >
       {decided ? (
         <Stage label={title}>
-          {({ width, height }) => (
-            <StageBox width={width} height={height}>
+          {({ width, height }) => {
+            const chart = (minHeight: number) => (
               <DistributionChart
                 sizesM={GRID}
                 series={[{ id: 'selected', label: ARM_BY_ID.get(sel.armId)?.label[lang] ?? sel.armId, values: decided.curve.passing }]}
@@ -541,8 +575,10 @@ function DecideView({ sel }: { sel: Selection }) {
                   { sizeM: target, label: t(lang, 'target P80', 'P80 objetivo') },
                   { sizeM: oversize, label: t(lang, 'oversize limit', 'límite de sobretamaño') },
                 ]}
-                height={Math.max(180, height - 210)}
+                height={minHeight}
               />
+            );
+            const decision = (
               <DecisionPanel
                 inputs={{
                   targetP80M: target,
@@ -554,8 +590,29 @@ function DecideView({ sel }: { sel: Selection }) {
                   armId: sel.armId,
                 }}
               />
-            </StageBox>
-          )}
+            );
+            // From a tablet's width: the decision beside the curve, so the curve keeps the stage's height. Stacked,
+            // the panel took 243 of 490 px at 1280x800 and left the curve about 115 px, and a reserve of 210 px for it
+            // had run the canvas out of its frame. On a phone the decision goes under the curve and both scroll.
+            if (width >= 600) {
+              return (
+                <div className="fr-stagebox" style={{ width, height, flexDirection: 'row', gap: 12 }}>
+                  {chart(180)}
+                  <div className="fr-scrolly" style={{ width: Math.min(400, Math.round(width * 0.42)), flex: 'none' }}>
+                    {decision}
+                  </div>
+                </div>
+              );
+            }
+            const compact = height < 420 || width < 640;
+            const Box = compact ? ScrollBox : StageBox;
+            return (
+              <Box width={width} height={height}>
+                {chart(compact ? 220 : 180)}
+                {decision}
+              </Box>
+            );
+          }}
         </Stage>
       ) : (
         <p className="fr-note fr-note-warn">
@@ -729,20 +786,27 @@ export function CompareView({ sel, onVariant }: { sel: Selection; onVariant: (id
     >
       <Stage label={title}>
         {({ width, height }) => {
-          const left = Math.min(260, width * 0.38);
+          const px = 11.5;
+          const labels = variants.map((v) => v.label[lang]);
+          const rowH = Math.max(22, (height - 52) / Math.max(1, variants.length));
+          const room = Math.max(60, Math.round(width * 0.45) - 14);
+          const fitted = labels.map((label) => fitLabel(label, room, px, rowH >= 30 ? 2 : 1));
+          const left = Math.min(width * 0.45, Math.max(90, Math.ceil(Math.max(...fitted.map((f) => widestLabel(f.lines, px)))) + 14));
           const right = width - 16;
-          const rowH = Math.max(22, (height - 40) / Math.max(1, variants.length));
           const x = (v: number) => left + (Math.min(v, hi) / hi) * (right - left);
-          const ticks = [0, hi / 4, hi / 2, (3 * hi) / 4];
+          const ticks = ticksFor(hi * 100, right - left, textWidth(num(hi * 100, 0), 11)).map((cm) => cm / 100);
           const bottom = 12 + variants.length * rowH;
           return (
             <svg width={width} height={height} role="img" aria-label={pick(title, lang)} data-chart="variants" data-chart-rows={variants.length} data-chart-dots={values.length}>
               {ticks.map((v) => (
                 <g key={v}>
                   <line x1={x(v)} y1={8} x2={x(v)} y2={bottom} stroke="var(--color-border)" strokeDasharray="2 4" />
-                  <text x={x(v)} y={bottom + 16} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">{`${num(v * 100, 0)} cm`}</text>
+                  <text x={x(v)} y={bottom + 15} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">{num(v * 100, 0)}</text>
                 </g>
               ))}
+              <text x={(left + right) / 2} y={bottom + 31} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">
+                {t(lang, 'mean predicted x50, cm', 'x50 medio predicho, cm')}
+              </text>
               {typeof base === 'number' ? <line x1={x(base)} y1={8} x2={x(base)} y2={bottom} stroke="var(--color-fg-subtle)" strokeWidth={1.5} /> : null}
               {variants.map((v, i) => {
                 const cy = 12 + i * rowH + rowH / 2;
@@ -751,11 +815,30 @@ export function CompareView({ sel, onVariant }: { sel: Selection; onVariant: (id
                 return (
                   <g key={v.id} onClick={() => onVariant(v.id)} style={{ cursor: 'pointer' }}>
                     <rect x={0} y={cy - rowH / 2} width={width} height={rowH} fill={on ? 'var(--color-accent-soft)' : 'transparent'} />
-                    <text x={left - 10} y={cy + 4} fill="var(--color-fg)" fontSize={11.5} textAnchor="end">{v.label[lang]}</text>
+                    <text x={left - 10} y={fitted[i].lines.length === 2 ? cy - 3 : cy + 4} fill="var(--color-fg)" fontSize={px} textAnchor="end">
+                      {fitted[i].shortened ? <title>{labels[i]}</title> : null}
+                      {fitted[i].lines.map((line, k) => (
+                        <tspan key={k} x={left - 10} dy={k === 0 ? 0 : 13}>
+                          {line}
+                        </tspan>
+                      ))}
+                    </text>
                     {typeof val === 'number' ? (
                       <>
                         <circle cx={x(val)} cy={cy} r={5.5} fill={v.id === 'base' ? 'var(--color-fg-subtle)' : 'var(--color-accent)'} />
-                        <text x={Math.min(right - 40, x(val) + 10)} y={cy + 4} fill="var(--color-fg-subtle)" fontSize={10.5}>
+                        {/* A halo in the card's colour, so the baseline that crosses a value does not cross out its digits;
+                            a value at the plot's end goes left of its dot, which a label beside it would cover. */}
+                        <text
+                          x={x(val) + 52 > right ? x(val) - 10 : x(val) + 10}
+                          y={cy + 4}
+                          textAnchor={x(val) + 52 > right ? 'end' : 'start'}
+                          fill="var(--color-fg-subtle)"
+                          fontSize={10.5}
+                          paintOrder="stroke"
+                          stroke="var(--color-surface)"
+                          strokeWidth={3}
+                          strokeLinejoin="round"
+                        >
                           {typeof base === 'number' && base > 0 && v.id !== 'base' ? `${val >= base ? '+' : ''}${num((val / base - 1) * 100, 1)} %` : formatSize(val)}
                         </text>
                       </>

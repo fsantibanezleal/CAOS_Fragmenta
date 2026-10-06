@@ -1110,3 +1110,33 @@
   min-height: 0;
   overflow-y: auto;
 }
+
+/* The ranking of the models is laid out at the width it is given (a scaled drawing set its labels at five pixels
+ * on a phone). */
+.fr-ranking {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Against a target: the decision keeps its height and the chart above it takes what is left. */
+.fr-stagebox > .fr-panel {
+  flex: none;
+}
+
+/* On a phone the model comparison needs every pixel of its card: tighter cells keep its last column inside. */
+@media (max-width: 480px) {
+  .fr-armtable .fr-table th,
+  .fr-armtable .fr-table td {
+    padding-inline: 3px;
+  }
+}
+
+/* The readout's fixed height keeps a desktop instrument the same in both languages. Below 900 px the shell stacks
+ * the views and the page scrolls, and a fixed row hid what wrapped: on a phone the curves' P80 and uniformity. */
+@media (max-width: 900px) {
+  .fr-readout {
+    height: auto;
+    min-height: 28px;
+  }
+}
+

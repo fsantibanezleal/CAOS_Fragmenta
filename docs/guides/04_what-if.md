@@ -13,7 +13,7 @@ blast design a design problem, where a tighter burden can pay for a wider spacin
 | The response surface | the selected model's P80 (or mean size x50) on a 41 by 41 grid of burden-to-diameter and spacing-to-burden ratios spanning the corpus envelope, the other ratios and the hole diameter held at the design in the rail; iso-lines at the crusher's target P80 and the oversize limit (or, for x50, at the measured size); the design as a marker you drag |
 | Every model on this design | one row per model: a filled dot at the live prediction for the design, a ring at the baked prediction for the blast as fired, a line at the measured size while the design is the blast as fired; a model that refuses says why in place of a dot |
 | The bench | the blast as fired, reconstructed in 3D from the published ratios and the hole diameter of the source's prose; it does not redraw for a changed design |
-| The rail | the bench height and stemming ratios and the hole diameter (Geometry), the powder factor, in-situ block and modulus and what the map shows (Charge), the model and the blast (Model) |
+| The rail | the bench height and stemming ratios and the hole diameter (Bench), the powder factor, in-situ block and modulus and what the map shows (Charge), the model and the blast (Model) |
 
 The case's design variants (burden 15 percent tighter, powder factor 30 percent higher, and so on)
 set the design the group starts from; "Compare the variants" shows the baked response to each.

@@ -376,7 +376,7 @@ export const FEATURE_LABEL: Record<string, Record<Lang, string>> = {
   H_over_B: { en: 'Bench height / burden', es: 'Altura de banco / bordo' },
   B_over_D: { en: 'Burden / hole diameter', es: 'Bordo / diámetro' },
   T_over_B: { en: 'Stemming / burden', es: 'Taco / bordo' },
-  Pf_kg_m3: { en: 'Powder factor, kg/m3', es: 'Factor de carga, kg/m3' },
+  Pf_kg_m3: { en: 'Powder factor, kg/m³', es: 'Factor de carga, kg/m³' },
   XB_m: { en: 'In situ block size, m', es: 'Tamaño de bloque in situ, m' },
   E_GPa: { en: 'Young modulus, GPa', es: 'Módulo de Young, GPa' },
 };
