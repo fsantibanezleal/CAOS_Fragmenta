@@ -1,10 +1,10 @@
 /**
  * The design response surface: one arm's predicted size over the burden and spacing plane.
  *
- * The What if views move one lever at a time, which cannot show the interaction that makes blast design a design
+ * The variants move one lever at a time, which cannot show the interaction that makes blast design a design
  * problem: a tighter burden can buy a wider spacing at the same size. Here the grid spans the corpus envelope of the
  * burden-to-diameter and spacing-to-burden ratios, every other ratio and the hole diameter held at the current
- * design, and every cell is `answerOnDesign`, the same engine the What if views run. A cell that is not a blast, or
+ * design, and every cell is `answerOnDesign`, the same engine the every-model view runs. A cell that is not a blast, or
  * whose prediction leaves the plausible range, is empty and keeps its reason (requirements RS-001 to RS-003, RS-006).
  *
  * Iso-lines are traced by marching squares over the cell values, with linear interpolation along each edge; a level

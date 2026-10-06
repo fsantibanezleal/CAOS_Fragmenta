@@ -1,7 +1,7 @@
 /**
  * A blast design, and every arm's answer on it, computed in the browser.
  *
- * One function answers for every arm, so the What if views and the response surface are the same engine: the
+ * One function answers for every arm, so the every-model view and the response surface are the same engine: the
  * closed forms recompute in TypeScript (`live.ts`), and the fitted arms walk the case's own models file, the models
  * fitted without the case's campaign (`learned.ts`). A changed design has not been fired, so nothing computed here is
  * a score.

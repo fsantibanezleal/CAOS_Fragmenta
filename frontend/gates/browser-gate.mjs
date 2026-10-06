@@ -21,7 +21,8 @@
 //   - every chart on screen DECLARES what it drew, and the declaration is non-zero. The renderer
 //     sets data-chart-* itself, because sampling pixels cannot tell an empty canvas from a canvas
 //     that never mounted;
-//   - the workbench opens all six tabs and each one renders the panels it owns;
+//   - the workbench opens every group and sub-tab and each one renders the views it owns; the Design
+//     group's surface declares its grid and cells, and moving its marker moves the distribution (0.07.000);
 //   - the idle page is at rest: no chart rebuilding itself when nobody is touching it;
 //   - on every documentation route, the footer is ONE line at 1600 px (ADR-0016 section 2), and
 //     every sub-tab is opened by a pointer click and every figure in it MEASURED: no text on another
@@ -719,13 +720,23 @@ for (const [w, h] of VIEWPORTS) {
         };
         const before = await percentiles();
         await groupTabs.nth(TABS.indexOf('design')).click();
+        await page.waitForTimeout(700);
+        // The group keeps its open sub-tab, and the walk above left it on the bench: open the surface, its first.
+        const surfaceTab = page.locator('[data-instrument] [role="tabpanel"] [role="tablist"] [role="tab"]').first();
+        if (await surfaceTab.count()) await surfaceTab.click();
         await page.waitForTimeout(900);
         const surface = page.locator('[data-chart="surface"]').first();
-        const declared = await surface.evaluate((el) => ({
-          grid: Number(el.getAttribute('data-chart-grid')),
-          cells: Number(el.getAttribute('data-chart-cells')),
-          empty: Number(el.getAttribute('data-chart-empty')),
-        })).catch(() => null);
+        const declared = await surface
+          .evaluate(
+            (el) => ({
+              grid: Number(el.getAttribute('data-chart-grid')),
+              cells: Number(el.getAttribute('data-chart-cells')),
+              empty: Number(el.getAttribute('data-chart-empty')),
+            }),
+            null,
+            { timeout: 5000 },
+          )
+          .catch(() => null);
         if (!declared) fail(where, 'the Design group draws no response surface');
         else if (declared.cells + declared.empty !== declared.grid ** 2)
           fail(where, `the surface declares ${declared.cells} drawn and ${declared.empty} empty cells on a ${declared.grid}x${declared.grid} grid`);
