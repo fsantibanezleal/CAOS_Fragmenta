@@ -622,7 +622,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "fine, 0.14 to 0.22 m measured",
-   "es": "fina, 0.14 a 0.22 m medidos"
+   "es": "fina, 0,14 a 0,22 m medidos"
   },
   "id": "real-akdaglar",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -638,7 +638,7 @@
   }
  },
  "controls": {},
- "digest": "2fb071772e14ed31c3d0d953d2a734b824e6133ac33c07a06133f95f6bcbfabf",
+ "digest": "a026642439108e1e4d0db9ce10493408f244b547b82b87cbd42627dbbf4afe91",
  "distributions": {
   "crush-zone": {
    "constants_published": false,

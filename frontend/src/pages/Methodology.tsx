@@ -333,7 +333,7 @@ function Statistical({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10,318 y el menor del alto, 13.067. Es una compuerta real, así que enruta diseños que no están en el corpus. Cada grupo tiene su ley de potencia, con siete exponentes:'
+          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10,318 y el menor del alto, 13,067. Es una compuerta real, así que enruta diseños que no están en el corpus. Cada grupo tiene su ley de potencia, con siete exponentes:'
           : 'It reproduces the published membership of all 109 labelled blasts with no error, and the groups do not overlap: the low group’s maximum is 10.318 and the high group’s minimum 13.067. It is a real gate, so it routes designs that are not in the corpus. Each group has its power law, with seven exponents:'}
       </p>
       <Equation
@@ -448,7 +448,7 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
       </p>
       <Equation
         tex={String.raw`\hat y_{\mathrm{RF}} = \frac{1}{M}\sum_{m=1}^{M} T_m(\mathbf z),\qquad \hat y_{\mathrm{XGB}} = b_0 + \sum_{k=1}^{K} \eta\, f_k(\mathbf z)`}
-        caption={es ? 'Bosque: promedio de M = 76 árboles. Potenciación: valor base más K árboles escalados por η = 0.5.' : 'Forest: average of M = 76 trees. Boosting: a base value plus K trees scaled by η = 0.5.'}
+        caption={es ? 'Bosque: promedio de M = 76 árboles. Potenciación: valor base más K árboles escalados por η = 0,5.' : 'Forest: average of M = 76 trees. Boosting: a base value plus K trees scaled by η = 0.5.'}
       />
       <p>
         {es
@@ -507,7 +507,7 @@ function Protocols({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `El intervalo remuestrea sitios, no filas: se sortean diez sitios con reposición ${b?.n_boot ?? notAvailable()} veces, se recalcula el puntaje agrupado y se toman los percentiles 2,5 y 97.5. Remuestrear filas trataría los 22 tiros de una cantera como 22 observaciones independientes. Cada puntaje agrupado se informa además sobre dos conjuntos de filas: todos los tiros, y los ${v?.supports.geometry.n_blasts ?? notAvailable()} con geometría resoluble, que son los únicos donde responden los brazos clásicos.`
+          ? `El intervalo remuestrea sitios, no filas: se sortean diez sitios con reposición ${b?.n_boot ?? notAvailable()} veces, se recalcula el puntaje agrupado y se toman los percentiles 2,5 y 97,5. Remuestrear filas trataría los 22 tiros de una cantera como 22 observaciones independientes. Cada puntaje agrupado se informa además sobre dos conjuntos de filas: todos los tiros, y los ${v?.supports.geometry.n_blasts ?? notAvailable()} con geometría resoluble, que son los únicos donde responden los brazos clásicos.`
           : `The interval resamples sites, not rows: ten sites are drawn with replacement ${b?.n_boot ?? notAvailable()} times, the pooled score is recomputed, and the 2.5th and 97.5th percentiles are taken. Resampling rows would treat the 22 blasts of one quarry as 22 independent observations. Every pooled score is also reported on two row sets: every blast, and the ${v?.supports.geometry.n_blasts ?? notAvailable()} with resolvable geometry, the only rows the classical arms can answer.`}{' '}
         <Cite id="efron1979" />{' '}
         <Cite id="field2007" />

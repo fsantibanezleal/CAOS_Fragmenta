@@ -146,7 +146,7 @@
   "doi": "10.3390/app15031254",
   "expected_band": {
    "en": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
-   "es": "fina, 0.146 a 0.200 m medidos, toda predicci\u00f3n marcada como extrapolada"
+   "es": "fina, 0,146 a 0,200 m medidos, toda predicci\u00f3n marcada como extrapolada"
   },
   "id": "real-granite-ne",
   "licence": "numeric facts from Sui, Zhou, Zhao, Yang and Zou 2025, CC BY 4.0",
@@ -169,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "42b1efe7457d2c90106a5c5492c634fda56b03b1ca48c1cd5f40c87cdb2bb1a2",
+ "digest": "76264c678fe91e99d09825c676c20c772f538b9acc2ad85e0e64a3d7474221b1",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
