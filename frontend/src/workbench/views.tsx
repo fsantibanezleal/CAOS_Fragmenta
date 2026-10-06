@@ -174,7 +174,9 @@ function ArmComparison({ artifact, armId, onArm }: { artifact: CaseArtifact; arm
       <table className="fr-table caos-table">
         <thead>
           <tr>
-            <th>{t(lang, 'model', 'modelo')}</th>
+            {/* The shell's text column wraps (every other cell of a shell table keeps one line): a long model name
+                in Spanish set in DejaVu Sans held the column at 265 px and pushed the table out of its card. */}
+            <th className="caos-col-text">{t(lang, 'model', 'modelo')}</th>
             <th title={t(lang, 'Variance explained about the identity line', 'Varianza explicada respecto de la identidad')}>R²id</th>
             <th title={t(lang, 'Squared correlation, as the source papers report', 'Correlación al cuadrado, como la reportan las fuentes')}>r²</th>
             <th>RMSE</th>
@@ -186,7 +188,7 @@ function ArmComparison({ artifact, armId, onArm }: { artifact: CaseArtifact; arm
             const score = artifact.scores[arm.id];
             return (
               <tr key={arm.id} className={arm.id === selectedRow ? 'fr-row-selected' : undefined}>
-                <td>
+                <td className="caos-col-text">
                   <button type="button" className="fr-inline-arm" onClick={() => onArm(arm.id)}>
                     {arm.label[lang]}
                   </button>
