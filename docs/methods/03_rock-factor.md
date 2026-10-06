@@ -136,7 +136,7 @@ do; where the transfer factor is far from the recovered one, the error moves wit
 The **Rock** tab of the App computes the two Lilly schemes live (scheme A with the 2010 strength term,
 scheme B with the 2019 one) from the rock-mass description, joint spacing and orientation, density and
 strength you set, beside the factor recovered for the selected site, and lists what the corpus does
-publish for the blast, including its stiffness group. The transfer factor appears in the What if tab,
+publish for the blast, including its stiffness group. The transfer factor appears in the Design group,
 through the transfer arm.
 
 ## Sources

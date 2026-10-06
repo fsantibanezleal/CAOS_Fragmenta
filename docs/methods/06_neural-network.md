@@ -117,7 +117,7 @@ the published pair scores as the benchmark's arm does. The full tables are in
 ## 6. In the browser
 
 The fitted networks of each training scope are exported as JSON (both groups, the eight simulations,
-the normalisation bounds and the clamp) and the What if tab runs them in TypeScript. The browser test
+the normalisation bounds and the clamp) and the App's Design group runs them in TypeScript. The browser test
 reproduces the original network's prediction at all 116 published blasts to a relative difference
 below 1e-12; the difference that remains comes from the exponential in the logistic function
 ([architecture/05](../architecture/05_portable-models.md)).

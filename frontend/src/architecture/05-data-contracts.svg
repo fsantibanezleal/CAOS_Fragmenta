@@ -64,8 +64,8 @@
 <text class="ttl" x="22" y="28">Los dos contratos y las compuertas entre ellos</text>
 <rect class="bx bx-warn" x="22.0" y="64.0" width="270.0" height="94.0" rx="6"/>
 <text class="hd" x="32.0" y="85.0">Contrato 1, qué entra</text>
-<text class="mu" x="32.0" y="104.0">RECHAZA fuera del rango (E de 0.5 a 150</text>
-<text class="mu" x="32.0" y="118.0">GPa, Pf de 0.05 a 3 kg/m3)</text>
+<text class="mu" x="32.0" y="104.0">RECHAZA fuera del rango (E de 0,5 a 150</text>
+<text class="mu" x="32.0" y="118.0">GPa, Pf de 0,05 a 3 kg/m3)</text>
 <text class="mu" x="32.0" y="132.0">MARCA y sella fuera de la envolvente;</text>
 <text class="mu" x="32.0" y="146.0">nunca recorta</text>
 <rect class="bx bx-good" x="22.0" y="168.0" width="270.0" height="80.0" rx="6"/>
@@ -100,6 +100,6 @@
 <line class="flow" x1="740.0" y1="144.0" x2="740.0" y2="152.0" marker-end="url(#arch-arrow)"/>
 <line class="band" x1="22" y1="260.0" x2="878" y2="260.0"/>
 <text class="nt" x="22" y="278.0">La compuerta de integridad existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas,</text>
-<text class="nt" x="22" y="293.0">dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1.47 frente al 1.26 que imprime el artículo.</text>
+<text class="nt" x="22" y="293.0">dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1,47 frente al 1,26 que imprime el artículo.</text>
 </g>
 </svg>

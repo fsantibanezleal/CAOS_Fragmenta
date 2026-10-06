@@ -286,14 +286,14 @@ def tab2(F: dict, es: bool) -> tuple[str, float]:
 def tab3(F: dict, es: bool) -> tuple[str, float]:
     t = picker(es)
     app = column(22, 300, 64, 10, [
-        (t("App: one selected case", "App: un caso seleccionado"), [t("a rail with the case and the arm selectors, and six tabs grouped by the question", "un riel con los selectores de caso y brazo, y seis pestañas agrupadas por la pregunta")], "accent"),
-        (t("The six tabs", "Las seis pestañas"), [t("Predict, Distribution, Bench, Rock, What if, Decide", "Predecir, Distribución, Banco, Roca, Qué pasa si, Decidir")]),
-        (t("What if", "Qué pasa si"), [t("every arm, learned ones included, recomputes live on your design from the case's own fitted models", "todo brazo, aprendidos incluidos, se recalcula en vivo sobre su diseño con los modelos ajustados del caso")], "good"),
+        (t("App: the shell's case workbench", "App: el banco de trabajo del shell"), [t("the case, its variants, the model and the open group's controls in the rail", "el caso, sus variantes, el modelo y los controles del grupo abierto en el panel")], "accent"),
+        (t("Six slots, by question", "Seis espacios, por pregunta"), [t("Predict, Distribution, Design, Rock, Compare the variants, The case", "Predecir, Distribución, Diseño, Roca, Comparar las variantes, El caso")]),
+        (t("Design", "Diseño"), [t("the response surface over burden and spacing and every model on the design, live from the case's own fitted models", "la superficie de respuesta sobre bordo y espaciamiento y cada modelo sobre el diseño, en vivo con los modelos ajustados del caso")], "good"),
     ])
     docs = column(352, 260, 64, 10, [
         (t("Introduction", "Introducción"), [t("why fragmentation matters, the relations, the question, the scope", "por qué importa, las relaciones, la pregunta, el alcance")]),
-        (t("Methodology, 7 sections", "Metodología, 7 secciones"), [t("every predictor term by term, protocols and metrics", "cada predictor término a término, protocolos y métricas")]),
-        (t("Implementation, 8 sections", "Implementación, 8 secciones"), [t("data, geometry, bake, leakage, live lanes, deploy", "datos, geometría, horneado, fuga, carriles vivos, despliegue")]),
+        (t("Methodology, 6 sections", "Metodología, 6 secciones"), [t("every predictor term by term, protocols and metrics", "cada predictor término a término, protocolos y métricas")]),
+        (t("Implementation, 6 sections", "Implementación, 6 secciones"), [t("data, geometry, bake, leakage, live lanes, deploy", "datos, geometría, horneado, fuga, carriles vivos, despliegue")]),
         (t("Experiments and Benchmark", "Experimentos y Benchmark"), [t("the only routes that summarise across cases", "las únicas rutas que resumen entre casos")], "warn"),
     ])
     focus = column(642, 236, 64, 10, [

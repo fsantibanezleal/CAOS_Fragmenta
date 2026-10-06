@@ -94,19 +94,22 @@ El despliegue copia los artefactos y verifica sus resúmenes; nunca entrena ni r
       en: 'The web flow',
       es: 'El flujo web',
       svg: webFlow,
-      body_en: `The App route is a workbench for one selected case: a rail with the case and arm selectors, and six tabs
-grouped by the question a reader asks rather than by the list of models. The What if tab recomputes every
-arm, learned ones included, on a design you change, from the models fitted for that case without its
-own campaign.
+      body_en: `The App route is the shell's case workbench for one selected case. The rail holds the case, its design
+variants, the model and blast, and the controls of the open group only; the instrument holds six slots
+named by the question a reader asks: Predict, Distribution, Design, Rock, Compare the variants and The
+case. Design maps the selected model over the burden and spacing plane and lists every model, learned
+ones included, on a design you change, from the models fitted for that case without its own campaign.
 
 Introduction, Methodology and Implementation explain the problem, every predictor and how the numbers
 are produced. Experiments and Benchmark are the only routes that summarise across cases.
 
 The focus view shows one case full screen outside the header and footer, and applies the theme itself.
 Every chart reads values under the pointer, in a readout line under the drawing.`,
-      body_es: `La ruta App es un taller para un caso seleccionado: un riel con los selectores de caso y de brazo, y
-seis pestañas agrupadas por la pregunta del lector y no por la lista de modelos. La pestaña Qué pasa si
-recalcula todo brazo, aprendidos incluidos, sobre un diseño que usted cambia, con los modelos ajustados
+      body_es: `La ruta App es el banco de trabajo del shell para un caso seleccionado. El panel lleva el caso, sus
+variantes de diseño, el modelo y el tiro, y solo los controles del grupo abierto; el instrumento lleva
+seis espacios nombrados por la pregunta del lector: Predecir, Distribución, Diseño, Roca, Comparar las
+variantes y El caso. Diseño mapea el modelo seleccionado sobre el plano de bordo y espaciamiento y
+muestra cada modelo, aprendidos incluidos, sobre un diseño que usted cambia, con los modelos ajustados
 para ese caso sin su propia campaña.
 
 Introducción, Metodología e Implementación explican el problema, cada predictor y cómo se producen los

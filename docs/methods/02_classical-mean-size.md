@@ -173,9 +173,10 @@ validate the capped shape; only its mean-size effect is scored.
   model selector, whose description says where each one's rock factor comes from.
 - **Rock** computes the two Lilly rating schemes live from rock-mass inputs you set, next to the
   factor recovered for the site.
-- **What if** recomputes the classical arms live as the design changes; the transfer arm uses the line
-  fitted for the open case, without its own campaign, and the capped arm reads the design's own in-situ
-  block, so moving that slider below the classical size shows the cap bind.
+- **Design** recomputes the classical arms live as the design changes, on the response surface and in
+  the every-model view; the transfer arm uses the line fitted for the open case, without its own
+  campaign, and the capped arm reads the design's own in-situ block, so moving that knob below the
+  classical size shows the cap bind.
 - **The model comparison** folds the capped arm into the classical row on a case where it equals it,
   and shows its own row where the cap binds.
 

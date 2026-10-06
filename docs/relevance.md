@@ -124,8 +124,8 @@ corpus only the recovered and transfer routes are usable.
 ### 2.4 Distribution shapes
 
 **Role.** A crusher is specified on P80, an oversize limit and a fines fraction, not on the mean size.
-These shapes turn the mean into those numbers, and the Decide tab compares the P80 with a
-specification.
+These shapes turn the mean into those numbers, and the App's "Against a target" view compares the
+P80 with a specification.
 
 **Evidence.** None on this corpus: no available dataset carries a measured passing curve. The shapes
 are declared unvalidated on every page that shows one ([methods/04](methods/04_distribution-shapes.md)

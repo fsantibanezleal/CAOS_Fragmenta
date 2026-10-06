@@ -11,7 +11,7 @@ changed design has not been fired, and it is never scored against the original b
 ## 1. Real campaigns, nine
 
 Each is a real mine with its own rock, rig and measurement. The learned models shown on each were fitted
-on the corpus without that campaign, and the App's What if tab uses that same fit.
+on the corpus without that campaign, and the App's Design group uses that same fit.
 
 | Case | Rock, modulus | Why it is in the matrix |
 |---|---|---|
