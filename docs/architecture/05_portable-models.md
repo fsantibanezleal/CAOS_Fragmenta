@@ -28,7 +28,7 @@ One file per training scope, `data/derived/models/<scope>.json`, schema `fragmen
 
 The live arms are the published network, the radial support-vector arm, the random forest, gradient
 boosting, the stacked model, the refitted power law and the transfer line. The polynomial kernel is
-left out by choice: the What if tab shows one kernel model, and the radial one is the better of the two
+left out by choice: the Design group shows one kernel model, and the radial one is the better of the two
 under every protocol. The stacked model's forest and booster are stored as references
 (`{"ref": "random-forest"}`) to the standalone arms, after the stage asserts that the trees are
 identical, which keeps each file at about 240 kB.

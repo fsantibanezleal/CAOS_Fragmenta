@@ -41,8 +41,8 @@ relative weight strength (ANFO, 100, by default). For the corpus it is recovered
 - **Outside the training envelope is an extrapolation, and it is refused by default.** It is admitted
   only with `allow_extrapolation=True`, and every prediction made on such a row carries the
   `extrapolated` stamp and the list of fields outside. In the App, the Predict chart draws extrapolated
-  points in their own colour and badges them in its readout, and the What if tab marks each control
-  that leaves the envelope and says so under the chart.
+  points in their own colour and badges them in its readout, and the Design group names every input
+  of a changed design that leaves the envelope.
 
 ### Nothing is clipped
 

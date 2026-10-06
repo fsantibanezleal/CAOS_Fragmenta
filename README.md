@@ -89,7 +89,7 @@ The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-
 
 | Route | What it is |
 |---|---|
-| App | a workbench for one case: Predict, Distribution, Bench (the reconstructed bench in 3D), Rock, What if (every arm live on your design), Decide (P80 against a crusher specification) |
+| App | the shell's case workbench for one case: Predict (parity and every model's score), Distribution (the curves, and P80 against a crusher specification), Design (the response surface over burden and spacing, every model live on your design, the reconstructed bench in 3D), Rock, Compare the variants, The case |
 | Introduction | the problem, the relations, the question, the data, the scope |
 | Methodology | every predictor term by term, with its source, and the protocols and metrics |
 | Implementation | the data and the gate, the geometry, the bake, leakage control, the live lanes, the deploy |
@@ -161,8 +161,8 @@ missing values, outliers) is in [docs/data/04_data-contract.md](docs/data/04_dat
 ## Scope
 
 No mechanistic simulation (discrete-element, grain-based or hybrid stress models), no non-ideal
-detonation, no flyrock, ground vibration or comminution model. The initiation sequence on the Bench tab
-is drawn and enters no prediction: the timing factor of the modified classical model is a scalar.
+detonation, no flyrock, ground vibration or comminution model. The initiation sequence of the bench view
+(the App's Design group) is drawn and enters no prediction: the timing factor of the modified classical model is a scalar.
 Constants that no held source prints, such as that timing factor and the crush-zone branch, are user
 parameters with stated ranges. No passing curve is validated here, because no available dataset carries
 a measured one.

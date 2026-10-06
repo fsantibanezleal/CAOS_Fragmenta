@@ -131,8 +131,8 @@ plausibility guard catches.
 - **Predict** plots the published regression or the refit (chosen in the rail) against the
   measurement for every blast of the case.
 - **Rock** shows the stiffness group the router assigns to the selected blast.
-- **What if** recomputes the router, the published power law and the refit (from its exported
-  exponents for the open case) on the changed design.
+- **Design** recomputes the router, the published power law and the refit (from its exported
+  exponents for the open case) on the changed design, cell by cell on the response surface.
 
 ## Sources
 
