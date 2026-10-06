@@ -31,7 +31,10 @@
 //     how a note running through the Group 2 box of the router diagram shipped;
 //   - the architecture modal's drawings, measured the same way.
 //   - every size column states one unit, the rail leaves no empty band above its last control, and
-//     the Benchmark's published-reproductions sub-tab carries the width sweep, drawn (0.06.000).
+//     the Benchmark's published-reproductions sub-tab carries the width sweep, drawn (0.06.000);
+//   - every drawn view of the App measured as a figure is (no label outside its drawing, none on
+//     another), and the App again at 390 and 768 px in both languages: no table cut, no text cut
+//     without a title, no label fault in a drawing (0.07.000).
 //
 // Usage:
 //   npm run build && npx vite preview --port 4173 &
@@ -690,6 +693,14 @@ for (const [w, h] of VIEWPORTS) {
           else
             pass(where, `${info.panels.length} views, ${info.charts.length} charts` + (info.benchHoles !== null ? `, ${info.benchHoles} holes` : ''));
 
+          // The App's drawn views, measured as the documentation figures are: no label outside its drawing, no
+          // label on another. Until 0.07.000 only figures were measured, and the model view shipped labels cut
+          // at the card's edge in Spanish ("dio clásico, limitado al bloque in situ") and ticks printed over one
+          // another ("19 cm37 cm"), under a green gate. Canvas-drawn charts carry no text elements to measure.
+          const drawn = await measureFigures(page, '[data-instrument] svg[data-chart]');
+          if (drawn.hits.length) fail(`${where} drawings`, `${drawn.hits.length} label fault(s): ${drawn.hits.slice(0, 3).join(' | ')}`);
+          else if (drawn.n) pass(`${where} drawings`, `${drawn.n} measured`);
+
           if (bench && !info.benchDisclaimer) fail(where, 'the 3D bench lost its timing disclaimer');
           if (bench && info.benchHolesVisible !== null) {
             // The hole COUNT was true while nothing was visible: the columns were drawn inside an opaque block, so
@@ -776,6 +787,61 @@ for (const [w, h] of VIEWPORTS) {
 
       await context.close();
     }
+  }
+}
+
+// The App at a phone's and a tablet's width, where the shell stacks the views and gives each a fixed height: a
+// label that fits at 1280 px may not fit there, and in Spanish the words are longer. The base's gate measures
+// these sizes for reach and coverage; this measures what is drawn and written in them.
+for (const [w, h] of [
+  [390, 844],
+  [768, 1024],
+]) {
+  for (const lang of ['en', 'es']) {
+    const context = await browser.newContext({ viewport: { width: w, height: h }, locale: lang === 'es' ? 'es-CL' : 'en-GB' });
+    await context.addInitScript((l) => {
+      localStorage.setItem('caos.theme', 'light');
+      localStorage.setItem('caos.lang', l);
+    }, lang);
+    if (process.env.GATE_FONTS === 'dejavu') {
+      await context.addInitScript(() => {
+        document.addEventListener('DOMContentLoaded', () => {
+          const style = document.createElement('style');
+          style.textContent =
+            ':root{--font-sans:"DejaVu Sans",sans-serif !important;--font-mono:"Courier New",monospace !important}';
+          document.head.appendChild(style);
+        });
+      });
+    }
+    const page = await context.newPage();
+    await page.goto(BASE + '/', { waitUntil: 'networkidle', timeout: 60000 });
+    await page.waitForTimeout(1200);
+    const groupTabs = page.locator('[data-instrument] [role="tablist"]').first().locator('[role="tab"]');
+    const groupCount = await groupTabs.count();
+    for (let g = 0; g < groupCount; g += 1) {
+      const tab = TABS[g] ?? `group-${g}`;
+      await groupTabs.nth(g).click();
+      await page.waitForTimeout(900);
+      const subTabs = page.locator('[data-instrument] [role="tabpanel"] [role="tablist"] [role="tab"]');
+      const subCount = await subTabs.count();
+      for (let k = 0; k < Math.max(1, subCount); k += 1) {
+        let subLabel = '';
+        if (subCount) {
+          subLabel = ((await subTabs.nth(k).textContent()) || `sub ${k + 1}`).trim();
+          await subTabs.nth(k).click();
+          await page.waitForTimeout(900);
+        }
+        const where = `${w}x${h} light ${lang} tab:${tab}${subLabel ? ` > ${subLabel}` : ''}`;
+        const info = await inspect(page);
+        const drawn = await measureFigures(page, '[data-instrument] svg[data-chart]');
+        if (info.brokenPanels.length) fail(where, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
+        else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
+        else if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
+        else if (drawn.hits.length) fail(where, `${drawn.hits.length} label fault(s): ${drawn.hits.slice(0, 3).join(' | ')}`);
+        else pass(where, `${info.panels.length} views, ${drawn.n} drawings measured`);
+      }
+    }
+    await context.close();
   }
 }
 
