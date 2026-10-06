@@ -265,7 +265,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The weakest rock in the corpus at 9.57 GPa, and the lowest recovered rock factor at 3.68. It is also where the classical model fails hardest: on the hold-out blast from this site it predicts 0.08 m against 0.35 m measured.",
-   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9.57 GPa, y el menor factor de roca recuperado, 3.68. Tambi\u00e9n es donde el modelo cl\u00e1sico falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0.08 m frente a 0.35 m medidos."
+   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3.68. Tambi\u00e9n es donde el modelo cl\u00e1sico falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0,08 m frente a 0,35 m medidos."
   },
   "site": "Dongri-Buzurg",
   "title": {
@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "b3ef77b389820cc425ad7f90b89d00063d537854dc88723bb0ba069b3e8af08d",
+ "digest": "5763a8c46f2e7d7142c95c02489978f3653985a8754a185fae99f876ed3b3d52",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1815,7 +1815,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "cab236f1186f2b8cc5f722f1669584de2c0fe9f95f152573c5ac1ec0d46e3a57",
+  "digest": "4cbcd9931e330ab1c448af176e27afbeaf8e74968d5c35d5b09077c26816a0c8",
   "path": "models/Dongri-Buzurg.json",
   "scope": "Dongri-Buzurg"
  },
@@ -2985,7 +2985,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.06.000",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

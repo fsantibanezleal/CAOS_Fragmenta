@@ -153,7 +153,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "Five production blasts measured with image analysis, and the only real set in this product that lies OUTSIDE the fitted envelope. Its Young modulus of 5.6 GPa sits below the corpus minimum of 9.57, on the feature two independent studies rank most important. Every prediction here is stamped as an extrapolation. It is also the only set that publishes its absolute pattern, so it checks the geometry reconstruction instead of consuming it.",
-   "es": "Cinco tiros de producci\u00f3n medidos por an\u00e1lisis de imagen, y el \u00fanico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su m\u00f3dulo de Young de 5.6 GPa est\u00e1 bajo el m\u00ednimo del corpus, 9.57, en la variable que dos estudios independientes califican como la m\u00e1s importante. Toda predicci\u00f3n aqu\u00ed se marca como extrapolaci\u00f3n. Es tambi\u00e9n el \u00fanico conjunto que publica su malla absoluta, as\u00ed que verifica la reconstrucci\u00f3n geom\u00e9trica en vez de consumirla."
+   "es": "Cinco tiros de producci\u00f3n medidos por an\u00e1lisis de imagen, y el \u00fanico conjunto real de este producto que queda FUERA de la envolvente ajustada. Su m\u00f3dulo de Young de 5,6 GPa est\u00e1 bajo el m\u00ednimo del corpus, 9,57, en la variable que dos estudios independientes califican como la m\u00e1s importante. Toda predicci\u00f3n aqu\u00ed se marca como extrapolaci\u00f3n. Es tambi\u00e9n el \u00fanico conjunto que publica su malla absoluta, as\u00ed que verifica la reconstrucci\u00f3n geom\u00e9trica en vez de consumirla."
   },
   "site": "Granite-NE",
   "title": {
@@ -169,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "650537572a88909d58a0f902429aefb4e5a11b7e40db249bbfbdc99a77a6cdb3",
+ "digest": "42b1efe7457d2c90106a5c5492c634fda56b03b1ca48c1cd5f40c87cdb2bb1a2",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -182,7 +182,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "d309582a2940733b4a74802114fc8c203e952608d5a13757d44c105c3aefb03c",
+  "digest": "c76cfd37420dccf0540ce27fc653f14d9239756340a7e7a2df375735f1b38832",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -848,7 +848,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.06.000",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

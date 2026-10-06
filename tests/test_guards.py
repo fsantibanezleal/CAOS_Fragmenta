@@ -242,6 +242,55 @@ def test_the_shell_is_pinned_exactly_and_the_template_version_is_recorded():
     assert re.fullmatch(shape, recorded), recorded
 
 
+def test_the_version_has_one_source_and_every_statement_of_it_follows():
+    """WB-008. VERSION is read, never restated: by the pipeline, by the build, and by every artifact stamped.
+
+    The template's `check_version_coherence.py` joins this when CAOS_PRODUCT_TEMPLATE#19 is released; as it
+    stands it rejects the release history the comments here use to say why a check exists. This test checks
+    the statements themselves, so it holds the requirement meanwhile. A literal drifted once already: the
+    dormant API kept announcing a release three behind.
+    """
+    import json
+    import re
+
+    version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    assert re.fullmatch(r"\d+\.\d{2}\.\d{3}", version), f"VERSION is {version!r}, not X.XX.XXX"
+    major, minor, patch = (int(part) for part in version.split("."))
+    semver = f"{major}.{minor}.{patch}"
+
+    package = json.loads((ROOT / "frontend" / "package.json").read_text(encoding="utf-8"))
+    lock = json.loads((ROOT / "frontend" / "package-lock.json").read_text(encoding="utf-8"))
+    assert package["version"] == semver, f"package.json says {package['version']}, VERSION says {semver}"
+    assert lock["version"] == lock["packages"][""]["version"] == semver, "the lock is behind package.json"
+
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    top = re.search(r"^## \[(\d+\.\d{2}\.\d{3})\]", changelog, re.M)
+    assert top and top.group(1) == version, f"the top CHANGELOG entry is not VERSION {version}"
+
+    readers = {
+        "data-pipeline/pipeline/__init__.py": '"VERSION"',
+        "app/__init__.py": '"VERSION"',
+        "frontend/vite.config.ts": "'../VERSION'",
+    }
+    for rel, reads in readers.items():
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        assert reads in text, f"{rel} no longer reads VERSION"
+        code = "\n".join(line.split("//")[0].split("#")[0] for line in text.splitlines())
+        assert not re.search(r"['\"]\d+\.\d{2}\.\d{3}['\"]", code), f"{rel} writes a version literal"
+
+    # The committed artifacts (frontend/public/data is a gitignored copy made at build time).
+    data = ROOT / "data" / "derived"
+    stamped = {}
+    for path in sorted(data.rglob("*.json")):
+        artifact = json.loads(path.read_text(encoding="utf-8"))
+        stamp = artifact.get("app_version", artifact.get("provenance", {}).get("app_version"))
+        if stamp is not None:
+            stamped[path.relative_to(data).as_posix()] = stamp
+    assert len(stamped) >= 40, f"only {len(stamped)} stamped artifacts found under data/derived"
+    stale = [f"{rel}: {stamp}" for rel, stamp in stamped.items() if stamp != version]
+    assert stale == [], f"{len(stale)} artifacts baked under another release than {version}: {stale[:5]}"
+
+
 #: The entries of CAOS_MANAGE conventions/shell-known-defects.md still open against the pinned shell. An
 #: override in this product may answer one of these, and must name it; any other is a fix the shell carries.
 OPEN_SHELL_DEFECTS = {19, 20, 22, 23}

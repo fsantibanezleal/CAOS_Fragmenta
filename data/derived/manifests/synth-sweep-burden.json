@@ -1,5 +1,5 @@
 {
- "app_version": "0.06.000",
+ "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 68589,
@@ -9,7 +9,7 @@
  "case_id": "synth-sweep-burden",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "16a4d3e4383c1d8a2284492d3f11dcd1d79be5066ae897e04e9775ae6821f5a8",
+ "digest": "a58f8463391880c2efda9c605809c1976ae4dd0da66cc8d9ab59af75782c50ec",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"

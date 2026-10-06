@@ -1,5 +1,5 @@
 {
- "app_version": "0.06.000",
+ "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 35686,
@@ -16,7 +16,7 @@
    "unstamped": []
   }
  },
- "digest": "650537572a88909d58a0f902429aefb4e5a11b7e40db249bbfbdc99a77a6cdb3",
+ "digest": "42b1efe7457d2c90106a5c5492c634fda56b03b1ca48c1cd5f40c87cdb2bb1a2",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
