@@ -18,3 +18,9 @@ workbench (ADR-0078 s5), pinned exactly, and meet ADR-0071 rule 8 as the base me
 | WB-009 | THE views SHALL use only defined tokens and styled classes, SHALL format numbers through the shell, and SHALL run no animation loop outside the shell's paused loop. | `scripts/check_web_baseline.py` |
 | WB-010 | THE product SHALL carry the files of one deploy place, GitHub Pages, and none of another. | `scripts/check_deploy_place.py` |
 | WB-011 | EVERY documentation page SHALL show at most six peer sub-tabs; related sections share one (ADR-0071 rule 5). | `frontend/gates/browser-gate.mjs` |
+| WB-012 | EVERY drawn view of the App SHALL keep each label inside its drawing and off every other label, from 390 px wide, in both languages and both font sets. | `frontend/gates/browser-gate.mjs` |
+| WB-013 | THE Spanish interface SHALL write a decimal with the comma in the strings the bake composes as in the strings written. | `tests/test_guards.py::test_the_spanish_guard_reads_what_the_bake_composed` |
+
+WB-012 and WB-013 were added at convergence (2026-10-05): the captures of every view showed both faults under
+gates that could not see them (findings F-24 in CAOS_MANAGE `plans/fragmenta/`).
+
