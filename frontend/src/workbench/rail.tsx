@@ -214,30 +214,28 @@ function DesignRail({
       })}
       {part === 'geometry' ? (
         <Knob
-        id="hole"
-        label={{ en: 'Hole diameter', es: 'Diámetro de perforación' }}
-        value={sel.holeMm}
-        min={76}
-        max={250}
-        step={1}
-        unit="mm"
-        format={{ decimals: 0 }}
-        onChange={onHole}
-      />
+          id="hole"
+          label={{ en: 'Hole diameter', es: 'Diámetro de perforación' }}
+          value={sel.holeMm}
+          min={76}
+          max={250}
+          step={1}
+          unit="mm"
+          format={{ decimals: 0 }}
+          onChange={onHole}
+        />
       ) : null}
       {part === 'charge' ? (
-        <>
-      <ChipGroup
-        id="quantity"
-        label={{ en: 'The map shows', es: 'El mapa muestra' }}
-        options={[
-          { id: 'p80', label: 'P80', hint: { en: 'The 80 percent passing size, against the crusher specification', es: 'El tamaño 80 por ciento pasante, frente a la especificación de chancado' } },
-          { id: 'x50', label: 'x50', hint: { en: 'The mean size the models predict', es: 'El tamaño medio que predicen los modelos' } },
-        ]}
-        value={sel.controls.quantity}
-        onChange={(q) => set({ quantity: q as Controls['quantity'] })}
-      />
-        </>
+        <ChipGroup
+          id="quantity"
+          label={{ en: 'The map shows', es: 'El mapa muestra' }}
+          options={[
+            { id: 'p80', label: 'P80', hint: { en: 'The 80 percent passing size, against the crusher specification', es: 'El tamaño 80 por ciento pasante, frente a la especificación de chancado' } },
+            { id: 'x50', label: 'x50', hint: { en: 'The mean size the models predict', es: 'El tamaño medio que predicen los modelos' } },
+          ]}
+          value={sel.controls.quantity}
+          onChange={(q) => set({ quantity: q as Controls['quantity'] })}
+        />
       ) : null}
     </>
   );
