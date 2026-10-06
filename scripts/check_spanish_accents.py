@@ -150,6 +150,11 @@ ESTA_BEFORE = re.compile(r"\b(esta|estan)\s+([a-záéíóúñ]+)", re.IGNORECASE
 
 EL_BEFORE_PUNCTUATION = re.compile(r"\b[Ee]l\s*[.,;:)?!]")
 
+#: Spanish writes a decimal comma (conventions/languages.md, base requirement S8): "0,311", never "0.311".
+#: A version is an identifier, not a decimal, so a number after "versión" keeps its point.
+DECIMAL_POINT = re.compile(r"(?<![\w.,/])\d+\.\d+(?![\w./])")
+VERSION_BEFORE = re.compile(r"versi[oó]n\s+$", re.IGNORECASE)
+
 
 def tracked(pattern: str) -> list[Path]:
     out = subprocess.run(["git", "ls-files", pattern], cwd=ROOT, capture_output=True, text=True,
@@ -225,6 +230,10 @@ def problems_in(where: str, text: str) -> list[str]:
     # The article "el" cannot end a clause, so before punctuation it is the pronoun ("sobre el." shipped).
     for m in EL_BEFORE_PUNCTUATION.finditer(INTERPOLATION.sub(" ", text)):
         problems.append(f"{where}: '{m.group(0)}' needs the pronoun, 'él'")
+    prose = INTERPOLATION.sub(" ", text)
+    for m in DECIMAL_POINT.finditer(prose):
+        if not VERSION_BEFORE.search(prose[max(0, m.start() - 12) : m.start()]):
+            problems.append(f"{where}: '{m.group(0)}' takes the decimal comma in Spanish")
     for m in ESTA_BEFORE.finditer(INTERPOLATION.sub(" ", text)):
         follower = m.group(2).lower()
         if follower in VERB_FOLLOWERS or follower.endswith(("ando", "iendo", "yendo")):

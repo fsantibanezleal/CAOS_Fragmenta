@@ -54,6 +54,7 @@ import {
   TabBoundary,
   TierBadge,
 } from '../viz/Panels';
+import { notAvailable, num, value } from '../lib/format';
 
 const DEFAULT_CASE = 'real-murgul';
 
@@ -626,15 +627,15 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
             <dt>P80</dt>
             <dd>{formatSize(p80)}</dd>
             <dt>{lang === 'es' ? 'Índice de uniformidad' : 'Uniformity index'}</dt>
-            <dd>{live.n.toFixed(3)}</dd>
+            <dd>{num(live.n, 3)}</dd>
             <dt>{lang === 'es' ? 'Medido' : 'Measured'}</dt>
             <dd>{formatSize(blast.x50_measured_m)}</dd>
           </dl>
           {live.n < 0.7 ? (
             <p className="fr-note fr-note-warn">
               {lang === 'es'
-                ? `El índice cae bajo la banda usual de 0.7 a 2. En este tiro el taco ocupa ${((blast.features.T_over_B / blast.features.H_over_B) * 100).toFixed(0)} por ciento del barreno, así que la columna de carga es corta.`
-                : `The index falls below the usual band of 0.7 to 2. On this blast the stemming takes ${((blast.features.T_over_B / blast.features.H_over_B) * 100).toFixed(0)} percent of the hole, so the charge column is short.`}
+                ? `El índice cae bajo la banda usual de 0,7 a 2. En este tiro el taco ocupa ${num((blast.features.T_over_B / blast.features.H_over_B) * 100, 0)} por ciento del barreno, así que la columna de carga es corta.`
+                : `The index falls below the usual band of 0.7 to 2. On this blast the stemming takes ${num((blast.features.T_over_B / blast.features.H_over_B) * 100, 0)} percent of the hole, so the charge column is short.`}
             </p>
           ) : null}
         </Panel>
@@ -657,7 +658,7 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
               value={undulation}
               onChange={(e) => setUndulation(Number(e.target.value))}
             />
-            <output>{undulation.toFixed(1)}</output>
+            <output>{num(undulation, 1)}</output>
           </label>
           <label className="fr-control">
             {lang === 'es' ? 'Fracción de finos (zona triturada)' : 'Fines fraction (crush zone)'}
@@ -669,17 +670,17 @@ function DistributionTab({ blast }: { blast: BlastRow }) {
               value={finesFraction}
               onChange={(e) => setFinesFraction(Number(e.target.value))}
             />
-            <output>{(finesFraction * 100).toFixed(0)}%</output>
+            <output>{num(finesFraction * 100, 0)}%</output>
           </label>
         </Panel>
         <Panel id="fines" title={lang === 'es' ? 'Finos' : 'Fines'}>
           <dl className="fr-kv">
             <dt>{lang === 'es' ? 'Pasa 10 mm, clásica' : 'Passing 10 mm, classical'}</dt>
-            <dd>{(passingAt(live.classical, 0.01) * 100).toFixed(2)}%</dd>
+            <dd>{num(passingAt(live.classical, 0.01) * 100, 2)}%</dd>
             <dt>{lang === 'es' ? 'Pasa 10 mm, tres parámetros' : 'Passing 10 mm, three-parameter'}</dt>
-            <dd>{(passingAt(live.three, 0.01) * 100).toFixed(2)}%</dd>
+            <dd>{num(passingAt(live.three, 0.01) * 100, 2)}%</dd>
             <dt>{lang === 'es' ? 'Pasa 10 mm, zona triturada' : 'Passing 10 mm, crush zone'}</dt>
-            <dd>{(passingAt(live.crush, 0.01) * 100).toFixed(2)}%</dd>
+            <dd>{num(passingAt(live.crush, 0.01) * 100, 2)}%</dd>
           </dl>
           <p className="fr-fine">
             {lang === 'es'
@@ -784,8 +785,8 @@ function BenchTab({
           >
             <p className="fr-note">
               {lang === 'es'
-                ? `El diámetro de ${report.hole_diameter_mm} mm viene de la prosa de la fuente. Todo lo demás se deduce de las razones publicadas, y se verifica contra lo que la misma prosa declara.`
-                : `The ${report.hole_diameter_mm} mm diameter comes from the source’s own prose. Everything else follows from the published ratios, and is checked against what the same prose states.`}
+                ? `El diámetro de ${value(report.hole_diameter_mm)} mm viene de la prosa de la fuente. Todo lo demás se deduce de las razones publicadas, y se verifica contra lo que la misma prosa declara.`
+                : `The ${value(report.hole_diameter_mm)} mm diameter comes from the source’s own prose. Everything else follows from the published ratios, and is checked against what the same prose states.`}
             </p>
             <table className="fr-table fr-table-compact">
               <thead>
@@ -879,8 +880,8 @@ function RockTab({ blast }: { blast: BlastRow }) {
         </div>
         <p className="fr-note fr-note-warn">
           {lang === 'es'
-            ? `Los dos esquemas publicados difieren en ${Math.abs(factorA - factorB).toFixed(2)} en el factor de roca sobre esta misma roca. El tamaño predicho es lineal en ese factor.`
-            : `The two published schemes differ by ${Math.abs(factorA - factorB).toFixed(2)} in the rock factor on this same rock. Predicted size is linear in that factor.`}
+            ? `Los dos esquemas publicados difieren en ${num(Math.abs(factorA - factorB), 2)} en el factor de roca sobre esta misma roca. El tamaño predicho es lineal en ese factor.`
+            : `The two published schemes differ by ${num(Math.abs(factorA - factorB), 2)} in the rock factor on this same rock. Predicted size is linear in that factor.`}
         </p>
       </div>
       <div className="fr-side">
@@ -901,12 +902,12 @@ function RockTab({ blast }: { blast: BlastRow }) {
           <label className="fr-control">
             {lang === 'es' ? 'Densidad, t/m3' : 'Density, t/m3'}
             <input type="range" min={1.8} max={3.5} step={0.05} value={density} onChange={(e) => setDensity(Number(e.target.value))} />
-            <output>{density.toFixed(2)}</output>
+            <output>{num(density, 2)}</output>
           </label>
           <label className="fr-control">
             {lang === 'es' ? 'Espaciamiento de juntas, m' : 'Joint spacing, m'}
             <input type="range" min={0.02} max={2} step={0.02} value={jointSpacing} onChange={(e) => setJointSpacing(Number(e.target.value))} />
-            <output>{jointSpacing.toFixed(2)}</output>
+            <output>{num(jointSpacing, 2)}</output>
           </label>
         </Panel>
         <Panel id="corpus-publishes" title={lang === 'es' ? 'Lo que el corpus sí publica' : 'What the corpus does publish'}>
@@ -935,7 +936,7 @@ function FeatureRow({ name, value, lang }: { name: string; value: number; lang: 
   return (
     <>
       <dt>{FEATURE_LABEL[name]?.[lang] ?? name}</dt>
-      <dd>{value.toFixed(name === 'B_over_D' || name === 'E_GPa' ? 2 : 3)}</dd>
+      <dd>{num(value, name === 'B_over_D' || name === 'E_GPa' ? 2 : 3)}</dd>
     </>
   );
 }
@@ -953,12 +954,13 @@ function RockCard({
   factor: number | null;
   highlight?: boolean;
 }) {
+  const lang = useShellLang();
   return (
     <div className={`fr-rockcard ${highlight ? 'fr-rockcard-on' : ''}`}>
       <h4>{title}</h4>
       <p className="fr-fine">{subtitle}</p>
-      {index !== null ? <p className="fr-metric-small">index {index.toFixed(1)}</p> : null}
-      <p className="fr-metric">{factor === null ? 'n/a' : factor.toFixed(2)}</p>
+      {index !== null ? <p className="fr-metric-small">{lang === 'es' ? 'índice' : 'index'} {num(index, 1)}</p> : null}
+      <p className="fr-metric">{factor === null ? notAvailable() : num(factor, 2)}</p>
     </div>
   );
 }

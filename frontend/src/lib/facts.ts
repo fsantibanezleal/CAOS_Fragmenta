@@ -19,6 +19,7 @@ import {
   type RepeatedArmBlock,
   type Support,
 } from './contract.types';
+import { interval, notAvailable, num } from './format';
 
 export function useBenchmark(): BenchmarkArtifact | null {
   const [value, setValue] = useState<BenchmarkArtifact | null>(null);
@@ -90,14 +91,13 @@ export function facts(b: BenchmarkArtifact): Facts {
   };
 }
 
-/** Fixed decimals, or "n/a". */
-export const f = (value: number | null | undefined, digits = 3) =>
-  value === null || value === undefined || !Number.isFinite(value) ? 'n/a' : value.toFixed(digits);
+/** Fixed decimals in the interface language, or its "not available". */
+export const f = (value: number | null | undefined, digits = 3) => num(value, digits);
 
 /** "a to b", for an interval. */
-export const iv = (interval: [number, number] | null | undefined, digits = 2, es = false) =>
-  interval ? `${f(interval[0], digits)} ${es ? 'a' : 'to'} ${f(interval[1], digits)}` : 'n/a';
+export const iv = (pair: [number, number] | null | undefined, digits = 2, es = false) =>
+  interval(pair, digits, es ? 'es' : 'en');
 
 /** A share as a whole percent. */
 export const pct = (value: number | null | undefined) =>
-  value === null || value === undefined || !Number.isFinite(value) ? 'n/a' : `${Math.round(value * 100)}`;
+  value === null || value === undefined || !Number.isFinite(value) ? notAvailable() : `${Math.round(value * 100)}`;

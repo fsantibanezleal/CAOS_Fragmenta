@@ -17,3 +17,4 @@ workbench (ADR-0078 s5), pinned exactly, and meet ADR-0071 rule 8 as the base me
 | WB-008 | THE version SHALL have one source, VERSION, which every other statement of it follows. | `scripts/check_version_coherence.py` |
 | WB-009 | THE views SHALL use only defined tokens and styled classes, SHALL format numbers through the shell, and SHALL run no animation loop outside the shell's paused loop. | `scripts/check_web_baseline.py` |
 | WB-010 | THE product SHALL carry the files of one deploy place, GitHub Pages, and none of another. | `scripts/check_deploy_place.py` |
+| WB-011 | EVERY documentation page SHALL show at most six peer sub-tabs; related sections share one (ADR-0071 rule 5). | `frontend/gates/browser-gate.mjs` |

@@ -17,6 +17,7 @@ import { f, facts, iv, useBenchmark, useModels } from '../lib/facts';
 import { LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import { SupportsDiagram } from '../viz/Diagrams';
 import { DrawHistogram, IntervalChart, type IntervalRow, type MarkKind } from '../viz/Evidence';
+import { notAvailable, num } from '../lib/format';
 
 interface TabProps {
   es: boolean;
@@ -56,7 +57,7 @@ function verdictText(b: BenchmarkArtifact, lang: Lang): string {
   const parts: string[] = [];
   if (v.depends_on_support) {
     parts.push(
-      `EL VEREDICTO DEPENDE DE QUÉ FILAS SE PUNTÚAN. Sobre los ${all.n_blasts} tiros, el mejor brazo aprendido con cada sitio excluido, ${name(all.best_learned_arm)}, explica ${f(all.best_learned_r2_identity)} y el nivel aprendido ${all.generalises_across_sites ? 'cumple' : 'no cumple'} el criterio. Sobre los ${geo.n_blasts} tiros con geometría resoluble, las filas donde también se puntúan los brazos clásicos, ${name(geo.best_learned_arm)} explica ${f(geo.best_learned_r2_identity)}, ${f(geo.margin_over_null)} sobre el nulo, y el nivel ${geo.generalises_across_sites ? 'lo cumple' : 'no lo cumple'}. Los tiros que separan los dos conjuntos son de ${v.sites_outside_geometry_support.join(', ')}.`,
+      `EL VEREDICTO DEPENDE DE QUÉ FILAS SE PUNTÚAN. Sobre los ${all.n_blasts} tiros, el mejor brazo aprendido con cada sitio excluido, ${name(all.best_learned_arm)}, explica ${f(all.best_learned_r2_identity)} y el nivel aprendido ${all.generalises_across_sites ? 'cumple' : 'no cumple'} el criterio. Sobre los ${geo.n_blasts} tiros con geometría resoluble, las filas donde también se puntúan los brazos clásicos, ${name(geo.best_learned_arm)} explica ${f(geo.best_learned_r2_identity)} (${f(geo.margin_over_null)} sobre el nulo) y el nivel ${geo.generalises_across_sites ? 'lo cumple' : 'no lo cumple'}. Los tiros que separan los dos conjuntos son de ${v.sites_outside_geometry_support.join(', ')}.`,
     );
   } else if (all.generalises_across_sites) {
     parts.push(`El nivel aprendido generaliza entre sitios: ${name(all.best_learned_arm)} explica ${f(all.best_learned_r2_identity)} de la varianza y supera a un predictor constante por ${f(all.margin_over_null)}.`);
@@ -81,8 +82,18 @@ export default function Benchmark() {
   const tabs: SubTabDef[] = [
     { id: 'verdict', label: es ? 'El veredicto' : 'The verdict', content: <Verdict {...props} /> },
     { id: 'arms', label: es ? 'Cada brazo' : 'Every arm', content: <Arms {...props} /> },
-    { id: 'published', label: es ? 'Validaciones publicadas' : 'Published hold-outs', content: <Published {...props} /> },
-    { id: 'network', label: es ? 'La red publicada' : 'The published network', content: <Seeds {...props} /> },
+    // Six peers at most (ADR-0071 rule 5): both are reproductions of published figures, as in
+    // docs/results/05_published-reproductions.md.
+    {
+      id: 'published',
+      label: es ? 'Reproducciones publicadas' : 'Published reproductions',
+      content: (
+        <>
+          <Published {...props} />
+          <Seeds {...props} />
+        </>
+      ),
+    },
     { id: 'robustness', label: es ? 'Robustez' : 'Robustness', content: <Robustness {...props} /> },
     { id: 'live', label: es ? 'Comprobación en vivo' : 'Live check', content: <LiveCheck {...props} /> },
     { id: 'provenance', label: es ? 'Procedencia y salvedades' : 'Provenance and caveats', content: <Provenance {...props} /> },
@@ -115,7 +126,7 @@ function Verdict({ es, lang, b }: TabProps) {
       </Callout>
       <p>
         {es
-          ? 'El criterio se escribió antes de la primera corrida como un margen sobre el nulo y nada más. Esa corrida dio un mejor brazo aprendido de -0.034 frente a un nulo de -0.216, y la regla de solo margen declaró que el nivel aprendido generaliza para un brazo peor que una constante; entonces se agregó la mitad de positividad. La frase no ha cambiado desde entonces y una prueba del motor fija su resumen. Pide que el mejor brazo aprendido, con cada sitio excluido, explique una varianza positiva y al menos 0.10 más que el nulo. Desde 0.05 se evalúa sobre dos conjuntos de filas, porque los brazos clásicos no pueden responder en Miami y compararlos con los aprendidos sobre denominadores distintos fue lo que fijó el veredicto anterior.'
+          ? 'El criterio se escribió antes de la primera corrida como un margen sobre el nulo y nada más. Esa corrida dio un mejor brazo aprendido de -0,034 frente a un nulo de -0,216, y la regla de solo margen declaró que el nivel aprendido generaliza para un brazo peor que una constante; entonces se agregó la mitad de positividad. La frase no ha cambiado desde entonces y una prueba del motor fija su resumen. Pide que el mejor brazo aprendido, con cada sitio excluido, explique una varianza positiva y al menos 0,10 más que el nulo. Desde la versión 0.05 se evalúa sobre dos conjuntos de filas, porque los brazos clásicos no pueden responder en Miami y compararlos con los aprendidos sobre denominadores distintos fue lo que fijó el veredicto anterior.'
           : 'The criterion was first written, before the first run, as a margin over the null alone. That run produced a best learned arm at -0.034 against a null at -0.216, and the margin-only rule declared that the learned tier generalises, for an arm that does worse than a constant; the positivity half was added then. The sentence has not changed since, and an engine test pins its digest. It asks that the best learned arm, with each site held out, explain a positive variance and at least 0.10 more than the null. Since 0.05 it is evaluated on two row sets, because the classical arms cannot answer at Miami, and comparing them with the learned arms over different denominators is what set the previous verdict.'}{' '}
         <Cite id="roberts2017" />
       </p>
@@ -333,8 +344,8 @@ function WidthSweep({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
                 <td>{name}</td>
                 <td>{e.published_optimum}</td>
                 <td>{e.best_hidden}</td>
-                <td>{(e.best_rmse * 100).toFixed(1)}</td>
-                <td>{atPublished === null ? 'n/a' : (atPublished * 100).toFixed(1)}</td>
+                <td>{num(e.best_rmse * 100, 1)}</td>
+                <td>{atPublished === null ? notAvailable() : num(atPublished * 100, 1)}</td>
               </tr>
             );
           })}
@@ -374,8 +385,8 @@ function Published({ es, b }: TabProps) {
       <h2>{es ? 'Las validaciones publicadas' : 'The published hold-outs'}</h2>
       <p>
         {es
-          ? `El artículo de 2012 imprime, en una misma tabla y sobre las mismas doce filas, las predicciones de tres modelos. Puntuadas aquí con un nulo al lado, la ecuación clásica es la peor de las tres y mejora en ${gain === null ? 'n/a' : Math.round(gain * 100)} por ciento el error de predecir una constante. Esas doce filas son de los mismos sitios que el entrenamiento, así que esta es la validación que reporta la literatura y no una prueba de transferencia.`
-          : `The 2012 paper prints, in one table and on the same twelve rows, the predictions of three models. Scored here with a null beside them, the classical equation is the worst of the three and improves on the error of predicting a constant by ${gain === null ? 'n/a' : Math.round(gain * 100)} percent. Those twelve rows come from the same sites as the training rows, so this is the validation the literature reports and not a transfer test.`}{' '}
+          ? `El artículo de 2012 imprime, en una misma tabla y sobre las mismas doce filas, las predicciones de tres modelos. Puntuadas aquí con un nulo al lado, la ecuación clásica es la peor de las tres y mejora en ${gain === null ? notAvailable() : Math.round(gain * 100)} por ciento el error de predecir una constante. Esas doce filas son de los mismos sitios que el entrenamiento, así que esta es la validación que reporta la literatura y no una prueba de transferencia.`
+          : `The 2012 paper prints, in one table and on the same twelve rows, the predictions of three models. Scored here with a null beside them, the classical equation is the worst of the three and improves on the error of predicting a constant by ${gain === null ? notAvailable() : Math.round(gain * 100)} percent. Those twelve rows come from the same sites as the training rows, so this is the validation the literature reports and not a transfer test.`}{' '}
         <Cite id="kulatilake2012" />
       </p>
       <table className="fr-table">
@@ -395,7 +406,7 @@ function Published({ es, b }: TabProps) {
               <td className={(arms[key]?.r2_identity ?? 0) > 0 ? 'fr-ok' : 'fr-bad'}>{f(arms[key]?.r2_identity)}</td>
               <td>{f(arms[key]?.pearson_r2)}</td>
               <td>{formatSize(arms[key]?.rmse_m)}</td>
-              <td>{arms[key]?.mape_pct === null || arms[key]?.mape_pct === undefined ? 'n/a' : `${arms[key]?.mape_pct?.toFixed(1)}%`}</td>
+              <td>{arms[key]?.mape_pct === null || arms[key]?.mape_pct === undefined ? notAvailable() : `${num(arms[key]?.mape_pct, 1)}%`}</td>
             </tr>
           ))}
         </tbody>
@@ -501,7 +512,7 @@ function Seeds({ es, lang, b }: TabProps) {
                 <td>{formatSize(row.measured_m)}</td>
                 <td>{formatSize(row.published_m)}</td>
                 <td>
-                  {row.min_m === null ? 'n/a' : `${formatSize(row.min_m)} ${lang === 'es' ? 'a' : 'to'} ${formatSize(row.max_m)}`}
+                  {row.min_m === null ? notAvailable() : `${formatSize(row.min_m)} ${lang === 'es' ? 'a' : 'to'} ${formatSize(row.max_m)}`}
                   {outside ? <span className="fr-badge fr-badge-warn">{es ? 'fuera del rango' : 'outside the range'}</span> : null}
                 </td>
               </tr>
@@ -567,7 +578,7 @@ function Robustness({ es, lang, b }: TabProps) {
       ) : null}
       <p>
         {es
-          ? `Para el ensamble apilado la mediana es ${f(F.random('stacking')?.r2_identity)} y el percentil 95, ${f(F.random('stacking')?.repeats.p95)}; el 0.943 publicado queda por encima de ${Math.round((b.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} de cada 100 sorteos. Para el brazo clásico, los sorteos van de ${f(F.random('kuznetsov')?.repeats.p05, 2)} a ${f(F.random('kuznetsov')?.repeats.p95, 2)} entre los percentiles 5 y 95: un único sorteo puede caer a cualquier lado de cero, y la semilla 0 cayó bajo cero.`
+          ? `Para el ensamble apilado la mediana es ${f(F.random('stacking')?.r2_identity)} y el percentil 95, ${f(F.random('stacking')?.repeats.p95)}; el 0,943 publicado queda por encima de ${Math.round((b.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} de cada 100 sorteos. Para el brazo clásico, los sorteos van de ${f(F.random('kuznetsov')?.repeats.p05, 2)} a ${f(F.random('kuznetsov')?.repeats.p95, 2)} entre los percentiles 5 y 95: un único sorteo puede caer a cualquier lado de cero, y la semilla 0 cayó bajo cero.`
           : `For the stacked ensemble the median is ${f(F.random('stacking')?.r2_identity)} and the 95th percentile ${f(F.random('stacking')?.repeats.p95)}; the published 0.943 lies above ${Math.round((b.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} of 100 draws. For the classical arm, the draws run from ${f(F.random('kuznetsov')?.repeats.p05, 2)} to ${f(F.random('kuznetsov')?.repeats.p95, 2)} between the 5th and 95th percentiles: a single draw can land on either side of zero, and seed 0 landed below it.`}
       </p>
       {refs('b-protocols', es)}

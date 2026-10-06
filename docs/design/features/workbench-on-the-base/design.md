@@ -53,3 +53,18 @@ size and P80) as `Readout` with lane and provenance.
 - `scripts/check_deploy_place.py` with `deploy/TARGET` = `pages`. The product still carries the dormant VPS unit and
   nginx site of the old frozen layout (`deploy/fasl-slug.service`, `deploy/domain.nginx`); a Pages product carries
   none, so they go.
+
+## The documentation pages (WB-011)
+
+Shell 0.7.x reports more than six peer sub-tabs as a console error (ADR-0071 rule 5), and four pages carry seven or
+eight. Each is brought to six by putting related sections under one sub-tab, mirroring the wiki where it already
+groups them, rather than by adding a second row of navigation:
+
+| Page | Was | Now |
+|---|---|---|
+| Methodology | classical, rock factor, distributions, router and regressions, network, kernels and ensembles, protocols | the rock factor joins the classical mean size (it is that equation's A term) |
+| Implementation | architecture, data and the gate, geometry, bake, leakage, live equations, live fitted models, deploy | geometry joins data and the gate (the reconstruction is how the data become usable); the two live lanes share one sub-tab |
+| Experiments | questions and design, metrics, coverage, protocol sensitivity, by site, design response, diagnostics | the metrics join the questions and design (Methodology carries their equations) |
+| Benchmark | verdict, every arm, published hold-outs, the published network, robustness, live check, provenance | the hold-outs and the network become "Published reproductions", as `docs/results/05_published-reproductions.md` already is |
+
+Each merged sub-tab keeps every section it had, each with its own heading and its own sources; nothing is cut.

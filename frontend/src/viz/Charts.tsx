@@ -13,6 +13,7 @@ import { useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
+import { notAvailable, num } from '../lib/format';
 
 /** Read a CSS custom property off the document, with a fallback that is never a bare colour. */
 function token(name: string, fallback: string): string {
@@ -181,7 +182,7 @@ export function DistributionChart({
           grid: { stroke: grid, width: 1 },
           ticks: { stroke: grid },
           values: (_u, ticks) =>
-            ticks.map((t) => (t < 0.1 ? `${(t * 1000).toFixed(0)}mm` : `${(t * 100).toFixed(0)}cm`)),
+            ticks.map((t) => (t < 0.1 ? `${num(t * 1000, 0)}mm` : `${num(t * 100, 0)}cm`)),
           // Painted on the canvas, so no translation pass reaches it: the language is chosen here.
           label: lang === 'es' ? 'tamaño de fragmento' : 'fragment size',
           labelSize: 22,
@@ -291,8 +292,8 @@ export function DistributionChart({
           <>
             <span className="fr-readout-key">
               {readout.size < 0.1
-                ? `${(readout.size * 1000).toFixed(1)} mm`
-                : `${(readout.size * 100).toFixed(1)} cm`}
+                ? `${num(readout.size * 1000, 1)} mm`
+                : `${num(readout.size * 100, 1)} cm`}
             </span>
             {series.map((s, i) => (
               <span key={s.id} className="fr-readout-item">
@@ -300,8 +301,8 @@ export function DistributionChart({
                 {s.label}
                 <b>
                   {readout.values[i] === null || readout.values[i] === undefined
-                    ? 'n/a'
-                    : `${((readout.values[i] as number) * 100).toFixed(1)}%`}
+                    ? notAvailable()
+                    : `${num((readout.values[i] as number) * 100, 1)}%`}
                 </b>
               </span>
             ))}
@@ -445,7 +446,7 @@ export function ParityChart({
     ctx.rotate(-Math.PI / 2);
     ctx.fillText(AXES.predicted[lang] ?? AXES.predicted.en, 0, 0);
     ctx.restore();
-    ctx.fillText(`${(hi * 100).toFixed(0)}cm`, 6, 18);
+    ctx.fillText(`${num(hi * 100, 0)}cm`, 6, 18);
     ctx.fillText('0', pad - 10, size - pad + 14);
     declare(ref.current, 'parity', {
       points: points.length,
@@ -507,19 +508,19 @@ export function ParityChart({
             <span className="fr-readout-item">
               {hover.site}
               <b>
-                measured {(hover.measuredM * 100).toFixed(1)} cm, predicted{' '}
-                {(hover.predictedM * 100).toFixed(1)} cm
+                {lang === 'es' ? 'medido' : 'measured'} {num(hover.measuredM * 100, 1)} cm;{' '}
+                {lang === 'es' ? 'predicho' : 'predicted'} {num(hover.predictedM * 100, 1)} cm
               </b>
             </span>
             <span className="fr-readout-item">
-              error
+              {lang === 'es' ? 'error' : 'error'}
               <b>
                 {hover.predictedM >= hover.measuredM ? '+' : ''}
-                {((hover.predictedM - hover.measuredM) * 100).toFixed(1)} cm (
-                {(((hover.predictedM - hover.measuredM) / hover.measuredM) * 100).toFixed(0)}%)
+                {num((hover.predictedM - hover.measuredM) * 100, 1)} cm (
+                {num(((hover.predictedM - hover.measuredM) / hover.measuredM) * 100, 0)}%)
               </b>
             </span>
-            {hover.extrapolated ? <span className="fr-badge fr-badge-warn">extrapolated</span> : null}
+            {hover.extrapolated ? <span className="fr-badge fr-badge-warn">{lang === 'es' ? 'extrapolado' : 'extrapolated'}</span> : null}
           </>
         ) : (
           <span className="fr-readout-hint" title={HINTS.parity[lang] ?? HINTS.parity.en}>{HINTS.parity[lang] ?? HINTS.parity.en}</span>
@@ -701,7 +702,7 @@ export function LineChart({
     epoch,
   ]);
 
-  const fmt = valueFormat ?? ((v: number) => v.toFixed(3));
+  const fmt = valueFormat ?? ((v: number) => num(v, 3));
 
   return (
     <div className="fr-chart">
@@ -726,13 +727,13 @@ export function LineChart({
         {readout ? (
           <>
             <span className="fr-readout-key">
-              {xTickFormat ? xTickFormat(readout.x) : readout.x.toFixed(3)}
+              {xTickFormat ? xTickFormat(readout.x) : num(readout.x, 3)}
             </span>
             {series.map((s, i) => (
               <span key={s.id} className="fr-readout-item">
                 <i style={{ background: s.colour ?? palette()[i % palette().length] }} />
                 {s.label}
-                <b>{readout.values[i] === null || readout.values[i] === undefined ? 'n/a' : fmt(readout.values[i] as number)}</b>
+                <b>{readout.values[i] === null || readout.values[i] === undefined ? notAvailable() : fmt(readout.values[i] as number)}</b>
               </span>
             ))}
           </>

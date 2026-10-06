@@ -20,6 +20,7 @@ import { ARM_BY_ID, FEATURE_LABEL, formatSize } from '../lib/artifacts';
 import type { BlastRow, CaseArtifact, Lang } from '../lib/contract.types';
 import { useModels } from '../lib/facts';
 import { Panel } from '../viz/Panels';
+import { notAvailable, num } from '../lib/format';
 
 const FEATURES: (keyof LiveBlast)[] = ['S_over_B', 'H_over_B', 'B_over_D', 'T_over_B', 'Pf_kg_m3', 'XB_m', 'E_GPa'];
 
@@ -171,7 +172,7 @@ export function WhatIfTab({ artifact, blast }: { artifact: CaseArtifact; blast: 
             <>
               <b>{label(active.arm, lang)}</b>
               {' · '}
-              {es ? 'en vivo' : 'live'}: {active.live?.value !== null && active.live?.value !== undefined ? formatSize(active.live.value) : active.live?.reason ?? 'n/a'}
+              {es ? 'en vivo' : 'live'}: {active.live?.value !== null && active.live?.value !== undefined ? formatSize(active.live.value) : active.live?.reason ?? notAvailable()}
               {' · '}
               {es ? 'horneado' : 'baked'}: {formatSize(active.baked?.x50_m)}
             </>
@@ -213,7 +214,7 @@ export function WhatIfTab({ artifact, blast }: { artifact: CaseArtifact; blast: 
                   value={design[k]}
                   onChange={(e) => setDesign({ ...design, [k]: Number(e.target.value) })}
                 />
-                <output>{design[k].toFixed(2)}</output>
+                <output>{num(design[k], 2)}</output>
               </label>
             );
           })}
@@ -268,7 +269,7 @@ function VariantResponse({ artifact }: { artifact: CaseArtifact }) {
   const change = (v: number | null | undefined) =>
     typeof v === 'number' && typeof base === 'number' && base > 0 ? (v / base - 1) * 100 : null;
   const pctText = (p: number | null) =>
-    p === null ? '' : Math.abs(p) < 0.05 ? (es ? 'igual que el diseño' : 'same as designed') : `${p > 0 ? '+' : ''}${p.toFixed(1)} %`;
+    p === null ? '' : Math.abs(p) < 0.05 ? (es ? 'igual que el diseño' : 'same as designed') : `${p > 0 ? '+' : ''}${num(p, 1)} %`;
 
   return (
     <>
