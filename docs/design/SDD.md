@@ -50,8 +50,8 @@ Non-goals, each something a reader could reasonably assume:
   Levenberg-Marquardt fits put it offline; it never runs in CI (ADR-0074). It pins BLAS to one thread before numpy
   loads: on the network's small matrices a multi-threaded BLAS spun, and one fit at width 15 took more than six
   minutes on a loaded workstation against about two seconds on one thread. The full bake took 745 s at 0.06.000
-  and 347 s at 0.07.000 on the development workstation, the same day and with the same pipeline (2026-10-05): the
-  time follows the machine's load.
+  and 347 to 678 s in the three bakes of 0.07.000 on the development workstation, the same day and with the same
+  pipeline (2026-10-05): the time follows the machine's load.
 - **Replayed**: the committed artifacts, copied into the site and fetched with the version in the address. Their
   size, measured on the committed files:
 
