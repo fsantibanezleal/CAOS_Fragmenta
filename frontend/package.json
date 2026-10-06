@@ -11,7 +11,8 @@
     "postbuild": "node spa-404.mjs",
     "preview": "vite preview",
     "test": "node --import tsx --test",
-    "gate:browser": "node gates/browser-gate.mjs"
+    "gate:browser": "node gates/browser-gate.mjs",
+    "gate": "node scripts/gate.mjs"
   },
   "dependencies": {
     "@fasl-work/caos-app-shell": "0.7.2",
