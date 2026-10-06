@@ -30,7 +30,7 @@
 //     how a note running through the Group 2 box of the router diagram shipped;
 //   - the architecture modal's drawings, measured the same way.
 //   - every size column states one unit, the rail leaves no empty band above its last control, and
-//     the Benchmark's published-network sub-tab carries the width sweep, drawn (0.06.000).
+//     the Benchmark's published-reproductions sub-tab carries the width sweep, drawn (0.06.000).
 //
 // Usage:
 //   npm run build && npx vite preview --port 4173 &
@@ -599,8 +599,8 @@ for (const [w, h] of VIEWPORTS) {
             const info = await inspect(page);
             if (info.brokenPanels.length) fail(`${where} ${label}`, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
             if (info.mixedUnits.length) fail(`${where} ${label}`, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
-            // EN-008: the network's own sub-tab carries the width sweep, drawn and declared.
-            if (route.startsWith('/benchmark') && /published network|red publicada/i.test(label)) {
+            // EN-008: the published-reproductions sub-tab carries the network's width sweep, drawn and declared.
+            if (route.startsWith('/benchmark') && /published reproductions|reproducciones publicadas/i.test(label)) {
               sweepChecked = true;
               const sweep = await page.evaluate(() => {
                 const el = document.querySelector('[data-width-sweep]');
@@ -613,7 +613,7 @@ for (const [w, h] of VIEWPORTS) {
                   : 0;
                 return { widths: Number(el.getAttribute('data-width-sweep')) || 0, drawn };
               });
-              if (!sweep) fail(`${where} ${label}`, 'the width sweep is not on the published-network sub-tab');
+              if (!sweep) fail(`${where} ${label}`, 'the width sweep is not on the published-reproductions sub-tab');
               else if (!sweep.widths || !sweep.drawn)
                 fail(`${where} ${label}`, `the width sweep declares ${sweep.widths} widths and its chart ${sweep.drawn} drawn`);
               else pass(`${where} ${label} width sweep`, `${sweep.widths} widths drawn`);
@@ -640,7 +640,7 @@ for (const [w, h] of VIEWPORTS) {
           }
           // A renamed sub-tab must not skip the check silently.
           if (route.startsWith('/benchmark') && !sweepChecked)
-            fail(where, 'no sub-tab named "The published network" ("La red publicada") to check the width sweep on');
+            fail(where, 'no sub-tab named "Published reproductions" ("Reproducciones publicadas") to check the width sweep on');
           pass(`${where} figures`, `${count || 1} sections, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
           problems.length = 0;
         }

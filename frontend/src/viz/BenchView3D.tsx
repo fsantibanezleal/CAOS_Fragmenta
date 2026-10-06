@@ -21,6 +21,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 import type { Pattern } from '../lib/contract.types';
+import { num } from '../lib/format';
 
 export interface BenchView3DProps {
   pattern: Pattern;
@@ -445,13 +446,13 @@ export function BenchView3D({
       key: 'charge',
       swatch: 'var(--color-accent)',
       label: es ? 'carga' : 'charge',
-      value: `${pattern.charge_length_m.toFixed(2)} m · ${pattern.charge_mass_kg.toFixed(0)} kg`,
+      value: `${num(pattern.charge_length_m, 2)} m · ${num(pattern.charge_mass_kg, 0)} kg`,
     },
     {
       key: 'stemming',
       swatch: 'var(--color-warn)',
       label: es ? 'taco' : 'stemming',
-      value: `${pattern.stemming_m.toFixed(2)} m`,
+      value: `${num(pattern.stemming_m, 2)} m`,
     },
     {
       key: 'face',
@@ -463,19 +464,19 @@ export function BenchView3D({
       key: 'burden',
       swatch: 'var(--color-fg-subtle)',
       label: es ? 'bordo x espaciamiento' : 'burden x spacing',
-      value: `${pattern.burden_m.toFixed(2)} x ${pattern.spacing_m.toFixed(2)} m`,
+      value: `${num(pattern.burden_m, 2)} x ${num(pattern.spacing_m, 2)} m`,
     },
     {
       key: 'bench',
       swatch: 'var(--color-fg-subtle)',
       label: es ? 'banco' : 'bench',
-      value: `${pattern.bench_height_m.toFixed(2)} m`,
+      value: `${num(pattern.bench_height_m, 2)} m`,
     },
     {
       key: 'hole',
       swatch: 'var(--color-fg-subtle)',
       label: es ? 'perforación' : 'hole',
-      value: `${pattern.hole_diameter_mm.toFixed(0)} mm`,
+      value: `${num(pattern.hole_diameter_mm, 0)} mm`,
     },
   ];
 
@@ -507,8 +508,8 @@ export function BenchView3D({
             : es ? 'Reproducir iniciación' : 'Play initiation'}
         </button>
         <span className="fr-bench-dims">
-          {es ? 'roca' : 'rock'} {pattern.rock_volume_m3.toFixed(0)} m3 ·{' '}
-          {(pattern.charge_mass_kg / Math.max(1e-9, pattern.rock_volume_m3)).toFixed(3)}{' '}
+          {es ? 'roca' : 'rock'} {num(pattern.rock_volume_m3, 0)} m3 ·{' '}
+          {num(pattern.charge_mass_kg / Math.max(1e-9, pattern.rock_volume_m3), 3)}{' '}
           {es ? 'kg por m3' : 'kg per m3'}
         </span>
         {label ? <span className="fr-bench-label">{label}</span> : null}

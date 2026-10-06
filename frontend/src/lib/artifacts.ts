@@ -7,6 +7,7 @@
  */
 
 import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang, ModelsFile } from './contract.types';
+import { notAvailable, num, signed } from './format';
 
 // `import.meta.env` is injected by the bundler and does not exist when this module is imported
 // from plain Node, which is how the parity tests read the arm catalogue. Guarding it is what makes
@@ -271,7 +272,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Gradient boosting', es: 'Potenciación por gradiente' },
     blurb: {
       en: 'Reproduced at the published learning rate of 0.5, which its own source reports as overfitting. Left visible rather than tuned away.',
-      es: 'Reproducido con la tasa de aprendizaje publicada de 0.5, que su propia fuente reporta como sobreajuste. Se deja visible en vez de corregirlo.',
+      es: 'Reproducido con la tasa de aprendizaje publicada de 0,5, que su propia fuente reporta como sobreajuste. Se deja visible en vez de corregirlo.',
     },
     distribution: false,
     source: 'Sui et al. 2025, final parameters',
@@ -388,24 +389,23 @@ export const FEATURE_LABEL: Record<string, Record<Lang, string>> = {
  * in the product makes any two of them comparable at a glance; the browser gate checks the columns.
  */
 export function formatSize(metres: number | null | undefined): string {
-  if (metres === null || metres === undefined || !Number.isFinite(metres)) return 'n/a';
-  return `${(metres * 100).toFixed(1)} cm`;
+  if (metres === null || metres === undefined || !Number.isFinite(metres)) return notAvailable();
+  return `${num(metres * 100, 1)} cm`;
 }
 
 export function formatSigned(value: number | null | undefined, digits = 3): string {
-  if (value === null || value === undefined || !Number.isFinite(value)) return 'n/a';
-  return `${value >= 0 ? '+' : ''}${value.toFixed(digits)}`;
+  return signed(value, digits);
 }
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹';
 
 export function formatScore(value: number | null | undefined, digits = 3): string {
-  if (value === null || value === undefined || !Number.isFinite(value)) return 'n/a';
+  if (value === null || value === undefined || !Number.isFinite(value)) return notAvailable();
   // A refit collapses to -117792.670 on an unseen site; printed in full it widened every table it was in.
   if (Math.abs(value) >= 1000) {
     const [mantissa, exponent] = value.toExponential(1).split('e');
     const power = [...String(Number(exponent))].map((c) => (c === '-' ? '⁻' : SUPERSCRIPT[Number(c)])).join('');
-    return `${mantissa}×10${power}`;
+    return `${num(Number(mantissa), 1)}×10${power}`;
   }
-  return value.toFixed(digits);
+  return num(value, digits);
 }

@@ -135,7 +135,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
         ),
         (
     "La roca más rígida del conjunto, 60 GPa, en un esquisto plegado. También es donde el índice "
-    "de uniformidad baja más, porque el taco ocupa casi todo un banco de solo 1.33 bordos."
+    "de uniformidad baja más, porque el taco ocupa casi todo un banco de solo 1,33 bordos."
         ),
         "coarse, 0.26 to 0.64 m measured",
     ),
@@ -148,7 +148,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
     "sits in both the training table and the published validation set."
         ),
         (
-    "El mayor bordo del conjunto, 6.0 m con perforación de 229 mm. Su tiro Rc1 es el que aparece "
+    "El mayor bordo del conjunto, 6,0 m con perforación de 229 mm. Su tiro Rc1 es el que aparece "
     "tanto en la tabla de entrenamiento como en el conjunto de validación publicado."
         ),
         "coarse, 0.44 to 0.96 m measured",
@@ -229,9 +229,9 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
     "predicts 0.08 m against 0.35 m measured."
         ),
         (
-    "La roca más débil del conjunto, 9.57 GPa, y el menor factor de roca recuperado, 3.68. "
+    "La roca más débil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3.68. "
     "También es donde el modelo clásico falla más: en el tiro de validación de este sitio "
-    "predice 0.08 m frente a 0.35 m medidos."
+    "predice 0,08 m frente a 0,35 m medidos."
         ),
         "medium, 0.23 to 0.76 m measured",
     ),
@@ -246,7 +246,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
         ),
         (
     "El sitio más grande del conjunto, 22 de los 97 tiros, razón por la cual las filas no son "
-    "muestras independientes y el benchmark excluye sitios completos. Arenisca de 16.9 GPa con "
+    "muestras independientes y el benchmark excluye sitios completos. Arenisca de 16,9 GPa con "
     "los mayores factores de carga del conjunto."
         ),
         "fine, 0.14 to 0.22 m measured",
@@ -332,7 +332,7 @@ def _real_cases() -> list[Case]:
             reason_es=(
                 "Cinco tiros de producción medidos por análisis de imagen, y el único conjunto real "
                 "de este producto que queda FUERA de la envolvente ajustada. Su módulo de Young de "
-                "5.6 GPa está bajo el mínimo del corpus, 9.57, en la variable que dos estudios "
+                "5,6 GPa está bajo el mínimo del corpus, 9,57, en la variable que dos estudios "
                 "independientes califican como la más importante. Toda predicción aquí se marca "
                 "como extrapolación. Es también el único conjunto que publica su malla absoluta, "
                 "así que verifica la reconstrucción geométrica en vez de consumirla."

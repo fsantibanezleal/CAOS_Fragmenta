@@ -322,7 +322,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
         (t("Checked: 15 of 15", "Comprobado: 15 de 15"), [t("dimensional constraints the same prose states, at nine sites", "restricciones dimensionales que declara la misma prosa, en nueve sitios")], "good"),
     ])
     b = column(312, 270, 64, 10, [
-        (t("A rock factor nobody printed", "Un factor de roca que nadie imprimió"), [t("recovered by inverting the equation on the published predictions; within-site spread 0.6 to 3.7 percent", "recuperado invirtiendo la ecuación sobre las predicciones publicadas; dispersión dentro del sitio 0.6 a 3.7 por ciento")], "accent"),
+        (t("A rock factor nobody printed", "Un factor de roca que nadie imprimió"), [t("recovered by inverting the equation on the published predictions; within-site spread 0.6 to 3.7 percent", "recuperado invirtiendo la ecuación sobre las predicciones publicadas; dispersión dentro del sitio 0,6 a 3,7 por ciento")], "accent"),
         (t("A transfer line", "Una recta de transferencia"), [t(f"the factor predicted from Young's modulus over training sites only: {F['transfer_site']:.3f} held out by site, against {F['kuz_site']:.3f} with the site's own factor", f"el factor predicho desde el módulo solo con los sitios de entrenamiento: {F['transfer_site']:.3f} con el sitio excluido, frente a {F['kuz_site']:.3f} con el factor propio")], "good"),
     ])
     c = column(602, 276, 64, 10, [
@@ -342,7 +342,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
 def tab5(F: dict, es: bool) -> tuple[str, float]:
     t = picker(es)
     c1 = column(22, 270, 64, 10, [
-        (t("Contract 1, what gets in", "Contrato 1, qué entra"), [t("REJECT outside the contract range (E in 0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)", "RECHAZA fuera del rango (E de 0.5 a 150 GPa, Pf de 0.05 a 3 kg/m3)"), t("FLAG and stamp outside the envelope; never clip", "MARCA y sella fuera de la envolvente; nunca recorta")], "warn"),
+        (t("Contract 1, what gets in", "Contrato 1, qué entra"), [t("REJECT outside the contract range (E in 0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)", "RECHAZA fuera del rango (E de 0,5 a 150 GPa, Pf de 0,05 a 3 kg/m3)"), t("FLAG and stamp outside the envelope; never clip", "MARCA y sella fuera de la envolvente; nunca recorta")], "warn"),
         (t("Integrity gate", "Compuerta de integridad"), [t("reproduce the paper's own summary table, plus a pinned digest; it found five transcription errors", "reproduce la tabla resumen del artículo, más un resumen fijado; encontró cinco errores de transcripción")], "good"),
     ])
     c2 = column(312, 270, 64, 10, [
@@ -356,7 +356,7 @@ def tab5(F: dict, es: bool) -> tuple[str, float]:
     arrows = [arrow(c1[0].bottom(), c1[1].top()), arrow(c1[1].right(), c2[0].left()), arrow(c2[0].bottom(), c2[1].top()), arrow(c2[0].right(), gate[0].left()), arrow(gate[0].bottom(), gate[1].top())]
     notes = [t(
         "The integrity gate exists because the corpus as first assembled disagreed with the published tables in five cells, two on the measured size; the tell was a powder-factor maximum of 1.47 against the 1.26 the paper prints.",
-        "La compuerta de integridad existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas, dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1.47 frente al 1.26 que imprime el artículo.",
+        "La compuerta de integridad existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas, dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1,47 frente al 1,26 que imprime el artículo.",
     )]
     return layout(t("The two contracts and the gates between them", "Los dos contratos y las compuertas entre ellos"), [c1, c2, gate], arrows, notes)
 

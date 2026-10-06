@@ -20,6 +20,7 @@ import {
   ProtocolDiagram,
   RockFactorDiagram,
 } from '../viz/Diagrams';
+import { notAvailable, value } from '../lib/format';
 
 interface TabProps {
   es: boolean;
@@ -34,8 +35,17 @@ export default function Methodology() {
   const corpus = useModels('corpus');
 
   const tabs: SubTabDef[] = [
-    { id: 'classical', label: es ? 'Tamaño medio clásico' : 'Classical mean size', content: <Classical es={es} b={b} /> },
-    { id: 'rock', label: es ? 'Factor de roca' : 'Rock factor', content: <RockFactor es={es} b={b} /> },
+    // Six peers at most (ADR-0071 rule 5): the rock factor is the classical equation's A term, so the two share one.
+    {
+      id: 'classical',
+      label: es ? 'Tamaño medio clásico y factor de roca' : 'Classical mean size and rock factor',
+      content: (
+        <>
+          <Classical es={es} b={b} />
+          <RockFactor es={es} b={b} />
+        </>
+      ),
+    },
     { id: 'distributions', label: es ? 'Distribuciones' : 'Distributions', content: <Distributions es={es} b={b} /> },
     { id: 'statistical', label: es ? 'Enrutador y regresiones' : 'Router and regressions', content: <Statistical es={es} b={b} /> },
     { id: 'network', label: es ? 'Red neuronal' : 'Neural network', content: <Network es={es} b={b} /> },
@@ -107,8 +117,8 @@ function Classical({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `Dónde falla. Sobre el conjunto de validación publicado de doce tiros, la columna clásica que imprime el artículo de 2012 explica ${f(classical?.r2_identity)} de la varianza respecto de la identidad, con una correlación al cuadrado de ${f(classical?.pearson_r2)}; su error cuadrático medio de ${f(classical?.rmse_m)} m mejora en ${gain === null ? 'n/a' : Math.round(gain * 100)} por ciento al de predecir una constante. Es el peor de los tres modelos de esa tabla. Su falla mejor documentada es subestimar los finos. Bajo los protocolos de este producto puntúa cerca de 0.30 en todos: ${f(F?.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana y ${f(F?.site('kuznetsov'))} con su sitio excluido.`
-          : `Where it fails. On the published twelve-blast hold-out, the classical column the 2012 paper prints explains ${f(classical?.r2_identity)} of the variance about the identity line, with a squared correlation of ${f(classical?.pearson_r2)}; its root mean square error of ${f(classical?.rmse_m)} m improves on predicting a constant by ${gain === null ? 'n/a' : Math.round(gain * 100)} percent. It is the worst of the three models in that table. Its best-documented failure is under-predicting fines. Under this product’s protocols it scores about 0.30 in all of them: ${f(F?.random('kuznetsov')?.r2_identity)} at the median random split and ${f(F?.site('kuznetsov'))} with its site held out.`}{' '}
+          ? `Dónde falla. Sobre el conjunto de validación publicado de doce tiros, la columna clásica que imprime el artículo de 2012 explica ${f(classical?.r2_identity)} de la varianza respecto de la identidad, con una correlación al cuadrado de ${f(classical?.pearson_r2)}; su error cuadrático medio de ${f(classical?.rmse_m)} m mejora en ${gain === null ? notAvailable() : Math.round(gain * 100)} por ciento al de predecir una constante. Es el peor de los tres modelos de esa tabla. Su falla mejor documentada es subestimar los finos. Bajo los protocolos de este producto puntúa cerca de 0,30 en todos: ${f(F?.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana y ${f(F?.site('kuznetsov'))} con su sitio excluido.`
+          : `Where it fails. On the published twelve-blast hold-out, the classical column the 2012 paper prints explains ${f(classical?.r2_identity)} of the variance about the identity line, with a squared correlation of ${f(classical?.pearson_r2)}; its root mean square error of ${f(classical?.rmse_m)} m improves on predicting a constant by ${gain === null ? notAvailable() : Math.round(gain * 100)} percent. It is the worst of the three models in that table. Its best-documented failure is under-predicting fines. Under this product’s protocols it scores about 0.30 in all of them: ${f(F?.random('kuznetsov')?.r2_identity)} at the median random split and ${f(F?.site('kuznetsov'))} with its site held out.`}{' '}
         <Cite id="kulatilake2012" />{' '}
         <Cite id="amoako2022" />
       </p>
@@ -171,8 +181,8 @@ function CapParagraphs({ es, b }: { es: boolean; b: BenchmarkArtifact | null }) 
       />
       <p>
         {es
-          ? `En el corpus el límite actúa en ${moved.length} tiros (${moved.join(', ') || 'n/a'}), donde la predicción clásica supera el bloque; ningún tamaño medido en ninguna parte lo supera. Con el sitio excluido lleva el brazo clásico de ${f(classical?.r2_identity)} a ${f(capped?.r2_identity)}, con un intervalo que sigue cruzando el cero (${iv(capped?.supports.all.interval_95, 2, true)}). Ninguna curva medida valida la forma limitada; solo se puntúa su efecto en el tamaño medio.`
-          : `On the corpus the cap binds on ${moved.length} blasts (${moved.join(', ') || 'n/a'}), where the classical prediction exceeds the block; no measured size anywhere exceeds it. Held out by site it moves the classical arm from ${f(classical?.r2_identity)} to ${f(capped?.r2_identity)}, with an interval that still spans zero (${iv(capped?.supports.all.interval_95)}). No measured curve validates the capped shape; only its effect on the mean size is scored.`}
+          ? `En el corpus el límite actúa en ${moved.length} tiros (${moved.join(', ') || notAvailable()}), donde la predicción clásica supera el bloque; ningún tamaño medido en ninguna parte lo supera. Con el sitio excluido lleva el brazo clásico de ${f(classical?.r2_identity)} a ${f(capped?.r2_identity)}, con un intervalo que sigue cruzando el cero (${iv(capped?.supports.all.interval_95, 2, true)}). Ninguna curva medida valida la forma limitada; solo se puntúa su efecto en el tamaño medio.`
+          : `On the corpus the cap binds on ${moved.length} blasts (${moved.join(', ') || notAvailable()}), where the classical prediction exceeds the block; no measured size anywhere exceeds it. Held out by site it moves the classical arm from ${f(classical?.r2_identity)} to ${f(capped?.r2_identity)}, with an interval that still spans zero (${iv(capped?.supports.all.interval_95)}). No measured curve validates the capped shape; only its effect on the mean size is scored.`}
       </p>
     </>
   );
@@ -191,11 +201,11 @@ function RockFactor({ es, b }: TabProps) {
       </p>
       <Equation
         tex={String.raw`A = 0.06\,\mathrm{BI},\qquad \mathrm{BI} = 0.5\,(\mathrm{RMD} + \mathrm{JPS} + \mathrm{JPO} + \mathrm{RDI} + S)`}
-        caption={es ? 'RMD descripción del macizo (10, 20, 50), JPS espaciamiento de juntas (10, 20, 50), JPO orientación (10 a 40), RDI = 25·densidad − 50, S = 0.05·UCS.' : 'RMD rock-mass description (10, 20, 50), JPS joint spacing (10, 20, 50), JPO orientation (10 to 40), RDI = 25·density − 50, S = 0.05·UCS.'}
+        caption={es ? 'RMD descripción del macizo (10, 20, 50), JPS espaciamiento de juntas (10, 20, 50), JPO orientación (10 a 40), RDI = 25·densidad − 50, S = 0,05·UCS.' : 'RMD rock-mass description (10, 20, 50), JPS joint spacing (10, 20, 50), JPO orientation (10 to 40), RDI = 25·density − 50, S = 0.05·UCS.'}
       />
       <p>
         {es
-          ? 'Babaeian y colegas publican en 2019 una segunda tabla atribuida a Lilly, y no es la misma: el término de resistencia es la resistencia a compresión dividida por 3 bajo 50 GPa de módulo, o por 5 sobre 50 GPa, en vez de 0.05 veces la resistencia. Con 100 MPa eso da 5 frente a 33.3 o 20, mueve el índice hasta 14 puntos y el factor de roca hasta 0.85, y el tamaño predicho es lineal en ese factor. La misma fuente tabula una tercera vía, la de Hustrulid, que pasa directamente del índice de Protodyakonov a un factor de 3 a 13. Las tres vías se ofrecen lado a lado, cada una con su fuente.'
+          ? 'Babaeian y colegas publican en 2019 una segunda tabla atribuida a Lilly, y no es la misma: el término de resistencia es la resistencia a compresión dividida por 3 bajo 50 GPa de módulo, o por 5 sobre 50 GPa, en vez de 0,05 veces la resistencia. Con 100 MPa eso da 5 frente a 33,3 o 20, mueve el índice hasta 14 puntos y el factor de roca hasta 0,85, y el tamaño predicho es lineal en ese factor. La misma fuente tabula una tercera vía, la de Hustrulid, que pasa directamente del índice de Protodyakonov a un factor de 3 a 13. Las tres vías se ofrecen lado a lado, cada una con su fuente.'
           : 'Babaeian and colleagues published in 2019 a second table attributed to Lilly, and it is not the same table: the strength term is the compressive strength divided by 3 below 50 GPa of modulus, or by 5 above it, instead of 0.05 times the strength. At 100 MPa that is 5 against 33.3 or 20; it moves the index by up to 14 points and the rock factor by up to 0.85, and the predicted size is linear in the factor. The same source tabulates a third route, Hustrulid’s, which maps the Protodyakonov index straight onto a factor from 3 to 13. The three routes are offered side by side, each with its source.'}{' '}
         <Cite id="babaeian2019" />
       </p>
@@ -210,7 +220,7 @@ function RockFactor({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? 'Los valores recuperados casi no se mueven dentro de un sitio: la mayor dispersión es 3.7 por ciento, lo que produce redondear las predicciones publicadas a dos decimales, y un error en la geometría los dispersaría. Ordenan la roca casi por rigidez, aunque no del todo: el esquisto plegado de 60 GPa de Enusa queda por debajo de los carbonatos de 45 GPa de Reocin. El brazo de transferencia ajusta una recta en logaritmos de esos factores contra el módulo de cada sitio, sin el sitio que se va a predecir; la tabla compara las dos vías.'
+          ? 'Los valores recuperados casi no se mueven dentro de un sitio: la mayor dispersión es 3,7 por ciento, lo que produce redondear las predicciones publicadas a dos decimales, y un error en la geometría los dispersaría. Ordenan la roca casi por rigidez, aunque no del todo: el esquisto plegado de 60 GPa de Enusa queda por debajo de los carbonatos de 45 GPa de Reocin. El brazo de transferencia ajusta una recta en logaritmos de esos factores contra el módulo de cada sitio, sin el sitio que se va a predecir; la tabla compara las dos vías.'
           : 'The recovered values barely move within a site: the widest spread is 3.7 percent, which is what rounding the published predictions to two decimals produces, and an error in the geometry would scatter them. They order the rock almost by stiffness, though not entirely: the folded 60 GPa schist at Enusa sits below the 45 GPa carbonates at Reocin. The transfer arm fits a line in logarithms of these factors against each site’s modulus, without the site to be predicted; the table compares the two routes.'}
       </p>
       {sites.length ? (
@@ -230,7 +240,7 @@ function RockFactor({ es, b }: TabProps) {
                 <tr key={site}>
                   <td>{site}</td>
                   <td className="fr-fine">{meta.rock ?? '-'}</td>
-                  <td>{meta.E_GPa.join(', ')}</td>
+                  <td>{meta.E_GPa.map((e) => value(e)).join('; ')}</td>
                   <td>{meta.rock_factor_recovered === null ? (es ? 'sin geometría' : 'no geometry') : f(meta.rock_factor_recovered, 2)}</td>
                   <td>{f(meta.rock_factor_transfer, 2)}</td>
                 </tr>
@@ -264,15 +274,15 @@ function Distributions({ es }: TabProps) {
       </p>
       <Equation
         tex={String.raw`P(x) = 1 - \exp\!\left[-0.693\left(\frac{x}{x_{50}}\right)^{n}\right]`}
-        caption={es ? 'Amoako et al. 2022, Ec. 5. El 0.693 es ln 2, lo que hace de x50 el tamaño al 50 por ciento.' : 'Amoako et al. 2022, Eq. 5. The 0.693 is ln 2, which makes x50 the 50 percent size.'}
+        caption={es ? 'Amoako et al. 2022, Ec. 5. El 0,693 es ln 2, lo que hace de x50 el tamaño al 50 por ciento.' : 'Amoako et al. 2022, Eq. 5. The 0.693 is ln 2, which makes x50 the 50 percent size.'}
       />
       <Equation
         tex={String.raw`n = \left(2.2 - 14\frac{B}{d}\right)\sqrt{\frac{1 + S/B}{2}}\left(1 - \frac{W}{B}\right)\left(\left|\frac{\mathrm{BCL}-\mathrm{CCL}}{L}\right| + 0.1\right)^{0.1}\frac{L}{H}`}
-        caption={es ? 'Cunningham 1987, Amoako et al. Ec. 7: B y S en m, d en mm, W desviación de perforación, L largo de carga; ×1.1 en malla trabada.' : 'Cunningham 1987, Amoako et al. Eq. 7: B and S in m, d in mm, W drilling deviation, L charge length; ×1.1 for a staggered pattern.'}
+        caption={es ? 'Cunningham 1987, Amoako et al. Ec. 7: B y S en m, d en mm, W desviación de perforación, L largo de carga; ×1,1 en malla trabada.' : 'Cunningham 1987, Amoako et al. Eq. 7: B and S in m, d in mm, W drilling deviation, L charge length; ×1.1 for a staggered pattern.'}
       />
       <p>
         {es
-          ? 'Dos decisiones de este producto. La carga es una columna continua de ANFO, así que el término de distribución de carga vale 0.1 elevado a 0.1 en vez de inventarse un reparto entre carga de fondo y de columna; y la desviación de perforación es cero porque ninguna fuente la publica. La trampa está en B/d: la fuente da el bordo en metros y el diámetro en milímetros, así que vale cerca de 0.027, no la razón de 27 que tabula el corpus.'
+          ? 'Dos decisiones de este producto. La carga es una columna continua de ANFO, así que el término de distribución de carga vale 0,1 elevado a 0,1 en vez de inventarse un reparto entre carga de fondo y de columna; y la desviación de perforación es cero porque ninguna fuente la publica. La trampa está en B/d: la fuente da el bordo en metros y el diámetro en milímetros, así que vale cerca de 0,027, no la razón de 27 que tabula el corpus.'
           : 'Two decisions of this product. The charge is one continuous ANFO column, so the charge-distribution term is 0.1 to the power 0.1 rather than an invented split between bottom and column charge; and the drilling deviation is zero because no source publishes it. The trap is B/d: the source gives the burden in metres and the diameter in millimetres, so it is about 0.027, not the ratio of 27 the corpus tabulates.'}
       </p>
       <p>
@@ -313,36 +323,36 @@ function Statistical({ es, b }: TabProps) {
       <h2>{es ? 'El enrutador y las dos regresiones' : 'The router and the two regressions'}</h2>
       <p>
         {es
-          ? 'Hudaverdi y colegas separan los 97 tiros por análisis de conglomerados en dos grupos: 35 de módulo alto, con media de 51.14 GPa, y 62 de módulo bajo, con media de 17.22 GPa. El análisis discriminante de la fuente identifica el módulo como el separador dominante (lambda de Wilks 0.161) y encuentra que la razón espaciamiento sobre bordo no influye en la pertenencia. La función discriminante resultante es:'
+          ? 'Hudaverdi y colegas separan los 97 tiros por análisis de conglomerados en dos grupos: 35 de módulo alto, con media de 51,14 GPa, y 62 de módulo bajo, con media de 17,22 GPa. El análisis discriminante de la fuente identifica el módulo como el separador dominante (lambda de Wilks 0,161) y encuentra que la razón espaciamiento sobre bordo no influye en la pertenencia. La función discriminante resultante es:'
           : 'Hudaverdi and colleagues separate the 97 blasts by cluster analysis into two groups: 35 high-modulus blasts averaging 51.14 GPa and 62 low-modulus blasts averaging 17.22 GPa. The source’s discriminant analysis identifies the modulus as the dominant separator (Wilks’ lambda 0.161) and finds that the spacing-to-burden ratio has no effect on membership. The resulting discriminant function is:'}{' '}
         <Cite id="hudaverdi2010" />
       </p>
       <Equation
         tex={String.raw`L = 4.467\tfrac{S}{B} - 0.551\tfrac{H}{B} - 0.123\tfrac{B}{D} + 1.642\tfrac{T}{B} - 3.005\,P_f + 0.309\,X_B + 0.208\,E + 3.577`}
-        caption={es ? 'Hudaverdi et al. 2010, Ec. 8. Grupo 1 cuando L supera 11.821, el punto medio entre los centroides.' : 'Hudaverdi et al. 2010, Eq. 8. Group 1 when L exceeds 11.821, the midpoint between the centroids.'}
+        caption={es ? 'Hudaverdi et al. 2010, Ec. 8. Grupo 1 cuando L supera 11,821, el punto medio entre los centroides.' : 'Hudaverdi et al. 2010, Eq. 8. Group 1 when L exceeds 11.821, the midpoint between the centroids.'}
       />
       <p>
         {es
-          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10.318 y el menor del alto, 13.067. Es una compuerta real, así que enruta diseños que no están en el corpus. Cada grupo tiene su ley de potencia, con siete exponentes:'
+          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10,318 y el menor del alto, 13.067. Es una compuerta real, así que enruta diseños que no están en el corpus. Cada grupo tiene su ley de potencia, con siete exponentes:'
           : 'It reproduces the published membership of all 109 labelled blasts with no error, and the groups do not overlap: the low group’s maximum is 10.318 and the high group’s minimum 13.067. It is a real gate, so it routes designs that are not in the corpus. Each group has its power law, with seven exponents:'}
       </p>
       <Equation
         tex={String.raw`x_{50}^{(1)} = 208\left(\tfrac{S}{B}\right)^{2.788}\left(\tfrac{H}{B}\right)^{0.112}\left(\tfrac{B}{D}\right)^{0.027}\left(\tfrac{T}{B}\right)^{-0.321}P_f^{-0.360}X_B^{0.233}E^{-1.802}`}
-        caption={es ? 'Grupo 1, módulo alto, Ec. 9: R² 0.708 sobre 35 tiros, en metros.' : 'Group 1, high modulus, Eq. 9: R² 0.708 on 35 blasts, in metres.'}
+        caption={es ? 'Grupo 1, módulo alto, Ec. 9: R² 0,708 sobre 35 tiros, en metros.' : 'Group 1, high modulus, Eq. 9: R² 0.708 on 35 blasts, in metres.'}
       />
       <Equation
         tex={String.raw`x_{50}^{(2)} = 0.60\left(\tfrac{S}{B}\right)^{0.547}\left(\tfrac{H}{B}\right)^{0.535}\left(\tfrac{B}{D}\right)^{0.427}\left(\tfrac{T}{B}\right)^{-0.101}P_f^{-0.115}X_B^{0.434}E^{-1.202}`}
-        caption={es ? 'Grupo 2, módulo bajo, Ec. 10: R² 0.739 sobre 62 tiros, en metros.' : 'Group 2, low modulus, Eq. 10: R² 0.739 on 62 blasts, in metres.'}
+        caption={es ? 'Grupo 2, módulo bajo, Ec. 10: R² 0,739 sobre 62 tiros, en metros.' : 'Group 2, low modulus, Eq. 10: R² 0.739 on 62 blasts, in metres.'}
       />
       <p>
         {es
-          ? 'Los dos coeficientes principales difieren por un factor de 347 y ambas ecuaciones devuelven metros. Parece un error de unidades y no lo es: los exponentes del módulo difieren en 0.6 sobre un rango de 9.57 a 60 GPa, y el término del módulo absorbe la diferencia. Se comprobó numéricamente antes de aceptar los coeficientes.'
+          ? 'Los dos coeficientes principales difieren por un factor de 347 y ambas ecuaciones devuelven metros. Parece un error de unidades y no lo es: los exponentes del módulo difieren en 0,6 sobre un rango de 9,57 a 60 GPa, y el término del módulo absorbe la diferencia. Se comprobó numéricamente antes de aceptar los coeficientes.'
           : 'The two leading coefficients differ by a factor of 347 and both equations return metres. It looks like a unit slip and is not: the modulus exponents differ by 0.6 over a range of 9.57 to 60 GPa, and the modulus term absorbs the gap. This was checked numerically before the coefficients were accepted.'}
       </p>
       <p>
         {es
-          ? `Ambos artículos imprimen estas ecuaciones y además una tabla de predicciones hechas con ellas. Recalcular las ecuaciones y puntuar sobre las mismas filas da más que las tablas: ${f(r2010?.recomputed.r2_identity)} frente a ${f(r2010?.as_published.r2_identity)} sobre los ${r2010?.n_rows ?? 'n/a'} tiros de 2010, y ${f(r2012?.recomputed.r2_identity)} frente a ${f(r2012?.as_published.r2_identity)} sobre los ${r2012?.n_rows ?? 'n/a'} de 2012. Los dos artículos imprimen cifras distintas para cinco filas pese a usar las mismas ecuaciones; el recálculo coincide con la cifra de 2010 en cuatro de ellas y nunca con la de 2012, y la quinta, Ad24, no coincide con ninguna por unos 0.02 m.`
-          : `Both papers print these equations and also a table of predictions made with them. Recomputing the equations and scoring on the same rows gives more than the tables: ${f(r2010?.recomputed.r2_identity)} against ${f(r2010?.as_published.r2_identity)} on the ${r2010?.n_rows ?? 'n/a'} blasts of 2010, and ${f(r2012?.recomputed.r2_identity)} against ${f(r2012?.as_published.r2_identity)} on the ${r2012?.n_rows ?? 'n/a'} of 2012. The two papers print different figures for five rows despite using the same equations; the recomputation matches the 2010 figure on four of them and never the 2012 one, and the fifth, Ad24, matches neither by about 0.02 m.`}{' '}
+          ? `Ambos artículos imprimen estas ecuaciones y además una tabla de predicciones hechas con ellas. Recalcular las ecuaciones y puntuar sobre las mismas filas da más que las tablas: ${f(r2010?.recomputed.r2_identity)} frente a ${f(r2010?.as_published.r2_identity)} sobre los ${r2010?.n_rows ?? notAvailable()} tiros de 2010, y ${f(r2012?.recomputed.r2_identity)} frente a ${f(r2012?.as_published.r2_identity)} sobre los ${r2012?.n_rows ?? notAvailable()} de 2012. Los dos artículos imprimen cifras distintas para cinco filas pese a usar las mismas ecuaciones; el recálculo coincide con la cifra de 2010 en cuatro de ellas y nunca con la de 2012, y la quinta, Ad24, no coincide con ninguna por unos 0,02 m.`
+          : `Both papers print these equations and also a table of predictions made with them. Recomputing the equations and scoring on the same rows gives more than the tables: ${f(r2010?.recomputed.r2_identity)} against ${f(r2010?.as_published.r2_identity)} on the ${r2010?.n_rows ?? notAvailable()} blasts of 2010, and ${f(r2012?.recomputed.r2_identity)} against ${f(r2012?.as_published.r2_identity)} on the ${r2012?.n_rows ?? notAvailable()} of 2012. The two papers print different figures for five rows despite using the same equations; the recomputation matches the 2010 figure on four of them and never the 2012 one, and the fifth, Ad24, matches neither by about 0.02 m.`}{' '}
         <Cite id="kulatilake2012" />
       </p>
       <GroupRouterDiagram />
@@ -388,8 +398,8 @@ function Network({ es, b }: TabProps) {
       <WidthParagraph es={es} b={b} />
       <p>
         {es
-          ? `Reproducida con su especificación sobre ${sweep?.n_seeds ?? 'n/a'} semillas, la varianza explicada en el conjunto de validación publicado va de ${f(sweep?.min)} a ${f(sweep?.max)}, con mediana ${f(sweep?.median)}. El ${f(sweep?.published)} publicado queda por encima de todas. El déficit se concentra en dos filas, las que la propia fuente reporta como sus más inestables, con coeficientes de variación de 0.56 y 0.76 entre sus ocho simulaciones.`
-          : `Reproduced to its specification over ${sweep?.n_seeds ?? 'n/a'} seeds, its variance explained on the published hold-out runs from ${f(sweep?.min)} to ${f(sweep?.max)}, with a median of ${f(sweep?.median)}. The published ${f(sweep?.published)} lies above every one. The shortfall concentrates in two rows, the two the source itself reports as its most unstable, with coefficients of variation of 0.56 and 0.76 across its eight simulations.`}
+          ? `Reproducida con su especificación sobre ${sweep?.n_seeds ?? notAvailable()} semillas, la varianza explicada en el conjunto de validación publicado va de ${f(sweep?.min)} a ${f(sweep?.max)}, con mediana ${f(sweep?.median)}. El ${f(sweep?.published)} publicado queda por encima de todas. El déficit se concentra en dos filas, las que la propia fuente reporta como sus más inestables, con coeficientes de variación de 0,56 y 0,76 entre sus ocho simulaciones.`
+          : `Reproduced to its specification over ${sweep?.n_seeds ?? notAvailable()} seeds, its variance explained on the published hold-out runs from ${f(sweep?.min)} to ${f(sweep?.max)}, with a median of ${f(sweep?.median)}. The published ${f(sweep?.published)} lies above every one. The shortfall concentrates in two rows, the two the source itself reports as its most unstable, with coefficients of variation of 0.56 and 0.76 across its eight simulations.`}
       </p>
       <p>
         {es
@@ -399,7 +409,7 @@ function Network({ es, b }: TabProps) {
       <NetworkDiagram />
       <Callout variant="honest" title={es ? 'Qué se afirma, y qué no' : 'What is claimed, and what is not'}>
         {es
-          ? 'No se afirma que el resultado publicado sea falso: detalles no registrados, una inicialización o una tirada distinta de simulaciones podrían explicarlo. Lo que el barrido establece es que el puntaje publicado no es robusto a la semilla, en un método cuyo propio artículo lo muestra inestable entre anchos vecinos: en el grupo de módulo bajo, la correlación de su Tabla 7 pasa de 0.11 con seis unidades ocultas a 0.81 con siete y a 0.49 con ocho.'
+          ? 'No se afirma que el resultado publicado sea falso: detalles no registrados, una inicialización o una tirada distinta de simulaciones podrían explicarlo. Lo que el barrido establece es que el puntaje publicado no es robusto a la semilla, en un método cuyo propio artículo lo muestra inestable entre anchos vecinos: en el grupo de módulo bajo, la correlación de su Tabla 7 pasa de 0,11 con seis unidades ocultas a 0,81 con siete y a 0,49 con ocho.'
           : 'It is not claimed that the published result is wrong: unrecorded details, an initialisation scheme or a different simulation draw could account for it. What the sweep establishes is that the published score is not robust to the seed, on a method its own paper shows to be unstable between adjacent widths: in the low-modulus group, the correlation in its Table 7 goes from 0.11 with six hidden units to 0.81 with seven and 0.49 with eight.'}
       </Callout>
       {refs('m-network', es)}
@@ -419,7 +429,7 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
       <h2>{es ? 'Núcleos, bosques, potenciación y el ensamble' : 'Kernels, forests, boosting and the ensemble'}</h2>
       <p>
         {es
-          ? 'Dos fuentes ajustan regresión por vectores de soporte sobre este mismo corpus y llegan a conclusiones opuestas sobre el núcleo. Amoako y colegas buscan en 2700 combinaciones de cuatro núcleos y eligen uno radial con C 5.25 y épsilon 0.04; Sui y colegas usan uno polinomial de grado 5 con C 1 y lo reportan como el peor de sus tres aprendices. Ambos se reproducen. La regresión es una expansión en vectores de soporte, con las entradas estandarizadas:'
+          ? 'Dos fuentes ajustan regresión por vectores de soporte sobre este mismo corpus y llegan a conclusiones opuestas sobre el núcleo. Amoako y colegas buscan en 2700 combinaciones de cuatro núcleos y eligen uno radial con C 5,25 y épsilon 0,04; Sui y colegas usan uno polinomial de grado 5 con C 1 y lo reportan como el peor de sus tres aprendices. Ambos se reproducen. La regresión es una expansión en vectores de soporte, con las entradas estandarizadas:'
           : 'Two sources fit support-vector regression to this same corpus and reach opposite conclusions about the kernel. Amoako and colleagues search 2700 combinations of four kernels and choose a radial one with C 5.25 and epsilon 0.04; Sui and colleagues use a degree-5 polynomial with C 1 and report it as the worst of their three learners. Both are reproduced. The regression is an expansion over support vectors, with the inputs standardised:'}{' '}
         <Cite id="amoako2022" />{' '}
         <Cite id="sui2025" />{' '}
@@ -431,7 +441,7 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
       />
       <p>
         {es
-          ? 'El bosque aleatorio promedia árboles crecidos sobre muestras bootstrap con subconjuntos aleatorios de variables; la potenciación por gradiente suma árboles pequeños, cada uno ajustado al residuo de los anteriores, escalados por una tasa de aprendizaje. Los parámetros finales publicados son 76 árboles con semilla 27 para el bosque, y tasa 0.5 con semilla 42 para la potenciación, que la fuente misma reporta como sobreajustada.'
+          ? 'El bosque aleatorio promedia árboles crecidos sobre muestras bootstrap con subconjuntos aleatorios de variables; la potenciación por gradiente suma árboles pequeños, cada uno ajustado al residuo de los anteriores, escalados por una tasa de aprendizaje. Los parámetros finales publicados son 76 árboles con semilla 27 para el bosque, y tasa 0,5 con semilla 42 para la potenciación, que la fuente misma reporta como sobreajustada.'
           : 'The random forest averages trees grown on bootstrap samples with random subsets of the inputs; gradient boosting adds small trees, each fitted to the residual of the ones before, scaled by a learning rate. The published final parameters are 76 trees at seed 27 for the forest and a rate of 0.5 at seed 42 for the boosting, which the source itself reports as overfitting.'}{' '}
         <Cite id="breiman2001" />{' '}
         <Cite id="chen2016" />
@@ -442,8 +452,8 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
       />
       <p>
         {es
-          ? `El ensamble apilado combina el bosque y la potenciación con una regresión lineal. Sui y colegas escriben, al describir su construcción, que intentaron validación cruzada y la cancelaron porque el modelo resultante predecía peor en prueba. En un ensamble apilado, la validación cruzada que se puede cancelar es la que genera las entradas del combinador fuera de muestra, el paso que define el apilamiento según Wolpert; así que este producto ajusta el combinador sobre las predicciones en muestra de los dos aprendices. Ajustado así sobre todo el corpus, sus pesos son ${weights ? f(weights[1], 2) : 'n/a'} para la potenciación y ${weights ? f(weights[0], 2) : 'n/a'} para el bosque.`
-          : `The stacked ensemble combines the forest and the boosting model with a linear regression. Sui and colleagues write, while describing its construction, that they tried cross-validation and cancelled it because the resulting model predicted worse on the test set. In a stacked ensemble, the cross-validation that can be cancelled is the one that produces the combiner’s inputs out of sample, the step that defines stacking in Wolpert’s formulation; so this product fits the combiner on the two learners’ in-sample predictions. Fitted that way on the whole corpus, its weights are ${weights ? f(weights[1], 2) : 'n/a'} on the boosting model and ${weights ? f(weights[0], 2) : 'n/a'} on the forest.`}{' '}
+          ? `El ensamble apilado combina el bosque y la potenciación con una regresión lineal. Sui y colegas escriben, al describir su construcción, que intentaron validación cruzada y la cancelaron porque el modelo resultante predecía peor en prueba. En un ensamble apilado, la validación cruzada que se puede cancelar es la que genera las entradas del combinador fuera de muestra, el paso que define el apilamiento según Wolpert; así que este producto ajusta el combinador sobre las predicciones en muestra de los dos aprendices. Ajustado así sobre todo el corpus, sus pesos son ${weights ? f(weights[1], 2) : notAvailable()} para la potenciación y ${weights ? f(weights[0], 2) : notAvailable()} para el bosque.`
+          : `The stacked ensemble combines the forest and the boosting model with a linear regression. Sui and colleagues write, while describing its construction, that they tried cross-validation and cancelled it because the resulting model predicted worse on the test set. In a stacked ensemble, the cross-validation that can be cancelled is the one that produces the combiner’s inputs out of sample, the step that defines stacking in Wolpert’s formulation; so this product fits the combiner on the two learners’ in-sample predictions. Fitted that way on the whole corpus, its weights are ${weights ? f(weights[1], 2) : notAvailable()} on the boosting model and ${weights ? f(weights[0], 2) : notAvailable()} on the forest.`}{' '}
         <Cite id="wolpert1992" />
       </p>
       <Equation
@@ -452,13 +462,13 @@ function Ensembles({ es, b, corpus }: TabProps & { corpus: ModelsFile | null }) 
       />
       <p>
         {es
-          ? `Como la potenciación reproduce casi exactamente sus filas de entrenamiento, el combinador le da casi todo el peso, y el ensamble se comporta como su aprendiz de potenciación bajo todo protocolo: ${f(F?.random('stacking')?.r2_identity)} y ${f(F?.random('xgboost')?.r2_identity)} en la partición aleatoria mediana, ${f(F?.site('stacking'))} y ${f(F?.site('xgboost'))} con el sitio excluido. El 0.943 publicado para el ensamble queda por encima de ${pub ? Math.round(pub.share_of_draws_below * 100) : 'n/a'} de cada 100 reproducciones de su protocolo.`
-          : `Because the boosting model reproduces its training rows almost exactly, the combiner gives it almost all the weight, and the ensemble behaves like its boosting learner under every protocol: ${f(F?.random('stacking')?.r2_identity)} and ${f(F?.random('xgboost')?.r2_identity)} at the median random split, ${f(F?.site('stacking'))} and ${f(F?.site('xgboost'))} with the site held out. The 0.943 published for the ensemble lies above ${pub ? Math.round(pub.share_of_draws_below * 100) : 'n/a'} of 100 reproductions of its protocol.`}
+          ? `Como la potenciación reproduce casi exactamente sus filas de entrenamiento, el combinador le da casi todo el peso, y el ensamble se comporta como su aprendiz de potenciación bajo todo protocolo: ${f(F?.random('stacking')?.r2_identity)} y ${f(F?.random('xgboost')?.r2_identity)} en la partición aleatoria mediana, ${f(F?.site('stacking'))} y ${f(F?.site('xgboost'))} con el sitio excluido. El 0,943 publicado para el ensamble queda por encima de ${pub ? Math.round(pub.share_of_draws_below * 100) : notAvailable()} de cada 100 reproducciones de su protocolo.`
+          : `Because the boosting model reproduces its training rows almost exactly, the combiner gives it almost all the weight, and the ensemble behaves like its boosting learner under every protocol: ${f(F?.random('stacking')?.r2_identity)} and ${f(F?.random('xgboost')?.r2_identity)} at the median random split, ${f(F?.site('stacking'))} and ${f(F?.site('xgboost'))} with the site held out. The 0.943 published for the ensemble lies above ${pub ? Math.round(pub.share_of_draws_below * 100) : notAvailable()} of 100 reproductions of its protocol.`}
       </p>
       <EnsembleDiagram boostingWeight={weights?.[1]} forestWeight={weights?.[0]} />
       <Callout variant="honest" title={es ? 'Dos juegos de parámetros, y una lectura' : 'Two parameter sets, and one reading'}>
         {es
-          ? 'La fuente imprime dos juegos de parámetros para sus aprendices: uno al afinarlos solos (bosque con semilla 1 y 50 árboles, potenciación con tasa 1.9) y el final al construir el ensamble. No dice sin ambigüedad cuál produjo sus cifras individuales de 0.797 y 0.758, así que los brazos individuales de este producto usan el final y no se presentan como reproducciones de esas dos cifras. Que la validación cruzada cancelada sea la del combinador es una lectura de este producto; la fuente no detalla el mecanismo.'
+          ? 'La fuente imprime dos juegos de parámetros para sus aprendices: uno al afinarlos solos (bosque con semilla 1 y 50 árboles, potenciación con tasa 1,9) y el final al construir el ensamble. No dice sin ambigüedad cuál produjo sus cifras individuales de 0,797 y 0,758, así que los brazos individuales de este producto usan el final y no se presentan como reproducciones de esas dos cifras. Que la validación cruzada cancelada sea la del combinador es una lectura de este producto; la fuente no detalla el mecanismo.'
           : 'The source prints two parameter sets for its learners: one when tuning them alone (forest at seed 1 with 50 trees, boosting at a rate of 1.9) and the final one when building the ensemble. It does not say unambiguously which produced its standalone figures of 0.797 and 0.758, so this product’s standalone arms use the final set and are not presented as reproductions of those two figures. That the cancelled cross-validation is the combiner’s is this product’s reading; the source does not spell out the mechanism.'}
       </Callout>
       {refs('m-ensembles', es)}
@@ -486,8 +496,8 @@ function Protocols({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `Tres protocolos parten las mismas filas. El aleatorio reproduce el publicado y el deduplicado colapsa antes los vectores repetidos; ambos se sortean ${b?.n_repeats ?? 'n/a'} veces y se informan por su mediana y sus percentiles 5 y 95. El tercero retiene una campaña completa por vez y puntúa juntas las predicciones fuera de pliegue de las diez campañas, de modo que cada tiro cuenta una vez. Retener grupos enteros es la forma de validar con datos agrupados que recomiendan Roberts y colegas.`
-          : `Three protocols split the same rows. The random one reproduces the published protocol and the deduplicated one first collapses the repeated vectors; both are drawn ${b?.n_repeats ?? 'n/a'} times and reported by their median and their 5th and 95th percentiles. The third holds out one whole campaign at a time and scores the out-of-fold predictions of all ten campaigns together, so that every blast counts once. Holding out whole groups is how Roberts and colleagues recommend validating on grouped data.`}{' '}
+          ? `Tres protocolos parten las mismas filas. El aleatorio reproduce el publicado y el deduplicado colapsa antes los vectores repetidos; ambos se sortean ${b?.n_repeats ?? notAvailable()} veces y se informan por su mediana y sus percentiles 5 y 95. El tercero retiene una campaña completa por vez y puntúa juntas las predicciones fuera de pliegue de las diez campañas, de modo que cada tiro cuenta una vez. Retener grupos enteros es la forma de validar con datos agrupados que recomiendan Roberts y colegas.`
+          : `Three protocols split the same rows. The random one reproduces the published protocol and the deduplicated one first collapses the repeated vectors; both are drawn ${b?.n_repeats ?? notAvailable()} times and reported by their median and their 5th and 95th percentiles. The third holds out one whole campaign at a time and scores the out-of-fold predictions of all ten campaigns together, so that every blast counts once. Holding out whole groups is how Roberts and colleagues recommend validating on grouped data.`}{' '}
         <Cite id="roberts2017" />{' '}
         <Cite id="kapoor2023" />
       </p>
@@ -497,8 +507,8 @@ function Protocols({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `El intervalo remuestrea sitios, no filas: se sortean diez sitios con reposición ${b?.n_boot ?? 'n/a'} veces, se recalcula el puntaje agrupado y se toman los percentiles 2.5 y 97.5. Remuestrear filas trataría los 22 tiros de una cantera como 22 observaciones independientes. Cada puntaje agrupado se informa además sobre dos conjuntos de filas: todos los tiros, y los ${v?.supports.geometry.n_blasts ?? 'n/a'} con geometría resoluble, que son los únicos donde responden los brazos clásicos.`
-          : `The interval resamples sites, not rows: ten sites are drawn with replacement ${b?.n_boot ?? 'n/a'} times, the pooled score is recomputed, and the 2.5th and 97.5th percentiles are taken. Resampling rows would treat the 22 blasts of one quarry as 22 independent observations. Every pooled score is also reported on two row sets: every blast, and the ${v?.supports.geometry.n_blasts ?? 'n/a'} with resolvable geometry, the only rows the classical arms can answer.`}{' '}
+          ? `El intervalo remuestrea sitios, no filas: se sortean diez sitios con reposición ${b?.n_boot ?? notAvailable()} veces, se recalcula el puntaje agrupado y se toman los percentiles 2,5 y 97.5. Remuestrear filas trataría los 22 tiros de una cantera como 22 observaciones independientes. Cada puntaje agrupado se informa además sobre dos conjuntos de filas: todos los tiros, y los ${v?.supports.geometry.n_blasts ?? notAvailable()} con geometría resoluble, que son los únicos donde responden los brazos clásicos.`
+          : `The interval resamples sites, not rows: ten sites are drawn with replacement ${b?.n_boot ?? notAvailable()} times, the pooled score is recomputed, and the 2.5th and 97.5th percentiles are taken. Resampling rows would treat the 22 blasts of one quarry as 22 independent observations. Every pooled score is also reported on two row sets: every blast, and the ${v?.supports.geometry.n_blasts ?? notAvailable()} with resolvable geometry, the only rows the classical arms can answer.`}{' '}
         <Cite id="efron1979" />{' '}
         <Cite id="field2007" />
       </p>
@@ -508,8 +518,8 @@ function Protocols({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `El criterio de descarte, con la redacción fija desde que la primera corrida le agregó la mitad de positividad (la historia está en Benchmark): «${b?.kill_criterion ?? ''}». Sobre todos los tiros, el mejor brazo aprendido explica ${f(v?.supports.all.best_learned_r2_identity)} y el criterio no se cumple; sobre los ${v?.supports.geometry.n_blasts ?? 'n/a'} con geometría, explica ${f(v?.supports.geometry.best_learned_r2_identity)} y se cumple. El nulo agrupado se correlaciona con las mediciones en ${f(v?.supports.all.null_pearson_r, 2)}: excluir un sitio grueso baja la media de entrenamiento, así que el nulo predice bajo justo donde la medición es alta, y el margen sobre él exagera la destreza.`
-          : `The kill criterion, in the wording fixed since the first run added its positivity half (the history is on Benchmark): “${b?.kill_criterion ?? ''}” Over every blast the best learned arm explains ${f(v?.supports.all.best_learned_r2_identity)} and the criterion is not met; over the ${v?.supports.geometry.n_blasts ?? 'n/a'} with geometry it explains ${f(v?.supports.geometry.best_learned_r2_identity)} and it is. The pooled null correlates with the measurements at ${f(v?.supports.all.null_pearson_r, 2)}: holding out a coarse site lowers the training mean, so the null predicts low exactly where the measurement is high, and the margin over it overstates skill.`}
+          ? `El criterio de descarte, con la redacción fija desde que la primera corrida le agregó la mitad de positividad (la historia está en Benchmark): «${b?.kill_criterion ?? ''}». Sobre todos los tiros, el mejor brazo aprendido explica ${f(v?.supports.all.best_learned_r2_identity)} y el criterio no se cumple; sobre los ${v?.supports.geometry.n_blasts ?? notAvailable()} con geometría, explica ${f(v?.supports.geometry.best_learned_r2_identity)} y se cumple. El nulo agrupado se correlaciona con las mediciones en ${f(v?.supports.all.null_pearson_r, 2)}: excluir un sitio grueso baja la media de entrenamiento, así que el nulo predice bajo justo donde la medición es alta, y el margen sobre él exagera la destreza.`
+          : `The kill criterion, in the wording fixed since the first run added its positivity half (the history is on Benchmark): “${b?.kill_criterion ?? ''}” Over every blast the best learned arm explains ${f(v?.supports.all.best_learned_r2_identity)} and the criterion is not met; over the ${v?.supports.geometry.n_blasts ?? notAvailable()} with geometry it explains ${f(v?.supports.geometry.best_learned_r2_identity)} and it is. The pooled null correlates with the measurements at ${f(v?.supports.all.null_pearson_r, 2)}: holding out a coarse site lowers the training mean, so the null predicts low exactly where the measurement is high, and the margin over it overstates skill.`}
       </p>
       <ProtocolDiagram
         scores={{

@@ -31,7 +31,9 @@ import {
   degenerateReason,
   type LiveBlast,
 } from '../src/engine/live';
-import { ARMS, formatSize } from '../src/lib/artifacts';
+import { useLangStore } from '@fasl-work/caos-app-shell';
+
+import { ARMS, formatScore, formatSize } from '../src/lib/artifacts';
 import type { CaseArtifact, CaseIndex } from '../src/lib/contract.types';
 
 const DERIVED = join(process.cwd(), '..', 'data', 'derived');
@@ -503,6 +505,21 @@ test('every fragment size is stated in one unit, whatever its magnitude', () => 
   assert.equal(formatSize(0.022), '2.2 cm');
   assert.equal(formatSize(0.11), '11.0 cm');
   assert.equal(formatSize(0.96), '96.0 cm');
-  assert.equal(formatSize(null), 'n/a');
+  assert.equal(formatSize(null), 'not available');
   for (const metres of [0.004, 0.0999, 0.1, 0.45, 1.2]) assert.match(formatSize(metres), /^\d+\.\d cm$/);
+});
+
+test('every number follows the interface language, through the shell formatter', () => {
+  // Until 0.07.000 the views wrote toFixed, so the Spanish pages printed 0.311 and "n/a".
+  const before = useLangStore.getState().lang;
+  try {
+    useLangStore.setState({ lang: 'es' });
+    assert.equal(formatSize(0.022), '2,2 cm');
+    assert.equal(formatScore(0.3114), '0,311');
+    assert.equal(formatSize(null), 'no disponible');
+    useLangStore.setState({ lang: 'en' });
+    assert.equal(formatScore(0.3114), '0.311');
+  } finally {
+    useLangStore.setState({ lang: before });
+  }
 });

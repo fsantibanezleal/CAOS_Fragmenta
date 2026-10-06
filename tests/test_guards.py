@@ -132,6 +132,20 @@ def test_the_spanish_surface_writes_the_pronoun_el_before_punctuation():
     assert found == []
 
 
+def test_the_spanish_surface_writes_the_decimal_comma():
+    """Spanish writes 0,311; until 0.07.000 every Spanish page printed 0.311, typed or formatted."""
+    assert problems_in("x", "explica 0.311 de la varianza")
+    assert problems_in("x", "un módulo de 5.6 GPa")
+    assert not problems_in("x", "explica 0,311 de la varianza")
+    assert not problems_in("x", "lo que cambió en la versión 0.05")
+    assert not problems_in("x", "numpy 2.5.3 y la 0.06.000")
+    assert not problems_in("x", "doi:10.1002/nag.957")
+    from check_spanish_accents import spanish_strings
+
+    found = [p for where, text in spanish_strings() for p in problems_in(where, text) if "decimal comma" in p]
+    assert found == []
+
+
 def test_the_accent_guard_rejects_a_decomposed_accent():
     """e + combining acute looks right in most editors and renders wrongly in some fonts."""
     assert problems_in("x", "fragmentacio\u0301n")
