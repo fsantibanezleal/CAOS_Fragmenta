@@ -99,7 +99,7 @@ export default function Benchmark() {
     { id: 'provenance', label: es ? 'Procedencia y salvedades' : 'Provenance and caveats', content: <Provenance {...props} /> },
   ];
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>Benchmark</h1>
         <p className="lede">

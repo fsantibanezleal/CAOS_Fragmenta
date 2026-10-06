@@ -54,7 +54,7 @@ export default function Experiments() {
     { id: 'diagnostics', label: es ? 'Diagnósticos' : 'Diagnostics', content: <Diagnostics {...props} /> },
   ];
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Experimentos' : 'Experiments'}</h1>
         <p className="lede">

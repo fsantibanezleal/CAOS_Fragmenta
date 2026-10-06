@@ -22,7 +22,7 @@ export default function Introduction() {
   const label = (arm: string) => ARM_BY_ID.get(arm)?.label[es ? 'es' : 'en'] ?? arm;
 
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Fragmentación por voladura, y qué se puede predecir de ella' : 'Blast fragmentation, and what can be predicted about it'}</h1>
         <p className="lede">
