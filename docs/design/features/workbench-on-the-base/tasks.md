@@ -11,3 +11,57 @@
 6. The rail as registered controls and readouts; the selection key (WB-004).
 7. `frontend/scripts/gate.mjs` on `caos-shell-gate`; the product gate follows the groups and stays green in both font
    sets (WB-003, WB-004, WB-007).
+
+## Convergence, 2026-10-05
+
+| Requirement | Gate | Result |
+|---|---|---|
+| WB-001, WB-006, WB-008 | `tests/test_guards.py` | passed, in a suite of 83; the WB-008 test failed on each statement in turn with VERSION moved ahead of the bake (the package, the changelog, then 45 artifacts) |
+| WB-002 to WB-005 | `frontend/scripts/gate.mjs` (`caos-shell-gate`, shell 0.7.2) | passed: 0 failures in 820 states at 390x844, 768x1024, 1280x800, 1600x900 and 2560x1440, both themes, both languages; the smallest drawn share 0.578 (the floor 0.5, at 1280x800 on Design) and the smallest stage fill 0.46 (the floor 0.3) |
+| WB-007, WB-011 | `frontend/gates/browser-gate.mjs` | passed: 420 of 420 with the native fonts and 420 of 420 with DejaVu Sans (`GATE_FONTS=dejavu`) |
+| WB-009 | `scripts/check_web_baseline.py` | passed, in CI's frontend job |
+| WB-010 | `scripts/check_deploy_place.py` | passed, in CI's guards job |
+| WB-012 | `frontend/gates/browser-gate.mjs` | passed in both font sets, with the App's drawings measured at 1280, 1600 and 2560 px and again at 390 and 768 px; the check fails a label planted outside its drawing and two ticks planted on one another |
+| WB-013 | `tests/test_guards.py::test_the_spanish_guard_reads_what_the_bake_composed` | passed, in a suite of 83; the guard reported 41 decimal points in the bake's Spanish before the fix |
+
+Two things differ from the design. The readouts of the Distribution and Design views sit inside the views, under
+the drawing each reads, because in the rail they pushed a phone-sized rail's controls out of reach (G5); and the
+template's version guard is not adopted: as released it rejects the release history in comments
+(CAOS_PRODUCT_TEMPLATE#19), so WB-008 is held by the product's own test until it is.
+
+The base's gate failed 76 of 820 states on its first run, at sizes the product's gate never opened, and reached
+zero in four rounds (findings F-20 in CAOS_MANAGE `plans/fragmenta/`). It also exposed two shell defects, recorded
+in CAOS_MANAGE `conventions/shell-known-defects.md`: 23, a filling card takes its views row (CAOS_APP_SHELL#54;
+the product wraps each view in a column of its own), and 24, the vertical sub-tab list scrolls away on a long
+section (CAOS_APP_SHELL#55; the product's sticky rule restyled reserved classes and went with the web-baseline
+guard, so the documentation pages carry the symptom until the shell fixes it).
+
+The product gate in the deploy runner's fonts then caught what both had passed with the Windows fonts: in Spanish
+at 1280x800 the model comparison ran 24 px out of its 464 px card, because every cell of a shell table keeps one
+line and a long model name held its column at 265 px. The name column now wraps, as the shell's text column
+(`caos-col-text`).
+
+A review of every view's capture, in Spanish set in DejaVu Sans at 390, 768 and 1280 px, then found what all
+three gates had passed: labels of the every-model view cut at the card's edge and its ticks printed over one
+another; the rail's three section names cut ("Mod"); the target view's two marker labels on one another, its
+curve running out of its frame onto the decision, and every canvas label a label's width left of where it was
+meant to start (uPlot leaves the canvas right-aligned); the ranking of the models at five pixels on a phone; the
+curves' key and percentiles cut by a phone's fixed view height; repeated palette colours with nothing to tell
+them apart; and the expected bands, one case reason and five page sentences with the English decimal point.
+
+The fixes are in the release, and so are the gates that would have caught them where a gate can (WB-012,
+WB-013): the product gate measures the App's drawings as it measures the figures and runs the App again at 390
+and 768 px, and the Spanish guard reads the artifacts and no longer excuses a number at the end of a sentence.
+Both were planted with the faults they were written for: on the built site the drawing check passed clean and
+failed on a label moved out of its drawing and on two ticks set on one another; the guard reported 46 decimal
+points before the fix, 41 in the bake's Spanish and five in the pages. The canvas-drawn charts carry no text
+elements, so their labels stay outside every gate and are read in the captures.
+
+The release checks:
+
+- **Against 0.06.000**, field by field over the 45 artifacts: none of 423,793 numbers changed; the 45 version
+  stamps, the 88 digests over them and 25 Spanish strings did (the decimal comma: five case reasons, and the
+  expected band of ten real campaigns in each case and its manifest).
+- **The bake** ran three times for this release, 347, 599 and 678 s, against 745 s for 0.06.000 the same day with
+  the same pipeline; the time follows the machine's load (the later two ran beside browser captures).
+
