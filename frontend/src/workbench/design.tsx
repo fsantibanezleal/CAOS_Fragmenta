@@ -13,6 +13,7 @@ import { ARM_BY_ID, FEATURE_LABEL, formatSize } from '../lib/artifacts';
 import type { Lang } from '../lib/contract.types';
 import { notAvailable, num } from '../lib/format';
 import { BenchView3D } from '../viz/BenchView3D';
+import { fitLabel, textWidth, ticksFor, widestLabel } from '../viz/text';
 import { provenanceOf, type DesignView, type Selection } from './model';
 
 const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
@@ -202,19 +203,21 @@ function SurfaceCanvas({
   const ref = useRef<HTMLCanvasElement | null>(null);
   const dragging = useRef(false);
   const n = surface.bd.length;
+  const lo = surface.min ?? 0;
+  const hi = surface.max ?? 1;
   const layout: Layout = useMemo(() => {
     const left = 56;
     const top = 10;
-    const right = 70;
+    // The colour scale and its two labels: the right margin is what they need, measured in the drawing's font.
+    const scaleLabel = Math.max(textWidth(`${num(hi * 100, 0, lang)} cm`, 11), textWidth(`${num(lo * 100, 0, lang)} cm`, 11));
+    const right = 18 + 12 + 4 + Math.ceil(scaleLabel) + 8;
     const bottom = 40;
     const plotW = Math.max(60, width - left - right);
     const plotH = Math.max(60, height - top - bottom);
     return { left, top, plotW, plotH, cw: plotW / n, ch: plotH / n };
-  }, [width, height, n]);
+  }, [width, height, n, hi, lo, lang]);
   const [bd0, bd1] = [surface.bd[0], surface.bd[n - 1]];
   const [sb0, sb1] = [surface.sb[0], surface.sb[n - 1]];
-  const lo = surface.min ?? 0;
-  const hi = surface.max ?? 1;
 
   useEffect(() => {
     const canvas = ref.current;
@@ -402,31 +405,47 @@ function ArmsOnDesignView({ sel }: { sel: Selection }) {
     >
       <Stage label={title}>
         {({ width, height }) => {
-          const longest = Math.max(...DESIGN_ARMS.map((a) => (ARM_BY_ID.get(a)?.label[lang] ?? a).length));
-          const left = Math.min(width * 0.6, Math.max(120, longest * 6.3 + 14));
+          // The labels take at most half the drawing, measured in the page's font; a long one breaks over two lines
+          // where the rows are tall enough, and is shortened only after that, keeping its whole text as a title.
+          const px = 11.5;
+          const labels = DESIGN_ARMS.map((a) => ARM_BY_ID.get(a)?.label[lang] ?? a);
+          const rowH = Math.max(20, (height - 46) / DESIGN_ARMS.length);
+          const room = Math.max(60, Math.round(width * 0.5) - 14);
+          const fitted = labels.map((label) => fitLabel(label, room, px, rowH >= 30 ? 2 : 1));
+          const left = Math.min(width * 0.5, Math.max(90, Math.ceil(Math.max(...fitted.map((f) => widestLabel(f.lines, px)))) + 14));
           const right = width - 16;
-          const rowH = Math.max(20, (height - 30) / DESIGN_ARMS.length);
-          const bottom = 10 + DESIGN_ARMS.length * rowH;
+          const bottom = 8 + DESIGN_ARMS.length * rowH;
           const x = (v: number) => left + (Math.min(v, hi) / hi) * (right - left);
-          const ticks = [0, hi / 4, hi / 2, (3 * hi) / 4];
+          const ticks = ticksFor(hi * 100, right - left, textWidth(num(hi * 100, 0), 11)).map((cm) => cm / 100);
           return (
             <svg width={width} height={height} role="img" aria-label={pick(title, lang)} data-chart="whatif" data-chart-rows={DESIGN_ARMS.filter((a) => answers[a]?.value !== undefined).length}>
               {ticks.map((v) => (
                 <g key={v}>
                   <line x1={x(v)} y1={6} x2={x(v)} y2={bottom} stroke="var(--color-border)" strokeDasharray="2 4" />
-                  <text x={x(v)} y={bottom + 16} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">{`${num(v * 100, 0)} cm`}</text>
+                  <text x={x(v)} y={bottom + 15} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">{num(v * 100, 0)}</text>
                 </g>
               ))}
+              <text x={(left + right) / 2} y={bottom + 31} fill="var(--color-fg-subtle)" fontSize={11} textAnchor="middle">
+                {t(lang, 'predicted mean size x50, cm', 'tamaño medio predicho x50, cm')}
+              </text>
               {measured ? <line x1={x(measured)} y1={6} x2={x(measured)} y2={bottom} stroke="var(--color-good)" strokeWidth={2} /> : null}
               {DESIGN_ARMS.map((arm, i) => {
-                const cy = 10 + i * rowH + rowH / 2;
+                const cy = 8 + i * rowH + rowH / 2;
                 const live = answers[arm];
                 const baked = sel.artifact.predictions[arm]?.[sel.blast.blast_id]?.x50_m;
                 const on = arm === sel.armId;
+                const label = fitted[i];
                 return (
                   <g key={arm}>
                     {on ? <rect x={0} y={cy - rowH / 2} width={width} height={rowH} fill="var(--color-accent-soft)" /> : null}
-                    <text x={left - 10} y={cy + 4} fill="var(--color-fg)" fontSize={11.5} textAnchor="end">{ARM_BY_ID.get(arm)?.label[lang] ?? arm}</text>
+                    <text x={left - 10} y={label.lines.length === 2 ? cy - 3 : cy + 4} fill="var(--color-fg)" fontSize={px} textAnchor="end">
+                      {label.shortened ? <title>{labels[i]}</title> : null}
+                      {label.lines.map((line, k) => (
+                        <tspan key={k} x={left - 10} dy={k === 0 ? 0 : 13}>
+                          {line}
+                        </tspan>
+                      ))}
+                    </text>
                     {typeof baked === 'number' ? <circle cx={x(baked)} cy={cy} r={5} fill="none" stroke="var(--color-fg-subtle)" strokeWidth={1.5} /> : null}
                     {live?.value !== null && live?.value !== undefined ? (
                       <circle cx={x(live.value)} cy={cy} r={5.5} fill="var(--color-accent)" />

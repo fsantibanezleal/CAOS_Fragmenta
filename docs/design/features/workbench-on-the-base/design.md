@@ -81,7 +81,7 @@ tier) and the blast picker. With their group only:
 | Predict | none beyond the global ones | the selected model's score on this case, in the rail |
 | Distribution: the curves | undulation and fines fraction; the variants | P20, P50, P80, the uniformity index and the share passing 10 mm, live, under the curve they are read from |
 | Distribution: against a target | the target P80 and the oversize limit; the variants | the P80, the oversize and the fines of the selected model, in the view |
-| Design: the surface, with every model on the design beside it | Geometry (bench height and stemming ratios, hole diameter) and Charge (powder factor, in-situ block, modulus, and what the map shows) as two rail sections; the variants | the hovered cell's design and size, or the iso-levels, under the map |
+| Design: the surface, with every model on the design beside it | Bench (bench height and stemming ratios, hole diameter) and Charge (powder factor, in-situ block, modulus, and what the map shows) as two rail sections; the variants | the hovered cell's design and size, or the iso-levels, under the map |
 | Design: the bench | the tie-in and the inter-hole delay | none: the bench is the blast as fired |
 | Rock | UCS, density and joint spacing | the two schemes' factors and the recovered one, in the rail |
 | Compare the variants | the variants | none |

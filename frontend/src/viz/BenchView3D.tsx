@@ -496,9 +496,9 @@ export function BenchView3D({
             : es ? 'Reproducir iniciación' : 'Play initiation'}
         </button>
         <span className="fr-bench-dims">
-          {es ? 'roca' : 'rock'} {num(pattern.rock_volume_m3, 0)} m3 ·{' '}
+          {es ? 'roca' : 'rock'} {num(pattern.rock_volume_m3, 0)} m³ ·{' '}
           {num(pattern.charge_mass_kg / Math.max(1e-9, pattern.rock_volume_m3), 3)}{' '}
-          {es ? 'kg por m3' : 'kg per m3'}
+          {es ? 'kg por m³' : 'kg per m³'}
         </span>
         {label ? <span>{label}</span> : null}
       </div>

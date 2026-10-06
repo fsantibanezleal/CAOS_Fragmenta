@@ -36,6 +36,17 @@ function palette(): string[] {
   return SERIES_COLOURS.map((name, i) => token(name, fallbacks[i]));
 }
 
+/** A series past the palette repeats a colour, so it is drawn dashed; a colour given explicitly is not repeated. */
+function isDashed(s: { dashed?: boolean; colour?: string }, i: number): boolean {
+  return Boolean(s.dashed) || (!s.colour && i >= SERIES_COLOURS.length);
+}
+
+/** The swatch of a series in a key or a readout: its colour, dashed as its line is. */
+function swatch(s: { dashed?: boolean; colour?: string }, i: number): string {
+  const colour = s.colour ?? palette()[i % palette().length];
+  return isDashed(s, i) ? `repeating-linear-gradient(90deg, ${colour} 0 4px, transparent 4px 7px)` : colour;
+}
+
 /** Re-resolve tokens whenever the theme attribute flips, so a repaint follows the toggle. */
 function useThemeEpoch(): number {
   const [epoch, setEpoch] = useState(0);
@@ -241,6 +252,21 @@ export function DistributionChart({
           (u) => {
             const ctx = u.ctx;
             ctx.save();
+            // uPlot leaves the context right-aligned after its y axis, and until 0.07.000 every label here ended
+            // where it was meant to start: the size labels sat a label's width left of their lines, and on a
+            // phone ran out past the axis. The alignment is set, not inherited.
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'alphabetic';
+            const surface = token('--color-surface', '#ffffff');
+            // A label in the card's colour first, so a grid or marker line under it does not cross out its letters.
+            const label = (text: string, x: number, y: number, colour: string) => {
+              ctx.lineWidth = 3;
+              ctx.lineJoin = 'round';
+              ctx.strokeStyle = surface;
+              ctx.strokeText(text, x, y);
+              ctx.fillStyle = colour;
+              ctx.fillText(text, x, y);
+            };
             // Percentile markers, labelled with what they are rather than left as bare lines.
             for (const marker of markers) {
               const y = u.valToPos(marker.fraction * 100, 'y', true);
@@ -251,14 +277,19 @@ export function DistributionChart({
               ctx.lineTo(u.bbox.left + u.bbox.width, y);
               ctx.stroke();
               ctx.setLineDash([]);
-              ctx.fillStyle = token('--color-fg-subtle', '#8892a4');
               ctx.font = '11px ui-monospace, monospace';
-              ctx.fillText(marker.label, u.bbox.left + 6, y - 4);
+              label(marker.label, u.bbox.left + 6, y - 4, token('--color-fg-subtle', '#8892a4'));
             }
-            // Size markers: a vertical line at a size, labelled at the top of the plot.
-            for (const marker of sizeMarkers) {
-              const x = u.valToPos(marker.sizeM, 'x', true);
-              if (!Number.isFinite(x) || x < u.bbox.left || x > u.bbox.left + u.bbox.width) continue;
+            // Size markers: a vertical line at a size, labelled at the top of the plot, left of its line. Two
+            // markers close on the log axis (a 60 cm target beside a 100 cm limit) printed their labels on one
+            // another, so a label that would touch one already placed takes the next row down.
+            const placed: { row: number; x0: number; x1: number }[] = [];
+            const ordered = sizeMarkers
+              .map((marker) => ({ marker, x: u.valToPos(marker.sizeM, 'x', true) }))
+              .filter(({ x }) => Number.isFinite(x) && x >= u.bbox.left && x <= u.bbox.left + u.bbox.width)
+              .sort((a, b) => a.x - b.x);
+            ctx.font = '11px ui-monospace, monospace';
+            for (const { marker, x } of ordered) {
               ctx.strokeStyle = token('--color-warn', '#b7791f');
               ctx.setLineDash([5, 4]);
               ctx.beginPath();
@@ -266,10 +297,21 @@ export function DistributionChart({
               ctx.lineTo(x, u.bbox.top + u.bbox.height);
               ctx.stroke();
               ctx.setLineDash([]);
-              ctx.fillStyle = token('--color-warn', '#b7791f');
-              ctx.font = '11px ui-monospace, monospace';
               const width = ctx.measureText(marker.label).width;
-              ctx.fillText(marker.label, Math.max(u.bbox.left + 4, x - width - 6), u.bbox.top + 14);
+              // Left of the line where it fits inside the plot, else right of it, else against the plot's edge.
+              const leftOf = x - width - 6;
+              const rightOf = x + 6;
+              const x0 =
+                leftOf >= u.bbox.left + 4
+                  ? leftOf
+                  : rightOf + width <= u.bbox.left + u.bbox.width - 4
+                    ? rightOf
+                    : Math.max(u.bbox.left + 4, u.bbox.left + u.bbox.width - 4 - width);
+              const x1 = x0 + width;
+              const taken = (row: number) => placed.some((q) => q.row === row && x0 < q.x1 + 8 && x1 > q.x0 - 8);
+              const row = [...Array(placed.length + 1).keys()].find((r) => !taken(r)) ?? placed.length;
+              placed.push({ row, x0, x1 });
+              label(marker.label, x0, u.bbox.top + 14 + row * 14, token('--color-warn', '#b7791f'));
             }
             // Measured points, if this case has any.
             for (const point of measured) {
@@ -315,7 +357,7 @@ export function DistributionChart({
             </span>
             {series.map((s, i) => (
               <span key={s.id} className="fr-readout-item">
-                <i style={{ background: s.colour ?? palette()[i % palette().length] }} />
+                <i style={{ background: swatch(s, i) }} />
                 {s.label}
                 <b>
                   {readout.values[i] === null || readout.values[i] === undefined
@@ -326,7 +368,18 @@ export function DistributionChart({
             ))}
           </>
         ) : (
-          <span className="fr-readout-hint" title={HINTS.curve[lang] ?? HINTS.curve.en}>{HINTS.curve[lang] ?? HINTS.curve.en}</span>
+          <>
+            {/* At rest the row is the chart's key: which curve is which, before the pointer asks. */}
+            {series.length > 1
+              ? series.map((s, i) => (
+                  <span key={s.id} className="fr-readout-item">
+                    <i style={{ background: swatch(s, i) }} />
+                    {s.label}
+                  </span>
+                ))
+              : null}
+            <span className="fr-readout-hint" title={HINTS.curve[lang] ?? HINTS.curve.en}>{HINTS.curve[lang] ?? HINTS.curve.en}</span>
+          </>
         )}
       </div>
     </div>
@@ -643,7 +696,7 @@ export function LineChart({
           // A soloed chart DIMS the rest rather than hiding them, so the reader keeps the context
           // of where the chosen line sits among the others.
           alpha: solo && solo !== s.id ? 0.12 : 1,
-          dash: s.dashed ? [6, 4] : undefined,
+          dash: isDashed(s, i) ? [6, 4] : undefined,
           points: { show: x.length < 40, size: 5 },
           spanGaps: false,
         })),
@@ -735,7 +788,7 @@ export function LineChart({
               aria-pressed={solo === s.id}
               onClick={() => setSolo(solo === s.id ? null : s.id)}
             >
-              <i style={{ background: s.colour ?? palette()[i % palette().length] }} />
+              <i style={{ background: swatch(s, i) }} />
               {s.label}
             </button>
           ))}
@@ -749,7 +802,7 @@ export function LineChart({
             </span>
             {series.map((s, i) => (
               <span key={s.id} className="fr-readout-item">
-                <i style={{ background: s.colour ?? palette()[i % palette().length] }} />
+                <i style={{ background: swatch(s, i) }} />
                 {s.label}
                 <b>{readout.values[i] === null || readout.values[i] === undefined ? notAvailable() : fmt(readout.values[i] as number)}</b>
               </span>

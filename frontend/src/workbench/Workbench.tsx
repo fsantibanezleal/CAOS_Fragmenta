@@ -198,7 +198,9 @@ export default function Workbench() {
     ) : null;
   if (openGroup === 'design' && designView === 'surface') {
     railSections.unshift(
-      { id: 'view-design-geometry', label: { en: 'Geometry', es: 'Geometría' }, content: scoped('geometry') },
+      // The rail's section row neither wraps nor shows that it scrolls, and at 1280 px it is 219 px wide: the labels
+      // are short enough that the three fit in either language and in the deploy runner's fonts.
+      { id: 'view-design-geometry', label: { en: 'Bench', es: 'Banco' }, content: scoped('geometry') },
       { id: 'view-design-charge', label: { en: 'Charge', es: 'Carga' }, content: scoped('charge') },
     );
   } else if (openGroup === 'distribution' || openGroup === 'design' || openGroup === 'rock') {
@@ -207,7 +209,7 @@ export default function Workbench() {
       label:
         openGroup === 'distribution'
           ? distView === 'decide'
-            ? { en: 'Your specification', es: 'Su especificación' }
+            ? { en: 'Your target', es: 'Su objetivo' }
             : { en: 'The curves', es: 'Las curvas' }
           : openGroup === 'design'
             ? designView === 'bench'
