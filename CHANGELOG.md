@@ -27,6 +27,9 @@ in each case and in its manifest). (#14)
   2560x1440), both themes and both languages. On this release it measured 820 states and failed none;
   the smallest share of the viewport drawn was 0.578 (the floor is 0.5) and the smallest stage fill
   0.34 (the floor is 0.3).
+- The product gate measures every drawn view of the App as it measures the documentation figures (no
+  label outside its drawing, none on another), and runs the App again at 390 and 768 px in both
+  languages: no table cut, no text cut without a title, no label fault.
 - The template's web-baseline guard, verbatim, in CI: defined tokens, styled classes, numbers through
   the shell's formatter, no reserved shell class restyled, no animation loop outside the shell's
   paused loop. And the deploy-place guard (one deploy place, GitHub Pages).
