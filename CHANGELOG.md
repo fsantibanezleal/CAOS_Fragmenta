@@ -74,8 +74,11 @@ decimal commas of five Spanish case reasons. (#14)
 
 ### Known limits
 
-- One override remains, for shell defect 23: a filling card beside another view takes the whole row,
-  so each view of a row sits in a column of the product's own.
+- One override remains, for shell defect 23 (CAOS_APP_SHELL#54): a filling card beside another view
+  takes the whole row, so each view of a row sits in a column of the product's own.
+- The vertical sub-tab list of a documentation page scrolls away on a long section. From 0.05.000 a
+  product rule kept it in view; it restyled a reserved shell class, so it went with the web-baseline
+  guard, and the fix is the shell's (shell defect 24, CAOS_APP_SHELL#55).
 - The abstention reasons written at bake time are in English on the Spanish interface.
 - The template's version guard joins when CAOS_PRODUCT_TEMPLATE#19 is released; as it stands it rejects
   the release history in comments. The product's own test holds the requirement meanwhile.

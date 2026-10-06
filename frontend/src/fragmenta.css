@@ -1077,8 +1077,9 @@
 
 /* Each view of a row, with a zero basis. Shell known defect 23 (0.7.2): `.caos-plot.fill` (flex 1 1 auto)
  * outranks `.caos-views-row > *` (flex 1 1 0), so a fill card beside any other view took the whole row
- * (CAOS_MANAGE conventions/shell-known-defects.md, entry 23). The product composes a column of its own
- * around each view instead of restyling the shell's classes; remove these columns when the shell fixes it. */
+ * (CAOS_MANAGE conventions/shell-known-defects.md, entry 23; CAOS_APP_SHELL#54). The product composes a
+ * column of its own around each view instead of restyling the shell's classes; remove these columns when the
+ * shell fixes it. */
 .fr-viewcol {
   display: flex;
   flex-direction: column;
