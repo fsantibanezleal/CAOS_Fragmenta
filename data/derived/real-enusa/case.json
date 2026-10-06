@@ -342,7 +342,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "coarse, 0.26 to 0.64 m measured",
-   "es": "gruesa, 0.26 a 0.64 m medidos"
+   "es": "gruesa, 0,26 a 0,64 m medidos"
   },
   "id": "real-enusa",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "9e4abe0c5d1bb918d1c25e79ab31b9afa62f8b56078541cacc37a0aa0a2e6321",
+ "digest": "52fe7fc939c57340c9ecfe75c3a8492ea2f31ea63c843982531cbcb79bb4be07",
  "distributions": {
   "crush-zone": {
    "constants_published": false,

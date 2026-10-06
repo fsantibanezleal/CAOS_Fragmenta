@@ -160,7 +160,7 @@ function Data({ es }: TabProps) {
       </p>
       <p>
         {es
-          ? 'Cargar el corpus corre una compuerta de dos partes. La primera recalcula, desde las 97 filas, la tabla de estadísticas descriptivas que el propio artículo imprime (mínimo, máximo, media y desviación de las siete variables) y la compara a la precisión con que se imprimió. La segunda compara un resumen criptográfico del contenido con un valor fijado, porque una media sobre 97 filas detecta mal el cambio de una celda: corregir un factor de carga la mueve en 0.0006.'
+          ? 'Cargar el corpus corre una compuerta de dos partes. La primera recalcula, desde las 97 filas, la tabla de estadísticas descriptivas que el propio artículo imprime (mínimo, máximo, media y desviación de las siete variables) y la compara a la precisión con que se imprimió. La segunda compara un resumen criptográfico del contenido con un valor fijado, porque una media sobre 97 filas detecta mal el cambio de una celda: corregir un factor de carga la mueve en 0,0006.'
           : 'Loading the corpus runs a two-part gate. The first recomputes, from the 97 rows, the descriptive-statistics table the paper itself prints (minimum, maximum, mean and deviation of all seven variables) and compares it at the precision it was printed to. The second compares a cryptographic digest of the content with a pinned value, because a mean over 97 rows detects a one-cell change poorly: correcting one powder factor moves it by 0.0006.'}
       </p>
       <Equation

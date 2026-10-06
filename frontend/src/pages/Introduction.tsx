@@ -98,7 +98,7 @@ export default function Introduction() {
         </p>
         <Equation
           tex={String.raw`P(x) = 1 - \exp\!\left[-\ln 2\left(\frac{x}{x_{50}}\right)^{n}\right]`}
-          caption={es ? 'Curva Rosin-Rammler escrita sobre el tamaño medio: P(x50) = 0.5.' : 'Rosin-Rammler curve written on the mean size: P(x50) = 0.5.'}
+          caption={es ? 'Curva Rosin-Rammler escrita sobre el tamaño medio: P(x50) = 0,5.' : 'Rosin-Rammler curve written on the mean size: P(x50) = 0.5.'}
         />
         <p>
           {es

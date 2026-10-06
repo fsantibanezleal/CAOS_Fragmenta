@@ -202,7 +202,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "fine, 0.15 to 0.28 m measured",
-   "es": "fina, 0.15 a 0.28 m medidos"
+   "es": "fina, 0,15 a 0,28 m medidos"
   },
   "id": "real-soma",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "b2ff476465c6483ee4124c2ce314ee0d87df9881452b888bedf9ed12161202de",
+ "digest": "6de09248dbbb0cea71d4f8c5cc9d96f803e14e20dac15270051786618b5b17f5",
  "distributions": {
   "crush-zone": {
    "constants_published": false,

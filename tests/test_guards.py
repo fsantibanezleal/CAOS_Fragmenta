@@ -146,6 +146,25 @@ def test_the_spanish_surface_writes_the_decimal_comma():
     assert found == []
 
 
+def test_the_decimal_comma_guard_reads_a_number_at_the_end_of_a_sentence():
+    """Any point after a number excused it, so "recuperado, 3.68." shipped; a dotted version still passes."""
+    assert problems_in("x", "el menor factor de roca recuperado, 3.68. También")
+    assert problems_in("x", "media, 0.23 a 0.38 m medidos")
+    assert not problems_in("x", "el menor factor de roca recuperado, 3,68. También")
+    assert not problems_in("x", "la versión 0.05.001.")
+    assert not problems_in("x", "hasta 0.05.000 el gate no leía")
+
+
+def test_the_spanish_guard_reads_what_the_bake_composed():
+    """The expected band is composed at bake time, so only the artifact shows its Spanish as it ships."""
+    from check_spanish_accents import spanish_strings
+
+    baked = [(where, text) for where, text in spanish_strings() if where.startswith("data/derived/")]
+    bands = [text for where, text in baked if where.endswith("/case/expected_band")]
+    assert len(bands) >= 10, f"only {len(bands)} expected bands read from the artifacts"
+    assert [p for band in bands for p in problems_in("band", band)] == []
+
+
 def test_the_accent_guard_rejects_a_decomposed_accent():
     """e + combining acute looks right in most editors and renders wrongly in some fonts."""
     assert problems_in("x", "fragmentacio\u0301n")

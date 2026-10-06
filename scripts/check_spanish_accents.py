@@ -151,8 +151,10 @@ ESTA_BEFORE = re.compile(r"\b(esta|estan)\s+([a-záéíóúñ]+)", re.IGNORECASE
 EL_BEFORE_PUNCTUATION = re.compile(r"\b[Ee]l\s*[.,;:)?!]")
 
 #: Spanish writes a decimal comma (conventions/languages.md, base requirement S8): "0,311", never "0.311".
-#: A version is an identifier, not a decimal, so a number after "versión" keeps its point.
-DECIMAL_POINT = re.compile(r"(?<![\w.,/])\d+\.\d+(?![\w./])")
+#: A version is an identifier, not a decimal, so a number after "versión" keeps its point, and so does the
+#: middle of a dotted identifier ("0.05.000"). Until 0.07.000 any point after the number excused it, and a
+#: number that ends a sentence ("recuperado, 3.68.") passed.
+DECIMAL_POINT = re.compile(r"(?<![\w.,/])\d+\.\d+(?![\w/]|\.\d)")
 VERSION_BEFORE = re.compile(r"versi[oó]n\s+$", re.IGNORECASE)
 
 
@@ -212,6 +214,23 @@ def spanish_strings() -> list[tuple[str, str]]:
         if isinstance(value, str) and value.strip():
             if any(value in s for s in spanish) and not any(value in s for s in english):
                 found.append((f"data-pipeline/.../fragmenta_cases.py:{tok.start[0]}", value))
+
+    # What the App shows from the bake: every Spanish field of every committed artifact. A string the bake
+    # composes (the expected band joins the English numbers) is read here as it ships, not only as written.
+    def spanish_fields(node: object, where: str) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key == "es" and isinstance(value, str):
+                    found.append((where, value))
+                else:
+                    spanish_fields(value, f"{where}/{key}")
+        elif isinstance(node, list):
+            for k, value in enumerate(node):
+                spanish_fields(value, f"{where}[{k}]")
+
+    for path in sorted(tracked("data/derived/**")):
+        if path.suffix == ".json" and path.exists():
+            spanish_fields(json.loads(path.read_text(encoding="utf-8")), path.relative_to(ROOT).as_posix())
 
     return found
 

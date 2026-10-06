@@ -16,14 +16,14 @@
    "unstamped": []
   }
  },
- "digest": "42b1efe7457d2c90106a5c5492c634fda56b03b1ca48c1cd5f40c87cdb2bb1a2",
+ "digest": "76264c678fe91e99d09825c676c20c772f538b9acc2ad85e0e64a3d7474221b1",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
  },
  "expected_band": {
   "en": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
-  "es": "fina, 0.146 a 0.200 m medidos, toda predicci\u00f3n marcada como extrapolada"
+  "es": "fina, 0,146 a 0,200 m medidos, toda predicci\u00f3n marcada como extrapolada"
  },
  "flags": [
   {

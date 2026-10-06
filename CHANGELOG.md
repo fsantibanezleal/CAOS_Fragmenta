@@ -7,8 +7,9 @@ All notable changes to this project. Format follows Keep a Changelog; newest on 
 The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.7.2
 exactly, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
 response surface over burden and spacing. The engine is still `blastfrag==0.4.0`. The re-bake changed none
-of the 423,793 numbers in the 45 artifacts: only their version stamps, the 88 digests over them, and the
-decimal commas of five Spanish case reasons. (#14)
+of the 423,793 numbers in the 45 artifacts: only their version stamps, the 88 digests over them, and 25
+Spanish strings that take the decimal comma (five case reasons, and the expected band of ten real campaigns,
+in each case and in its manifest). (#14)
 
 ### Added
 
@@ -51,7 +52,15 @@ decimal commas of five Spanish case reasons. (#14)
   "Published reproductions". Nothing was cut.
 - Every number is written in the interface language: in Spanish with the decimal comma, 0,311 where the
   pages printed 0.311, and an absent value as the shell writes it. The Spanish guard now fails a
-  decimal point in Spanish text.
+  decimal point in Spanish text, reads every Spanish field of the committed artifacts (a string the bake
+  composes is read as it ships), and no longer excuses a number that ends a sentence.
+- The drawn views fit their labels in the font the page renders: a label is measured, broken over two
+  lines where it is too long for its column, and shortened with an ellipsis only after that, with its
+  whole text as a title. The axes of the model and variant views tick at round values and name their
+  quantity. A chart with more series than the palette has colours draws the repeats dashed, in the plot
+  and in its key, and a distribution with several curves says which is which before the pointer asks.
+- "Against a target" sets the decision beside the curve where the view is wide, so the curve keeps the
+  view's height; on a phone the curve and the decision scroll inside the view.
 - The shell is pinned to 0.7.2 exactly (it was `^0.6.0`), with its peer `zustand` declared; the
   architecture drawings are inline, and the shell's configuration states the licence, the visibility
   and the build.
@@ -65,6 +74,14 @@ decimal commas of five Spanish case reasons. (#14)
   was formatted.
 - The dormant API announced 0.04.006, and its FastAPI application 0.01.000; it now reads VERSION.
 - Spanish: the parity plot's hover, a rock card and the column of moduli were in English or printed raw.
+- Spanish: the expected band of every real campaign ("media, 0.23 a 0.38 m medidos") kept the English
+  decimal point, because the bake composes it from the English numbers and the guard read only the
+  strings written in the registry; so did one case reason ("recuperado, 3.68.") and five sentences of the
+  pages that end on a number, which the guard's pattern excused.
+- The label of the in-situ block on the distribution chart ended where it was meant to start: uPlot
+  leaves the canvas right-aligned after its y axis, so it sat a label's width left of its line, and the
+  percentile labels ran into the axis. Labels on the canvas are now left-aligned, take a row of their
+  own when two would touch, and carry a halo where a line crosses them.
 
 ### Removed
 

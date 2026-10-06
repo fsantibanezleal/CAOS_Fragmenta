@@ -314,7 +314,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "fine, 0.13 to 0.21 m measured",
-   "es": "fina, 0.13 a 0.21 m medidos"
+   "es": "fina, 0,13 a 0,21 m medidos"
   },
   "id": "real-mrica",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -330,7 +330,7 @@
   }
  },
  "controls": {},
- "digest": "76d99db93fa8808c508d517b95e4a8f861bd2e6508929f3c905e064a7190132d",
+ "digest": "1c5bcc312c54d2eb07014441bc76c4cdd8eefeb739ac2560d2b1dc38b1149c90",
  "distributions": {
   "crush-zone": {
    "constants_published": false,

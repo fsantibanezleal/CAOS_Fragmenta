@@ -202,7 +202,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "medium, 0.23 to 0.38 m measured",
-   "es": "media, 0.23 a 0.38 m medidos"
+   "es": "media, 0,23 a 0,38 m medidos"
   },
   "id": "real-murgul",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "29b06946a6b4c1aca12f92ff69e54ed51eac225717841a6d15fc53214d28fb3d",
+ "digest": "29870e915ce6a3970225ca1bc8ab78f8a32397c14b59014dba2ee3d2ac5a33c0",
  "distributions": {
   "crush-zone": {
    "constants_published": false,

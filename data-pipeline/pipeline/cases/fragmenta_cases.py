@@ -119,6 +119,9 @@ def _band(en: str, es: str | None = None) -> dict[str, str]:
     if match is None:
         raise ValueError(f"this expected band is not formulaic, so write its Spanish: {en!r}")
     word, low, high = match.groups()
+    # Spanish writes the decimal comma; composed from the English numbers, the band kept their points until
+    # 0.07.000, under a guard that read only the strings written here and never the ones composed from them.
+    low, high = low.replace(".", ","), high.replace(".", ",")
     return {"en": en, "es": f"{_BAND_WORDS[word]}, {low} a {high} m medidos"}
 
 
@@ -229,7 +232,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
     "predicts 0.08 m against 0.35 m measured."
         ),
         (
-    "La roca más débil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3.68. "
+    "La roca más débil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3,68. "
     "También es donde el modelo clásico falla más: en el tiro de validación de este sitio "
     "predice 0,08 m frente a 0,35 m medidos."
         ),
@@ -339,7 +342,7 @@ def _real_cases() -> list[Case]:
             ),
             expected_band=_band(
                 "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
-                "fina, 0.146 a 0.200 m medidos, toda predicción marcada como extrapolada",
+                "fina, 0,146 a 0,200 m medidos, toda predicción marcada como extrapolada",
             ),
             variants=_STANDARD_VARIANTS,
             dataset="field",
