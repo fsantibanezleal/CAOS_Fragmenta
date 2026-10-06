@@ -293,7 +293,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The largest burden in the corpus at 6.0 m on 229 mm holes. Its Rc1 blast is the one that sits in both the training table and the published validation set.",
-   "es": "El mayor bordo del conjunto, 6.0 m con perforaci\u00f3n de 229 mm. Su tiro Rc1 es el que aparece tanto en la tabla de entrenamiento como en el conjunto de validaci\u00f3n publicado."
+   "es": "El mayor bordo del conjunto, 6,0 m con perforaci\u00f3n de 229 mm. Su tiro Rc1 es el que aparece tanto en la tabla de entrenamiento como en el conjunto de validaci\u00f3n publicado."
   },
   "site": "Reocin",
   "title": {
@@ -302,7 +302,7 @@
   }
  },
  "controls": {},
- "digest": "0ad873111ede70fc66e2c59333848cebe1449bfee71d9467c37baf0cbc92e6b7",
+ "digest": "caa5c58638da8d97bcd06df83304d6bf2e8565673b09f7e5a3c5292f585f6bf9",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1817,7 +1817,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "8d081d4312848f94a5f8987d39c0ae710bc2c7e5a86f79f6495a7a6dfa53025f",
+  "digest": "8f583cbeb768cc7e27808db1b1a757ed1b9bcf29017a66ce65b7763637ee3d5b",
   "path": "models/Reocin.json",
   "scope": "Reocin"
  },
@@ -3113,7 +3113,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.06.000",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

@@ -349,7 +349,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The stiffest rock in the corpus at 60 GPa, in a moderately to heavily folded schist. It is also where the uniformity index goes lowest, because the stemming takes most of a bench only 1.33 burdens tall.",
-   "es": "La roca m\u00e1s r\u00edgida del conjunto, 60 GPa, en un esquisto plegado. Tambi\u00e9n es donde el \u00edndice de uniformidad baja m\u00e1s, porque el taco ocupa casi todo un banco de solo 1.33 bordos."
+   "es": "La roca m\u00e1s r\u00edgida del conjunto, 60 GPa, en un esquisto plegado. Tambi\u00e9n es donde el \u00edndice de uniformidad baja m\u00e1s, porque el taco ocupa casi todo un banco de solo 1,33 bordos."
   },
   "site": "Enusa",
   "title": {
@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "88dce479507decbb6ed5a99fb241237695ec0453196c724a22a31d6b483573a8",
+ "digest": "9e4abe0c5d1bb918d1c25e79ab31b9afa62f8b56078541cacc37a0aa0a2e6321",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1873,7 +1873,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "8b5d135aaab503b3202bf05189020b401dd085659bb1e4a18eeaa8edd43517e9",
+  "digest": "914ff509ce2f983226ede828d246ffd974888111ea01d5362ca0cc526390ccce",
   "path": "models/Enusa.json",
   "scope": "Enusa"
  },
@@ -3421,7 +3421,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.06.000",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

@@ -2,7 +2,7 @@
 
 # Results
 
-Every page in this theme is rendered from the committed benchmark artifact. Benchmark baked with engine `blastfrag` 0.04.000 and application 0.06.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Every page in this theme is rendered from the committed benchmark artifact. Benchmark baked with engine `blastfrag` 0.04.000 and application 0.07.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 1. [The verdict](results/01_verdict.md), on the two row sets it depends on.
 2. [Every arm](results/02_every-arm.md), under every protocol, with spreads and intervals.

@@ -1,5 +1,5 @@
 {
- "app_version": "0.06.000",
+ "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 69748,
@@ -9,7 +9,7 @@
  "case_id": "synth-sweep-powder",
  "category": "parameter-sweep",
  "controls": {},
- "digest": "1bebb154d622888bed8afaaddbe128552abaed4f533827c36605155062ef6fbc",
+ "digest": "2de104be0b77f53d1badee6c9bbb7ffea8f4755a828509bf6b16c79fcece097a",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"

@@ -629,7 +629,7 @@
   "real_or_synthetic": "real",
   "reason": {
    "en": "The largest site in the corpus, 22 of the 97 blasts, which is why rows here are not independent draws and why the benchmark holds out whole sites. Sandstone at 16.9 GPa with the highest powder factors in the set.",
-   "es": "El sitio m\u00e1s grande del conjunto, 22 de los 97 tiros, raz\u00f3n por la cual las filas no son muestras independientes y el benchmark excluye sitios completos. Arenisca de 16.9 GPa con los mayores factores de carga del conjunto."
+   "es": "El sitio m\u00e1s grande del conjunto, 22 de los 97 tiros, raz\u00f3n por la cual las filas no son muestras independientes y el benchmark excluye sitios completos. Arenisca de 16,9 GPa con los mayores factores de carga del conjunto."
   },
   "site": "Akdaglar",
   "title": {
@@ -638,7 +638,7 @@
   }
  },
  "controls": {},
- "digest": "7f3c7f67a4307f3cf03a33c886ee032298eb9128522484018ff80052448a86d8",
+ "digest": "2fb071772e14ed31c3d0d953d2a734b824e6133ac33c07a06133f95f6bcbfabf",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2153,7 +2153,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "8b4f087b93be32a36a662ac18185ecddb9dc60c100442635a73427fda757c642",
+  "digest": "38e75677a41247ba67c6f243073e06f646e4479304c448a1d715af12870dd6df",
   "path": "models/Akdaglar.json",
   "scope": "Akdaglar"
  },
@@ -4961,7 +4961,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.06.000",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

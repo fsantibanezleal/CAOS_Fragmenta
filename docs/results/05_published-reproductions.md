@@ -2,7 +2,7 @@
 
 # Published reproductions
 
-Benchmark baked with engine `blastfrag` 0.04.000 and application 0.06.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.07.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 ## The 2012 hold-out, three published models and a null
 

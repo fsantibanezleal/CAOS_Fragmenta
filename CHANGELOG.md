@@ -2,6 +2,84 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.07.000] - 2026-10-05
+
+The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.7.2
+exactly, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
+response surface over burden and spacing. The engine is still `blastfrag==0.4.0`. The re-bake changed none
+of the 423,793 numbers in the 45 artifacts: only their version stamps, the 88 digests over them, and the
+decimal commas of five Spanish case reasons. (#14)
+
+### Added
+
+- The response surface (Design group): the selected model's P80, or mean size x50, on a 41 by 41 grid of
+  burden-to-diameter (17.98 to 39.47) and spacing-to-burden (1.0 to 1.75) ratios, the corpus envelope,
+  with the other ratios and the hole diameter held at the design in the rail. Iso-lines at the crusher's
+  target P80 and the oversize limit (for x50, at the measured size of the blast as fired), traced by
+  marching squares. A cell that is not a blast, or whose prediction leaves 0.001 to 3 m, is hatched and
+  gives its reason on hover. The design is a marker that moves by pointer or by the arrow keys, and the
+  Distribution group's curves and percentiles follow it. Every cell is the same function as the
+  every-model view, so a learned model's surface walks the models fitted without the case's campaign.
+  The P80 of a cell takes Cunningham's uniformity index of its pattern, a declared choice for the
+  learned models, which predict a mean size and no curve.
+- The base's measured gate: `npm run gate` runs `caos-shell-gate` on the build at five sizes (390x844 to
+  2560x1440), both themes and both languages. On this release it measured 820 states and failed none;
+  the smallest share of the viewport drawn was 0.578 (the floor is 0.5) and the smallest stage fill
+  0.34 (the floor is 0.3).
+- The template's web-baseline guard, verbatim, in CI: defined tokens, styled classes, numbers through
+  the shell's formatter, no reserved shell class restyled, no animation loop outside the shell's
+  paused loop. And the deploy-place guard (one deploy place, GitHub Pages).
+- Tests that the shell is pinned to one exact version, that every remaining override names an open
+  shell defect, and that VERSION is read by the pipeline, the dormant API and the build, and stamped on
+  every committed artifact.
+
+### Changed
+
+- The App is one workbench of six slots named by the question a reader asks: Predict, Distribution
+  (the curves, and "Against a target", which was the Decide tab), Design (the response surface, every
+  model on the design, which was the What if tab, and the bench), Rock, Compare the variants, and The
+  case. The rail holds the case picker, the case's design variants ("Burden -15%"), the model and the
+  blast, and only the controls of the open group: a control is shown with the views it moves.
+- A group or sub-tab is offered only where it has something to draw. A case without an absolute
+  geometry or a rock factor has no Distribution group; "Against a target" needs the selected model's
+  size on the blast as fired. A design study, which has no measurement to score against, draws every
+  model's prediction design by design; the degenerate control draws why every model refuses.
+- Rock is one view: the two rating schemes' factors drawn beside their tables.
+- The documentation pages carry at most six sub-tabs (the shell reports more as an error): the rock
+  factor joins the classical mean size, geometry joins the data and the gate, the two live lanes share
+  one, the metrics join the questions they answer, and the published hold-outs and the network become
+  "Published reproductions". Nothing was cut.
+- Every number is written in the interface language: in Spanish with the decimal comma, 0,311 where the
+  pages printed 0.311, and an absent value as the shell writes it. The Spanish guard now fails a
+  decimal point in Spanish text.
+- The shell is pinned to 0.7.2 exactly (it was `^0.6.0`), with its peer `zustand` declared; the
+  architecture drawings are inline, and the shell's configuration states the licence, the visibility
+  and the build.
+- The bench's animation runs on the shell's paused loop: paused when the view opens, halted on a hidden
+  tab, started by its button.
+- The size axis of a distribution labels its decades only, in mm, cm or m.
+
+### Fixed
+
+- The size axis printed "0mm" at every tick it does not label: uPlot passes null there, and each null
+  was formatted.
+- The dormant API announced 0.04.006, and its FastAPI application 0.01.000; it now reads VERSION.
+- Spanish: the parity plot's hover, a rock card and the column of moduli were in English or printed raw.
+
+### Removed
+
+- The six-tab workbench and the What if tab (`pages/Tool.tsx`, `pages/WhatIf.tsx`).
+- The overrides for shell defects 1, 4 and 14, which the pinned shell carries; the dormant VPS unit and
+  nginx site of the old layout.
+
+### Known limits
+
+- One override remains, for shell defect 23: a filling card beside another view takes the whole row,
+  so each view of a row sits in a column of the product's own.
+- The abstention reasons written at bake time are in English on the Spanish interface.
+- The template's version guard joins when CAOS_PRODUCT_TEMPLATE#19 is released; as it stands it rejects
+  the release history in comments. The product's own test holds the requirement meanwhile.
+
 ## [0.06.000] - 2026-10-05
 
 Baked on `blastfrag==0.4.0`, which adds three things to the benchmark: the classical arm capped at
