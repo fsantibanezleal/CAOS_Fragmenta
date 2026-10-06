@@ -15,7 +15,7 @@ import Focus from './pages/Focus';
 import Implementation from './pages/Implementation';
 import Introduction from './pages/Introduction';
 import Methodology from './pages/Methodology';
-import Tool from './pages/Tool';
+import Workbench from './workbench/Workbench';
 
 applyTheme(readTheme());
 
@@ -35,13 +35,10 @@ const config: ShellConfig = {
   // Required since shell 0.7.0: the footer shows the product's own licence, never a default.
   license: { en: 'MIT licence', es: 'Licencia MIT' },
   visibility: 'public',
-  // The App route is an instrument, so it is sized to the viewport rather than allowed to grow
-  // (ADR-0071 rules 1 and 6). The shell's `fixed` mode locks the shell to 100dvh and hands the
-  // remaining height to `.page-body.wide`, which is what makes a bounded rail possible at all: a
-  // rail with `height: 100%` inside an ancestor chain that has no height simply grows, and it did.
-  // Measured before this: the rail was 1717px tall in an 800px viewport, so 917px of controls sat
-  // below the fold on first paint. Doc routes stay scrollable and are deliberately not listed.
-  fixedRoutes: ['/', '/app'],
+  // Every route is the viewport (ADR-0071 rule 1, the template's configuration): the workbench fills it, and a
+  // documentation route scrolls inside the main container, so the header and footer stay in view. This replaces
+  // the `fixedRoutes` of 0.6.x, under which only the App route was bounded.
+  contain: true,
   architecture,
   footer: {
     // ONE line at the reading width (ADR-0016 section 2, the Lidar3D footer). The long forms live
@@ -76,14 +73,14 @@ createRoot(document.getElementById('root')!).render(
             element={
               <AppShell config={config}>
                 <Routes>
-                  <Route path="/" element={<Tool />} />
-                  <Route path="/app" element={<Tool />} />
+                  <Route path="/" element={<Workbench />} />
+                  <Route path="/app" element={<Workbench />} />
                   <Route path="/introduction" element={<Introduction />} />
                   <Route path="/methodology" element={<Methodology />} />
                   <Route path="/implementation" element={<Implementation />} />
                   <Route path="/experiments" element={<Experiments />} />
                   <Route path="/benchmark" element={<Benchmark />} />
-                  <Route path="*" element={<Tool />} />
+                  <Route path="*" element={<Workbench />} />
                 </Routes>
               </AppShell>
             }

@@ -62,7 +62,7 @@ export default function Implementation() {
     { id: 'deploy', label: es ? 'Artefactos y despliegue' : 'Artifacts and deploy', content: <Deploy {...props} /> },
   ];
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Implementación' : 'Implementation'}</h1>
         <p className="lede">

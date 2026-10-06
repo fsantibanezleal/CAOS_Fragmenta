@@ -37,7 +37,7 @@ export function ProvenancePanel({ artifact }: { artifact: CaseArtifact }) {
   const withheld = provenance.held_out_site;
 
   return (
-    <section className="fr-panel fr-panel-provenance">
+    <section className="fr-panel">
       <h3>
         <Info size={15} aria-hidden="true" />
         {lang === 'es' ? 'Procedencia' : 'Provenance'}
@@ -116,7 +116,7 @@ export function AbstentionPanel({
   }
 
   return (
-    <section className="fr-panel fr-panel-abstain">
+    <section className="fr-panel">
       <h3>
         <Ban size={15} aria-hidden="true" />
         {lang === 'es'
@@ -183,7 +183,7 @@ export function ScorePanel({
       : null;
 
   return (
-    <section className="fr-panel fr-panel-score">
+    <section className="fr-panel">
       {title ? <h3>{title}</h3> : null}
       <dl className="fr-kv fr-kv-metrics">
         <dt title="1 - SS_res / SS_tot about the 1:1 line. What a reader assumes R2 means.">
@@ -313,7 +313,7 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
 
   if (predictedP80M === null || predictedX50M === null) {
     return (
-      <section className="fr-panel fr-panel-decision">
+      <section className="fr-panel">
         <h3>{lang === 'es' ? 'Decisión' : 'Decision'}</h3>
         <p className="fr-note fr-note-warn">
           {lang === 'es'
@@ -353,7 +353,7 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
         : 'The design is coarse. Tighten the burden by 10 to 15 percent before touching the explosive: it is the cheaper change.';
 
   return (
-    <section className="fr-panel fr-panel-decision">
+    <section className="fr-panel">
       <h3>{lang === 'es' ? 'Decisión' : 'Decision'}</h3>
       <div className={`fr-verdict ${meets ? 'fr-verdict-ok' : 'fr-verdict-bad'}`}>
         {meets ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}

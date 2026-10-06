@@ -16,7 +16,7 @@
  * nobody is looking is a compute bomb.
  */
 
-import { useShellLang } from '@fasl-work/caos-app-shell';
+import { usePausedViz, useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -92,8 +92,6 @@ export function BenchView3D({
   const lang = useShellLang();
   const mountRef = useRef<HTMLDivElement | null>(null);
   const initRef = useRef<Init | null>(null);
-  const rafRef = useRef<number | null>(null);
-  const [playing, setPlaying] = useState(false);
   const [themeEpoch, setThemeEpoch] = useState(0);
 
   useEffect(() => {
@@ -393,49 +391,39 @@ export function BenchView3D({
     };
   }, [pattern, holesPerRow, rows, tieIn, height, themeEpoch]);
 
-  // The initiation ripple. Default paused, halted on a hidden tab.
+  // The initiation ripple, on the shell's paused loop: default paused, halted on a hidden tab, and never an
+  // animation loop of its own (the template's web baseline checks for one).
+  const cycle = useRef({ maxOrder: 1, cycleMs: 900 });
   useEffect(() => {
-    if (!playing) return;
-    const state = initRef.current;
-    if (!state) return;
-
-    const maxOrder = Math.max(...state.holes.map((h) => h.order), 1);
-    const cycleMs = Math.max(900, maxOrder * Math.max(1, delayMs) * 6);
-    let start = performance.now();
-
-    const step = () => {
-      if (document.hidden) {
-        setPlaying(false);
-        return;
-      }
-      const elapsed = (performance.now() - start) % cycleMs;
-      const front = (elapsed / cycleMs) * (maxOrder + 1.5);
+    const holes = initRef.current?.holes ?? [];
+    const maxOrder = Math.max(...holes.map((h) => h.order), 1);
+    cycle.current = { maxOrder, cycleMs: Math.max(900, maxOrder * Math.max(1, delayMs) * 6) };
+  }, [delayMs, pattern, holesPerRow, rows, tieIn, height, themeEpoch]);
+  const viz = usePausedViz(
+    (_dt, elapsed) => {
+      const state = initRef.current;
+      if (!state) return false;
+      const { maxOrder, cycleMs } = cycle.current;
+      const front = ((elapsed % cycleMs) / cycleMs) * (maxOrder + 1.5);
       for (const hole of state.holes) {
         const distance = front - hole.order;
         const intensity = distance >= 0 && distance < 1.2 ? 1 - distance / 1.2 : 0;
-        const material = hole.mesh.material as THREE.MeshStandardMaterial;
-        material.emissive.setRGB(intensity * 0.9, intensity * 0.45, 0);
+        (hole.mesh.material as THREE.MeshStandardMaterial).emissive.setRGB(intensity * 0.9, intensity * 0.45, 0);
       }
       state.renderer.render(state.scene, state.camera);
-      rafRef.current = requestAnimationFrame(step);
-    };
-    rafRef.current = requestAnimationFrame(step);
-
-    const onVisibility = () => {
-      if (document.hidden) setPlaying(false);
-    };
-    document.addEventListener('visibilitychange', onVisibility);
-
-    return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      document.removeEventListener('visibilitychange', onVisibility);
-      for (const hole of state.holes) {
-        (hole.mesh.material as THREE.MeshStandardMaterial).emissive.setRGB(0, 0, 0);
-      }
-      state.renderer.render(state.scene, state.camera);
-      start = 0;
-    };
-  }, [playing, delayMs]);
+      return true;
+    },
+    { loop: true },
+  );
+  const playing = viz.playing;
+  // Paused: the holes return to rest, drawn once.
+  useEffect(() => {
+    if (playing) return;
+    const state = initRef.current;
+    if (!state) return;
+    for (const hole of state.holes) (hole.mesh.material as THREE.MeshStandardMaterial).emissive.setRGB(0, 0, 0);
+    state.renderer.render(state.scene, state.camera);
+  }, [playing]);
 
   const es = lang === 'es';
 
@@ -500,7 +488,7 @@ export function BenchView3D({
         <button
           type="button"
           className="fr-btn"
-          onClick={() => setPlaying((p) => !p)}
+          onClick={() => viz.toggle()}
           aria-pressed={playing}
         >
           {playing
@@ -512,7 +500,7 @@ export function BenchView3D({
           {num(pattern.charge_mass_kg / Math.max(1e-9, pattern.rock_volume_m3), 3)}{' '}
           {es ? 'kg por m3' : 'kg per m3'}
         </span>
-        {label ? <span className="fr-bench-label">{label}</span> : null}
+        {label ? <span>{label}</span> : null}
       </div>
       {/*
         The permanent caveat overlay. Not dismissible, because the moment it can be dismissed this

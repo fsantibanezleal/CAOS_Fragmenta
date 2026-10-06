@@ -54,7 +54,7 @@ export default function Methodology() {
   ];
 
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Metodología' : 'Methodology'}</h1>
         <p className="lede">

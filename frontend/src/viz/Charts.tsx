@@ -181,8 +181,26 @@ export function DistributionChart({
           stroke: text,
           grid: { stroke: grid, width: 1 },
           ticks: { stroke: grid },
-          values: (_u, ticks) =>
-            ticks.map((t) => (t < 0.1 ? `${num(t * 1000, 0)}mm` : `${num(t * 100, 0)}cm`)),
+          // uPlot passes null for the ticks of a log axis it leaves unlabelled (all but the decades). Until
+          // 0.07.000 each null was formatted, as "0mm", so the axis of every distribution read
+          // "0mm0mm0mm" on top of itself, on the live site too; a null tick now gets no label.
+          values: (_u, ticks) => {
+            const labels = ticks.map((t) => {
+              if (t === null || t === undefined || !Number.isFinite(t) || t <= 0) return '';
+              const decade = Math.log10(t);
+              if (Math.abs(decade - Math.round(decade)) > 1e-6) return '';
+              if (t < 0.001) return `${num(t * 1000, 1)} mm`;
+              if (t < 0.1) return `${num(t * 1000, 0)} mm`;
+              if (t < 1) return `${num(t * 100, 0)} cm`;
+              return `${num(t, 0)} m`;
+            });
+            // Declared for the browser gate: a label that repeats the one before it is a broken axis.
+            const shown = labels.filter((l) => l !== '');
+            const repeats = shown.filter((l, i) => i > 0 && l === shown[i - 1]).length;
+            ref.current?.setAttribute('data-ticks-repeat', String(repeats));
+            ref.current?.setAttribute('data-ticks-labelled', String(shown.length));
+            return labels;
+          },
           // Painted on the canvas, so no translation pass reaches it: the language is chosen here.
           label: lang === 'es' ? 'tamaño de fragmento' : 'fragment size',
           labelSize: 22,
