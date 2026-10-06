@@ -221,3 +221,41 @@ def test_the_framework_examples_in_the_docs_run_and_agree_with_the_engine():
     assert "leave one site out, pooled: -0.231" in out["02_scikit-learn"]
     assert "worst difference over the corpus: 0.0e+00 m" in out["03_xgboost"]
     assert "variance explained 0.232, squared correlation 0.570" in out["04_numpy"]
+
+
+# ---------------------------------------------------------------------------------------------
+# The shared base (ADR-0078): the shell pinned exactly, and no override the pinned shell carries
+# ---------------------------------------------------------------------------------------------
+
+def test_the_shell_is_pinned_exactly_and_the_template_version_is_recorded():
+    """WB-001. A range (`^0.6.0`) let any 0.x release in; ADR-0078 s5 asks for one exact version."""
+    import json
+    import re
+
+    package = json.loads((ROOT / "frontend" / "package.json").read_text(encoding="utf-8"))
+    pin = package["dependencies"]["@fasl-work/caos-app-shell"]
+    assert re.fullmatch(r"\d+\.\d+\.\d+", pin), f"the shell is pinned as {pin!r}, not to one exact version"
+    lock = json.loads((ROOT / "frontend" / "package-lock.json").read_text(encoding="utf-8"))
+    assert lock["packages"]["node_modules/@fasl-work/caos-app-shell"]["version"] == pin
+    recorded = (ROOT / ".template-version").read_text(encoding="utf-8").strip()
+    shape = r"CAOS_PRODUCT_TEMPLATE \d+\.\d{2}\.\d{3} \(tag v\d+\.\d{2}\.\d{3}\)"
+    assert re.fullmatch(shape, recorded), recorded
+
+
+#: The entries of CAOS_MANAGE conventions/shell-known-defects.md still open against the pinned shell. An
+#: override in this product may answer one of these, and must name it; any other is a fix the shell carries.
+OPEN_SHELL_DEFECTS = {19, 20, 22, 23}
+
+
+def test_every_shell_override_names_an_open_defect():
+    """WB-006. Overrides of defects 1, 4 and 14 were carried by 0.7.0 and 0.7.1 and went with the pin."""
+    import re
+
+    sources = [ROOT / "frontend" / "src" / "fragmenta.css", ROOT / "frontend" / "src" / "main.tsx"]
+    sources += sorted((ROOT / "frontend" / "src").rglob("*.tsx"))
+    named = set()
+    for path in sources:
+        for m in re.finditer(r"[Ss]hell (?:known )?defect (\d+)", path.read_text(encoding="utf-8")):
+            named.add((path.relative_to(ROOT).as_posix(), int(m.group(1))))
+    closed = sorted(f"{where}: defect {n}" for where, n in named if n not in OPEN_SHELL_DEFECTS)
+    assert closed == [], f"overrides of defects the pinned shell carries: {closed}"
