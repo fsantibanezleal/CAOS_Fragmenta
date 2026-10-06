@@ -24,6 +24,7 @@ select = ["E", "F", "W", "I"]
 # the 110-column limit.
 "scripts/build_architecture_svgs.py" = ["E501"]
 "scripts/build_docs_results.py" = ["E501"]
-# The template's SDD and deploy-place gates, kept verbatim so they stay the base's (ADR-0078).
+# The template's SDD, deploy-place and web-baseline gates, kept verbatim so they stay the base's (ADR-0078).
 "scripts/check_sdd.py" = ["E501"]
 "scripts/check_deploy_place.py" = ["E501"]
+"scripts/check_web_baseline.py" = ["E501"]
