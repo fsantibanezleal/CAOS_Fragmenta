@@ -68,3 +68,41 @@ groups them, rather than by adding a second row of navigation:
 | Benchmark | verdict, every arm, published hold-outs, the published network, robustness, live check, provenance | the hold-outs and the network become "Published reproductions", as `docs/results/05_published-reproductions.md` already is |
 
 Each merged sub-tab keeps every section it had, each with its own heading and its own sources; nothing is cut.
+
+## The rail, scoped to the open group
+
+`CaseWorkbench` takes a controlled `group`, so the rail is composed for the group that is open. A control that moves
+only some views is shown only with them (the 2026-06-21 review rule: a control's scope is what it affects). Always
+in the rail: the case picker (a select with one group per category), the model picker (a select with one group per
+tier) and the blast picker. With their group only:
+
+| Group | Its controls, in the rail | Its readout |
+|---|---|---|
+| Predict | none beyond the global ones | the selected model's score on this case, in the rail |
+| Distribution: the curves | undulation and fines fraction; the variants | P20, P50, P80, the uniformity index and the share passing 10 mm, live, under the curve they are read from |
+| Distribution: against a target | the target P80 and the oversize limit; the variants | the P80, the oversize and the fines of the selected model, in the view |
+| Design: the surface, with every model on the design beside it | Geometry (bench height and stemming ratios, hole diameter) and Charge (powder factor, in-situ block, modulus, and what the map shows) as two rail sections; the variants | the hovered cell's design and size, or the iso-levels, under the map |
+| Design: the bench | the tie-in and the inter-hole delay | none: the bench is the blast as fired |
+| Rock | UCS, density and joint spacing | the two schemes' factors and the recovered one, in the rail |
+| Compare the variants | the variants | none |
+
+As built, three things differ from the plan above it. The readouts of the Distribution and Design views sit inside
+the view, under the drawing they read, because in the rail they pushed the controls of a phone-sized rail out of
+reach (G5). Burden and spacing are not knobs: they are the surface's axes, moved by its marker, by pointer or arrow
+keys. The variants are shown only with the views a variant moves.
+
+Every control is a shell `Knob` or `ChipGroup` (registered, so the gate can move it) or, for the three long
+categorised choices, a select that writes `data-control`; every value enters the selection key through `controls`.
+
+## The variants
+
+A case's variants are design changes of its representative blast (burden 15 percent tighter, powder factor 30 percent
+higher, and so on), each baked for every arm as `variant_curves`. The variant bar sets the design the Distribution,
+Decide and Design views start from; Predict and Rock are about the measured blasts and the rock, so they do not move
+with it. "Compare the variants" shows every variant for the selected model (the baked response, one lever at a time).
+
+## Drawing what each group shows (rule 8)
+
+The gate counts canvases, SVG drawings and tables. Rock had none (three rating cards and a definition list); it gains
+a drawing of the factors side by side, and its tables are tables. The case write-up is prose and is the context slot,
+which the gate reads as prose.

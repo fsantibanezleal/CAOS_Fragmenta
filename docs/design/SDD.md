@@ -22,9 +22,10 @@ Non-goals, each something a reader could reasonably assume:
 - **A production design tool**: no predictor here is validated for a new mine; with ten sites no arm fitted
   without the corpus has a site-resampled interval above zero.
 - **A validated passing curve**: no available dataset carries a measured size distribution.
-- **Timing physics**: the initiation sequence on the Bench tab is drawn and enters no prediction; the timing
-  factor of the modified classical model is a scalar.
-- **Flyrock, vibration, comminution**: none is modelled; the Decide tab's crusher comparison is a labelled proxy.
+- **Timing physics**: the initiation sequence of the bench view (the Design group) is drawn and enters no
+  prediction; the timing factor of the modified classical model is a scalar.
+- **Flyrock, vibration, comminution**: none is modelled; the crusher comparison (Distribution, "Against a
+  target") is a labelled proxy.
 - **A package**: the product declares none (ADR-0057); the engine is `blastfrag` on PyPI, pinned exactly.
 
 ## Contracts
@@ -48,8 +49,9 @@ Non-goals, each something a reader could reasonably assume:
   (numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1). The benchmark's 100-draw protocols and the network's
   Levenberg-Marquardt fits put it offline; it never runs in CI (ADR-0074). It pins BLAS to one thread before numpy
   loads: on the network's small matrices a multi-threaded BLAS spun, and one fit at width 15 took more than six
-  minutes on a loaded workstation against about two seconds on one thread. The full bake of 0.06.000 took 745 s on
-  the development workstation (2026-10-05).
+  minutes on a loaded workstation against about two seconds on one thread. The full bake took 745 s at 0.06.000
+  and 347 s at 0.07.000 on the development workstation, the same day and with the same pipeline (2026-10-05): the
+  time follows the machine's load.
 - **Replayed**: the committed artifacts, copied into the site and fetched with the version in the address. Their
   size, measured on the committed files:
 
@@ -63,6 +65,12 @@ The committed artifacts come to about 4.2 MB: 2.7 MB of portable models, 368 kB 
   exactly for the trees and to 1e-12 for the network and the kernels, held by fixtures of the original models.
   The measured basis for running them in the browser is that walk: a tree ensemble of a few hundred trees on
   seven inputs is a few thousand comparisons per blast.
+- **Live, on a grid**: the Design group's response surface (`frontend/src/engine/surface.ts`) evaluates
+  `answerOnDesign` (`frontend/src/engine/design.ts`) on 41 by 41 designs over the corpus envelope of
+  burden-to-diameter and spacing-to-burden; the every-model view runs the same function, so the two cannot
+  disagree. One full surface of 1681 designs took 13 to 19 ms per model in Node 24 on the development
+  workstation (2026-10-05), and at most 24 ms on the first call, which reads the models into the walk's cache;
+  so it recomputes on every change, with no worker.
 
 ## Method ladder
 
@@ -118,10 +126,10 @@ Sans), and only then publishes.
 |---|---|---|---|
 | ADR-0057 | two contracts, named stages, no internal package | yes: `data-pipeline/`, the contract mirror, the engine on PyPI | none |
 | ADR-0069 | method vertical with its acceptance criterion | yes, split with the engine | none |
-| ADR-0016, ADR-0017 | six routes on the shared shell; documentation depth | yes | the shell is 0.6.8; adoption of the base is `features/workbench-on-the-base/` |
+| ADR-0016, ADR-0017 | six routes on the shared shell; documentation depth | yes, on shell 0.7.2 pinned exactly | none |
 | ADR-0056 | the `docs/` wiki | yes | none |
 | ADR-0058 | architecture modal, five themed bilingual tabs | yes, generated from the artifacts | none |
-| ADR-0071 | the page is the viewport; one nav row; instrument at least half the App route | rules 1 to 7 and 9 are gated | rule 8 is not met (0.28 to 0.36 of the viewport, the parity plot must be square); `features/workbench-on-the-base/` |
+| ADR-0071 | the page is the viewport; one nav row; instrument at least half the App route | yes: rules 1 to 7 and 9 by the product's gate, rule 8 by the base's (G6), where the drawn views covered at least 0.578 of the viewport in every workbench state at 1280 px and wider on 0.07.000 | none |
 | ADR-0074 | CI runs cheap checks only | yes: `scripts/check_ci_budget.py` | none |
 | ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before | this document; `scripts/check_sdd.py` in the guards job |
-| ADR-0078 | rules live in the base | partly: overrides for shell defects 1 and 14 are local | `features/workbench-on-the-base/`; overrides 14 to 18 stay until shell 0.7.1 is on npm |
+| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's web-baseline and deploy-place guards run in CI | one override, for shell defect 23 (a filling card takes its row); the template's version guard waits on CAOS_PRODUCT_TEMPLATE#19, and WB-008 is held by the product's own test meanwhile |

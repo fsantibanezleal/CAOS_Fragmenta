@@ -1,6 +1,6 @@
 # Requirements: the App on the shared base
 
-Status: planned
+Status: live
 
 Designed 2026-10-05, before its code (ADR-0075), for backlog items BL-031 and BL-034 and issue #14: adopt the shell's
 workbench (ADR-0078 s5), pinned exactly, and meet ADR-0071 rule 8 as the base measures it. EARS.
@@ -14,7 +14,7 @@ workbench (ADR-0078 s5), pinned exactly, and meet ADR-0071 rule 8 as the base me
 | WB-005 | EVERY view and readout SHALL declare its lane and its provenance. | `frontend/scripts/gate.mjs` |
 | WB-006 | THE product SHALL remove every local override of a shell defect the pinned shell carries, and SHALL keep each remaining override beside the open defect entry it answers. | `tests/test_guards.py::test_every_shell_override_names_an_open_defect` |
 | WB-007 | THE product's own browser gate SHALL keep passing on every route in both font sets. | `frontend/gates/browser-gate.mjs` |
-| WB-008 | THE version SHALL have one source, VERSION, which every other statement of it follows. | `scripts/check_version_coherence.py` |
+| WB-008 | THE version SHALL have one source, VERSION, which every other statement of it follows. | `tests/test_guards.py::test_the_version_has_one_source_and_every_statement_of_it_follows` |
 | WB-009 | THE views SHALL use only defined tokens and styled classes, SHALL format numbers through the shell, and SHALL run no animation loop outside the shell's paused loop. | `scripts/check_web_baseline.py` |
 | WB-010 | THE product SHALL carry the files of one deploy place, GitHub Pages, and none of another. | `scripts/check_deploy_place.py` |
 | WB-011 | EVERY documentation page SHALL show at most six peer sub-tabs; related sections share one (ADR-0071 rule 5). | `frontend/gates/browser-gate.mjs` |
