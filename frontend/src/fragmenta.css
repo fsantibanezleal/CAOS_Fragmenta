@@ -248,39 +248,17 @@
   min-height: 0;
 }
 
-/* The host measures the space; the canvas does not get a vote.
- *
- * The chart picks its side from the host's height, and the canvas then sets that height in pixels.
- * While the canvas is in normal flow those two facts are the same number, so the measurement is
- * self-referential and the square sticks at whatever it happened to start at: 520px, at every
- * viewport from 1280 to 2560. Taking the canvas out of flow breaks the loop, and the host's height
- * comes from the flex column above it instead. */
+/* The parity plot is the shell's UPlotChart (square, centred by the shell). Filling, it takes the height of the
+ * box its Stage gives it and the chart's plot fills that column; otherwise it takes the height asked for. */
 .fr-parity {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-/* Height from the column above, never from the content inside. The absolutely positioned host
- * contributes nothing to this box, which is the whole point. */
-.fr-chart-fillbox {
-  flex: 1 1 0;
-  min-height: 120px;
+  flex-direction: column;
   min-width: 0;
-  position: relative;
 }
 
-.fr-chart-fillbox > .fr-chart-canvas {
-  position: absolute;
-  inset: 0;
-}
-
-.fr-parity > canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.fr-parity.fill {
+  height: 100%;
+  min-height: 0;
 }
 
 /* Past about four lines a hover readout is not enough: the reader needs to isolate one and follow

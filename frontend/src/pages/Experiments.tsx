@@ -372,8 +372,8 @@ function BySite({ es, lang, b }: TabProps) {
       </p>
       <p>
         {es
-          ? 'Dos campañas concentran la caída de los aprendidos: Murgul, donde el error de la potenciación es varias veces el del nulo, y Miami, la de fragmentos más finos. Las dos de Reocin, las más gruesas, derrotan a todo brazo que no está dentro de la muestra, porque ningún sitio de entrenamiento es tan grueso. Abajo, las predicciones fuera de pliegue del brazo elegido contra lo medido, coloreadas por sitio.'
-          : 'Two campaigns concentrate the learned arms’ drop: Murgul, where the boosting model’s error is several times the null’s, and Miami, the one with the finest fragments. The two Reocin campaigns, the coarsest, defeat every arm that is not in sample, because no training site is as coarse. Below, the chosen arm’s out-of-fold predictions against the measurement, coloured by site.'}
+          ? 'Dos campañas concentran la caída de los aprendidos: Murgul, donde el error de la potenciación es varias veces el del nulo, y Miami, la de fragmentos más finos. Las dos de Reocin, las más gruesas, derrotan a todo brazo que no está dentro de la muestra, porque ningún sitio de entrenamiento es tan grueso. Abajo, las predicciones fuera de pliegue del brazo elegido contra lo medido; al apuntar a un tiro se lee su sitio.'
+          : 'Two campaigns concentrate the learned arms’ drop: Murgul, where the boosting model’s error is several times the null’s, and Miami, the one with the finest fragments. The two Reocin campaigns, the coarsest, defeat every arm that is not in sample, because no training site is as coarse. Below, the chosen arm’s out-of-fold predictions against the measurement; point at a blast to read its site.'}
       </p>
       <label className="fr-control fr-control-inline">
         {es ? 'Brazo' : 'Arm'}

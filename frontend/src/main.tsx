@@ -1,5 +1,7 @@
 import { AppShell, applyTheme, CitationsProvider, readTheme, type ShellConfig } from '@fasl-work/caos-app-shell';
 import '@fasl-work/caos-app-shell/styles.css';
+// The shell's chart (the parity plot) is sized by its own stylesheet: without it the plot has no height.
+import '@fasl-work/caos-app-shell/chart.css';
 import { Hammer } from 'lucide-react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

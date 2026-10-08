@@ -31,7 +31,7 @@ size and P80) as `Readout` with lane and provenance.
   0.7.2 (defect 21, repeated integer ticks) reached npm on 2026-10-05, before this unit's code, so the pin is the
   release that carries every defect fix the product overrides. `.template-version` records the template release
   whose base the product follows; the template's `scripts/check_version_coherence.py` joins the guards.
-- On 2026-10-07 the pin moved to `0.9.1` and `.template-version` to the template 0.03.000, the base release built
+- On 2026-10-07 and 08 the pin moved to `0.10.0` and `.template-version` to the template 0.03.001, the base release built
   from this product's own bridges (CAOS_MANAGE `plans/app-shell`, BL-026): the shell's `ViewsRow` with shares
   replaces the product's view columns (`.fr-viewcol`, the override for defect 23), and the shell's text kit
   (`textWidth`, `fitLabel`, `niceTicks`) replaces `src/viz/text.ts`. The template's version guard, which reads code

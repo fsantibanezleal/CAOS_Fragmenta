@@ -4,8 +4,8 @@ All notable changes to this project. Format follows Keep a Changelog; newest on 
 
 ## [0.07.000] - 2026-10-05
 
-The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.9.3
-exactly, on the template 0.03.000, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
+The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.10.0
+exactly, on the template 0.03.001, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
 response surface over burden and spacing. The engine is still `blastfrag==0.4.0`. The re-bake changed none
 of the 423,793 numbers in the 45 artifacts: only their version stamps, the 88 digests over them, and 25
 Spanish strings that take the decimal comma (five case reasons, and the expected band of ten real campaigns,
@@ -66,14 +66,21 @@ in each case and in its manifest). (#14)
   and in its key, and a distribution with several curves says which is which before the pointer asks.
 - "Against a target" sets the decision beside the curve where the view is wide, so the curve keeps the
   view's height; on a phone the curve and the decision scroll inside the view.
-- The shell is pinned to 0.9.3 exactly (it was `^0.6.0`; the release was first built on 0.7.2), with
-  its peer `zustand` declared, and `.template-version` records the template 0.03.000; the architecture
+- The shell is pinned to 0.10.0 exactly (it was `^0.6.0`; the release was first built on 0.7.2), with
+  its peer `zustand` declared, and its chart stylesheet imported; `.template-version` records the
+  template 0.03.001; the architecture
   drawings are inline, and the shell's configuration states the licence, the visibility and the build.
 - The views of a row sit in the shell's `ViewsRow` (the Design row split three to two), and the drawn
   views fit their labels and pick their ticks with the shell's text kit (`textWidth`, `fitLabel`,
   `niceTicks`); the product's own copies are gone (see Removed).
 - The choice of what the response map shows (P80 or x50) sits in the rail's Model section with the
   surface open, beside the model it maps, instead of among the charge's knobs.
+- The parity plot (predicted against measured: the Predict view, the Benchmark, the Experiments and the
+  full-screen page) is the shell's `UPlotChart` in its parity form: ticks on both axes in centimetres, a
+  grid, the null model as a labelled reference line, the selected blast as a larger point with its own
+  key, and the blast under the pointer found in the plane, named with its error and site. It was a
+  canvas of the product's own, with two labels on one axis ("0" and "45cm") and none on the other.
+  On the documentation pages, where a click selects nothing, the hint no longer offers it.
 - The bench's animation runs on the shell's paused loop: paused when the view opens, halted on a hidden
   tab, started by its button.
 - The size axis of a distribution labels its decades only, in mm, cm or m.
@@ -107,6 +114,8 @@ in each case and in its manifest). (#14)
   nginx site of the old layout.
 - The view columns (`.fr-viewcol`, the override for shell defect 23) and the product's text kit
   (`src/viz/text.ts` and its test), which the shell carries since 0.8.0 and 0.9.0.
+- The canvas parity chart, its own picking and its layout rules (`.fr-chart-fillbox`), which the
+  shell's parity form carries since 0.10.0.
 
 ### Known limits
 
