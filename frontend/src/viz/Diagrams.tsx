@@ -393,9 +393,9 @@ export function ClassicalFlowDiagram() {
     { title: t('Absolute pattern', 'Malla absoluta'), lines: ['B, S, H, T, D', 'V = B·S·H', 'Q = Pf·V'] },
     { title: t('Rock factor A', 'Factor de roca A'), tone: 'warn', lines: [t('published ratings, or', 'calificaciones publicadas, o'), t('recovered per site, or', 'recuperado por sitio, o'), t('predicted from E', 'predicho desde E')] },
   ]);
-  const mean = centred({ x: 245, w: 220, tone: 'accent', title: t('Mean size x50', 'Tamaño medio x50'), lines: ['A·(V/Q)^0.8·Q^(1/6)', '·(RWS/115)^(-19/30)'] }, bottomOf(left) / 2 + 7);
+  const mean = centred({ x: 245, w: 220, tone: 'accent', title: t('Mean size x50', 'Tamaño medio x50'), lines: [t('A·(V/Q)^0.8·Q^(1/6)', 'A·(V/Q)^0,8·Q^(1/6)'), '·(RWS/115)^(-19/30)'] }, bottomOf(left) / 2 + 7);
   const right = column(505, 200, 14, 16, [
-    { title: t('Uniformity n', 'Uniformidad n'), tone: 'bad', lines: ['(2.2 - 14·B/d)·...', t('B in m, d in mm', 'B en m, d en mm')] },
+    { title: t('Uniformity n', 'Uniformidad n'), tone: 'bad', lines: [t('(2.2 - 14·B/d)·...', '(2,2 - 14·B/d)·...'), t('B in m, d in mm', 'B en m, d en mm')] },
     { title: t('Curve shape', 'Forma de la curva'), lines: ['Rosin-Rammler', 'Swebrec', t('two-branch', 'dos ramas')] },
   ]);
   const out = centred({ x: 745, w: 143, tone: 'good', title: 'P20, P50, P80', lines: [t('oversize %', 'sobretamaño %'), t('fines %', 'finos %')] }, bottomOf(right) / 2 + 7);
@@ -432,7 +432,7 @@ export function ClassicalFlowDiagram() {
 export function RockFactorDiagram() {
   const t = useT();
   const sources = column(12, 230, 12, 12, [
-    { title: t('Lilly, as printed in 2010', 'Lilly, según 2010'), lines: ['BI = 0.5(RMD+JPS+JPO', '     +RDI+0.05·UCS)'] },
+    { title: t('Lilly, as printed in 2010', 'Lilly, según 2010'), lines: [t('BI = 0.5(RMD+JPS+JPO', 'BI = 0,5(RMD+JPS+JPO'), t('     +RDI+0.05·UCS)', '     +RDI+0,05·UCS)')] },
     { title: t('Lilly, as printed in 2019', 'Lilly, según 2019'), tone: 'warn', lines: [t('strength = UCS/3 or /5', 'resistencia = UCS/3 o /5')] },
     { title: t('Protodyakonov lookup', 'Tabla de Protodyakonov'), lines: [t('five bands, A = 3 to 13', 'cinco bandas, A = 3 a 13')] },
     { title: t('Recovered per site', 'Recuperado por sitio'), tone: 'good', lines: [t('invert x50 on the', 'invertir x50 sobre la'), t('published prediction', 'predicción publicada')] },
@@ -531,7 +531,7 @@ export function GroupRouterDiagram() {
   ]);
   const mid = bottomOf(groups) / 2 + 7;
   const inputs = centred({ x: 12, w: 170, title: t('Seven ratios', 'Siete razones'), lines: ['S/B H/B B/D T/B', 'Pf XB E'] }, mid);
-  const score = centred({ x: 222, w: 230, tone: 'accent', title: t('Discriminant L', 'Discriminante L'), lines: ['4.467 S/B - 0.551 H/B', '- 0.123 B/D + ... + 3.577'] }, mid);
+  const score = centred({ x: 222, w: 230, tone: 'accent', title: t('Discriminant L', 'Discriminante L'), lines: [t('4.467 S/B - 0.551 H/B', '4,467 S/B - 0,551 H/B'), t('- 0.123 B/D + ... + 3.577', '- 0,123 B/D + ... + 3,577')] }, mid);
   const eq = centred({ x: 800, w: 88, title: t('Its own', 'Su propia'), lines: [t('power law', 'ley de potencia')] }, mid);
   const boxes = [inputs, score, ...groups, eq];
   const from = edge(score, 'right');

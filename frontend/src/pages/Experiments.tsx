@@ -89,15 +89,15 @@ function Design({ es }: TabProps) {
       <SafeProtocolDiagram />
       <p>
         {es
-          ? 'Todo lo que se ajusta, se ajusta solo con las filas de entrenamiento de cada partición: la escala de las entradas, los pesos, los árboles, la recta del factor de roca de transferencia. Lo que no se puede ajustar sin el corpus se declara: el enrutador y la regresión publicada vienen ajustados por su fuente sobre los 97 tiros, y el factor de roca recuperado usa predicciones publicadas del propio sitio. El criterio de descarte se declaró antes de correr; lo que cambió en la versión 0.05 es lo que se informa a su lado.'
-          : 'Everything that is fitted is fitted on each split’s training rows only: the input scaling, the weights, the trees, the transfer rock-factor line. What cannot be fitted without the corpus is declared: the router and the published regression come fitted by their source on the 97 blasts, and the recovered rock factor uses published predictions for the site itself. The kill criterion was declared before the run; what changed in 0.05 is what is reported beside it.'}{' '}
+          ? 'Todo lo que se ajusta, se ajusta solo con las filas de entrenamiento de cada partición: la escala de las entradas, los pesos, los árboles, la recta del factor de roca de transferencia. Lo que no se puede ajustar sin el corpus se declara: el enrutador y la regresión publicada vienen ajustados por su fuente sobre los 97 tiros, y el factor de roca recuperado usa predicciones publicadas del propio sitio. El criterio de descarte se declaró antes de correr; lo que cambió en la versión 0.05.000 es lo que se informa a su lado.'
+          : 'Everything that is fitted is fitted on each split’s training rows only: the input scaling, the weights, the trees, the transfer rock-factor line. What cannot be fitted without the corpus is declared: the router and the published regression come fitted by their source on the 97 blasts, and the recovered rock factor uses published predictions for the site itself. The kill criterion was declared before the run; what changed in 0.05.000 is what is reported beside it.'}{' '}
         <Cite id="roberts2017" />{' '}
         <Cite id="kapoor2023" />
       </p>
-      <Callout variant="honest" title={es ? 'Lo que cambió en la versión 0.05, y por qué' : 'What changed in 0.05, and why'}>
+      <Callout variant="honest" title={es ? 'Lo que cambió en la versión 0.05.000, y por qué' : 'What changed in 0.05.000, and why'}>
         {es
-          ? 'Hasta la versión 0.04 cada protocolo aleatorio era un único sorteo de 19 filas, la retención de sitio no tenía intervalo, y el brazo clásico y los aprendidos se puntuaban sobre filas distintas. Una revisión adversarial mostró que dos afirmaciones de entonces (que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos) eran efectos del sorteo de la semilla 0, y que el veredicto cambia con seis tiros. Los experimentos se rediseñaron para medir esas tres cosas.'
-          : 'Up to 0.04 each random protocol was a single draw of 19 rows, the site hold-out had no interval, and the classical arm and the learned arms were scored on different rows. An adversarial review showed that two claims of that time (that the classical model improves with a site held out, and that deduplication raises the learned scores) were effects of the seed-0 draw, and that the verdict changes with six blasts. The experiments were redesigned to measure those three things.'}
+          ? 'Antes de la versión 0.05.000 cada protocolo aleatorio era un único sorteo de 19 filas, la retención de sitio no tenía intervalo, y el brazo clásico y los aprendidos se puntuaban sobre filas distintas. Una revisión adversarial mostró que dos afirmaciones de entonces (que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos) eran efectos del sorteo de la semilla 0, y que el veredicto cambia con seis tiros. Los experimentos se rediseñaron para medir esas tres cosas.'
+          : 'Before 0.05.000 each random protocol was a single draw of 19 rows, the site hold-out had no interval, and the classical arm and the learned arms were scored on different rows. An adversarial review showed that two claims of that time (that the classical model improves with a site held out, and that deduplication raises the learned scores) were effects of the seed-0 draw, and that the verdict changes with six blasts. The experiments were redesigned to measure those three things.'}
       </Callout>
       {refs('e-design', es)}
     </section>
@@ -326,8 +326,8 @@ function ProtocolSensitivity({ es, lang, b }: TabProps) {
       </table>
       <Callout variant="honest" title={es ? 'Dos afirmaciones retiradas' : 'Two claims withdrawn'}>
         {es
-          ? 'Hasta la versión 0.04 esta página decía que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos. Las dos lecturas venían del sorteo de la semilla 0; sobre cien sorteos ninguna se sostiene, y la tabla muestra por qué.'
-          : 'Up to 0.04 this page said the classical model improves with a site held out and that deduplication raises the learned scores. Both readings came from the seed-0 draw; over a hundred draws neither holds, and the table shows why.'}
+          ? 'Antes de la versión 0.05.000 esta página decía que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos. Las dos lecturas venían del sorteo de la semilla 0; sobre cien sorteos ninguna se sostiene, y la tabla muestra por qué.'
+          : 'Before 0.05.000 this page said the classical model improves with a site held out and that deduplication raises the learned scores. Both readings came from the seed-0 draw; over a hundred draws neither holds, and the table shows why.'}
       </Callout>
       {refs('e-spread', es)}
     </section>

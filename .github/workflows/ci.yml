@@ -93,3 +93,6 @@ jobs:
 
       - name: One deploy place, GitHub Pages, and no files of another (ADR-0055)
         run: python scripts/check_deploy_place.py
+
+      - name: VERSION the single source; a version in code, never in history, fails (template 0.03.000)
+        run: python scripts/check_version_coherence.py

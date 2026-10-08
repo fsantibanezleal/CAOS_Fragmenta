@@ -3,7 +3,20 @@
  * the current design beside it, and the bench as reconstructed (docs/design/features/response-surface/).
  */
 
-import { pick, PlotCard, Stage, SubTabs, useShellLang, useThemeTokens, type BiText } from '@fasl-work/caos-app-shell';
+import {
+  fitLabel,
+  niceTicks,
+  pick,
+  PlotCard,
+  Stage,
+  SubTabs,
+  textWidth,
+  useShellLang,
+  useThemeTokens,
+  ViewsRow,
+  widestLabel,
+  type BiText,
+} from '@fasl-work/caos-app-shell';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { answersOnDesign, DESIGN_ARMS, designRefusal, ENVELOPE, outsideEnvelope, type DesignContext } from '../engine/design';
@@ -13,7 +26,6 @@ import { ARM_BY_ID, FEATURE_LABEL, formatSize } from '../lib/artifacts';
 import type { Lang } from '../lib/contract.types';
 import { notAvailable, num } from '../lib/format';
 import { BenchView3D } from '../viz/BenchView3D';
-import { fitLabel, textWidth, ticksFor, widestLabel } from '../viz/text';
 import { provenanceOf, type DesignView, type Selection } from './model';
 
 const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
@@ -43,14 +55,10 @@ export function DesignGroup({
           id: 'surface',
           label: t(lang, 'Response surface', 'Superficie de respuesta'),
           content: (
-            <div className="caos-views-row">
-              <div className="fr-viewcol" style={{ flexGrow: 3 }}>
-                <SurfaceView sel={sel} onDesign={onDesign} />
-              </div>
-              <div className="fr-viewcol" style={{ flexGrow: 2 }}>
-                <ArmsOnDesignView sel={sel} />
-              </div>
-            </div>
+            <ViewsRow shares={[3, 2]}>
+              <SurfaceView sel={sel} onDesign={onDesign} />
+              <ArmsOnDesignView sel={sel} />
+            </ViewsRow>
           ),
         },
         ...(sel.blast.pattern ? [{ id: 'bench', label: t(lang, 'The bench', 'El banco'), content: <BenchSubView sel={sel} /> }] : []),
@@ -416,7 +424,7 @@ function ArmsOnDesignView({ sel }: { sel: Selection }) {
           const right = width - 16;
           const bottom = 8 + DESIGN_ARMS.length * rowH;
           const x = (v: number) => left + (Math.min(v, hi) / hi) * (right - left);
-          const ticks = ticksFor(hi * 100, right - left, textWidth(num(hi * 100, 0), 11)).map((cm) => cm / 100);
+          const ticks = niceTicks(0, hi * 100, right - left, textWidth(num(hi * 100, 0), 11)).filter((cm) => cm <= hi * 100 + 1e-9).map((cm) => cm / 100);
           return (
             <svg width={width} height={height} role="img" aria-label={pick(title, lang)} data-chart="whatif" data-chart-rows={DESIGN_ARMS.filter((a) => answers[a]?.value !== undefined).length}>
               {ticks.map((v) => (

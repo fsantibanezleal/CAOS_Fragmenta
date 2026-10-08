@@ -15,7 +15,7 @@
     "gate": "node scripts/gate.mjs"
   },
   "dependencies": {
-    "@fasl-work/caos-app-shell": "0.7.2",
+    "@fasl-work/caos-app-shell": "0.9.3",
     "katex": "^0.16.11",
     "lucide-react": "^0.469.0",
     "react": "^19.0.0",

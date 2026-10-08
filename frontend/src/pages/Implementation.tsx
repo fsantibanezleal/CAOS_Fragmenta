@@ -18,7 +18,7 @@ import {
   PortableModelDiagram,
   ReconstructionDiagram,
 } from '../viz/Diagrams';
-import { notAvailable } from '../lib/format';
+import { notAvailable, num } from '../lib/format';
 
 interface TabProps {
   es: boolean;
@@ -141,12 +141,12 @@ function Architecture({ es, b }: TabProps) {
 /* ------------------------------------------------------------------------------------------- */
 
 function Data({ es }: TabProps) {
-  const defects: [string, string, string, string][] = [
-    ['Db5', es ? 'factor de carga' : 'powder factor', '0.39', '0.33'],
-    ['Sm4', 'x50', '0.22', '0.24'],
-    ['Ad15', 'x50', '0.15', '0.22'],
-    ['Ad17', es ? 'factor de carga' : 'powder factor', '1.24', '1.07'],
-    ['Ad19', es ? 'factor de carga' : 'powder factor', '1.26', '1.47'],
+  const defects: [string, string, number, number][] = [
+    ['Db5', es ? 'factor de carga' : 'powder factor', 0.39, 0.33],
+    ['Sm4', 'x50', 0.22, 0.24],
+    ['Ad15', 'x50', 0.15, 0.22],
+    ['Ad17', es ? 'factor de carga' : 'powder factor', 1.24, 1.07],
+    ['Ad19', es ? 'factor de carga' : 'powder factor', 1.26, 1.47],
   ];
   return (
     <section>
@@ -187,8 +187,8 @@ function Data({ es }: TabProps) {
             <tr key={id}>
               <td><code>{id}</code></td>
               <td>{column}</td>
-              <td>{published}</td>
-              <td className="fr-bad">{found}</td>
+              <td>{num(published, 2)}</td>
+              <td className="fr-bad">{num(found, 2)}</td>
             </tr>
           ))}
         </tbody>
@@ -282,8 +282,8 @@ function Bake({ es, b }: TabProps) {
       <PipelineDiagram />
       <p>
         {es
-          ? `El horneado es una función pura del registro de casos, de las versiones fijadas (motor ${b?.engine_version ?? notAvailable()}, numpy, scikit-learn y xgboost exactos) y de la semilla. Repetido en el mismo entorno, produce artefactos idénticos byte a byte, y una prueba lo comprueba. Repetido en otro sistema operativo los reproduce con una tolerancia numérica y no con un resumen, porque dos compilaciones del mismo numpy pueden sumar un producto punto en otro orden; la comparación entre entornos usa una tolerancia relativa de 1e-6, y la peor diferencia medida entre Windows y Linux en la versión 0.04 fue 2.7e-08.`
-          : `The bake is a pure function of the case registry, the pinned versions (engine ${b?.engine_version ?? notAvailable()}, and exact numpy, scikit-learn and xgboost) and the seed. Re-run in the same environment it writes byte-identical artifacts, and a test checks that. Re-run on another operating system it reproduces them to a numeric tolerance rather than a digest, because two builds of the same numpy can sum a dot product in a different order; the cross-environment comparison uses a relative tolerance of 1e-6, and the worst difference measured between Windows and Linux at version 0.04 was 2.7e-08.`}
+          ? `El horneado es una función pura del registro de casos, de las versiones fijadas (motor ${b?.engine_version ?? notAvailable()}, numpy, scikit-learn y xgboost exactos) y de la semilla. Repetido en el mismo entorno, produce artefactos idénticos byte a byte, y una prueba lo comprueba. Repetido en otro sistema operativo los reproduce con una tolerancia numérica y no con un resumen, porque dos compilaciones del mismo numpy pueden sumar un producto punto en otro orden; la comparación entre entornos usa una tolerancia relativa de 1e-6, y la peor diferencia medida entre Windows y Linux en la versión 0.04.000 fue 2,7e-08.`
+          : `The bake is a pure function of the case registry, the pinned versions (engine ${b?.engine_version ?? notAvailable()}, and exact numpy, scikit-learn and xgboost) and the seed. Re-run in the same environment it writes byte-identical artifacts, and a test checks that. Re-run on another operating system it reproduces them to a numeric tolerance rather than a digest, because two builds of the same numpy can sum a dot product in a different order; the cross-environment comparison uses a relative tolerance of 1e-6, and the worst difference measured between Windows and Linux at version 0.04.000 was 2.7e-08.`}
       </p>
       <Equation
         tex={String.raw`\frac{|a - b|}{\max(|a|, |b|)} \le 10^{-6}\quad \text{for every number in every artifact}`}
@@ -291,7 +291,7 @@ function Bake({ es, b }: TabProps) {
       />
       <Callout variant="note" title={es ? 'Dónde vale y dónde no' : 'Where it holds and where it does not'}>
         {es
-          ? 'Las pruebas escriben en un directorio temporal y comparan contra los archivos comprometidos, así que no pueden reescribir lo que comprueban. Medido en la versión 0.06.000 entre Windows y Linux con las mismas versiones: cada caso y su archivo de modelos se reproducen; la peor diferencia es 2.7e-08 en un caso y 7.0e-07 en un archivo de modelos, sobre un peso de la red cercano a cero, donde una diferencia relativa se infla. Esa medición mostró además que la comparación no podía pasar entre sistemas desde la 0.05.000, porque comparaba como texto el resumen criptográfico del archivo de modelos; ahora compara los números que ese resumen cubre. La identidad byte a byte en el mismo entorno se comprueba en cada corrida de las pruebas.'
+          ? 'Las pruebas escriben en un directorio temporal y comparan contra los archivos comprometidos, así que no pueden reescribir lo que comprueban. Medido en la versión 0.06.000 entre Windows y Linux con las mismas versiones: cada caso y su archivo de modelos se reproducen; la peor diferencia es 2,7e-08 en un caso y 7,0e-07 en un archivo de modelos, sobre un peso de la red cercano a cero, donde una diferencia relativa se infla. Esa medición mostró además que la comparación no podía pasar entre sistemas desde la 0.05.000, porque comparaba como texto el resumen criptográfico del archivo de modelos; ahora compara los números que ese resumen cubre. La identidad byte a byte en el mismo entorno se comprueba en cada corrida de las pruebas.'
           : 'Tests write into a temporary directory and compare against the committed files, so they cannot rewrite what they check. Measured at 0.06.000 between Windows and Linux on the same pins: every case and its models file reproduces; the worst difference is 2.7e-08 in a case and 7.0e-07 in a models file, on a near-zero network weight, where a relative difference inflates. The same run showed that the comparison could not pass across systems since 0.05.000, because it compared the models file’s digest as a string; it now compares the numbers that digest covers. Byte identity in the same environment is checked on every test run.'}
       </Callout>
       {refs('i-bake', es)}
