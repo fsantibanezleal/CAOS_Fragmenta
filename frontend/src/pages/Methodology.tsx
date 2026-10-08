@@ -239,7 +239,7 @@ function RockFactor({ es, b }: TabProps) {
               {sites.map(([site, meta]) => (
                 <tr key={site}>
                   <td>{site}</td>
-                  <td className="fr-fine">{meta.rock ?? '-'}</td>
+                  <td className="fr-fine" lang="en" translate="no">{meta.rock ?? '-'}</td>
                   <td>{meta.E_GPa.map((e) => value(e)).join('; ')}</td>
                   <td>{meta.rock_factor_recovered === null ? (es ? 'sin geometría' : 'no geometry') : f(meta.rock_factor_recovered, 2)}</td>
                   <td>{f(meta.rock_factor_transfer, 2)}</td>
@@ -518,7 +518,13 @@ function Protocols({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `El criterio de descarte, con la redacción fija desde que la primera corrida le agregó la mitad de positividad (la historia está en Benchmark): «${b?.kill_criterion ?? ''}». Sobre todos los tiros, el mejor brazo aprendido explica ${f(v?.supports.all.best_learned_r2_identity)} y el criterio no se cumple; sobre los ${v?.supports.geometry.n_blasts ?? notAvailable()} con geometría, explica ${f(v?.supports.geometry.best_learned_r2_identity)} y se cumple. El nulo agrupado se correlaciona con las mediciones en ${f(v?.supports.all.null_pearson_r, 2)}: excluir un sitio grueso baja la media de entrenamiento, así que el nulo predice bajo justo donde la medición es alta, y el margen sobre él exagera la destreza.`
+          ? (
+            <>
+              {'El criterio de descarte, con la redacción fija desde que la primera corrida le agregó la mitad de positividad (la historia está en Benchmark): «'}
+              <span lang="en" translate="no">{b?.kill_criterion ?? ''}</span>
+              {`». Sobre todos los tiros, el mejor brazo aprendido explica ${f(v?.supports.all.best_learned_r2_identity)} y el criterio no se cumple; sobre los ${v?.supports.geometry.n_blasts ?? notAvailable()} con geometría, explica ${f(v?.supports.geometry.best_learned_r2_identity)} y se cumple. El nulo agrupado se correlaciona con las mediciones en ${f(v?.supports.all.null_pearson_r, 2)}: excluir un sitio grueso baja la media de entrenamiento, así que el nulo predice bajo justo donde la medición es alta, y el margen sobre él exagera la destreza.`}
+            </>
+          )
           : `The kill criterion, in the wording fixed since the first run added its positivity half (the history is on Benchmark): “${b?.kill_criterion ?? ''}” Over every blast the best learned arm explains ${f(v?.supports.all.best_learned_r2_identity)} and the criterion is not met; over the ${v?.supports.geometry.n_blasts ?? notAvailable()} with geometry it explains ${f(v?.supports.geometry.best_learned_r2_identity)} and it is. The pooled null correlates with the measurements at ${f(v?.supports.all.null_pearson_r, 2)}: holding out a coarse site lowers the training mean, so the null predicts low exactly where the measurement is high, and the margin over it overstates skill.`}
       </p>
       <ProtocolDiagram

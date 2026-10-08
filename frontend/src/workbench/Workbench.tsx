@@ -28,7 +28,7 @@ import {
   type GroupId,
   type Selection,
 } from './model';
-import { ArmPicker, BlastPicker, GroupRail, ScoreReadout } from './rail';
+import { ArmPicker, BlastPicker, GroupRail, MapQuantity, ScoreReadout } from './rail';
 import { canDrawCurves, CompareView, ContextView, DistributionGroup, PredictGroup, RockGroup } from './views';
 
 const LOADING = { en: 'Loading the case artifacts', es: 'Cargando los artefactos del caso' };
@@ -179,6 +179,7 @@ export default function Workbench() {
               <ArmPicker artifact={ready} armId={armId} onArm={setArmId} />
               <BlastPicker artifact={ready} blastId={blast.blast_id} onBlast={(id) => setBlastId(id)} />
               {openGroup === 'predict' ? <ScoreReadout sel={s} /> : null}
+              {openGroup === 'design' && designView === 'surface' ? <MapQuantity sel={s} set={set} /> : null}
             </>
           )}
         />

@@ -7,7 +7,7 @@
  * mark it does not belong to.
  */
 
-import { useShellLang } from '@fasl-work/caos-app-shell';
+import { fitLabel, useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import {
@@ -124,7 +124,15 @@ export function IntervalChart({
           return (
             <g key={row.id} onPointerEnter={() => setHover(row.id)} data-row={row.id}>
               <rect x={0} y={cy - rowH / 2} width={W} height={rowH} fill={hover === row.id ? 'var(--color-accent-soft, rgba(79,142,247,0.08))' : 'transparent'} />
-              <text x={L - 12} y={cy + 4} fill={FG} fontSize={11.5} textAnchor="end">{row.label}</text>
+              {(() => {
+                const fit = fitLabel(row.label, L - 18, 11.5, 1);
+                return (
+                  <text x={L - 12} y={cy + 4} fill={FG} fontSize={11.5} textAnchor="end">
+                    {fit.shortened ? <title>{row.label}</title> : null}
+                    {fit.lines[0]}
+                  </text>
+                );
+              })()}
               {row.marks.map((mark) => {
                 if (mark.value === null || mark.value === undefined) return null;
                 const cyy = cy + MARK_STYLE[mark.kind].offset;

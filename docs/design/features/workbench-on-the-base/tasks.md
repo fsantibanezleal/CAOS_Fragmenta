@@ -1,6 +1,6 @@
 # Tasks: the App on the shared base
 
-1. Pin shell 0.7.2 exactly and record `.template-version` (WB-001).
+1. Pin shell 0.7.2 exactly and record `.template-version` (WB-001); 0.9.1 and the template 0.03.000 since 2026-10-07.
 2. Migrate the shell API: licence and visibility, `contain`, architecture SVGs inline, `BiText` citations, controlled
    tabs (WB-002).
 3. Remove the three overrides the pinned shell carries (defects 1, 4, 14) and add their guard (WB-006).
@@ -65,3 +65,18 @@ The release checks:
 - **The bake** ran three times for this release, 347, 599 and 678 s, against 745 s for 0.06.000 the same day with
   the same pipeline; the time follows the machine's load (the later two ran beside browser captures).
 
+
+## On the base 0.03.000 (shell 0.9.3), 2026-10-08
+
+| Requirement | Gate | Result |
+|---|---|---|
+| WB-001, WB-006, WB-008 | `tests/test_guards.py`; `scripts/check_version_coherence.py` in CI | passed, in a suite of 83; no shell override remains |
+| WB-002 to WB-005 | `frontend/scripts/gate.mjs` (`caos-shell-gate`, shell 0.9.3) | passed: 0 failures in 890 states (the 820 of the first convergence and the wide-font pass at 390 and 1280 px); the smallest drawn share 0.578 and the smallest stage fill 0.46 |
+| WB-007, WB-011, WB-012 | `frontend/gates/browser-gate.mjs` | passed: 420 of 420 with the native fonts and 420 of 420 with DejaVu Sans |
+| WB-009 | `scripts/check_web_baseline.py` (the template's 0.03.000 guard: each rule judged by its subject, the exact pin) | passed |
+
+The shell 0.9.0 gate failed 2,860 of 889 states on its first run here, most of them the gate's own (shell 0.9.1
+fixed them); 384 remained, which were the product's: Spanish decimal points in the drawings' formulas, a table
+and a value in scientific notation, labels cut in the wider font, a translucent clipped bar under the contrast
+floor. The last, the Design rail scrolling by 24 px at 1280x800 in Spanish with the wider font, was the shell's:
+its rail rule stacked every knob's value under its label (CAOS_APP_SHELL#77, fixed in 0.9.3).

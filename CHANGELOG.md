@@ -4,8 +4,8 @@ All notable changes to this project. Format follows Keep a Changelog; newest on 
 
 ## [0.07.000] - 2026-10-05
 
-The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.7.2
-exactly, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
+The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.9.3
+exactly, on the template 0.03.000, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
 response surface over burden and spacing. The engine is still `blastfrag==0.4.0`. The re-bake changed none
 of the 423,793 numbers in the 45 artifacts: only their version stamps, the 88 digests over them, and 25
 Spanish strings that take the decimal comma (five case reasons, and the expected band of ten real campaigns,
@@ -24,15 +24,17 @@ in each case and in its manifest). (#14)
   The P80 of a cell takes Cunningham's uniformity index of its pattern, a declared choice for the
   learned models, which predict a mean size and no curve.
 - The base's measured gate: `npm run gate` runs `caos-shell-gate` on the build at five sizes (390x844 to
-  2560x1440), both themes and both languages. On this release it measured 820 states and failed none;
-  the smallest share of the viewport drawn was 0.578 (the floor is 0.5) and the smallest stage fill
-  0.46 (the floor is 0.3).
+  2560x1440), both themes and both languages, and again at 390 and 1280 px in a wider font. On this
+  release it measured 890 states and failed none; the smallest share of the viewport drawn was 0.578
+  (the floor is 0.5) and the smallest stage fill 0.46 (the floor is 0.3).
 - The product gate measures every drawn view of the App as it measures the documentation figures (no
   label outside its drawing, none on another), and runs the App again at 390 and 768 px in both
   languages: no table cut, no text cut without a title, no label fault.
-- The template's web-baseline guard, verbatim, in CI: defined tokens, styled classes, numbers through
-  the shell's formatter, no reserved shell class restyled, no animation loop outside the shell's
-  paused loop. And the deploy-place guard (one deploy place, GitHub Pages).
+- The template's guards, verbatim, in CI: the web baseline (defined tokens, styled classes, numbers
+  through the shell's formatter, no shell component restyled, judged by each rule's subject, no
+  animation loop outside the shell's paused loop, the shell pinned exactly), the version guard (VERSION
+  the one source; it reads code, not the release history in comments and page prose), and the
+  deploy-place guard (one deploy place, GitHub Pages).
 - Tests that the shell is pinned to one exact version, that every remaining override names an open
   shell defect, and that VERSION is read by the pipeline, the dormant API and the build, and stamped on
   every committed artifact.
@@ -64,9 +66,14 @@ in each case and in its manifest). (#14)
   and in its key, and a distribution with several curves says which is which before the pointer asks.
 - "Against a target" sets the decision beside the curve where the view is wide, so the curve keeps the
   view's height; on a phone the curve and the decision scroll inside the view.
-- The shell is pinned to 0.7.2 exactly (it was `^0.6.0`), with its peer `zustand` declared; the
-  architecture drawings are inline, and the shell's configuration states the licence, the visibility
-  and the build.
+- The shell is pinned to 0.9.3 exactly (it was `^0.6.0`; the release was first built on 0.7.2), with
+  its peer `zustand` declared, and `.template-version` records the template 0.03.000; the architecture
+  drawings are inline, and the shell's configuration states the licence, the visibility and the build.
+- The views of a row sit in the shell's `ViewsRow` (the Design row split three to two), and the drawn
+  views fit their labels and pick their ticks with the shell's text kit (`textWidth`, `fitLabel`,
+  `niceTicks`); the product's own copies are gone (see Removed).
+- The choice of what the response map shows (P80 or x50) sits in the rail's Model section with the
+  surface open, beside the model it maps, instead of among the charge's knobs.
 - The bench's animation runs on the shell's paused loop: paused when the view opens, halted on a hidden
   tab, started by its button.
 - The size axis of a distribution labels its decades only, in mm, cm or m.
@@ -85,23 +92,26 @@ in each case and in its manifest). (#14)
   leaves the canvas right-aligned after its y axis, so it sat a label's width left of its line, and the
   percentile labels ran into the axis. Labels on the canvas are now left-aligned, take a row of their
   own when two would touch, and carry a halo where a line crosses them.
+- Spanish: the formulas of the documentation drawings, the published and found values of the defects
+  table on the Implementation page, and one value in scientific notation ("2.7e-08") kept the decimal
+  point; the kill criterion, quoted from the benchmark in English, is marked as English text. A short
+  release reference ("0.05") read as a decimal number; every one is written in full ("0.05.000").
+- The rows of the arms chart and the axis title of the refusal chart were cut in a wider font; they
+  are fitted to their drawing, with the whole text as a title.
+- A clipped bar was drawn translucent, so its value label failed the text contrast on it (WCAG AA).
 
 ### Removed
 
 - The six-tab workbench and the What if tab (`pages/Tool.tsx`, `pages/WhatIf.tsx`).
 - The overrides for shell defects 1, 4 and 14, which the pinned shell carries; the dormant VPS unit and
   nginx site of the old layout.
+- The view columns (`.fr-viewcol`, the override for shell defect 23) and the product's text kit
+  (`src/viz/text.ts` and its test), which the shell carries since 0.8.0 and 0.9.0.
 
 ### Known limits
 
-- One override remains, for shell defect 23 (CAOS_APP_SHELL#54): a filling card beside another view
-  takes the whole row, so each view of a row sits in a column of the product's own.
-- The vertical sub-tab list of a documentation page scrolls away on a long section. From 0.05.000 a
-  product rule kept it in view; it restyled a reserved shell class, so it went with the web-baseline
-  guard, and the fix is the shell's (shell defect 24, CAOS_APP_SHELL#55).
+- No shell override remains.
 - The abstention reasons written at bake time are in English on the Spanish interface.
-- The template's version guard joins when CAOS_PRODUCT_TEMPLATE#19 is released; as it stands it rejects
-  the release history in comments. The product's own test holds the requirement meanwhile.
 
 ## [0.06.000] - 2026-10-05
 

@@ -103,7 +103,7 @@ export function GroupRail({
   part?: 'geometry' | 'charge';
 }) {
   if (group === 'distribution') return distView === 'decide' ? <DecideRail sel={sel} set={set} /> : <CurvesRail sel={sel} set={set} />;
-  if (group === 'design') return designView === 'bench' ? <BenchRail sel={sel} set={set} /> : <DesignRail sel={sel} set={set} onDesign={onDesign} onHole={onHole} part={part} />;
+  if (group === 'design') return designView === 'bench' ? <BenchRail sel={sel} set={set} /> : <DesignRail sel={sel} onDesign={onDesign} onHole={onHole} part={part} />;
   if (group === 'rock') return <RockRail sel={sel} set={set} />;
   return null;
 }
@@ -179,13 +179,11 @@ const CHARGE: (keyof LiveBlast)[] = ['Pf_kg_m3', 'XB_m', 'E_GPa'];
 
 function DesignRail({
   sel,
-  set,
   onDesign,
   onHole,
   part,
 }: {
   sel: Selection;
-  set: SetControls;
   onDesign: (design: LiveBlast) => void;
   onHole: (mm: number) => void;
   part: 'geometry' | 'charge';
@@ -225,19 +223,25 @@ function DesignRail({
           onChange={onHole}
         />
       ) : null}
-      {part === 'charge' ? (
-        <ChipGroup
-          id="quantity"
-          label={{ en: 'The map shows', es: 'El mapa muestra' }}
-          options={[
-            { id: 'p80', label: 'P80', hint: { en: 'The 80 percent passing size, against the crusher specification', es: 'El tamaño 80 por ciento pasante, frente a la especificación de chancado' } },
-            { id: 'x50', label: 'x50', hint: { en: 'The mean size the models predict', es: 'El tamaño medio que predicen los modelos' } },
-          ]}
-          value={sel.controls.quantity}
-          onChange={(q) => set({ quantity: q as Controls['quantity'] })}
-        />
-      ) : null}
     </>
+  );
+}
+
+/** What the response map shows. A choice about the model's answer, not a charge parameter, so it sits in the Model
+ * section: in the Charge section it filled the rail, and in a wider font (the gate's wide-font pass, DejaVu Sans on
+ * Linux) its chips wrapped and the rail scrolled by 24 px (ADR-0071 rule 6). */
+export function MapQuantity({ sel, set }: { sel: Selection; set: SetControls }) {
+  return (
+    <ChipGroup
+      id="quantity"
+      label={{ en: 'The map shows', es: 'El mapa muestra' }}
+      options={[
+        { id: 'p80', label: 'P80', hint: { en: 'The 80 percent passing size, against the crusher specification', es: 'El tamaño 80 por ciento pasante, frente a la especificación de chancado' } },
+        { id: 'x50', label: 'x50', hint: { en: 'The mean size the models predict', es: 'El tamaño medio que predicen los modelos' } },
+      ]}
+      value={sel.controls.quantity}
+      onChange={(q) => set({ quantity: q as Controls['quantity'] })}
+    />
   );
 }
 

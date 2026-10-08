@@ -3,7 +3,20 @@
  * data it rests on, and every drawing sits in a `Stage`, so the gate measures what is drawn, not the box around it.
  */
 
-import { pick, PlotCard, Stage, SubTabs, useShellLang, type BiText } from '@fasl-work/caos-app-shell';
+import {
+  fitLabel,
+  niceTicks,
+  pick,
+  PlotCard,
+  Stage,
+  SubTabs,
+  textWidth,
+  useShellLang,
+  useStageSize,
+  ViewsRow,
+  widestLabel,
+  type BiText,
+} from '@fasl-work/caos-app-shell';
 import { useMemo } from 'react';
 import { Link } from 'react-router';
 
@@ -34,7 +47,6 @@ import type { CaseArtifact, Lang } from '../lib/contract.types';
 import { notAvailable, num, value } from '../lib/format';
 import { DistributionChart, LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import { AbstentionPanel, DecisionPanel, ProvenancePanel, SimulationSpread, TierBadge } from '../viz/Panels';
-import { fitLabel, textWidth, ticksFor, useWidth, widestLabel } from '../viz/text';
 import { provenanceOf, type DistributionView, type Selection } from './model';
 
 const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
@@ -91,8 +103,7 @@ export function PredictGroup({
   // With no measured size there is no ranking to show beside the drawing, so the drawing takes the row.
   const ranked = ARMS.some((a) => sel.artifact.scores[a.id]?.scoreable && sel.artifact.scores[a.id]?.r2_identity !== null);
   return (
-    <div className="caos-views-row">
-      <div className="fr-viewcol">
+    <ViewsRow>
       <PlotCard
         fill
         title={title}
@@ -126,9 +137,7 @@ export function PredictGroup({
           <RefusalChart sel={sel} />
         )}
       </PlotCard>
-      </div>
       {ranked ? (
-      <div className="fr-viewcol">
         <PlotCard
           fill
           title={{ en: 'Every model on this case', es: 'Todos los modelos en este caso' }}
@@ -146,9 +155,8 @@ export function PredictGroup({
             <AbstentionPanel artifact={sel.artifact} arm={sel.armId} />
           </div>
         </PlotCard>
-      </div>
       ) : null}
-    </div>
+    </ViewsRow>
   );
 }
 
@@ -255,8 +263,8 @@ function RankingChart({ artifact, rows, selected }: { artifact: CaseArtifact; ro
   const lang = useShellLang();
   // Laid out at the width it is given. A fixed 600-unit drawing scaled into a phone's column set its labels at
   // about five pixels.
-  const [ref, measured] = useWidth<HTMLDivElement>();
-  const W = measured || 600;
+  const [ref, box] = useStageSize();
+  const W = box.width || 600;
   const rowH = 18;
   const px = 11;
   const labels = rows.map((arm) => ARM_BY_ID.get(arm)?.label[lang] ?? arm);
@@ -289,7 +297,8 @@ function RankingChart({ artifact, rows, selected }: { artifact: CaseArtifact; ro
                   width={Math.max(1, Math.abs(x(value) - x(0)))}
                   height={rowH - 6}
                   fill={value > 0 ? 'var(--color-good)' : 'var(--color-bad)'}
-                  opacity={arm === selected ? 1 : 0.65}
+                  // a clipped bar carries its marker in the page colour, which reads only on the full tone (G13)
+                  opacity={arm === selected || clipped ? 1 : 0.65}
                 />
               ) : null}
               {clipped ? <text x={value! < 0 ? x(-1) + 4 : x(1) - 4} y={y + 12} fontSize={10} textAnchor={value! < 0 ? 'start' : 'end'} fill="var(--color-bg)">{value! < 0 ? '<' : '>'}</text> : null}
@@ -392,9 +401,16 @@ function RefusalChart({ sel }: { sel: Selection }) {
                 </g>
               );
             })}
-            <text x={left + (width - left) / 2} y={height - 6} textAnchor="middle" fontSize={11} fill="var(--color-fg-subtle)">
-              {t(lang, 'share of the hole that carries explosive after the stemming', 'fracción del barreno que lleva explosivo después del taco')}
-            </text>
+            {(() => {
+              const axis = t(lang, 'share of the hole that carries explosive after the stemming', 'fracción del barreno que lleva explosivo después del taco');
+              const fit = fitLabel(axis, width - 16, 11, 1);
+              return (
+                <text x={width / 2} y={height - 6} textAnchor="middle" fontSize={11} fill="var(--color-fg-subtle)">
+                  {fit.shortened ? <title>{axis}</title> : null}
+                  {fit.lines[0]}
+                </text>
+              );
+            })()}
           </svg>
         );
       }}
@@ -794,7 +810,7 @@ export function CompareView({ sel, onVariant }: { sel: Selection; onVariant: (id
           const left = Math.min(width * 0.45, Math.max(90, Math.ceil(Math.max(...fitted.map((f) => widestLabel(f.lines, px)))) + 14));
           const right = width - 16;
           const x = (v: number) => left + (Math.min(v, hi) / hi) * (right - left);
-          const ticks = ticksFor(hi * 100, right - left, textWidth(num(hi * 100, 0), 11)).map((cm) => cm / 100);
+          const ticks = niceTicks(0, hi * 100, right - left, textWidth(num(hi * 100, 0), 11)).filter((cm) => cm <= hi * 100 + 1e-9).map((cm) => cm / 100);
           const bottom = 12 + variants.length * rowH;
           return (
             <svg width={width} height={height} role="img" aria-label={pick(title, lang)} data-chart="variants" data-chart-rows={variants.length} data-chart-dots={values.length}>

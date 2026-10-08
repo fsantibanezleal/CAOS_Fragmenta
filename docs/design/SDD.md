@@ -126,7 +126,7 @@ Sans), and only then publishes.
 |---|---|---|---|
 | ADR-0057 | two contracts, named stages, no internal package | yes: `data-pipeline/`, the contract mirror, the engine on PyPI | none |
 | ADR-0069 | method vertical with its acceptance criterion | yes, split with the engine | none |
-| ADR-0016, ADR-0017 | six routes on the shared shell; documentation depth | yes, on shell 0.7.2 pinned exactly | none |
+| ADR-0016, ADR-0017 | six routes on the shared shell; documentation depth | yes, on shell 0.9.1 pinned exactly (0.7.2 until 2026-10-07) | none |
 | ADR-0056 | the `docs/` wiki | yes | none |
 | ADR-0058 | architecture modal, five themed bilingual tabs | yes, generated from the artifacts | none |
 | ADR-0071 | the page is the viewport; one nav row; instrument at least half the App route | yes: rules 1 to 7 and 9 by the product's gate, rule 8 by the base's (G6), where the drawn views covered at least 0.578 of the viewport in every workbench state at 1280 px and wider on 0.07.000 | none |

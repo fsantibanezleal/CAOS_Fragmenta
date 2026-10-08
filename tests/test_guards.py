@@ -264,10 +264,10 @@ def test_the_shell_is_pinned_exactly_and_the_template_version_is_recorded():
 def test_the_version_has_one_source_and_every_statement_of_it_follows():
     """WB-008. VERSION is read, never restated: by the pipeline, by the build, and by every artifact stamped.
 
-    The template's `check_version_coherence.py` joins this when CAOS_PRODUCT_TEMPLATE#19 is released; as it
-    stands it rejects the release history the comments here use to say why a check exists. This test checks
-    the statements themselves, so it holds the requirement meanwhile. A literal drifted once already: the
-    dormant API kept announcing a release three behind.
+    The template's `check_version_coherence.py` runs in CI since the template 0.03.000
+    (CAOS_PRODUCT_TEMPLATE#19: it reads code, not the release history in comments). This test checks the
+    statements themselves, the bake's stamps included, which the guard does not read. A literal drifted once
+    already: the dormant API kept announcing a release three behind.
     """
     import json
     import re
@@ -312,11 +312,12 @@ def test_the_version_has_one_source_and_every_statement_of_it_follows():
 
 #: The entries of CAOS_MANAGE conventions/shell-known-defects.md still open against the pinned shell. An
 #: override in this product may answer one of these, and must name it; any other is a fix the shell carries.
-OPEN_SHELL_DEFECTS = {19, 20, 22, 23}
+OPEN_SHELL_DEFECTS: set[int] = set()  # none open since 0.8.0 (entries 19 to 29 closed by 0.8.0 and 0.8.1)
 
 
 def test_every_shell_override_names_an_open_defect():
-    """WB-006. Overrides of defects 1, 4 and 14 were carried by 0.7.0 and 0.7.1 and went with the pin."""
+    """WB-006. Overrides of defects 1, 4 and 14 went with the pin to 0.7.2, and 23 (`.fr-viewcol`) with the
+    shell's `ViewsRow` (0.9.0)."""
     import re
 
     sources = [ROOT / "frontend" / "src" / "fragmenta.css", ROOT / "frontend" / "src" / "main.tsx"]

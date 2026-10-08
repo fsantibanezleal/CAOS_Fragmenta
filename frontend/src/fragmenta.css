@@ -1076,26 +1076,6 @@
   margin: 0.4rem 0 0.8rem;
 }
 
-/* Each view of a row, with a zero basis. Shell known defect 23 (0.7.2): `.caos-plot.fill` (flex 1 1 auto)
- * outranks `.caos-views-row > *` (flex 1 1 0), so a fill card beside any other view took the whole row
- * (CAOS_MANAGE conventions/shell-known-defects.md, entry 23; CAOS_APP_SHELL#54). The product composes a
- * column of its own around each view instead of restyling the shell's classes; remove these columns when the
- * shell fixes it. */
-.fr-viewcol {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-}
-
-/* Below 900 px the shell stacks a row's views and gives each filling body a fixed height; a zero-basis column
- * would then collapse and the views below would overlap it. */
-@media (max-width: 900px) {
-  .fr-viewcol {
-    flex: none;
-  }
-}
-
 /* The Rock view: the factors drawn beside the tables of the schemes and of what the corpus publishes. */
 .fr-rockstage {
   display: flex;
