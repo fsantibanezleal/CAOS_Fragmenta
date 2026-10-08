@@ -10,6 +10,7 @@
  */
 
 import { useShellLang } from '@fasl-work/caos-app-shell';
+import { type ChartSeries, UPlotChart } from '@fasl-work/caos-app-shell/chart';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
@@ -119,9 +120,16 @@ const HINTS = {
     en: 'Move the pointer over the curve to read values',
     es: 'Mueva el puntero sobre la curva para leer los valores',
   },
+  // One line under the plot, cut with an ellipsis where it does not fit: 62 characters fit the Predict card at
+  // 1280 px, and the part before the semicolon fits a phone.
   parity: {
     en: 'Point at a blast for its error and site; click to select it.',
-    es: 'Apunte a un tiro para ver su error y su sitio; clic para elegirlo.',
+    es: 'Apunte a un tiro: su error y su sitio; clic para elegirlo.',
+  },
+  // where a click selects nothing (the documentation pages), the hint does not promise it
+  parityRead: {
+    en: 'Point at a blast for its error and site.',
+    es: 'Apunte a un tiro: su error y su sitio.',
   },
 } as const;
 
@@ -415,8 +423,10 @@ export interface ParityChartProps {
  * Settled against a bar chart of scores per model, which hides which blast fails and by how much,
  * and that is the only thing an engineer can act on.
  *
- * Drawn on a plain canvas rather than through uPlot: this is a scatter with per-point interaction
- * and an aspect ratio that has to stay square for the identity line to mean anything.
+ * Drawn by the shell's `UPlotChart` in its parity form (0.10.0): one shared range in a square box, the
+ * null model as a reference line, the selected blast as a larger point of its own colour, the blast
+ * under the pointer found in the plane. Until 0.07.000 this was a canvas of the product's own, whose
+ * axes carried two labels ("0" and the top of the range) and no grid.
  */
 export function ParityChart({
   points,
@@ -426,177 +436,58 @@ export function ParityChart({
   selected,
   fill = false,
 }: ParityChartProps) {
-  const [ref, box] = useBox<HTMLDivElement>();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const epoch = useThemeEpoch();
   const lang = useShellLang();
-  const [hover, setHover] = useState<ParityPoint | null>(null);
-
-  // Square, because a parity plot with unequal scales puts the identity line at an angle the eye
-  // reads as bias. So the side is the SMALLER of the two container dimensions, and when the caller
-  // asks it to fill, the height comes from the container rather than from the `height` floor.
-  const size = Math.max(180, Math.min(box.w, fill ? box.h : box.h || height));
+  const ref = useRef<HTMLDivElement | null>(null);
+  const es = lang === 'es';
+  const at = selected ? points.findIndex((p) => p.blastId === selected) : -1;
+  const cm = (m: number) => m * 100;
+  const inside = points.map((p, i) => (i === at || p.extrapolated ? null : cm(p.predictedM)));
+  const outside = points.map((p, i) => (i !== at && p.extrapolated ? cm(p.predictedM) : null));
+  const chosen = points.map((p, i) => (i === at ? cm(p.predictedM) : null));
+  const series: ChartSeries[] = [
+    { label: { en: 'Blasts', es: 'Tiros' }, values: inside, mode: 'points' },
+    ...(outside.some((v) => v !== null)
+      ? [{ label: { en: 'Outside the training range', es: 'Fuera del rango de entrenamiento' }, values: outside, mode: 'points' as const, color: '--color-warn' as const }]
+      : []),
+    ...(at >= 0
+      ? [{ label: { en: 'The selected blast', es: 'El tiro elegido' }, values: chosen, mode: 'points' as const, size: 14, color: '--color-magenta' as const }]
+      : []),
+  ];
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || size < 120 || points.length === 0) return;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
-    canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, size, size);
-
-    const pad = 42;
-    const values = points.flatMap((p) => [p.measuredM, p.predictedM]);
-    const hi = Math.max(...values, nullMeanM ?? 0) * 1.1;
-    const lo = 0;
-    const toX = (v: number) => pad + ((v - lo) / (hi - lo)) * (size - pad - 10);
-    const toY = (v: number) => size - pad - ((v - lo) / (hi - lo)) * (size - pad - 10);
-
-    const grid = token('--color-border', 'rgba(128,128,128,0.25)');
-    const text = token('--color-fg', '#222');
-    const muted = token('--color-fg-subtle', '#8892a4');
-
-    ctx.strokeStyle = grid;
-    ctx.lineWidth = 1;
-    ctx.strokeRect(pad, 10, size - pad - 10, size - pad - 10);
-
-    // The identity line. Without it a parity plot is just a scatter.
-    ctx.strokeStyle = muted;
-    ctx.setLineDash([5, 4]);
-    ctx.beginPath();
-    ctx.moveTo(toX(lo), toY(lo));
-    ctx.lineTo(toX(hi), toY(hi));
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // The null model: a horizontal line at the constant it predicts.
-    if (nullMeanM !== undefined) {
-      ctx.strokeStyle = token('--color-warn', '#d19a2b');
-      ctx.setLineDash([2, 4]);
-      ctx.beginPath();
-      ctx.moveTo(toX(lo), toY(nullMeanM));
-      ctx.lineTo(toX(hi), toY(nullMeanM));
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.fillStyle = token('--color-warn', '#d19a2b');
-      ctx.font = '10px ui-monospace, monospace';
-      const nullLabel = AXES.nullModel[lang] ?? AXES.nullModel.en;
-      ctx.fillText(nullLabel, toX(hi) - ctx.measureText(nullLabel).width - 6, toY(nullMeanM) - 4);
-    }
-
-    for (const point of points) {
-      const x = toX(point.measuredM);
-      const y = toY(point.predictedM);
-      const isSelected = point.blastId === selected;
-      ctx.beginPath();
-      ctx.arc(x, y, isSelected ? 7 : 5, 0, Math.PI * 2);
-      ctx.fillStyle = point.extrapolated
-        ? token('--color-warn', '#d19a2b')
-        : token('--color-accent', '#4f8ef7');
-      ctx.globalAlpha = isSelected ? 1 : 0.8;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      if (isSelected) {
-        ctx.strokeStyle = text;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-    }
-
-    ctx.fillStyle = text;
-    ctx.font = '11px ui-monospace, monospace';
-    const measuredLabel = AXES.measured[lang] ?? AXES.measured.en;
-    ctx.fillText(measuredLabel, size / 2 - ctx.measureText(measuredLabel).width / 2, size - 8);
-    ctx.save();
-    ctx.translate(12, size / 2 + 24);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText(AXES.predicted[lang] ?? AXES.predicted.en, 0, 0);
-    ctx.restore();
-    ctx.fillText(`${num(hi * 100, 0)}cm`, 6, 18);
-    ctx.fillText('0', pad - 10, size - pad + 14);
     declare(ref.current, 'parity', {
       points: points.length,
-      selected: selected ? 1 : 0,
+      selected: at >= 0 ? 1 : 0,
       'null-line': nullMeanM === undefined || nullMeanM === null ? 0 : 1,
     });
-  }, [ref, points, size, nullMeanM, selected, epoch, lang]);
+  }, [points.length, at, nullMeanM]);
 
-  const pick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
-    if (!canvas || points.length === 0) return null;
-    const rect = canvas.getBoundingClientRect();
-    const mx = event.clientX - rect.left;
-    const my = event.clientY - rect.top;
-    const pad = 42;
-    const values = points.flatMap((p) => [p.measuredM, p.predictedM]);
-    const hi = Math.max(...values, nullMeanM ?? 0) * 1.1;
-    const toX = (v: number) => pad + (v / hi) * (size - pad - 10);
-    const toY = (v: number) => size - pad - (v / hi) * (size - pad - 10);
-    let best: ParityPoint | null = null;
-    let bestDistance = 14;
-    for (const point of points) {
-      const d = Math.hypot(toX(point.measuredM) - mx, toY(point.predictedM) - my);
-      if (d < bestDistance) {
-        bestDistance = d;
-        best = point;
-      }
-    }
-    return best;
+  const readout = (i: number) => {
+    const p = points[i];
+    const err = cm(p.predictedM - p.measuredM);
+    const rel = ((p.predictedM - p.measuredM) / p.measuredM) * 100;
+    const sign = err >= 0 ? '+' : '';
+    const outsideNote = p.extrapolated ? (es ? '; extrapolado' : '; extrapolated') : '';
+    // The error first: the readout is one line, cut with an ellipsis in a narrow card, and the sizes it would lose
+    // are the ones the axes already show.
+    return es
+      ? `${p.blastId}, ${p.site}: error ${sign}${num(err, 1)} cm (${sign}${num(rel, 0)} %); medido ${num(cm(p.measuredM), 1)} cm, predicho ${num(cm(p.predictedM), 1)} cm${outsideNote}`
+      : `${p.blastId}, ${p.site}: error ${sign}${num(err, 1)} cm (${sign}${num(rel, 0)} %); measured ${num(cm(p.measuredM), 1)} cm, predicted ${num(cm(p.predictedM), 1)} cm${outsideNote}`;
   };
 
   return (
-    <div className="fr-chart">
-      {/* In fill mode the measured host is taken OUT of flow, inside a box whose height comes only
-          from the flex column above it. Any arrangement where the host is in flow makes the size
-          self-referential: the chart reads the host to choose a side, the canvas then sets that
-          side as the host's height, and the number never moves off whatever it started at. */}
-      <div className={fill ? 'fr-chart-fillbox' : undefined}>
-      <div
-        ref={ref}
-        className="fr-chart-canvas fr-parity"
-        style={fill ? undefined : { minHeight: height }}
-      >
-        <canvas
-          ref={canvasRef}
-          onMouseMove={(e) => setHover(pick(e))}
-          onMouseLeave={() => setHover(null)}
-          onClick={(e) => {
-            const point = pick(e);
-            if (point && onSelect) onSelect(point.blastId);
-          }}
-        />
-      </div>
-      </div>
-      <div className="fr-readout" role="status" aria-live="polite">
-        {hover ? (
-          <>
-            <span className="fr-readout-key">{hover.blastId}</span>
-            <span className="fr-readout-item">
-              {hover.site}
-              <b>
-                {lang === 'es' ? 'medido' : 'measured'} {num(hover.measuredM * 100, 1)} cm;{' '}
-                {lang === 'es' ? 'predicho' : 'predicted'} {num(hover.predictedM * 100, 1)} cm
-              </b>
-            </span>
-            <span className="fr-readout-item">
-              {lang === 'es' ? 'error' : 'error'}
-              <b>
-                {hover.predictedM >= hover.measuredM ? '+' : ''}
-                {num((hover.predictedM - hover.measuredM) * 100, 1)} cm (
-                {num(((hover.predictedM - hover.measuredM) / hover.measuredM) * 100, 0)}%)
-              </b>
-            </span>
-            {hover.extrapolated ? <span className="fr-badge fr-badge-warn">{lang === 'es' ? 'extrapolado' : 'extrapolated'}</span> : null}
-          </>
-        ) : (
-          <span className="fr-readout-hint" title={HINTS.parity[lang] ?? HINTS.parity.en}>{HINTS.parity[lang] ?? HINTS.parity.en}</span>
-        )}
-      </div>
+    <div ref={ref} className={fill ? 'fr-chart fr-parity fill' : 'fr-chart fr-parity'}>
+      <UPlotChart
+        parity
+        height={fill ? 'fill' : height}
+        x={{ values: points.map((p) => cm(p.measuredM)), label: AXES.measured, unit: 'cm', format: { decimals: 0 } }}
+        y={{ label: AXES.predicted, unit: 'cm', format: { decimals: 0 } }}
+        series={series}
+        yMarks={nullMeanM === undefined || nullMeanM === null ? undefined : [{ y: cm(nullMeanM), label: AXES.nullModel }]}
+        readout={readout}
+        hint={onSelect ? HINTS.parity : HINTS.parityRead}
+        onPick={onSelect ? (i) => onSelect(points[i].blastId) : undefined}
+      />
     </div>
   );
 }
