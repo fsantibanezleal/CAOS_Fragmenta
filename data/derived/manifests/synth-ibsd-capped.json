@@ -1,18 +1,18 @@
 {
- "app_version": "0.05.001",
+ "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 68041,
+  "bytes": 70683,
   "format": "json",
   "path": "synth-ibsd-capped/case.json"
  },
  "case_id": "synth-ibsd-capped",
  "category": "structural-control",
  "controls": {},
- "digest": "acc70dacfcc5da77bb2599387b6e0463ea9046886c673f740d889763b3c476eb",
+ "digest": "c1ce3393788b22bc20a76a73b9fb61bb03cfaf9fef9ed36ce758b0d94ed8426a",
  "engine": {
   "package": "blastfrag",
-  "version": "0.03.000"
+  "version": "0.04.000"
  },
  "expected_band": {
   "en": "coarse tail dominated by the block size, not by the powder factor",
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 68041,
+  "trace_bytes": 70683,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

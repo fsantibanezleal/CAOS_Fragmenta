@@ -8,15 +8,23 @@
 """
 from __future__ import annotations
 
-import argparse
-import sys
-from pathlib import Path
+import os
+
+# BLAS on one thread, set before numpy is imported. The network's matrices are tiny, and on a loaded machine a
+# multi-threaded BLAS spins: one fit at width 15 took more than six minutes against 1.9 s on one thread
+# (2026-10-05). One thread also keeps the reduction order, and so the last bits, fixed across machines.
+for _variable in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"):
+    os.environ[_variable] = "1"
+
+import argparse  # noqa: E402
+import sys  # noqa: E402
+from pathlib import Path  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from pipeline.pipeline import DATA_ROOT, bake_all, bake_case
-from pipeline.registry import get_case, list_cases
-from pipeline.stages import validate
+from pipeline.pipeline import DATA_ROOT, bake_all, bake_case  # noqa: E402
+from pipeline.registry import get_case, list_cases  # noqa: E402
+from pipeline.stages import validate  # noqa: E402
 
 
 def main() -> int:

@@ -1,8 +1,8 @@
 {
- "app_version": "0.05.001",
+ "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 34150,
+  "bytes": 35686,
   "format": "json",
   "path": "real-granite-ne/case.json"
  },
@@ -16,14 +16,14 @@
    "unstamped": []
   }
  },
- "digest": "8c3ed8b0e17d8ccac115392659f7ea43c973d315b320f13cf29bb001078f48dd",
+ "digest": "76264c678fe91e99d09825c676c20c772f538b9acc2ad85e0e64a3d7474221b1",
  "engine": {
   "package": "blastfrag",
-  "version": "0.03.000"
+  "version": "0.04.000"
  },
  "expected_band": {
   "en": "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
-  "es": "fina, 0.146 a 0.200 m medidos, toda predicci\u00f3n marcada como extrapolada"
+  "es": "fina, 0,146 a 0,200 m medidos, toda predicci\u00f3n marcada como extrapolada"
  },
  "flags": [
   {
@@ -57,7 +57,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 34150,
+  "trace_bytes": 35686,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

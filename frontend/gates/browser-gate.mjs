@@ -21,7 +21,8 @@
 //   - every chart on screen DECLARES what it drew, and the declaration is non-zero. The renderer
 //     sets data-chart-* itself, because sampling pixels cannot tell an empty canvas from a canvas
 //     that never mounted;
-//   - the workbench opens all six tabs and each one renders the panels it owns;
+//   - the workbench opens every group and sub-tab and each one renders the views it owns; the Design
+//     group's surface declares its grid and cells, and moving its marker moves the distribution (0.07.000);
 //   - the idle page is at rest: no chart rebuilding itself when nobody is touching it;
 //   - on every documentation route, the footer is ONE line at 1600 px (ADR-0016 section 2), and
 //     every sub-tab is opened by a pointer click and every figure in it MEASURED: no text on another
@@ -29,6 +30,11 @@
 //     0.05.000 the gate never clicked a documentation sub-tab and never measured a figure, which is
 //     how a note running through the Group 2 box of the router diagram shipped;
 //   - the architecture modal's drawings, measured the same way.
+//   - every size column states one unit, the rail leaves no empty band above its last control, and
+//     the Benchmark's published-reproductions sub-tab carries the width sweep, drawn (0.06.000);
+//   - every drawn view of the App measured as a figure is (no label outside its drawing, none on
+//     another), and the App again at 390 and 768 px in both languages: no table cut, no text cut
+//     without a title, no label fault in a drawing (0.07.000).
 //
 // Usage:
 //   npm run build && npx vite preview --port 4173 &
@@ -67,29 +73,11 @@ const ROUTES = [
   '/benchmark',
   '/benchmark/',
 ];
-const TABS = ['predict', 'distribution', 'bench', 'rock', 'whatif', 'decide'];
-/**
- * ADR-0071 rule 8 asks for at least 0.50 of the viewport, and this product cannot reach it.
- *
- * The App route's instrument is a parity plot, which has to be SQUARE: unequal scales put the
- * identity line at an angle a reader interprets as bias. A square's area on a 16:9 screen is capped
- * by the pane HEIGHT, and the pane is the viewport minus the header, the footer, the tab strip and
- * the page padding. At 1600x900 that leaves about 680px, so the largest square that fits is about 0.32
- * of the screen; at 2560x1440 it reaches 0.36. Reaching 0.50 would need a side of 848px in a 680px
- * pane, which is not a layout problem.
- *
- * So this floor is what the layout can actually deliver, measured after the fixes of 0.03.000, and
- * the shortfall against the ADR is written down rather than hidden by a looser number. Changing it
- * to meet 0.50 means changing WHICH chart lands on the App route, which is a product decision.
- *
- * The floor carries HEADROOM, and it earned that the same way the bake's tolerance did. Set at 0.26
- * from a single machine, it passed locally and failed on the CI runner at 0.257: the same build, the
- * same viewport, a couple of pixels of difference in text metrics on a different operating system,
- * and the pane is that much shorter. A floor with no margin is a floor that measures the runner
- * rather than the layout. 0.25 still sits above the 0.219 this route had before the fixes, so a
- * regression to the old layout fails it.
- */
-const INSTRUMENT_FLOOR = 0.25;
+const TABS = ['predict', 'distribution', 'design', 'rock', 'compare', 'context'];
+// ADR-0071 rule 8 (the drawn views cover half the viewport) is measured by the base's own gate, caos-shell-gate G6,
+// through frontend/scripts/gate.mjs. Until 0.07.000 this gate held the largest single drawing to 0.25 of the
+// viewport instead, because the App's square parity plot could not reach 0.50 alone; on the shell's workbench the
+// views of a group share the instrument and G6 counts their union.
 
 const VIEWPORTS = [
   [1280, 800],
@@ -257,7 +245,7 @@ async function inspect(page) {
       theme: de.getAttribute('data-theme') || stored.theme || getComputedStyle(de).colorScheme,
       overflowX: de.scrollWidth > window.innerWidth + 1,
       bodyText: (document.body.innerText || '').trim().length,
-      panels: [...document.querySelectorAll('.fr-panel')].map((el) => ({
+      panels: [...document.querySelectorAll('.fr-panel, [data-plot]')].map((el) => ({
         id: el.getAttribute('data-panel') || '',
         heading: el.querySelector('h3')?.textContent?.trim() || '',
         height: Math.round(el.getBoundingClientRect().height),
@@ -285,22 +273,15 @@ async function inspect(page) {
       // Rule 6: every CONTROL in the rail is reachable without scrolling it. The reading pane inside
       // the rail may scroll, because it is reading and not controls.
       railControlsBelowFold: (() => {
-        const controls = [...document.querySelectorAll('.fr-rail select, .fr-railtabs, .fr-focus-link')];
+        const controls = [...document.querySelectorAll('[data-rail] select, [data-rail] input, [data-rail] [role="tab"], [data-rail] button')].filter(
+          (el) => el.getClientRects().length,
+        );
         if (!controls.length) return null;
         const lowest = Math.max(...controls.map((el) => el.getBoundingClientRect().bottom));
         return Math.max(0, Math.round(lowest - window.innerHeight));
       })(),
       // Rule 7: a categorised one-of-N choice is a select with optgroups, not N buttons.
-      caseSelectOptgroups: document.querySelector('.fr-rail select')?.querySelectorAll('optgroup').length ?? null,
-      // Rule 8: the share of the screen the instrument actually occupies.
-      instrumentFraction: (() => {
-        let best = 0;
-        for (const el of document.querySelectorAll('canvas, .fr-chart-canvas svg')) {
-          const b = el.getBoundingClientRect();
-          best = Math.max(best, b.width * b.height);
-        }
-        return +(best / (window.innerWidth * window.innerHeight)).toFixed(3);
-      })(),
+      caseSelectOptgroups: document.querySelector('select[data-control="case"]')?.querySelectorAll('optgroup').length ?? null,
       // ADR-0017 rule 1: the shell owns the width. A page root that is not `.page-body` has picked
       // its own, which is the divergence that ADR banned by name.
       pageRoot: (() => {
@@ -319,7 +300,7 @@ async function inspect(page) {
       // them together reported "the tab strip wrapped onto 2 rows" for two strips that were each
       // perfectly on one row. ADR-0071 rule 4 is about one strip wrapping, not about how many
       // strips exist.
-      tabs: [...document.querySelectorAll('.fr-main [role="tab"]')].map((t) => t.textContent?.trim()),
+      tabs: [...(document.querySelector('[data-instrument] [role="tablist"]')?.querySelectorAll('[role="tab"]') ?? [])].map((t) => t.textContent?.trim()),
       tabRows: Math.max(
         0,
         ...[...document.querySelectorAll('[role="tablist"]')].map(
@@ -362,6 +343,61 @@ async function inspect(page) {
           else seen.set(key, cells[0]);
         }
         return dup;
+      })(),
+      // A chart axis whose labels repeat their neighbour is broken. Until 0.07.000 every null tick of the
+      // distribution chart's log axis was formatted as "0mm", on the live site too, and nothing caught it.
+      repeatedTicks: [...document.querySelectorAll('[data-ticks-repeat]')]
+        .filter((el) => el.getClientRects().length && Number(el.getAttribute('data-ticks-repeat')) > 0)
+        .map((el) => `${el.closest('[data-chart]')?.getAttribute('data-chart') ?? 'chart'}: ${el.getAttribute('data-ticks-repeat')} repeated labels`),
+      // HY-001: one unit per column. Until 0.06.000 the unit was picked by magnitude, which put
+      // "22 mm" above "11.0 cm" in the model comparison's RMSE column, so a reader comparing two
+      // rows compared two units first.
+      mixedUnits: (() => {
+        const unitOf = (text) => /^[-+\u2212]?\d[\d.,]*\s*(mm|cm|m)$/.exec(text.trim())?.[1] ?? null;
+        const out = [];
+        for (const table of document.querySelectorAll('table')) {
+          if (!table.getClientRects().length) continue;
+          const columns = new Map();
+          for (const tr of table.querySelectorAll('tbody tr')) {
+            [...tr.cells].forEach((cell, i) => {
+              const unit = unitOf(cell.textContent || '');
+              if (!unit) return;
+              if (!columns.has(i)) columns.set(i, new Set());
+              columns.get(i).add(unit);
+            });
+          }
+          for (const [i, units] of columns) {
+            if (units.size < 2) continue;
+            const head = table.querySelector('thead tr')?.cells[i]?.textContent?.trim() || `column ${i + 1}`;
+            out.push(`${head}: ${[...units].join(' and ')}`);
+          }
+        }
+        return out;
+      })(),
+      // HY-002: no band of empty rail above its last control. The reading pane grew to fill the rail
+      // until 0.06.000, so on a short case the full-screen link sat at the bottom of the screen under
+      // an empty band. The pane's box reached the link, so its VISIBLE bottom is measured: its last
+      // child's bottom plus that child's margin and the pane's own padding and border.
+      railGaps: (() => {
+        const rail = document.querySelector('[data-rail]');
+        if (!rail) return null;
+        const items = [...rail.children].filter((el) => el.getClientRects().length);
+        const visibleBottom = (el) => {
+          const box = el.getBoundingClientRect();
+          const kids = [...el.children].filter((c) => c.getClientRects().length);
+          if (!kids.length) return box.bottom;
+          const last = kids.reduce((a, b) => (b.getBoundingClientRect().bottom > a.getBoundingClientRect().bottom ? b : a));
+          const own = getComputedStyle(el);
+          const content =
+            last.getBoundingClientRect().bottom +
+            parseFloat(getComputedStyle(last).marginBottom) +
+            parseFloat(own.paddingBottom) +
+            parseFloat(own.borderBottomWidth);
+          return Math.min(box.bottom, content);
+        };
+        const gaps = items.slice(1).map((el, i) => Math.round(el.getBoundingClientRect().top - visibleBottom(items[i])));
+        if (gaps.length < 2) return null;
+        return { last: gaps[gaps.length - 1], others: Math.max(...gaps.slice(0, -1)) };
       })(),
     };
   });
@@ -488,6 +524,8 @@ for (const [w, h] of VIEWPORTS) {
         }
         if (info.bodyOverflowX > 1) fail(where, `the page is ${info.bodyOverflowX}px wider than the screen`);
         if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
+        if (info.mixedUnits.length) fail(where, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
+        if (info.repeatedTicks.length) fail(where, `an axis repeats its labels: ${info.repeatedTicks.join(' | ')}`);
 
         if (route === '/' || route === '/app') {
           // The App route is locked to the viewport, so NOTHING may scroll the page itself.
@@ -497,13 +535,10 @@ for (const [w, h] of VIEWPORTS) {
             fail(where, `${info.railControlsBelowFold}px of rail controls below the fold (ADR-0071 rule 6)`);
           if (!info.caseSelectOptgroups)
             fail(where, 'the case control is not a select with optgroups (ADR-0071 rule 7)');
-          if (info.instrumentFraction < INSTRUMENT_FLOOR)
-            fail(
-              where,
-              `the instrument is ${info.instrumentFraction} of the viewport, under the ` +
-                `${INSTRUMENT_FLOOR} this layout can reach`,
-            );
-          else pass(`${where} instrument`, `${info.instrumentFraction} of the viewport`);
+          if (!info.railGaps) fail(where, 'the rail has too few controls to measure its gaps');
+          else if (info.railGaps.last > info.railGaps.others + 4)
+            fail(where, `${info.railGaps.last}px of empty rail above its last control, against ${info.railGaps.others}px between the others`);
+          else pass(`${where} rail`, `${info.railGaps.last}px above the last control, ${info.railGaps.others}px between the others`);
         }
 
         for (const chart of info.charts) {
@@ -532,6 +567,7 @@ for (const [w, h] of VIEWPORTS) {
           const subtabs = page.locator('.subtabs-vertical .subtablist [role="tab"]');
           const count = await subtabs.count();
           const seen = [];
+          let sweepChecked = false;
           const doTab = async (label) => {
             const figures = await measureFigures(page, 'figure svg');
             seen.push(figures.n);
@@ -540,6 +576,26 @@ for (const [w, h] of VIEWPORTS) {
             if (runTogether.length) fail(`${where} ${label}`, `citations with no space between: ${runTogether.slice(0, 3).join(' | ')}`);
             const info = await inspect(page);
             if (info.brokenPanels.length) fail(`${where} ${label}`, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
+            if (info.mixedUnits.length) fail(`${where} ${label}`, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
+            // EN-008: the published-reproductions sub-tab carries the network's width sweep, drawn and declared.
+            if (route.startsWith('/benchmark') && /published reproductions|reproducciones publicadas/i.test(label)) {
+              sweepChecked = true;
+              const sweep = await page.evaluate(() => {
+                const el = document.querySelector('[data-width-sweep]');
+                if (!el) return null;
+                const chart = el.querySelector('[data-chart]');
+                const drawn = chart
+                  ? [...chart.attributes]
+                      .filter((a) => a.name.startsWith('data-chart-'))
+                      .reduce((sum, a) => sum + (Number(a.value) || 0), 0)
+                  : 0;
+                return { widths: Number(el.getAttribute('data-width-sweep')) || 0, drawn };
+              });
+              if (!sweep) fail(`${where} ${label}`, 'the width sweep is not on the published-reproductions sub-tab');
+              else if (!sweep.widths || !sweep.drawn)
+                fail(`${where} ${label}`, `the width sweep declares ${sweep.widths} widths and its chart ${sweep.drawn} drawn`);
+              else pass(`${where} ${label} width sweep`, `${sweep.widths} widths drawn`);
+            }
             for (const chart of info.charts) {
               const total = Object.values(chart.declared).reduce((a, b) => a + b, 0);
               if (!total) fail(`${where} ${label}`, `the ${chart.chart} chart declared nothing drawn`);
@@ -560,6 +616,9 @@ for (const [w, h] of VIEWPORTS) {
             if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
             await doTab(label);
           }
+          // A renamed sub-tab must not skip the check silently.
+          if (route.startsWith('/benchmark') && !sweepChecked)
+            fail(where, 'no sub-tab named "Published reproductions" ("Reproducciones publicadas") to check the width sweep on');
           pass(`${where} figures`, `${count || 1} sections, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
           problems.length = 0;
         }
@@ -600,52 +659,106 @@ for (const [w, h] of VIEWPORTS) {
       problems.length = 0;
       await page.goto(BASE + '/', { waitUntil: 'networkidle', timeout: 60000 });
       await page.waitForTimeout(1200);
-      for (const tab of TABS) {
-        const where = `${w}x${h} ${theme} ${lang} tab:${tab}`;
-        const button = page.locator('.fr-main [role="tab"]').nth(TABS.indexOf(tab));
-        if (!(await button.count())) {
-          fail(where, 'the tab is not on the page');
-          continue;
-        }
-        await button.click();
+      const groupTabs = page.locator('[data-instrument] [role="tablist"]').first().locator('[role="tab"]');
+      const groupCount = await groupTabs.count();
+      if (groupCount !== TABS.length) fail(`${w}x${h} ${theme} ${lang} workbench`, `${groupCount} groups on the default case, not ${TABS.length}`);
+      for (let g = 0; g < groupCount; g += 1) {
+        const tab = TABS[g] ?? `group-${g}`;
+        await groupTabs.nth(g).click();
         await page.waitForTimeout(900);
-        const info = await inspect(page);
-        if (problems.length) fail(where, problems.slice(0, 2).join(' | '));
-        else if (info.brokenPanels.length)
-          fail(where, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
-        else if (info.tabRows !== 1) fail(where, `the tab strip wrapped onto ${info.tabRows} rows`);
-        else if (info.clippedTabRows.length) fail(where, `a tab strip is cut: ${info.clippedTabRows.join(' | ')}`);
-        else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
-        else if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
-        else if (info.duplicateArmRows.length) fail(where, `comparison rows with identical scores: ${info.duplicateArmRows.join(' | ')}`);
-        else if (!info.panels.length && !info.charts.length && info.benchHoles === null)
-          fail(where, 'the tab rendered neither a panel nor a chart');
-        else
-          pass(
-            where,
-            `${info.panels.length} panels, ${info.charts.length} charts` +
-              (info.benchHoles !== null ? `, ${info.benchHoles} holes` : ''),
-          );
+        const subTabs = page.locator('[data-instrument] [role="tabpanel"] [role="tablist"] [role="tab"]');
+        const subCount = await subTabs.count();
+        for (let k = 0; k < Math.max(1, subCount); k += 1) {
+          let subLabel = '';
+          if (subCount) {
+            subLabel = ((await subTabs.nth(k).textContent()) || `sub ${k + 1}`).trim();
+            await subTabs.nth(k).click();
+            await page.waitForTimeout(900);
+          }
+          const where = `${w}x${h} ${theme} ${lang} tab:${tab}${subLabel ? ` > ${subLabel}` : ''}`;
+          const bench = /bench|banco/i.test(subLabel);
+          const info = await inspect(page);
+          if (problems.length) fail(where, problems.slice(0, 2).join(' | '));
+          else if (info.brokenPanels.length) fail(where, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
+          else if (info.tabRows !== 1) fail(where, `the tab strip wrapped onto ${info.tabRows} rows`);
+          else if (info.clippedTabRows.length) fail(where, `a tab strip is cut: ${info.clippedTabRows.join(' | ')}`);
+          else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
+          else if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
+          else if (info.duplicateArmRows.length) fail(where, `comparison rows with identical scores: ${info.duplicateArmRows.join(' | ')}`);
+          else if (info.mixedUnits.length) fail(where, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
+          else if (info.repeatedTicks.length) fail(where, `an axis repeats its labels: ${info.repeatedTicks.join(' | ')}`);
+          else if (info.railControlsBelowFold > 0) fail(where, `${info.railControlsBelowFold}px of rail controls below the fold (ADR-0071 rule 6)`);
+          else if (!info.panels.length && !info.charts.length && info.benchHoles === null && tab !== 'context')
+            fail(where, 'the view rendered neither a panel nor a chart');
+          else
+            pass(where, `${info.panels.length} views, ${info.charts.length} charts` + (info.benchHoles !== null ? `, ${info.benchHoles} holes` : ''));
 
-        if (tab === 'bench' && !info.benchDisclaimer)
-          fail(where, 'the 3D bench lost its timing disclaimer');
+          // The App's drawn views, measured as the documentation figures are: no label outside its drawing, no
+          // label on another. Until 0.07.000 only figures were measured, and the model view shipped labels cut
+          // at the card's edge in Spanish ("dio clásico, limitado al bloque in situ") and ticks printed over one
+          // another ("19 cm37 cm"), under a green gate. Canvas-drawn charts carry no text elements to measure.
+          const drawn = await measureFigures(page, '[data-instrument] svg[data-chart]');
+          if (drawn.hits.length) fail(`${where} drawings`, `${drawn.hits.length} label fault(s): ${drawn.hits.slice(0, 3).join(' | ')}`);
+          else if (drawn.n) pass(`${where} drawings`, `${drawn.n} measured`);
 
-        if (tab === 'bench' && info.benchHolesVisible !== null) {
-          // The hole COUNT was true while nothing was visible: the columns were drawn inside an
-          // opaque block, so the element said 18 and the tab showed a featureless slab. Three pixel
-          // heuristics were tried against that and every one of them measured something adjacent:
-          // counting distinct colours passed on the broken view because a shaded box has plenty,
-          // classifying pixels by colour passed in the dark theme because the palette's blues sit
-          // close together, and counting transitions along a scanline passed because it was counting
-          // the dimension lines. The renderer raycasts instead, and the two states separate exactly:
-          // 18 visible against 0.
-          if (Number(info.benchHolesVisible) < 1)
-            fail(where, 'the bench declares holes but none of them is visible from the camera');
-          else pass(`${where} visible`, `${info.benchHolesVisible} of ${info.benchHoles} holes`);
+          if (bench && !info.benchDisclaimer) fail(where, 'the 3D bench lost its timing disclaimer');
+          if (bench && info.benchHolesVisible !== null) {
+            // The hole COUNT was true while nothing was visible: the columns were drawn inside an opaque block, so
+            // the element said 18 and the tab showed a featureless slab. Three pixel heuristics were tried against
+            // that and every one of them measured something adjacent. The renderer raycasts instead, and the two
+            // states separate exactly: 18 visible against 0.
+            if (Number(info.benchHolesVisible) < 1) fail(where, 'the bench declares holes but none of them is visible from the camera');
+            else pass(`${where} visible`, `${info.benchHolesVisible} of ${info.benchHoles} holes`);
+          }
+          if (SHOTS) {
+            const name = `tab-${tab}${subLabel ? '-' + subLabel.replace(/[^a-z0-9]+/gi, '-') : ''}-${theme}-${lang}-${w}x${h}.png`;
+            await page.screenshot({ path: `${SHOTS}/${name}` });
+          }
         }
+      }
 
-        if (SHOTS) {
-          await page.screenshot({ path: `${SHOTS}/tab-${tab}-${theme}-${lang}-${w}x${h}.png` });
+      // RS-005 and RS-004: the response surface declares its grid and cells, and moving its marker (here by the
+      // arrow keys, as a keyboard reader would) moves the distribution the Distribution group draws.
+      {
+        const where = `${w}x${h} ${theme} ${lang} surface`;
+        const percentiles = async () => {
+          await groupTabs.nth(TABS.indexOf('distribution')).click();
+          await page.waitForTimeout(700);
+          const curves = page.locator('[data-instrument] [role="tabpanel"] [role="tablist"] [role="tab"]').first();
+          if (await curves.count()) await curves.click();
+          await page.waitForTimeout(700);
+          return (await page.locator('[data-readout="percentiles"]').first().textContent()) ?? '';
+        };
+        const before = await percentiles();
+        await groupTabs.nth(TABS.indexOf('design')).click();
+        await page.waitForTimeout(700);
+        // The group keeps its open sub-tab, and the walk above left it on the bench: open the surface, its first.
+        const surfaceTab = page.locator('[data-instrument] [role="tabpanel"] [role="tablist"] [role="tab"]').first();
+        if (await surfaceTab.count()) await surfaceTab.click();
+        await page.waitForTimeout(900);
+        const surface = page.locator('[data-chart="surface"]').first();
+        const declared = await surface
+          .evaluate(
+            (el) => ({
+              grid: Number(el.getAttribute('data-chart-grid')),
+              cells: Number(el.getAttribute('data-chart-cells')),
+              empty: Number(el.getAttribute('data-chart-empty')),
+            }),
+            null,
+            { timeout: 5000 },
+          )
+          .catch(() => null);
+        if (!declared) fail(where, 'the Design group draws no response surface');
+        else if (declared.cells + declared.empty !== declared.grid ** 2)
+          fail(where, `the surface declares ${declared.cells} drawn and ${declared.empty} empty cells on a ${declared.grid}x${declared.grid} grid`);
+        else pass(where, `${declared.cells} cells drawn, ${declared.empty} empty, on ${declared.grid}x${declared.grid}`);
+        if (declared) {
+          await surface.focus();
+          for (let k = 0; k < 4; k += 1) await page.keyboard.press('ArrowRight');
+          await page.waitForTimeout(600);
+          const after = await percentiles();
+          if (!before || after === before) fail(where, 'moving the design marker did not move the distribution');
+          else pass(`${where} marker`, 'the distribution follows the marked design');
         }
       }
 
@@ -674,6 +787,61 @@ for (const [w, h] of VIEWPORTS) {
 
       await context.close();
     }
+  }
+}
+
+// The App at a phone's and a tablet's width, where the shell stacks the views and gives each a fixed height: a
+// label that fits at 1280 px may not fit there, and in Spanish the words are longer. The base's gate measures
+// these sizes for reach and coverage; this measures what is drawn and written in them.
+for (const [w, h] of [
+  [390, 844],
+  [768, 1024],
+]) {
+  for (const lang of ['en', 'es']) {
+    const context = await browser.newContext({ viewport: { width: w, height: h }, locale: lang === 'es' ? 'es-CL' : 'en-GB' });
+    await context.addInitScript((l) => {
+      localStorage.setItem('caos.theme', 'light');
+      localStorage.setItem('caos.lang', l);
+    }, lang);
+    if (process.env.GATE_FONTS === 'dejavu') {
+      await context.addInitScript(() => {
+        document.addEventListener('DOMContentLoaded', () => {
+          const style = document.createElement('style');
+          style.textContent =
+            ':root{--font-sans:"DejaVu Sans",sans-serif !important;--font-mono:"Courier New",monospace !important}';
+          document.head.appendChild(style);
+        });
+      });
+    }
+    const page = await context.newPage();
+    await page.goto(BASE + '/', { waitUntil: 'networkidle', timeout: 60000 });
+    await page.waitForTimeout(1200);
+    const groupTabs = page.locator('[data-instrument] [role="tablist"]').first().locator('[role="tab"]');
+    const groupCount = await groupTabs.count();
+    for (let g = 0; g < groupCount; g += 1) {
+      const tab = TABS[g] ?? `group-${g}`;
+      await groupTabs.nth(g).click();
+      await page.waitForTimeout(900);
+      const subTabs = page.locator('[data-instrument] [role="tabpanel"] [role="tablist"] [role="tab"]');
+      const subCount = await subTabs.count();
+      for (let k = 0; k < Math.max(1, subCount); k += 1) {
+        let subLabel = '';
+        if (subCount) {
+          subLabel = ((await subTabs.nth(k).textContent()) || `sub ${k + 1}`).trim();
+          await subTabs.nth(k).click();
+          await page.waitForTimeout(900);
+        }
+        const where = `${w}x${h} light ${lang} tab:${tab}${subLabel ? ` > ${subLabel}` : ''}`;
+        const info = await inspect(page);
+        const drawn = await measureFigures(page, '[data-instrument] svg[data-chart]');
+        if (info.brokenPanels.length) fail(where, `panel error boundary fired: ${info.brokenPanels.join(', ')}`);
+        else if (info.tablesCut.length) fail(where, `a table is wider than its container: ${info.tablesCut.join(' | ')}`);
+        else if (info.truncated.length) fail(where, `text cut with no title: ${info.truncated.join(' | ')}`);
+        else if (drawn.hits.length) fail(where, `${drawn.hits.length} label fault(s): ${drawn.hits.slice(0, 3).join(' | ')}`);
+        else pass(where, `${info.panels.length} views, ${drawn.n} drawings measured`);
+      }
+    }
+    await context.close();
   }
 }
 

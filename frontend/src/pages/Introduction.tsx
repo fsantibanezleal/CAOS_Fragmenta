@@ -22,7 +22,7 @@ export default function Introduction() {
   const label = (arm: string) => ARM_BY_ID.get(arm)?.label[es ? 'es' : 'en'] ?? arm;
 
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Fragmentación por voladura, y qué se puede predecir de ella' : 'Blast fragmentation, and what can be predicted about it'}</h1>
         <p className="lede">
@@ -98,7 +98,7 @@ export default function Introduction() {
         </p>
         <Equation
           tex={String.raw`P(x) = 1 - \exp\!\left[-\ln 2\left(\frac{x}{x_{50}}\right)^{n}\right]`}
-          caption={es ? 'Curva Rosin-Rammler escrita sobre el tamaño medio: P(x50) = 0.5.' : 'Rosin-Rammler curve written on the mean size: P(x50) = 0.5.'}
+          caption={es ? 'Curva Rosin-Rammler escrita sobre el tamaño medio: P(x50) = 0,5.' : 'Rosin-Rammler curve written on the mean size: P(x50) = 0.5.'}
         />
         <p>
           {es
@@ -119,7 +119,7 @@ export default function Introduction() {
           <li><InlineMath tex="D" />: {es ? 'diámetro de perforación, mm' : 'hole diameter, mm'}</li>
           <li><InlineMath tex="P_f" />: {es ? 'factor de carga, kg de explosivo por m³ de roca' : 'powder factor, kg of explosive per m³ of rock'}</li>
           <li><InlineMath tex="V,\,Q" />: {es ? 'volumen de roca y masa de explosivo por barreno' : 'rock volume and explosive mass per hole'}</li>
-          <li><InlineMath tex="A" />: {es ? 'factor de roca, adimensional, 0.8 a 22' : 'rock factor, dimensionless, 0.8 to 22'}</li>
+          <li><InlineMath tex="A" />: {es ? 'factor de roca, adimensional, 0,8 a 22' : 'rock factor, dimensionless, 0.8 to 22'}</li>
           <li><InlineMath tex="\mathrm{RWS}" />: {es ? 'potencia relativa en peso; ANFO 100, TNT 115' : 'weight strength relative to ANFO; ANFO 100, TNT 115'}</li>
           <li><InlineMath tex="E" />: {es ? 'módulo de Young de la roca, GPa' : 'Young modulus of the rock, GPa'}</li>
           <li><InlineMath tex="X_B" />: {es ? 'tamaño de bloque in situ, m' : 'in-situ block size, m'}</li>
@@ -132,7 +132,7 @@ export default function Introduction() {
         <h2>{es ? 'La pregunta de este producto' : 'The question this product asks'}</h2>
         <p>
           {es
-            ? 'La familia clásica se ha extendido muchas veces y una revisión de 2019 recorre esas extensiones. Desde 2012, además, una serie de modelos aprendidos se ha ajustado sobre el mismo corpus de 97 tiros: una red neuronal publicada con su especificación completa, regresión por vectores de soporte, bosques, potenciación y, en 2025, un ensamble apilado que reporta 0.943 de una sola partición aleatoria 80/20.'
+            ? 'La familia clásica se ha extendido muchas veces y una revisión de 2019 recorre esas extensiones. Desde 2012, además, una serie de modelos aprendidos se ha ajustado sobre el mismo corpus de 97 tiros: una red neuronal publicada con su especificación completa, regresión por vectores de soporte, bosques, potenciación y, en 2025, un ensamble apilado que reporta 0,943 de una sola partición aleatoria 80/20.'
             : 'The classical family has been extended many times, and a 2019 review surveys those extensions. Since 2012, a series of learned models has also been fitted to the same 97-blast corpus: a published neural network with its full specification, support-vector regression, forests, boosting and, in 2025, a stacked ensemble that reports 0.943 from one random 80/20 split.'}{' '}
           <Cite id="ouchterlony2019" />{' '}
           <Cite id="kulatilake2012" />{' '}
@@ -154,12 +154,12 @@ export default function Introduction() {
               </li>
               <li>
                 {es
-                  ? `El 0.943 publicado para el ensamble apilado queda por encima de ${Math.round((benchmark?.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} de cada 100 reproducciones de su propio protocolo, cuya mediana es ${f(benchmark?.verdict.published_random_split_figures.stacking?.median_draw)}.`
+                  ? `El 0,943 publicado para el ensamble apilado queda por encima de ${Math.round((benchmark?.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} de cada 100 reproducciones de su propio protocolo, cuya mediana es ${f(benchmark?.verdict.published_random_split_figures.stacking?.median_draw)}.`
                   : `The 0.943 published for the stacked ensemble lies above ${Math.round((benchmark?.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} of 100 reproductions of its own protocol, whose median is ${f(benchmark?.verdict.published_random_split_figures.stacking?.median_draw)}.`}
               </li>
               <li>
                 {es
-                  ? `La ecuación clásica puntúa cerca de 0.30 bajo todo protocolo (${f(F.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana, ${f(F.site('kuznetsov'))} con el sitio excluido), y también ${f(F.site('kuznetsov-transfer'))} cuando su factor de roca se predice desde el módulo con los otros sitios.`
+                  ? `La ecuación clásica puntúa cerca de 0,30 bajo todo protocolo (${f(F.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana, ${f(F.site('kuznetsov'))} con el sitio excluido), y también ${f(F.site('kuznetsov-transfer'))} cuando su factor de roca se predice desde el módulo con los otros sitios.`
                   : `The classical equation scores about 0.30 under every protocol (${f(F.random('kuznetsov')?.r2_identity)} at the median random split, ${f(F.site('kuznetsov'))} with its site held out), and ${f(F.site('kuznetsov-transfer'))} when its rock factor is predicted from the modulus using the other sites.`}
               </li>
               <li>
@@ -206,7 +206,7 @@ export default function Introduction() {
         </p>
         <p>
           {es
-            ? 'Dos conjuntos de prueba publicados acompañan al corpus, 14 tiros en total de los mismos sitios, uno de ellos con las predicciones de tres modelos impresas en la misma tabla. Un tercero son cinco tiros de producción en una mina de granito del noreste de China, de un artículo de acceso abierto, con un módulo de 5.6 GPa, por debajo del mínimo del corpus. Los valores numéricos son hechos experimentales reutilizados con cita; los artículos no se redistribuyen. El escaneo tridimensional es una alternativa al análisis de imágenes para medir un montón tronado, y se menciona como el canal de medición que mejoraría un corpus futuro.'
+            ? 'Dos conjuntos de prueba publicados acompañan al corpus, 14 tiros en total de los mismos sitios, uno de ellos con las predicciones de tres modelos impresas en la misma tabla. Un tercero son cinco tiros de producción en una mina de granito del noreste de China, de un artículo de acceso abierto, con un módulo de 5,6 GPa, por debajo del mínimo del corpus. Los valores numéricos son hechos experimentales reutilizados con cita; los artículos no se redistribuyen. El escaneo tridimensional es una alternativa al análisis de imágenes para medir un montón tronado, y se menciona como el canal de medición que mejoraría un corpus futuro.'
             : 'Two published hold-outs accompany the corpus, 14 blasts in all from the same sites, one of them with three models’ predictions printed in the same table. A third set is five production blasts at a granite mine in north-east China, from an open-access paper, with a modulus of 5.6 GPa, below the corpus minimum. The numeric values are experimental facts reused with citation; the articles are not redistributed. Three-dimensional scanning is an alternative to image analysis for measuring a muckpile and is noted as the measurement channel a future corpus could use.'}{' '}
           <Cite id="kulatilake2012" />{' '}
           <Cite id="sui2025" />{' '}

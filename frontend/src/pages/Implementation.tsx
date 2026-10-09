@@ -18,6 +18,7 @@ import {
   PortableModelDiagram,
   ReconstructionDiagram,
 } from '../viz/Diagrams';
+import { notAvailable, num } from '../lib/format';
 
 interface TabProps {
   es: boolean;
@@ -26,7 +27,7 @@ interface TabProps {
 }
 
 const refs = (key: string, es: boolean) => <Refs ids={SECTION_REFS[key]} label={es ? 'Fuentes' : 'Sources'} />;
-const kb = (bytes: number | undefined) => (bytes === undefined ? 'n/a' : `${Math.round(bytes / 1024)} kB`);
+const kb = (bytes: number | undefined) => (bytes === undefined ? notAvailable() : `${Math.round(bytes / 1024)} kB`);
 
 export default function Implementation() {
   const es = useShellLang() === 'es';
@@ -35,16 +36,33 @@ export default function Implementation() {
   const props = { es, b, index };
   const tabs: SubTabDef[] = [
     { id: 'architecture', label: es ? 'Arquitectura' : 'Architecture', content: <Architecture {...props} /> },
-    { id: 'data', label: es ? 'Datos y compuerta' : 'Data and the gate', content: <Data {...props} /> },
-    { id: 'geometry', label: es ? 'Geometría' : 'Geometry', content: <Geometry {...props} /> },
+    // Six peers at most (ADR-0071 rule 5): the geometry reconstruction is how the data become usable.
+    {
+      id: 'data',
+      label: es ? 'Datos, compuerta y geometría' : 'Data, the gate and the geometry',
+      content: (
+        <>
+          <Data {...props} />
+          <Geometry {...props} />
+        </>
+      ),
+    },
     { id: 'bake', label: es ? 'El horneado' : 'The bake', content: <Bake {...props} /> },
     { id: 'leakage', label: es ? 'Control de fuga' : 'Leakage control', content: <Leakage {...props} /> },
-    { id: 'live', label: es ? 'Vivo: ecuaciones' : 'Live: equations', content: <LiveEquations {...props} /> },
-    { id: 'models', label: es ? 'Vivo: modelos ajustados' : 'Live: fitted models', content: <LiveModels {...props} /> },
+    {
+      id: 'live',
+      label: es ? 'En vivo: ecuaciones y modelos' : 'Live: equations and models',
+      content: (
+        <>
+          <LiveEquations {...props} />
+          <LiveModels {...props} />
+        </>
+      ),
+    },
     { id: 'deploy', label: es ? 'Artefactos y despliegue' : 'Artifacts and deploy', content: <Deploy {...props} /> },
   ];
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Implementación' : 'Implementation'}</h1>
         <p className="lede">
@@ -66,8 +84,8 @@ function Architecture({ es, b }: TabProps) {
       <h2>{es ? 'Dónde corre cada cosa' : 'Where each thing runs'}</h2>
       <p>
         {es
-          ? `Dos repositorios. El motor, publicado como paquete (versión ${b?.engine_version ?? 'n/a'}), contiene todo lo que un tercero usaría para predecir fragmentación sin que le importe esta aplicación: los modelos, los corpus con su compuerta de integridad, la reconstrucción de la geometría, los protocolos, las métricas, los diagnósticos y la exportación portátil de los modelos ajustados. Este repositorio contiene el producto: la matriz de casos, el horneado por etapas, los dos contratos de datos, los artefactos y la aplicación web.`
-          : `Two repositories. The engine, published as a package (version ${b?.engine_version ?? 'n/a'}), holds everything a third party would use to predict fragmentation without caring about this application: the models, the corpora with their integrity gate, the geometry reconstruction, the protocols, the metrics, the diagnostics and the portable export of fitted models. This repository holds the product: the case matrix, the staged bake, the two data contracts, the artifacts and the web application.`}
+          ? `Dos repositorios. El motor, publicado como paquete (versión ${b?.engine_version ?? notAvailable()}), contiene todo lo que un tercero usaría para predecir fragmentación sin que le importe esta aplicación: los modelos, los corpus con su compuerta de integridad, la reconstrucción de la geometría, los protocolos, las métricas, los diagnósticos y la exportación portátil de los modelos ajustados. Este repositorio contiene el producto: la matriz de casos, el horneado por etapas, los dos contratos de datos, los artefactos y la aplicación web.`
+          : `Two repositories. The engine, published as a package (version ${b?.engine_version ?? notAvailable()}), holds everything a third party would use to predict fragmentation without caring about this application: the models, the corpora with their integrity gate, the geometry reconstruction, the protocols, the metrics, the diagnostics and the portable export of fitted models. This repository holds the product: the case matrix, the staged bake, the two data contracts, the artifacts and the web application.`}
       </p>
       <ArchitectureDiagram />
       <p>
@@ -123,26 +141,26 @@ function Architecture({ es, b }: TabProps) {
 /* ------------------------------------------------------------------------------------------- */
 
 function Data({ es }: TabProps) {
-  const defects: [string, string, string, string][] = [
-    ['Db5', es ? 'factor de carga' : 'powder factor', '0.39', '0.33'],
-    ['Sm4', 'x50', '0.22', '0.24'],
-    ['Ad15', 'x50', '0.15', '0.22'],
-    ['Ad17', es ? 'factor de carga' : 'powder factor', '1.24', '1.07'],
-    ['Ad19', es ? 'factor de carga' : 'powder factor', '1.26', '1.47'],
+  const defects: [string, string, number, number][] = [
+    ['Db5', es ? 'factor de carga' : 'powder factor', 0.39, 0.33],
+    ['Sm4', 'x50', 0.22, 0.24],
+    ['Ad15', 'x50', 0.15, 0.22],
+    ['Ad17', es ? 'factor de carga' : 'powder factor', 1.24, 1.07],
+    ['Ad19', es ? 'factor de carga' : 'powder factor', 1.26, 1.47],
   ];
   return (
     <section>
       <h2>{es ? 'Los datos y la compuerta de integridad' : 'The data and the integrity gate'}</h2>
       <p>
         {es
-          ? 'Tres conjuntos reales se cargan por el mismo contrato: los 97 tiros del corpus, los 14 de validación publicados y los cinco de campo. El contrato rechaza lo que no puede ser una voladura (un factor de carga fuera de 0.05 a 3 kg/m³, por ejemplo) y marca, sin recortar, lo que queda fuera de la envolvente de entrenamiento; toda predicción sobre una fila marcada lleva el sello de extrapolación.'
+          ? 'Tres conjuntos reales se cargan por el mismo contrato: los 97 tiros del corpus, los 14 de validación publicados y los cinco de campo. El contrato rechaza lo que no puede ser una voladura (un factor de carga fuera de 0,05 a 3 kg/m³, por ejemplo) y marca, sin recortar, lo que queda fuera de la envolvente de entrenamiento; toda predicción sobre una fila marcada lleva el sello de extrapolación.'
           : 'Three real sets load through one contract: the 97 corpus blasts, the 14 published hold-out blasts and the five field blasts. The contract rejects what cannot be a blast (a powder factor outside 0.05 to 3 kg/m³, for example) and flags, without clipping, what lies outside the training envelope; every prediction on a flagged row carries the extrapolation stamp.'}{' '}
         <Cite id="hudaverdi2010" />{' '}
         <Cite id="sui2025" />
       </p>
       <p>
         {es
-          ? 'Cargar el corpus corre una compuerta de dos partes. La primera recalcula, desde las 97 filas, la tabla de estadísticas descriptivas que el propio artículo imprime (mínimo, máximo, media y desviación de las siete variables) y la compara a la precisión con que se imprimió. La segunda compara un resumen criptográfico del contenido con un valor fijado, porque una media sobre 97 filas detecta mal el cambio de una celda: corregir un factor de carga la mueve en 0.0006.'
+          ? 'Cargar el corpus corre una compuerta de dos partes. La primera recalcula, desde las 97 filas, la tabla de estadísticas descriptivas que el propio artículo imprime (mínimo, máximo, media y desviación de las siete variables) y la compara a la precisión con que se imprimió. La segunda compara un resumen criptográfico del contenido con un valor fijado, porque una media sobre 97 filas detecta mal el cambio de una celda: corregir un factor de carga la mueve en 0,0006.'
           : 'Loading the corpus runs a two-part gate. The first recomputes, from the 97 rows, the descriptive-statistics table the paper itself prints (minimum, maximum, mean and deviation of all seven variables) and compares it at the precision it was printed to. The second compares a cryptographic digest of the content with a pinned value, because a mean over 97 rows detects a one-cell change poorly: correcting one powder factor moves it by 0.0006.'}
       </p>
       <Equation
@@ -151,7 +169,7 @@ function Data({ es }: TabProps) {
       />
       <p>
         {es
-          ? 'La compuerta encontró cinco errores de transcripción en el corpus tal como se ensambló al principio, dos sobre el tamaño medido. La señal fue el máximo del factor de carga, 1.47 frente al 1.26 que imprime el artículo; la fila Ad19 tenía su propio tamaño de bloque copiado en la columna vecina. Dos copias independientes del artículo, leídas por separado, coinciden entre sí y discrepan del archivo exactamente en estas cinco celdas:'
+          ? 'La compuerta encontró cinco errores de transcripción en el corpus tal como se ensambló al principio, dos sobre el tamaño medido. La señal fue el máximo del factor de carga, 1,47 frente al 1,26 que imprime el artículo; la fila Ad19 tenía su propio tamaño de bloque copiado en la columna vecina. Dos copias independientes del artículo, leídas por separado, coinciden entre sí y discrepan del archivo exactamente en estas cinco celdas:'
           : 'The gate found five transcription errors in the corpus as first assembled, two of them on the measured size. The tell was the powder-factor maximum, 1.47 against the 1.26 the paper prints; row Ad19 had its own block size copied into the neighbouring column. Two independent copies of the paper, read separately, agree with each other and disagree with the file in exactly these five cells:'}{' '}
         <Cite id="kulatilake2012" />
       </p>
@@ -169,8 +187,8 @@ function Data({ es }: TabProps) {
             <tr key={id}>
               <td><code>{id}</code></td>
               <td>{column}</td>
-              <td>{published}</td>
-              <td className="fr-bad">{found}</td>
+              <td>{num(published, 2)}</td>
+              <td className="fr-bad">{num(found, 2)}</td>
             </tr>
           ))}
         </tbody>
@@ -205,7 +223,7 @@ function Geometry({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? 'Un noveno sitio, Reocin subterránea, no declara diámetro pero sí una altura de banco de 18 m; invertir la cadena da el mismo diámetro, 91.2 mm, en sus seis filas, una comprobación interna de seis veces y no un supuesto. El décimo, Miami, no publica nada absoluto: sus seis tiros no se reconstruyen y todo brazo que necesita volumen se abstiene allí con la razón.'
+          ? 'Un noveno sitio, Reocin subterránea, no declara diámetro pero sí una altura de banco de 18 m; invertir la cadena da el mismo diámetro, 91,2 mm, en sus seis filas, una comprobación interna de seis veces y no un supuesto. El décimo, Miami, no publica nada absoluto: sus seis tiros no se reconstruyen y todo brazo que necesita volumen se abstiene allí con la razón.'
           : 'A ninth site, Reocin underground, states no diameter but an 18 m bench height; inverting the chain returns the same diameter, 91.2 mm, on all six of its rows, a six-fold internal check rather than an assumption. The tenth, Miami, publishes nothing absolute: its six blasts are not reconstructed and every arm that needs a volume abstains there with the reason.'}
       </p>
       <Equation
@@ -264,8 +282,8 @@ function Bake({ es, b }: TabProps) {
       <PipelineDiagram />
       <p>
         {es
-          ? `El horneado es una función pura del registro de casos, de las versiones fijadas (motor ${b?.engine_version ?? 'n/a'}, numpy, scikit-learn y xgboost exactos) y de la semilla. Repetido en el mismo entorno, produce artefactos idénticos byte a byte, y una prueba lo comprueba. Repetido en otro sistema operativo los reproduce con una tolerancia numérica y no con un resumen, porque dos compilaciones del mismo numpy pueden sumar un producto punto en otro orden; la comparación entre entornos usa una tolerancia relativa de 1e-6, y la peor diferencia medida entre Windows y Linux en la versión 0.04 fue 2.7e-08.`
-          : `The bake is a pure function of the case registry, the pinned versions (engine ${b?.engine_version ?? 'n/a'}, and exact numpy, scikit-learn and xgboost) and the seed. Re-run in the same environment it writes byte-identical artifacts, and a test checks that. Re-run on another operating system it reproduces them to a numeric tolerance rather than a digest, because two builds of the same numpy can sum a dot product in a different order; the cross-environment comparison uses a relative tolerance of 1e-6, and the worst difference measured between Windows and Linux at version 0.04 was 2.7e-08.`}
+          ? `El horneado es una función pura del registro de casos, de las versiones fijadas (motor ${b?.engine_version ?? notAvailable()}, numpy, scikit-learn y xgboost exactos) y de la semilla. Repetido en el mismo entorno, produce artefactos idénticos byte a byte, y una prueba lo comprueba. Repetido en otro sistema operativo los reproduce con una tolerancia numérica y no con un resumen, porque dos compilaciones del mismo numpy pueden sumar un producto punto en otro orden; la comparación entre entornos usa una tolerancia relativa de 1e-6, y la peor diferencia medida entre Windows y Linux en la versión 0.04.000 fue 2,7e-08.`
+          : `The bake is a pure function of the case registry, the pinned versions (engine ${b?.engine_version ?? notAvailable()}, and exact numpy, scikit-learn and xgboost) and the seed. Re-run in the same environment it writes byte-identical artifacts, and a test checks that. Re-run on another operating system it reproduces them to a numeric tolerance rather than a digest, because two builds of the same numpy can sum a dot product in a different order; the cross-environment comparison uses a relative tolerance of 1e-6, and the worst difference measured between Windows and Linux at version 0.04.000 was 2.7e-08.`}
       </p>
       <Equation
         tex={String.raw`\frac{|a - b|}{\max(|a|, |b|)} \le 10^{-6}\quad \text{for every number in every artifact}`}
@@ -273,8 +291,8 @@ function Bake({ es, b }: TabProps) {
       />
       <Callout variant="note" title={es ? 'Dónde vale y dónde no' : 'Where it holds and where it does not'}>
         {es
-          ? 'Las pruebas escriben en un directorio temporal y comparan contra los archivos comprometidos, así que no pueden reescribir lo que comprueban. La medición entre sistemas operativos se hizo en la versión 0.04 y no se repitió para esta; la identidad byte a byte en el mismo entorno sí se comprueba en cada corrida de las pruebas.'
-          : 'Tests write into a temporary directory and compare against the committed files, so they cannot rewrite what they check. The cross-operating-system measurement was made at version 0.04 and not repeated for this one; byte identity in the same environment is checked on every test run.'}
+          ? 'Las pruebas escriben en un directorio temporal y comparan contra los archivos comprometidos, así que no pueden reescribir lo que comprueban. Medido en la versión 0.06.000 entre Windows y Linux con las mismas versiones: cada caso y su archivo de modelos se reproducen; la peor diferencia es 2,7e-08 en un caso y 7,0e-07 en un archivo de modelos, sobre un peso de la red cercano a cero, donde una diferencia relativa se infla. Esa medición mostró además que la comparación no podía pasar entre sistemas desde la 0.05.000, porque comparaba como texto el resumen criptográfico del archivo de modelos; ahora compara los números que ese resumen cubre. La identidad byte a byte en el mismo entorno se comprueba en cada corrida de las pruebas.'
+          : 'Tests write into a temporary directory and compare against the committed files, so they cannot rewrite what they check. Measured at 0.06.000 between Windows and Linux on the same pins: every case and its models file reproduces; the worst difference is 2.7e-08 in a case and 7.0e-07 in a models file, on a near-zero network weight, where a relative difference inflates. The same run showed that the comparison could not pass across systems since 0.05.000, because it compared the models file’s digest as a string; it now compares the numbers that digest covers. Byte identity in the same environment is checked on every test run.'}
       </Callout>
       {refs('i-bake', es)}
     </section>
@@ -410,8 +428,8 @@ function LiveModels({ es, index }: TabProps) {
       />
       <p>
         {es
-          ? `Cada archivo de modelos trae, como fijaciones, la predicción del modelo original en los 116 tiros publicados. La prueba del navegador las reproduce exactamente para el bosque, la potenciación y el ensamble, y con una diferencia relativa menor que 1e-12 para la red, los núcleos y la ley de potencia, que llaman a una exponencial o a una potencia. Hay ${models.length || 'n/a'} archivos, uno por campaña retenida y uno con el corpus completo, ${kb(total)} en total; el navegador carga solo el del caso abierto.`
-          : `Every models file carries, as fixtures, the original model’s prediction at all 116 published blasts. The browser test reproduces them exactly for the forest, the boosting model and the ensemble, and to a relative difference below 1e-12 for the network, the kernels and the power law, which call an exponential or a power. There are ${models.length || 'n/a'} files, one per withheld campaign and one for the whole corpus, ${kb(total)} in all; the browser loads only the one for the open case.`}
+          ? `Cada archivo de modelos trae, como fijaciones, la predicción del modelo original en los 116 tiros publicados. La prueba del navegador las reproduce exactamente para el bosque, la potenciación y el ensamble, y con una diferencia relativa menor que 1e-12 para la red, los núcleos y la ley de potencia, que llaman a una exponencial o a una potencia. Hay ${models.length || notAvailable()} archivos, uno por campaña retenida y uno con el corpus completo, ${kb(total)} en total; el navegador carga solo el del caso abierto.`
+          : `Every models file carries, as fixtures, the original model’s prediction at all 116 published blasts. The browser test reproduces them exactly for the forest, the boosting model and the ensemble, and to a relative difference below 1e-12 for the network, the kernels and the power law, which call an exponential or a power. There are ${models.length || notAvailable()} files, one per withheld campaign and one for the whole corpus, ${kb(total)} in all; the browser loads only the one for the open case.`}
       </p>
       <Callout variant="note" title={es ? 'Dónde vale y dónde no' : 'Where it holds and where it does not'}>
         {es
@@ -433,8 +451,8 @@ function Deploy({ es, b, index }: TabProps) {
       <h2>{es ? 'Artefactos y despliegue' : 'Artifacts and deploy'}</h2>
       <p>
         {es
-          ? `Lo que se publica: ${index?.n_cases ?? 'n/a'} artefactos de caso (${kb(caseBytes)}), el benchmark (${kb(index?.benchmark?.bytes)}), ${index?.models?.length ?? 'n/a'} archivos de modelos (${kb(modelBytes)}) y un índice que lista cada archivo con su resumen. Cada artefacto registra la versión de la aplicación que lo horneó (${b?.app_version ?? 'n/a'}) y la del motor (${b?.engine_version ?? 'n/a'}). Una prueba vuelve a hornear un caso y exige los mismos números y las mismas versiones, así que cada versión nueva vuelve a hornear sus artefactos aunque solo cambie el sitio, y los números deben salir iguales.`
-          : `What is published: ${index?.n_cases ?? 'n/a'} case artifacts (${kb(caseBytes)}), the benchmark (${kb(index?.benchmark?.bytes)}), ${index?.models?.length ?? 'n/a'} models files (${kb(modelBytes)}) and an index listing every file with its digest. Every artifact records the application version that baked it (${b?.app_version ?? 'n/a'}) and the engine version (${b?.engine_version ?? 'n/a'}). A test re-bakes a case and requires the same numbers and the same versions, so a new release re-bakes its artifacts even when only the site changed, and the numbers must come back unchanged.`}
+          ? `Lo que se publica: ${index?.n_cases ?? notAvailable()} artefactos de caso (${kb(caseBytes)}), el benchmark (${kb(index?.benchmark?.bytes)}), ${index?.models?.length ?? notAvailable()} archivos de modelos (${kb(modelBytes)}) y un índice que lista cada archivo con su resumen. Cada artefacto registra la versión de la aplicación que lo horneó (${b?.app_version ?? notAvailable()}) y la del motor (${b?.engine_version ?? notAvailable()}). Una prueba vuelve a hornear un caso y exige los mismos números y las mismas versiones, así que cada versión nueva vuelve a hornear sus artefactos aunque solo cambie el sitio, y los números deben salir iguales.`
+          : `What is published: ${index?.n_cases ?? notAvailable()} case artifacts (${kb(caseBytes)}), the benchmark (${kb(index?.benchmark?.bytes)}), ${index?.models?.length ?? notAvailable()} models files (${kb(modelBytes)}) and an index listing every file with its digest. Every artifact records the application version that baked it (${b?.app_version ?? notAvailable()}) and the engine version (${b?.engine_version ?? notAvailable()}). A test re-bakes a case and requires the same numbers and the same versions, so a new release re-bakes its artifacts even when only the site changed, and the numbers must come back unchanged.`}
       </p>
       <p>
         {es

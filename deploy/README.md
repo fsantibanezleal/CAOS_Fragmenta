@@ -3,7 +3,7 @@
 Fragmenta deploys to **GitHub Pages** at `fragmenta.fasl-work.com`.
 
 That target was chosen from the full menu rather than by default. The repo is public, so Pages is
-available. The payload is about 1.2 MB of JSON plus a bundle, so no disk-heavy host is warranted.
+available. The payload is about 4 MB of JSON plus a bundle, so no disk-heavy host is warranted.
 Everything computes in the browser or was computed offline, so no compute-heavy host is warranted
 either. There is no server state, no auth and no request-time compute, so a backend would be
 carrying cost and an abuse surface for nothing.
@@ -16,8 +16,9 @@ carrying cost and an abuse surface for nothing.
 2. runs the frontend parity gate, which scores the browser engine against those same artifacts.
 3. builds the SPA and publishes `frontend/dist`.
 
-The two files beside this one are the nginx site and systemd unit the frozen layout carries for
-products that do run a backend. Fragmenta does not, and they are unused here.
+`TARGET` names the one deploy place, `pages`, and `scripts/check_deploy_place.py` (in CI) fails if the
+files of another place appear. The dormant VPS unit and nginx site the old frozen layout carried were
+removed in 0.07.000, because a Pages product carries none.
 
 ## The custom domain
 

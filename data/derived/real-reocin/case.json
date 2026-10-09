@@ -286,14 +286,14 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "coarse, 0.44 to 0.96 m measured",
-   "es": "gruesa, 0.44 a 0.96 m medidos"
+   "es": "gruesa, 0,44 a 0,96 m medidos"
   },
   "id": "real-reocin",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
   "reason": {
    "en": "The largest burden in the corpus at 6.0 m on 229 mm holes. Its Rc1 blast is the one that sits in both the training table and the published validation set.",
-   "es": "El mayor bordo del conjunto, 6.0 m con perforaci\u00f3n de 229 mm. Su tiro Rc1 es el que aparece tanto en la tabla de entrenamiento como en el conjunto de validaci\u00f3n publicado."
+   "es": "El mayor bordo del conjunto, 6,0 m con perforaci\u00f3n de 229 mm. Su tiro Rc1 es el que aparece tanto en la tabla de entrenamiento como en el conjunto de validaci\u00f3n publicado."
   },
   "site": "Reocin",
   "title": {
@@ -302,7 +302,7 @@
   }
  },
  "controls": {},
- "digest": "2c0437f40534e94379de62193cac36638fefc9d29ac630c5bae3a399db045b7d",
+ "digest": "0b26f2621eff6fdf356944657c5aee3ee778613472c87e08736b456e06f73843",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1817,7 +1817,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "e713fd731b22c5693d8cf4cfc07dcf4d560de4273079747f1f86fd2727f026ab",
+  "digest": "8f583cbeb768cc7e27808db1b1a757ed1b9bcf29017a66ce65b7763637ee3d5b",
   "path": "models/Reocin.json",
   "scope": "Reocin"
  },
@@ -2135,6 +2135,98 @@
     "n_simulations": null,
     "reason": null,
     "x50_m": 0.806002
+   },
+   "Rc4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.73881
+   },
+   "Rc5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.801828
+   },
+   "Rc6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.699211
+   },
+   "Rc7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.762694
+   },
+   "Rc8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.790664
+   },
+   "Rc9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.758997
+   }
+  },
+  "kuznetsov-capped": {
+   "Rc1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.68
+   },
+   "Rc10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.71712
+   },
+   "Rc2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.68
+   },
+   "Rc3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.68
    },
    "Rc4": {
     "abstained": false,
@@ -3021,11 +3113,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Reocin",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Reocin",
@@ -3172,6 +3264,49 @@
      "error_pct": 62.98191879264572,
      "measured_m": 0.44,
      "predicted_m": 0.7171204426876412,
+     "site": "Reocin"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
+   "bias_m": 0.11493235376408162,
+   "mae_m": 0.16096271350685892,
+   "mape_pct": 30.776989423165748,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 10,
+   "pearson_r2": 0.3378631103837988,
+   "r2_identity": -0.2416361163381433,
+   "r2_identity_interval": [
+    -5.145546331918671,
+    0.2906631351956727
+   ],
+   "r2_identity_point": -0.2416361163381433,
+   "rmse_m": 0.18486425415988633,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Rc10",
+     "error_m": 0.2771204426876412,
+     "error_pct": 62.98191879264572,
+     "measured_m": 0.44,
+     "predicted_m": 0.7171204426876412,
+     "site": "Reocin"
+    },
+    {
+     "blast_id": "Rc7",
+     "error_m": 0.23269404444519448,
+     "error_pct": 43.90453668777254,
+     "measured_m": 0.53,
+     "predicted_m": 0.7626940444451945,
+     "site": "Reocin"
+    },
+    {
+     "blast_id": "Rc8",
+     "error_m": 0.23066358336258497,
+     "error_pct": 41.1899256004616,
+     "measured_m": 0.56,
+     "predicted_m": 0.790663583362585,
      "site": "Reocin"
     }
    ]
@@ -3647,6 +3782,16 @@
    "powder-up": 0.6402871903414502,
    "spacing-wide": 0.7793558700635839,
    "stemming-long": 0.7504773782959484
+  },
+  "kuznetsov-capped": {
+   "base": 0.7309323537640816,
+   "blocky": 0.756029838845943,
+   "burden-tight": 0.6881960758086543,
+   "burden-wide": 0.7690719965277509,
+   "powder-down": 0.8362411104121941,
+   "powder-up": 0.6400262938665071,
+   "spacing-wide": 0.7471899667602144,
+   "stemming-long": 0.7365915041823129
   },
   "kuznetsov-transfer": {
    "base": 0.5925002886989734,

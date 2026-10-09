@@ -38,6 +38,8 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: cd frontend && npm ci
+      - name: The web baseline against the installed shell (tokens, classes, numbers, animation loops; ADR-0078)
+        run: python3 scripts/check_web_baseline.py
       - name: The parity gate between the browser engine and the baked numbers
         run: cd frontend && npm test
       - name: Type-check and build
@@ -85,3 +87,12 @@ jobs:
 
       - name: CI budget, trunk-only triggers, no training (ADR-0074)
         run: python scripts/check_ci_budget.py
+
+      - name: The design document, every requirement naming a gate that exists (ADR-0075)
+        run: python scripts/check_sdd.py
+
+      - name: One deploy place, GitHub Pages, and no files of another (ADR-0055)
+        run: python scripts/check_deploy_place.py
+
+      - name: VERSION the single source; a version in code, never in history, fails (template 0.03.000)
+        run: python scripts/check_version_coherence.py

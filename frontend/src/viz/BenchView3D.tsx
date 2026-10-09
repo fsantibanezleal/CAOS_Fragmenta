@@ -16,11 +16,12 @@
  * nobody is looking is a compute bomb.
  */
 
-import { useShellLang } from '@fasl-work/caos-app-shell';
+import { usePausedViz, useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 import type { Pattern } from '../lib/contract.types';
+import { num } from '../lib/format';
 
 export interface BenchView3DProps {
   pattern: Pattern;
@@ -91,8 +92,6 @@ export function BenchView3D({
   const lang = useShellLang();
   const mountRef = useRef<HTMLDivElement | null>(null);
   const initRef = useRef<Init | null>(null);
-  const rafRef = useRef<number | null>(null);
-  const [playing, setPlaying] = useState(false);
   const [themeEpoch, setThemeEpoch] = useState(0);
 
   useEffect(() => {
@@ -392,49 +391,39 @@ export function BenchView3D({
     };
   }, [pattern, holesPerRow, rows, tieIn, height, themeEpoch]);
 
-  // The initiation ripple. Default paused, halted on a hidden tab.
+  // The initiation ripple, on the shell's paused loop: default paused, halted on a hidden tab, and never an
+  // animation loop of its own (the template's web baseline checks for one).
+  const cycle = useRef({ maxOrder: 1, cycleMs: 900 });
   useEffect(() => {
-    if (!playing) return;
-    const state = initRef.current;
-    if (!state) return;
-
-    const maxOrder = Math.max(...state.holes.map((h) => h.order), 1);
-    const cycleMs = Math.max(900, maxOrder * Math.max(1, delayMs) * 6);
-    let start = performance.now();
-
-    const step = () => {
-      if (document.hidden) {
-        setPlaying(false);
-        return;
-      }
-      const elapsed = (performance.now() - start) % cycleMs;
-      const front = (elapsed / cycleMs) * (maxOrder + 1.5);
+    const holes = initRef.current?.holes ?? [];
+    const maxOrder = Math.max(...holes.map((h) => h.order), 1);
+    cycle.current = { maxOrder, cycleMs: Math.max(900, maxOrder * Math.max(1, delayMs) * 6) };
+  }, [delayMs, pattern, holesPerRow, rows, tieIn, height, themeEpoch]);
+  const viz = usePausedViz(
+    (_dt, elapsed) => {
+      const state = initRef.current;
+      if (!state) return false;
+      const { maxOrder, cycleMs } = cycle.current;
+      const front = ((elapsed % cycleMs) / cycleMs) * (maxOrder + 1.5);
       for (const hole of state.holes) {
         const distance = front - hole.order;
         const intensity = distance >= 0 && distance < 1.2 ? 1 - distance / 1.2 : 0;
-        const material = hole.mesh.material as THREE.MeshStandardMaterial;
-        material.emissive.setRGB(intensity * 0.9, intensity * 0.45, 0);
+        (hole.mesh.material as THREE.MeshStandardMaterial).emissive.setRGB(intensity * 0.9, intensity * 0.45, 0);
       }
       state.renderer.render(state.scene, state.camera);
-      rafRef.current = requestAnimationFrame(step);
-    };
-    rafRef.current = requestAnimationFrame(step);
-
-    const onVisibility = () => {
-      if (document.hidden) setPlaying(false);
-    };
-    document.addEventListener('visibilitychange', onVisibility);
-
-    return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      document.removeEventListener('visibilitychange', onVisibility);
-      for (const hole of state.holes) {
-        (hole.mesh.material as THREE.MeshStandardMaterial).emissive.setRGB(0, 0, 0);
-      }
-      state.renderer.render(state.scene, state.camera);
-      start = 0;
-    };
-  }, [playing, delayMs]);
+      return true;
+    },
+    { loop: true },
+  );
+  const playing = viz.playing;
+  // Paused: the holes return to rest, drawn once.
+  useEffect(() => {
+    if (playing) return;
+    const state = initRef.current;
+    if (!state) return;
+    for (const hole of state.holes) (hole.mesh.material as THREE.MeshStandardMaterial).emissive.setRGB(0, 0, 0);
+    state.renderer.render(state.scene, state.camera);
+  }, [playing]);
 
   const es = lang === 'es';
 
@@ -445,13 +434,13 @@ export function BenchView3D({
       key: 'charge',
       swatch: 'var(--color-accent)',
       label: es ? 'carga' : 'charge',
-      value: `${pattern.charge_length_m.toFixed(2)} m · ${pattern.charge_mass_kg.toFixed(0)} kg`,
+      value: `${num(pattern.charge_length_m, 2)} m · ${num(pattern.charge_mass_kg, 0)} kg`,
     },
     {
       key: 'stemming',
       swatch: 'var(--color-warn)',
       label: es ? 'taco' : 'stemming',
-      value: `${pattern.stemming_m.toFixed(2)} m`,
+      value: `${num(pattern.stemming_m, 2)} m`,
     },
     {
       key: 'face',
@@ -463,19 +452,19 @@ export function BenchView3D({
       key: 'burden',
       swatch: 'var(--color-fg-subtle)',
       label: es ? 'bordo x espaciamiento' : 'burden x spacing',
-      value: `${pattern.burden_m.toFixed(2)} x ${pattern.spacing_m.toFixed(2)} m`,
+      value: `${num(pattern.burden_m, 2)} x ${num(pattern.spacing_m, 2)} m`,
     },
     {
       key: 'bench',
       swatch: 'var(--color-fg-subtle)',
       label: es ? 'banco' : 'bench',
-      value: `${pattern.bench_height_m.toFixed(2)} m`,
+      value: `${num(pattern.bench_height_m, 2)} m`,
     },
     {
       key: 'hole',
       swatch: 'var(--color-fg-subtle)',
       label: es ? 'perforación' : 'hole',
-      value: `${pattern.hole_diameter_mm.toFixed(0)} mm`,
+      value: `${num(pattern.hole_diameter_mm, 0)} mm`,
     },
   ];
 
@@ -499,7 +488,7 @@ export function BenchView3D({
         <button
           type="button"
           className="fr-btn"
-          onClick={() => setPlaying((p) => !p)}
+          onClick={() => viz.toggle()}
           aria-pressed={playing}
         >
           {playing
@@ -507,11 +496,11 @@ export function BenchView3D({
             : es ? 'Reproducir iniciación' : 'Play initiation'}
         </button>
         <span className="fr-bench-dims">
-          {es ? 'roca' : 'rock'} {pattern.rock_volume_m3.toFixed(0)} m3 ·{' '}
-          {(pattern.charge_mass_kg / Math.max(1e-9, pattern.rock_volume_m3)).toFixed(3)}{' '}
-          {es ? 'kg por m3' : 'kg per m3'}
+          {es ? 'roca' : 'rock'} {num(pattern.rock_volume_m3, 0)} m³ ·{' '}
+          {num(pattern.charge_mass_kg / Math.max(1e-9, pattern.rock_volume_m3), 3)}{' '}
+          {es ? 'kg por m³' : 'kg per m³'}
         </span>
-        {label ? <span className="fr-bench-label">{label}</span> : null}
+        {label ? <span>{label}</span> : null}
       </div>
       {/*
         The permanent caveat overlay. Not dismissible, because the moment it can be dismissed this

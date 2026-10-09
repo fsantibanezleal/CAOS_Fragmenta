@@ -119,6 +119,9 @@ def _band(en: str, es: str | None = None) -> dict[str, str]:
     if match is None:
         raise ValueError(f"this expected band is not formulaic, so write its Spanish: {en!r}")
     word, low, high = match.groups()
+    # Spanish writes the decimal comma; composed from the English numbers, the band kept their points until
+    # 0.07.000, under a guard that read only the strings written here and never the ones composed from them.
+    low, high = low.replace(".", ","), high.replace(".", ",")
     return {"en": en, "es": f"{_BAND_WORDS[word]}, {low} a {high} m medidos"}
 
 
@@ -135,7 +138,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
         ),
         (
     "La roca más rígida del conjunto, 60 GPa, en un esquisto plegado. También es donde el índice "
-    "de uniformidad baja más, porque el taco ocupa casi todo un banco de solo 1.33 bordos."
+    "de uniformidad baja más, porque el taco ocupa casi todo un banco de solo 1,33 bordos."
         ),
         "coarse, 0.26 to 0.64 m measured",
     ),
@@ -148,7 +151,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
     "sits in both the training table and the published validation set."
         ),
         (
-    "El mayor bordo del conjunto, 6.0 m con perforación de 229 mm. Su tiro Rc1 es el que aparece "
+    "El mayor bordo del conjunto, 6,0 m con perforación de 229 mm. Su tiro Rc1 es el que aparece "
     "tanto en la tabla de entrenamiento como en el conjunto de validación publicado."
         ),
         "coarse, 0.44 to 0.96 m measured",
@@ -229,9 +232,9 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
     "predicts 0.08 m against 0.35 m measured."
         ),
         (
-    "La roca más débil del conjunto, 9.57 GPa, y el menor factor de roca recuperado, 3.68. "
+    "La roca más débil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3,68. "
     "También es donde el modelo clásico falla más: en el tiro de validación de este sitio "
-    "predice 0.08 m frente a 0.35 m medidos."
+    "predice 0,08 m frente a 0,35 m medidos."
         ),
         "medium, 0.23 to 0.76 m measured",
     ),
@@ -246,7 +249,7 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
         ),
         (
     "El sitio más grande del conjunto, 22 de los 97 tiros, razón por la cual las filas no son "
-    "muestras independientes y el benchmark excluye sitios completos. Arenisca de 16.9 GPa con "
+    "muestras independientes y el benchmark excluye sitios completos. Arenisca de 16,9 GPa con "
     "los mayores factores de carga del conjunto."
         ),
         "fine, 0.14 to 0.22 m measured",
@@ -332,14 +335,14 @@ def _real_cases() -> list[Case]:
             reason_es=(
                 "Cinco tiros de producción medidos por análisis de imagen, y el único conjunto real "
                 "de este producto que queda FUERA de la envolvente ajustada. Su módulo de Young de "
-                "5.6 GPa esta bajo el mínimo del corpus, 9.57, en la variable que dos estudios "
+                "5,6 GPa está bajo el mínimo del corpus, 9,57, en la variable que dos estudios "
                 "independientes califican como la más importante. Toda predicción aquí se marca "
                 "como extrapolación. Es también el único conjunto que publica su malla absoluta, "
                 "así que verifica la reconstrucción geométrica en vez de consumirla."
             ),
             expected_band=_band(
                 "fine, 0.146 to 0.200 m measured, every prediction stamped extrapolated",
-                "fina, 0.146 a 0.200 m medidos, toda predicción marcada como extrapolada",
+                "fina, 0,146 a 0,200 m medidos, toda predicción marcada como extrapolada",
             ),
             variants=_STANDARD_VARIANTS,
             dataset="field",
@@ -442,7 +445,7 @@ _SYNTHETIC: tuple[Case, ...] = (
         reason_es=(
             "Un diseño que no es un tiro: el taco excede la perforación, de modo que no hay carga "
             "que detonar. Todo modelo debe rechazarlo en vez de devolver un número verosímil. Si "
-            "algún modelo responde aquí, el producto esta fabricando."
+            "algún modelo responde aquí, el producto está inventando números."
         ),
         expected_band=_band(
             "every arm abstains, with a reason",
@@ -469,7 +472,7 @@ _SYNTHETIC: tuple[Case, ...] = (
         reason_es=(
             "Verdad de terreno generada por un modelo conocido, que ese mismo modelo debe recuperar "
             "dentro de tolerancia. Prueba el andamiaje, no la ciencia: si el modelo que produjo "
-            "estos números no puede reproducirlos, la instalación esta rota y ningún otro resultado "
+            "estos números no puede reproducirlos, la instalación está rota y ningún otro resultado "
             "de esta página es confiable."
         ),
         expected_band=_band(

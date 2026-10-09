@@ -2,7 +2,7 @@
 
 # The verdict
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.07.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 The kill criterion. It was first written, before the first run, as a margin over the null alone; that run declared success for a best learned arm at -0.034 against a null at -0.216, an arm worse than a constant, so the positivity half was added. The sentence has not changed since, and an engine test pins its hash:
 
@@ -23,5 +23,5 @@ The outcome the engine writes, verbatim:
 > THE VERDICT DEPENDS ON THE ROW SET. Over all 97 blasts the best learned arm under leave-one-site-out, xgboost, scores -0.034 and the learned tier does not meet the criterion. Over the 91 blasts whose pattern geometry is resolvable, the rows on which the classical arms are also scored, stacking scores 0.034, 0.266 above the null, and the tier meets it. The blasts that separate the two row sets come from Miami. Apart from arms whose source fitted them on this corpus, no arm has a site-resampled 95 percent interval above zero: with ten sites, none of them is distinguishable from predicting the corpus mean. The null's held-out predictions correlate with the measurements at -0.79: holding out a coarse site lowers the training mean, so any margin over the null under this protocol is larger than the skill it measures.
 
 Arms in sample (fitted by their source on this corpus): published regression (0.802).
-Arms reading a constant derived from the held-out site itself: classical mean size, site factor.
+Arms reading a constant derived from the held-out site itself: classical mean size, site factor, classical mean size, capped at the in-situ block (declared).
 Arms with a site-resampled interval above zero, in-sample arms excluded: none.

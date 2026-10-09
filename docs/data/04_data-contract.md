@@ -41,8 +41,8 @@ relative weight strength (ANFO, 100, by default). For the corpus it is recovered
 - **Outside the training envelope is an extrapolation, and it is refused by default.** It is admitted
   only with `allow_extrapolation=True`, and every prediction made on such a row carries the
   `extrapolated` stamp and the list of fields outside. In the App, the Predict chart draws extrapolated
-  points in their own colour and badges them in its readout, and the What if tab marks each control
-  that leaves the envelope and says so under the chart.
+  points in their own colour and badges them in its readout, and the Design group names every input
+  of a changed design that leaves the envelope.
 
 ### Nothing is clipped
 
@@ -85,7 +85,7 @@ content digest ([data/01](01_corpus.md) section 5).
 | File | Schema | One per | What it holds |
 |---|---|---|---|
 | `data/derived/<case>/case.json` | `fragmenta.case/v1` | case (16) | the case's blasts and patterns, every arm's prediction or abstention with its reason, the case's scores, distributions, variants, controls, provenance, and which models file it runs live |
-| `data/derived/benchmark.json` | `fragmenta.benchmark/v2` | release | the three protocols with draws, spreads, pooled scores on two row sets and site-resampled intervals; per-site errors; the verdict; arm provenance; diagnostics; the published reproductions and seed sweep; the corpus, hold-out and field rows |
+| `data/derived/benchmark.json` | `fragmenta.benchmark/v3` | release | the three protocols with draws, spreads, pooled scores on two row sets and site-resampled intervals; every arm's score on the rows every size-predicting arm answers (`common`); per-site errors; the verdict; arm provenance; diagnostics; the published reproductions, the seed sweep and the width sweep of the network; the corpus, hold-out and field rows |
 | `data/derived/models/<scope>.json` | `fragmenta.models/v1` (arms in `blastfrag.portable/v1`) | training scope (11) | the fitted learned arms, exported, and fixtures of the original models' predictions at the 116 shipped blasts |
 | `data/derived/manifests/<case>.json` | | case | the case's lane measurement and budgets |
 | `data/derived/manifests/index.json` | | release | every case, the benchmark and every models file, each with its path, byte size and digest; the app and engine versions; the corpus digest |
