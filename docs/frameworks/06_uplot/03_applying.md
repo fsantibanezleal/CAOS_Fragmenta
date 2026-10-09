@@ -9,4 +9,4 @@ For a dense scientific curve in another product:
 - **Put the readout below the plot**, bound to uPlot's cursor hook, not in a floating tooltip.
 - **Declare what was drawn** with `data-chart-*` attributes, and have the browser test read them.
 - **Use a categorical layout for categories.** A line chart joins its points as if they were a
-  sequence; the What if tab's design variants are drawn as labelled rows instead, for that reason.
+  sequence; the case's design variants (Compare the variants) are drawn as labelled rows instead, for that reason.

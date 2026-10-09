@@ -2,6 +2,188 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.07.000] - 2026-10-05
+
+The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.10.0
+exactly, on the template 0.03.001, measured by the base's own gate. The What if tab becomes the Design group, whose first view is a
+response surface over burden and spacing. The engine is still `blastfrag==0.4.0`. The re-bake changed none
+of the 423,793 numbers in the 45 artifacts: only their version stamps, the 88 digests over them, and 25
+Spanish strings that take the decimal comma (five case reasons, and the expected band of ten real campaigns,
+in each case and in its manifest). (#14)
+
+### Added
+
+- The response surface (Design group): the selected model's P80, or mean size x50, on a 41 by 41 grid of
+  burden-to-diameter (17.98 to 39.47) and spacing-to-burden (1.0 to 1.75) ratios, the corpus envelope,
+  with the other ratios and the hole diameter held at the design in the rail. Iso-lines at the crusher's
+  target P80 and the oversize limit (for x50, at the measured size of the blast as fired), traced by
+  marching squares. A cell that is not a blast, or whose prediction leaves 0.001 to 3 m, is hatched and
+  gives its reason on hover. The design is a marker that moves by pointer or by the arrow keys, and the
+  Distribution group's curves and percentiles follow it. Every cell is the same function as the
+  every-model view, so a learned model's surface walks the models fitted without the case's campaign.
+  The P80 of a cell takes Cunningham's uniformity index of its pattern, a declared choice for the
+  learned models, which predict a mean size and no curve.
+- The base's measured gate: `npm run gate` runs `caos-shell-gate` on the build at five sizes (390x844 to
+  2560x1440), both themes and both languages, and again at 390 and 1280 px in a wider font. On this
+  release it measured 890 states and failed none; the smallest share of the viewport drawn was 0.578
+  (the floor is 0.5) and the smallest stage fill 0.46 (the floor is 0.3).
+- The product gate measures every drawn view of the App as it measures the documentation figures (no
+  label outside its drawing, none on another), and runs the App again at 390 and 768 px in both
+  languages: no table cut, no text cut without a title, no label fault.
+- The template's guards, verbatim, in CI: the web baseline (defined tokens, styled classes, numbers
+  through the shell's formatter, no shell component restyled, judged by each rule's subject, no
+  animation loop outside the shell's paused loop, the shell pinned exactly), the version guard (VERSION
+  the one source; it reads code, not the release history in comments and page prose), and the
+  deploy-place guard (one deploy place, GitHub Pages).
+- Tests that the shell is pinned to one exact version, that every remaining override names an open
+  shell defect, and that VERSION is read by the pipeline, the dormant API and the build, and stamped on
+  every committed artifact.
+
+### Changed
+
+- The App is one workbench of six slots named by the question a reader asks: Predict, Distribution
+  (the curves, and "Against a target", which was the Decide tab), Design (the response surface, every
+  model on the design, which was the What if tab, and the bench), Rock, Compare the variants, and The
+  case. The rail holds the case picker, the case's design variants ("Burden -15%"), the model and the
+  blast, and only the controls of the open group: a control is shown with the views it moves.
+- A group or sub-tab is offered only where it has something to draw. A case without an absolute
+  geometry or a rock factor has no Distribution group; "Against a target" needs the selected model's
+  size on the blast as fired. A design study, which has no measurement to score against, draws every
+  model's prediction design by design; the degenerate control draws why every model refuses.
+- Rock is one view: the two rating schemes' factors drawn beside their tables.
+- The documentation pages carry at most six sub-tabs (the shell reports more as an error): the rock
+  factor joins the classical mean size, geometry joins the data and the gate, the two live lanes share
+  one, the metrics join the questions they answer, and the published hold-outs and the network become
+  "Published reproductions". Nothing was cut.
+- Every number is written in the interface language: in Spanish with the decimal comma, 0,311 where the
+  pages printed 0.311, and an absent value as the shell writes it. The Spanish guard now fails a
+  decimal point in Spanish text, reads every Spanish field of the committed artifacts (a string the bake
+  composes is read as it ships), and no longer excuses a number that ends a sentence.
+- The drawn views fit their labels in the font the page renders: a label is measured, broken over two
+  lines where it is too long for its column, and shortened with an ellipsis only after that, with its
+  whole text as a title. The axes of the model and variant views tick at round values and name their
+  quantity. A chart with more series than the palette has colours draws the repeats dashed, in the plot
+  and in its key, and a distribution with several curves says which is which before the pointer asks.
+- "Against a target" sets the decision beside the curve where the view is wide, so the curve keeps the
+  view's height; on a phone the curve and the decision scroll inside the view.
+- The shell is pinned to 0.10.0 exactly (it was `^0.6.0`; the release was first built on 0.7.2), with
+  its peer `zustand` declared, and its chart stylesheet imported; `.template-version` records the
+  template 0.03.001; the architecture
+  drawings are inline, and the shell's configuration states the licence, the visibility and the build.
+- The views of a row sit in the shell's `ViewsRow` (the Design row split three to two), and the drawn
+  views fit their labels and pick their ticks with the shell's text kit (`textWidth`, `fitLabel`,
+  `niceTicks`); the product's own copies are gone (see Removed).
+- The choice of what the response map shows (P80 or x50) sits in the rail's Model section with the
+  surface open, beside the model it maps, instead of among the charge's knobs.
+- The parity plot (predicted against measured: the Predict view, the Benchmark, the Experiments and the
+  full-screen page) is the shell's `UPlotChart` in its parity form: ticks on both axes in centimetres, a
+  grid, the null model as a labelled reference line, the selected blast as a larger point with its own
+  key, and the blast under the pointer found in the plane, named with its error and site. It was a
+  canvas of the product's own, with two labels on one axis ("0" and "45cm") and none on the other.
+  On the documentation pages, where a click selects nothing, the hint no longer offers it.
+- The bench's animation runs on the shell's paused loop: paused when the view opens, halted on a hidden
+  tab, started by its button.
+- The size axis of a distribution labels its decades only, in mm, cm or m.
+
+### Fixed
+
+- The size axis printed "0mm" at every tick it does not label: uPlot passes null there, and each null
+  was formatted.
+- The dormant API announced 0.04.006, and its FastAPI application 0.01.000; it now reads VERSION.
+- Spanish: the parity plot's hover, a rock card and the column of moduli were in English or printed raw.
+- Spanish: the expected band of every real campaign ("media, 0.23 a 0.38 m medidos") kept the English
+  decimal point, because the bake composes it from the English numbers and the guard read only the
+  strings written in the registry; so did one case reason ("recuperado, 3.68.") and five sentences of the
+  pages that end on a number, which the guard's pattern excused.
+- The label of the in-situ block on the distribution chart ended where it was meant to start: uPlot
+  leaves the canvas right-aligned after its y axis, so it sat a label's width left of its line, and the
+  percentile labels ran into the axis. Labels on the canvas are now left-aligned, take a row of their
+  own when two would touch, and carry a halo where a line crosses them.
+- Spanish: the formulas of the documentation drawings, the published and found values of the defects
+  table on the Implementation page, and one value in scientific notation ("2.7e-08") kept the decimal
+  point; the kill criterion, quoted from the benchmark in English, is marked as English text. A short
+  release reference ("0.05") read as a decimal number; every one is written in full ("0.05.000").
+- The rows of the arms chart and the axis title of the refusal chart were cut in a wider font; they
+  are fitted to their drawing, with the whole text as a title.
+- A clipped bar was drawn translucent, so its value label failed the text contrast on it (WCAG AA).
+
+### Removed
+
+- The six-tab workbench and the What if tab (`pages/Tool.tsx`, `pages/WhatIf.tsx`).
+- The overrides for shell defects 1, 4 and 14, which the pinned shell carries; the dormant VPS unit and
+  nginx site of the old layout.
+- The view columns (`.fr-viewcol`, the override for shell defect 23) and the product's text kit
+  (`src/viz/text.ts` and its test), which the shell carries since 0.8.0 and 0.9.0.
+- The canvas parity chart, its own picking and its layout rules (`.fr-chart-fillbox`), which the
+  shell's parity form carries since 0.10.0.
+
+### Known limits
+
+- No shell override remains.
+- The abstention reasons written at bake time are in English on the Spanish interface.
+
+## [0.06.000] - 2026-10-05
+
+Baked on `blastfrag==0.4.0`, which adds three things to the benchmark: the classical arm capped at
+the in-situ block, every arm's score on the rows every size-predicting arm answers, and a sweep of the
+published network's hidden width. Benchmark schema `fragmenta.benchmark/v3`. This is the first release
+whose design document came before its code (ADR-0075); the document covers everything earlier
+retroactively, and says so. (#14)
+
+### Added
+
+- `kuznetsov-capped`, the classical mean size capped at the in-situ block, `min(x50, XB)`, as its own
+  arm. Its provenance says the cap is a declared choice, not a published relation, and which arm it
+  caps. It binds on three corpus blasts (Rc1 to Rc3, where the classical prediction exceeds the
+  0.68 m block) and moves the classical arm from 0.311 to 0.352 held out by site. It runs live on the
+  Distribution tab, which draws the block on the curve, and in What if, and it appears in the
+  Benchmark, Methodology and Experiments pages and in the wiki.
+- Common support: on every protocol, each arm's score on the rows every size-predicting arm answers
+  (79 blasts from nine sites held out by site), beside its own score. It is reported and never
+  decides the verdict, because those rows are selected by the arms' own refusals.
+- The network width sweep: hidden widths 6 to 15 on the source's protocol, which picks 8 and 11
+  where the paper reports 9 and 7, and every width held out by site, where every one scores below
+  zero. On the Benchmark's "The published network" sub-tab and in the network's method page.
+- The software design document (`docs/design/SDD.md`) and its feature folders, each requirement in
+  EARS form naming the test or gate that holds it; `scripts/check_sdd.py` checks that every named
+  gate exists, in CI.
+- Non-circularity tests: no synthetic design carries a measured size or a score, none enters the
+  benchmark, the designs depend on no arm, and the positive control is circular by design and says so.
+- Two Spanish guards a word list cannot provide: the verb "está" where a participle, a gerund or a
+  preposition follows, and the pronoun "él" before punctuation.
+- Three browser-gate checks: one unit per size column, no empty band above the rail's last control,
+  and the width sweep drawn on its sub-tab. The first two were run against the live 0.05.001 first,
+  where both fail.
+- Generated fact blocks for the bake's output (counts and sizes) and the site's payload, in place of
+  typed sizes that had gone stale.
+
+### Changed
+
+- Every fragment size is stated in centimetres to one decimal. The unit was picked by magnitude,
+  which put "22 mm" above "11.0 cm" in the model comparison's RMSE column, and millimetres beside
+  centimetres in a readout whenever its sizes straddled 10 cm.
+- The rail's reading pane no longer grows to fill the rail. It pushed the full-screen link to the
+  bottom of the screen under an empty band, up to 243 px at 1600x900 on the live site.
+- The bake pins BLAS to one thread before numpy loads. A multi-threaded BLAS spun on the network's
+  small matrices (one width-15 fit took more than six minutes on a loaded workstation against about
+  two seconds on one thread). The full bake took 745 s, against about 18 minutes before, and the pin
+  changed no number.
+
+### Fixed
+
+- The cross-environment bake comparison could not pass since 0.05.000: each case carries the digest
+  of its models file, a hash that moves with the last bit of any number in the file, and
+  `scripts/compare_bakes.py` compared it as a string. Re-measured on Ubuntu 24.04 under WSL2 against
+  the Windows bake, every case failed with every number within tolerance. The tool now compares the
+  numbers that digest covers, the case's and its models file's, and keeps comparing the corpus digest
+  exactly. Every case and its models file reproduces: the worst difference is 2.745e-08 in a case and
+  7.0e-07 in a models file, on a near-zero network weight. The re-bake test had the same blind spot
+  and could pass only on the machine that baked.
+- Spanish: "está" without its accent in three case reasons ("5.6 GPa está bajo el mínimo", "el
+  producto está inventando números", "la instalación está rota"), and "sobre él" on the Distribution
+  tab.
+- The manifest module still declared the retired benchmark schema v1; the constant is gone.
+
 ## [0.05.001] - 2026-10-05
 
 0.05.000 was tagged and never published: the deploy's browser gate, on the Linux runner, failed it on

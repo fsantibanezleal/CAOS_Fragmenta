@@ -12,11 +12,12 @@ import { useMemo, useState } from 'react';
 import { SECTION_REFS } from '../data/citations';
 import { fittedArms, predictModel } from '../engine/learned';
 import { ARM_BY_ID, formatSize, IN_SAMPLE_ARMS } from '../lib/artifacts';
-import type { BenchmarkArtifact, Lang, ReproductionBlock } from '../lib/contract.types';
+import type { BenchmarkArtifact, GroupedArmBlock, Lang, ReproductionBlock } from '../lib/contract.types';
 import { f, facts, iv, useBenchmark, useModels } from '../lib/facts';
 import { LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import { SupportsDiagram } from '../viz/Diagrams';
 import { DrawHistogram, IntervalChart, type IntervalRow, type MarkKind } from '../viz/Evidence';
+import { notAvailable, num } from '../lib/format';
 
 interface TabProps {
   es: boolean;
@@ -30,6 +31,7 @@ const label = (arm: string, lang: Lang) => ARM_BY_ID.get(arm)?.label[lang] ?? ar
 const ORDER = [
   'kuznetsov',
   'kuznetsov-transfer',
+  'kuznetsov-capped',
   'published-regression',
   'refitted-regression',
   'published-neural-net',
@@ -55,7 +57,7 @@ function verdictText(b: BenchmarkArtifact, lang: Lang): string {
   const parts: string[] = [];
   if (v.depends_on_support) {
     parts.push(
-      `EL VEREDICTO DEPENDE DE QUÉ FILAS SE PUNTÚAN. Sobre los ${all.n_blasts} tiros, el mejor brazo aprendido con cada sitio excluido, ${name(all.best_learned_arm)}, explica ${f(all.best_learned_r2_identity)} y el nivel aprendido ${all.generalises_across_sites ? 'cumple' : 'no cumple'} el criterio. Sobre los ${geo.n_blasts} tiros con geometría resoluble, las filas donde también se puntúan los brazos clásicos, ${name(geo.best_learned_arm)} explica ${f(geo.best_learned_r2_identity)}, ${f(geo.margin_over_null)} sobre el nulo, y el nivel ${geo.generalises_across_sites ? 'lo cumple' : 'no lo cumple'}. Los tiros que separan los dos conjuntos son de ${v.sites_outside_geometry_support.join(', ')}.`,
+      `EL VEREDICTO DEPENDE DE QUÉ FILAS SE PUNTÚAN. Sobre los ${all.n_blasts} tiros, el mejor brazo aprendido con cada sitio excluido, ${name(all.best_learned_arm)}, explica ${f(all.best_learned_r2_identity)} y el nivel aprendido ${all.generalises_across_sites ? 'cumple' : 'no cumple'} el criterio. Sobre los ${geo.n_blasts} tiros con geometría resoluble, las filas donde también se puntúan los brazos clásicos, ${name(geo.best_learned_arm)} explica ${f(geo.best_learned_r2_identity)} (${f(geo.margin_over_null)} sobre el nulo) y el nivel ${geo.generalises_across_sites ? 'lo cumple' : 'no lo cumple'}. Los tiros que separan los dos conjuntos son de ${v.sites_outside_geometry_support.join(', ')}.`,
     );
   } else if (all.generalises_across_sites) {
     parts.push(`El nivel aprendido generaliza entre sitios: ${name(all.best_learned_arm)} explica ${f(all.best_learned_r2_identity)} de la varianza y supera a un predictor constante por ${f(all.margin_over_null)}.`);
@@ -80,14 +82,24 @@ export default function Benchmark() {
   const tabs: SubTabDef[] = [
     { id: 'verdict', label: es ? 'El veredicto' : 'The verdict', content: <Verdict {...props} /> },
     { id: 'arms', label: es ? 'Cada brazo' : 'Every arm', content: <Arms {...props} /> },
-    { id: 'published', label: es ? 'Validaciones publicadas' : 'Published hold-outs', content: <Published {...props} /> },
-    { id: 'network', label: es ? 'Semillas de la red' : 'Network seeds', content: <Seeds {...props} /> },
+    // Six peers at most (ADR-0071 rule 5): both are reproductions of published figures, as in
+    // docs/results/05_published-reproductions.md.
+    {
+      id: 'published',
+      label: es ? 'Reproducciones publicadas' : 'Published reproductions',
+      content: (
+        <>
+          <Published {...props} />
+          <Seeds {...props} />
+        </>
+      ),
+    },
     { id: 'robustness', label: es ? 'Robustez' : 'Robustness', content: <Robustness {...props} /> },
     { id: 'live', label: es ? 'Comprobación en vivo' : 'Live check', content: <LiveCheck {...props} /> },
     { id: 'provenance', label: es ? 'Procedencia y salvedades' : 'Provenance and caveats', content: <Provenance {...props} /> },
   ];
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>Benchmark</h1>
         <p className="lede">
@@ -114,8 +126,8 @@ function Verdict({ es, lang, b }: TabProps) {
       </Callout>
       <p>
         {es
-          ? 'El criterio se escribió antes de la primera corrida como un margen sobre el nulo y nada más. Esa corrida dio un mejor brazo aprendido de -0.034 frente a un nulo de -0.216, y la regla de solo margen declaró que el nivel aprendido generaliza para un brazo peor que una constante; entonces se agregó la mitad de positividad. La frase no ha cambiado desde entonces y una prueba del motor fija su resumen. Pide que el mejor brazo aprendido, con cada sitio excluido, explique una varianza positiva y al menos 0.10 más que el nulo. Desde 0.05 se evalúa sobre dos conjuntos de filas, porque los brazos clásicos no pueden responder en Miami y compararlos con los aprendidos sobre denominadores distintos fue lo que fijó el veredicto anterior.'
-          : 'The criterion was first written, before the first run, as a margin over the null alone. That run produced a best learned arm at -0.034 against a null at -0.216, and the margin-only rule declared that the learned tier generalises, for an arm that does worse than a constant; the positivity half was added then. The sentence has not changed since, and an engine test pins its digest. It asks that the best learned arm, with each site held out, explain a positive variance and at least 0.10 more than the null. Since 0.05 it is evaluated on two row sets, because the classical arms cannot answer at Miami, and comparing them with the learned arms over different denominators is what set the previous verdict.'}{' '}
+          ? 'El criterio se escribió antes de la primera corrida como un margen sobre el nulo y nada más. Esa corrida dio un mejor brazo aprendido de -0,034 frente a un nulo de -0,216, y la regla de solo margen declaró que el nivel aprendido generaliza para un brazo peor que una constante; entonces se agregó la mitad de positividad. La frase no ha cambiado desde entonces y una prueba del motor fija su resumen. Pide que el mejor brazo aprendido, con cada sitio excluido, explique una varianza positiva y al menos 0,10 más que el nulo. Desde la versión 0.05.000 se evalúa sobre dos conjuntos de filas, porque los brazos clásicos no pueden responder en Miami y compararlos con los aprendidos sobre denominadores distintos fue lo que fijó el veredicto anterior.'
+          : 'The criterion was first written, before the first run, as a margin over the null alone. That run produced a best learned arm at -0.034 against a null at -0.216, and the margin-only rule declared that the learned tier generalises, for an arm that does worse than a constant; the positivity half was added then. The sentence has not changed since, and an engine test pins its digest. It asks that the best learned arm, with each site held out, explain a positive variance and at least 0.10 more than the null. Since 0.05.000 it is evaluated on two row sets, because the classical arms cannot answer at Miami, and comparing them with the learned arms over different denominators is what set the previous verdict.'}{' '}
         <Cite id="roberts2017" />
       </p>
       <SupportsDiagram
@@ -214,6 +226,9 @@ function Arms({ es, lang, b }: TabProps) {
               <th>{es ? 'sitio excluido, todos' : 'site held out, all'}</th>
               <th>{es ? 'abst.' : 'abst.'}</th>
               <th>{es ? 'con geometría' : 'with geometry'}</th>
+              <th title={es ? 'las filas que respondió todo brazo que predice un tamaño' : 'the rows every size-predicting arm answered'}>
+                {es ? 'filas comunes' : 'common rows'}
+              </th>
               <th>RMSE</th>
               <th>{es ? 'ajustado con' : 'fitted on'}</th>
             </tr>
@@ -232,6 +247,9 @@ function Arms({ es, lang, b }: TabProps) {
                   </td>
                   <td>{g?.n_abstained || ''}</td>
                   <td>{f(g?.supports.geometry.score.r2_identity)}</td>
+                  <td>
+                    {f(g?.common?.score.r2_identity)} <span className="fr-fine">{iv(g?.common?.interval_95, 2, es)}</span>
+                  </td>
                   <td>{formatSize(g?.rmse_m)}</td>
                   <td className="fr-fine">
                     {p?.in_sample_corpus
@@ -253,12 +271,103 @@ function Arms({ es, lang, b }: TabProps) {
           ? 'La regresión publicada se ajustó sobre estos 97 tiros, así que su columna con el sitio excluido es un ajuste dentro de la muestra y no transferencia. El brazo clásico de factor del sitio usa información del propio sitio; el de transferencia no, y puntúa casi lo mismo. Los brazos con abstenciones se puntúan sobre menos filas, por eso la columna con geometría compara a todos sobre las mismas.'
           : 'The published regression was fitted on these 97 blasts, so its site-held-out column is an in-sample fit and not transfer. The site-factor classical arm uses information about the site itself; the transfer arm does not, and scores almost the same. Arms with abstentions are scored on fewer rows, which is why the with-geometry column compares them all on the same ones.'}
       </Callout>
+      <CommonRowsNote es={es} b={b} />
       {refs('b-protocols', es)}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------------------------------- */
+
+/** The published network's hidden width: the source's own selection, reproduced, and every width held out by site. */
+function WidthSweep({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
+  const ws = b.network_width_sweep;
+  const held = ws.leave_one_site_out.filter((row) => !row.published);
+  const pub = ws.leave_one_site_out.find((row) => row.published);
+  const nullScore = (b.protocols['leave-one-site-out'].arms.null as GroupedArmBlock).r2_identity;
+  const series: SeriesSpec[] = [
+    { id: 'all', label: es ? 'cada tiro' : 'every blast', values: held.map((row) => row.supports.all.r2_identity) },
+    { id: 'geometry', label: es ? 'con geometría' : 'with geometry', values: held.map((row) => row.supports.geometry.r2_identity) },
+    {
+      id: 'published',
+      label: es ? `par publicado (${ws.published_widths['1']} y ${ws.published_widths['2']})` : `published pair (${ws.published_widths['1']} and ${ws.published_widths['2']})`,
+      values: held.map(() => pub?.supports.all.r2_identity ?? null),
+      dashed: true,
+    },
+    {
+      id: 'null',
+      label: es ? 'nulo: la media de entrenamiento' : 'null: the training mean',
+      values: held.map(() => nullScore),
+      dashed: true,
+    },
+  ];
+  const groups: [string, string][] = [
+    ['1', es ? '1, módulo alto' : '1, high modulus'],
+    ['2', es ? '2, módulo bajo' : '2, low modulus'],
+  ];
+  return (
+    <div data-width-sweep={held.length}>
+      <h3>{es ? 'El ancho de la capa oculta' : 'The width of the hidden layer'}</h3>
+      <p>
+        {es
+          ? `La fuente barrió de ${ws.widths[0]} a ${ws.widths[ws.widths.length - 1]} unidades ocultas, ${ws.n_simulations} simulaciones cada una, y eligió el ancho de cada grupo sobre su propio conjunto de validación. El mismo procedimiento, reproducido, no cae en los anchos publicados; y con el sitio excluido ningún ancho explica varianza alguna ni supera al nulo, que predice la media de entrenamiento.`
+          : `The source swept ${ws.widths[0]} to ${ws.widths[ws.widths.length - 1]} hidden units, ${ws.n_simulations} simulations each, and chose each group's width on its own hold-out. The same procedure, reproduced, does not land on the published widths; and held out by site no width explains any variance or does better than the null, which predicts the training mean.`}
+      </p>
+      <LineChart
+        x={held.map((row) => row.hidden['1'])}
+        series={series}
+        xLabel={es ? 'unidades ocultas, igual en ambos grupos' : 'hidden units, the same in both groups'}
+        yLabel={es ? 'varianza explicada, sitio excluido' : 'variance explained, site held out'}
+        height={240}
+        legend
+        zeroLine
+        xTicks={held.map((row) => row.hidden['1'])}
+        xTickFormat={(v) => String(Math.round(v))}
+        valueFormat={(v) => f(v)}
+      />
+      <table className="fr-table">
+        <thead>
+          <tr>
+            <th>{es ? 'grupo' : 'group'}</th>
+            <th>{es ? 'publicado' : 'published'}</th>
+            <th>{es ? 'reproducido' : 'reproduced'}</th>
+            <th>{es ? 'RMSE en el reproducido, cm' : 'RMSE at the reproduced width, cm'}</th>
+            <th>{es ? 'RMSE en el publicado, cm' : 'RMSE at the published width, cm'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map(([g, name]) => {
+            const e = ws.published_protocol[g];
+            const atPublished = e.table.find((row) => row.hidden === e.published_optimum)?.rmse ?? null;
+            return (
+              <tr key={g}>
+                <td>{name}</td>
+                <td>{e.published_optimum}</td>
+                <td>{e.best_hidden}</td>
+                <td>{num(e.best_rmse * 100, 1)}</td>
+                <td>{atPublished === null ? notAvailable() : num(atPublished * 100, 1)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/** The common rows: what they are, how many, and why the criterion never reads them. */
+function CommonRowsNote({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
+  const common = b.protocols['leave-one-site-out'].arms.null as GroupedArmBlock;
+  const n = common.common.n_rows;
+  const sites = common.common.n_sites;
+  return (
+    <Callout variant="note" title={es ? 'Las filas comunes' : 'The common rows'}>
+      {es
+        ? `Aun con geometría, cada brazo descarta sus propias abstenciones, así que dos brazos de esta tabla se puntúan sobre filas distintas cuando uno rehúsa una predicción fuera del rango plausible. La columna de filas comunes puntúa a todos sobre las filas que respondió todo brazo que predice un tamaño: con el sitio excluido, ${n} tiros de ${sites} sitios. Esas filas las eligen los propios rechazos de los brazos, y un brazo rehúsa donde extrapola, así que las filas que quedan fuera son las difíciles y todo puntaje sube en ellas. Por eso el criterio se evalúa solo sobre los dos conjuntos declarados antes de la corrida, nunca sobre estas.`
+        : `Even with geometry, each arm drops its own abstentions, so two arms in this table are scored on different rows when one refuses a prediction outside the plausible range. The common-rows column scores every arm on the rows every size-predicting arm answered: held out by site, ${n} blasts from ${sites} sites. Those rows are chosen by the arms' own refusals, and an arm refuses where it extrapolates, so the rows left out are the hard ones and every score rises on them. That is why the criterion is evaluated only on the two row sets declared before the run, never on these.`}
+    </Callout>
+  );
+}
 
 function Published({ es, b }: TabProps) {
   const arms = b.published_reproduction.published_holdout_arms;
@@ -276,8 +385,8 @@ function Published({ es, b }: TabProps) {
       <h2>{es ? 'Las validaciones publicadas' : 'The published hold-outs'}</h2>
       <p>
         {es
-          ? `El artículo de 2012 imprime, en una misma tabla y sobre las mismas doce filas, las predicciones de tres modelos. Puntuadas aquí con un nulo al lado, la ecuación clásica es la peor de las tres y mejora en ${gain === null ? 'n/a' : Math.round(gain * 100)} por ciento el error de predecir una constante. Esas doce filas son de los mismos sitios que el entrenamiento, así que esta es la validación que reporta la literatura y no una prueba de transferencia.`
-          : `The 2012 paper prints, in one table and on the same twelve rows, the predictions of three models. Scored here with a null beside them, the classical equation is the worst of the three and improves on the error of predicting a constant by ${gain === null ? 'n/a' : Math.round(gain * 100)} percent. Those twelve rows come from the same sites as the training rows, so this is the validation the literature reports and not a transfer test.`}{' '}
+          ? `El artículo de 2012 imprime, en una misma tabla y sobre las mismas doce filas, las predicciones de tres modelos. Puntuadas aquí con un nulo al lado, la ecuación clásica es la peor de las tres y mejora en ${gain === null ? notAvailable() : Math.round(gain * 100)} por ciento el error de predecir una constante. Esas doce filas son de los mismos sitios que el entrenamiento, así que esta es la validación que reporta la literatura y no una prueba de transferencia.`
+          : `The 2012 paper prints, in one table and on the same twelve rows, the predictions of three models. Scored here with a null beside them, the classical equation is the worst of the three and improves on the error of predicting a constant by ${gain === null ? notAvailable() : Math.round(gain * 100)} percent. Those twelve rows come from the same sites as the training rows, so this is the validation the literature reports and not a transfer test.`}{' '}
         <Cite id="kulatilake2012" />
       </p>
       <table className="fr-table">
@@ -297,7 +406,7 @@ function Published({ es, b }: TabProps) {
               <td className={(arms[key]?.r2_identity ?? 0) > 0 ? 'fr-ok' : 'fr-bad'}>{f(arms[key]?.r2_identity)}</td>
               <td>{f(arms[key]?.pearson_r2)}</td>
               <td>{formatSize(arms[key]?.rmse_m)}</td>
-              <td>{arms[key]?.mape_pct === null || arms[key]?.mape_pct === undefined ? 'n/a' : `${arms[key]?.mape_pct?.toFixed(1)}%`}</td>
+              <td>{arms[key]?.mape_pct === null || arms[key]?.mape_pct === undefined ? notAvailable() : `${num(arms[key]?.mape_pct, 1)}%`}</td>
             </tr>
           ))}
         </tbody>
@@ -403,7 +512,7 @@ function Seeds({ es, lang, b }: TabProps) {
                 <td>{formatSize(row.measured_m)}</td>
                 <td>{formatSize(row.published_m)}</td>
                 <td>
-                  {row.min_m === null ? 'n/a' : `${formatSize(row.min_m)} ${lang === 'es' ? 'a' : 'to'} ${formatSize(row.max_m)}`}
+                  {row.min_m === null ? notAvailable() : `${formatSize(row.min_m)} ${lang === 'es' ? 'a' : 'to'} ${formatSize(row.max_m)}`}
                   {outside ? <span className="fr-badge fr-badge-warn">{es ? 'fuera del rango' : 'outside the range'}</span> : null}
                 </td>
               </tr>
@@ -416,6 +525,7 @@ function Seeds({ es, lang, b }: TabProps) {
           ? 'No se afirma que el resultado publicado sea falso. Lo que el barrido establece es que no es robusto a la semilla; las filas marcadas, donde lo publicado queda fuera de todo lo que alcanzó la reproducción, son las que la propia fuente reporta como sus más inestables.'
           : 'It is not claimed that the published result is wrong. What the sweep establishes is that it is not robust to the seed; the marked rows, where the published value falls outside everything the reproduction reached, are the rows the source itself reports as its most unstable.'}
       </Callout>
+      <WidthSweep es={es} b={b} />
       {refs('b-network', es)}
     </section>
   );
@@ -468,7 +578,7 @@ function Robustness({ es, lang, b }: TabProps) {
       ) : null}
       <p>
         {es
-          ? `Para el ensamble apilado la mediana es ${f(F.random('stacking')?.r2_identity)} y el percentil 95, ${f(F.random('stacking')?.repeats.p95)}; el 0.943 publicado queda por encima de ${Math.round((b.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} de cada 100 sorteos. Para el brazo clásico, los sorteos van de ${f(F.random('kuznetsov')?.repeats.p05, 2)} a ${f(F.random('kuznetsov')?.repeats.p95, 2)} entre los percentiles 5 y 95: un único sorteo puede caer a cualquier lado de cero, y la semilla 0 cayó bajo cero.`
+          ? `Para el ensamble apilado la mediana es ${f(F.random('stacking')?.r2_identity)} y el percentil 95, ${f(F.random('stacking')?.repeats.p95)}; el 0,943 publicado queda por encima de ${Math.round((b.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} de cada 100 sorteos. Para el brazo clásico, los sorteos van de ${f(F.random('kuznetsov')?.repeats.p05, 2)} a ${f(F.random('kuznetsov')?.repeats.p95, 2)} entre los percentiles 5 y 95: un único sorteo puede caer a cualquier lado de cero, y la semilla 0 cayó bajo cero.`
           : `For the stacked ensemble the median is ${f(F.random('stacking')?.r2_identity)} and the 95th percentile ${f(F.random('stacking')?.repeats.p95)}; the published 0.943 lies above ${Math.round((b.verdict.published_random_split_figures.stacking?.share_of_draws_below ?? 0) * 100)} of 100 draws. For the classical arm, the draws run from ${f(F.random('kuznetsov')?.repeats.p05, 2)} to ${f(F.random('kuznetsov')?.repeats.p95, 2)} between the 5th and 95th percentiles: a single draw can land on either side of zero, and seed 0 landed below it.`}
       </p>
       {refs('b-protocols', es)}

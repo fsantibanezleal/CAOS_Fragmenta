@@ -2,7 +2,7 @@
 
 # Protocol sensitivity
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.07.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 Median gap between the random draws and the site hold-out, over the learned arms: 0.984 (median of 100 random 80/20 draws minus the pooled leave-one-site-out score over every blast).
 
@@ -16,6 +16,7 @@ Median gap between the random draws and the site hold-out, over the learned arms
 | stacking ensemble | 0.703 | -0.004 | 0.738 |
 | classical mean size, site factor | 0.303 | +0.008 | -0.009 |
 | classical mean size, transfer factor | 0.312 | +0.018 | 0.014 |
+| classical mean size, capped at the in-situ block (declared) | 0.399 | -0.039 | 0.047 |
 | published regression | 0.805 | +0.032 | 0.003 |
 | refitted regression | 0.686 | +0.029 | 4.760 |
 

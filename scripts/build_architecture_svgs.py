@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the five architecture-modal drawings from the committed artifacts.
 
-    python scripts/build_architecture_svgs.py          write frontend/public/svg/tech/*.svg
+    python scripts/build_architecture_svgs.py          write frontend/src/architecture/*.svg
     python scripts/build_architecture_svgs.py --check  fail if a committed drawing is out of date
 
 It also writes ``docs/assets/arch-*.svg``: the English layout with FIXED colours, because a markdown
@@ -32,7 +32,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DERIVED = ROOT / "data" / "derived"
-OUT = ROOT / "frontend" / "public" / "svg" / "tech"
+OUT = ROOT / "frontend" / "src" / "architecture"
 DOCS_ASSETS = ROOT / "docs" / "assets"
 
 # The light palette of the shared shell, for drawings that cannot read the theme.
@@ -286,14 +286,14 @@ def tab2(F: dict, es: bool) -> tuple[str, float]:
 def tab3(F: dict, es: bool) -> tuple[str, float]:
     t = picker(es)
     app = column(22, 300, 64, 10, [
-        (t("App: one selected case", "App: un caso seleccionado"), [t("a rail with the case and the arm selectors, and six tabs grouped by the question", "un riel con los selectores de caso y brazo, y seis pestañas agrupadas por la pregunta")], "accent"),
-        (t("The six tabs", "Las seis pestañas"), [t("Predict, Distribution, Bench, Rock, What if, Decide", "Predecir, Distribución, Banco, Roca, Qué pasa si, Decidir")]),
-        (t("What if", "Qué pasa si"), [t("every arm, learned ones included, recomputes live on your design from the case's own fitted models", "todo brazo, aprendidos incluidos, se recalcula en vivo sobre su diseño con los modelos ajustados del caso")], "good"),
+        (t("App: the shell's case workbench", "App: el banco de trabajo del shell"), [t("the case, its variants, the model and the open group's controls in the rail", "el caso, sus variantes, el modelo y los controles del grupo abierto en el panel")], "accent"),
+        (t("Six slots, by question", "Seis espacios, por pregunta"), [t("Predict, Distribution, Design, Rock, Compare the variants, The case", "Predecir, Distribución, Diseño, Roca, Comparar las variantes, El caso")]),
+        (t("Design", "Diseño"), [t("the response surface over burden and spacing and every model on the design, live from the case's own fitted models", "la superficie de respuesta sobre bordo y espaciamiento y cada modelo sobre el diseño, en vivo con los modelos ajustados del caso")], "good"),
     ])
     docs = column(352, 260, 64, 10, [
         (t("Introduction", "Introducción"), [t("why fragmentation matters, the relations, the question, the scope", "por qué importa, las relaciones, la pregunta, el alcance")]),
-        (t("Methodology, 7 sections", "Metodología, 7 secciones"), [t("every predictor term by term, protocols and metrics", "cada predictor término a término, protocolos y métricas")]),
-        (t("Implementation, 8 sections", "Implementación, 8 secciones"), [t("data, geometry, bake, leakage, live lanes, deploy", "datos, geometría, horneado, fuga, carriles vivos, despliegue")]),
+        (t("Methodology, 6 sections", "Metodología, 6 secciones"), [t("every predictor term by term, protocols and metrics", "cada predictor término a término, protocolos y métricas")]),
+        (t("Implementation, 6 sections", "Implementación, 6 secciones"), [t("data, geometry, bake, leakage, live lanes, deploy", "datos, geometría, horneado, fuga, carriles vivos, despliegue")]),
         (t("Experiments and Benchmark", "Experimentos y Benchmark"), [t("the only routes that summarise across cases", "las únicas rutas que resumen entre casos")], "warn"),
     ])
     focus = column(642, 236, 64, 10, [
@@ -322,7 +322,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
         (t("Checked: 15 of 15", "Comprobado: 15 de 15"), [t("dimensional constraints the same prose states, at nine sites", "restricciones dimensionales que declara la misma prosa, en nueve sitios")], "good"),
     ])
     b = column(312, 270, 64, 10, [
-        (t("A rock factor nobody printed", "Un factor de roca que nadie imprimió"), [t("recovered by inverting the equation on the published predictions; within-site spread 0.6 to 3.7 percent", "recuperado invirtiendo la ecuación sobre las predicciones publicadas; dispersión dentro del sitio 0.6 a 3.7 por ciento")], "accent"),
+        (t("A rock factor nobody printed", "Un factor de roca que nadie imprimió"), [t("recovered by inverting the equation on the published predictions; within-site spread 0.6 to 3.7 percent", "recuperado invirtiendo la ecuación sobre las predicciones publicadas; dispersión dentro del sitio 0,6 a 3,7 por ciento")], "accent"),
         (t("A transfer line", "Una recta de transferencia"), [t(f"the factor predicted from Young's modulus over training sites only: {F['transfer_site']:.3f} held out by site, against {F['kuz_site']:.3f} with the site's own factor", f"el factor predicho desde el módulo solo con los sitios de entrenamiento: {F['transfer_site']:.3f} con el sitio excluido, frente a {F['kuz_site']:.3f} con el factor propio")], "good"),
     ])
     c = column(602, 276, 64, 10, [
@@ -342,7 +342,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
 def tab5(F: dict, es: bool) -> tuple[str, float]:
     t = picker(es)
     c1 = column(22, 270, 64, 10, [
-        (t("Contract 1, what gets in", "Contrato 1, qué entra"), [t("REJECT outside the contract range (E in 0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)", "RECHAZA fuera del rango (E de 0.5 a 150 GPa, Pf de 0.05 a 3 kg/m3)"), t("FLAG and stamp outside the envelope; never clip", "MARCA y sella fuera de la envolvente; nunca recorta")], "warn"),
+        (t("Contract 1, what gets in", "Contrato 1, qué entra"), [t("REJECT outside the contract range (E in 0.5 to 150 GPa, Pf in 0.05 to 3 kg/m3)", "RECHAZA fuera del rango (E de 0,5 a 150 GPa, Pf de 0,05 a 3 kg/m3)"), t("FLAG and stamp outside the envelope; never clip", "MARCA y sella fuera de la envolvente; nunca recorta")], "warn"),
         (t("Integrity gate", "Compuerta de integridad"), [t("reproduce the paper's own summary table, plus a pinned digest; it found five transcription errors", "reproduce la tabla resumen del artículo, más un resumen fijado; encontró cinco errores de transcripción")], "good"),
     ])
     c2 = column(312, 270, 64, 10, [
@@ -356,7 +356,7 @@ def tab5(F: dict, es: bool) -> tuple[str, float]:
     arrows = [arrow(c1[0].bottom(), c1[1].top()), arrow(c1[1].right(), c2[0].left()), arrow(c2[0].bottom(), c2[1].top()), arrow(c2[0].right(), gate[0].left()), arrow(gate[0].bottom(), gate[1].top())]
     notes = [t(
         "The integrity gate exists because the corpus as first assembled disagreed with the published tables in five cells, two on the measured size; the tell was a powder-factor maximum of 1.47 against the 1.26 the paper prints.",
-        "La compuerta de integridad existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas, dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1.47 frente al 1.26 que imprime el artículo.",
+        "La compuerta de integridad existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas, dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1,47 frente al 1,26 que imprime el artículo.",
     )]
     return layout(t("The two contracts and the gates between them", "Los dos contratos y las compuertas entre ellos"), [c1, c2, gate], arrows, notes)
 

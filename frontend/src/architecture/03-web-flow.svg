@@ -21,28 +21,28 @@
 <g class="l-en">
 <text class="ttl" x="22" y="28">Six routes and one view outside the chrome</text>
 <rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="66.0" rx="6"/>
-<text class="hd" x="32.0" y="85.0">App: one selected case</text>
-<text class="mu" x="32.0" y="104.0">a rail with the case and the arm selectors,</text>
-<text class="mu" x="32.0" y="118.0">and six tabs grouped by the question</text>
+<text class="hd" x="32.0" y="85.0">App: the shell&#x27;s case workbench</text>
+<text class="mu" x="32.0" y="104.0">the case, its variants, the model and the</text>
+<text class="mu" x="32.0" y="118.0">open group&#x27;s controls in the rail</text>
 <rect class="bx" x="22.0" y="140.0" width="300.0" height="66.0" rx="6"/>
-<text class="hd" x="32.0" y="161.0">The six tabs</text>
-<text class="mu" x="32.0" y="180.0">Predict, Distribution, Bench, Rock, What if,</text>
-<text class="mu" x="32.0" y="194.0">Decide</text>
+<text class="hd" x="32.0" y="161.0">Six slots, by question</text>
+<text class="mu" x="32.0" y="180.0">Predict, Distribution, Design, Rock, Compare</text>
+<text class="mu" x="32.0" y="194.0">the variants, The case</text>
 <rect class="bx bx-good" x="22.0" y="216.0" width="300.0" height="80.0" rx="6"/>
-<text class="hd" x="32.0" y="237.0">What if</text>
-<text class="mu" x="32.0" y="256.0">every arm, learned ones included, recomputes</text>
-<text class="mu" x="32.0" y="270.0">live on your design from the case&#x27;s own</text>
-<text class="mu" x="32.0" y="284.0">fitted models</text>
+<text class="hd" x="32.0" y="237.0">Design</text>
+<text class="mu" x="32.0" y="256.0">the response surface over burden and spacing</text>
+<text class="mu" x="32.0" y="270.0">and every model on the design, live from the</text>
+<text class="mu" x="32.0" y="284.0">case&#x27;s own fitted models</text>
 <rect class="bx" x="352.0" y="64.0" width="260.0" height="66.0" rx="6"/>
 <text class="hd" x="362.0" y="85.0">Introduction</text>
 <text class="mu" x="362.0" y="104.0">why fragmentation matters, the</text>
 <text class="mu" x="362.0" y="118.0">relations, the question, the scope</text>
 <rect class="bx" x="352.0" y="140.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="161.0">Methodology, 7 sections</text>
+<text class="hd" x="362.0" y="161.0">Methodology, 6 sections</text>
 <text class="mu" x="362.0" y="180.0">every predictor term by term,</text>
 <text class="mu" x="362.0" y="194.0">protocols and metrics</text>
 <rect class="bx" x="352.0" y="216.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="237.0">Implementation, 8 sections</text>
+<text class="hd" x="362.0" y="237.0">Implementation, 6 sections</text>
 <text class="mu" x="362.0" y="256.0">data, geometry, bake, leakage, live</text>
 <text class="mu" x="362.0" y="270.0">lanes, deploy</text>
 <rect class="bx bx-warn" x="352.0" y="292.0" width="260.0" height="66.0" rx="6"/>
@@ -68,28 +68,28 @@
 <g class="l-es">
 <text class="ttl" x="22" y="28">Seis rutas y una vista fuera del marco</text>
 <rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="66.0" rx="6"/>
-<text class="hd" x="32.0" y="85.0">App: un caso seleccionado</text>
-<text class="mu" x="32.0" y="104.0">un riel con los selectores de caso y brazo, y</text>
-<text class="mu" x="32.0" y="118.0">seis pestañas agrupadas por la pregunta</text>
+<text class="hd" x="32.0" y="85.0">App: el banco de trabajo del shell</text>
+<text class="mu" x="32.0" y="104.0">el caso, sus variantes, el modelo y los</text>
+<text class="mu" x="32.0" y="118.0">controles del grupo abierto en el panel</text>
 <rect class="bx" x="22.0" y="140.0" width="300.0" height="66.0" rx="6"/>
-<text class="hd" x="32.0" y="161.0">Las seis pestañas</text>
-<text class="mu" x="32.0" y="180.0">Predecir, Distribución, Banco, Roca, Qué pasa</text>
-<text class="mu" x="32.0" y="194.0">si, Decidir</text>
+<text class="hd" x="32.0" y="161.0">Seis espacios, por pregunta</text>
+<text class="mu" x="32.0" y="180.0">Predecir, Distribución, Diseño, Roca,</text>
+<text class="mu" x="32.0" y="194.0">Comparar las variantes, El caso</text>
 <rect class="bx bx-good" x="22.0" y="216.0" width="300.0" height="80.0" rx="6"/>
-<text class="hd" x="32.0" y="237.0">Qué pasa si</text>
-<text class="mu" x="32.0" y="256.0">todo brazo, aprendidos incluidos, se</text>
-<text class="mu" x="32.0" y="270.0">recalcula en vivo sobre su diseño con los</text>
-<text class="mu" x="32.0" y="284.0">modelos ajustados del caso</text>
+<text class="hd" x="32.0" y="237.0">Diseño</text>
+<text class="mu" x="32.0" y="256.0">la superficie de respuesta sobre bordo y</text>
+<text class="mu" x="32.0" y="270.0">espaciamiento y cada modelo sobre el diseño,</text>
+<text class="mu" x="32.0" y="284.0">en vivo con los modelos ajustados del caso</text>
 <rect class="bx" x="352.0" y="64.0" width="260.0" height="66.0" rx="6"/>
 <text class="hd" x="362.0" y="85.0">Introducción</text>
 <text class="mu" x="362.0" y="104.0">por qué importa, las relaciones, la</text>
 <text class="mu" x="362.0" y="118.0">pregunta, el alcance</text>
 <rect class="bx" x="352.0" y="140.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="161.0">Metodología, 7 secciones</text>
+<text class="hd" x="362.0" y="161.0">Metodología, 6 secciones</text>
 <text class="mu" x="362.0" y="180.0">cada predictor término a término,</text>
 <text class="mu" x="362.0" y="194.0">protocolos y métricas</text>
 <rect class="bx" x="352.0" y="216.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="237.0">Implementación, 8 secciones</text>
+<text class="hd" x="362.0" y="237.0">Implementación, 6 secciones</text>
 <text class="mu" x="362.0" y="256.0">datos, geometría, horneado, fuga,</text>
 <text class="mu" x="362.0" y="270.0">carriles vivos, despliegue</text>
 <rect class="bx bx-warn" x="352.0" y="292.0" width="260.0" height="66.0" rx="6"/>

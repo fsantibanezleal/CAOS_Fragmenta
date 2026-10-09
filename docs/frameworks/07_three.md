@@ -1,6 +1,7 @@
 # 07 · three.js
 
-The WebGL library behind the App's Bench tab (`frontend/src/viz/BenchView3D.tsx`), version 0.171.
+The WebGL library behind the bench view of the App's Design group (`frontend/src/viz/BenchView3D.tsx`),
+version 0.171.
 
 | | |
 |---|---|

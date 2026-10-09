@@ -622,14 +622,14 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "fine, 0.14 to 0.22 m measured",
-   "es": "fina, 0.14 a 0.22 m medidos"
+   "es": "fina, 0,14 a 0,22 m medidos"
   },
   "id": "real-akdaglar",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
   "reason": {
    "en": "The largest site in the corpus, 22 of the 97 blasts, which is why rows here are not independent draws and why the benchmark holds out whole sites. Sandstone at 16.9 GPa with the highest powder factors in the set.",
-   "es": "El sitio m\u00e1s grande del conjunto, 22 de los 97 tiros, raz\u00f3n por la cual las filas no son muestras independientes y el benchmark excluye sitios completos. Arenisca de 16.9 GPa con los mayores factores de carga del conjunto."
+   "es": "El sitio m\u00e1s grande del conjunto, 22 de los 97 tiros, raz\u00f3n por la cual las filas no son muestras independientes y el benchmark excluye sitios completos. Arenisca de 16,9 GPa con los mayores factores de carga del conjunto."
   },
   "site": "Akdaglar",
   "title": {
@@ -638,7 +638,7 @@
   }
  },
  "controls": {},
- "digest": "fa074793a3f36e4c777484954a7b2aa572e27c8a3918073c1634d0d556766616",
+ "digest": "a026642439108e1e4d0db9ce10493408f244b547b82b87cbd42627dbbf4afe91",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2153,7 +2153,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "3996cf7e7d671bc3411ed9eebd53bf42fe544b6432e3c067210eb37531da899e",
+  "digest": "38e75677a41247ba67c6f243073e06f646e4479304c448a1d715af12870dd6df",
   "path": "models/Akdaglar.json",
   "scope": "Akdaglar"
  },
@@ -2760,6 +2760,206 @@
    }
   },
   "kuznetsov": {
+   "Ad1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.216297
+   },
+   "Ad10": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.157987
+   },
+   "Ad11": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.170732
+   },
+   "Ad12": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.170732
+   },
+   "Ad13": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.207489
+   },
+   "Ad14": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.193924
+   },
+   "Ad15": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.12772
+   },
+   "Ad16": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.143011
+   },
+   "Ad17": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.104847
+   },
+   "Ad18": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.102312
+   },
+   "Ad19": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.102312
+   },
+   "Ad2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.202213
+   },
+   "Ad20": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.113963
+   },
+   "Ad21": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.10799
+   },
+   "Ad22": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.13248
+   },
+   "Ad3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.191371
+   },
+   "Ad4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.236882
+   },
+   "Ad5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.171173
+   },
+   "Ad6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.171794
+   },
+   "Ad7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.159318
+   },
+   "Ad8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.162921
+   },
+   "Ad9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.157987
+   }
+  },
+  "kuznetsov-capped": {
    "Ad1": {
     "abstained": false,
     "cv": null,
@@ -4761,11 +4961,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Akdaglar",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Akdaglar",
@@ -4874,6 +5074,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": -0.011570230496091138,
+   "mae_m": 0.04668042502646524,
+   "mape_pct": 27.120522650409814,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 22,
+   "pearson_r2": 0.10799888258325298,
+   "r2_identity": -3.44109169717737,
+   "r2_identity_interval": [
+    -6.8909606691858345,
+    -1.9322655515192169
+   ],
+   "r2_identity_point": -3.44109169717737,
+   "rmse_m": 0.05388159295984419,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Ad21",
+     "error_m": -0.1120095131738289,
+     "error_pct": -50.913415079013134,
+     "measured_m": 0.22,
+     "predicted_m": 0.1079904868261711,
+     "site": "Akdaglar"
+    },
+    {
+     "blast_id": "Ad17",
+     "error_m": -0.0851526241836252,
+     "error_pct": -44.81717062296063,
+     "measured_m": 0.19,
+     "predicted_m": 0.10484737581637481,
+     "site": "Akdaglar"
+    },
+    {
+     "blast_id": "Ad4",
+     "error_m": 0.07688167596694323,
+     "error_pct": 48.051047479339516,
+     "measured_m": 0.16,
+     "predicted_m": 0.23688167596694323,
+     "site": "Akdaglar"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": -0.011570230496091138,
    "mae_m": 0.04668042502646524,
    "mape_pct": 27.120522650409814,
@@ -5379,6 +5622,16 @@
    "stemming-long": 0.15933886041299977
   },
   "kuznetsov": {
+   "base": 0.15933886041299977,
+   "blocky": 0.15933886041299977,
+   "burden-tight": 0.14690317073520373,
+   "burden-wide": 0.17087189149585266,
+   "powder-down": 0.19118313255904607,
+   "powder-up": 0.1349452442271097,
+   "spacing-wide": 0.16425499340300245,
+   "stemming-long": 0.15933886041299977
+  },
+  "kuznetsov-capped": {
    "base": 0.15933886041299977,
    "blocky": 0.15933886041299977,
    "burden-tight": 0.14690317073520373,

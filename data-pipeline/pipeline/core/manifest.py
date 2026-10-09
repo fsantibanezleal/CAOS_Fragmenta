@@ -18,6 +18,5 @@ from __future__ import annotations
 MANIFEST_SCHEMA = "fragmenta.manifest/v1"
 INDEX_SCHEMA = "fragmenta.index/v1"
 ARTIFACT_SCHEMA = "fragmenta.case/v1"
-BENCHMARK_SCHEMA = "fragmenta.benchmark/v1"
 
-__all__ = ["MANIFEST_SCHEMA", "INDEX_SCHEMA", "ARTIFACT_SCHEMA", "BENCHMARK_SCHEMA"]
+__all__ = ["MANIFEST_SCHEMA", "INDEX_SCHEMA", "ARTIFACT_SCHEMA"]

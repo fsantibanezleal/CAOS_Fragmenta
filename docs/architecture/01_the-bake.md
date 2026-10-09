@@ -46,8 +46,18 @@ deduplicated draws, the ten-fold leave-one-site-out with intervals from 2000 sit
 verdict on both row sets, the per-site errors, the arm provenance and the diagnostics. It adds the
 published reproductions (the 2010 and 2012 hold-outs, the row in both sets), the 30-seed sweep of the
 published network, the per-site metadata, and the corpus, hold-out and field rows the Benchmark page
-re-scores in the browser. The result is `benchmark.json` (`fragmenta.benchmark/v2`). Most of the
-bake's time goes here, mostly to the network's Levenberg-Marquardt training.
+re-scores in the browser. Schema v3 (0.06.000) adds three things the engine's 0.4.0 computes: the
+classical arm capped at the in-situ block as its own arm, every arm's score on the rows every
+size-predicting arm answers (reported beside its own score, never deciding the verdict), and the
+network's hidden width swept from 6 to 15 on the source's protocol and held out by site. The result is
+`benchmark.json` (`fragmenta.benchmark/v3`). Most of the bake's time goes here, mostly to the
+network's Levenberg-Marquardt training.
+
+`run.py` pins the BLAS libraries to one thread before numpy loads (`OPENBLAS_NUM_THREADS`,
+`OMP_NUM_THREADS`, `MKL_NUM_THREADS`). The network's matrices are small, and a multi-threaded BLAS
+spun on them: one fit at width 15 took more than six minutes on a loaded workstation against about two
+seconds on one thread. The pin changed no number, and a test holds it. The full bake of 0.06.000 took
+745 s on the development workstation (2026-10-05).
 
 ## 4. Determinism, and the two claims it supports
 
@@ -74,7 +84,23 @@ At version 0.04 this was measured by baking all sixteen cases on Windows and on 
 numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1): the worst relative difference was 2.7e-08, on
 `real-reocin-ug`; typical cases differed in 30 to 100 fields at around 1e-09; and `ctrl-degenerate`,
 where every arm abstains, was byte-identical, which is the control on the explanation (a case with no
-arithmetic does not drift). **That cross-platform measurement has not been repeated for 0.05.000.**
+arithmetic does not drift).
+
+At version 0.06.000 it was measured again, Windows 11 (Python 3.13.14) against Ubuntu 24.04 under WSL2
+(Python 3.13.16), with the same pins and BLAS on one thread: every case and its models file reproduces.
+The worst difference in a case is 2.7e-08, on `real-reocin-ug` again; typical cases differ in 30 to 110
+fields; `ctrl-degenerate` has no number that differs. The models files, compared for the first time,
+differ in about 1,400 to 1,600 fields each, the worst at 7.0e-07 on a network weight of magnitude
+2.8e-4 that moved by 2.0e-10: a relative difference inflates near zero, so a near-zero weight is where
+the tolerance is closest.
+
+The same run found that the comparison could not pass across environments at all since 0.05.000. Each
+case carries the digest of its training scope's models file, a hash that moves with the last bit of any
+number in that file, and the tool compared it as a string; every case failed with every number within
+tolerance. Nothing noticed, because the cross-environment run had not been repeated since 0.04. The tool
+now skips the two digests computed over numbers and compares the numbers they cover, the case's and its
+models file's; the corpus digest, a hash of the input, is still compared exactly, and a test holds that
+split.
 
 ```bash
 python scripts/compare_bakes.py                           # every case against the committed artifacts
@@ -107,11 +133,15 @@ file. The full list is in [data/04](../data/04_data-contract.md). One failure fa
 
 ## 7. What the bake produces
 
+Measured on the committed files by `scripts/build_docs_results.py`, so the table moves with the bake:
+
+<!-- facts:bake-output -->
 | | Count | Size |
 |---|---|---|
-| case artifacts | 16 | about 1.0 MB in all |
+| case artifacts | 16 | about 1.1 MB in all |
 | manifests | 16 plus the index | small |
-| benchmark | 1 | about 229 kB |
-| models files | 11 | about 2.7 MB in all, about 240 kB each |
+| benchmark | 1 | about 368 kB |
+| models files | 11 | about 2.7 MB in all, about 245 kB each |
 
-The cases carry 1976 prediction cells, 294 of them abstentions, each with its reason.
+The cases carry 2128 prediction cells, 311 of them abstentions, each with its reason.
+<!-- /facts -->

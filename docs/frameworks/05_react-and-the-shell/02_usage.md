@@ -4,9 +4,9 @@
 
 | Route | Page | Inside the shell |
 |---|---|---|
-| `/`, `/app` | `pages/Tool.tsx`: the workbench for one case (six tabs: Predict, Distribution, Bench, Rock, What if, Decide) | yes |
+| `/`, `/app` | `workbench/Workbench.tsx`: one shell `CaseWorkbench` for the selected case (Predict, Distribution, Design, Rock, Compare the variants, The case) | yes |
 | `/introduction` | `pages/Introduction.tsx` | yes |
-| `/methodology` | `pages/Methodology.tsx` (seven vertical sub-tabs) | yes |
+| `/methodology` | `pages/Methodology.tsx` (six vertical sub-tabs) | yes |
 | `/implementation` | `pages/Implementation.tsx` (eight) | yes |
 | `/experiments` | `pages/Experiments.tsx` (seven) | yes |
 | `/benchmark` | `pages/Benchmark.tsx` (seven) | yes |

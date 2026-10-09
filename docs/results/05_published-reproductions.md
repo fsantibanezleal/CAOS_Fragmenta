@@ -2,7 +2,7 @@
 
 # Published reproductions
 
-Benchmark baked with engine `blastfrag` 0.03.000 and application 0.05.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.07.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 ## The 2012 hold-out, three published models and a null
 
@@ -46,3 +46,28 @@ Variance explained on the 2012 hold-out: minimum 0.167, median 0.340, maximum 0.
 | Rc1 | 0.46 | 0.43 | 0.460 to 0.461 |
 | Ru7 | 0.64 | 0.63 | 0.412 to 0.935 |
 | Sm8 | 0.18 | 0.19 | 0.190 to 0.190 |
+
+## The network's hidden width
+
+The source swept 6 to 15 hidden units, 8 simulations each, and chose 9 for the high-modulus group and 7 for the low on its hold-out. The same procedure, reproduced on the 2012 hold-out:
+
+| group | published | reproduced | RMSE at the reproduced width, m | RMSE at the published width, m |
+|---|---|---|---|---|
+| 1, high modulus | 9 | 8 | 0.037 | 0.102 |
+| 2, low modulus | 7 | 11 | 0.106 | 0.133 |
+
+Every width held out by site, the same width in both groups, pooled over the ten folds:
+
+| hidden width | every blast | blasts with geometry |
+|---|---|---|
+| 9 and 7, the published pair | -0.626 | -0.604 |
+| 6 | -0.605 | -0.630 |
+| 7 | -0.653 | -0.635 |
+| 8 | -0.626 | -0.562 |
+| 9 | -0.586 | -0.604 |
+| 10 | -0.902 | -0.955 |
+| 11 | -0.568 | -0.681 |
+| 12 | -1.027 | -1.169 |
+| 13 | -0.717 | -0.747 |
+| 14 | -1.257 | -1.296 |
+| 15 | -1.486 | -1.603 |

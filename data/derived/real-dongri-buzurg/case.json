@@ -258,14 +258,14 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "medium, 0.23 to 0.76 m measured",
-   "es": "media, 0.23 a 0.76 m medidos"
+   "es": "media, 0,23 a 0,76 m medidos"
   },
   "id": "real-dongri-buzurg",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
   "reason": {
    "en": "The weakest rock in the corpus at 9.57 GPa, and the lowest recovered rock factor at 3.68. It is also where the classical model fails hardest: on the hold-out blast from this site it predicts 0.08 m against 0.35 m measured.",
-   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9.57 GPa, y el menor factor de roca recuperado, 3.68. Tambi\u00e9n es donde el modelo cl\u00e1sico falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0.08 m frente a 0.35 m medidos."
+   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3,68. Tambi\u00e9n es donde el modelo cl\u00e1sico falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0,08 m frente a 0,35 m medidos."
   },
   "site": "Dongri-Buzurg",
   "title": {
@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "f75922f319c981c7bd5e03f5df7a31938a9ef827997863ea60627013b03d386e",
+ "digest": "c0f2f72052e5a050a2c07242de22c137ae6dcb4d5988ade4f98541c04517ee5f",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1815,7 +1815,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "09c64df8a43735c3223998fa12c9cb9dcee7f62c2f45e9f5b8708e95626803ef",
+  "digest": "4cbcd9931e330ab1c448af176e27afbeaf8e74968d5c35d5b09077c26816a0c8",
   "path": "models/Dongri-Buzurg.json",
   "scope": "Dongri-Buzurg"
  },
@@ -2071,6 +2071,89 @@
    }
   },
   "kuznetsov": {
+   "Db1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.088756
+   },
+   "Db2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.097049
+   },
+   "Db3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.097527
+   },
+   "Db4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.116688
+   },
+   "Db5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.146922
+   },
+   "Db6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.154412
+   },
+   "Db7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.129797
+   },
+   "Db8": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.169808
+   },
+   "Db9": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.171374
+   }
+  },
+  "kuznetsov-capped": {
    "Db1": {
     "abstained": false,
     "cv": null,
@@ -2902,11 +2985,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Dongri-Buzurg",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Dongri-Buzurg",
@@ -3015,6 +3098,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": -0.2830742792479648,
+   "mae_m": 0.2830742792479648,
+   "mape_pct": 63.200505813887794,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 9,
+   "pearson_r2": 0.39403781517310554,
+   "r2_identity": -3.889751207048648,
+   "r2_identity_interval": [
+    -19.876659056197152,
+    -2.27666670603835
+   ],
+   "r2_identity_point": -3.889751207048648,
+   "rmse_m": 0.33013197565249214,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Db2",
+     "error_m": -0.6629513746375802,
+     "error_pct": -87.23044403126056,
+     "measured_m": 0.76,
+     "predicted_m": 0.09704862536241973,
+     "site": "Dongri-Buzurg"
+    },
+    {
+     "blast_id": "Db4",
+     "error_m": -0.43331150915845595,
+     "error_pct": -78.7839107560829,
+     "measured_m": 0.55,
+     "predicted_m": 0.11668849084154408,
+     "site": "Dongri-Buzurg"
+    },
+    {
+     "blast_id": "Db1",
+     "error_m": -0.3512442196156491,
+     "error_pct": -79.82823173082934,
+     "measured_m": 0.44,
+     "predicted_m": 0.08875578038435088,
+     "site": "Dongri-Buzurg"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": -0.2830742792479648,
    "mae_m": 0.2830742792479648,
    "mape_pct": 63.200505813887794,
@@ -3520,6 +3646,16 @@
    "stemming-long": 0.13025905408536856
   },
   "kuznetsov": {
+   "base": 0.13025905408536856,
+   "blocky": 0.13025905408536856,
+   "burden-tight": 0.12009291401049738,
+   "burden-wide": 0.13968727338915746,
+   "powder-down": 0.1562916537727868,
+   "powder-up": 0.11031734393468931,
+   "spacing-wide": 0.13427797847942913,
+   "stemming-long": 0.13025905408536856
+  },
+  "kuznetsov-capped": {
    "base": 0.13025905408536856,
    "blocky": 0.13025905408536856,
    "burden-tight": 0.12009291401049738,

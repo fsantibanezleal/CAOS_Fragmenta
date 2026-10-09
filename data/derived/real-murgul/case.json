@@ -202,7 +202,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "medium, 0.23 to 0.38 m measured",
-   "es": "media, 0.23 a 0.38 m medidos"
+   "es": "media, 0,23 a 0,38 m medidos"
   },
   "id": "real-murgul",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "a620e738401e21d847f70e01d84b57db6c3ed6866c7246f7c36871596e1482bb",
+ "digest": "29870e915ce6a3970225ca1bc8ab78f8a32397c14b59014dba2ee3d2ac5a33c0",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1759,7 +1759,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "d64738f6abbe491b5abf340da206b0933ee31ad50cc184281e92eb27f268571a",
+  "digest": "bc3dbd713617d7a184ff997d612e36cc146cf4de512c6150c11b7d02cae75cfb",
   "path": "models/Murgul.json",
   "scope": "Murgul"
  },
@@ -1961,6 +1961,71 @@
    }
   },
   "kuznetsov": {
+   "Mg1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.302302
+   },
+   "Mg2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.302302
+   },
+   "Mg3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.356807
+   },
+   "Mg4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.356807
+   },
+   "Mg5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.387089
+   },
+   "Mg6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.387089
+   },
+   "Mg7": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.387089
+   }
+  },
+  "kuznetsov-capped": {
    "Mg1": {
     "abstained": false,
     "cv": null,
@@ -2612,11 +2677,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Murgul",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Murgul",
@@ -2725,6 +2790,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": 0.042783755688258686,
+   "mae_m": 0.042783755688258686,
+   "mape_pct": 15.970420677659266,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 7,
+   "pearson_r2": 0.8670719769056442,
+   "r2_identity": 0.2378867519967034,
+   "r2_identity_interval": [
+    -1.942243516835211,
+    0.65578502782375
+   ],
+   "r2_identity_point": 0.2378867519967034,
+   "rmse_m": 0.052260549437777096,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Mg3",
+     "error_m": 0.08680691653957451,
+     "error_pct": 32.15070982947204,
+     "measured_m": 0.27,
+     "predicted_m": 0.3568069165395745,
+     "site": "Murgul"
+    },
+    {
+     "blast_id": "Mg1",
+     "error_m": 0.07230218374361855,
+     "error_pct": 31.435732062442845,
+     "measured_m": 0.23,
+     "predicted_m": 0.30230218374361856,
+     "site": "Murgul"
+    },
+    {
+     "blast_id": "Mg4",
+     "error_m": 0.05680691653957454,
+     "error_pct": 18.935638846524846,
+     "measured_m": 0.3,
+     "predicted_m": 0.3568069165395745,
+     "site": "Murgul"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": 0.042783755688258686,
    "mae_m": 0.042783755688258686,
    "mape_pct": 15.970420677659266,
@@ -3225,6 +3333,16 @@
    "stemming-long": 0.3542123271168301
   },
   "kuznetsov": {
+   "base": 0.3542123271168301,
+   "blocky": 0.3542123271168301,
+   "burden-tight": 0.3265676297174787,
+   "burden-wide": 0.3798504029006002,
+   "powder-down": 0.4250025518803083,
+   "powder-up": 0.2999850059623859,
+   "spacing-wide": 0.3651409537073,
+   "stemming-long": 0.3542123271168301
+  },
+  "kuznetsov-capped": {
    "base": 0.3542123271168301,
    "blocky": 0.3542123271168301,
    "burden-tight": 0.3265676297174787,

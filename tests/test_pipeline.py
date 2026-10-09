@@ -175,6 +175,71 @@ def test_the_positive_control_recovers_its_own_truth_exactly(artifacts):
     assert control["passed"] is True
 
 
+# ---------------------------------------------------------------------------------------------
+# The synthetic cases are not circular (docs/design/features/non-circularity/)
+# ---------------------------------------------------------------------------------------------
+
+SYNTHETIC_DESIGNS = ("synth-sweep-burden", "synth-sweep-powder", "synth-ibsd-capped", "ctrl-degenerate")
+
+
+def test_no_synthetic_design_carries_a_measured_size_or_a_score(artifacts):
+    for case_id in SYNTHETIC_DESIGNS:
+        payload = artifacts[case_id]
+        assert payload["case"]["real_or_synthetic"] == "synthetic", case_id
+        assert all(b["x50_measured_m"] is None for b in payload["blasts"]), case_id
+        assert not any(score["scoreable"] for score in payload["scores"].values()), case_id
+
+
+def test_no_synthetic_blast_enters_the_benchmark(benchmark):
+    corpus_ids = {b.blast_id for b in bf.load_training_corpus()}
+    assert {row["blast_id"] for row in benchmark["corpus_rows"]} == corpus_ids
+    held_out = benchmark["protocols"]["leave-one-site-out"]["arms"]
+    assert all(set(arm["predictions"]) <= corpus_ids for arm in held_out.values())
+
+
+def test_the_synthetic_designs_do_not_depend_on_any_arm(monkeypatch):
+    """Rebuild every synthetic design with every arm's prediction disabled: none may need one."""
+    from pipeline.model.blasts import synthetic_sweep
+
+    def snapshot():
+        return {
+            case_id: [(b.blast_id, b.features(), b.x50_m) for b in synthetic_sweep(get_case(case_id))]
+            for case_id in SYNTHETIC_DESIGNS
+        }
+
+    before = snapshot()
+
+    def refuse(*_args, **_kwargs):
+        raise AssertionError("a synthetic design asked an arm for a prediction")
+
+    def subclasses(cls):
+        for sub in cls.__subclasses__():
+            yield sub
+            yield from subclasses(sub)
+
+    import blastfrag.learned  # noqa: F401  (registers the learned arms as subclasses)
+
+    for arm_class in [bf.Arm, *subclasses(bf.Arm)]:
+        monkeypatch.setattr(arm_class, "predict_one", refuse, raising=False)
+        monkeypatch.setattr(arm_class, "predict", refuse, raising=False)
+    assert snapshot() == before
+    assert all(x50 is None for rows in before.values() for _id, _features, x50 in rows)
+
+
+def test_the_positive_control_is_circular_by_design_and_says_so(artifacts):
+    from pipeline.model.blasts import oracle_truth
+
+    truth = oracle_truth()
+    assert len(truth) == 8
+    regression = bf.PublishedRegression()
+    assert all(b.x50_m == regression.predict_one(b).x50_m and b.meta["oracle"] for b in truth)
+    case = get_case("ctrl-oracle")
+    assert case.category == "positive-control"
+    assert "tests the harness rather than the science" in case.reason_en
+    assert "Prueba el andamiaje, no la ciencia" in case.reason_es
+    assert artifacts["ctrl-oracle"]["controls"]["positive_control"]["passed"] is True
+
+
 def test_the_extrapolation_control_stamps_every_prediction(artifacts):
     control = artifacts["real-granite-ne"]["controls"]["extrapolation_control"]
     assert control["n_predictions"] > 20
@@ -439,6 +504,68 @@ def test_the_verdict_reports_that_it_depends_on_the_row_set(benchmark):
     assert "published-regression" not in dict(verdict["arms_with_positive_variance_explained_across_sites"])
 
 
+# ---------------------------------------------------------------------------------------------
+# Schema v3, the engine's 0.4.0 (docs/design/features/benchmark-0-4/)
+# ---------------------------------------------------------------------------------------------
+
+def test_the_capped_arm_is_benchmarked_with_its_declared_provenance(benchmark):
+    provenance = benchmark["provenance"]["kuznetsov-capped"]
+    assert provenance["declared_not_published"] is True and provenance["caps"] == "kuznetsov"
+    assert provenance["uses_site_constant"] is True
+    assert all("kuznetsov-capped" in p["arms"] for p in benchmark["protocols"].values())
+    held_out = benchmark["protocols"]["leave-one-site-out"]["arms"]
+    capped, classical = held_out["kuznetsov-capped"], held_out["kuznetsov"]
+    moved = sorted(b for b, v in capped["predictions"].items() if v != classical["predictions"][b])
+    assert moved == ["Rc1", "Rc2", "Rc3"]
+    assert capped["r2_identity"] > classical["r2_identity"]
+
+
+def test_every_arm_carries_its_common_support_score(benchmark):
+    n = benchmark["n_repeats"]
+    for name, protocol in benchmark["protocols"].items():
+        for arm, block in protocol["arms"].items():
+            common = block["common"]
+            assert "group-discriminant" not in common["arms"] and "kuznetsov" in common["arms"], (name, arm)
+            if protocol["repeated"]:
+                assert len(common["draws_r2_identity"]) == n and common["n_rows"]["n"] == n, (name, arm)
+            else:
+                assert common["n_rows"] == 79 and common["n_sites"] == 9, arm
+    # Reported beside the declared row sets, never deciding the verdict.
+    assert set(benchmark["verdict"]["supports"]) == {"all", "geometry"}
+
+
+def test_the_width_sweep_is_baked_beside_the_published_widths(benchmark):
+    sweep = benchmark["network_width_sweep"]
+    assert sweep["widths"] == list(range(6, 16)) and sweep["n_simulations"] == 8
+    assert sweep["published_widths"] == {"1": 9, "2": 7}
+    for group, entry in sweep["published_protocol"].items():
+        assert entry["published_optimum"] == {"1": 9, "2": 7}[group]
+        assert entry["best_hidden"] in sweep["widths"] and len(entry["table"]) == 10
+    rows = sweep["leave_one_site_out"]
+    published = [row for row in rows if row["published"]]
+    assert len(rows) == 11 and len(published) == 1 and published[0]["hidden"] == {"1": 9, "2": 7}
+    # The published pair is the network as the benchmark runs it, so the two agree.
+    network = benchmark["protocols"]["leave-one-site-out"]["arms"]["published-neural-net"]
+    assert published[0]["supports"]["all"]["r2_identity"] == pytest.approx(network["r2_identity"], abs=1e-9)
+
+
+def test_the_bake_pins_blas_to_one_thread():
+    """Set in run.py before numpy is imported, and in effect: the prefix alone leaves numpy on one thread."""
+    import os
+    import subprocess
+
+    source = (ROOT / "data-pipeline" / "run.py").read_text(encoding="utf-8")
+    prefix = source.split("\nimport argparse")[0]
+    probe = prefix + (
+        "\nimport numpy, threadpoolctl"
+        "\nprint(max(p['num_threads'] for p in threadpoolctl.threadpool_info()))\n"
+    )
+    pinned = {"OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"}
+    env = {k: v for k, v in os.environ.items() if k not in pinned}
+    out = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True, env=env, check=True)
+    assert out.stdout.strip() == "1", out.stdout + out.stderr
+
+
 def test_the_transfer_rung_is_benchmarked_and_reported_per_case(benchmark, artifacts):
     transfer = benchmark["protocols"]["leave-one-site-out"]["arms"]["kuznetsov-transfer"]
     assert transfer["r2_identity"] > 0.25
@@ -583,29 +710,31 @@ def test_rebaking_reproduces_the_committed_numbers_to_tolerance(artifacts, tmp_p
 
     A content address is a discrete answer to a continuous question. Two builds of the same pinned
     numpy reduce a dot product in a different order and the last bits differ. Measured between
-    Windows and Linux runners on identical pins, over all sixteen cases: the worst difference is
-    2.7e-08 relative, most of it on the fitted arms, and the one case where every arm abstains comes
-    out byte-identical.
+    Windows and Linux on identical pins, over all sixteen cases: the worst difference is 2.7e-08
+    relative at 0.04 and 2.745e-08 at 0.06.000, most of it on the fitted arms, and the one case
+    where every arm abstains has no number that differs.
 
     Asserting equal hashes here would therefore assert something false. Asserting nothing would let
     a changed model through. The tolerance sits between the two, five orders below the percent-scale
     move a different model would make and two orders above the measured floating-point noise.
 
+    The comparison is the tool's: the case's numbers and its models file's, with the two digests
+    computed over those numbers skipped. Until 0.06.000 this test compared the case's pointer to its
+    models file as a string, digest included, so it could pass only on the machine that baked.
+
     Written to a sandbox, for the same reason as the test above.
     """
-    from compare_bakes import RELATIVE_TOLERANCE, compare
+    from compare_bakes import RELATIVE_TOLERANCE, compare_bake
     from pipeline.pipeline import bake_case
 
     case = get_case("real-murgul")
     bake_case(case, seed=0, root=tmp_path)
-    baked = json.loads((tmp_path / "real-murgul" / "case.json").read_text(encoding="utf-8"))
+    assert artifacts["real-murgul"]["live_models"]["path"] == "models/Murgul.json"
 
-    committed = dict(artifacts["real-murgul"])
-    baked.pop("digest", None)
-    committed.pop("digest", None)
-
-    problems, numeric = compare(baked, committed)
+    problems, numeric, model_problems, model_numeric = compare_bake(tmp_path, "real-murgul")
     assert not problems, problems
+    assert not model_problems, model_problems
+    numeric = sorted(numeric + model_numeric, reverse=True)
     worst = numeric[0] if numeric else None
     assert worst is None or worst[0] <= RELATIVE_TOLERANCE, (
         f"{worst[1]} re-baked as {worst[2]!r} against the committed {worst[3]!r}, "
@@ -613,3 +742,36 @@ def test_rebaking_reproduces_the_committed_numbers_to_tolerance(artifacts, tmp_p
         "is a different model rather than a different machine."
     )
     assert (DERIVED / "real-murgul" / "case.json").stat().st_size > 0
+
+
+def test_the_bake_comparison_skips_only_the_digests_computed_over_numbers():
+    """A digest over numbers moves with their last bit, so the numbers are compared instead.
+
+    The corpus digest is a hash of the input, the same file on every machine, so it must still match.
+    """
+    from compare_bakes import compare, without_computed_digests
+
+    committed = {
+        "digest": "a",
+        "live_models": {"digest": "b", "path": "models/X.json"},
+        "provenance": {"corpus_digest": "c"},
+        "x": 1.0,
+    }
+    rebaked = {
+        "digest": "z",
+        "live_models": {"digest": "y", "path": "models/X.json"},
+        "provenance": {"corpus_digest": "c"},
+        "x": 1.0 + 1e-12,
+    }
+    problems, numeric = compare(without_computed_digests(rebaked), without_computed_digests(committed))
+    assert problems == [] and [key for _, key, _, _ in numeric] == ["x"]
+    assert committed["live_models"]["digest"] == "b", "the comparison must not modify what it reads"
+
+    rebaked["provenance"]["corpus_digest"] = "another corpus"
+    problems, _ = compare(without_computed_digests(rebaked), without_computed_digests(committed))
+    assert len(problems) == 1 and "provenance.corpus_digest" in problems[0]
+
+    rebaked["provenance"]["corpus_digest"] = "c"
+    rebaked["live_models"]["path"] = "models/Y.json"
+    problems, _ = compare(without_computed_digests(rebaked), without_computed_digests(committed))
+    assert len(problems) == 1 and "live_models.path" in problems[0]

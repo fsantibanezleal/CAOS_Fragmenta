@@ -77,6 +77,15 @@ export function kuznetsovX50M(
 }
 
 /**
+ * The in-situ cap, a declared choice of the engine (blastfrag 0.4.0 `InSituCap`), not a published relation: a
+ * blast breaks blocks and does not fuse them, so no mean size exceeds the in-situ block size.
+ */
+export function cappedAtInSituBlock(x50M: number, inSituBlockM: number): number {
+  if (!Number.isFinite(x50M) || !(inSituBlockM > 0)) return NaN;
+  return Math.min(x50M, inSituBlockM);
+}
+
+/**
  * The Cunningham uniformity index.
  *
  * THE UNIT TRAP: the source states the burden in METRES and the diameter in MILLIMETRES, so the

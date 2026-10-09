@@ -1,0 +1,13 @@
+{
+  "name": "Fragmenta",
+  "slug": "fragmenta",
+  "tagline": {
+    "en": "Blast fragmentation prediction on published measured blasts: ten published predictors, three split protocols, and what each prediction is worth at a mine it has not seen.",
+    "es": "Predicción de fragmentación por tronadura sobre tiros medidos publicados: diez predictores publicados, tres protocolos de partición, y cuánto vale cada predicción en una mina que no ha visto."
+  },
+  "repo": "https://github.com/fsantibanezleal/CAOS_Fragmenta",
+  "visibility": "public",
+  "license": "MIT",
+  "holder": "Felipe Santibáñez-Leal",
+  "year": 2026
+}
