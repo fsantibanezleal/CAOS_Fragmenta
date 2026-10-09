@@ -129,15 +129,56 @@ line with the median training factor loses about half the score (engine
 [methods/07](https://github.com/fsantibanezleal/CAOS_BlastFrag/blob/main/docs/methods/07_transfer.md)),
 so the modulus carries most of what the site factor knew.
 
-## 5. In the application
+## 5. The in-situ cap, a declared choice
+
+A blast breaks blocks; it does not fuse them, so no fragment can be larger than the in-situ block it came
+from. Hudaverdi, Kulatilake and Kuzu frame blasting as exactly that transformation, from the in-situ block
+size distribution to the blasted one, yet the equation above never reads the block size $X_B$. No held
+source prints a cap, so the engine (blastfrag 0.4.0) implements one as a **declared modelling choice**,
+named `declared_not_published` in its provenance:
+
+$$
+x_{50,\mathrm{cap}} = \min\left(x_{50},\; X_B\right)
+$$
+
+and, on a passing curve, the mass above $X_B$ is read as unbroken blocks at that size: the curve is
+unchanged below $X_B$ and passes everything at and above it. Clamping rather than renormalising is the
+choice, because dividing by the passing fraction at $X_B$ would move that mass into the fines, which no
+mechanism here supports.
+
+<!-- facts:cap -->
+The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the classical arm from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
+<!-- /facts -->
+
+<!-- facts:arm-kuznetsov-capped -->
+Evidence for **classical mean size, capped at the in-situ block (declared)** in the committed benchmark (variance explained about the identity line):
+
+- random 80/20, 100 draws: median 0.399, 5th to 95th percentile -0.49 to 0.75;
+- deduplicated, 100 draws: median 0.360;
+- held out by site, every blast: 0.352 (site-resampled 95 percent interval -0.95 to 0.74, 6 blasts abstained);
+- held out by site, the 91 blasts with geometry: 0.352 (-0.96 to 0.73);
+- error by held-out campaign: lowest at Murgul (0.052 m RMSE), highest at Dongri-Buzurg (0.330 m).
+
+Provenance: it reads a constant derived from the held-out site itself.
+<!-- /facts -->
+
+Where it binds, the measured size sits below the block too, so the cap removes part of an
+over-prediction rather than causing one. The interval still spans zero. No measured curve exists to
+validate the capped shape; only its mean-size effect is scored.
+
+## 6. In the application
 
 - **Predict** plots the selected arm's prediction against the measurement for every blast of the
   case, with its score on the case and a table of every model; both classical arms are in the rail's
   model selector, whose description says where each one's rock factor comes from.
 - **Rock** computes the two Lilly rating schemes live from rock-mass inputs you set, next to the
   factor recovered for the site.
-- **What if** recomputes both arms live as the design changes; the transfer arm uses the line fitted
-  for the open case, without its own campaign.
+- **Design** recomputes the classical arms live as the design changes, on the response surface and in
+  the every-model view; the transfer arm uses the line fitted for the open case, without its own
+  campaign, and the capped arm reads the design's own in-situ block, so moving that knob below the
+  classical size shows the cap bind.
+- **The model comparison** folds the capped arm into the classical row on a case where it equals it,
+  and shows its own row where the cap binds.
 
 ## Sources
 

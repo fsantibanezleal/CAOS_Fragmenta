@@ -11,7 +11,7 @@ changed design has not been fired, and it is never scored against the original b
 ## 1. Real campaigns, nine
 
 Each is a real mine with its own rock, rig and measurement. The learned models shown on each were fitted
-on the corpus without that campaign, and the App's What if tab uses that same fit.
+on the corpus without that campaign, and the App's Design group uses that same fit.
 
 | Case | Rock, modulus | Why it is in the matrix |
 |---|---|---|
@@ -57,25 +57,35 @@ Their hole diameter is a choice this product makes, 165 mm, the most common diam
 the registry says so. Without it the classical arms would abstain on every synthetic case; abstention is
 right where the scale is unknown, and here the scale was chosen.
 
+**Why no arm is scored on its own output.** A synthetic truth produced by one of the arms would hand that
+arm a perfect score. The research plan therefore had the synthetic truth come from a model unlike any arm;
+as built, the design cases carry no truth at all, so no arm is ever scored on them, and the benchmark is
+computed on the 97 corpus blasts only. The one exception is deliberate: the positive control's truth is the
+published regression's own output, because its job is to show that the harness returns what it was given,
+and its write-up says it tests the harness rather than the science. Four tests hold this
+(`tests/test_pipeline.py`, the non-circularity block): no design carries a measurement or a score, no
+synthetic blast enters the benchmark, every design rebuilds with every arm's prediction disabled, and the
+positive control's truth is exactly the regression's.
+
 ## 6. Every case at a glance
 
 <!-- facts:cases -->
 | case | category | blasts | learned arms fitted without | answered | abstained | controls |
 |---|---|---|---|---|---|---|
-| `ctrl-degenerate` | negative-control | 6 | nothing (not in the corpus) | 0 | 78 | degenerate negative control: passed |
-| `ctrl-oracle` | positive-control | 8 | nothing (not in the corpus) | 96 | 8 | positive control: passed |
-| `real-akdaglar` | real-campaign | 22 | Akdaglar | 263 | 23 | - |
-| `real-dongri-buzurg` | real-campaign | 9 | Dongri-Buzurg | 108 | 9 | - |
-| `real-enusa` | real-campaign | 12 | Enusa | 144 | 12 | - |
-| `real-granite-ne` | extrapolation-control | 5 | nothing (not in the corpus) | 40 | 25 | extrapolation control: passed |
-| `real-miami` | negative-control | 6 | Miami | 42 | 36 | geometry negative control: passed |
-| `real-mrica` | real-campaign | 11 | Mrica | 132 | 11 | - |
-| `real-murgul` | real-campaign | 7 | Murgul | 80 | 11 | - |
-| `real-ozmert` | real-campaign | 7 | Ozmert | 84 | 7 | - |
-| `real-reocin` | real-campaign | 10 | Reocin | 120 | 10 | - |
-| `real-reocin-ug` | real-campaign | 6 | Reocin-UG | 72 | 6 | - |
-| `real-soma` | real-campaign | 7 | Soma | 84 | 7 | - |
-| `synth-ibsd-capped` | structural-control | 12 | nothing (not in the corpus) | 134 | 22 | - |
-| `synth-sweep-burden` | parameter-sweep | 12 | nothing (not in the corpus) | 144 | 12 | - |
-| `synth-sweep-powder` | parameter-sweep | 12 | nothing (not in the corpus) | 139 | 17 | - |
+| `ctrl-degenerate` | negative-control | 6 | nothing (not in the corpus) | 0 | 84 | degenerate negative control: passed |
+| `ctrl-oracle` | positive-control | 8 | nothing (not in the corpus) | 104 | 8 | positive control: passed |
+| `real-akdaglar` | real-campaign | 22 | Akdaglar | 285 | 23 | - |
+| `real-dongri-buzurg` | real-campaign | 9 | Dongri-Buzurg | 117 | 9 | - |
+| `real-enusa` | real-campaign | 12 | Enusa | 156 | 12 | - |
+| `real-granite-ne` | extrapolation-control | 5 | nothing (not in the corpus) | 40 | 30 | extrapolation control: passed |
+| `real-miami` | negative-control | 6 | Miami | 42 | 42 | geometry negative control: passed |
+| `real-mrica` | real-campaign | 11 | Mrica | 143 | 11 | - |
+| `real-murgul` | real-campaign | 7 | Murgul | 87 | 11 | - |
+| `real-ozmert` | real-campaign | 7 | Ozmert | 91 | 7 | - |
+| `real-reocin` | real-campaign | 10 | Reocin | 130 | 10 | - |
+| `real-reocin-ug` | real-campaign | 6 | Reocin-UG | 78 | 6 | - |
+| `real-soma` | real-campaign | 7 | Soma | 91 | 7 | - |
+| `synth-ibsd-capped` | structural-control | 12 | nothing (not in the corpus) | 146 | 22 | - |
+| `synth-sweep-burden` | parameter-sweep | 12 | nothing (not in the corpus) | 156 | 12 | - |
+| `synth-sweep-powder` | parameter-sweep | 12 | nothing (not in the corpus) | 151 | 17 | - |
 <!-- /facts -->

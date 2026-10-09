@@ -16,6 +16,7 @@ import { f, facts, useBenchmark, useIndex } from '../lib/facts';
 import { LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
 import { SafeProtocolDiagram } from '../viz/Diagrams';
 import { RatioTable, ResponseHeatmap } from '../viz/Evidence';
+import { notAvailable, num } from '../lib/format';
 
 interface TabProps {
   es: boolean;
@@ -35,8 +36,17 @@ export default function Experiments() {
   const index = useIndex();
   const props = { es, lang, b, index };
   const tabs: SubTabDef[] = [
-    { id: 'design', label: es ? 'Preguntas y diseño' : 'Questions and design', content: <Design {...props} /> },
-    { id: 'metrics', label: es ? 'Métricas' : 'Metrics', content: <Metrics {...props} /> },
+    // Six peers at most (ADR-0071 rule 5): the metrics belong with the questions they answer.
+    {
+      id: 'design',
+      label: es ? 'Preguntas, diseño y métricas' : 'Questions, design and metrics',
+      content: (
+        <>
+          <Design {...props} />
+          <Metrics {...props} />
+        </>
+      ),
+    },
     { id: 'coverage', label: es ? 'Cobertura' : 'Coverage', content: <Coverage {...props} /> },
     { id: 'protocol', label: es ? 'Sensibilidad al protocolo' : 'Protocol sensitivity', content: <ProtocolSensitivity {...props} /> },
     { id: 'sites', label: es ? 'Por sitio' : 'By site', content: <BySite {...props} /> },
@@ -44,7 +54,7 @@ export default function Experiments() {
     { id: 'diagnostics', label: es ? 'Diagnósticos' : 'Diagnostics', content: <Diagnostics {...props} /> },
   ];
   return (
-    <div className="page-body wide prose">
+    <div className="page-body wide prose fr-doc">
       <div className="page-head">
         <h1>{es ? 'Experimentos' : 'Experiments'}</h1>
         <p className="lede">
@@ -66,7 +76,7 @@ function Design({ es }: TabProps) {
       <h2>{es ? 'Las preguntas, y cómo se diseñó cada experimento' : 'The questions, and how each experiment was designed'}</h2>
       <p>
         {es
-          ? 'El benchmark responde cinco preguntas distintas, y cada una tiene su experimento. Separarlas importa porque un mismo número puede responder a una y no a otra: el 0.943 publicado responde la primera y nada dice de la tercera.'
+          ? 'El benchmark responde cinco preguntas distintas, y cada una tiene su experimento. Separarlas importa porque un mismo número puede responder a una y no a otra: el 0,943 publicado responde la primera y nada dice de la tercera.'
           : 'The benchmark answers five distinct questions, and each has its own experiment. Keeping them apart matters because one number can answer one question and not another: the published 0.943 answers the first and says nothing about the third.'}
       </p>
       <ol className="fr-list">
@@ -79,15 +89,15 @@ function Design({ es }: TabProps) {
       <SafeProtocolDiagram />
       <p>
         {es
-          ? 'Todo lo que se ajusta, se ajusta solo con las filas de entrenamiento de cada partición: la escala de las entradas, los pesos, los árboles, la recta del factor de roca de transferencia. Lo que no se puede ajustar sin el corpus se declara: el enrutador y la regresión publicada vienen ajustados por su fuente sobre los 97 tiros, y el factor de roca recuperado usa predicciones publicadas del propio sitio. El criterio de descarte se declaró antes de correr; lo que cambió en 0.05 es lo que se informa a su lado.'
-          : 'Everything that is fitted is fitted on each split’s training rows only: the input scaling, the weights, the trees, the transfer rock-factor line. What cannot be fitted without the corpus is declared: the router and the published regression come fitted by their source on the 97 blasts, and the recovered rock factor uses published predictions for the site itself. The kill criterion was declared before the run; what changed in 0.05 is what is reported beside it.'}{' '}
+          ? 'Todo lo que se ajusta, se ajusta solo con las filas de entrenamiento de cada partición: la escala de las entradas, los pesos, los árboles, la recta del factor de roca de transferencia. Lo que no se puede ajustar sin el corpus se declara: el enrutador y la regresión publicada vienen ajustados por su fuente sobre los 97 tiros, y el factor de roca recuperado usa predicciones publicadas del propio sitio. El criterio de descarte se declaró antes de correr; lo que cambió en la versión 0.05.000 es lo que se informa a su lado.'
+          : 'Everything that is fitted is fitted on each split’s training rows only: the input scaling, the weights, the trees, the transfer rock-factor line. What cannot be fitted without the corpus is declared: the router and the published regression come fitted by their source on the 97 blasts, and the recovered rock factor uses published predictions for the site itself. The kill criterion was declared before the run; what changed in 0.05.000 is what is reported beside it.'}{' '}
         <Cite id="roberts2017" />{' '}
         <Cite id="kapoor2023" />
       </p>
-      <Callout variant="honest" title={es ? 'Lo que cambió en 0.05, y por qué' : 'What changed in 0.05, and why'}>
+      <Callout variant="honest" title={es ? 'Lo que cambió en la versión 0.05.000, y por qué' : 'What changed in 0.05.000, and why'}>
         {es
-          ? 'Hasta 0.04 cada protocolo aleatorio era un único sorteo de 19 filas, la retención de sitio no tenía intervalo, y el brazo clásico y los aprendidos se puntuaban sobre filas distintas. Una revisión adversarial mostró que dos afirmaciones de entonces (que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos) eran efectos del sorteo de la semilla 0, y que el veredicto cambia con seis tiros. Los experimentos se rediseñaron para medir esas tres cosas.'
-          : 'Up to 0.04 each random protocol was a single draw of 19 rows, the site hold-out had no interval, and the classical arm and the learned arms were scored on different rows. An adversarial review showed that two claims of that time (that the classical model improves with a site held out, and that deduplication raises the learned scores) were effects of the seed-0 draw, and that the verdict changes with six blasts. The experiments were redesigned to measure those three things.'}
+          ? 'Antes de la versión 0.05.000 cada protocolo aleatorio era un único sorteo de 19 filas, la retención de sitio no tenía intervalo, y el brazo clásico y los aprendidos se puntuaban sobre filas distintas. Una revisión adversarial mostró que dos afirmaciones de entonces (que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos) eran efectos del sorteo de la semilla 0, y que el veredicto cambia con seis tiros. Los experimentos se rediseñaron para medir esas tres cosas.'
+          : 'Before 0.05.000 each random protocol was a single draw of 19 rows, the site hold-out had no interval, and the classical arm and the learned arms were scored on different rows. An adversarial review showed that two claims of that time (that the classical model improves with a site held out, and that deduplication raises the learned scores) were effects of the seed-0 draw, and that the verdict changes with six blasts. The experiments were redesigned to measure those three things.'}
       </Callout>
       {refs('e-design', es)}
     </section>
@@ -115,8 +125,8 @@ function Metrics({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? `Constantes de esta corrida: ${b?.n_repeats ?? 'n/a'} sorteos por protocolo aleatorio con semillas consecutivas desde ${b?.seed ?? 'n/a'}; 20 por ciento de filas de prueba en cada sorteo; ${b?.n_boot ?? 'n/a'} remuestreos de sitios por intervalo, con semilla 0; un nulo que predice la media de las filas de entrenamiento de cada partición; un rango plausible de 0.001 a 3 m, fuera del cual una predicción es una abstención con su razón.`
-          : `Constants of this run: ${b?.n_repeats ?? 'n/a'} draws per random protocol with consecutive seeds from ${b?.seed ?? 'n/a'}; 20 percent of rows to test in each draw; ${b?.n_boot ?? 'n/a'} site resamples per interval, with seed 0; a null that predicts the mean of each split’s training rows; a plausible range of 0.001 to 3 m, outside which a prediction is an abstention with its reason.`}
+          ? `Constantes de esta corrida: ${b?.n_repeats ?? notAvailable()} sorteos por protocolo aleatorio con semillas consecutivas desde ${b?.seed ?? notAvailable()}; 20 por ciento de filas de prueba en cada sorteo; ${b?.n_boot ?? notAvailable()} remuestreos de sitios por intervalo, con semilla 0; un nulo que predice la media de las filas de entrenamiento de cada partición; un rango plausible de 0,001 a 3 m, fuera del cual una predicción es una abstención con su razón.`
+          : `Constants of this run: ${b?.n_repeats ?? notAvailable()} draws per random protocol with consecutive seeds from ${b?.seed ?? notAvailable()}; 20 percent of rows to test in each draw; ${b?.n_boot ?? notAvailable()} site resamples per interval, with seed 0; a null that predicts the mean of each split’s training rows; a plausible range of 0.001 to 3 m, outside which a prediction is an abstention with its reason.`}
       </p>
       <Equation
         tex={String.raw`\tilde R^2 = q_{0.5}\{R^2_k\}_{k=1}^{100},\qquad [\,q_{0.05},\ q_{0.95}\,],\qquad q_p(v) = v_{(\lfloor h \rfloor)} + (h - \lfloor h \rfloor)\big(v_{(\lceil h\rceil)} - v_{(\lfloor h \rfloor)}\big),\ h = (K-1)p`}
@@ -124,7 +134,7 @@ function Metrics({ es, b }: TabProps) {
       />
       <p>
         {es
-          ? 'El intervalo de un puntaje agrupado remuestrea campañas: se sortean diez campañas con reposición, se juntan sus tiros con sus predicciones fuera de pliegue y se recalcula el puntaje; los percentiles 2.5 y 97.5 de las 2000 repeticiones son el intervalo. Es un bootstrap por conglomerados, y es el adecuado cuando las filas de una campaña no son independientes.'
+          ? 'El intervalo de un puntaje agrupado remuestrea campañas: se sortean diez campañas con reposición, se juntan sus tiros con sus predicciones fuera de pliegue y se recalcula el puntaje; los percentiles 2,5 y 97,5 de las 2000 repeticiones son el intervalo. Es un bootstrap por conglomerados, y es el adecuado cuando las filas de una campaña no son independientes.'
           : 'The interval of a pooled score resamples campaigns: ten campaigns are drawn with replacement, their blasts are gathered with their out-of-fold predictions, and the score is recomputed; the 2.5th and 97.5th percentiles of the 2000 repetitions are the interval. It is a cluster bootstrap, the appropriate one when the rows of a campaign are not independent.'}{' '}
         <Cite id="efron1979" />{' '}
         <Cite id="field2007" />
@@ -158,8 +168,8 @@ function Coverage({ es, lang, index }: TabProps) {
       <h2>{es ? 'Cobertura: casos, datos y controles' : 'Coverage: cases, data and controls'}</h2>
       <p>
         {es
-          ? `${index?.n_cases ?? 'n/a'} casos en ${byCategory.size} categorías, cada uno con una razón científica para estar en la matriz. Diez son las campañas reales del corpus, una por sitio; uno es el conjunto de campo de 2025, fuera de la envolvente; tres son barridos y un control estructural sintéticos; dos son controles, uno negativo y uno positivo. Cada caso se abre en la App desde aquí.`
-          : `${index?.n_cases ?? 'n/a'} cases in ${byCategory.size} categories, each with a scientific reason to be in the matrix. Ten are the corpus’s real campaigns, one per site; one is the 2025 field set, outside the envelope; three are synthetic sweeps and a structural control; two are controls, one negative and one positive. Each case opens in the App from here.`}
+          ? `${index?.n_cases ?? notAvailable()} casos en ${byCategory.size} categorías, cada uno con una razón científica para estar en la matriz. Diez son las campañas reales del corpus, una por sitio; uno es el conjunto de campo de 2025, fuera de la envolvente; tres son barridos y un control estructural sintéticos; dos son controles, uno negativo y uno positivo. Cada caso se abre en la App desde aquí.`
+          : `${index?.n_cases ?? notAvailable()} cases in ${byCategory.size} categories, each with a scientific reason to be in the matrix. Ten are the corpus’s real campaigns, one per site; one is the 2025 field set, outside the envelope; three are synthetic sweeps and a structural control; two are controls, one negative and one positive. Each case opens in the App from here.`}
       </p>
       <div className="fr-scroll-x">
         <table className="fr-table">
@@ -235,7 +245,7 @@ function Coverage({ es, lang, index }: TabProps) {
       <ul className="fr-list">
         <li><b>{es ? 'Negativo de geometría' : 'Geometry negative'}</b>{es ? ': seis tiros cuya escala no publica ninguna fuente; todo brazo que necesita volumen se abstiene con la razón, y una prueba verifica que ninguno respondió.' : ': six blasts whose scale no source publishes; every arm that needs a volume abstains with the reason, and a test checks that none answered.'}</li>
         <li><b>{es ? 'Negativo degenerado' : 'Degenerate negative'}</b>{es ? ': diseños donde el taco excede el banco; todo brazo se niega, incluidos los que solo ven razones, porque la guarda está a nivel del diseño.' : ': designs where the stemming exceeds the bench; every arm refuses, including the ratio-only ones, because the guard sits at the design level.'}</li>
-        <li><b>{es ? 'De extrapolación' : 'Extrapolation'}</b>{es ? ': cinco tiros de campo con módulo de 5.6 GPa, bajo el mínimo del corpus; cada predicción lleva el sello.' : ': five field blasts at 5.6 GPa, below the corpus minimum; every prediction carries the stamp.'}</li>
+        <li><b>{es ? 'De extrapolación' : 'Extrapolation'}</b>{es ? ': cinco tiros de campo con módulo de 5,6 GPa, bajo el mínimo del corpus; cada predicción lleva el sello.' : ': five field blasts at 5.6 GPa, below the corpus minimum; every prediction carries the stamp.'}</li>
         <li><b>{es ? 'Positivo' : 'Positive'}</b>{es ? ': una verdad generada por un modelo conocido, que ese modelo recupera con error cero; prueba el andamiaje, no la ciencia.' : ': a truth generated by a known model, which that model recovers at zero error; it tests the harness, not the science.'}</li>
       </ul>
       {refs('e-coverage', es)}
@@ -286,7 +296,7 @@ function ProtocolSensitivity({ es, lang, b }: TabProps) {
         xTicks={[0, 1, 2]}
         xRange={[-0.12, 2.12]}
         xTickFormat={(v) => [es ? 'aleatorio' : 'random', es ? 'deduplicado' : 'deduplicated', es ? 'sitio excluido' : 'site held out'][Math.round(v)] ?? ''}
-        yTickFormat={(v) => v.toFixed(1)}
+        yTickFormat={(v) => num(v, 1)}
         valueFormat={(v) => f(v)}
       />
       <p>
@@ -304,11 +314,11 @@ function ProtocolSensitivity({ es, lang, b }: TabProps) {
           </tr>
         </thead>
         <tbody>
-          {[...F.learned, 'kuznetsov', 'kuznetsov-transfer'].map((arm) => (
+          {[...F.learned, 'kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped'].map((arm) => (
             <tr key={arm}>
               <td>{label(arm, lang)}</td>
               <td>{f(F.random(arm)?.r2_identity)}</td>
-              <td>{shifts[arm] === undefined ? 'n/a' : `${shifts[arm] >= 0 ? '+' : ''}${shifts[arm].toFixed(3)}`}</td>
+              <td>{shifts[arm] === undefined ? notAvailable() : `${shifts[arm] >= 0 ? '+' : ''}${num(shifts[arm], 3)}`}</td>
               <td>{f(b.verdict.protocol_gap_random_minus_grouped[arm])}</td>
             </tr>
           ))}
@@ -316,8 +326,8 @@ function ProtocolSensitivity({ es, lang, b }: TabProps) {
       </table>
       <Callout variant="honest" title={es ? 'Dos afirmaciones retiradas' : 'Two claims withdrawn'}>
         {es
-          ? 'Hasta 0.04 esta página decía que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos. Las dos lecturas venían del sorteo de la semilla 0; sobre cien sorteos ninguna se sostiene, y la tabla muestra por qué.'
-          : 'Up to 0.04 this page said the classical model improves with a site held out and that deduplication raises the learned scores. Both readings came from the seed-0 draw; over a hundred draws neither holds, and the table shows why.'}
+          ? 'Antes de la versión 0.05.000 esta página decía que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos. Las dos lecturas venían del sorteo de la semilla 0; sobre cien sorteos ninguna se sostiene, y la tabla muestra por qué.'
+          : 'Before 0.05.000 this page said the classical model improves with a site held out and that deduplication raises the learned scores. Both readings came from the seed-0 draw; over a hundred draws neither holds, and the table shows why.'}
       </Callout>
       {refs('e-spread', es)}
     </section>
@@ -332,7 +342,7 @@ function BySite({ es, lang, b }: TabProps) {
   const F = facts(b);
   const sites = b.sites;
   const nullRow = F.grouped('null')?.per_site;
-  const arms = ['kuznetsov', 'kuznetsov-transfer', 'published-regression', 'refitted-regression', ...F.learned];
+  const arms = ['kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped', 'published-regression', 'refitted-regression', ...F.learned];
   const rows = arms.map((a) => ({
     id: a,
     label: label(a, lang),
@@ -362,8 +372,8 @@ function BySite({ es, lang, b }: TabProps) {
       </p>
       <p>
         {es
-          ? 'Dos campañas concentran la caída de los aprendidos: Murgul, donde el error de la potenciación es varias veces el del nulo, y Miami, la de fragmentos más finos. Las dos de Reocin, las más gruesas, derrotan a todo brazo que no está dentro de la muestra, porque ningún sitio de entrenamiento es tan grueso. Abajo, las predicciones fuera de pliegue del brazo elegido contra lo medido, coloreadas por sitio.'
-          : 'Two campaigns concentrate the learned arms’ drop: Murgul, where the boosting model’s error is several times the null’s, and Miami, the one with the finest fragments. The two Reocin campaigns, the coarsest, defeat every arm that is not in sample, because no training site is as coarse. Below, the chosen arm’s out-of-fold predictions against the measurement, coloured by site.'}
+          ? 'Dos campañas concentran la caída de los aprendidos: Murgul, donde el error de la potenciación es varias veces el del nulo, y Miami, la de fragmentos más finos. Las dos de Reocin, las más gruesas, derrotan a todo brazo que no está dentro de la muestra, porque ningún sitio de entrenamiento es tan grueso. Abajo, las predicciones fuera de pliegue del brazo elegido contra lo medido; al apuntar a un tiro se lee su sitio.'
+          : 'Two campaigns concentrate the learned arms’ drop: Murgul, where the boosting model’s error is several times the null’s, and Miami, the one with the finest fragments. The two Reocin campaigns, the coarsest, defeat every arm that is not in sample, because no training site is as coarse. Below, the chosen arm’s out-of-fold predictions against the measurement; point at a blast to read its site.'}
       </p>
       <label className="fr-control fr-control-inline">
         {es ? 'Brazo' : 'Arm'}
@@ -393,7 +403,7 @@ function Response({ es, lang }: TabProps) {
   const sweep = (artifact: CaseArtifact | null, field: 'Pf_kg_m3' | 'B_over_D') => {
     if (!artifact) return null;
     const x = artifact.blasts.map((blast) => blast.features[field]);
-    const arms = ['kuznetsov', 'kuznetsov-transfer', 'published-regression', 'random-forest', 'stacking', 'published-neural-net'];
+    const arms = ['kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped', 'published-regression', 'random-forest', 'stacking', 'published-neural-net'];
     const series: SeriesSpec[] = arms
       .filter((a) => artifact.predictions[a])
       .map((a) => ({ id: a, label: label(a, lang), values: artifact.blasts.map((blast) => artifact.predictions[a][blast.blast_id]?.x50_m ?? null) }));
@@ -424,18 +434,18 @@ function Response({ es, lang }: TabProps) {
       {p ? (
         <>
           <h3>{es ? 'Factor de carga' : 'Powder factor'}</h3>
-          <LineChart x={p.x} series={p.series} xLabel={es ? 'factor de carga, kg/m³' : 'powder factor, kg/m³'} yLabel={es ? 'x50 predicho' : 'predicted x50'} height={280} legend xTickFormat={(v) => v.toFixed(2)} valueFormat={(v) => formatSize(v)} />
+          <LineChart x={p.x} series={p.series} xLabel={es ? 'factor de carga, kg/m³' : 'powder factor, kg/m³'} yLabel={es ? 'x50 predicho' : 'predicted x50'} height={280} legend xTickFormat={(v) => num(v, 2)} valueFormat={(v) => formatSize(v)} />
         </>
       ) : null}
       {bd ? (
         <>
           <h3>{es ? 'Bordo sobre diámetro' : 'Burden over hole diameter'}</h3>
-          <LineChart x={bd.x} series={bd.series} xLabel={es ? 'B/D' : 'B/D'} yLabel={es ? 'x50 predicho' : 'predicted x50'} height={280} legend xTickFormat={(v) => v.toFixed(1)} valueFormat={(v) => formatSize(v)} />
+          <LineChart x={bd.x} series={bd.series} xLabel={es ? 'B/D' : 'B/D'} yLabel={es ? 'x50 predicho' : 'predicted x50'} height={280} legend xTickFormat={(v) => num(v, 1)} valueFormat={(v) => formatSize(v)} />
         </>
       ) : null}
       <Callout variant="note" title={es ? 'Lo que el mapa no dice' : 'What the map does not say'}>
         {es
-          ? 'Es la respuesta de una ecuación con un factor de roca elegido por usted, no una predicción validada para una mina. La ecuación clásica explica cerca de 0.30 de la varianza entre sitios en este corpus; su forma de responder a la malla es lo que el mapa muestra, no su exactitud.'
+          ? 'Es la respuesta de una ecuación con un factor de roca elegido por usted, no una predicción validada para una mina. La ecuación clásica explica cerca de 0,30 de la varianza entre sitios en este corpus; su forma de responder a la malla es lo que el mapa muestra, no su exactitud.'
           : 'It is the response of an equation with a rock factor you choose, not a prediction validated for a mine. The classical equation explains about 0.30 of the variance across sites on this corpus; how it responds to the pattern is what the map shows, not how accurate it is.'}
       </Callout>
       {refs('e-response', es)}
@@ -502,11 +512,11 @@ function Diagnostics({ es, lang, b }: TabProps) {
           })),
         ]}
         reference={FEATURES.map(() => null)}
-        format={(v) => v.toFixed(3)}
+        format={(v) => num(v, 3)}
       />
       <p>
         {es
-          ? `La fuente de 2025 publica 0.7129 para el módulo en su bosque y 0.4608 en su potenciación, ambos primeros; aquí el bosque le da ${f(native['random-forest']?.values.E_GPa)}, con el mismo orden. Con el sitio excluido, los aprendidos se apoyan en el módulo mucho más que las ecuaciones. En este corpus el módulo es una constante por campaña: cada tiro de una campaña tiene el mismo valor y nueve valores cubren diez campañas. En una partición aleatoria identifica la campaña de una fila de prueba; al retenerla, ocho de las diez campañas tienen un módulo que ningún tiro de entrenamiento tiene.`
+          ? `La fuente de 2025 publica 0,7129 para el módulo en su bosque y 0,4608 en su potenciación, ambos primeros; aquí el bosque le da ${f(native['random-forest']?.values.E_GPa)}, con el mismo orden. Con el sitio excluido, los aprendidos se apoyan en el módulo mucho más que las ecuaciones. En este corpus el módulo es una constante por campaña: cada tiro de una campaña tiene el mismo valor y nueve valores cubren diez campañas. En una partición aleatoria identifica la campaña de una fila de prueba; al retenerla, ocho de las diez campañas tienen un módulo que ningún tiro de entrenamiento tiene.`
           : `The 2025 source publishes 0.7129 for the modulus in its forest and 0.4608 in its boosting model, first in both; here the forest gives it ${f(native['random-forest']?.values.E_GPa)}, with the same ordering. With the site held out, the learned arms lean on the modulus far more than the equations do. In this corpus the modulus is a constant per campaign: every blast of a campaign has the same value and nine values cover ten campaigns. On a random split it identifies the campaign of a test row; when the campaign is held out, eight of the ten have a modulus no training blast has.`}
       </p>
       <Callout variant="honest" title={es ? 'Un mecanismo, no una prueba' : 'A mechanism, not a proof'}>

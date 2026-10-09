@@ -49,6 +49,10 @@ What that supports, and what it does not:
   blasts. Refitted without each site, the same functional form collapses.
 - **Whether the learned tier meets the criterion depends on six blasts** (the Miami campaign, which has
   no recoverable geometry), and the product reports it that way.
+- **Each arm is also scored on the rows every size-predicting arm answers**, so two arms can be
+  compared on the same blasts. That score is reported beside the arm's own and never decides the
+  verdict, because those rows are selected by the arms' own refusals
+  ([every arm](docs/results/02_every-arm.md)).
 
 The numbers in this section are rendered from the committed benchmark by
 `scripts/build_docs_results.py`, and a test fails if they go stale. Every tool's role and evidence is
@@ -66,13 +70,26 @@ in [docs/relevance.md](docs/relevance.md); the full tables are in [docs/results.
 - **The published equations beat their own papers' tables** on both published hold-outs; where the two
   papers disagree, the recomputation matches the 2010 figure on four of five rows.
 - **The published network's hold-out score is not robust to the seed**: reproduced to its specification
-  over 30 seeds, every seed falls below the published figure.
+  over 30 seeds, every seed falls below the published figure. Nor is its width the one its own
+  protocol picks, and held out by site no width does better than the null:
+
+<!-- facts:width-sweep -->
+Reproduced on the 2012 hold-out, the source's width selection picks 8 hidden units for the high-modulus group and 11 for the low, against the published 9 and 7. Held out by site, every width from 6 to 15 scores from -1.486 to -0.568, and the published pair -0.626; the null, which predicts the training mean, scores -0.216.
+<!-- /facts -->
+
+- **The classical equation can predict a mean size larger than the in-situ block it breaks.** Capping
+  it at the block is a declared choice, not a published relation, so it is benchmarked as its own arm
+  beside the uncapped one:
+
+<!-- facts:cap -->
+The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the classical arm from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
+<!-- /facts -->
 
 ## The application
 
 | Route | What it is |
 |---|---|
-| App | a workbench for one case: Predict, Distribution, Bench (the reconstructed bench in 3D), Rock, What if (every arm live on your design), Decide (P80 against a crusher specification) |
+| App | the shell's case workbench for one case: Predict (parity and every model's score), Distribution (the curves, and P80 against a crusher specification), Design (the response surface over burden and spacing, every model live on your design, the reconstructed bench in 3D), Rock, Compare the variants, The case |
 | Introduction | the problem, the relations, the question, the data, the scope |
 | Methodology | every predictor term by term, with its source, and the protocols and metrics |
 | Implementation | the data and the gate, the geometry, the bake, leakage control, the live lanes, the deploy |
@@ -107,7 +124,8 @@ PowerShell and bash. The engine is published separately: `pip install blastfrag`
 | Python tests (pipeline, contracts, docs generators, framework examples, guards) | `pytest` | before every push |
 | parity and portable models | `cd frontend && npm test` | CI and the deploy |
 | release gate on the artifacts | `python data-pipeline/run.py --validate` (`scripts/check_artifacts.py`) | after every bake, and in the deploy |
-| browser gate (every route, tab, theme, language; figure, table, tab-strip and footer measurement) | `npm run gate:browser -- --url http://localhost:4173`, once as is and once with `GATE_FONTS=dejavu` (the deploy runner's fonts) | before a push, and in the deploy on the build it publishes |
+| browser gate (every route, tab, theme, language; figure, drawing, table, tab-strip and footer measurement; the App again at 390 and 768 px) | `npm run gate:browser -- --url http://localhost:4173`, once as is and once with `GATE_FONTS=dejavu` (the deploy runner's fonts) | before a push, and in the deploy on the build it publishes |
+| the base's measured gate (`caos-shell-gate`: reach, the drawn share of the viewport, control reactivity, at five sizes, both themes and languages) | `cd frontend && npm run gate` | before a release |
 | lint, guards, content standards, Spanish accents, CI budget | `ruff check data-pipeline tests scripts`, `python scripts/check_*.py` | CI |
 
 CI never trains, bakes or runs the Python suite (ADR-0074); the deploy verifies and publishes the
@@ -144,8 +162,8 @@ missing values, outliers) is in [docs/data/04_data-contract.md](docs/data/04_dat
 ## Scope
 
 No mechanistic simulation (discrete-element, grain-based or hybrid stress models), no non-ideal
-detonation, no flyrock, ground vibration or comminution model. The initiation sequence on the Bench tab
-is drawn and enters no prediction: the timing factor of the modified classical model is a scalar.
+detonation, no flyrock, ground vibration or comminution model. The initiation sequence of the bench view
+(the App's Design group) is drawn and enters no prediction: the timing factor of the modified classical model is a scalar.
 Constants that no held source prints, such as that timing factor and the crush-zone branch, are user
 parameters with stated ranges. No passing curve is validated here, because no available dataset carries
 a measured one.

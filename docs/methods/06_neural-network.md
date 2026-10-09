@@ -100,10 +100,24 @@ Evidence for **published neural network** in the committed benchmark (variance e
 Provenance: it is routed by the published discriminant, which was fitted on this corpus.
 <!-- /facts -->
 
+### 5.1 The hidden width, reproduced and held out by site
+
+The source chose the hidden width on its own hold-out, the rows it then reported. The engine's
+`network_width_sweep` (0.4.0) asks two questions of that choice: does the source's procedure, reproduced,
+land on the published widths, and does any width transfer to a site the network has not seen?
+
+<!-- facts:width-sweep -->
+Reproduced on the 2012 hold-out, the source's width selection picks 8 hidden units for the high-modulus group and 11 for the low, against the published 9 and 7. Held out by site, every width from 6 to 15 scores from -1.486 to -0.568, and the published pair -0.626; the null, which predicts the training mean, scores -0.216.
+<!-- /facts -->
+
+Neither the width nor the seed rescues the network across sites: the wider networks fail hardest, and
+the published pair scores as the benchmark's arm does. The full tables are in
+[results/05](../results/05_published-reproductions.md).
+
 ## 6. In the browser
 
 The fitted networks of each training scope are exported as JSON (both groups, the eight simulations,
-the normalisation bounds and the clamp) and the What if tab runs them in TypeScript. The browser test
+the normalisation bounds and the clamp) and the App's Design group runs them in TypeScript. The browser test
 reproduces the original network's prediction at all 116 published blasts to a relative difference
 below 1e-12; the difference that remains comes from the exponential in the logistic function
 ([architecture/05](../architecture/05_portable-models.md)).

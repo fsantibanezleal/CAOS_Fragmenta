@@ -30,7 +30,7 @@ Three places hold it:
 1. **The writer** (`data-pipeline/pipeline/core/jsonio.py`, `stages/export.py`, `stages/models.py`,
    `stages/benchmark.py`): sorted keys, LF endings, no non-finite floats, a content digest in every file.
 2. **The typed mirror** (`frontend/src/lib/contract.types.ts`): every field the artifacts carry, with
-   the schema names `fragmenta.case/v1`, `fragmenta.benchmark/v2` and `fragmenta.models/v1`. The
+   the schema names `fragmenta.case/v1`, `fragmenta.benchmark/v3` and `fragmenta.models/v1`. The
    parity test reads the committed artifacts and fails when a field appears on one side only, so a
    renamed field fails the build instead of rendering an empty chart.
 3. **The checks**: the release gate (`stages/validate.py`, also run by the deploy through

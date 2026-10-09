@@ -134,7 +134,8 @@ measurement channel a future corpus could use.
 
 - **Distribution** (App) draws the selected blast's curves on a logarithmic size axis with their P20,
   P50 and P80.
-- **Decide** (App) compares the predicted P80 against a crusher specification you set.
+- **Against a target** (App, Distribution) compares the predicted P80 against a crusher specification
+  you set.
 - **Design response** (Experiments) maps the live P80 over burden-to-diameter and spacing-to-burden,
   with an iso-line at a chosen specification.
 

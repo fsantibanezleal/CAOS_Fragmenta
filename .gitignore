@@ -52,3 +52,6 @@ models/*.pth
 .DS_Store
 Thumbs.db
 *.log
+
+# The measured gate's report and captures (frontend/scripts/gate.mjs)
+frontend/gate-output/

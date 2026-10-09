@@ -3,13 +3,14 @@
 Two routes: the browser, for a design study close to a corpus campaign, and the engine in Python, for
 your own data.
 
-## 1. In the browser: the What if tab
+## 1. In the browser: the Design group
 
 Open the App, pick the case closest to your rock (the real campaigns are listed with their rock and
-modulus; [cases](../cases.md)), open **What if**, and move the seven controls and the hole diameter to
-your design. Every arm answers live, including the learned ones fitted without that case's campaign;
-controls that leave the corpus envelope are marked, and so is every prediction made there. Nothing you
-enter leaves the browser. Details in [04](04_what-if.md).
+modulus; [cases](../cases.md)), open **Design**, set the bench height, stemming, powder factor, block
+size, modulus and hole diameter in the rail, and drag the map's marker to your burden and spacing. Every
+model answers live, including the learned ones fitted without that case's campaign; the inputs that
+leave the corpus envelope are named, and so is every prediction made there. Nothing you enter leaves
+the browser. Details in [04](04_what-if.md).
 
 What this route cannot do: change the rock factor's source, add your measured size, or score anything.
 A changed design has not been fired.

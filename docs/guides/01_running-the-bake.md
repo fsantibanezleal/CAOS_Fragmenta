@@ -12,9 +12,14 @@ python data-pipeline/run.py --n-seeds 30           # the network seed sweep widt
 ```
 
 `scripts/precompute.ps1` and `scripts/precompute.sh` wrap the full bake. Most of the time goes to the
-benchmark (100 draws of two random protocols, ten site folds, and the 30-seed network sweep), and within
-it to the network's Levenberg-Marquardt training; the engine measures its own benchmark at about two and
-a half minutes on a desktop CPU.
+benchmark (100 draws of two random protocols, ten site folds, the 30-seed network sweep and the
+ten-width network sweep), and within it to the network's Levenberg-Marquardt training. The full bake of
+0.06.000 took 745 s on the development workstation.
+
+`run.py` pins BLAS to one thread before numpy loads, and a test holds the pin. Without it, a
+multi-threaded BLAS spun on the network's small matrices: one fit took more than six minutes against
+about two seconds on one thread. A script that imports the engine directly should set
+`OPENBLAS_NUM_THREADS=1` (and `OMP_NUM_THREADS`, `MKL_NUM_THREADS`) itself.
 
 ## What it writes
 
@@ -24,7 +29,7 @@ a half minutes on a desktop CPU.
 | `data/derived/models/<scope>.json` | one per training scope: the fitted learned arms, exported, with fixtures |
 | `data/derived/manifests/<case>.json` | the case's lane measurement, flags, controls and provenance |
 | `data/derived/manifests/index.json` | what the web reads first: every file with its size and digest |
-| `data/derived/benchmark.json` | the cross-case benchmark (`fragmenta.benchmark/v2`) |
+| `data/derived/benchmark.json` | the cross-case benchmark (`fragmenta.benchmark/v3`) |
 
 All of it is committed; the web reads only these files.
 
@@ -60,7 +65,9 @@ python scripts/compare_bakes.py real-murgul --repeat 2
 If two bakes differ, something is reading a wall clock, iterating an unordered set, or stopping on a
 time limit. On a different operating system the bake reproduces to a numeric tolerance instead, because
 two builds of the same numpy can reduce in a different order; `python scripts/compare_bakes.py` compares
-every number in every case and fails above a relative 1e-6 ([architecture/01](../architecture/01_the-bake.md)).
+every number in every case and in its models file, and fails above a relative 1e-6. Measured at
+0.06.000 between Windows and Linux: 2.7e-08 at worst in a case, 7.0e-07 in a models file, on a
+near-zero network weight ([architecture/01](../architecture/01_the-bake.md)).
 Both bake into a temporary directory, never the canonical tree. They run on a developer machine before a
 release; CI does not bake (ADR-0074).
 

@@ -52,7 +52,7 @@ zero.
 
 The learned arms are fitted offline with scikit-learn and XGBoost, which a browser does not have, and
 ONNX Runtime Web has no tree-ensemble kernel. So the engine exports each fitted model as plain JSON and
-`frontend/src/engine/learned.ts` walks it. The What if tab uses the models file of the open case's
+`frontend/src/engine/learned.ts` walks it. The Design group uses the models file of the open case's
 training scope, so a learned number shown for a campaign comes from a model fitted without it, and the
 Benchmark page's live check walks the whole-corpus models over the published hold-out. How the walk is
 made exact is in [05](05_portable-models.md).
