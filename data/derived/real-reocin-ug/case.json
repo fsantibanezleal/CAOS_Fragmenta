@@ -174,7 +174,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "coarse, 0.51 to 0.69 m measured",
-   "es": "gruesa, 0.51 a 0.69 m medidos"
+   "es": "gruesa, 0,51 a 0,69 m medidos"
   },
   "id": "real-reocin-ug",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -190,7 +190,7 @@
   }
  },
  "controls": {},
- "digest": "4178f5c2744a2d610edb934a7afb8a2179a2b9f7a453a3d1f210a9551ac46ca1",
+ "digest": "7bc1511f02784abbb164f843981cfdb9aa27d8515581f05148ccc566581c12c0",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1705,7 +1705,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "36327d8af09405d03d08d738a521daca51b25c80fd05e91a21c82540dae64f1a",
+  "digest": "8350de46bc0168f0a639a18e42e9689c77571ca3e8df66a81fff5651fc553f82",
   "path": "models/Reocin-UG.json",
   "scope": "Reocin-UG"
  },
@@ -1880,6 +1880,62 @@
    }
   },
   "kuznetsov": {
+   "Ru1": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.649953
+   },
+   "Ru2": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.630735
+   },
+   "Ru3": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.630735
+   },
+   "Ru4": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.767637
+   },
+   "Ru5": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.572067
+   },
+   "Ru6": {
+    "abstained": false,
+    "cv": null,
+    "extrapolated": false,
+    "group": null,
+    "n_simulations": null,
+    "reason": null,
+    "x50_m": 0.582667
+   }
+  },
+  "kuznetsov-capped": {
    "Ru1": {
     "abstained": false,
     "cv": null,
@@ -2441,11 +2497,11 @@
   }
  },
  "provenance": {
-  "app_version": "0.05.001",
+  "app_version": "0.07.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
-   "version": "0.03.000"
+   "version": "0.04.000"
   },
   "held_out_site": "Reocin-UG",
   "leakage_note": "every learned arm on this case was trained WITHOUT any blast from Reocin-UG",
@@ -2554,6 +2610,49 @@
    ]
   },
   "kuznetsov": {
+   "bias_m": 0.04563219075898458,
+   "mae_m": 0.08140996718428488,
+   "mape_pct": 13.911422277626817,
+   "n_abstained": 0,
+   "n_extrapolated": 0,
+   "n_scored": 6,
+   "pearson_r2": 0.05165724292905473,
+   "r2_identity": -0.9651369609628464,
+   "r2_identity_interval": [
+    -5.1207161543847395,
+    -0.1104605352401109
+   ],
+   "r2_identity_point": -0.9651369609628464,
+   "rmse_m": 0.0928696278290955,
+   "scoreable": true,
+   "worst_rows": [
+    {
+     "blast_id": "Ru4",
+     "error_m": 0.12763681153009387,
+     "error_pct": 19.943251801577166,
+     "measured_m": 0.64,
+     "predicted_m": 0.7676368115300939,
+     "site": "Reocin-UG"
+    },
+    {
+     "blast_id": "Ru3",
+     "error_m": 0.12073465878691203,
+     "error_pct": 23.67346250723765,
+     "measured_m": 0.51,
+     "predicted_m": 0.630734658786912,
+     "site": "Reocin-UG"
+    },
+    {
+     "blast_id": "Ru6",
+     "error_m": -0.10733332927590089,
+     "error_pct": -15.55555496752187,
+     "measured_m": 0.69,
+     "predicted_m": 0.5826666707240991,
+     "site": "Reocin-UG"
+    }
+   ]
+  },
+  "kuznetsov-capped": {
    "bias_m": 0.04563219075898458,
    "mae_m": 0.08140996718428488,
    "mape_pct": 13.911422277626817,
@@ -3059,6 +3158,16 @@
    "stemming-long": 0.6132312666047628
   },
   "kuznetsov": {
+   "base": 0.6389655240923179,
+   "blocky": 0.6389655240923179,
+   "burden-tight": 0.5890971056046574,
+   "burden-wide": 0.6852141870432602,
+   "powder-down": 0.766664391703127,
+   "powder-up": 0.541144567482461,
+   "spacing-wide": 0.6586797324425134,
+   "stemming-long": 0.6132312666047628
+  },
+  "kuznetsov-capped": {
    "base": 0.6389655240923179,
    "blocky": 0.6389655240923179,
    "burden-tight": 0.5890971056046574,

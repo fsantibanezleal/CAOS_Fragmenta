@@ -138,6 +138,26 @@ INTERPOLATION = re.compile(r"\$\{[^}]*\}")
 WORD = re.compile(r"[A-Za-zÀ-ſ]+")
 
 
+#: "esta" is a demonstrative and "está" the verb, which is why the word list leaves both alone. A
+#: demonstrative is followed by a noun, so before a gerund, a preposition or these words only the verb can
+#: stand: "la instalación esta rota" shipped in a case write-up.
+VERB_FOLLOWERS = frozenset(
+    "en a de por sobre bajo entre fuera dentro cerca lejos sin bien mal rota roto rotas rotos "
+    "completamente listo lista claro clara".split()
+)
+ESTA_BEFORE = re.compile(r"\b(esta|estan)\s+([a-záéíóúñ]+)", re.IGNORECASE)
+
+
+EL_BEFORE_PUNCTUATION = re.compile(r"\b[Ee]l\s*[.,;:)?!]")
+
+#: Spanish writes a decimal comma (conventions/languages.md, base requirement S8): "0,311", never "0.311".
+#: A version is an identifier, not a decimal, so a number after "versión" keeps its point, and so does the
+#: middle of a dotted identifier ("0.05.000"). Until 0.07.000 any point after the number excused it, and a
+#: number that ends a sentence ("recuperado, 3.68.") passed.
+DECIMAL_POINT = re.compile(r"(?<![\w.,/])\d+\.\d+(?![\w/]|\.\d)")
+VERSION_BEFORE = re.compile(r"versi[oó]n\s+$", re.IGNORECASE)
+
+
 def tracked(pattern: str) -> list[Path]:
     out = subprocess.run(["git", "ls-files", pattern], cwd=ROOT, capture_output=True, text=True,
                          check=True).stdout
@@ -195,6 +215,23 @@ def spanish_strings() -> list[tuple[str, str]]:
             if any(value in s for s in spanish) and not any(value in s for s in english):
                 found.append((f"data-pipeline/.../fragmenta_cases.py:{tok.start[0]}", value))
 
+    # What the App shows from the bake: every Spanish field of every committed artifact. A string the bake
+    # composes (the expected band joins the English numbers) is read here as it ships, not only as written.
+    def spanish_fields(node: object, where: str) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key == "es" and isinstance(value, str):
+                    found.append((where, value))
+                else:
+                    spanish_fields(value, f"{where}/{key}")
+        elif isinstance(node, list):
+            for k, value in enumerate(node):
+                spanish_fields(value, f"{where}[{k}]")
+
+    for path in sorted(tracked("data/derived/**")):
+        if path.suffix == ".json" and path.exists():
+            spanish_fields(json.loads(path.read_text(encoding="utf-8")), path.relative_to(ROOT).as_posix())
+
     return found
 
 
@@ -209,6 +246,18 @@ def problems_in(where: str, text: str) -> list[str]:
         fixed = REQUIRED.get(m.group(0).lower())
         if fixed:
             problems.append(f"{where}: '{m.group(0)}' should be '{fixed}'")
+    # The article "el" cannot end a clause, so before punctuation it is the pronoun ("sobre el." shipped).
+    for m in EL_BEFORE_PUNCTUATION.finditer(INTERPOLATION.sub(" ", text)):
+        problems.append(f"{where}: '{m.group(0)}' needs the pronoun, 'él'")
+    prose = INTERPOLATION.sub(" ", text)
+    for m in DECIMAL_POINT.finditer(prose):
+        if not VERSION_BEFORE.search(prose[max(0, m.start() - 12) : m.start()]):
+            problems.append(f"{where}: '{m.group(0)}' takes the decimal comma in Spanish")
+    for m in ESTA_BEFORE.finditer(INTERPOLATION.sub(" ", text)):
+        follower = m.group(2).lower()
+        if follower in VERB_FOLLOWERS or follower.endswith(("ando", "iendo", "yendo")):
+            verb = {"esta": "está", "estan": "están"}[m.group(1).lower()]
+            problems.append(f"{where}: '{m.group(0)}' needs the verb, '{verb} {m.group(2)}'")
     return problems
 
 

@@ -44,6 +44,9 @@ def arm_catalogue(
     factors = dict(bf.SITE_ROCK_FACTOR) | dict(rock_factors or {})
     catalogue: dict[str, bf.Arm] = {
         "kuznetsov": bf.Kuznetsov(factors),
+        # The cap is a declared choice of the engine, not a published relation; it changes the mean size only
+        # where the classical prediction exceeds the in-situ block.
+        "kuznetsov-capped": bf.InSituCap(bf.Kuznetsov(factors)),
         "kuz-ram": bf.KuzRam(factors),
         "swebrec": bf.Swebrec(factors),
         "crush-zone": bf.CrushZone(factors),

@@ -1,0 +1,16 @@
+# Requirements: the live lanes in the browser
+
+Retroactive (written 2026-10-05; the code is 0.01.003 to 0.05.001). EARS.
+
+| ID | Requirement | Gate |
+|---|---|---|
+| LV-001 | THE browser's classical mean size SHALL match the baked value on every reconstructable blast. | `frontend/test/parity.test.ts::the classical mean size matches the baked value on every reconstructable blast` |
+| LV-002 | THE browser's published regression and router SHALL match the baked values on every blast, and the two published groups SHALL stay separated. | `frontend/test/parity.test.ts::the published regression matches the baked value on every blast`, `frontend/test/parity.test.ts::the group router agrees with the baked group on every blast`, `frontend/test/parity.test.ts::the two published groups stay perfectly separated by the discriminant` |
+| LV-003 | THE browser's distribution curves SHALL match the baked ones point for point on the same sieve grid, with the same percentiles. | `frontend/test/parity.test.ts::the distribution curves match the baked ones point for point`, `frontend/test/parity.test.ts::the three-parameter curve matches the baked one`, `frontend/test/parity.test.ts::the percentiles the artifact carries are reproduced in the browser`, `frontend/test/parity.test.ts::the sieve grid is the same one the bake used` |
+| LV-004 | THE browser's geometry reconstruction SHALL match the baked pattern. | `frontend/test/parity.test.ts::the geometry reconstruction matches the baked pattern` |
+| LV-005 | IF a design is not a blast, THEN THE browser SHALL refuse exactly what the bake refused, and SHALL not flag a normal blast. | `frontend/test/parity.test.ts::the browser refuses exactly the designs the bake refused as not a blast`, `frontend/test/parity.test.ts::a normal blast is not flagged as degenerate` |
+| LV-006 | THE browser SHALL use the plausible fragment range of the engine that baked the artifacts. | `frontend/test/parity.test.ts::the plausible range agrees with the engine that baked the artifacts` |
+| LV-007 | THE walker SHALL reproduce every fitted model at every fixture, and THE learned predictions the App replays SHALL be what the shipped models return. | `frontend/test/learned.test.ts::the walker reproduces every fitted model at every fixture`, `frontend/test/learned.test.ts::the learned predictions the App replays are what the shipped models return` |
+| LV-008 | IF a design lies outside the physical range, THEN THE learned lane SHALL refuse it rather than draw it. | `frontend/test/learned.test.ts::a design outside the physical range is refused, not drawn` |
+| LV-009 | THE web SHALL read exactly the fields the pipeline writes, and every arm in every artifact SHALL be in the arm catalogue. | `frontend/test/parity.test.ts::every field in every shipped artifact is named in the TypeScript contract mirror`, `frontend/test/parity.test.ts::every arm in every shipped artifact has an entry in the arm catalogue` |
+| LV-010 | WHERE an arm declares that it shares another arm's mean size, THE artifacts SHALL show it predicting that mean size and scoring as its source on every case. | `frontend/test/parity.test.ts::an arm declared as sharing a mean size predicts it and scores as its source on every case` |

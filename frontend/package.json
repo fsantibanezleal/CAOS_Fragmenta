@@ -1,7 +1,7 @@
 {
   "name": "fragmenta-frontend",
   "private": true,
-  "version": "0.5.1",
+  "version": "0.7.0",
   "type": "module",
   "scripts": {
     "predev": "node copy-data.mjs",
@@ -11,17 +11,19 @@
     "postbuild": "node spa-404.mjs",
     "preview": "vite preview",
     "test": "node --import tsx --test",
-    "gate:browser": "node gates/browser-gate.mjs"
+    "gate:browser": "node gates/browser-gate.mjs",
+    "gate": "node scripts/gate.mjs"
   },
   "dependencies": {
-    "@fasl-work/caos-app-shell": "^0.6.0",
+    "@fasl-work/caos-app-shell": "0.10.0",
     "katex": "^0.16.11",
     "lucide-react": "^0.469.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.1.1",
     "three": "^0.171.0",
-    "uplot": "^1.6.31"
+    "uplot": "^1.6.31",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@types/node": "^22.20.0",

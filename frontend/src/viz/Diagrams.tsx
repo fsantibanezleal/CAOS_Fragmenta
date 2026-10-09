@@ -25,6 +25,7 @@ import { useShellLang } from '@fasl-work/caos-app-shell';
 import { useId, type ReactNode } from 'react';
 
 import { DISCRIMINANT_BOUNDARY, rosinRammler, sieveGrid, swebrec } from '../engine/live';
+import { coord, num } from '../lib/format';
 
 const FG = 'var(--color-fg, #222)';
 const MUTED = 'var(--color-fg-subtle, #8892a4)';
@@ -392,9 +393,9 @@ export function ClassicalFlowDiagram() {
     { title: t('Absolute pattern', 'Malla absoluta'), lines: ['B, S, H, T, D', 'V = B·S·H', 'Q = Pf·V'] },
     { title: t('Rock factor A', 'Factor de roca A'), tone: 'warn', lines: [t('published ratings, or', 'calificaciones publicadas, o'), t('recovered per site, or', 'recuperado por sitio, o'), t('predicted from E', 'predicho desde E')] },
   ]);
-  const mean = centred({ x: 245, w: 220, tone: 'accent', title: t('Mean size x50', 'Tamaño medio x50'), lines: ['A·(V/Q)^0.8·Q^(1/6)', '·(RWS/115)^(-19/30)'] }, bottomOf(left) / 2 + 7);
+  const mean = centred({ x: 245, w: 220, tone: 'accent', title: t('Mean size x50', 'Tamaño medio x50'), lines: [t('A·(V/Q)^0.8·Q^(1/6)', 'A·(V/Q)^0,8·Q^(1/6)'), '·(RWS/115)^(-19/30)'] }, bottomOf(left) / 2 + 7);
   const right = column(505, 200, 14, 16, [
-    { title: t('Uniformity n', 'Uniformidad n'), tone: 'bad', lines: ['(2.2 - 14·B/d)·...', t('B in m, d in mm', 'B en m, d en mm')] },
+    { title: t('Uniformity n', 'Uniformidad n'), tone: 'bad', lines: [t('(2.2 - 14·B/d)·...', '(2,2 - 14·B/d)·...'), t('B in m, d in mm', 'B en m, d en mm')] },
     { title: t('Curve shape', 'Forma de la curva'), lines: ['Rosin-Rammler', 'Swebrec', t('two-branch', 'dos ramas')] },
   ]);
   const out = centred({ x: 745, w: 143, tone: 'good', title: 'P20, P50, P80', lines: [t('oversize %', 'sobretamaño %'), t('fines %', 'finos %')] }, bottomOf(right) / 2 + 7);
@@ -410,7 +411,7 @@ export function ClassicalFlowDiagram() {
       notes={[
         t(
           'The trap in n: the source gives the burden in metres and the hole diameter in millimetres, so B/d is about 0.027 for a 4.5 m burden on a 165 mm hole, a thousand times smaller than the ratio the corpus tabulates. Read as the tabulated ratio, the leading term becomes 2.2 minus 382.',
-          'La trampa en n: la fuente da el bordo en metros y el diámetro en milímetros, así que B/d vale cerca de 0.027 para un bordo de 4.5 m en un barreno de 165 mm, mil veces menos que la razón tabulada en el corpus. Leído como la razón tabulada, el término principal pasa a 2.2 menos 382.',
+          'La trampa en n: la fuente da el bordo en metros y el diámetro en milímetros, así que B/d vale cerca de 0,027 para un bordo de 4,5 m en un barreno de 165 mm, mil veces menos que la razón tabulada en el corpus. Leído como la razón tabulada, el término principal pasa a 2,2 menos 382.',
         ),
       ]}
     >
@@ -431,14 +432,14 @@ export function ClassicalFlowDiagram() {
 export function RockFactorDiagram() {
   const t = useT();
   const sources = column(12, 230, 12, 12, [
-    { title: t('Lilly, as printed in 2010', 'Lilly, según 2010'), lines: ['BI = 0.5(RMD+JPS+JPO', '     +RDI+0.05·UCS)'] },
+    { title: t('Lilly, as printed in 2010', 'Lilly, según 2010'), lines: [t('BI = 0.5(RMD+JPS+JPO', 'BI = 0,5(RMD+JPS+JPO'), t('     +RDI+0.05·UCS)', '     +RDI+0,05·UCS)')] },
     { title: t('Lilly, as printed in 2019', 'Lilly, según 2019'), tone: 'warn', lines: [t('strength = UCS/3 or /5', 'resistencia = UCS/3 o /5')] },
     { title: t('Protodyakonov lookup', 'Tabla de Protodyakonov'), lines: [t('five bands, A = 3 to 13', 'cinco bandas, A = 3 a 13')] },
     { title: t('Recovered per site', 'Recuperado por sitio'), tone: 'good', lines: [t('invert x50 on the', 'invertir x50 sobre la'), t('published prediction', 'predicción publicada')] },
     { title: t('Predicted from E', 'Predicho desde E'), tone: 'accent', lines: [t('line over training sites', 'recta sobre sitios de'), t('only (transfer arm)', 'entrenamiento (brazo de transferencia)')] },
   ]);
-  const a = centred({ x: 310, w: 200, tone: 'accent', title: t('Rock factor A', 'Factor de roca A'), lines: [t('valid range 0.8 to 22', 'rango válido 0.8 a 22'), t('x50 is linear in A', 'x50 es lineal en A')] }, bottomOf(sources) / 2 + 6);
-  const spread = centred({ x: 580, w: 308, tone: 'bad', title: t('How far the routes disagree', 'Cuánto discrepan las rutas'), lines: [t('2010 vs 2019 tables: up to', 'tablas 2010 vs 2019: hasta'), t('0.85 in A at UCS 100 MPa', '0.85 en A con UCS 100 MPa'), t('recovered: within-site', 'recuperado: dispersión'), t('spread 0.6 to 3.7%', 'dentro del sitio 0.6 a 3.7%')] }, a.y + a.h / 2);
+  const a = centred({ x: 310, w: 200, tone: 'accent', title: t('Rock factor A', 'Factor de roca A'), lines: [t('valid range 0.8 to 22', 'rango válido 0,8 a 22'), t('x50 is linear in A', 'x50 es lineal en A')] }, bottomOf(sources) / 2 + 6);
+  const spread = centred({ x: 580, w: 308, tone: 'bad', title: t('How far the routes disagree', 'Cuánto discrepan las rutas'), lines: [t('2010 vs 2019 tables: up to', 'tablas 2010 vs 2019: hasta'), t('0.85 in A at UCS 100 MPa', '0,85 en A con UCS 100 MPa'), t('recovered: within-site', 'recuperado: dispersión'), t('spread 0.6 to 3.7%', 'dentro del sitio 0,6 a 3,7%')] }, a.y + a.h / 2);
   const boxes = [...sources, a, spread];
   return (
     <Figure
@@ -478,7 +479,7 @@ export function DistributionShapesDiagram() {
   const Y1 = 236;
   const lx = (v: number) => X0 + ((Math.log10(v) - Math.log10(0.003)) / (Math.log10(4.4) - Math.log10(0.003))) * (X1 - X0);
   const ly = (p: number) => Y1 - p * (Y1 - Y0);
-  const path = (values: number[]) => values.map((p, i) => `${i ? 'L' : 'M'}${lx(grid[i]).toFixed(1)},${ly(p).toFixed(1)}`).join(' ');
+  const path = (values: number[]) => values.map((p, i) => `${i ? 'L' : 'M'}${coord(lx(grid[i]))},${coord(ly(p))}`).join(' ');
   const ticks = [0.01, 0.1, 1];
   return (
     <Figure
@@ -486,12 +487,12 @@ export function DistributionShapesDiagram() {
       label={t('Two curves through one mean size', 'Dos curvas por un mismo tamaño medio')}
       caption={t(
         'Computed in your browser by the same functions the App uses: a two-parameter Rosin-Rammler curve (n = 1.2) and a three-parameter Swebrec curve (upper limit 4.5 m, undulation 2) through the same x50 of 0.30 m. Both pass 50 percent at x50; they disagree in both tails.',
-        'Calculadas en su navegador por las mismas funciones que usa la App: una curva Rosin-Rammler de dos parámetros (n = 1.2) y una Swebrec de tres (límite superior 4.5 m, ondulación 2) por el mismo x50 de 0.30 m. Ambas pasan el 50 por ciento en x50; discrepan en las dos colas.',
+        'Calculadas en su navegador por las mismas funciones que usa la App: una curva Rosin-Rammler de dos parámetros (n = 1,2) y una Swebrec de tres (límite superior 4,5 m, ondulación 2) por el mismo x50 de 0,30 m. Ambas pasan el 50 por ciento en x50; discrepan en las dos colas.',
       )}
       notes={[
         t(
           'Horizontal axis: mesh size, logarithmic, 3 mm to 4.4 m. Vertical: fraction passing, 0 to 1. No measured passing curve exists for any blast held for this work, so neither shape is validated here.',
-          'Eje horizontal: tamaño de malla, logarítmico, de 3 mm a 4.4 m. Vertical: fracción pasante, de 0 a 1. Ningún tiro disponible para este trabajo tiene una curva pasante medida, así que ninguna de las dos formas se valida aquí.',
+          'Eje horizontal: tamaño de malla, logarítmico, de 3 mm a 4,4 m. Vertical: fracción pasante, de 0 a 1. Ningún tiro disponible para este trabajo tiene una curva pasante medida, así que ninguna de las dos formas se valida aquí.',
         ),
       ]}
     >
@@ -509,7 +510,7 @@ export function DistributionShapesDiagram() {
           ))}
           <Label x={lx(x50)} y={Y1 + 16} anchor="middle" tone="fg">x50</Label>
           {[0, 0.5, 1].map((p) => (
-            <Label key={p} x={X0 - 8} y={ly(p) + 4} anchor="end">{p.toFixed(1)}</Label>
+            <Label key={p} x={X0 - 8} y={ly(p) + 4} anchor="end">{num(p, 1)}</Label>
           ))}
           {/* Legend in the empty upper-left of the plot, where neither curve goes. */}
           <rect x={X0 + 12} y={Y0 + 12} width={14} height={4} fill={ACCENT} />
@@ -525,12 +526,12 @@ export function DistributionShapesDiagram() {
 export function GroupRouterDiagram() {
   const t = useT();
   const groups = column(560, 210, 14, 26, [
-    { title: t('Group 1, high modulus', 'Grupo 1, módulo alto'), tone: 'good', lines: [t('35 blasts, mean 51.1 GPa', '35 tiros, media 51.1 GPa'), t('lowest L = 13.067', 'menor L = 13.067')] },
-    { title: t('Group 2, low modulus', 'Grupo 2, módulo bajo'), tone: 'good', lines: [t('62 blasts, mean 17.2 GPa', '62 tiros, media 17.2 GPa'), t('highest L = 10.318', 'mayor L = 10.318')] },
+    { title: t('Group 1, high modulus', 'Grupo 1, módulo alto'), tone: 'good', lines: [t('35 blasts, mean 51.1 GPa', '35 tiros, media 51,1 GPa'), t('lowest L = 13.067', 'menor L = 13,067')] },
+    { title: t('Group 2, low modulus', 'Grupo 2, módulo bajo'), tone: 'good', lines: [t('62 blasts, mean 17.2 GPa', '62 tiros, media 17,2 GPa'), t('highest L = 10.318', 'mayor L = 10,318')] },
   ]);
   const mid = bottomOf(groups) / 2 + 7;
   const inputs = centred({ x: 12, w: 170, title: t('Seven ratios', 'Siete razones'), lines: ['S/B H/B B/D T/B', 'Pf XB E'] }, mid);
-  const score = centred({ x: 222, w: 230, tone: 'accent', title: t('Discriminant L', 'Discriminante L'), lines: ['4.467 S/B - 0.551 H/B', '- 0.123 B/D + ... + 3.577'] }, mid);
+  const score = centred({ x: 222, w: 230, tone: 'accent', title: t('Discriminant L', 'Discriminante L'), lines: [t('4.467 S/B - 0.551 H/B', '4,467 S/B - 0,551 H/B'), t('- 0.123 B/D + ... + 3.577', '- 0,123 B/D + ... + 3,577')] }, mid);
   const eq = centred({ x: 800, w: 88, title: t('Its own', 'Su propia'), lines: [t('power law', 'ley de potencia')] }, mid);
   const boxes = [inputs, score, ...groups, eq];
   const from = edge(score, 'right');
@@ -601,12 +602,12 @@ export function NetworkDiagram() {
 
 export function EnsembleDiagram({ boostingWeight, forestWeight }: { boostingWeight?: number | null; forestWeight?: number | null }) {
   const t = useT();
-  const fmt = (v?: number | null) => (v === undefined || v === null ? '...' : v.toFixed(2));
+  const fmt = (v?: number | null) => (v === undefined || v === null ? '...' : num(v, 2));
   const scale = place({ x: 12, y: 70, w: 150, title: t('Standard score', 'Puntaje estándar'), lines: ['(x - mean)/sd', t('training rows', 'filas de entrenamiento')] });
   const bases = column(196, 220, 14, 14, [
     { title: t('Random forest', 'Bosque aleatorio'), lines: [t('76 trees, seed 27', '76 árboles, semilla 27')] },
-    { title: 'XGBoost', tone: 'warn', lines: [t('rate 0.5, seed 42', 'tasa 0.5, semilla 42'), t('fits its training rows almost exactly', 'ajusta sus filas de entrenamiento casi exacto')] },
-    { title: t('Support vectors', 'Vectores de soporte'), lines: [t('radial: C 5.25, eps 0.04', 'radial: C 5.25, eps 0.04'), t('poly: degree 5, C 1', 'polinómico: grado 5, C 1')] },
+    { title: 'XGBoost', tone: 'warn', lines: [t('rate 0.5, seed 42', 'tasa 0,5, semilla 42'), t('fits its training rows almost exactly', 'ajusta sus filas de entrenamiento casi exacto')] },
+    { title: t('Support vectors', 'Vectores de soporte'), lines: [t('radial: C 5.25, eps 0.04', 'radial: C 5,25, eps 0,04'), t('poly: degree 5, C 1', 'polinómico: grado 5, C 1')] },
   ]);
   const meta = place({ x: 456, y: 22, w: 200, tone: 'accent', title: t('Linear meta-learner', 'Meta-aprendiz lineal'), lines: [t('fitted on IN-SAMPLE base', 'ajustado sobre predicciones'), t('predictions (no CV)', 'base EN MUESTRA (sin CV)')] });
   const weights = place({ x: 686, y: 22, w: 202, tone: 'bad', title: t('Learned weights', 'Pesos aprendidos'), lines: [`${t('boosting', 'boosting')} ${fmt(boostingWeight)}`, `${t('forest', 'bosque')} ${fmt(forestWeight)}`, t('= its boosting learner', '= su aprendiz boosting')] });
@@ -644,7 +645,7 @@ export function EnsembleDiagram({ boostingWeight, forestWeight }: { boostingWeig
 /** The three protocols, with the median scores passed in from the benchmark artifact. */
 export function ProtocolDiagram({ scores }: { scores?: { random?: number | null; dedup?: number | null; site?: number | null; arm?: string } }) {
   const t = useT();
-  const f = (v?: number | null) => (v === undefined || v === null ? '...' : v.toFixed(3));
+  const f = (v?: number | null) => (v === undefined || v === null ? '...' : num(v, 3));
   const rows = column(232, 250, 14, 16, [
     { title: t('Random 80/20, 100 draws', 'Aleatorio 80/20, 100 sorteos'), tone: 'bad', lines: [t('duplicates and sites cross', 'duplicados y sitios cruzan')] },
     { title: t('Deduplicated, 100 draws', 'Deduplicado, 100 sorteos'), tone: 'warn', lines: [t('duplicates removed; sites cross', 'sin duplicados; sitios cruzan')] },
@@ -818,7 +819,7 @@ export function ContractsDiagram() {
       notes={[
         t(
           'The gate exists because the corpus as first assembled disagreed with the published tables in five cells, two of them on the measured size; the tell was a powder-factor maximum of 1.47 against the 1.26 the paper prints in its own summary table.',
-          'La compuerta existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas, dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1.47 frente al 1.26 que el artículo imprime en su propia tabla resumen.',
+          'La compuerta existe porque el corpus, tal como se ensambló primero, discrepaba de las tablas publicadas en cinco celdas, dos sobre el tamaño medido; la señal fue un máximo de factor de carga de 1,47 frente al 1,26 que el artículo imprime en su propia tabla resumen.',
         ),
       ]}
     >
@@ -890,7 +891,7 @@ export function ReconstructionDiagram() {
       label={t('Recovering the absolute pattern', 'Recuperar la malla absoluta')}
       caption={t(
         'A diameter closes the system: from it and the tabulated ratios, every dimension of the pattern follows. A ninth site has no stated diameter but a stated bench height, and inverting it returns the same 91.2 mm on all six of its rows.',
-        'Un diámetro cierra el sistema: con él y las razones tabuladas se obtiene cada dimensión de la malla. Un noveno sitio no declara diámetro pero sí altura de banco, e invertirla devuelve los mismos 91.2 mm en sus seis filas.',
+        'Un diámetro cierra el sistema: con él y las razones tabuladas se obtiene cada dimensión de la malla. Un noveno sitio no declara diámetro pero sí altura de banco, e invertirla devuelve los mismos 91,2 mm en sus seis filas.',
       )}
     >
       {(m) => (
@@ -985,7 +986,7 @@ export function SafeProtocolDiagram() {
 /** Why the verdict depends on the row set: the two supports, with the scores passed in. */
 export function SupportsDiagram({ all, geometry }: { all?: { n: number; best: number | null; arm: string } | null; geometry?: { n: number; best: number | null; arm: string } | null }) {
   const t = useT();
-  const f = (v?: number | null) => (v === undefined || v === null ? '...' : v.toFixed(3));
+  const f = (v?: number | null) => (v === undefined || v === null ? '...' : num(v, 3));
   const a = place({ x: 12, y: 14, w: 420, tone: 'bad', title: t(`All ${all?.n ?? 97} blasts`, `Los ${all?.n ?? 97} tiros`), lines: [t(`best learned: ${all?.arm ?? '...'} ${f(all?.best)}`, `mejor aprendido: ${all?.arm ?? '...'} ${f(all?.best)}`), t('includes Miami: smallest fragments,', 'incluye Miami: fragmentos más finos,'), t('no geometry, classical arms abstain', 'sin geometría, los clásicos se abstienen')] });
   const g = place({ x: 468, y: 14, w: 420, tone: 'good', title: t(`The ${geometry?.n ?? 91} with geometry`, `Los ${geometry?.n ?? 91} con geometría`), lines: [t(`best learned: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`, `mejor aprendido: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`), t('the rows every arm can answer,', 'las filas que todo brazo responde,'), t('so arms are compared like for like', 'así se comparan en igualdad')] });
   const boxes = [a, g];
@@ -995,7 +996,7 @@ export function SupportsDiagram({ all, geometry }: { all?: { n: number; best: nu
       label={t('Two row sets', 'Dos conjuntos de filas')}
       caption={t(
         'The same out-of-fold predictions scored on two row sets. The declared criterion asks for a positive score at least 0.10 above the null; whether the learned tier meets it turns on the six Miami blasts.',
-        'Las mismas predicciones fuera de pliegue puntuadas sobre dos conjuntos de filas. El criterio declarado pide un puntaje positivo y al menos 0.10 sobre el nulo; que el nivel aprendido lo cumpla depende de los seis tiros de Miami.',
+        'Las mismas predicciones fuera de pliegue puntuadas sobre dos conjuntos de filas. El criterio declarado pide un puntaje positivo y al menos 0,10 sobre el nulo; que el nivel aprendido lo cumpla depende de los seis tiros de Miami.',
       )}
     >
       {() => <>{boxes.map((b, i) => <BoxEl key={i} box={b} />)}</>}

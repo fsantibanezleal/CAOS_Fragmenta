@@ -7,6 +7,7 @@
  */
 
 import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang, ModelsFile } from './contract.types';
+import { notAvailable, num, signed } from './format';
 
 // `import.meta.env` is injected by the bundler and does not exist when this module is imported
 // from plain Node, which is how the parity tests read the arm catalogue. Guarding it is what makes
@@ -81,6 +82,8 @@ export interface ArmMeta {
   distribution: boolean;
   /** The arm whose mean size this one reuses, as the engine's `shares_mean_size_with`; it adds a curve shape only. */
   sharesMeanSizeWith?: string;
+  /** The arm this one caps at the in-situ block (the engine's `InSituCap`); equal to it wherever the cap does not bind. */
+  cappedFrom?: string;
   source: string;
 }
 
@@ -117,6 +120,21 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: false,
     source: 'Kuznetsov 1973 with Cunningham’s correction; rock-factor line fitted here',
+  },
+  {
+    id: 'kuznetsov-capped',
+    tier: 'classical',
+    label: {
+      en: 'Classical mean size, capped at the in-situ block',
+      es: 'Tamaño medio clásico, limitado al bloque in situ',
+    },
+    blurb: {
+      en: 'The classical mean size with the site factor, capped at the blast’s in-situ block size, because a blast breaks blocks and does not fuse them. A declared choice of the engine, not a published relation: it changes a prediction only where the classical one exceeds the block, which on the corpus is three Reocin blasts.',
+      es: 'El tamaño medio clásico con el factor del sitio, limitado al tamaño de bloque in situ del tiro, porque una voladura rompe bloques y no los une. Una elección declarada del motor, no una relación publicada: cambia una predicción solo donde la clásica supera el bloque, que en el corpus son tres tiros de Reocin.',
+    },
+    distribution: false,
+    cappedFrom: 'kuznetsov',
+    source: 'Kuznetsov 1973 with Cunningham’s correction (Hudaverdi et al. 2010 Eq. 1), capped at the in-situ block size: a declared choice of blastfrag 0.4.0',
   },
   {
     id: 'kuz-ram',
@@ -254,7 +272,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Gradient boosting', es: 'Potenciación por gradiente' },
     blurb: {
       en: 'Reproduced at the published learning rate of 0.5, which its own source reports as overfitting. Left visible rather than tuned away.',
-      es: 'Reproducido con la tasa de aprendizaje publicada de 0.5, que su propia fuente reporta como sobreajuste. Se deja visible en vez de corregirlo.',
+      es: 'Reproducido con la tasa de aprendizaje publicada de 0,5, que su propia fuente reporta como sobreajuste. Se deja visible en vez de corregirlo.',
     },
     distribution: false,
     source: 'Sui et al. 2025, final parameters',
@@ -358,32 +376,36 @@ export const FEATURE_LABEL: Record<string, Record<Lang, string>> = {
   H_over_B: { en: 'Bench height / burden', es: 'Altura de banco / bordo' },
   B_over_D: { en: 'Burden / hole diameter', es: 'Bordo / diámetro' },
   T_over_B: { en: 'Stemming / burden', es: 'Taco / bordo' },
-  Pf_kg_m3: { en: 'Powder factor, kg/m3', es: 'Factor de carga, kg/m3' },
+  Pf_kg_m3: { en: 'Powder factor, kg/m³', es: 'Factor de carga, kg/m³' },
   XB_m: { en: 'In situ block size, m', es: 'Tamaño de bloque in situ, m' },
   E_GPa: { en: 'Young modulus, GPa', es: 'Módulo de Young, GPa' },
 };
 
-/** Format a fragment size for a readout: millimetres below 10 cm, centimetres above. */
+/**
+ * Format a fragment size, always in centimetres to one decimal.
+ *
+ * Until 0.06.000 the unit was picked by magnitude (millimetres below 10 cm), which put "22 mm" above
+ * "11.0 cm" in one table column and "45 mm" beside "11.0 cm" in one readout. One unit for every size
+ * in the product makes any two of them comparable at a glance; the browser gate checks the columns.
+ */
 export function formatSize(metres: number | null | undefined): string {
-  if (metres === null || metres === undefined || !Number.isFinite(metres)) return 'n/a';
-  if (metres < 0.1) return `${(metres * 1000).toFixed(0)} mm`;
-  return `${(metres * 100).toFixed(1)} cm`;
+  if (metres === null || metres === undefined || !Number.isFinite(metres)) return notAvailable();
+  return `${num(metres * 100, 1)} cm`;
 }
 
 export function formatSigned(value: number | null | undefined, digits = 3): string {
-  if (value === null || value === undefined || !Number.isFinite(value)) return 'n/a';
-  return `${value >= 0 ? '+' : ''}${value.toFixed(digits)}`;
+  return signed(value, digits);
 }
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹';
 
 export function formatScore(value: number | null | undefined, digits = 3): string {
-  if (value === null || value === undefined || !Number.isFinite(value)) return 'n/a';
+  if (value === null || value === undefined || !Number.isFinite(value)) return notAvailable();
   // A refit collapses to -117792.670 on an unseen site; printed in full it widened every table it was in.
   if (Math.abs(value) >= 1000) {
     const [mantissa, exponent] = value.toExponential(1).split('e');
     const power = [...String(Number(exponent))].map((c) => (c === '-' ? '⁻' : SUPERSCRIPT[Number(c)])).join('');
-    return `${mantissa}×10${power}`;
+    return `${num(Number(mantissa), 1)}×10${power}`;
   }
-  return value.toFixed(digits);
+  return num(value, digits);
 }

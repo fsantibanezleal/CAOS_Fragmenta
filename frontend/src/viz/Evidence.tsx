@@ -7,7 +7,7 @@
  * mark it does not belong to.
  */
 
-import { useShellLang } from '@fasl-work/caos-app-shell';
+import { fitLabel, useShellLang } from '@fasl-work/caos-app-shell';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import {
@@ -19,6 +19,7 @@ import {
   uniformityIndex,
   type LiveBlast,
 } from '../engine/live';
+import { notAvailable, num } from '../lib/format';
 
 const FG = 'var(--color-fg, #222)';
 const MUTED = 'var(--color-fg-subtle, #8892a4)';
@@ -28,7 +29,7 @@ const WARN = 'var(--color-warn, #d19a2b)';
 const GOOD = 'var(--color-good, #3aa675)';
 const BAD = 'var(--color-bad, #cc4b4b)';
 
-const fmt = (v: number | null | undefined, d = 3) => (v === null || v === undefined || !Number.isFinite(v) ? 'n/a' : v.toFixed(d));
+const fmt = (v: number | null | undefined, d = 3) => (v === null || v === undefined || !Number.isFinite(v) ? notAvailable() : num(v, d));
 
 function Readout({ children }: { children: ReactNode }) {
   return (
@@ -115,7 +116,7 @@ export function IntervalChart({
         {ticks.map((t) => (
           <g key={t}>
             <line x1={x(t)} y1={top - 4} x2={x(t)} y2={top + rows.length * rowH} stroke={BORDER} strokeDasharray={t === 0 ? undefined : '2 4'} />
-            <text x={x(t)} y={top + rows.length * rowH + 18} fill={MUTED} fontSize={11} textAnchor="middle">{t.toFixed(1)}</text>
+            <text x={x(t)} y={top + rows.length * rowH + 18} fill={MUTED} fontSize={11} textAnchor="middle">{num(t, 1)}</text>
           </g>
         ))}
         {rows.map((row, i) => {
@@ -123,7 +124,15 @@ export function IntervalChart({
           return (
             <g key={row.id} onPointerEnter={() => setHover(row.id)} data-row={row.id}>
               <rect x={0} y={cy - rowH / 2} width={W} height={rowH} fill={hover === row.id ? 'var(--color-accent-soft, rgba(79,142,247,0.08))' : 'transparent'} />
-              <text x={L - 12} y={cy + 4} fill={FG} fontSize={11.5} textAnchor="end">{row.label}</text>
+              {(() => {
+                const fit = fitLabel(row.label, L - 18, 11.5, 1);
+                return (
+                  <text x={L - 12} y={cy + 4} fill={FG} fontSize={11.5} textAnchor="end">
+                    {fit.shortened ? <title>{row.label}</title> : null}
+                    {fit.lines[0]}
+                  </text>
+                );
+              })()}
               {row.marks.map((mark) => {
                 if (mark.value === null || mark.value === undefined) return null;
                 const cyy = cy + MARK_STYLE[mark.kind].offset;
@@ -227,7 +236,7 @@ export function DrawHistogram({
           ),
         )}
         {[-1, -0.5, 0, 0.5, 1].map((t) => (
-          <text key={t} x={x(t)} y={B + 18} fill={MUTED} fontSize={11} textAnchor="middle">{t.toFixed(1)}</text>
+          <text key={t} x={x(t)} y={B + 18} fill={MUTED} fontSize={11} textAnchor="middle">{num(t, 1)}</text>
         ))}
       </svg>
       <Readout>
@@ -370,9 +379,9 @@ export function ResponseHeatmap() {
     <div className="fr-evidence">
       <div className="fr-heat">
         <div className="fr-heat-yaxis" aria-hidden="true">
-          <span>{SB[1].toFixed(2)}</span>
+          <span>{num(SB[1], 2)}</span>
           <span>{es ? 'S/B' : 'S/B'}</span>
-          <span>{SB[0].toFixed(2)}</span>
+          <span>{num(SB[0], 2)}</span>
         </div>
         <div className="fr-heat-plot" onPointerMove={onMove} onPointerLeave={() => setHover(null)}>
           <canvas ref={canvas} width={NX} height={NY} className="fr-heat-canvas" />
@@ -383,21 +392,21 @@ export function ResponseHeatmap() {
           </svg>
         </div>
         <div className="fr-heat-xaxis" aria-hidden="true">
-          <span>{BD[0].toFixed(1)}</span>
+          <span>{num(BD[0], 1)}</span>
           <span>{es ? 'B/D, bordo sobre diámetro' : 'B/D, burden over hole diameter'}</span>
-          <span>{BD[1].toFixed(1)}</span>
+          <span>{num(BD[1], 1)}</span>
         </div>
       </div>
       <div className="fr-heat-scale">
-        <span>{(lo * 100).toFixed(0)} cm</span>
+        <span>{num(lo * 100, 0)} cm</span>
         <span className="fr-heat-ramp" />
-        <span>{(hi * 100).toFixed(0)} cm</span>
+        <span>{num(hi * 100, 0)} cm</span>
         <span className="fr-fine">{es ? `P80 predicho; línea blanca: P80 = ${targetCm} cm` : `predicted P80; white line: P80 = ${targetCm} cm`}</span>
       </div>
       <Readout>
         {hover ? (
           <>
-            B/D {hover.bd.toFixed(1)}, S/B {hover.sb.toFixed(2)}: <b>P80 {Number.isFinite(hover.p80) ? `${(hover.p80 * 100).toFixed(1)} cm` : 'n/a'}</b>
+            B/D {num(hover.bd, 1)}, S/B {num(hover.sb, 2)}: <b>P80 {Number.isFinite(hover.p80) ? `${num(hover.p80 * 100, 1)} cm` : notAvailable()}</b>
           </>
         ) : (
           <span className="fr-fine">{es ? 'Pase el puntero sobre el mapa para leer el P80 de ese diseño.' : 'Point at the map to read the P80 of that design.'}</span>
@@ -407,7 +416,7 @@ export function ResponseHeatmap() {
         <label className="fr-control">
           {es ? 'Factor de roca A' : 'Rock factor A'}
           <input type="range" min={3} max={13} step={0.1} value={rockFactor} onChange={(e) => setRockFactor(Number(e.target.value))} />
-          <output>{rockFactor.toFixed(1)}</output>
+          <output>{num(rockFactor, 1)}</output>
         </label>
         <label className="fr-control">
           {es ? 'Diámetro, mm' : 'Hole diameter, mm'}
@@ -417,7 +426,7 @@ export function ResponseHeatmap() {
         <label className="fr-control">
           {es ? 'Factor de carga, kg/m³' : 'Powder factor, kg/m³'}
           <input type="range" min={0.22} max={1.26} step={0.01} value={powder} onChange={(e) => setPowder(Number(e.target.value))} />
-          <output>{powder.toFixed(2)}</output>
+          <output>{num(powder, 2)}</output>
         </label>
         <label className="fr-control">
           {es ? 'P80 objetivo, cm' : 'Target P80, cm'}
@@ -468,7 +477,7 @@ export function RatioTable({
                 const ratio = v !== null && ref ? v / ref : null;
                 const cls = ratio === null ? '' : ratio <= 0.8 ? 'fr-cell-good' : ratio <= 1 ? 'fr-cell-ok' : 'fr-cell-bad';
                 return (
-                  <td key={k} className={cls} title={ratio === null ? undefined : `${format(v as number)} (${ratio.toFixed(2)}×)`}>
+                  <td key={k} className={cls} title={ratio === null ? undefined : `${format(v as number)} (${num(ratio, 2)}×)`}>
                     {v === null ? '-' : format(v)}
                   </td>
                 );

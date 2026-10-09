@@ -11,20 +11,20 @@ at a time; Experiments and Benchmark are the pages that summarise across them.
 <!-- facts:cases -->
 | case | category | blasts | learned arms fitted without | answered | abstained | controls |
 |---|---|---|---|---|---|---|
-| `ctrl-degenerate` | negative-control | 6 | nothing (not in the corpus) | 0 | 78 | degenerate negative control: passed |
-| `ctrl-oracle` | positive-control | 8 | nothing (not in the corpus) | 96 | 8 | positive control: passed |
-| `real-akdaglar` | real-campaign | 22 | Akdaglar | 263 | 23 | - |
-| `real-dongri-buzurg` | real-campaign | 9 | Dongri-Buzurg | 108 | 9 | - |
-| `real-enusa` | real-campaign | 12 | Enusa | 144 | 12 | - |
-| `real-granite-ne` | extrapolation-control | 5 | nothing (not in the corpus) | 40 | 25 | extrapolation control: passed |
-| `real-miami` | negative-control | 6 | Miami | 42 | 36 | geometry negative control: passed |
-| `real-mrica` | real-campaign | 11 | Mrica | 132 | 11 | - |
-| `real-murgul` | real-campaign | 7 | Murgul | 80 | 11 | - |
-| `real-ozmert` | real-campaign | 7 | Ozmert | 84 | 7 | - |
-| `real-reocin` | real-campaign | 10 | Reocin | 120 | 10 | - |
-| `real-reocin-ug` | real-campaign | 6 | Reocin-UG | 72 | 6 | - |
-| `real-soma` | real-campaign | 7 | Soma | 84 | 7 | - |
-| `synth-ibsd-capped` | structural-control | 12 | nothing (not in the corpus) | 134 | 22 | - |
-| `synth-sweep-burden` | parameter-sweep | 12 | nothing (not in the corpus) | 144 | 12 | - |
-| `synth-sweep-powder` | parameter-sweep | 12 | nothing (not in the corpus) | 139 | 17 | - |
+| `ctrl-degenerate` | negative-control | 6 | nothing (not in the corpus) | 0 | 84 | degenerate negative control: passed |
+| `ctrl-oracle` | positive-control | 8 | nothing (not in the corpus) | 104 | 8 | positive control: passed |
+| `real-akdaglar` | real-campaign | 22 | Akdaglar | 285 | 23 | - |
+| `real-dongri-buzurg` | real-campaign | 9 | Dongri-Buzurg | 117 | 9 | - |
+| `real-enusa` | real-campaign | 12 | Enusa | 156 | 12 | - |
+| `real-granite-ne` | extrapolation-control | 5 | nothing (not in the corpus) | 40 | 30 | extrapolation control: passed |
+| `real-miami` | negative-control | 6 | Miami | 42 | 42 | geometry negative control: passed |
+| `real-mrica` | real-campaign | 11 | Mrica | 143 | 11 | - |
+| `real-murgul` | real-campaign | 7 | Murgul | 87 | 11 | - |
+| `real-ozmert` | real-campaign | 7 | Ozmert | 91 | 7 | - |
+| `real-reocin` | real-campaign | 10 | Reocin | 130 | 10 | - |
+| `real-reocin-ug` | real-campaign | 6 | Reocin-UG | 78 | 6 | - |
+| `real-soma` | real-campaign | 7 | Soma | 91 | 7 | - |
+| `synth-ibsd-capped` | structural-control | 12 | nothing (not in the corpus) | 146 | 22 | - |
+| `synth-sweep-burden` | parameter-sweep | 12 | nothing (not in the corpus) | 156 | 12 | - |
+| `synth-sweep-powder` | parameter-sweep | 12 | nothing (not in the corpus) | 151 | 17 | - |
 <!-- /facts -->

@@ -9,228 +9,6 @@
  * because clipping them is how a content page silently hides its own content.
  */
 
-:root {
-  --fr-rail: 320px;
-  --fr-gap: 12px;
-}
-
-/* Shell known defect 1 (caos-app-shell 0.6.x): the document cannot scroll.
- *
- * The shell sets `html, body, #root { height: 100% }` and, separately, `overflow-x: hidden` on html
- * and body. A box cannot be visible on one axis and hidden on the other, so overflow-y computes to
- * auto and both elements become viewport-tall scroll containers. The mouse wheel still scrolls
- * `body`, which is why it shipped, but `window.scrollTo` and in-page anchors do nothing: measured
- * here on /methodology, 2040px of content and a `scrollTo(0, 1200)` that moved 0px.
- *
- * Recorded in CAOS_MANAGE conventions/shell-known-defects.md, entry 1. Remove this block when a shell
- * release carries the fix, and not before. The App route is unaffected, because `.app-shell.fixed`
- * sizes itself with 100dvh, a viewport unit that does not depend on this percentage chain. */
-html,
-body,
-#root {
-  height: auto;
-  min-height: 100%;
-}
-
-/* Shell known defect 14 (caos-app-shell 0.6.8 to 0.6.13): the "·" before `.footer-build` stays on the
- * left while the auto margin pushes the version right, so it ends the left group alone before the gap.
- * The gap already separates the groups. CAOS_MANAGE conventions/shell-known-defects.md, entry 14;
- * the browser gate's footer check fails on any separator that is not between two items. */
-.footer-meta > span[aria-hidden='true']:has(+ .footer-build) {
-  display: none;
-}
-
-/* The App route's compact footer on every route. At the shell's 0.85rem the ADR-0016 items need
- * 1243px in Spanish under DejaVu Sans (the Linux fallback for the system stack) against 1152px, so the
- * documentation footer wrapped on Linux while fitting on Windows. */
-.site-footer .footer-inner {
-  padding: 0.45rem 1.5rem;
-  gap: 0.4rem;
-  font-size: 0.74rem;
-  line-height: 1.3;
-}
-
-.site-footer .footer-meta {
-  column-gap: 0.5rem;
-}
-
-/* ---------------------------------------------------------------------------------------------
- * The workbench route
- * ------------------------------------------------------------------------------------------- */
-
-.fr-layout {
-  display: grid;
-  grid-template-columns: var(--fr-rail) minmax(0, 1fr);
-  gap: var(--fr-gap);
-  height: 100%;
-  min-height: 0;
-  min-width: 0;
-}
-
-.fr-rail {
-  min-width: 0;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* The rail's two sections. Both are always REACHABLE in one click, which is the point: the rule is
- * that a control must not be below the fold, not that everything must be on screen at once. */
-.fr-railtabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  flex: 0 0 auto;
-}
-
-.fr-railtab {
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background: var(--color-surface);
-  color: var(--color-fg-subtle);
-  font: inherit;
-  font-size: 0.76rem;
-  padding: 5px 6px;
-  cursor: pointer;
-}
-
-.fr-railtab:hover {
-  color: var(--color-fg);
-}
-
-.fr-railtab-on {
-  border-color: var(--color-accent);
-  color: var(--color-fg);
-  background: var(--color-surface-2);
-}
-
-/* The one place in the rail allowed to scroll, and only because it is READING rather than controls.
- * It is also the only element that can absorb a long case reason without pushing a control off. */
-.fr-railpane {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.fr-main {
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* The instrument gets at least half an App route, and getting there is a chain, not one rule.
- *
- * The shell's own `.tabs` wrapper is a plain BLOCK, so as a flex item it sizes to its content and
- * every descendant inherits that ceiling. Making it a filling flex column is what actually releases
- * the height; styling the tab panel alone is not enough. */
-.fr-main > .tabs {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* The shell's tablist hides vertical overflow, which drops its minimum height to 0, so a tall panel
- * squeezed it and cut the tabs. */
-.fr-main > .tabs > .tablist {
-  flex: 0 0 auto;
-}
-
-/* `:not([hidden])` is load-bearing. The shell keeps EVERY tab panel mounted and hides the inactive
- * ones with the `hidden` attribute; `[hidden] { display: none }` is one class of specificity, so a
- * two-class `display: flex` beats it and every hidden panel comes back as an empty box stacked above
- * the active one. */
-.fr-main .tabpanel:not([hidden]) {
-  flex: 1 1 auto;
-  min-height: 0;
-  min-width: 0;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.fr-grid {
-  display: grid;
-  gap: var(--fr-gap);
-  min-height: 0;
-  min-width: 0;
-  flex: 1 1 auto;
-}
-
-/* The per-tab error boundary is a real element in the tree, so it has to pass height through.
- *
- * It was added as a plain `<div>`, which is `display: block` with `min-height: auto`, and that one
- * element broke the sizing chain the whole App route depends on: the tab panel was correctly bounded
- * at 650px, the boundary div sat inside it at 1146px because it sized to its content, and the grid's
- * `height: 100%` then resolved against 1146 instead of 650. A wrapper that does not pass height
- * through is invisible in the markup and decisive in the layout. */
-[data-tab-panel] {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  min-width: 0;
-}
-
-/* The instrument takes the pane it is given, and the pane is the visible height.
- *
- * ADR-0071 rule 8 asks for at least half the viewport on an App route. Without this the stage sized
- * itself to the chart's own minimum and the rest of the tab scrolled underneath, so the instrument
- * was 21% to 32% of the screen depending on size, which is the thumbnail the rule exists to stop.
- *
- * `100%` of a flex item whose parent is already bounded by the shell's fixed mode resolves to the
- * visible pane, so the chart grows with the window instead of sitting at a hand-picked pixel size.
- * A square chart on a 16:9 screen tops out around 41% by geometry; see the note in the browser gate. */
-.fr-grid-fill {
-  grid-template-rows: minmax(0, 1fr);
-  height: 100%;
-}
-
-.fr-grid-2 {
-  grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr);
-}
-
-@media (max-width: 1100px) {
-  .fr-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .fr-grid-2 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-.fr-stage {
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  /* Inside `.fr-grid-fill` the row is `minmax(0, 1fr)`, so the stage must be allowed to be shorter
-     than its content for the chart to size to the pane rather than the other way round. */
-  overflow: hidden;
-}
-
-.fr-stage-title {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 650;
-  color: var(--color-fg);
-}
-
-.fr-side {
-  min-width: 0;
-  min-height: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 /* ---------------------------------------------------------------------------------------------
  * Panels
  * ------------------------------------------------------------------------------------------- */
@@ -260,24 +38,12 @@ body,
   color: var(--color-fg-subtle);
 }
 
-.fr-panel-case .fr-case-reason {
-  margin: 0 0 10px;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  color: var(--color-fg-subtle);
-}
-
 .fr-kv {
   display: grid;
   grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   gap: 3px 10px;
   margin: 0;
   font-size: 0.78rem;
-}
-
-.fr-kv-wide {
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
-  font-size: 0.85rem;
 }
 
 .fr-kv dt {
@@ -482,39 +248,17 @@ body,
   min-height: 0;
 }
 
-/* The host measures the space; the canvas does not get a vote.
- *
- * The chart picks its side from the host's height, and the canvas then sets that height in pixels.
- * While the canvas is in normal flow those two facts are the same number, so the measurement is
- * self-referential and the square sticks at whatever it happened to start at: 520px, at every
- * viewport from 1280 to 2560. Taking the canvas out of flow breaks the loop, and the host's height
- * comes from the flex column above it instead. */
+/* The parity plot is the shell's UPlotChart (square, centred by the shell). Filling, it takes the height of the
+ * box its Stage gives it and the chart's plot fills that column; otherwise it takes the height asked for. */
 .fr-parity {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-/* Height from the column above, never from the content inside. The absolutely positioned host
- * contributes nothing to this box, which is the whole point. */
-.fr-chart-fillbox {
-  flex: 1 1 0;
-  min-height: 120px;
+  flex-direction: column;
   min-width: 0;
-  position: relative;
 }
 
-.fr-chart-fillbox > .fr-chart-canvas {
-  position: absolute;
-  inset: 0;
-}
-
-.fr-parity > canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.fr-parity.fill {
+  height: 100%;
+  min-height: 0;
 }
 
 /* Past about four lines a hover readout is not enough: the reader needs to isolate one and follow
@@ -765,10 +509,6 @@ body,
   font-style: italic;
 }
 
-.fr-row-good td:first-child {
-  font-weight: 650;
-}
-
 .fr-row-bad {
   background: color-mix(in srgb, var(--color-bad) 10%, transparent);
 }
@@ -793,38 +533,17 @@ body,
   white-space: nowrap;
 }
 
-.fr-arm-name {
-  display: block;
-  margin-bottom: 3px;
-}
-
 .fr-inline-arm {
   display: inline;
   padding: 0;
   border: 0;
   background: none;
   font: inherit;
+  text-align: inherit;
   color: var(--color-accent);
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
-}
-
-.fr-bar {
-  display: inline-block;
-  width: 130px;
-  height: 7px;
-  background: var(--color-surface-2);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-.fr-bar span {
-  display: block;
-  height: 100%;
-  background: var(--color-accent);
 }
 
 /* ---------------------------------------------------------------------------------------------
@@ -921,43 +640,6 @@ body,
   color: var(--color-bad);
 }
 
-.fr-metric {
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  margin: 6px 0 0;
-  color: var(--color-fg);
-}
-
-.fr-metric-small {
-  font-size: 0.75rem;
-  margin: 4px 0 0;
-  color: var(--color-fg-subtle);
-  font-variant-numeric: tabular-nums;
-}
-
-.fr-rockcompare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 10px;
-}
-
-.fr-rockcard {
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: var(--color-surface);
-}
-
-.fr-rockcard h4 {
-  margin: 0;
-  font-size: 0.82rem;
-}
-
-.fr-rockcard-on {
-  border-color: var(--color-good);
-}
-
 /* ---------------------------------------------------------------------------------------------
  * Prose routes
  *
@@ -970,19 +652,8 @@ body,
  * already set. A per-app width cannot follow a change to the shared measure, and it did not.
  * ------------------------------------------------------------------------------------------- */
 
-.prose h1 {
-  font-size: 1.5rem;
-  margin: 4px 0 12px;
-}
-
-.prose .fr-list {
+.fr-list {
   font-size: 0.86rem;
-}
-
-.fr-lede {
-  font-size: 0.98rem !important;
-  line-height: 1.6 !important;
-  color: var(--color-fg-subtle);
 }
 
 .fr-symbols {
@@ -1013,60 +684,6 @@ body,
   line-height: 1.6;
 }
 
-.fr-callout {
-  border: 1px solid var(--color-border);
-  border-left-width: 3px;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin: 16px 0;
-  background: var(--color-surface);
-}
-
-.fr-callout-strong {
-  border-left-color: var(--color-accent);
-}
-
-.fr-callout p {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.65;
-}
-
-.fr-callout-figures {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  margin: 14px 0 0;
-  padding: 0;
-}
-
-.fr-callout-figures li {
-  display: flex;
-  flex-direction: column;
-}
-
-.fr-callout-figures b {
-  font-size: 1.35rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-good);
-}
-
-.fr-callout-figures .fr-bad b,
-.fr-callout-figures li.fr-bad b {
-  color: var(--color-bad);
-}
-
-/* A score that is not a result about an unseen site: the published regression's in-sample fit. */
-.fr-callout-figures li.fr-neutral b {
-  color: var(--color-fg-subtle);
-}
-
-.fr-callout-figures span {
-  font-size: 0.7rem;
-  color: var(--color-fg-subtle);
-}
-
 .fr-figure {
   margin: 16px 0 20px;
   min-width: 0;
@@ -1092,21 +709,6 @@ body,
 .fr-inline-link {
   font-size: 0.78rem;
   color: var(--color-accent);
-}
-
-.fr-focus-link {
-  display: block;
-  text-align: center;
-  padding: 7px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  font-size: 0.76rem;
-  color: var(--color-accent);
-  text-decoration: none;
-}
-
-.fr-focus-link:hover {
-  border-color: var(--color-accent);
 }
 
 /* ---------------------------------------------------------------------------------------------
@@ -1226,23 +828,13 @@ body,
 /* Documentation routes, 0.05.000                                                               */
 /* ------------------------------------------------------------------------------------------- */
 
-/* The rail stays in reach on a long section. The shell's vertical rail is a normal grid column, so on
-   a section several screens tall the navigation scrolled away with the first paragraph. */
-.prose .subtabs-vertical > .subtablist {
-  position: sticky;
-  top: 72px;
-}
-
 /* ADR-0071 rule 2, the amendment: documentation routes take the full width, and the cap moves from
    the column to the TEXT BLOCK. Paragraphs and lists keep a reading measure; tables, figures,
    equations and grids keep the whole pane. Measured before this at 1600 px: about 150 characters
    per line of prose. */
-.prose .subtabpanel section > p,
-.prose .subtabpanel section > ul,
-.prose .subtabpanel section > ol,
-.prose > section > p,
-.prose > section > ul,
-.prose > section > ol {
+.fr-doc section > p,
+.fr-doc section > ul,
+.fr-doc section > ol {
   max-width: 110ch;
 }
 
@@ -1331,8 +923,10 @@ body,
   cursor: crosshair;
 }
 
-.fr-heat-canvas,
-.fr-heat-iso {
+/* Two classes, not one: the shell's prose rule gives an SVG `height: auto`, which made this 16:9 overlay a
+ * square that ran over the controls below it and drew the iso-line on the wrong geometry. */
+.fr-heat-plot .fr-heat-canvas,
+.fr-heat-plot .fr-heat-iso {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1397,12 +991,6 @@ body,
   margin: 6px 0;
 }
 
-/* What-if: a control whose value has left the training envelope says so. */
-.fr-control-out output {
-  color: var(--color-warn);
-  font-weight: 600;
-}
-
 .fr-button {
   margin-top: 8px;
   padding: 6px 12px;
@@ -1419,3 +1007,94 @@ body,
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
+
+/* ---------------------------------------------------------------------------------------------
+ * The workbench on the shell's CaseWorkbench (0.07.000)
+ * ------------------------------------------------------------------------------------------- */
+
+/* A drawing's box inside a Stage: a flex column of the stage's size, so a chart can grow to it. */
+.fr-stagebox {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* The body of a filling card whose content is a long table: it scrolls inside the card instead of being cut. */
+.fr-scrolly {
+  height: 100%;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* The response surface: the canvas takes keyboard focus, so the marker moves with the arrow keys. */
+.fr-surface {
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.fr-surface:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* A labelled select in the rail. */
+.fr-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.78rem;
+  color: var(--color-fg-subtle);
+  margin-bottom: 0.45rem;
+}
+
+/* The case write-up, in the workbench's context slot. */
+.fr-context table {
+  margin: 0.4rem 0 0.8rem;
+}
+
+/* The Rock view: the factors drawn beside the tables of the schemes and of what the corpus publishes. */
+.fr-rockstage {
+  display: flex;
+  gap: 0.9rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+.fr-rocktables {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* The ranking of the models is laid out at the width it is given (a scaled drawing set its labels at five pixels
+ * on a phone). */
+.fr-ranking {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Against a target: the decision keeps its height and the chart above it takes what is left. */
+.fr-stagebox > .fr-panel {
+  flex: none;
+}
+
+/* On a phone the model comparison needs every pixel of its card: tighter cells keep its last column inside. */
+@media (max-width: 480px) {
+  .fr-armtable .fr-table th,
+  .fr-armtable .fr-table td {
+    padding-inline: 3px;
+  }
+}
+
+/* The readout's fixed height keeps a desktop instrument the same in both languages. Below 900 px the shell stacks
+ * the views and the page scrolls, and a fixed row hid what wrapped: on a phone the curves' P80 and uniformity. */
+@media (max-width: 900px) {
+  .fr-readout {
+    height: auto;
+    min-height: 28px;
+  }
+}
+

@@ -18,6 +18,7 @@ import {
   TIER_LABEL,
 } from '../lib/artifacts';
 import type { CaseArtifact, PredictionCell, ScoreBlock } from '../lib/contract.types';
+import { notAvailable, num } from '../lib/format';
 
 /* ------------------------------------------------------------------------------------------- */
 /* Provenance                                                                                    */
@@ -36,7 +37,7 @@ export function ProvenancePanel({ artifact }: { artifact: CaseArtifact }) {
   const withheld = provenance.held_out_site;
 
   return (
-    <section className="fr-panel fr-panel-provenance">
+    <section className="fr-panel">
       <h3>
         <Info size={15} aria-hidden="true" />
         {lang === 'es' ? 'Procedencia' : 'Provenance'}
@@ -115,7 +116,7 @@ export function AbstentionPanel({
   }
 
   return (
-    <section className="fr-panel fr-panel-abstain">
+    <section className="fr-panel">
       <h3>
         <Ban size={15} aria-hidden="true" />
         {lang === 'es'
@@ -182,7 +183,7 @@ export function ScorePanel({
       : null;
 
   return (
-    <section className="fr-panel fr-panel-score">
+    <section className="fr-panel">
       {title ? <h3>{title}</h3> : null}
       <dl className="fr-kv fr-kv-metrics">
         <dt title="1 - SS_res / SS_tot about the 1:1 line. What a reader assumes R2 means.">
@@ -205,7 +206,7 @@ export function ScorePanel({
         <dt>RMSE</dt>
         <dd>{formatSize(score.rmse_m)}</dd>
         <dt>MAPE</dt>
-        <dd>{score.mape_pct === null || score.mape_pct === undefined ? 'n/a' : `${score.mape_pct.toFixed(1)}%`}</dd>
+        <dd>{score.mape_pct === null || score.mape_pct === undefined ? notAvailable() : `${num(score.mape_pct, 1)}%`}</dd>
         <dt title="A near-zero bias with a large error is exactly where the two variance statistics diverge.">
           {lang === 'es' ? 'Sesgo' : 'Bias'}
         </dt>
@@ -219,8 +220,8 @@ export function ScorePanel({
         <p className={`fr-note ${beatsNull > 0 ? 'fr-note-ok' : 'fr-note-warn'}`}>
           {beatsNull > 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}{' '}
           {lang === 'es'
-            ? `Mejora sobre predecir una constante: ${(beatsNull * 100).toFixed(0)} por ciento en RMSE.`
-            : `Beats predicting a constant by ${(beatsNull * 100).toFixed(0)} percent on RMSE.`}
+            ? `Mejora sobre predecir una constante: ${num(beatsNull * 100, 0)} por ciento en RMSE.`
+            : `Beats predicting a constant by ${num(beatsNull * 100, 0)} percent on RMSE.`}
         </p>
       ) : null}
       {score.worst_rows && score.worst_rows.length ? (
@@ -245,7 +246,7 @@ export function ScorePanel({
                   <td>{formatSize(worst.predicted_m)}</td>
                   <td className={worst.error_m > 0 ? 'fr-warn' : 'fr-bad'}>
                     {worst.error_pct > 0 ? '+' : ''}
-                    {worst.error_pct.toFixed(0)}%
+                    {num(worst.error_pct, 0)}%
                   </td>
                 </tr>
               ))}
@@ -274,8 +275,8 @@ export function SimulationSpread({ cell }: { cell: PredictionCell }) {
     <p className={`fr-note ${unstable ? 'fr-note-warn' : ''}`}>
       {unstable ? <AlertTriangle size={13} /> : <Info size={13} />}{' '}
       {lang === 'es'
-        ? `Promedio de ${cell.n_simulations} simulaciones; coeficiente de variación ${cell.cv.toFixed(2)}.`
-        : `Mean of ${cell.n_simulations} simulations; coefficient of variation ${cell.cv.toFixed(2)}.`}{' '}
+        ? `Promedio de ${cell.n_simulations} simulaciones; coeficiente de variación ${num(cell.cv, 2)}.`
+        : `Mean of ${cell.n_simulations} simulations; coefficient of variation ${num(cell.cv, 2)}.`}{' '}
       {unstable
         ? lang === 'es'
           ? 'Aquí la respuesta depende de la semilla, no del modelo.'
@@ -312,7 +313,7 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
 
   if (predictedP80M === null || predictedX50M === null) {
     return (
-      <section className="fr-panel fr-panel-decision">
+      <section className="fr-panel">
         <h3>{lang === 'es' ? 'Decisión' : 'Decision'}</h3>
         <p className="fr-note fr-note-warn">
           {lang === 'es'
@@ -352,7 +353,7 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
         : 'The design is coarse. Tighten the burden by 10 to 15 percent before touching the explosive: it is the cheaper change.';
 
   return (
-    <section className="fr-panel fr-panel-decision">
+    <section className="fr-panel">
       <h3>{lang === 'es' ? 'Decisión' : 'Decision'}</h3>
       <div className={`fr-verdict ${meets ? 'fr-verdict-ok' : 'fr-verdict-bad'}`}>
         {meets ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
@@ -375,13 +376,13 @@ export function DecisionPanel({ inputs }: { inputs: DecisionInputs }) {
       <dl className="fr-kv">
         <dt>{lang === 'es' ? 'Severidad' : 'Severity'}</dt>
         <dd>
-          {severityLabel} ({(severity * 100).toFixed(0)}%)
+          {severityLabel} ({num(severity * 100, 0)}%)
         </dd>
         <dt>{lang === 'es' ? 'Sobre tamaño' : 'Oversize'}</dt>
         <dd>
           {oversizeFraction === null
-            ? 'n/a'
-            : `${(oversizeFraction * 100).toFixed(1)}% ${lang === 'es' ? 'sobre' : 'above'} ${formatSize(oversizeLimitM)}`}
+            ? notAvailable()
+            : `${num(oversizeFraction * 100, 1)}% ${lang === 'es' ? 'sobre' : 'above'} ${formatSize(oversizeLimitM)}`}
         </dd>
         <dt>{lang === 'es' ? 'Según' : 'According to'}</dt>
         <dd>{arm ? arm.label[lang] : armId}</dd>
