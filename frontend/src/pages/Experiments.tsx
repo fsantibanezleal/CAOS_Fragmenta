@@ -186,7 +186,7 @@ function Coverage({ es, lang, index }: TabProps) {
                 <td>{CATEGORY_LABEL[category]?.[lang] ?? category}</td>
                 <td>
                   {entries.map((entry) => (
-                    <Link key={entry.case_id} className="fr-chip" to={`/?case=${entry.case_id}`}>
+                    <Link key={entry.case_id} className="fr-chip" to={`/app?case=${entry.case_id}`}>
                       {entry.title[lang]}
                     </Link>
                   ))}
