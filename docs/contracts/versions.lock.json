@@ -1,0 +1,42 @@
+{
+  "blast-record": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/blast-record.schema.json",
+    "sha256": "9acfd03271aca7b48b942cb1e02cb043a36b2e48d777e68c3f69c7a6f080ce82"
+  },
+  "case-index": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/case-index.schema.json",
+    "sha256": "255486cb102bb3845a2134c98cbcf0db080f0013d77f06f2337d92ac4fa03f42"
+  },
+  "case-manifest": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/case-manifest.schema.json",
+    "sha256": "c18341ba00355a59a9e4ec234baed8b9a2dc814fd9fdf093c5b1d57fc37f6829"
+  },
+  "case-artifact": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/case-artifact.schema.json",
+    "sha256": "116456d386c5b5360280bf64fe0af5c168d494cd8e7ea8c5bd7631ec4f12cc5f"
+  },
+  "models-file": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/models-file.schema.json",
+    "sha256": "ff5ddeebfd29a6dfd40c91493954d7a87a5f3dab01f5c45b39def60077205765"
+  },
+  "benchmark": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/benchmark.schema.json",
+    "sha256": "c4709d93f317cecea0e86ac3d6e5b26f98935ccf82cc5883522b2da566d990a2"
+  },
+  "readiness": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/schemas/readiness.schema.json",
+    "sha256": "2853ad073befb531ff01c7aa20545de8397da11eb28c98f3a816fa8832141bf0"
+  },
+  "api": {
+    "version": "1.0.0",
+    "schema": "docs/contracts/api.openapi.json",
+    "sha256": "f28a42b3abe39fac9a5610000e5462f26154f38daa4a38a78d2d3c57e45083d0"
+  }
+}

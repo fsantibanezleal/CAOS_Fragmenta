@@ -1,0 +1,437 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "case-manifest.schema.json",
+  "title": "CaseManifest",
+  "description": "Contract 2 (artifact), catalog row case-manifest 1.0.0: the per-case manifest written by data-pipeline/pipeline/pipeline.py bake_case beside the artifact it describes (data/derived/manifests/<case>.json). Rules the schema cannot state, checked by tests/contracts/test_documents.py: lane equals gate.lane, artifact.bytes equals the file size, digest equals the artifact's own.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "case_id",
+    "category",
+    "real_or_synthetic",
+    "expected_band",
+    "engine",
+    "app_version",
+    "seed",
+    "artifact",
+    "digest",
+    "lane",
+    "gate",
+    "flags",
+    "provenance",
+    "held_out_site",
+    "n_training_rows",
+    "models_scope",
+    "arms_that_failed_to_fit",
+    "controls",
+    "n_scoreable"
+  ],
+  "properties": {
+    "schema": {
+      "const": "fragmenta.manifest/v1"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "category": {
+      "$ref": "#/$defs/category"
+    },
+    "real_or_synthetic": {
+      "$ref": "#/$defs/realOrSynthetic"
+    },
+    "expected_band": {
+      "$ref": "#/$defs/text"
+    },
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package",
+        "version"
+      ],
+      "properties": {
+        "package": {
+          "const": "blastfrag"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+          "description": "A version in the product format X.XX.XXX."
+        }
+      }
+    },
+    "app_version": {
+      "$ref": "#/$defs/version"
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "format",
+        "bytes"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[^/\\\\]+/case\\.json$"
+        },
+        "format": {
+          "const": "json"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "lane": {
+      "$ref": "#/$defs/lane"
+    },
+    "gate": {
+      "$ref": "#/$defs/gate"
+    },
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "blast_id",
+          "kind",
+          "detail"
+        ],
+        "properties": {
+          "blast_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "extrapolation",
+              "degenerate-design"
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset",
+        "site",
+        "doi",
+        "licence",
+        "n_blasts",
+        "corpus_digest",
+        "real_or_synthetic"
+      ],
+      "properties": {
+        "dataset": {
+          "enum": [
+            "train",
+            "field",
+            "synthetic"
+          ]
+        },
+        "site": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "doi": {
+          "type": "string"
+        },
+        "licence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "n_blasts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "corpus_digest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "real_or_synthetic": {
+          "$ref": "#/$defs/realOrSynthetic"
+        }
+      }
+    },
+    "held_out_site": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "n_training_rows": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "models_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "arms_that_failed_to_fit": {
+      "type": "object",
+      "description": "arm -> the reason it did not fit; empty when every arm fitted.",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "controls": {
+      "$ref": "#/$defs/controls"
+    },
+    "n_scoreable": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "object",
+      "description": "Every reader-facing string is bilingual at the source.",
+      "additionalProperties": false,
+      "required": [
+        "en",
+        "es"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "es": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+      "description": "A version in the product format X.XX.XXX."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 hex digest."
+    },
+    "category": {
+      "enum": [
+        "real-campaign",
+        "extrapolation-control",
+        "parameter-sweep",
+        "structural-control",
+        "negative-control",
+        "positive-control"
+      ]
+    },
+    "realOrSynthetic": {
+      "enum": [
+        "real",
+        "synthetic"
+      ]
+    },
+    "lane": {
+      "enum": [
+        "live",
+        "precompute"
+      ]
+    },
+    "gate": {
+      "type": "object",
+      "description": "The measured live-versus-precompute verdict and the numbers behind it (core/gate.py classify_lane).",
+      "additionalProperties": false,
+      "required": [
+        "lane",
+        "pure_python",
+        "wheels",
+        "trace_bytes",
+        "run_ms_budget",
+        "trace_bytes_budget",
+        "reasons"
+      ],
+      "properties": {
+        "lane": {
+          "$ref": "#/$defs/lane"
+        },
+        "pure_python": {
+          "type": "boolean"
+        },
+        "wheels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "trace_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "run_ms_budget": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "trace_bytes_budget": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "description": "The control checks that apply to the case; each is present only where it was run.",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "geometry_negative_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_without_geometry",
+            "n_answered_anyway",
+            "passed"
+          ],
+          "properties": {
+            "n_without_geometry": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_answered_anyway": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "degenerate_negative_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_degenerate",
+            "n_answered_anyway",
+            "answered_by",
+            "passed"
+          ],
+          "properties": {
+            "n_degenerate": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_answered_anyway": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "answered_by": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "description": "(arm, blast_id) pairs of the arms that answered a design that is not a blast."
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "extrapolation_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_predictions",
+            "n_unstamped",
+            "unstamped",
+            "passed"
+          ],
+          "properties": {
+            "n_predictions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_unstamped": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unstamped": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "maxItems": 5
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "positive_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_checked",
+            "max_abs_error_m",
+            "passed"
+          ],
+          "properties": {
+            "n_checked": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_abs_error_m": {
+              "type": "number",
+              "minimum": 0
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
+}

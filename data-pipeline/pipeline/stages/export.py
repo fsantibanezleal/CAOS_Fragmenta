@@ -17,11 +17,12 @@ import blastfrag as bf
 
 from ..cases.fragmenta_cases import Case
 from ..core.jsonio import write_json
+from ..io.contract import require_valid
 from .evaluate import CaseEvaluation
 from .infer import InferResult
 from .preprocess import PreprocessResult
 
-__all__ = ["ARTIFACT_SCHEMA", "build_case_artifact", "digest", "write_artifact"]
+__all__ = ["ARTIFACT_SCHEMA", "build_case_artifact", "digest", "validate_document", "write_artifact"]
 
 ARTIFACT_SCHEMA = "fragmenta.case/v1"
 
@@ -166,11 +167,22 @@ def _serialisable(value: Any) -> Any:
     return value
 
 
+def validate_document(kind: str, payload: Any, *, where: str) -> None:
+    """Check ``payload`` against the schema file of the catalog row ``kind``.
+
+    The file is docs/contracts/schemas/<kind>.schema.json. A document that breaks it raises ``ContractError``
+    naming ``where`` and the path of each offending field, so the bake stops before the document is written,
+    never after a reader has met it. Every writer of a catalog document calls this.
+    """
+    require_valid(kind, payload, where=where)
+
+
 def write_artifact(root: Path, case_id: str, payload: dict) -> tuple[Path, int]:
-    """Write the artifact and return its path and the size of the file on disk.
+    """Validate the artifact against its contract, write it, return its path and the size of the file on disk.
 
     The size is the one the manifest declares and the release gate re-reads, so it has to be the
     real file, not the length of a string that a platform newline translation is about to change.
     """
     path = root / case_id / "case.json"
+    validate_document("case-artifact", payload, where=f"{case_id}/case.json")
     return path, write_json(path, payload)
