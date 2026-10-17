@@ -1,9 +1,7 @@
-"""Schema access for the contract tests (docs/contracts/catalog.md): every catalog schema file and the OpenAPI
-document, validated with jsonschema (Draft 2020-12) through one referencing registry, so an OpenAPI component
-that
-points at a schema file resolves to that same file. The schema files are the single source of every contract;
-no
-test re-declares a shape."""
+"""Schema access for the contract tests (docs/contracts/catalog.md): every catalog schema file and the
+OpenAPI document, validated with jsonschema (Draft 2020-12) through one referencing registry, so an
+OpenAPI component that points at a schema file resolves to that same file. The schema files are the
+single source of every contract; no test re-declares a shape."""
 
 from __future__ import annotations
 
@@ -82,10 +80,11 @@ def _escape(token: str) -> str:
 
 @lru_cache(maxsize=None)
 def response_validator(path: str, method: str, status: int) -> Draft202012Validator:
-    """The validator of the JSON body the OpenAPI document declares for ``method path`` answering ``status``.
+    """The validator of the JSON body the OpenAPI document declares for ``method path`` answering
+    ``status``.
 
-    A response given as ``{"$ref": "#/components/responses/X"}`` is followed; the body schema's own references
-    (components, schema files) resolve through the registry."""
+    A response given as ``{"$ref": "#/components/responses/X"}`` is followed; the body schema's own
+    references (components, schema files) resolve through the registry."""
     doc = load_json(OPENAPI)
     response = doc["paths"][path][method.lower()]["responses"][str(status)]
     pointer = "/" + "/".join(_escape(t) for t in ("paths", path, method.lower(), "responses", str(status)))
