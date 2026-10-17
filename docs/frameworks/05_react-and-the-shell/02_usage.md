@@ -19,7 +19,7 @@
 | `AppShell` (header, footer, theme, language, architecture modal) | `main.tsx`, configured with the routes, the footer provenance line and `architecture.ts` |
 | `SubTabs` (vertical) | the four documentation pages with sections |
 | `Tabs`, `CaseSelector` | the workbench |
-| `Callout`, `Equation`, `InlineMath`, `Cite`, `Refs` | every documentation page; citations come from `data/citations.ts`, scoped per section by `SECTION_REFS` |
+| `Callout`, `Equation`, `InlineMath`, `Cite`, `Refs` | every documentation page; citations come from `frontend/src/data/citations.ts` (composed from one file per page in `frontend/src/data/citations/`), scoped per section by `SECTION_REFS` |
 | `useShellLang`, `applyTheme`, `readTheme` | every bilingual component; the focus view's own theme |
 
 ## How the pages get their numbers
