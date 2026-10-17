@@ -55,9 +55,8 @@ size and P80) as `Readout` with lane and provenance.
   rule, no app rule redefines a reserved shell class, numbers in a view go through the shell's formatter (no
   `toFixed`, no bare `toLocaleString`), no SVG behind an `<img>`, and no `requestAnimationFrame` outside
   `usePausedViz` (the 3D bench's loop moves onto it).
-- `scripts/check_deploy_place.py` with `deploy/TARGET` = `pages`. The product still carries the dormant VPS unit and
-  nginx site of the old frozen layout (`deploy/fasl-slug.service`, `deploy/domain.nginx`); a Pages product carries
-  none, so they go.
+- `scripts/check_deploy_place.py` with `deploy/TARGET` = `pages`. The product deploys to GitHub Pages only: `deploy/` holds
+  `deploy/README.md` and `deploy/TARGET`, and no VPS unit or nginx site.
 
 ## The documentation pages (WB-011)
 
