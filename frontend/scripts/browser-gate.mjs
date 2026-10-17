@@ -587,8 +587,18 @@ for (const [w, h] of VIEWPORTS) {
           else if (footer.dangling.length) fail(where, `a footer separator stands alone: ${footer.dangling.join(' | ')}`);
           else pass(`${where} footer`, `one row, ${footer.height}px, every separator between two items`);
 
-          const subtabs = page.locator('.subtabs-vertical .subtablist [role="tab"]');
-          const count = await subtabs.count();
+          // A page's topics are the top-level tabs (`Tabs`, or the groups of `TabGroups`), each holding a sub-tab list or
+          // one panel; the Introduction's two views are top-level tabs too. Every top-level tab is opened, then every
+          // sub-tab visible under it, so no group or view is skipped (0.08.000: the walk opened only the first group).
+          const tops = await page.evaluate(() => {
+            const top = [...document.querySelectorAll('.tabs')].find((el) => !el.parentElement?.closest('.tabs, .subtabs'));
+            const list = top?.querySelector(':scope > .tablist');
+            if (!list) return 0;
+            list.setAttribute('data-gate-top', '');
+            return list.querySelectorAll(':scope > [role="tab"]').length;
+          });
+          const subtabs = page.locator('.subtabs .subtablist [role="tab"]:visible');
+          let count = 0;
           const seen = [];
           let sweepChecked = false;
           const doTab = async (label) => {
@@ -628,21 +638,36 @@ for (const [w, h] of VIEWPORTS) {
               await page.screenshot({ path: `${SHOTS}/${name}`, fullPage: true });
             }
           };
-          if (!count) {
-            await doTab('page');
-          }
-          for (let i = 0; i < count; i += 1) {
-            const tab = subtabs.nth(i);
-            const label = ((await tab.textContent()) || `tab ${i + 1}`).trim();
-            await tab.click();
+          const walkSubtabs = async (prefix) => {
+            const n = await subtabs.count();
+            if (!n) {
+              count += 1;
+              await doTab(prefix || 'page');
+              return;
+            }
+            for (let i = 0; i < n; i += 1) {
+              const tab = subtabs.nth(i);
+              const label = `${prefix ? `${prefix} / ` : ''}${((await tab.textContent()) || `tab ${i + 1}`).trim()}`;
+              await tab.click();
+              await page.waitForTimeout(500);
+              if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
+              count += 1;
+              await doTab(label);
+            }
+          };
+          if (!tops) await walkSubtabs('');
+          for (let t = 0; t < tops; t += 1) {
+            const top = page.locator('[data-gate-top] > [role="tab"]').nth(t);
+            const topLabel = ((await top.textContent()) || `view ${t + 1}`).trim();
+            await top.click();
             await page.waitForTimeout(500);
-            if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
-            await doTab(label);
+            if ((await top.getAttribute('aria-selected')) !== 'true') fail(`${where} ${topLabel}`, 'the tab did not open on a click');
+            await walkSubtabs(topLabel);
           }
           // A renamed sub-tab must not skip the check silently.
           if (route.startsWith('/benchmark') && !sweepChecked)
             fail(where, 'no sub-tab named "Published reproductions" ("Reproducciones publicadas") to check the width sweep on');
-          pass(`${where} figures`, `${count || 1} sections, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
+          pass(`${where} figures`, `${count} panels, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
           problems.length = 0;
         }
       }
