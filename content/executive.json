@@ -1,7 +1,7 @@
 {
   "title": {
-    "en": "The first breakage of the rock, at the blast, sets the cost and the energy of every size reduction after it, and that decision is made with little measured knowledge.",
-    "es": "La primera rotura de la roca, en la voladura, fija el costo y la energía de toda reducción de tamaño posterior, y esa decisión se toma con poco conocimiento medido."
+    "en": "Blast fragmentation and the energy of size reduction",
+    "es": "La fragmentación por voladura y la energía de la reducción de tamaño"
   },
   "key_statement": {
     "en": "The mine decides how finely to break rock at the blast, while the plant pays for that decision in energy and throughput. The direction is one shared decision on fragment size, predicted with a stated uncertainty, tested at a mine the method has not seen, and measured after each blast.",
