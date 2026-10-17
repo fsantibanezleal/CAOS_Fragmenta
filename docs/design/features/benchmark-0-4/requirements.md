@@ -13,4 +13,4 @@ product bakes, mirrors and shows of them. EARS.
 | EN-005 | THE benchmark SHALL carry the network width sweep: the source's protocol with its choice beside the published widths, and every width held out by site. | `tests/test_pipeline.py::test_the_width_sweep_is_baked_beside_the_published_widths` |
 | EN-006 | THE bake SHALL pin BLAS to one thread, so a loaded machine cannot slow the network fits by orders of magnitude and the thread count cannot reorder a reduction. | `tests/test_pipeline.py::test_the_bake_pins_blas_to_one_thread` |
 | EN-007 | THE generated results pages SHALL report the capped arm, the common-support scores and the width sweep. | `tests/test_guards.py::test_the_results_pages_report_the_cap_common_support_and_the_width_sweep` |
-| EN-008 | THE Benchmark page SHALL draw the width sweep and declare what it drew. | `frontend/gates/browser-gate.mjs` |
+| EN-008 | THE Benchmark page SHALL draw the width sweep and declare what it drew. | `frontend/scripts/browser-gate.mjs` |

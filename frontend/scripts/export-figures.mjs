@@ -7,7 +7,7 @@
 // docs/assets/fig-<slug>.svg. The figures in the wiki are therefore the ones the site shows.
 //
 // Usage (a built site served locally):
-//   node gates/export-figures.mjs --url http://localhost:4173
+//   node scripts/export-figures.mjs --url http://localhost:4173
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
