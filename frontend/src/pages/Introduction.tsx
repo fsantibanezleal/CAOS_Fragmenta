@@ -1,43 +1,63 @@
 /**
- * Introduction: why the size of broken rock matters, what a blast designer controls, the relations
- * every later page uses, the question this product asks, how a number is produced, where the data
- * come from, and what is exact, modelled or absent.
+ * Introduction (shell 0.15.0, ADR-0017 section 2.1, `conventions/problem-context-first.md`): a documentation page with two
+ * views. The executive view is first and open on load; the shell's `ExecutiveView` renders it from `content/executive.json`
+ * (boundary B10) and the product never designs it. The technical view carries the five areas of the page (the problem, the
+ * principles, the mathematics, the pipeline, what is exact or absent) and where the data come from.
  *
  * Every corpus-level figure is read from the committed benchmark through `lib/facts`, never typed.
  */
 
-import { Callout, Cite, Equation, InlineMath, Refs, useShellLang } from '@fasl-work/caos-app-shell';
+import { Callout, Cite, DocPage, DocSection, Equation, ExecutiveView, Glossary, InlineMath, Tabs, useShellLang } from '@fasl-work/caos-app-shell';
 import { Link } from 'react-router';
 
+import executive from '../../../content/executive.json';
 import { SECTION_REFS } from '../data/citations';
 import { ARM_BY_ID } from '../lib/artifacts';
 import { f, facts, iv, useBenchmark } from '../lib/facts';
 import { BenchSectionDiagram, OverviewDiagram } from '../viz/Diagrams';
 
 export default function Introduction() {
+  return <IntroductionPage data={executive} base={import.meta.env.BASE_URL} />;
+}
+
+/** The page for a given data file (the contract test passes its own `base`, and may open the technical view). */
+export function IntroductionPage({ data, base, initial }: { data: unknown; base: string; initial?: 'executive' | 'technical' }) {
+  const es = useShellLang() === 'es';
+  const t = (en: string, sp: string) => (es ? sp : en);
+  return (
+    <DocPage
+      title={{ en: 'Blast fragmentation, and what can be predicted about it', es: 'Fragmentación por voladura, y qué se puede predecir de ella' }}
+      lede={
+        <>
+          {es ? 'Fragmenta predice el tamaño medio ' : 'Fragmenta predicts the mean fragment size '}
+          <InlineMath tex="x_{50}" />
+          {es
+            ? ' de una voladura de banco a partir de su diseño y de la roca, con diez predictores publicados que van de la ecuación de 1973 a los ensambles de 2025, y mide cuánto vale cada predicción en una mina que el modelo no ha visto. No es un simulador mecanicista ni una herramienta de diseño de producción: es un banco de pruebas sobre 97 tiros publicados, con la incertidumbre de cada resultado a la vista. La vista ejecutiva enmarca el problema para quien decide; la vista técnica da el método, el pipeline y los límites de lo que el banco de pruebas demuestra.'
+            : ' of a bench blast from its design and its rock, with ten published predictors from the 1973 equation to the 2025 ensembles, and measures what each prediction is worth at a mine the model has not seen. It is not a mechanistic simulator and not a production design tool: it is a test bench over 97 published blasts, with the uncertainty of every result shown. The executive view frames the problem for a decision maker; the technical view gives the method, the pipeline and the limits of what the benchmark proves.'}
+        </>
+      }
+    >
+      <Tabs
+        ariaLabel={t('Introduction views', 'Vistas de la introducción')}
+        initial={initial}
+        tabs={[
+          { id: 'executive', label: t('Executive', 'Ejecutiva'), content: <ExecutiveView data={data} base={base} /> },
+          { id: 'technical', label: t('Technical', 'Técnica'), content: <TechnicalView /> },
+        ]}
+      />
+    </DocPage>
+  );
+}
+
+function TechnicalView() {
   const es = useShellLang() === 'es';
   const benchmark = useBenchmark();
   const F = benchmark ? facts(benchmark) : null;
-  const refs = (key: string) => <Refs ids={SECTION_REFS[key]} label={es ? 'Fuentes' : 'Sources'} />;
   const label = (arm: string) => ARM_BY_ID.get(arm)?.label[es ? 'es' : 'en'] ?? arm;
 
   return (
-    <div className="page-body wide prose fr-doc">
-      <div className="page-head">
-        <h1>{es ? 'Fragmentación por voladura, y qué se puede predecir de ella' : 'Blast fragmentation, and what can be predicted about it'}</h1>
-        <p className="lede">
-          {es
-            ? 'Fragmenta predice el tamaño medio '
-            : 'Fragmenta predicts the mean fragment size '}
-          <InlineMath tex="x_{50}" />
-          {es
-            ? ' de una voladura de banco a partir de su diseño y de la roca, con diez predictores publicados que van de la ecuación de 1973 a los ensambles de 2025, y mide cuánto vale cada predicción en una mina que el modelo no ha visto. No es un simulador mecanicista ni una herramienta de diseño de producción: es un banco de pruebas sobre 97 tiros publicados, con la incertidumbre de cada resultado a la vista.'
-            : ' of a bench blast from its design and its rock, with ten published predictors from the 1973 equation to the 2025 ensembles, and measures what each prediction is worth at a mine the model has not seen. It is not a mechanistic simulator and not a production design tool: it is a test bench over 97 published blasts, with the uncertainty of every result shown.'}
-        </p>
-      </div>
-
-      <section>
-        <h2>{es ? 'Por qué importa el tamaño de la roca tronada' : 'Why the size of broken rock matters'}</h2>
+    <>
+      <DocSection title={{ en: 'The problem: why the size of broken rock matters', es: 'El problema: por qué importa el tamaño de la roca tronada' }} area="problem" refs={SECTION_REFS['intro-problem']}>
         <p>
           {es
             ? 'La voladura es el principal medio de fragmentación en minería y la primera etapa de reducción de tamaño. Hudaverdi, Kulatilake y Kuzu escriben que la voladura tiene un impacto significativo en los procesos aguas abajo, carguío, chancado y molienda: una mejor fragmentación aumenta la productividad de cargadores y excavadoras por una mayor excavabilidad y mejores factores de llenado de balde y de camión, y una distribución de tamaños adecuada y uniforme aumenta el rendimiento de chancadoras y molinos y reduce la energía de reducción de tamaño.'
@@ -55,81 +75,6 @@ export default function Introduction() {
             ? 'Por eso la pregunta práctica tiene números: para esta roca y este banco, qué malla entrega el tamaño que pide la chancadora primaria sin exceso de finos ni de sobretamaño, y cuánto puede equivocarse la predicción. Esta aplicación trabaja sobre el primer número de esa cadena, el tamaño medio, y sobre la curva que lo rodea.'
             : 'That is why the practical question has numbers in it: for this rock and this bench, which pattern delivers the size the primary crusher is specified for without excess fines or oversize, and how wrong could the prediction be. This application works on the first number in that chain, the mean size, and on the curve around it.'}
         </p>
-        {refs('intro-why')}
-      </section>
-
-      <section>
-        <h2>{es ? 'Lo que controla el diseñador y lo que decide la roca' : 'What the designer controls, and what the rock decides'}</h2>
-        <p>
-          {es
-            ? 'Las dos fuentes dividen los parámetros de una voladura en controlables y no controlables. Los controlables los fija el ingeniero: la geometría (diámetro de perforación, bordo, espaciamiento, altura de banco, taco, pasadura), el explosivo (tipo, potencia, factor de carga) y el tiempo (retardos y secuencia de iniciación). Los no controlables son la roca y el macizo: resistencia, módulo elástico, densidad, número, orientación y espaciamiento de las discontinuidades.'
-            : 'Both sources divide the parameters of a blast into controllable and uncontrollable. The engineer sets the controllable ones: the geometry (hole diameter, burden, spacing, bench height, stemming, subdrill), the explosive (type, strength, powder factor) and the timing (delays and initiation sequence). The uncontrollable ones are the rock and the rock mass: strength, elastic modulus, density, and the number, orientation and spacing of the discontinuities.'}{' '}
-          <Cite id="hudaverdi2010" />{' '}
-          <Cite id="amoako2022" />
-        </p>
-        <BenchSectionDiagram />
-        <p>
-          {es
-            ? 'El corpus con el que trabaja este producto registra cinco parámetros de diseño como razones adimensionales (S/B, H/B, B/D, T/B y el factor de carga) y dos de roca: el módulo de Young E y el tamaño de bloque in situ XB. Hudaverdi y colegas explican la elección: eran los dos parámetros de roca disponibles para toda la base, el módulo para representar las propiedades mecánicas y el tamaño de bloque para la estructura del macizo. Todos los tiros de la base usaron ANFO, así que el tipo de explosivo no es una variable.'
-            : 'The corpus this product works on records five design parameters as dimensionless ratios (S/B, H/B, B/D, T/B and the powder factor) and two rock parameters: the Young modulus E and the in-situ block size XB. Hudaverdi and colleagues explain the choice: those were the two rock parameters available for the whole database, the modulus to represent mechanical properties and the block size to represent the rock-mass structure. Every blast in the database used ANFO, so the explosive type is not a variable.'}{' '}
-          <Cite id="hudaverdi2010" />
-        </p>
-        {refs('intro-controls')}
-      </section>
-
-      <section>
-        <h2>{es ? 'Las relaciones que usan las demás páginas' : 'The relations the other pages use'}</h2>
-        <p>
-          {es
-            ? 'Tres relaciones recorren todo el producto. La primera es la ecuación clásica de tamaño medio, de Kuznetsov con la corrección de Cunningham por potencia del explosivo, tal como la imprimen las fuentes:'
-            : 'Three relations run through the whole product. The first is the classical mean-size equation, Kuznetsov with Cunningham’s explosive-strength correction, as the sources print it:'}{' '}
-          <Cite id="kuznetsov1973" />{' '}
-          <Cite id="hudaverdi2010" />
-        </p>
-        <Equation
-          tex={String.raw`x_{50} = A\left(\frac{V}{Q}\right)^{0.8} Q^{1/6}\left(\frac{\mathrm{RWS}}{115}\right)^{-19/30}`}
-          caption={es ? 'Tamaño medio de fragmento, en centímetros en la ecuación original.' : 'Mean fragment size, in centimetres in the original equation.'}
-        />
-        <p>
-          {es
-            ? 'La segunda convierte un tamaño medio en una curva: la fracción que pasa una malla de tamaño x, con un índice de uniformidad n que fija qué tan concentrada está la curva alrededor de su mediana.'
-            : 'The second turns a mean size into a curve: the fraction passing a mesh of size x, with a uniformity index n that sets how tightly the curve gathers around its median.'}{' '}
-          <Cite id="amoako2022" />
-        </p>
-        <Equation
-          tex={String.raw`P(x) = 1 - \exp\!\left[-\ln 2\left(\frac{x}{x_{50}}\right)^{n}\right]`}
-          caption={es ? 'Curva Rosin-Rammler escrita sobre el tamaño medio: P(x50) = 0,5.' : 'Rosin-Rammler curve written on the mean size: P(x50) = 0.5.'}
-        />
-        <p>
-          {es
-            ? 'La tercera es la vara con que se mide toda predicción en este sitio: la varianza explicada respecto de la línea de identidad, sobre las filas puntuadas. Es negativa cuando una predicción lo hace peor que el promedio de esas filas, y no es el cuadrado de la correlación, que es lo que la literatura suele llamar R2.'
-            : 'The third is the yardstick every prediction on this site is measured with: variance explained about the identity line, over the scored rows. It is negative when a prediction does worse than the mean of those rows, and it is not the squared correlation, which is what the literature usually calls R2.'}
-        </p>
-        <Equation
-          tex={String.raw`R^2_{\mathrm{id}} = 1 - \frac{\sum_i (y_i - \hat y_i)^2}{\sum_i (y_i - \bar y)^2}`}
-          caption={es ? 'Varianza explicada respecto de la línea 1:1; y medido, ŷ predicho.' : 'Variance explained about the 1:1 line; y measured, ŷ predicted.'}
-        />
-        <ul className="fr-symbols-list">
-          <li><InlineMath tex="x_{50}" />: {es ? 'tamaño medio, la malla que pasa el 50 por ciento' : 'mean size, the mesh 50 percent passes'}</li>
-          <li><InlineMath tex="P_{80}" />: {es ? 'malla que pasa el 80 por ciento, la que se especifica para una chancadora' : 'mesh 80 percent passes, what a crusher is specified against'}</li>
-          <li><InlineMath tex="B" />: {es ? 'bordo, distancia del barreno a la cara libre, m' : 'burden, distance from the hole to the free face, m'}</li>
-          <li><InlineMath tex="S" />: {es ? 'espaciamiento entre barrenos de una fila, m' : 'spacing between holes in a row, m'}</li>
-          <li><InlineMath tex="H" />: {es ? 'altura de banco, m' : 'bench height, m'}</li>
-          <li><InlineMath tex="T" />: {es ? 'taco, el tapón inerte del collar, m' : 'stemming, the inert plug at the collar, m'}</li>
-          <li><InlineMath tex="D" />: {es ? 'diámetro de perforación, mm' : 'hole diameter, mm'}</li>
-          <li><InlineMath tex="P_f" />: {es ? 'factor de carga, kg de explosivo por m³ de roca' : 'powder factor, kg of explosive per m³ of rock'}</li>
-          <li><InlineMath tex="V,\,Q" />: {es ? 'volumen de roca y masa de explosivo por barreno' : 'rock volume and explosive mass per hole'}</li>
-          <li><InlineMath tex="A" />: {es ? 'factor de roca, adimensional, 0,8 a 22' : 'rock factor, dimensionless, 0.8 to 22'}</li>
-          <li><InlineMath tex="\mathrm{RWS}" />: {es ? 'potencia relativa en peso; ANFO 100, TNT 115' : 'weight strength relative to ANFO; ANFO 100, TNT 115'}</li>
-          <li><InlineMath tex="E" />: {es ? 'módulo de Young de la roca, GPa' : 'Young modulus of the rock, GPa'}</li>
-          <li><InlineMath tex="X_B" />: {es ? 'tamaño de bloque in situ, m' : 'in-situ block size, m'}</li>
-          <li><InlineMath tex="n" />: {es ? 'índice de uniformidad de la curva' : 'uniformity index of the curve'}</li>
-        </ul>
-        {refs('intro-math')}
-      </section>
-
-      <section>
-        <h2>{es ? 'La pregunta de este producto' : 'The question this product asks'}</h2>
         <p>
           {es
             ? 'La familia clásica se ha extendido muchas veces y una revisión de 2019 recorre esas extensiones. Desde 2012, además, una serie de modelos aprendidos se ha ajustado sobre el mismo corpus de 97 tiros: una red neuronal publicada con su especificación completa, regresión por vectores de soporte, bosques, potenciación y, en 2025, un ensamble apilado que reporta 0,943 de una sola partición aleatoria 80/20.'
@@ -145,7 +90,7 @@ export default function Introduction() {
           <Cite id="roberts2017" />
         </p>
         {F ? (
-          <Callout variant="honest" title={es ? 'Lo que el benchmark sostiene, y lo que no' : 'What the benchmark supports, and what it does not'}>
+          <Callout variant="note" title={es ? 'Lo que el benchmark sostiene, y lo que no' : 'What the benchmark supports, and what it does not'}>
             <ul className="fr-list">
               <li>
                 {es
@@ -177,11 +122,78 @@ export default function Introduction() {
           <Link to="/experiments">{es ? 'Experimentos' : 'Experiments'}</Link>.
           {F ? (es ? ` El mejor brazo aprendido con todos los tiros es ${label(benchmark?.verdict.supports.all.best_learned_arm ?? '')}.` : ` The best learned arm over every blast is ${label(benchmark?.verdict.supports.all.best_learned_arm ?? '')}.`) : null}
         </p>
-        {refs('intro-question')}
-      </section>
+      </DocSection>
 
-      <section>
-        <h2>{es ? 'De una tabla publicada a un número puntuado' : 'From a published table to a scored number'}</h2>
+      <DocSection title={{ en: 'The principles: what the designer controls, and what the rock decides', es: 'Los principios: lo que controla el diseñador y lo que decide la roca' }} area="principles" refs={SECTION_REFS['intro-principles']}>
+        <p>
+          {es
+            ? 'Las dos fuentes dividen los parámetros de una voladura en controlables y no controlables. Los controlables los fija el ingeniero: la geometría (diámetro de perforación, bordo, espaciamiento, altura de banco, taco, pasadura), el explosivo (tipo, potencia, factor de carga) y el tiempo (retardos y secuencia de iniciación). Los no controlables son la roca y el macizo: resistencia, módulo elástico, densidad, número, orientación y espaciamiento de las discontinuidades.'
+            : 'Both sources divide the parameters of a blast into controllable and uncontrollable. The engineer sets the controllable ones: the geometry (hole diameter, burden, spacing, bench height, stemming, subdrill), the explosive (type, strength, powder factor) and the timing (delays and initiation sequence). The uncontrollable ones are the rock and the rock mass: strength, elastic modulus, density, and the number, orientation and spacing of the discontinuities.'}{' '}
+          <Cite id="hudaverdi2010" />{' '}
+          <Cite id="amoako2022" />
+        </p>
+        <BenchSectionDiagram />
+        <p>
+          {es
+            ? 'El corpus con el que trabaja este producto registra cinco parámetros de diseño como razones adimensionales (S/B, H/B, B/D, T/B y el factor de carga) y dos de roca: el módulo de Young E y el tamaño de bloque in situ XB. Hudaverdi y colegas explican la elección: eran los dos parámetros de roca disponibles para toda la base, el módulo para representar las propiedades mecánicas y el tamaño de bloque para la estructura del macizo. Todos los tiros de la base usaron ANFO, así que el tipo de explosivo no es una variable.'
+            : 'The corpus this product works on records five design parameters as dimensionless ratios (S/B, H/B, B/D, T/B and the powder factor) and two rock parameters: the Young modulus E and the in-situ block size XB. Hudaverdi and colleagues explain the choice: those were the two rock parameters available for the whole database, the modulus to represent mechanical properties and the block size to represent the rock-mass structure. Every blast in the database used ANFO, so the explosive type is not a variable.'}{' '}
+          <Cite id="hudaverdi2010" />
+        </p>
+      </DocSection>
+
+      <DocSection title={{ en: 'The mathematics: the relations the other pages use', es: 'La matemática: las relaciones que usan las demás páginas' }} area="math" refs={SECTION_REFS['intro-math']}>
+        <p>
+          {es
+            ? 'Tres relaciones recorren todo el producto. La primera es la ecuación clásica de tamaño medio, de Kuznetsov con la corrección de Cunningham por potencia del explosivo, tal como la imprimen las fuentes:'
+            : 'Three relations run through the whole product. The first is the classical mean-size equation, Kuznetsov with Cunningham’s explosive-strength correction, as the sources print it:'}{' '}
+          <Cite id="kuznetsov1973" />{' '}
+          <Cite id="hudaverdi2010" />
+        </p>
+        <Equation
+          tex={String.raw`x_{50} = A\left(\frac{V}{Q}\right)^{0.8} Q^{1/6}\left(\frac{\mathrm{RWS}}{115}\right)^{-19/30}`}
+          caption={es ? 'Tamaño medio de fragmento x50, en centímetros en la ecuación original: A es el factor de roca, V el volumen de roca por barreno en m³, Q la masa de explosivo por barreno en kg y RWS la potencia relativa en peso del explosivo (ANFO 100, TNT 115).' : 'Mean fragment size x50, in centimetres in the original equation: A is the rock factor, V the rock volume per hole in m³, Q the explosive mass per hole in kg and RWS the explosive’s weight strength relative to ANFO (ANFO 100, TNT 115).'}
+        />
+        <p>
+          {es
+            ? 'La segunda convierte un tamaño medio en una curva: la fracción que pasa una malla de tamaño x, con un índice de uniformidad n que fija qué tan concentrada está la curva alrededor de su mediana.'
+            : 'The second turns a mean size into a curve: the fraction passing a mesh of size x, with a uniformity index n that sets how tightly the curve gathers around its median.'}{' '}
+          <Cite id="amoako2022" />
+        </p>
+        <Equation
+          tex={String.raw`P(x) = 1 - \exp\!\left[-\ln 2\left(\frac{x}{x_{50}}\right)^{n}\right]`}
+          caption={es ? 'Curva Rosin-Rammler escrita sobre el tamaño medio: P(x) es la fracción que pasa una malla de tamaño x, x50 el tamaño medio, de modo que P(x50) = 0,5, y n el índice de uniformidad.' : 'Rosin-Rammler curve written on the mean size: P(x) is the fraction passing a mesh of size x, x50 the mean size, so that P(x50) = 0.5, and n the uniformity index.'}
+        />
+        <p>
+          {es
+            ? 'La tercera es la vara con que se mide toda predicción en este sitio: la varianza explicada respecto de la línea de identidad, sobre las filas puntuadas. Es negativa cuando una predicción lo hace peor que el promedio de esas filas, y no es el cuadrado de la correlación, que es lo que la literatura suele llamar R2.'
+            : 'The third is the yardstick every prediction on this site is measured with: variance explained about the identity line, over the scored rows. It is negative when a prediction does worse than the mean of those rows, and it is not the squared correlation, which is what the literature usually calls R2.'}
+        </p>
+        <Equation
+          tex={String.raw`R^2_{\mathrm{id}} = 1 - \frac{\sum_i (y_i - \hat y_i)^2}{\sum_i (y_i - \bar y)^2}`}
+          caption={es ? 'Varianza explicada respecto de la línea 1:1, sobre las filas puntuadas i: yᵢ es el valor medido, ŷᵢ el predicho y ȳ el promedio de los medidos.' : 'Variance explained about the 1:1 line, over the scored rows i: yᵢ is the measured value, ŷᵢ the predicted one and ȳ the mean of the measured values.'}
+        />
+        <Glossary
+          entries={[
+            { term: 'x50', definition: { en: 'mean size, the mesh 50 percent passes', es: 'tamaño medio, la malla que pasa el 50 por ciento' } },
+            { term: 'P80', definition: { en: 'mesh 80 percent passes, what a crusher is specified against', es: 'malla que pasa el 80 por ciento, la que se especifica para una chancadora' } },
+            { term: 'B', definition: { en: 'burden, distance from the hole to the free face, m', es: 'bordo, distancia del barreno a la cara libre, m' } },
+            { term: 'S', definition: { en: 'spacing between holes in a row, m', es: 'espaciamiento entre barrenos de una fila, m' } },
+            { term: 'H', definition: { en: 'bench height, m', es: 'altura de banco, m' } },
+            { term: 'T', definition: { en: 'stemming, the inert plug at the collar, m', es: 'taco, el tapón inerte del collar, m' } },
+            { term: 'D', definition: { en: 'hole diameter, mm', es: 'diámetro de perforación, mm' } },
+            { term: 'Pf', definition: { en: 'powder factor, kg of explosive per m³ of rock', es: 'factor de carga, kg de explosivo por m³ de roca' } },
+            { term: 'V', definition: { en: 'rock volume per hole, m³', es: 'volumen de roca por barreno, m³' } },
+            { term: 'Q', definition: { en: 'explosive mass per hole, kg', es: 'masa de explosivo por barreno, kg' } },
+            { term: 'A', definition: { en: 'rock factor, dimensionless, 0.8 to 22', es: 'factor de roca, adimensional, 0,8 a 22' } },
+            { term: 'RWS', definition: { en: 'weight strength relative to ANFO; ANFO 100, TNT 115', es: 'potencia relativa en peso; ANFO 100, TNT 115' } },
+            { term: 'E', definition: { en: 'Young modulus of the rock, GPa', es: 'módulo de Young de la roca, GPa' } },
+            { term: 'XB', definition: { en: 'in-situ block size, m', es: 'tamaño de bloque in situ, m' } },
+            { term: 'n', definition: { en: 'uniformity index of the curve', es: 'índice de uniformidad de la curva' } },
+          ]}
+        />
+      </DocSection>
+
+      <DocSection title={{ en: 'The pipeline: from a published table to a scored number', es: 'El pipeline: de una tabla publicada a un número puntuado' }} area="pipeline" refs={SECTION_REFS['intro-pipeline']}>
         <OverviewDiagram />
         <ol className="fr-list">
           <li>{es ? 'Se cargan los 97 tiros y se comprueba que reproducen la tabla de estadísticas descriptivas del propio artículo; esa comprobación encontró cinco errores de transcripción.' : 'Load the 97 blasts and check that they reproduce the source paper’s own descriptive-statistics table; that check found five transcription errors.'}</li>
@@ -193,11 +205,9 @@ export default function Introduction() {
           <li>{es ? 'Se escriben artefactos direccionados por contenido y se vuelven a leer y verificar antes de publicarlos.' : 'Write content-addressed artifacts, then re-read and re-check them before they are published.'}</li>
           <li>{es ? 'En el navegador se reproducen esos artefactos, y las ecuaciones y los modelos ajustados se recalculan en vivo cuando usted cambia un diseño.' : 'In the browser, replay those artifacts, and recompute the equations and the fitted models live when you change a design.'}</li>
         </ol>
-        {refs('intro-path')}
-      </section>
+      </DocSection>
 
-      <section>
-        <h2>{es ? 'De dónde vienen los datos' : 'Where the data come from'}</h2>
+      <DocSection title={{ en: 'Where the data come from', es: 'De dónde vienen los datos' }} refs={SECTION_REFS['intro-data']}>
         <p>
           {es
             ? 'Noventa y siete tiros de banco en diez campañas de cinco países: España (Enusa, Reocin a cielo abierto y subterránea), Turquía (Murgul, Soma, Akdaglar y Ozmert), India (Dongri-Buzurg), Indonesia (Mrica) y Estados Unidos (Miami, Arizona). Hudaverdi y colegas reunieron los datos de estudios anteriores con los de las canteras de Estambul. El método de medición se declara solo para algunas campañas: análisis de imágenes con Wipfrag en Akdaglar y Ozmert, y software de análisis de imágenes en Soma; para las demás, el corpus reutiliza los tamaños de los estudios originales sin repetir el método.'
@@ -212,11 +222,14 @@ export default function Introduction() {
           <Cite id="sui2025" />{' '}
           <Cite id="li2023" />
         </p>
-        {refs('intro-data')}
-      </section>
+      </DocSection>
 
-      <section>
-        <h2>{es ? 'Alcance: exacto, modelado y ausente' : 'Scope: exact, modelled, and absent'}</h2>
+      <DocSection title={{ en: 'What is exact, what is modelled and what is absent', es: 'Qué es exacto, qué es modelado y qué está ausente' }} area="honesty" refs={SECTION_REFS['intro-honesty']}>
+        <p>
+          {es
+            ? 'Cada cifra de este sitio es de una de tres clases, y las páginas dicen cuál. Lo exacto es lo publicado y la aritmética que se comprueba contra la fuente; lo modelado es lo que se recupera o se predice con un supuesto declarado; lo ausente es lo que este producto no calcula y no finge calcular. Leer una cifra sin saber su clase es leerla mal, y por eso cada resultado trae su incertidumbre a la vista.'
+            : 'Every figure on this site is one of three kinds, and the pages say which. The exact is what was published and the arithmetic that is checked against the source; the modelled is what is recovered or predicted under a stated assumption; the absent is what this product does not compute and does not pretend to. Reading a figure without knowing its kind is reading it wrong, which is why every result carries its uncertainty in view.'}
+        </p>
         <div className="fr-scope-grid">
           <div>
             <h3>{es ? 'Exacto' : 'Exact'}</h3>
@@ -249,8 +262,7 @@ export default function Introduction() {
             : 'A 2025 hybrid combining a convolutional network, a least-squares support-vector machine and a Newton-Raphson-based optimiser reports strong figures on a superset of this corpus. It is not reproduced, because the optimiser’s update rule cannot be transcribed with confidence from the copy available; it is cited with its figures, not as a model of this product. Constants that no source prints, such as the timing factor of the modified classical model or those of the fines branch, are exposed as user parameters.'}{' '}
           <Cite id="huan2025" />
         </Callout>
-        {refs('intro-scope')}
-      </section>
-    </div>
+      </DocSection>
+    </>
   );
 }

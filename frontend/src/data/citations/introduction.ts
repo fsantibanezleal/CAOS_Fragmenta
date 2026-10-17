@@ -27,13 +27,12 @@ export const INTRODUCTION_CITATIONS: Citation[] = [
   },
 ];
 
-/** Section key to the ids its reference list shows, in that order. */
+/** Section key to the ids its references are listed from, in that order (the shell prints them once, at the end of the open view). */
 export const INTRODUCTION_REFS: Record<string, string[]> = {
-  'intro-why': ['hudaverdi2010', 'amoako2022'],
-  'intro-controls': ['hudaverdi2010', 'amoako2022'],
+  'intro-problem': ['hudaverdi2010', 'amoako2022', 'sui2025', 'kulatilake2012', 'ouchterlony2019', 'roberts2017'],
+  'intro-principles': ['hudaverdi2010', 'amoako2022'],
   'intro-math': ['kuznetsov1973', 'hudaverdi2010', 'amoako2022'],
-  'intro-question': ['sui2025', 'kulatilake2012', 'ouchterlony2019', 'roberts2017'],
-  'intro-path': ['hudaverdi2010', 'kulatilake2012', 'sui2025'],
+  'intro-pipeline': ['hudaverdi2010', 'kulatilake2012', 'sui2025'],
   'intro-data': ['hudaverdi2010', 'kulatilake2012', 'sui2025', 'li2023'],
-  'intro-scope': ['amoako2022', 'huan2025'],
+  'intro-honesty': ['amoako2022', 'huan2025'],
 };
