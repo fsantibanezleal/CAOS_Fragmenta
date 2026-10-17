@@ -254,6 +254,10 @@ export default function Workbench() {
       controls={{ arm: armId, blast: blast?.blast_id ?? null, ...controls, design: current?.design ?? null, hole: current?.holeMm ?? null }}
       rail={railSections}
       railLabel={{ en: 'Case, model and controls', es: 'Caso, modelo y controles' }}
+      // Focus mode (ADR-0070, shell 0.14.0): the Focus button in the rail head opens the open group in the full viewport
+      // (?focus=1 beside ?case=); Escape or the exit button returns to the same case and group. An old /focus/<id> link
+      // is forwarded here by routes.ts and opens on Predict, the group the retired focus page drew.
+      focus
       group={shownGroup}
       onGroupChange={setGroup}
       groups={[

@@ -18,7 +18,6 @@ import {
   type BiText,
 } from '@fasl-work/caos-app-shell';
 import { useMemo } from 'react';
-import { Link } from 'react-router';
 
 import { DESIGN_ARMS, designOf } from '../engine/design';
 import {
@@ -82,7 +81,6 @@ export function PredictGroup({
   onSelectBlast: (id: string) => void;
   onArm: (id: string) => void;
 }) {
-  const lang = useShellLang();
   const row = sel.artifact.predictions[sel.armId] ?? {};
   const points = sel.artifact.blasts
     .filter((b) => b.x50_measured_m !== null && row[b.blast_id]?.x50_m !== null && row[b.blast_id] !== undefined)
@@ -110,11 +108,6 @@ export function PredictGroup({
         lane="replay"
         provenance={provenanceOf(sel, false)}
         dataKey={sel.stateKey}
-        actions={
-          <Link className="fr-inline-link" to={`/focus/${sel.artifact.case.id}`}>
-            {t(lang, 'Full screen', 'Pantalla completa')}
-          </Link>
-        }
       >
         {points.length >= 2 ? (
           <Stage label={title}>
