@@ -24,7 +24,7 @@ recomputes a benchmark.
    about a second. Until 0.05.000 the workflow's comment described this step and the step did not exist.
 2. **Builds the site** with the parity and model tests first (`npm test`), then the type check and the
    build (`npm run build`), whose copy step fails if a declared case or models file did not ship.
-3. **Runs the browser gate on the artifact about to be published** (`scripts/browser-gate.mjs` against a
+3. **Runs the browser gate on the artifact about to be published** (`frontend/scripts/browser-gate.mjs` against a
    local preview of the build): every route and every App tab, both themes, both languages, three
    viewport sizes; the declared content of every chart; no tab strip cut, no table wider than its
    container, no text cut by an ellipsis without its whole text as a title, no two rows of the model

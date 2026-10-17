@@ -9,7 +9,7 @@
 - The Experiments case chips link to `/app?case=<id>`. `spa-404.mjs` writes a real `index.html` for `/app` and the five
   documentation routes.
 - The gate runner always passes `--require-focus` (G18). The product's browser gate and the figure exporter moved from
-  `frontend/gates/` to `frontend/scripts/` (the SDD checks accept a gate under `scripts/` only); the browser gate walks the
+  the `gates` folder of the frontend to `frontend/scripts/` (the SDD checks accept a gate under `scripts/` only); the browser gate walks the
   new routes and checks the landing, the header order and the three legacy links.
 - The template 0.08.002 guards that apply now are adopted verbatim: `check_web_baseline`, `check_version_coherence`,
   `check_ci_budget`, `check_deploy_place`, `check_content_standards`, `check_doc_paths` and `check_svg_animation` (with
