@@ -1,0 +1,2 @@
+- Add content/executive.json, the executive view data of the Introduction: the blast fragmentation problem framed for a decision maker in English and Spanish, valid against the shell executive schema 2.0.0 and its writing limits, with 14 linked sources.
+- Add frontend/src/content/executive.test.ts, the contract test of the file: shell validator, order of the 4 C's, cause weights, owners as roles, sources by id, illustration paths under frontend/public/, and the flip card limits in both languages.
