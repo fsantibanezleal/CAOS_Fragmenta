@@ -6,7 +6,8 @@
  * design, and its agreement with these numbers is a gate rather than an assumption.
  */
 
-import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang, ModelsFile } from './contract.types';
+import { loadReadiness, unavailableRow } from '../readiness/readiness';
+import type { BenchmarkArtifact, CaseArtifact, CaseIndex, Lang, ModelsFile, Text } from './contract.types';
 import { notAvailable, num, signed } from './format';
 
 // `import.meta.env` is injected by the bundler and does not exist when this module is imported
@@ -48,6 +49,38 @@ async function fetchJson<T>(path: string): Promise<T> {
   return pending;
 }
 
+/** The same fetch for the readiness document, which this module's loaders consult before they read an artifact. */
+export const getJSON = fetchJson;
+
+/** Forgets every fetched document (a test starts clean; a page load never needs it). */
+export function resetArtifactCache(): void {
+  cache.clear();
+}
+
+/** The readiness document lists this artifact as absent: the view says not available yet, with the reason. */
+export class ArtifactUnavailable extends Error {
+  constructor(
+    readonly path: string,
+    readonly reason: Text,
+  ) {
+    super(`${path}: not available yet (${reason.en})`);
+  }
+}
+
+/**
+ * Throws ArtifactUnavailable when the readiness document marks `path` (relative to data/) absent. An unreadable or
+ * absent document never does: the views keep working and say readiness is unknown.
+ */
+async function requireAvailable(path: string): Promise<void> {
+  const row = unavailableRow(await loadReadiness(), path);
+  if (!row) return;
+  const why = row.reason ?? { en: 'the pipeline did not write it', es: 'el pipeline no lo escribió' };
+  throw new ArtifactUnavailable(path, {
+    en: `${path} is not available yet: ${why.en}`,
+    es: `${path} aún no está disponible: ${why.es}`,
+  });
+}
+
 /**
  * Every artifact path is ROOT-absolute, and the leading slash is the whole point.
  *
@@ -59,12 +92,23 @@ async function fetchJson<T>(path: string): Promise<T> {
  * own index.html and a 200, so nothing fails locally, the JSON parse guard above fires instead of a
  * network error, and the only place the bug is visible is the static host in production.
  */
-export const loadIndex = () => fetchJson<CaseIndex>('/data/manifests/index.json');
-export const loadCase = (caseId: string) => fetchJson<CaseArtifact>(`/data/${caseId}/case.json`);
-export const loadBenchmark = () => fetchJson<BenchmarkArtifact>('/data/benchmark.json');
+export async function loadIndex(): Promise<CaseIndex> {
+  await requireAvailable('manifests/index.json');
+  return fetchJson<CaseIndex>('/data/manifests/index.json');
+}
+export async function loadCase(caseId: string): Promise<CaseArtifact> {
+  await requireAvailable(`${caseId}/case.json`);
+  return fetchJson<CaseArtifact>(`/data/${caseId}/case.json`);
+}
+export async function loadBenchmark(): Promise<BenchmarkArtifact> {
+  await requireAvailable('benchmark.json');
+  return fetchJson<BenchmarkArtifact>('/data/benchmark.json');
+}
 /** The fitted models of one training scope: a withheld site, or `corpus`. Loaded only when needed. */
-export const loadModels = (scope: string) =>
-  fetchJson<ModelsFile>(`/data/models/${encodeURIComponent(scope)}.json`);
+export async function loadModels(scope: string): Promise<ModelsFile> {
+  await requireAvailable(`models/${scope}.json`);
+  return fetchJson<ModelsFile>(`/data/models/${encodeURIComponent(scope)}.json`);
+}
 
 /* ------------------------------------------------------------------------------------------- */
 /* The shared vocabulary                                                                        */

@@ -1,53 +1,80 @@
-// Prebuild: copy the committed artifacts into the SPA's public/ so the static site replays them.
+// Prebuild: copy into public/data/ exactly the files the index declares (the index, the readiness document, the
+// benchmark, every case's manifest and artifact, every models file), and fail on any that is missing.
 //
-// The canonical copies live in ../data/derived; public/ is a build-time overlay and is git-ignored,
-// so there is exactly one copy of the evidence in the repo. The build FAILS rather than shipping a
-// site with no data behind it, because an empty chart is indistinguishable from a working one until
-// somebody looks.
-import { cpSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+// The canonical copies live in ../data/derived (or the tree CAOS_DATA_ROOT names); public/ is a build-time overlay and
+// is git-ignored, so there is exactly one copy of the evidence in the repo. The overlay is rebuilt from scratch every
+// time, so a file removed from the bake never lingers in the site. The build FAILS rather than shipping a site with no
+// data behind it, because an empty chart is indistinguishable from a working one until somebody looks.
+//
+// A file the readiness document lists as absent in the `missing` of a `partial` row (a declared-partial bake, catalog
+// docs/contracts/catalog.md, Missing-data states) is warned about and left out: the site says "not available yet" for
+// it. Any other absent file stops the build, and so does an absent readiness document.
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, statSync } from 'node:fs';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(HERE, '..');
-const PUB = join(HERE, 'public');
+const REPO = join(HERE, '..');
+const INDEX_REL = 'manifests/index.json';
+const READINESS_REL = 'readiness.json';
 
-const derived = join(ROOT, 'data', 'derived');
-if (!existsSync(derived)) {
-  console.error('[copy-data] no data/derived; run "python data-pipeline/run.py" first');
-  process.exit(1);
-}
-mkdirSync(join(PUB, 'data'), { recursive: true });
-cpSync(derived, join(PUB, 'data'), { recursive: true });
+// CAOS_DATA_ROOT selects the provider tree (absolute, or relative to the repository root); the default is the bake.
+// CAOS_DATA_OUT moves the overlay (a test writes to a temp folder).
+const root = process.env.CAOS_DATA_ROOT?.trim() || 'data/derived';
+const derived = isAbsolute(root) ? root : resolve(REPO, root);
+const outRoot = process.env.CAOS_DATA_OUT?.trim() || join(HERE, 'public', 'data');
 
-const index = join(PUB, 'data', 'manifests', 'index.json');
-if (!existsSync(index)) {
-  console.error('[copy-data] manifests/index.json missing; the bake did not finish');
-  process.exit(1);
-}
-const benchmark = join(PUB, 'data', 'benchmark.json');
-if (!existsSync(benchmark)) {
-  console.error('[copy-data] benchmark.json missing; the cross-case bake did not run');
-  process.exit(1);
+/** The paths the readiness document declares absent: the `missing` of every row whose state is `partial`. Empty when the
+ * document is absent, unreadable or not the readiness shape: nothing is tolerated then. */
+function declaredAbsent() {
+  try {
+    const doc = JSON.parse(readFileSync(join(derived, READINESS_REL), 'utf8'));
+    const rows = Array.isArray(doc?.contracts) ? doc.contracts : [];
+    return rows.filter((r) => r && r.state === 'partial' && Array.isArray(r.missing)).flatMap((r) => r.missing.filter((m) => typeof m === 'string'));
+  } catch {
+    return [];
+  }
 }
 
-// Every case the index declares must actually be on disk. A partial bake ships clean and smaller,
-// and the only thing that catches it is comparing DECLARED against SHIPPED.
-const { readFileSync } = await import('node:fs');
-const idx = JSON.parse(readFileSync(index, 'utf8'));
-const missing = idx.cases.filter((c) => !existsSync(join(PUB, 'data', c.artifact_path)));
-// The same for the fitted models the live lane loads: a case whose models file did not ship would
-// render its replayed numbers and silently show nothing in the What-if tab.
-const missingModels = (idx.models ?? []).filter((m) => !existsSync(join(PUB, 'data', m.path)));
-if (!idx.models?.length || missingModels.length) {
-  console.error(`[copy-data] models missing: ${missingModels.map((m) => m.scope).join(', ') || 'the index lists none'}`);
+if (!existsSync(join(derived, INDEX_REL))) {
+  console.error(`[copy-data] ${INDEX_REL} is missing under ${derived}: run "python data-pipeline/run.py" first`);
   process.exit(1);
 }
-if (missing.length) {
-  console.error(`[copy-data] ${missing.length} declared cases have no artifact: ${missing.map((c) => c.case_id).join(', ')}`);
+const index = JSON.parse(readFileSync(join(derived, INDEX_REL), 'utf8'));
+// The fitted models the live lane loads: a case whose models file did not ship would render its replayed numbers and
+// silently show nothing in the What-if tab, so an index that lists none is a failed bake.
+if (!Array.isArray(index.models) || !index.models.length) {
+  console.error(`[copy-data] models missing: the index lists none`);
   process.exit(1);
 }
-const bytes = readdirSync(join(PUB, 'data'), { withFileTypes: true })
-  .filter((d) => d.isDirectory())
-  .reduce((sum, d) => sum + readdirSync(join(PUB, 'data', d.name)).reduce((s, f) => s + statSync(join(PUB, 'data', d.name, f)).size, 0), 0);
-console.log(`[copy-data] ${idx.cases.length} cases + benchmark copied, ${(bytes / 1024).toFixed(0)} kB`);
+const declared = [
+  ...new Set([
+    INDEX_REL,
+    READINESS_REL,
+    index.benchmark?.path ?? 'benchmark.json',
+    ...index.cases.flatMap((c) => [c.manifest_path, c.artifact_path]),
+    ...index.models.map((m) => m.path),
+  ]),
+];
+const absent = declared.filter((rel) => !existsSync(join(derived, rel)));
+const allowed = new Set(declaredAbsent());
+const tolerated = absent.filter((rel) => allowed.has(rel));
+const stopping = absent.filter((rel) => !allowed.has(rel));
+for (const rel of tolerated) {
+  console.warn(`[copy-data] WARN ${rel} is absent, as readiness.json declares (partial): the site says not available yet`);
+}
+if (stopping.length) {
+  console.error(`[copy-data] declared but missing under ${derived}:\n  ${stopping.join('\n  ')}`);
+  process.exit(1);
+}
+rmSync(outRoot, { recursive: true, force: true });
+let bytes = 0;
+for (const rel of declared.filter((r) => !tolerated.includes(r))) {
+  mkdirSync(dirname(join(outRoot, rel)), { recursive: true });
+  cpSync(join(derived, rel), join(outRoot, rel));
+  bytes += statSync(join(derived, rel)).size;
+}
+console.log(
+  `[copy-data] root ${derived}: ${declared.length - tolerated.length} declared files (${index.cases.length} cases, ` +
+    `${tolerated.length} declared absent), ${(bytes / 1024).toFixed(0)} kB -> ${outRoot}`,
+);
