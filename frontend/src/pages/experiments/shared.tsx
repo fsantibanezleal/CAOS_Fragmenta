@@ -46,3 +46,9 @@ export function Loading({ es }: { es: boolean }) {
 
 /** The interface label of an arm, or its id when the registry does not know it. */
 export const armLabel = (arm: string, lang: Lang) => ARM_BY_ID.get(arm)?.label[lang] ?? arm;
+
+/** An arm's label inside a sentence: its first letter in lower case. */
+export const armInSentence = (arm: string, lang: Lang) => {
+  const label = armLabel(arm, lang);
+  return label.charAt(0).toLowerCase() + label.slice(1);
+};
