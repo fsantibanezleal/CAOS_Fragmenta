@@ -5,6 +5,7 @@
     python data-pipeline/run.py --case real-murgul
     python data-pipeline/run.py --no-benchmark  cases only, for a fast iteration
     python data-pipeline/run.py --validate      re-check what is already on disk
+    python data-pipeline/run.py readiness       write data/derived/readiness.json, without a bake
 """
 from __future__ import annotations
 
@@ -21,6 +22,36 @@ import sys  # noqa: E402
 from pathlib import Path  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+
+def readiness_command(argv: list[str]) -> int:
+    """Compute the readiness document of the repository and write it.
+
+    It reads the catalog and the committed documents and nothing else, so it runs before (and without) the
+    engine and the training stack that the bake below imports.
+    """
+    from pipeline.core import readiness
+
+    parser = argparse.ArgumentParser(prog="run.py readiness", description="Write the readiness document.")
+    parser.add_argument(
+        "--repo-root",
+        type=Path,
+        default=Path(__file__).resolve().parents[1],
+        help="the repository whose catalog and data/derived are read and written (default: this one)",
+    )
+    root = parser.parse_args(argv).repo_root.resolve()
+    derived = root / "data" / "derived"
+    doc = readiness.compute(repo_root=root, derived_root=derived)
+    size = readiness.write(derived, doc)
+    for entry in doc["contracts"]:
+        absent = f" ({len(entry['missing'])} absent)" if entry["missing"] else ""
+        print(f"  {entry['id']}: {entry['state']}{absent}")
+    print(f"readiness: wrote {derived / 'readiness.json'} ({size} bytes), product {doc['product_version']}")
+    return 0
+
+
+if len(sys.argv) > 1 and sys.argv[1] == "readiness":
+    raise SystemExit(readiness_command(sys.argv[2:]))
 
 from pipeline.pipeline import DATA_ROOT, bake_all, bake_case  # noqa: E402
 from pipeline.registry import get_case, list_cases  # noqa: E402
