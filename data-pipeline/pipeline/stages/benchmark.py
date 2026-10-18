@@ -23,7 +23,7 @@ import blastfrag as bf
 
 from .. import __version__
 from ..core.jsonio import write_json
-from .export import digest
+from .export import digest, validate_document
 
 __all__ = ["BENCHMARK_SCHEMA", "SITE_MEASUREMENT", "build", "write"]
 
@@ -339,4 +339,5 @@ def _serialisable(value):
 
 def write(root: Path, payload: dict) -> tuple[Path, int]:
     path = root / "benchmark.json"
+    validate_document("benchmark", payload, where="benchmark.json")
     return path, write_json(path, payload)
