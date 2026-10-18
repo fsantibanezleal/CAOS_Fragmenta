@@ -7,7 +7,7 @@
  * Every corpus-level figure is read from the committed benchmark through `lib/facts`, never typed.
  */
 
-import { Callout, Cite, DocPage, DocSection, Equation, ExecutiveView, Glossary, InlineMath, Tabs, useShellLang } from '@fasl-work/caos-app-shell';
+import { Callout, Cite, DocPage, DocSection, Equation, ExecutiveView, Glossary, Tabs, useShellLang } from '@fasl-work/caos-app-shell';
 import { Link } from 'react-router';
 
 import executive from '../../../content/executive.json';
@@ -26,16 +26,11 @@ export function IntroductionPage({ data, base, initial }: { data: unknown; base:
   const t = (en: string, sp: string) => (es ? sp : en);
   return (
     <DocPage
-      title={{ en: 'Blast fragmentation, and what can be predicted about it', es: 'Fragmentación por voladura, y qué se puede predecir de ella' }}
-      lede={
-        <>
-          {es ? 'Fragmenta predice el tamaño medio ' : 'Fragmenta predicts the mean fragment size '}
-          <InlineMath tex="x_{50}" />
-          {es
-            ? ' de una voladura de banco a partir de su diseño y de la roca, con diez predictores publicados que van de la ecuación de 1973 a los ensambles de 2025, y mide cuánto vale cada predicción en una mina que el modelo no ha visto. No es un simulador mecanicista ni una herramienta de diseño de producción: es un banco de pruebas sobre 97 tiros publicados, con la incertidumbre de cada resultado a la vista. La vista ejecutiva enmarca el problema para quien decide; la vista técnica da el método, el pipeline y los límites de lo que el banco de pruebas demuestra.'
-            : ' of a bench blast from its design and its rock, with ten published predictors from the 1973 equation to the 2025 ensembles, and measures what each prediction is worth at a mine the model has not seen. It is not a mechanistic simulator and not a production design tool: it is a test bench over 97 published blasts, with the uncertainty of every result shown. The executive view frames the problem for a decision maker; the technical view gives the method, the pipeline and the limits of what the benchmark proves.'}
-        </>
-      }
+      title={{ en: 'Introduction', es: 'Introducción' }}
+      lede={t(
+        'Fragmenta tests what published blast fragmentation predictors are worth at a mine they have not seen: ten predictors, from the 1973 equation to the 2025 ensembles, over 97 published blasts, with the uncertainty of every result shown. It is not a mechanistic simulator and not a production design tool. The executive view frames the industry problem for a decision maker; the technical view gives the method, the pipeline and the limits of what the benchmark proves.',
+        'Fragmenta prueba cuánto valen los predictores publicados de fragmentación por voladura en una mina que no han visto: diez predictores, de la ecuación de 1973 a los ensambles de 2025, sobre 97 tiros publicados, con la incertidumbre de cada resultado a la vista. No es un simulador mecanicista ni una herramienta de diseño de producción. La vista ejecutiva enmarca el problema de la industria para quien decide; la vista técnica da el método, el pipeline y los límites de lo que el banco de pruebas demuestra.',
+      )}
     >
       <Tabs
         ariaLabel={t('Introduction views', 'Vistas de la introducción')}
