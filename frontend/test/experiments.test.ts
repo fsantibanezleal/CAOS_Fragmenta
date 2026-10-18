@@ -367,14 +367,14 @@ test('no visible string holds an internal reference, an em-dash or a local path;
   for (const topic of TOPICS) {
     for (const lang of LANGS) {
       const t = text(renderTopic(topic.id, lang), true);
-      assert.doesNotMatch(t, /—|–|→|←/, `${topic.id} ${lang}: a dash or an arrow`);
+      assert.doesNotMatch(t, /\u2014|\u2013|\u2192|\u2190/, `${topic.id} ${lang}: a dash or an arrow`);
       assert.doesNotMatch(t, /\b(?:BL|F|U|ADR|EN|RS|WB|NC|SDD)-\d{2,4}\b/, `${topic.id} ${lang}: a backlog, finding or decision id`);
       assert.doesNotMatch(t, /[A-Z]:[\\/]|CAOS_MANAGE|plans\/|wip\//, `${topic.id} ${lang}: a local path or a coordination path`);
     }
   }
   for (const [file, src] of sources) {
     assert.doesNotMatch(src, /\.toFixed\(/, `${file}: raw toFixed`);
-    assert.doesNotMatch(src, /[—→←\u{1F300}-\u{1FAFF}]/u, `${file}: em-dash, arrow or emoji`);
+    assert.doesNotMatch(src, /[\u2014\u2192\u2190\u{1F300}-\u{1FAFF}]/u, `${file}: em-dash, arrow or emoji`);
   }
 });
 
