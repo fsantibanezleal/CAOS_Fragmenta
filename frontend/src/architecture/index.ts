@@ -94,7 +94,9 @@ El despliegue copia los artefactos y verifica sus resúmenes; nunca entrena ni r
       en: 'The web flow',
       es: 'El flujo web',
       svg: webFlow,
-      body_en: `The App route is the shell's case workbench for one selected case. The rail holds the case, its design
+      body_en: `The Introduction is the landing: the site opens on its executive view, the problem framed for the reader who
+owns the decision, and its technical view follows. The App, at /app, is the shell's case workbench for one
+selected case. The rail holds the case, its design
 variants, the model and blast, and the controls of the open group only; the instrument holds six slots
 named by the question a reader asks: Predict, Distribution, Design, Rock, Compare the variants and The
 case. Design maps the selected model over the burden and spacing plane and lists every model, learned
@@ -103,9 +105,13 @@ ones included, on a design you change, from the models fitted for that case with
 Introduction, Methodology and Implementation explain the problem, every predictor and how the numbers
 are produced. Experiments and Benchmark are the only routes that summarise across cases.
 
-The focus view shows one case full screen outside the header and footer, and applies the theme itself.
-Every chart reads values under the pointer, in a readout line under the drawing.`,
-      body_es: `La ruta App es el banco de trabajo del shell para un caso seleccionado. El panel lleva el caso, sus
+Focus mode belongs to the App and is not a page of its own: the Focus button in the rail head opens the
+open group full screen on the same case (?focus=1), and Escape returns to it. An old /focus/ link is
+forwarded to the App with Focus mode open. Every chart reads values under the pointer, in a readout line
+under the drawing.`,
+      body_es: `La Introducción es la entrada: el sitio abre en su vista ejecutiva, el problema planteado para quien
+decide, y sigue su vista técnica. La App, en /app, es el banco de trabajo del shell para un caso
+seleccionado. El panel lleva el caso, sus
 variantes de diseño, el modelo y el tiro, y solo los controles del grupo abierto; el instrumento lleva
 seis espacios nombrados por la pregunta del lector: Predecir, Distribución, Diseño, Roca, Comparar las
 variantes y El caso. Diseño mapea el modelo seleccionado sobre el plano de bordo y espaciamiento y
@@ -115,8 +121,10 @@ para ese caso sin su propia campaña.
 Introducción, Metodología e Implementación explican el problema, cada predictor y cómo se producen los
 números. Experimentos y Benchmark son las únicas rutas que resumen entre casos.
 
-La vista de foco muestra un caso a pantalla completa fuera del encabezado y el pie, y aplica el tema
-por sí misma. Cada gráfico lee valores bajo el puntero, en una línea de lectura bajo el dibujo.`,
+El modo foco pertenece a la App y no es una página aparte: el botón Foco en la cabecera del panel abre
+el grupo abierto a pantalla completa sobre el mismo caso (?focus=1), y Escape vuelve a él. Un enlace
+antiguo /focus/ se reenvía a la App con el modo foco abierto. Cada gráfico lee valores bajo el puntero,
+en una línea de lectura bajo el dibujo.`,
     },
     {
       id: 'science',
@@ -168,7 +176,11 @@ Contract 2 decides what goes out: case, benchmark and model files, each content-
 its digest. The browser's typed mirror names every field the artifacts carry, and a field that appears
 on one side only fails the tests. The release gate re-reads and re-hashes every file, checks that every
 predicted cell carries a number or a reason, and checks that each case points at the models of its own
-training scope.`,
+training scope.
+
+Every contract is one row of a catalog, with its schema, its version and what each side does when the data
+is absent, and a readiness document computed from that catalog and the bake says for each row which of six
+declared states it is in, from real to missing.`,
       body_es: `El contrato 1 decide qué entra. Un valor fuera del rango del contrato es un error de captura o de
 unidad y se rechaza; un valor fuera de la envolvente de entrenamiento se admite solo con un permiso
 explícito y toda predicción hecha sobre él queda sellada como extrapolación. Nada se recorta. Detrás,
@@ -180,7 +192,11 @@ El contrato 2 decide qué sale: archivos de caso, de benchmark y de modelos, cad
 contenido y listado con su resumen. El espejo tipado del navegador nombra cada campo que traen los
 artefactos, y un campo que aparece de un solo lado hace fallar las pruebas. La compuerta de
 publicación relee y vuelve a calcular el resumen de cada archivo, comprueba que cada celda predicha
-lleve un número o una razón, y que cada caso apunte a los modelos de su propio alcance de entrenamiento.`,
+lleve un número o una razón, y que cada caso apunte a los modelos de su propio alcance de entrenamiento.
+
+Cada contrato es una fila de un catálogo, con su esquema, su versión y lo que hace cada lado cuando el
+dato falta, y un documento de preparación calculado desde ese catálogo y el horneado dice de cada fila en
+cuál de seis estados declarados está, de real a ausente.`,
     },
   ],
 };

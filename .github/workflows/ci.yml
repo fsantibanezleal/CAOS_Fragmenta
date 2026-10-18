@@ -64,6 +64,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install the web dependencies (the SDD guard validates the executive view against the shell's installed schema)
+        run: cd frontend && npm ci
+      - name: Install the schema validator (the SDD guard, the document check and the planted-defect suite)
+        run: pip install jsonschema==4.26.0
       - name: Base-integrity guards
         # A script rather than shell one-liners, so a developer can run the same check before
         # pushing, and so the guards themselves can be tested. They are: tests/test_guards.py.
@@ -98,6 +107,9 @@ jobs:
       - name: The design document, every requirement naming a gate that exists (ADR-0075)
         run: python scripts/check_sdd.py
 
+      - name: The SDD technology table is the pinned dependencies (template 0.08.002, ADR-0078)
+        run: python scripts/check_tech_matrix.py
+
       - name: One deploy place, GitHub Pages, and no files of another (ADR-0055)
         run: python scripts/check_deploy_place.py
 
@@ -112,6 +124,9 @@ jobs:
           if [ -z "${base//0/}" ]; then base=origin/develop; fi  # a new branch or a manual run has no before SHA
           python scripts/check_contract_versions.py --base "$base"
 
+      - name: Every guard rejects a planted defect (cheap, standard library and pytest only; ADR-0074)
+        run: pip install pytest==9.1.1 && python -m pytest tests/adversarial -q
+
       - name: The contract catalog, every row complete and every path it names present (ADR-0080)
         run: python scripts/check_contracts.py docs/contracts/catalog.md --repo-root .
 
@@ -119,7 +134,7 @@ jobs:
         run: python scripts/check_readiness.py
 
       - name: Every committed document valid against its schema file (ADR-0080)
-        run: pip install jsonschema==4.26.0 && python scripts/check_documents.py
+        run: python scripts/check_documents.py
 
       - name: Rows still served by a provider (listed while building; none on main)
         run: |
