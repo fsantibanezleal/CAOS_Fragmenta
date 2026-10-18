@@ -32,7 +32,7 @@ import blastfrag as bf
 
 from .. import __version__
 from ..core.jsonio import write_json
-from .export import _serialisable, digest
+from .export import _serialisable, digest, validate_document
 from .train import TrainedArms
 
 __all__ = ["MODELS_SCHEMA", "LIVE_ARMS", "scope_of", "build", "write"]
@@ -131,6 +131,7 @@ def build(trained: TrainedArms) -> dict:
 
 def write(root: Path, payload: dict) -> tuple[Path, int]:
     path = root / "models" / f"{payload['scope']}.json"
+    validate_document("models-file", payload, where=f"models/{payload['scope']}.json")
     return path, write_json(path, payload, compact=True)
 
 
