@@ -5,7 +5,7 @@
  */
 
 import assert from 'node:assert/strict';
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import test from 'node:test';
 
@@ -25,9 +25,18 @@ const PAGES = [
   { file: 'Benchmark', prefix: 'b-', own: BENCHMARK_CITATIONS, refs: BENCHMARK_REFS },
 ];
 
-/** The ids a page file names in an inline `<Cite id="...">`. */
+/** The files of a page: `pages/<Page>.tsx` and, when the page is split by topic, every `.tsx` under `pages/<page>/`. */
+const pageFiles = (file: string) => {
+  const dir = join(root, 'pages', file.toLowerCase());
+  const split = existsSync(dir)
+    ? readdirSync(dir, { recursive: true, encoding: 'utf8' }).filter((f) => f.endsWith('.tsx')).map((f) => join(dir, f))
+    : [];
+  return [join(root, 'pages', `${file}.tsx`), ...split];
+};
+
+/** The ids a page names in an inline `<Cite id="...">`, in its own file and in its topic files. */
 const inlineCites = (file: string) =>
-  [...readFileSync(join(root, 'pages', `${file}.tsx`), 'utf8').matchAll(/<Cite id="([^"]+)"/g)].map((m) => m[1]);
+  pageFiles(file).flatMap((path) => [...readFileSync(path, 'utf8').matchAll(/<Cite id="([^"]+)"/g)].map((m) => m[1]));
 
 test('citation ids are unique across the six files', () => {
   const ids = CITATIONS.map((c) => c.id);
