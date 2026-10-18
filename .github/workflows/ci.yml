@@ -59,6 +59,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the contract version check compares the schemas with the push's base
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
@@ -101,3 +103,30 @@ jobs:
 
       - name: VERSION the single source; a version in code, never in history, fails (template 0.03.000)
         run: python scripts/check_version_coherence.py
+
+      - name: Contract versions follow their schemas, each with its History entry, against the base (ADR-0080)
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          base="$BEFORE"
+          if [ -z "${base//0/}" ]; then base=origin/develop; fi  # a new branch or a manual run has no before SHA
+          python scripts/check_contract_versions.py --base "$base"
+
+      - name: The contract catalog, every row complete and every path it names present (ADR-0080)
+        run: python scripts/check_contracts.py docs/contracts/catalog.md --repo-root .
+
+      - name: The readiness document is current with the catalog and the bake (ADR-0080)
+        run: python scripts/check_readiness.py
+
+      - name: Every committed document valid against its schema file (ADR-0080)
+        run: pip install jsonschema==4.26.0 && python scripts/check_documents.py
+
+      - name: Rows still served by a provider (listed while building; none on main)
+        run: |
+          set +e
+          python scripts/check_skeleton.py docs/contracts/catalog.md
+          code=$?
+          set -e
+          if [ "$code" -eq 2 ] && [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            echo "::error::main is a release: every catalog row must be real"; exit 1; fi
+          [ "$code" -eq 0 ] || [ "$code" -eq 2 ]

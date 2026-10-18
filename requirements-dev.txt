@@ -5,3 +5,13 @@
 # overnight, on a commit that changed nothing. Bump them deliberately, on their own commit.
 pytest==9.1.1
 ruff==0.16.6
+#
+# The contract lane (ADR-0080): the schema registry of tests/contracts, scripts/check_documents.py and the producer
+# tests of the dormant API. Pinned exactly for the same reason: a release of a validator must not turn a build red.
+jsonschema==4.26.0
+openapi-spec-validator==0.9.0
+httpx==0.28.1
+# the dormant API's own pins (requirements-api.txt), so the API contract tests run on exactly those versions; uvicorn
+# is not needed to test it
+fastapi==0.143.3
+pydantic==2.14.1

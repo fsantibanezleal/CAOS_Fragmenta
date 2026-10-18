@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "blast-record.schema.json",
+  "title": "BlastRecord",
+  "description": "Contract 1 (ingestion), catalog row blast-record 1.0.0: one row of the published corpus as data-pipeline/pipeline/io/contract.py validate_row accepts it. The seven feature ranges are the contract bounds of the engine (blastfrag.datasets.CONTRACT_BOUNDS): outside them the row is rejected, never clipped. Extra columns are allowed because validate_row ignores them (the corpus rows carry a meta mapping); the required columns are exactly REQUIRED_COLUMNS.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "blast_id",
+    "site",
+    "S_over_B",
+    "H_over_B",
+    "B_over_D",
+    "T_over_B",
+    "Pf_kg_m3",
+    "XB_m",
+    "E_GPa"
+  ],
+  "properties": {
+    "blast_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The row's id."
+    },
+    "site": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The campaign the row belongs to."
+    },
+    "S_over_B": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 3.0,
+      "description": "spacing / burden; outside [0.5, 3.0] is a rejection, not an unusual blast."
+    },
+    "H_over_B": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 15.0,
+      "description": "bench height / burden; outside [0.5, 15.0] is a rejection, not an unusual blast."
+    },
+    "B_over_D": {
+      "type": "number",
+      "minimum": 5.0,
+      "maximum": 80.0,
+      "description": "burden / hole diameter; outside [5.0, 80.0] is a rejection, not an unusual blast."
+    },
+    "T_over_B": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 8.0,
+      "description": "stemming / burden; outside [0.1, 8.0] is a rejection, not an unusual blast."
+    },
+    "Pf_kg_m3": {
+      "type": "number",
+      "minimum": 0.05,
+      "maximum": 3.0,
+      "description": "powder factor, kg/m3; outside [0.05, 3.0] is a rejection, not an unusual blast."
+    },
+    "XB_m": {
+      "type": "number",
+      "minimum": 0.005,
+      "maximum": 10.0,
+      "description": "in situ block size, m; outside [0.005, 10.0] is a rejection, not an unusual blast."
+    },
+    "E_GPa": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 150.0,
+      "description": "Young modulus, GPa; outside [0.5, 150.0] is a rejection, not an unusual blast."
+    },
+    "x50_m": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0,
+      "description": "The measured mean fragment size in metres; absent or null for a design that was never measured."
+    },
+    "group": {
+      "enum": [
+        1,
+        2,
+        null
+      ],
+      "description": "The rock-stiffness group of the published two-group split; null when no arm assigned one."
+    }
+  }
+}
