@@ -37,3 +37,6 @@ select = ["E", "F", "W", "I"]
 "scripts/check_readiness.py" = ["E501"]
 "scripts/check_skeleton.py" = ["E501"]
 "scripts/check_tech_matrix.py" = ["E501"]
+# The planted-defect suite (template 0.08.002, adapted): the plants are one-line strings of the defect they plant, imports follow
+# the template's order so a template fix applies cleanly (E741: the template's domain letters).
+"tests/adversarial/*.py" = ["E501", "E741", "I001"]
