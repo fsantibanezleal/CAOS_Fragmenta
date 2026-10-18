@@ -300,7 +300,7 @@ test('no visible string holds an internal reference, an em-dash or a local path'
   for (const topic of TOPICS) {
     for (const lang of LANGS) {
       const t = text(renderTopic(topic.id, lang), true);
-      assert.doesNotMatch(t, /—|–/, `${topic.id} ${lang}: a dash`);
+      assert.doesNotMatch(t, /\u2014|\u2013/, `${topic.id} ${lang}: a dash`);
       assert.doesNotMatch(t, /\b(?:BL|F|U|ADR|EN|RS|WB|NC|SDD)-\d{2,4}\b/, `${topic.id} ${lang}: a backlog, finding or decision id`);
       assert.doesNotMatch(t, /[A-Z]:[\\/]|CAOS_MANAGE|plans\/|wip\//, `${topic.id} ${lang}: a local path or a coordination path`);
     }
