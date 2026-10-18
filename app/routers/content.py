@@ -1,6 +1,9 @@
-"""GET-only endpoints serving the committed documents unchanged (read-only), as docs/contracts/api.openapi.json
-declares. A document that does not exist yet, or exists but is not JSON, is a declared state: 503 with state
-missing and its reason, never an empty body that looks like data and never a 500. No write paths."""
+"""GET-only endpoints serving the committed documents unchanged (read-only).
+
+As docs/contracts/api.openapi.json declares. A document that does not exist yet, or exists but is not JSON,
+is a declared state: 503 with state missing and its reason, never an empty body that looks like data and
+never a 500. No write paths.
+"""
 from __future__ import annotations
 
 from typing import Any
@@ -56,7 +59,10 @@ def get_manifest(case_id: str) -> Any:
 
 @router.get("/artifacts/{rel_path:path}")
 def get_artifact(rel_path: str) -> Any:
-    """A case artifact an indexed case lists, by its path under data/derived (for example `<case>/case.json`)."""
+    """A case artifact an indexed case lists, by its path under data/derived.
+
+    For example `<case>/case.json`.
+    """
     try:
         art = content.load_artifact(rel_path)
     except content.Unreadable as exc:

@@ -1,13 +1,13 @@
 """Read the committed documents (index, manifests, artifacts, models files, benchmark, readiness) as they are.
 Read-only, path-traversal guarded.
 
-Only what the index lists is served: a manifest of an indexed case, an artifact an indexed case names, a models
-file of an indexed scope (never the index, the readiness, the benchmark or a manifest as an "artifact"), so no
-route answers with a body its OpenAPI response does not declare. A document that exists but is not JSON raises
-``Unreadable``, which the router answers as a declared 503.
+Only what the index lists is served: a manifest of an indexed case, an artifact an indexed case names, a
+models file of an indexed scope (never the index, the readiness, the benchmark or a manifest as an
+"artifact"), so no route answers with a body its OpenAPI response does not declare. A document that
+exists but is not JSON raises ``Unreadable``, which the router answers as a declared 503.
 
-The documents are served unchanged; their shapes are the schema files under docs/contracts/schemas/, checked by
-tests/contracts and scripts/check_documents.py, never re-declared here.
+The documents are served unchanged; their shapes are the schema files under docs/contracts/schemas/,
+checked by tests/contracts and scripts/check_documents.py, never re-declared here.
 """
 from __future__ import annotations
 
@@ -77,7 +77,10 @@ def _entries(key: str) -> list[dict]:
 
 
 def load_manifest(case_id: str) -> dict | None:
-    """The manifest of an indexed case, or None for any other id (the index itself, a path, a case not baked)."""
+    """The manifest of an indexed case, or None for any other id.
+
+    The index itself, a path, a case not baked: all None.
+    """
     for entry in _entries("cases"):
         if entry.get("case_id") == case_id and isinstance(entry.get("manifest_path"), str):
             return _read(entry["manifest_path"])

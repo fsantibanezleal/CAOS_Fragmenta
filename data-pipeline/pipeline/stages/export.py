@@ -172,9 +172,9 @@ def validate_document(kind: str, payload: Any, *, where: str) -> None:
 
     The file is docs/contracts/schemas/<kind>.schema.json. A document that breaks it raises ``ContractError``
     naming ``where`` and the path of each offending field, so the bake stops before the document is written,
-    never after a reader has met it. Every writer of a catalog document calls this. What is checked is the payload
-    after the serialisation ``write_json`` applies, so a value that would reach the file in another type (a tuple, a
-    numpy integer turned into a string) is judged as the file will hold it.
+    never after a reader has met it. Every writer of a catalog document calls this. What is checked is the
+    payload after the serialisation ``write_json`` applies, so a value that would reach the file in another
+    type (a tuple, a numpy integer turned into a string) is judged as the file will hold it.
     """
     require_valid(kind, json.loads(dumps(payload)), where=where)
 

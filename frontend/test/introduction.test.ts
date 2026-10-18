@@ -127,5 +127,5 @@ test('every id the page cites inline, and every id its sections list, is defined
 
 test('the page reads its numbers through lib/facts and writes no em-dash, no toFixed and no reading column of its own', () => {
   assert.match(source, /lib\/facts/);
-  assert.doesNotMatch(source, /toFixed|—|max-width|maxWidth/);
+  assert.doesNotMatch(source, /toFixed|\u2014|max-width|maxWidth/);
 });
