@@ -1,5 +1,5 @@
 /**
- * The Methodology page's references: the citations only this page uses, and the sources each of its sections lists.
+ * The Methodology page's references: the citations only this page uses, and the sources each of its topics lists.
  * A source several pages use sits in ../citations.ts. This file belongs to the page's own unit of work.
  */
 
@@ -54,13 +54,12 @@ export const METHODOLOGY_CITATIONS: Citation[] = [
   },
 ];
 
-/** Section key to the ids its reference list shows, in that order. */
+/** Topic key to the ids its reference list shows, in that order (the keys are `refsKey` of pages/methodology/index.ts). */
 export const METHODOLOGY_REFS: Record<string, string[]> = {
-  'm-classical': ['kuznetsov1973', 'hudaverdi2010', 'amoako2022', 'kulatilake2012'],
-  'm-rock': ['hudaverdi2010', 'babaeian2019', 'sui2025'],
-  'm-distributions': ['amoako2022', 'ouchterlony2005', 'babaeian2019'],
-  'm-statistical': ['hudaverdi2010', 'kulatilake2012'],
+  'm-mean-size': ['kuznetsov1973', 'hudaverdi2010', 'amoako2022', 'kulatilake2012'],
+  'm-rock-factor': ['hudaverdi2010', 'babaeian2019', 'kulatilake2012', 'sui2025', 'huan2025'],
+  'm-distributions': ['amoako2022', 'ouchterlony2005', 'babaeian2019', 'hudaverdi2010'],
+  'm-router': ['hudaverdi2010', 'kulatilake2012'],
   'm-network': ['kulatilake2012', 'cybenko1989', 'marquardt1963'],
   'm-ensembles': ['sui2025', 'amoako2022', 'smola2004', 'breiman2001', 'chen2016', 'wolpert1992'],
-  'm-protocols': ['sui2025', 'roberts2017', 'kapoor2023', 'efron1979', 'field2007'],
 };
