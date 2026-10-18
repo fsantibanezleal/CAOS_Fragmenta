@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "benchmark.schema.json",
   "title": "Benchmark",
-  "description": "Contract 2 (artifact), catalog row benchmark 1.0.0: the cross-case evidence every documentation page and the Benchmark page read, written by data-pipeline/pipeline/stages/benchmark.py to data/derived/benchmark.json (schema id fragmenta.benchmark/v3). digest is the SHA-256 of the canonical serialisation of the rest of the payload. The verdict is a measurement over the row set; the kill criterion text is in the document. Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, the corpus digest equal to the index's, every site in site_meta, the sizes of the row arrays.",
+  "description": "Contract 2 (artifact), catalog row benchmark 2.0.0: the cross-case evidence every documentation page and the Benchmark page read, written by data-pipeline/pipeline/stages/benchmark.py to data/derived/benchmark.json (schema id fragmenta.benchmark/v3). digest is the SHA-256 of the canonical serialisation of the rest of the payload. The verdict is a measurement over the row set; the kill criterion text is in the document. Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, the corpus digest equal to the index's, every site in site_meta, the sizes of the row arrays.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -1745,10 +1745,15 @@
           "type": "number"
         },
         "abstain_reason": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the arm answered no row of the site, in both languages; null when it answered."
         }
       }
     },
@@ -1774,6 +1779,25 @@
         },
         "gain_in_r2_identity": {
           "type": "number"
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "description": "Every reader-facing string is bilingual at the source.",
+      "additionalProperties": false,
+      "required": [
+        "en",
+        "es"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "es": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

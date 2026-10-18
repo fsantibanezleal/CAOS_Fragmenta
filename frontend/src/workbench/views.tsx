@@ -535,8 +535,8 @@ function NoCurve({ sel, title }: { sel: Selection; title: BiText }) {
   return (
     <PlotCard title={title} lane="live" provenance={provenanceOf(sel, true)} dataKey={sel.stateKey}>
       <p className="fr-note fr-note-warn">
-        {sel.blast.geometry_reason ??
-          sel.blast.degenerate_reason ??
+        {sel.blast.geometry_reason?.[lang] ??
+          sel.blast.degenerate_reason?.[lang] ??
           t(
             lang,
             'This blast has neither an absolute geometry nor a rock factor, so no distribution model can run on it.',

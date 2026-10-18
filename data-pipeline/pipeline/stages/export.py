@@ -37,11 +37,13 @@ def digest(payload: Any) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def _prediction_row(prediction: bf.Prediction) -> dict:
+def _prediction_row(prediction: bf.Prediction, reason: dict | None) -> dict:
     return {
         "x50_m": None if prediction.x50_m is None else round(prediction.x50_m, 6),
         "abstained": prediction.abstained,
-        "reason": prediction.abstain_reason,
+        # In both languages (BL-039): the engine's English text went through the reason catalogue in the
+        # infer stage.
+        "reason": reason,
         "extrapolated": prediction.extrapolated,
         "group": prediction.group,
         # The network's simulation spread is the uncertainty of a learned prediction, and it
@@ -125,7 +127,10 @@ def build_case_artifact(
             for v in case.variants
         ],
         "predictions": {
-            arm: {blast_id: _prediction_row(p) for blast_id, p in row.items()}
+            arm: {
+                blast_id: _prediction_row(p, inferred.reasons.get(arm, {}).get(blast_id))
+                for blast_id, p in row.items()
+            }
             for arm, row in inferred.predictions.items()
         },
         "variant_curves": inferred.variant_curves,
