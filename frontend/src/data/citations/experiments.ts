@@ -1,5 +1,5 @@
 /**
- * The Experiments page's references: the citations only this page uses, and the sources each of its sections lists.
+ * The Experiments page's references: the citations only this page uses, and the sources each of its topics lists.
  * A source several pages use sits in ../citations.ts. This file belongs to the page's own unit of work.
  */
 
@@ -16,13 +16,14 @@ export const EXPERIMENTS_CITATIONS: Citation[] = [
   },
 ];
 
-/** Section key to the ids its reference list shows, in that order. */
+/** Topic key to the ids its reference list shows, in that order. */
 export const EXPERIMENTS_REFS: Record<string, string[]> = {
-  'e-design': ['sui2025', 'roberts2017', 'kapoor2023'],
-  'e-metrics': ['efron1979', 'field2007'],
-  'e-coverage': ['hudaverdi2010', 'kulatilake2012', 'sui2025'],
-  'e-spread': ['sui2025'],
-  'e-sites': ['hudaverdi2010'],
+  'e-metrics': ['kulatilake2012', 'efron1979', 'field2007', 'roberts2017'],
+  'e-protocol': ['roberts2017', 'kapoor2023', 'sui2025', 'hudaverdi2010'],
+  'e-datasets': ['hudaverdi2010', 'kulatilake2012', 'sui2025', 'huan2025'],
+  'e-transfer': ['roberts2017', 'efron1979', 'field2007', 'hudaverdi2010'],
+  'e-sensitivity': ['sui2025', 'roberts2017', 'kapoor2023'],
+  'e-sites': ['hudaverdi2010', 'field2007'],
   'e-response': ['kuznetsov1973', 'hudaverdi2010'],
   'e-diagnostics': ['liu2008', 'huan2025', 'breiman2001', 'chen2016', 'sui2025'],
 };
