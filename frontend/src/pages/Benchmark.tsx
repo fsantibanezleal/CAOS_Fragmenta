@@ -470,7 +470,7 @@ function Published({ es, b }: TabProps) {
 
 function Seeds({ es, lang, b }: TabProps) {
   const sweep = b.network_seed_sweep;
-  const sorted = [...sweep.r2_identity].sort((x, y) => x - y);
+  const sorted = [...sweep.r2_identity].filter((v): v is number => v !== null).sort((x, y) => x - y);
   const series: SeriesSpec[] = [
     { id: 'seeds', label: es ? 'reproducción, por semilla' : 'reproduction, per seed', values: sorted },
     { id: 'published', label: es ? 'publicado' : 'published', values: sorted.map(() => sweep.published), dashed: true },
@@ -568,7 +568,7 @@ function Robustness({ es, lang, b }: TabProps) {
       </div>
       {block ? (
         <DrawHistogram
-          draws={block.draws}
+          draws={block.draws.filter((d): d is number => d !== null)}
           marks={[
             { value: block.repeats.median, label: es ? 'mediana' : 'median', colour: 'accent' },
             { value: F.site(arm), label: es ? 'sitio excluido' : 'site held out', colour: 'warn' },

@@ -7,6 +7,7 @@
 import { Callout, DocSection, Equation } from '@fasl-work/caos-app-shell';
 
 import { BENCHMARK_SCHEMA, CASE_SCHEMA, INDEX_SCHEMA, MODELS_SCHEMA } from '../../lib/contract.types';
+import { ReadinessTable } from '../../readiness/ReadinessTable';
 import { count, tr, type TopicProps } from './shared';
 
 export function Contract({ es, index }: TopicProps) {
@@ -103,8 +104,10 @@ export function Contract({ es, index }: TopicProps) {
           </tbody>
         </table>
       </div>
-      {/* The readiness table of the contract catalog goes here (the integrator adds it when the catalog lands); the slot is empty and takes no space. */}
-      <div data-slot="readiness-table" />
+      {/* What is real in this build: every catalog row with its declared state, read from readiness.json. */}
+      <div data-slot="readiness-table">
+        <ReadinessTable />
+      </div>
       <pre className="fr-code">
         <code>{flow}</code>
       </pre>
