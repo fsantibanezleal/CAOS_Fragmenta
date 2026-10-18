@@ -97,6 +97,8 @@ export async function loadIndex(): Promise<CaseIndex> {
   return fetchJson<CaseIndex>('/data/manifests/index.json');
 }
 export async function loadCase(caseId: string): Promise<CaseArtifact> {
+  // A case whose manifest the readiness document lists as absent is not available yet, though its artifact may be there.
+  await requireAvailable(`manifests/${caseId}.json`);
   await requireAvailable(`${caseId}/case.json`);
   return fetchJson<CaseArtifact>(`/data/${caseId}/case.json`);
 }

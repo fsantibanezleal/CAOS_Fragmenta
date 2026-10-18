@@ -195,6 +195,18 @@ describe('a case or a document the readiness lists as absent', () => {
     assert.ok(e.reason.en.includes('case-artifact is partial'), 'the reason is the document’s');
     assert.equal(asked(fetch).some((u) => u.includes('C1/case.json')), false);
   });
+  it('adversarial: loadCase refuses a case whose manifest is listed, though its artifact is there, and reads the other cases', async () => {
+    const fetch = serve({
+      'readiness.json': doc(entry('case-manifest', 'partial', { missing: ['manifests/C1.json'] })),
+      'C1/case.json': { case: { id: 'C1' } },
+      'C2/case.json': { case: { id: 'C2' } },
+    });
+    const e = await loadCase('C1').catch((x: unknown) => x);
+    assert.ok(e instanceof ArtifactUnavailable);
+    assert.ok(e.reason.en.includes('manifests/C1.json') && e.reason.en.includes('case-manifest is partial'));
+    assert.equal(asked(fetch).some((u) => u.includes('C1/case.json')), false);
+    assert.deepEqual(await loadCase('C2'), { case: { id: 'C2' } });
+  });
   it('loadIndex rejects with ArtifactUnavailable when case-index is missing, and loadBenchmark when benchmark is', async () => {
     serve({ 'readiness.json': doc(entry('case-index', 'missing'), entry('benchmark', 'missing')) });
     await assert.rejects(loadIndex(), ArtifactUnavailable);
