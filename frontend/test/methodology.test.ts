@@ -254,14 +254,14 @@ test('content standards: no em-dash, arrow or emoji, no internal reference, no r
   const files = [join(dir, 'Methodology.tsx'), ...readdirSync(join(dir, 'methodology')).map((f) => join(dir, 'methodology', f))];
   for (const file of files) {
     const text = readFileSync(file, 'utf8');
-    assert.doesNotMatch(text, /[—→←\u{1F300}-\u{1FAFF}☀-➿]/u, `${file}: em-dash, arrow or emoji`);
+    assert.doesNotMatch(text, /[\u2014→←\u{1F300}-\u{1FAFF}☀-➿]/u, `${file}: em-dash, arrow or emoji`);
     assert.doesNotMatch(text, /\.toFixed\(/, `${file}: raw toFixed`);
     assert.doesNotMatch(text, /\bBL-\d+|CAOS_MANAGE|[A-Z]:[\\/]/, `${file}: an internal reference`);
   }
   for (const lang of ['en', 'es'] as const) {
     for (const [id] of EXPECTED) {
       const text = textOf(topicHtml(id, lang).html);
-      assert.doesNotMatch(text, /[—→←]/u, `${id}: em-dash or arrow in the rendered text`);
+      assert.doesNotMatch(text, /[\u2014→←]/u, `${id}: em-dash or arrow in the rendered text`);
     }
   }
 });
