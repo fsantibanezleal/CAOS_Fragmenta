@@ -10,7 +10,7 @@ import { EXPERIMENTS_REFS } from '../../data/citations/experiments';
 import { f, facts, iv } from '../../lib/facts';
 import { notAvailable } from '../../lib/format';
 import { SupportsDiagram } from '../../viz/Diagrams';
-import { armLabel, Loading, tr, type TopicProps } from './shared';
+import { armInSentence, armLabel, Loading, tr, type TopicProps } from './shared';
 
 export function Transfer({ es, b }: TopicProps) {
   const t = tr(es);
@@ -38,8 +38,8 @@ export function Transfer({ es, b }: TopicProps) {
     >
       <p>
         {t(
-          `The third question is the one that matters for a mine that is not in the corpus, and its protocol holds out one whole campaign at a time. Over every blast (${all?.n_blasts ?? notAvailable()}), the best learned arm held out by site is ${all ? armLabel(all.best_learned_arm, lang) : notAvailable()} at ${f(all?.best_learned_r2_identity)} (${iv(all?.best_learned_interval_95)}), ${f(all?.margin_over_null)} above the null, and the criterion is ${all?.generalises_across_sites ? 'met' : 'not met'}. Over the ${geometry?.n_blasts ?? notAvailable()} blasts with resolvable geometry it is ${geometry ? armLabel(geometry.best_learned_arm, lang) : notAvailable()} at ${f(geometry?.best_learned_r2_identity)} (${iv(geometry?.best_learned_interval_95)}), ${f(geometry?.margin_over_null)} above the null, and the criterion is ${geometry?.generalises_across_sites ? 'met' : 'not met'}. The verdict depends on the row set, and this product reports it that way rather than choosing one.`,
-          `La tercera pregunta es la que importa para una mina que no está en el corpus, y su protocolo retiene una campaña completa por vez. Sobre todos los tiros (${all?.n_blasts ?? notAvailable()}), el mejor brazo aprendido con el sitio excluido es ${all ? armLabel(all.best_learned_arm, lang) : notAvailable()} con ${f(all?.best_learned_r2_identity)} (${iv(all?.best_learned_interval_95, 2, true)}), ${f(all?.margin_over_null)} sobre el nulo, y el criterio ${all?.generalises_across_sites ? 'se cumple' : 'no se cumple'}. Sobre los ${geometry?.n_blasts ?? notAvailable()} tiros con geometría resoluble es ${geometry ? armLabel(geometry.best_learned_arm, lang) : notAvailable()} con ${f(geometry?.best_learned_r2_identity)} (${iv(geometry?.best_learned_interval_95, 2, true)}), ${f(geometry?.margin_over_null)} sobre el nulo, y el criterio ${geometry?.generalises_across_sites ? 'se cumple' : 'no se cumple'}. El veredicto depende del conjunto de filas, y este producto lo informa así en lugar de elegir uno.`,
+          `The third question is the one that matters for a mine that is not in the corpus, and its protocol holds out one whole campaign at a time. Over every blast (${all?.n_blasts ?? notAvailable()}), the best learned arm held out by site is ${all ? armInSentence(all.best_learned_arm, lang) : notAvailable()} at ${f(all?.best_learned_r2_identity)} (${iv(all?.best_learned_interval_95)}), ${f(all?.margin_over_null)} above the null, and the criterion is ${all?.generalises_across_sites ? 'met' : 'not met'}. Over the ${geometry?.n_blasts ?? notAvailable()} blasts with resolvable geometry it is ${geometry ? armInSentence(geometry.best_learned_arm, lang) : notAvailable()} at ${f(geometry?.best_learned_r2_identity)} (${iv(geometry?.best_learned_interval_95)}), ${f(geometry?.margin_over_null)} above the null, and the criterion is ${geometry?.generalises_across_sites ? 'met' : 'not met'}. The verdict depends on the row set, and this product reports it that way rather than choosing one.`,
+          `La tercera pregunta es la que importa para una mina que no está en el corpus, y su protocolo retiene una campaña completa por vez. Sobre todos los tiros (${all?.n_blasts ?? notAvailable()}), el mejor brazo aprendido con el sitio excluido es ${all ? armInSentence(all.best_learned_arm, lang) : notAvailable()} con ${f(all?.best_learned_r2_identity)} (${iv(all?.best_learned_interval_95, 2, true)}), ${f(all?.margin_over_null)} sobre el nulo, y el criterio ${all?.generalises_across_sites ? 'se cumple' : 'no se cumple'}. Sobre los ${geometry?.n_blasts ?? notAvailable()} tiros con geometría resoluble es ${geometry ? armInSentence(geometry.best_learned_arm, lang) : notAvailable()} con ${f(geometry?.best_learned_r2_identity)} (${iv(geometry?.best_learned_interval_95, 2, true)}), ${f(geometry?.margin_over_null)} sobre el nulo, y el criterio ${geometry?.generalises_across_sites ? 'se cumple' : 'no se cumple'}. El veredicto depende del conjunto de filas, y este producto lo informa así en lugar de elegir uno.`,
         )}
       </p>
       {b ? (
@@ -84,7 +84,7 @@ export function Transfer({ es, b }: TopicProps) {
           'El criterio es una oración que el motor evalúa, con la redacción fija desde que la primera corrida le agregó la mitad de positividad, y una prueba del motor fija su resumen para que una edición posterior haga fallar el conjunto de pruebas. Se cita tal como la escribe el motor, en inglés:',
         )}
       </p>
-      <blockquote className="fr-fine" lang="en" translate="no">
+      <blockquote lang="en" translate="no">
         {b?.kill_criterion ?? notAvailable()}
       </blockquote>
       <p>
@@ -92,7 +92,8 @@ export function Transfer({ es, b }: TopicProps) {
           `Its history is part of the answer. It was first written, before the first run, as a margin over the null alone, and that run produced a best learned arm at ${f(all?.best_learned_r2_identity)} against a null at ${f(all?.null_r2_identity)}: the margin-only rule declared that the learned tier generalises, for an arm that does worse than predicting a constant. The positivity half was added then. The two row sets exist for a related reason: the classical arms need an absolute geometry that the Miami campaign does not publish, so they abstain on its ${miami?.n_blasts ?? notAvailable()} blasts, and comparing a classical score over ${geometry?.n_blasts ?? notAvailable()} blasts with a learned score over ${all?.n_blasts ?? notAvailable()} compares different denominators.`,
           `Su historia es parte de la respuesta. Se escribió primero, antes de la primera corrida, como un margen sobre el nulo solamente, y esa corrida dio un mejor brazo aprendido en ${f(all?.best_learned_r2_identity)} contra un nulo en ${f(all?.null_r2_identity)}: la regla de solo margen declaró que el nivel aprendido generaliza, para un brazo que lo hace peor que predecir una constante. Entonces se agregó la mitad de positividad. Los dos conjuntos de filas existen por una razón emparentada: los brazos clásicos necesitan una geometría absoluta que la campaña de Miami no publica, así que se abstienen en sus ${miami?.n_blasts ?? notAvailable()} tiros, y comparar un puntaje clásico sobre ${geometry?.n_blasts ?? notAvailable()} tiros con uno aprendido sobre ${all?.n_blasts ?? notAvailable()} compara denominadores distintos.`,
         )}{' '}
-        <Cite id="roberts2017" />
+        <Cite id="roberts2017" />{' '}
+        <Cite id="hudaverdi2010" />
       </p>
       {all && geometry ? (
         <SupportsDiagram
@@ -119,5 +120,5 @@ export function Transfer({ es, b }: TopicProps) {
 
 /** The label of the arm a source fitted on this corpus, or "not available". */
 function inSampleLabel(arm: string | undefined, lang: 'en' | 'es'): string {
-  return arm ? armLabel(arm, lang) : notAvailable();
+  return arm ? armInSentence(arm, lang) : notAvailable();
 }
