@@ -1,0 +1,1 @@
+- The design guard's validation rows for `docs-and-guards`, `workbench-on-the-base` and the nine remaining rows of `base-0-08`: each requirement names an adversarial test in `tests/adversarial/test_adv_base.py` that plants the defect it forbids in a throwaway copy and shows its own gate fail on it (CAOS_Fragmenta#33, unit V3).
