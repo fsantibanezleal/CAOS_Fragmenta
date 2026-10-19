@@ -25,61 +25,61 @@
 <g transform="translate(285,240)"><rect x="-8" y="-26" width="16" height="22" rx="5" fill="var(--color-accent)" stroke="var(--color-fg-subtle)" stroke-width="1.2"/><path d="M -5 -4 V 0 M 5 -4 V 0" stroke="var(--color-fg-subtle)" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-34" r="7" fill="var(--color-surface-2)" stroke="var(--color-fg-subtle)" stroke-width="1.4"/><path d="M -8 -35 A 8 8 0 0 1 8 -35 Z" fill="var(--color-warn)" stroke="var(--color-fg-subtle)" stroke-width="1.2" stroke-linejoin="round"/></g>
 <g transform="translate(352,240)"><rect x="-8" y="-26" width="16" height="22" rx="5" fill="var(--color-accent)" stroke="var(--color-fg-subtle)" stroke-width="1.2"/><path d="M -5 -4 V 0 M 5 -4 V 0" stroke="var(--color-fg-subtle)" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-34" r="7" fill="var(--color-surface-2)" stroke="var(--color-fg-subtle)" stroke-width="1.4"/><path d="M -8 -35 A 8 8 0 0 1 8 -35 Z" fill="var(--color-warn)" stroke="var(--color-fg-subtle)" stroke-width="1.2" stroke-linejoin="round"/></g>
 <g transform="translate(548,198)"><rect x="-8" y="-26" width="16" height="22" rx="5" fill="var(--color-accent)" stroke="var(--color-fg-subtle)" stroke-width="1.2"/><path d="M -5 -4 V 0 M 5 -4 V 0" stroke="var(--color-fg-subtle)" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-34" r="7" fill="var(--color-surface-2)" stroke="var(--color-fg-subtle)" stroke-width="1.4"/><path d="M -8 -35 A 8 8 0 0 1 8 -35 Z" fill="var(--color-warn)" stroke="var(--color-fg-subtle)" stroke-width="1.2" stroke-linejoin="round"/></g>
-<path d="M 178 203 V 124 H 361" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/>
-<path d="M 539 124 H 604 V 150" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/>
+<path d="M 178 203 V 142 H 334" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/>
+<path d="M 542 142 H 604 V 150" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/>
 <path d="M 60 60 V 144" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
-<path d="M 202 60 V 124" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+<path d="M 202 60 V 142" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 330 60 L 320 130" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 110 116 V 190" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 548 60 V 156" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 358 244 L 400 312" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
-<rect x="10" y="4" width="101" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="60" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">One site</text>
-<text data-lang="en" x="60" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">only</text>
-<text data-lang="es" x="60" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Un solo</text>
-<text data-lang="es" x="60" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">sitio</text>
-<rect x="34" y="62" width="153" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="110" y="83" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Unproven at</text>
-<text data-lang="en" x="110" y="109" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">a new mine</text>
-<text data-lang="es" x="110" y="83" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Sin validar en</text>
-<text data-lang="es" x="110" y="109" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">otra mina</text>
-<rect x="136" y="4" width="132" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="202" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Varies</text>
-<text data-lang="en" x="202" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">by site</text>
-<text data-lang="es" x="202" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Varía según</text>
-<text data-lang="es" x="202" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">el sitio</text>
-<rect x="279" y="4" width="112" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="335" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Mixed</text>
-<text data-lang="en" x="335" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">accuracy</text>
-<text data-lang="es" x="335" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Precisión</text>
-<text data-lang="es" x="335" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">dispar</text>
-<rect x="368" y="108" width="164" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="5 4"/>
-<text data-lang="en" x="450" y="131" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Thin hand-off</text>
-<text data-lang="es" x="450" y="131" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Traspaso débil</text>
-<rect x="58" y="272" width="143" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="130" y="293" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Blast</text>
-<text data-lang="en" x="130" y="319" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">engineer</text>
-<text data-lang="es" x="130" y="293" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Ingeniero de</text>
-<text data-lang="es" x="130" y="319" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">voladura</text>
-<rect x="219" y="272" width="132" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="285" y="293" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Geology and</text>
-<text data-lang="en" x="285" y="319" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">geotechnics</text>
-<text data-lang="es" x="285" y="293" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Geología y</text>
-<text data-lang="es" x="285" y="319" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">geotecnia</text>
-<rect x="382" y="312" width="132" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="448" y="333" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Mine</text>
-<text data-lang="en" x="448" y="359" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">operations</text>
-<text data-lang="es" x="448" y="333" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Operaciones</text>
-<text data-lang="es" x="448" y="359" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">mina</text>
-<rect x="476" y="4" width="143" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="548" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Site general</text>
-<text data-lang="en" x="548" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">manager</text>
-<text data-lang="es" x="548" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Gerente</text>
-<text data-lang="es" x="548" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">general</text>
-<rect x="644" y="140" width="152" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="720" y="161" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Concentrator</text>
-<text data-lang="en" x="720" y="187" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">manager</text>
-<text data-lang="es" x="720" y="161" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Gerente de</text>
-<text data-lang="es" x="720" y="187" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">planta</text>
+<rect x="4" y="4" width="120" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="64" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">One site</text>
+<text data-lang="en" x="64" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">only</text>
+<text data-lang="es" x="64" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Un solo</text>
+<text data-lang="es" x="64" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">sitio</text>
+<rect x="6" y="72" width="188" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="100" y="97" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Unproven at</text>
+<text data-lang="en" x="100" y="125" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">a new mine</text>
+<text data-lang="es" x="100" y="97" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Sin validar en</text>
+<text data-lang="es" x="100" y="125" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">otra mina</text>
+<rect x="130" y="4" width="164" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="212" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Varies</text>
+<text data-lang="en" x="212" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">by site</text>
+<text data-lang="es" x="212" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Varía según</text>
+<text data-lang="es" x="212" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">el sitio</text>
+<rect x="300" y="4" width="130" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="365" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Mixed</text>
+<text data-lang="en" x="365" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">accuracy</text>
+<text data-lang="es" x="365" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Precisión</text>
+<text data-lang="es" x="365" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">dispar</text>
+<rect x="340" y="125" width="196" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text data-lang="en" x="438" y="150" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Thin hand-off</text>
+<text data-lang="es" x="438" y="150" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Traspaso débil</text>
+<rect x="8" y="272" width="176" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="96" y="297" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Blast</text>
+<text data-lang="en" x="96" y="325" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">engineer</text>
+<text data-lang="es" x="96" y="297" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Ingeniero de</text>
+<text data-lang="es" x="96" y="325" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">voladura</text>
+<rect x="190" y="272" width="172" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="276" y="297" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Geology and</text>
+<text data-lang="en" x="276" y="325" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">geotechnics</text>
+<text data-lang="es" x="276" y="297" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Geología y</text>
+<text data-lang="es" x="276" y="325" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">geotecnia</text>
+<rect x="368" y="312" width="172" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="454" y="337" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Mine</text>
+<text data-lang="en" x="454" y="365" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">operations</text>
+<text data-lang="es" x="454" y="337" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Operaciones</text>
+<text data-lang="es" x="454" y="365" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">mina</text>
+<rect x="464" y="4" width="168" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="548" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Site general</text>
+<text data-lang="en" x="548" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">manager</text>
+<text data-lang="es" x="548" y="29" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Gerente</text>
+<text data-lang="es" x="548" y="57" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">general</text>
+<rect x="612" y="138" width="180" height="62" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="702" y="163" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Concentrator</text>
+<text data-lang="en" x="702" y="191" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">manager</text>
+<text data-lang="es" x="702" y="163" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Gerente de</text>
+<text data-lang="es" x="702" y="191" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">planta</text>
 <rect x="1" y="1" width="798" height="398" rx="12" fill="none" stroke="var(--color-border)" stroke-width="2"/>
 </svg>
