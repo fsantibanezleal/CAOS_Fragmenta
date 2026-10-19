@@ -1,0 +1,1174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "models-file.schema.json",
+  "title": "ModelsFile",
+  "description": "Contract 2 (artifact), catalog row models-file 1.0.0: the fitted arms of one training scope in the engine's portable format (blastfrag.portable/v1), written by data-pipeline/pipeline/stages/models.py to data/derived/models/<scope>.json and read by frontend/src/engine/learned.ts. The scope is the withheld site, or corpus. fixtures hold, for every arm, the prediction of the ORIGINAL fitted model at each of the shipped blasts, at full precision, so a port that drifts fails the build. digest is the SHA-256 of the canonical serialisation of the rest of the payload.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "portable_schema",
+    "scope",
+    "held_out_site",
+    "n_training_rows",
+    "engine",
+    "app_version",
+    "arms",
+    "fixtures",
+    "digest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "fragmenta.models/v1"
+    },
+    "portable_schema": {
+      "const": "blastfrag.portable/v1"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "held_out_site": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "n_training_rows": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package",
+        "version"
+      ],
+      "properties": {
+        "package": {
+          "const": "blastfrag"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+          "description": "A version in the product format X.XX.XXX."
+        }
+      }
+    },
+    "app_version": {
+      "$ref": "#/$defs/version"
+    },
+    "arms": {
+      "type": "object",
+      "description": "The seven fitted arms the live lane runs, keyed by the product's arm name (the portable arm field is the engine's own name and can differ).",
+      "additionalProperties": false,
+      "required": [
+        "published-neural-net",
+        "svr-rbf",
+        "random-forest",
+        "xgboost",
+        "stacking",
+        "refitted-regression",
+        "kuznetsov-transfer"
+      ],
+      "properties": {
+        "published-neural-net": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "activation",
+            "layout",
+            "output",
+            "router",
+            "groups"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "network"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "activation": {
+              "const": "logistic"
+            },
+            "layout": {
+              "type": "string",
+              "minLength": 1
+            },
+            "output": {
+              "type": "string",
+              "minLength": 1
+            },
+            "router": {
+              "$ref": "#/$defs/router"
+            },
+            "groups": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "1",
+                "2"
+              ],
+              "properties": {
+                "1": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "minimum",
+                    "maximum",
+                    "target_low",
+                    "target_high",
+                    "n_hidden",
+                    "networks"
+                  ],
+                  "properties": {
+                    "minimum": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 7,
+                      "maxItems": 7
+                    },
+                    "maximum": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 7,
+                      "maxItems": 7
+                    },
+                    "target_low": {
+                      "type": "number"
+                    },
+                    "target_high": {
+                      "type": "number"
+                    },
+                    "n_hidden": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "networks": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 1
+                      },
+                      "minItems": 1
+                    }
+                  }
+                },
+                "2": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "minimum",
+                    "maximum",
+                    "target_low",
+                    "target_high",
+                    "n_hidden",
+                    "networks"
+                  ],
+                  "properties": {
+                    "minimum": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 7,
+                      "maxItems": 7
+                    },
+                    "maximum": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 7,
+                      "maxItems": 7
+                    },
+                    "target_low": {
+                      "type": "number"
+                    },
+                    "target_high": {
+                      "type": "number"
+                    },
+                    "n_hidden": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "networks": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 1
+                      },
+                      "minItems": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "svr-rbf": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "standardise",
+            "kernel",
+            "gamma",
+            "degree",
+            "coef0",
+            "support_vectors",
+            "dual_coef",
+            "intercept"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "svr"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "standardise": {
+              "$ref": "#/$defs/standardise"
+            },
+            "kernel": {
+              "enum": [
+                "rbf",
+                "poly"
+              ]
+            },
+            "gamma": {
+              "type": "number"
+            },
+            "degree": {
+              "type": "integer"
+            },
+            "coef0": {
+              "type": "number"
+            },
+            "support_vectors": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 7,
+                "maxItems": 7
+              },
+              "minItems": 1
+            },
+            "dual_coef": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 1
+            },
+            "intercept": {
+              "type": "number"
+            }
+          }
+        },
+        "random-forest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "standardise",
+            "trees"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "forest"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "standardise": {
+              "$ref": "#/$defs/standardise"
+            },
+            "trees": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/flatTree"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "xgboost": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "standardise",
+            "base_score",
+            "trees"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "xgboost"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "standardise": {
+              "$ref": "#/$defs/standardise"
+            },
+            "base_score": {
+              "type": "number"
+            },
+            "trees": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/flatTree"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "stacking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "standardise",
+            "forest",
+            "boosting",
+            "meta"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "stacking"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "standardise": {
+              "$ref": "#/$defs/standardise"
+            },
+            "forest": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "trees"
+                  ],
+                  "properties": {
+                    "trees": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/$defs/flatTree"
+                      },
+                      "minItems": 1
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ref"
+                  ],
+                  "properties": {
+                    "ref": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9-]*$"
+                    }
+                  }
+                }
+              ]
+            },
+            "boosting": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "base_score",
+                    "trees"
+                  ],
+                  "properties": {
+                    "base_score": {
+                      "type": "number"
+                    },
+                    "trees": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/$defs/flatTree"
+                      },
+                      "minItems": 1
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ref"
+                  ],
+                  "properties": {
+                    "ref": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9-]*$"
+                    }
+                  }
+                }
+              ]
+            },
+            "meta": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "coef",
+                "intercept",
+                "inputs"
+              ],
+              "properties": {
+                "coef": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "intercept": {
+                  "type": "number"
+                },
+                "inputs": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "forest",
+                      "boosting"
+                    ]
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            }
+          }
+        },
+        "refitted-regression": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "router",
+            "groups"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "power-law"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "router": {
+              "$ref": "#/$defs/router"
+            },
+            "groups": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "1",
+                "2"
+              ],
+              "properties": {
+                "1": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "intercept",
+                    "exponents"
+                  ],
+                  "properties": {
+                    "intercept": {
+                      "type": "number"
+                    },
+                    "exponents": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 7,
+                      "maxItems": 7
+                    }
+                  }
+                },
+                "2": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "intercept",
+                    "exponents"
+                  ],
+                  "properties": {
+                    "intercept": {
+                      "type": "number"
+                    },
+                    "exponents": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 7,
+                      "maxItems": 7
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "kuznetsov-transfer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "arm",
+            "kind",
+            "engine_version",
+            "features",
+            "plausible_x50_m",
+            "provenance",
+            "note",
+            "timing_factor",
+            "rock_factor"
+          ],
+          "properties": {
+            "schema": {
+              "const": "blastfrag.portable/v1"
+            },
+            "arm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "const": "kuznetsov-transfer"
+            },
+            "engine_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            },
+            "features": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "S_over_B"
+                },
+                {
+                  "const": "H_over_B"
+                },
+                {
+                  "const": "B_over_D"
+                },
+                {
+                  "const": "T_over_B"
+                },
+                {
+                  "const": "Pf_kg_m3"
+                },
+                {
+                  "const": "XB_m"
+                },
+                {
+                  "const": "E_GPa"
+                }
+              ],
+              "items": false,
+              "minItems": 7
+            },
+            "plausible_x50_m": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "provenance": {
+              "$ref": "#/$defs/armProvenance"
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            },
+            "timing_factor": {
+              "type": "number"
+            },
+            "rock_factor": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "intercept",
+                "slope",
+                "fit_sites",
+                "form"
+              ],
+              "properties": {
+                "intercept": {
+                  "type": "number"
+                },
+                "slope": {
+                  "type": "number"
+                },
+                "fit_sites": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1
+                },
+                "form": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fixtures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "note",
+        "inputs",
+        "expected"
+      ],
+      "properties": {
+        "note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "blast_id",
+              "site",
+              "features"
+            ],
+            "properties": {
+              "blast_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "site": {
+                "type": "string",
+                "minLength": 1
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 7,
+                "maxItems": 7
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "expected": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+      "description": "A version in the product format X.XX.XXX."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 hex digest."
+    },
+    "flatTree": {
+      "type": "object",
+      "description": "A flattened decision tree: parallel arrays indexed by node; -1 marks a leaf in left, right and feature.",
+      "additionalProperties": false,
+      "required": [
+        "left",
+        "right",
+        "feature",
+        "t"
+      ],
+      "properties": {
+        "left": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "right": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "feature": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "t": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "standardise": {
+      "type": "object",
+      "description": "The training mean and standard deviation of each feature.",
+      "additionalProperties": false,
+      "required": [
+        "mean",
+        "sd"
+      ],
+      "properties": {
+        "mean": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 7,
+          "maxItems": 7
+        },
+        "sd": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 7,
+          "maxItems": 7
+        }
+      }
+    },
+    "router": {
+      "type": "object",
+      "description": "The linear group discriminant: group 1 when the score is strictly above the boundary, else group 2.",
+      "additionalProperties": false,
+      "required": [
+        "coefficients",
+        "constant",
+        "boundary",
+        "rule"
+      ],
+      "properties": {
+        "coefficients": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 7,
+          "maxItems": 7
+        },
+        "constant": {
+          "type": "number"
+        },
+        "boundary": {
+          "type": "number"
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "armProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fitted_on",
+        "in_sample_corpus",
+        "uses_site_constant",
+        "router_in_sample"
+      ],
+      "properties": {
+        "fitted_on": {
+          "type": "string",
+          "minLength": 1
+        },
+        "in_sample_corpus": {
+          "type": "boolean"
+        },
+        "uses_site_constant": {
+          "type": "boolean"
+        },
+        "router_in_sample": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

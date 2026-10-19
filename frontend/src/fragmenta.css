@@ -2,8 +2,9 @@
  *
  * The UI floor is the minimum here and it is measured rather than judged by eye: the page IS the
  * viewport, the workbench uses the full width, every ancestor of a scrollable row carries
- * min-width: 0, navigation chrome gets ONE row, and the instrument owns at least half the App route
- * and at least 80 percent of the focus route.
+ * min-width: 0, navigation chrome gets ONE row, and the instrument owns at least half the App route. Focus
+ * mode (?focus=1) is the shell's, inside the App, measured by the shell's gate; it replaced the product's own
+ * focus route in 0.08.000.
  *
  * The prose routes are legitimately taller than the screen and scroll INSIDE their own container,
  * because clipping them is how a content page silently hides its own content.
@@ -704,79 +705,6 @@
   font-size: 0.74rem;
   line-height: 1.5;
   color: var(--color-fg-subtle);
-}
-
-.fr-inline-link {
-  font-size: 0.78rem;
-  color: var(--color-accent);
-}
-
-/* ---------------------------------------------------------------------------------------------
- * The focus route: the instrument owns at least 80 percent
- * ------------------------------------------------------------------------------------------- */
-
-.fr-focus {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  background: var(--color-bg);
-  color: var(--color-fg);
-  min-width: 0;
-}
-
-.fr-focus-bar {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 14px;
-  border-bottom: 1px solid var(--color-border);
-  flex-wrap: wrap;
-  min-width: 0;
-}
-
-.fr-focus-bar h1 {
-  font-size: 0.94rem;
-  margin: 0;
-  font-weight: 650;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.fr-focus-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.78rem;
-  color: var(--color-accent);
-  text-decoration: none;
-}
-
-.fr-focus-metrics {
-  margin-left: auto;
-  font-size: 0.74rem;
-  color: var(--color-fg-subtle);
-  font-variant-numeric: tabular-nums;
-}
-
-.fr-focus-metrics b {
-  color: var(--color-fg);
-}
-
-.fr-focus-stage {
-  min-height: 0;
-  min-width: 0;
-  display: flex;
-  padding: 10px 14px;
-}
-
-.fr-focus-foot {
-  padding: 6px 14px;
-  border-top: 1px solid var(--color-border);
-  font-size: 0.7rem;
-  color: var(--color-fg-faint);
 }
 
 /* ---------------------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 |---|---|---|
 | `DistributionChart` | App, Distribution | cumulative percent passing against size on a log axis, one series per curve shape, with P20, P50 and P80 marked |
 | `LineChart` | Benchmark (the network's per-seed scores against the published one); Experiments (the predicted size against the powder factor and against B/D) | series over an ordered axis, with a readout under the pointer |
-| `ParityChart` (plain canvas, not uPlot) | App (Predict), the focus view, Experiments, Benchmark (the live check) | predicted against measured, equal axes, the identity line |
+| `ParityChart` (plain canvas, not uPlot) | App (Predict, and in Focus mode), Experiments, Benchmark (the live check) | predicted against measured, equal axes, the identity line |
 
 Three conventions hold for every chart:
 

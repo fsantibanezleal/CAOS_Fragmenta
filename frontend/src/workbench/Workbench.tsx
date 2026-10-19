@@ -10,13 +10,16 @@
  */
 
 import { CaseWorkbench, pick, useShellLang, useWorkbenchState, type CaseDef, type RailSection } from '@fasl-work/caos-app-shell';
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import { applyVariant, DEFAULT_HOLE_MM, designOf } from '../engine/design';
 import type { LiveBlast } from '../engine/live';
-import { CATEGORY_LABEL, loadCase, loadIndex } from '../lib/artifacts';
-import type { CaseArtifact, CaseIndex, VariantDef } from '../lib/contract.types';
+import { ArtifactUnavailable, CATEGORY_LABEL, loadCase, loadIndex } from '../lib/artifacts';
+import type { CaseArtifact, CaseIndex, Text, VariantDef } from '../lib/contract.types';
 import { useModels } from '../lib/facts';
+import { ReadinessNote, STATE_LABEL } from '../readiness/ReadinessNote';
+import { caseAbsent, WORKBENCH_ROWS } from '../readiness/readiness';
+import { useReadiness } from '../readiness/useReadiness';
 import { DesignGroup } from './design';
 import {
   DEFAULT_ARM,
@@ -52,18 +55,47 @@ function variantChip(v: VariantDef): { en: string; es: string } {
   return { en: `${lever.en} ${sign}${Math.abs(pct)}%`, es: `${lever.es} ${sign}${Math.abs(pct)} %` };
 }
 
-/** A view's data, keyed to the selection it was computed for; a case still loading reads as loading. */
-function Keyed({ sel, render }: { sel: Omit<Selection, 'stateKey'> | null; render: (sel: Selection) => ReactNode }) {
+/** The reason the selected case is not available yet, when the readiness document says so; null otherwise. */
+const UnavailableContext = createContext<Text | null>(null);
+
+/** What a view says while it has no data: the reason when the readiness document marks the case absent, else loading. */
+function Pending() {
   const lang = useShellLang();
+  const reason = useContext(UnavailableContext);
+  // A case the readiness document lists as absent says so, with the reason: never an empty chart, never a spinner.
+  return reason ? (
+    <p className="caos-pending" data-state="unavailable">
+      {reason[lang]}
+    </p>
+  ) : (
+    <p className="caos-pending" data-state="loading">
+      {pick(LOADING, lang)}
+    </p>
+  );
+}
+
+/**
+ * A view's data, keyed to the selection it was computed for; a case still loading reads as loading. With `note` the
+ * view opens with the readiness note of the rows it reads (catalog, Missing-data states): one line inside the view's
+ * own container (ADR-0071), and nothing at all on an available build.
+ */
+function Keyed({ sel, render, note = false }: { sel: Omit<Selection, 'stateKey'> | null; render: (sel: Selection) => ReactNode; note?: boolean }) {
   const stateKey = useWorkbenchState()?.stateKey;
+  const head = note ? <ReadinessNote ids={WORKBENCH_ROWS} /> : null;
   if (!sel) {
     return (
-      <p className="caos-pending" data-state="loading">
-        {pick(LOADING, lang)}
-      </p>
+      <>
+        {head}
+        <Pending />
+      </>
     );
   }
-  return <>{render({ ...sel, stateKey })}</>;
+  return (
+    <>
+      {head}
+      {render({ ...sel, stateKey })}
+    </>
+  );
 }
 
 const initialCase = () => {
@@ -78,6 +110,9 @@ export default function Workbench() {
   const lang = useShellLang();
   const [index, setIndex] = useState<CaseIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Set when the readiness document lists the selected case, or the whole index, as absent.
+  const [unavailable, setUnavailable] = useState<Text | null>(null);
+  const readiness = useReadiness();
   const [caseId, setCaseId] = useState<string>(initialCase);
   const [artifact, setArtifact] = useState<CaseArtifact | null>(null);
   const models = useModels(artifact?.case.id === caseId ? (artifact.live_models?.scope ?? null) : null);
@@ -92,11 +127,14 @@ export default function Workbench() {
   const [designView, setDesignView] = useState<DesignView>('surface');
 
   useEffect(() => {
-    loadIndex().then(setIndex).catch((e) => setError(String(e)));
+    loadIndex()
+      .then(setIndex)
+      .catch((e) => (e instanceof ArtifactUnavailable ? setUnavailable(e.reason) : setError(String(e))));
   }, []);
 
   useEffect(() => {
     let live = true;
+    setUnavailable(null);
     loadCase(caseId)
       .then((loaded) => {
         if (!live) return;
@@ -105,7 +143,11 @@ export default function Workbench() {
         setVariantId('base');
         setEdits(null);
       })
-      .catch((e) => live && setError(String(e)));
+      .catch((e) => {
+        if (!live) return;
+        if (e instanceof ArtifactUnavailable) setUnavailable(e.reason);
+        else setError(String(e));
+      });
     return () => {
       live = false;
     };
@@ -155,7 +197,10 @@ export default function Workbench() {
 
   const cases: CaseDef[] = (index?.cases ?? []).map((entry) => ({
     id: entry.case_id,
-    name: entry.title[lang],
+    // A case the readiness document lists as absent stays selectable, so its views can say why, and is marked on its chip.
+    name: caseAbsent(readiness ?? null, entry.case_id, entry.manifest_path)
+      ? `${entry.title[lang]} (${STATE_LABEL.missing[lang].toLowerCase()})`
+      : entry.title[lang],
     category: CATEGORY_LABEL[entry.category]?.[lang] ?? entry.category,
     kind: entry.real_or_synthetic === 'real' ? 'real' : 'synthetic',
   }));
@@ -184,7 +229,7 @@ export default function Workbench() {
           )}
         />
       ) : (
-        <p className="caos-pending" data-state="loading">{pick(LOADING, lang)}</p>
+        <Pending />
       ),
     },
   ];
@@ -222,85 +267,91 @@ export default function Workbench() {
   }
 
   return (
-    <CaseWorkbench
-      caseId={caseId}
-      source={ready?.case.real_or_synthetic}
-      cases={{
-        cases,
-        selectedId: caseId,
-        onSelect: (id) => {
-          if (id !== caseId) setCaseId(id);
-        },
-        layout: 'select',
-        deepLink: true,
-        lang,
-        modifiedFromId: current ? caseId : null,
-        onResetToCanonical: onReset,
-      }}
-      variants={
-        ready && ready.variants.length > 1 && (openGroup === 'distribution' || (openGroup === 'design' && designView === 'surface') || openGroup === 'compare')
-          ? {
-              variants: ready.variants.map((v) => ({ id: v.id, label: variantChip(v), note: v.field === 'none' ? undefined : v.label, lane: 'live' as const })),
-              activeId: variantId,
-              onSelect: (id) => {
-                setVariantId(id);
-                setEdits(null);
-              },
-              title: { en: 'Design variant', es: 'Variante de diseño' },
-              lane: 'live',
-            }
-          : undefined
-      }
-      controls={{ arm: armId, blast: blast?.blast_id ?? null, ...controls, design: current?.design ?? null, hole: current?.holeMm ?? null }}
-      rail={railSections}
-      railLabel={{ en: 'Case, model and controls', es: 'Caso, modelo y controles' }}
-      group={shownGroup}
-      onGroupChange={setGroup}
-      groups={[
-        {
-          id: 'predict',
-          label: { en: 'Predict', es: 'Predecir' },
+    <UnavailableContext.Provider value={unavailable}>
+      <CaseWorkbench
+        caseId={caseId}
+        source={ready?.case.real_or_synthetic}
+        cases={{
+          cases,
+          selectedId: caseId,
+          onSelect: (id) => {
+            if (id !== caseId) setCaseId(id);
+          },
+          layout: 'select',
+          deepLink: true,
+          lang,
+          modifiedFromId: current ? caseId : null,
+          onResetToCanonical: onReset,
+        }}
+        variants={
+          ready && ready.variants.length > 1 && (openGroup === 'distribution' || (openGroup === 'design' && designView === 'surface') || openGroup === 'compare')
+            ? {
+                variants: ready.variants.map((v) => ({ id: v.id, label: variantChip(v), note: v.field === 'none' ? undefined : v.label, lane: 'live' as const })),
+                activeId: variantId,
+                onSelect: (id) => {
+                  setVariantId(id);
+                  setEdits(null);
+                },
+                title: { en: 'Design variant', es: 'Variante de diseño' },
+                lane: 'live',
+              }
+            : undefined
+        }
+        controls={{ arm: armId, blast: blast?.blast_id ?? null, ...controls, design: current?.design ?? null, hole: current?.holeMm ?? null }}
+        rail={railSections}
+        railLabel={{ en: 'Case, model and controls', es: 'Caso, modelo y controles' }}
+        // Focus mode (ADR-0070, shell 0.14.0): the Focus button in the rail head opens the open group in the full viewport
+        // (?focus=1 beside ?case=); Escape or the exit button returns to the same case and group. An old /focus/<id> link
+        // is forwarded here by routes.ts and opens on Predict, the group the retired focus page drew.
+        focus
+        group={shownGroup}
+        onGroupChange={setGroup}
+        groups={[
+          {
+            id: 'predict',
+            label: { en: 'Predict', es: 'Predecir' },
+            lane: 'replay',
+            provenance: realCase ? 'real' : 'synthetic',
+            content: <Keyed note sel={sel} render={(s) => <PredictGroup sel={s} onSelectBlast={setBlastId} onArm={setArmId} />} />,
+          },
+          ...(curvesHere
+            ? [
+                {
+                  id: 'distribution',
+                  label: { en: 'Distribution', es: 'Distribución' },
+                  lane: 'live' as const,
+                  provenance: realCase && asFired ? ('real' as const) : ('synthetic' as const),
+                  content: <Keyed note sel={sel} render={(s) => <DistributionGroup sel={s} view={distView} onView={setDistView} />} />,
+                },
+              ]
+            : []),
+          {
+            id: 'design',
+            label: { en: 'Design', es: 'Diseño' },
+            lane: 'live',
+            provenance: 'synthetic',
+            content: <Keyed note sel={sel} render={(s) => <DesignGroup sel={s} view={designView} onView={setDesignView} onDesign={onDesign} />} />,
+          },
+          {
+            id: 'rock',
+            label: { en: 'Rock', es: 'Roca' },
+            lane: 'live',
+            provenance: 'published',
+            content: <Keyed note sel={sel} render={(s) => <RockGroup sel={s} />} />,
+          },
+        ]}
+        compare={{
+          label: { en: 'Compare the variants', es: 'Comparar las variantes' },
           lane: 'replay',
-          provenance: realCase ? 'real' : 'synthetic',
-          content: <Keyed sel={sel} render={(s) => <PredictGroup sel={s} onSelectBlast={setBlastId} onArm={setArmId} />} />,
-        },
-        ...(curvesHere
-          ? [
-              {
-                id: 'distribution',
-                label: { en: 'Distribution', es: 'Distribución' },
-                lane: 'live' as const,
-                provenance: realCase && asFired ? ('real' as const) : ('synthetic' as const),
-                content: <Keyed sel={sel} render={(s) => <DistributionGroup sel={s} view={distView} onView={setDistView} />} />,
-              },
-            ]
-          : []),
-        {
-          id: 'design',
-          label: { en: 'Design', es: 'Diseño' },
-          lane: 'live',
           provenance: 'synthetic',
-          content: <Keyed sel={sel} render={(s) => <DesignGroup sel={s} view={designView} onView={setDesignView} onDesign={onDesign} />} />,
-        },
-        {
-          id: 'rock',
-          label: { en: 'Rock', es: 'Roca' },
-          lane: 'live',
-          provenance: 'published',
-          content: <Keyed sel={sel} render={(s) => <RockGroup sel={s} />} />,
-        },
-      ]}
-      compare={{
-        label: { en: 'Compare the variants', es: 'Comparar las variantes' },
-        lane: 'replay',
-        provenance: 'synthetic',
-        content: <Keyed sel={sel} render={(s) => <CompareView sel={s} onVariant={(id) => { setVariantId(id); setEdits(null); }} />} />,
-      }}
-      context={{
-        label: { en: 'The case', es: 'El caso' },
-        content: <Keyed sel={sel} render={(s) => <ContextView sel={s} />} />,
-      }}
-      ariaLabel={{ en: 'Workbench views', es: 'Vistas del banco de trabajo' }}
-    />
+          content: <Keyed note sel={sel} render={(s) => <CompareView sel={s} onVariant={(id) => { setVariantId(id); setEdits(null); }} />} />,
+        }}
+        context={{
+          label: { en: 'The case', es: 'El caso' },
+          content: <Keyed note sel={sel} render={(s) => <ContextView sel={s} />} />,
+        }}
+        ariaLabel={{ en: 'Workbench views', es: 'Vistas del banco de trabajo' }}
+      />
+    </UnavailableContext.Provider>
   );
 }

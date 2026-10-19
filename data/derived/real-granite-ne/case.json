@@ -169,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "76264c678fe91e99d09825c676c20c772f538b9acc2ad85e0e64a3d7474221b1",
+ "digest": "c0327ae33c1e7e9d5833c31f6d313f4caac93d452d1e63b4171be6d9e59d4dfe",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -182,7 +182,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "c76cfd37420dccf0540ce27fc653f14d9239756340a7e7a2df375735f1b38832",
+  "digest": "075e72ee02b6452cb05f57b24878b0d108411eb80737748bcf2241f66a5b8fd8",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -195,7 +195,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE2": {
@@ -204,7 +207,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE3": {
@@ -213,7 +219,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE4": {
@@ -222,7 +231,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE5": {
@@ -231,7 +243,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    }
   },
@@ -242,7 +257,10 @@
     "extrapolated": true,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "NE2": {
@@ -251,7 +269,10 @@
     "extrapolated": true,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "NE3": {
@@ -260,7 +281,10 @@
     "extrapolated": true,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "NE4": {
@@ -269,7 +293,10 @@
     "extrapolated": true,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "NE5": {
@@ -278,7 +305,10 @@
     "extrapolated": true,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    }
   },
@@ -289,7 +319,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE2": {
@@ -298,7 +331,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE3": {
@@ -307,7 +343,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE4": {
@@ -316,7 +355,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE5": {
@@ -325,7 +367,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    }
   },
@@ -336,7 +381,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE2": {
@@ -345,7 +393,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE3": {
@@ -354,7 +405,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE4": {
@@ -363,7 +417,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE5": {
@@ -372,7 +429,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    }
   },
@@ -383,7 +443,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE2": {
@@ -392,7 +455,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE3": {
@@ -401,7 +467,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE4": {
@@ -410,7 +479,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE5": {
@@ -419,7 +491,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    }
   },
@@ -759,7 +834,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE2": {
@@ -768,7 +846,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE3": {
@@ -777,7 +858,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE4": {
@@ -786,7 +870,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    },
    "NE5": {
@@ -795,7 +882,10 @@
     "extrapolated": true,
     "group": null,
     "n_simulations": null,
-    "reason": "no rock factor is available for Granite-NE",
+    "reason": {
+     "en": "no rock factor is available for Granite-NE",
+     "es": "no hay factor de roca disponible para Granite-NE"
+    },
     "x50_m": null
    }
   },
@@ -848,7 +938,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.07.000",
+  "app_version": "0.08.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

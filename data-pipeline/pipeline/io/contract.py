@@ -15,7 +15,10 @@ Two bands, and they are not the same band:
 """
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 import blastfrag as bf
@@ -78,3 +81,66 @@ def validate_row(row: dict) -> list[Rejection]:
 def envelope() -> dict[str, tuple[float, float]]:
     """The fitted envelope, from the engine. Outside it is an extrapolation, not a rejection."""
     return dict(bf.TRAINING_ENVELOPE)
+
+
+# ----------------------------------------------------------------------------------------------------
+# The schema check (ADR-0080): every document the bake writes is validated against its schema file before
+# it is written. The schema files under docs/contracts/schemas/ are the single source of each document's
+# shape and the catalog (docs/contracts/catalog.md) names them. tests/contracts/contract_schemas.py resolves
+# the same files through the same kind of registry, and tests/contracts/test_blast_record.py holds the two
+# to one verdict.
+# ----------------------------------------------------------------------------------------------------
+
+SCHEMAS_DIR = Path(__file__).resolve().parents[3] / "docs" / "contracts" / "schemas"
+_BASE = "https://contracts.invalid/schemas/"  # a base URI only; nothing is fetched
+
+
+class ContractError(ValueError):
+    """A document departs from its schema; the message names it and the path of each offending field."""
+
+
+@lru_cache(maxsize=1)
+def _registry():
+    try:
+        from referencing import Registry, Resource
+        from referencing.jsonschema import DRAFT202012
+    except ImportError as exc:  # pragma: no cover - the lane is declared in requirements-dev.txt
+        raise ContractError("jsonschema is not installed: pip install -r requirements-dev.txt") from exc
+    resources = [
+        (
+            _BASE + f.name,
+            Resource.from_contents(
+                json.loads(f.read_text(encoding="utf-8")), default_specification=DRAFT202012
+            ),
+        )
+        for f in sorted(SCHEMAS_DIR.glob("*.schema.json"))
+    ]
+    return Registry().with_resources(resources)
+
+
+def schema_errors(name: str, document: Any) -> list[str]:
+    """Every way ``document`` departs from docs/contracts/schemas/<name>.schema.json, as ``path: message``.
+
+    Empty when it conforms.
+    """
+    from jsonschema import Draft202012Validator
+
+    validator = Draft202012Validator(
+        {"$schema": "https://json-schema.org/draft/2020-12/schema", "$ref": f"{_BASE}{name}.schema.json"},
+        registry=_registry(),
+    )
+    found = sorted(validator.iter_errors(document), key=lambda e: [str(p) for p in e.absolute_path])
+    return [f"{'/'.join(str(p) for p in e.absolute_path) or '$'}: {e.message}" for e in found]
+
+
+def require_valid(name: str, document: Any, *, where: str) -> None:
+    """Raise ``ContractError`` unless ``document`` conforms to its schema.
+
+    The message names ``where`` and the path of each offending field (at most ten).
+    """
+    problems = schema_errors(name, document)
+    if problems:
+        shown = "; ".join(problems[:10])
+        if len(problems) > 10:
+            shown += f"; and {len(problems) - 10} more"
+        raise ContractError(f"{where}: the document breaks its contract ({name}): {shown}")

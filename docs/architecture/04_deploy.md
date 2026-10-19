@@ -24,7 +24,7 @@ recomputes a benchmark.
    about a second. Until 0.05.000 the workflow's comment described this step and the step did not exist.
 2. **Builds the site** with the parity and model tests first (`npm test`), then the type check and the
    build (`npm run build`), whose copy step fails if a declared case or models file did not ship.
-3. **Runs the browser gate on the artifact about to be published** (`gates/browser-gate.mjs` against a
+3. **Runs the browser gate on the artifact about to be published** (`frontend/scripts/browser-gate.mjs` against a
    local preview of the build): every route and every App tab, both themes, both languages, three
    viewport sizes; the declared content of every chart; no tab strip cut, no table wider than its
    container, no text cut by an ellipsis without its whole text as a title, no two rows of the model
@@ -63,8 +63,9 @@ Doing only the first leaves the site unreachable, and the symptom looks like a D
 
 A static host serves a fallback page for an unknown path, so a client-routed app renders while the HTTP
 status is 404, and every shared link is a 404 to crawlers and link previews. The build
-(`frontend/spa-404.mjs`) writes a real `index.html` at each route path, including one per focus route,
-read from the manifest index so the list cannot drift when a case is added.
+(`frontend/spa-404.mjs`) writes a real `index.html` at `/app` and at each documentation route, so each answers 200.
+The landing at `/` is the site's own `index.html`. Focus mode is a state of the App (`/app?case=<id>&focus=1`), not a
+route, so it needs no file; an old `/focus/<id>` link answers 404 with the app, which forwards it to that address.
 
 ## 6. A 200 is not a working site
 

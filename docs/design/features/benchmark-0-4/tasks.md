@@ -12,7 +12,7 @@
 |---|---|---|
 | EN-001, EN-004 to EN-007 | `tests/test_pipeline.py` (the schema v3 block), `tests/test_guards.py` | passed, in a suite of 77 |
 | EN-002, EN-003 | `frontend/test/parity.test.ts` | passed, in a suite of 26 |
-| EN-008 | `frontend/gates/browser-gate.mjs` | passed: the published-network sub-tab declares ten widths drawn, in both languages and themes at the reading width; a renamed sub-tab now fails the gate instead of skipping the check |
+| EN-008 | `frontend/scripts/browser-gate.mjs` | passed: the published-network sub-tab declares ten widths drawn, in both languages and themes at the reading width; a renamed sub-tab now fails the gate instead of skipping the check |
 
 The release checks of task 4:
 

@@ -26,7 +26,7 @@ gate on the build it is about to publish.
 ## The figure export
 
 ```bash
-node gates/export-figures.mjs --url http://localhost:4173
+node scripts/export-figures.mjs --url http://localhost:4173
 ```
 
 Loads each documentation page in the light theme and English, opens every sub-tab, serialises each
