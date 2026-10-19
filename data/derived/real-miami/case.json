@@ -11,7 +11,10 @@
     "T_over_B": 1.69,
     "XB_m": 0.17
    },
-   "geometry_reason": "Mi1: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "geometry_reason": {
+    "en": "Mi1: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "Mi1: la mina Miami (Arizona, EE. UU.) no publica el di\u00e1metro de perforaci\u00f3n ni ninguna dimensi\u00f3n absoluta, as\u00ed que no se puede fijar su escala. NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "group": 2,
    "has_geometry": false,
    "rock_factor": null,
@@ -30,7 +33,10 @@
     "T_over_B": 0.72,
     "XB_m": 0.1
    },
-   "geometry_reason": "Mi2: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "geometry_reason": {
+    "en": "Mi2: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "Mi2: la mina Miami (Arizona, EE. UU.) no publica el di\u00e1metro de perforaci\u00f3n ni ninguna dimensi\u00f3n absoluta, as\u00ed que no se puede fijar su escala. NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "group": 2,
    "has_geometry": false,
    "rock_factor": null,
@@ -49,7 +55,10 @@
     "T_over_B": 1.25,
     "XB_m": 0.1
    },
-   "geometry_reason": "Mi3: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "geometry_reason": {
+    "en": "Mi3: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "Mi3: la mina Miami (Arizona, EE. UU.) no publica el di\u00e1metro de perforaci\u00f3n ni ninguna dimensi\u00f3n absoluta, as\u00ed que no se puede fijar su escala. NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "group": 2,
    "has_geometry": false,
    "rock_factor": null,
@@ -68,7 +77,10 @@
     "T_over_B": 0.7,
     "XB_m": 0.1
    },
-   "geometry_reason": "Mi4: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "geometry_reason": {
+    "en": "Mi4: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "Mi4: la mina Miami (Arizona, EE. UU.) no publica el di\u00e1metro de perforaci\u00f3n ni ninguna dimensi\u00f3n absoluta, as\u00ed que no se puede fijar su escala. NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "group": 2,
    "has_geometry": false,
    "rock_factor": null,
@@ -87,7 +99,10 @@
     "T_over_B": 1.28,
     "XB_m": 0.1
    },
-   "geometry_reason": "Mi5: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "geometry_reason": {
+    "en": "Mi5: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "Mi5: la mina Miami (Arizona, EE. UU.) no publica el di\u00e1metro de perforaci\u00f3n ni ninguna dimensi\u00f3n absoluta, as\u00ed que no se puede fijar su escala. NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "group": 2,
    "has_geometry": false,
    "rock_factor": null,
@@ -106,7 +121,10 @@
     "T_over_B": 1.69,
     "XB_m": 0.02
    },
-   "geometry_reason": "Mi6: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "geometry_reason": {
+    "en": "Mi6: Miami Mine, Arizona, USA publishes no hole diameter and no absolute dimension, so its scale cannot be fixed. NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "Mi6: la mina Miami (Arizona, EE. UU.) no publica el di\u00e1metro de perforaci\u00f3n ni ninguna dimensi\u00f3n absoluta, as\u00ed que no se puede fijar su escala. NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "group": 2,
    "has_geometry": false,
    "rock_factor": null,
@@ -142,13 +160,16 @@
    "passed": true
   }
  },
- "digest": "c59c58b7e5624fb554bff332ca92a454cabb2248c8281189d5e6305c959a4626",
+ "digest": "0254adc7ff7ce542d2c378866bd2c11738449f8f6b4f9843e2629fccc0f4986f",
  "distributions": {},
  "geometry_report": {
   "Miami": {
    "checks": [],
    "n": 6,
-   "reason": "NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+   "reason": {
+    "en": "NOT PUBLISHED and not derivable. The paper gives no diameter and no absolute dimension for this site, so nothing fixes its scale. Its six rows are the geometry negative control: a model that needs rock volume must abstain here, and a number would be an invention.",
+    "es": "NO PUBLICADO y no derivable. El art\u00edculo no da ning\u00fan di\u00e1metro ni dimensi\u00f3n absoluta para este sitio, as\u00ed que nada fija su escala. Sus seis filas son el control negativo de geometr\u00eda: un modelo que necesita el volumen de roca debe abstenerse aqu\u00ed, y un n\u00famero ser\u00eda una invenci\u00f3n."
+   },
    "reconstructable": false
   }
  },
@@ -175,7 +196,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -184,7 +208,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -193,7 +220,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -202,7 +232,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -211,7 +244,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -220,7 +256,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    }
   },
@@ -231,7 +270,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -240,7 +282,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -249,7 +294,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -258,7 +306,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -267,7 +318,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -276,7 +330,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    }
   },
@@ -287,7 +344,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -296,7 +356,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -305,7 +368,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -314,7 +380,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -323,7 +392,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -332,7 +404,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    }
   },
@@ -343,7 +418,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -352,7 +430,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -361,7 +442,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -370,7 +454,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -379,7 +466,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -388,7 +478,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    }
   },
@@ -399,7 +492,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -408,7 +504,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -417,7 +516,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -426,7 +528,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -435,7 +540,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -444,7 +552,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    }
   },
@@ -455,7 +566,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -464,7 +578,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -473,7 +590,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -482,7 +602,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -491,7 +614,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -500,7 +626,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    }
   },
@@ -847,7 +976,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi2": {
@@ -856,7 +988,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi3": {
@@ -865,7 +1000,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi4": {
@@ -874,7 +1012,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi5": {
@@ -883,7 +1024,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    },
    "Mi6": {
@@ -892,7 +1036,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+    "reason": {
+     "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+     "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+    },
     "x50_m": null
    }
   },

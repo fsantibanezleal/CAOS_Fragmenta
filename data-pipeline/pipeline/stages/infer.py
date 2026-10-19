@@ -13,10 +13,11 @@ variants are shown as a response curve and never scored against the original bla
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import blastfrag as bf
 
+from .. import reasons
 from ..cases.fragmenta_cases import Case
 from ..model.blasts import apply_variant, is_degenerate
 from .preprocess import PreprocessResult
@@ -68,14 +69,21 @@ class InferResult:
     #: distributions[arm] for the case's representative blast, as a passing curve.
     distributions: dict[str, dict]
     representative_blast_id: str | None
+    #: reasons[arm][blast_id] for every abstention, in both languages. The engine's prediction carries its
+    #: reason
+    #: as English text; this is that text through the reason catalogue (a text it does not know stops the
+    #: bake),
+    #: and the pipeline's own reasons built bilingual where they arise.
+    reasons: dict[str, dict[str, reasons.Reason]] = field(default_factory=dict)
 
 
 def _degenerate_prediction(arm_name: str, blast: bf.Blast, reason: str) -> bf.Prediction:
+    """The engine-shaped refusal; ``reason`` is the English text of ``reasons.degenerate_abstention``."""
     return bf.Prediction(
         method=arm_name,
         blast_id=blast.blast_id,
         x50_m=None,
-        abstain_reason=f"this design is not a blast: {reason}",
+        abstain_reason=reason,
     )
 
 
@@ -96,21 +104,31 @@ def run(
     blasts = [p.blast for p in prepared.prepared]
 
     predictions: dict[str, dict[str, bf.Prediction]] = {}
+    written: dict[str, dict[str, reasons.Reason]] = {}
     for name, arm in arms.items():
         row: dict[str, bf.Prediction] = {}
+        why: dict[str, reasons.Reason] = {}
         for blast in blasts:
-            reason = is_degenerate(blast)
-            if reason is not None:
+            if is_degenerate(blast) is not None:
                 # The design-level guard fires BEFORE any arm runs. A ratio-only model would happily
                 # price a hole with no charge in it; nothing in a power law over seven ratios knows
                 # that the stemming has swallowed the bench.
-                row[blast.blast_id] = _degenerate_prediction(name, blast, reason)
+                refusal = reasons.degenerate_abstention(blast)
+                row[blast.blast_id] = _degenerate_prediction(name, blast, refusal["en"])
+                why[blast.blast_id] = refusal
                 continue
             prediction = arm.predict_one(blast)
             if blast.meta.get("extrapolated") or case.category == "extrapolation-control":
                 prediction = _stamp_extrapolated(prediction)
             row[blast.blast_id] = prediction
+            if prediction.abstain_reason is not None:
+                # The engine's English text through the catalogue; an unknown text raises and the bake stops.
+                try:
+                    why[blast.blast_id] = reasons.from_engine(prediction.abstain_reason)
+                except reasons.UnknownReason as exc:
+                    raise reasons.UnknownReason(f"{case.id}/{name}/{blast.blast_id}: {exc}") from exc
         predictions[name] = row
+        written[name] = why
 
     variant_curves = _variant_response(case, blasts, arms)
     representative = _representative(prepared)
@@ -122,6 +140,7 @@ def run(
         variant_curves=variant_curves,
         distributions=distributions,
         representative_blast_id=representative.blast.blast_id if representative else None,
+        reasons=written,
     )
 
 

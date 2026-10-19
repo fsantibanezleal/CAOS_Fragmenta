@@ -502,7 +502,7 @@ function BenchSubView({ sel }: { sel: Selection }) {
         </Stage>
       ) : (
         <p className="fr-note fr-note-warn">
-          {sel.blast.geometry_reason ?? t(lang, 'With no absolute geometry there is no bench to draw.', 'Sin geometría absoluta no hay banco que dibujar.')}
+          {sel.blast.geometry_reason?.[lang] ?? t(lang, 'With no absolute geometry there is no bench to draw.', 'Sin geometría absoluta no hay banco que dibujar.')}
         </p>
       )}
     </PlotCard>

@@ -2,14 +2,14 @@
  "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 77598,
+  "bytes": 78940,
   "format": "json",
   "path": "real-mrica/case.json"
  },
  "case_id": "real-mrica",
  "category": "real-campaign",
  "controls": {},
- "digest": "1c5bcc312c54d2eb07014441bc76c4cdd8eefeb739ac2560d2b1dc38b1149c90",
+ "digest": "e3837dac51586938608571e94a616ed57ed719b12d508c7cca31e53293110813",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 77598,
+  "trace_bytes": 78940,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

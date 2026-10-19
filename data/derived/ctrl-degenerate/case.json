@@ -2,7 +2,10 @@
  "blasts": [
   {
    "blast_id": "DG01",
-   "degenerate_reason": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+   "degenerate_reason": {
+    "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+   },
    "features": {
     "B_over_D": 27.35,
     "E_GPa": 29.46,
@@ -31,7 +34,10 @@
   },
   {
    "blast_id": "DG02",
-   "degenerate_reason": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+   "degenerate_reason": {
+    "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+   },
    "features": {
     "B_over_D": 27.35,
     "E_GPa": 29.46,
@@ -60,7 +66,10 @@
   },
   {
    "blast_id": "DG03",
-   "degenerate_reason": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+   "degenerate_reason": {
+    "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+   },
    "features": {
     "B_over_D": 27.35,
     "E_GPa": 29.46,
@@ -89,7 +98,10 @@
   },
   {
    "blast_id": "DG04",
-   "degenerate_reason": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+   "degenerate_reason": {
+    "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+   },
    "features": {
     "B_over_D": 27.35,
     "E_GPa": 29.46,
@@ -118,7 +130,10 @@
   },
   {
    "blast_id": "DG05",
-   "degenerate_reason": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+   "degenerate_reason": {
+    "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+   },
    "features": {
     "B_over_D": 27.35,
     "E_GPa": 29.46,
@@ -147,7 +162,10 @@
   },
   {
    "blast_id": "DG06",
-   "degenerate_reason": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+   "degenerate_reason": {
+    "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+   },
    "features": {
     "B_over_D": 27.35,
     "E_GPa": 29.46,
@@ -203,7 +221,7 @@
    "passed": true
   }
  },
- "digest": "0d461de2e29aae261141e443fc41ac37d15a982d7c186c98a40e13c0b3662935",
+ "digest": "b849ec3e1040c448813baf2a7f44c9e9a0abef238078a93de1a00be50146d840",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -229,7 +247,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -238,7 +259,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -247,7 +271,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -256,7 +283,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -265,7 +295,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -274,7 +307,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -285,7 +321,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -294,7 +333,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -303,7 +345,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -312,7 +357,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -321,7 +369,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -330,7 +381,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -341,7 +395,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -350,7 +407,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -359,7 +419,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -368,7 +431,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -377,7 +443,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -386,7 +455,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -397,7 +469,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -406,7 +481,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -415,7 +493,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -424,7 +505,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -433,7 +517,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -442,7 +529,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -453,7 +543,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -462,7 +555,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -471,7 +567,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -480,7 +579,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -489,7 +591,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -498,7 +603,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -509,7 +617,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -518,7 +629,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -527,7 +641,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -536,7 +653,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -545,7 +665,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -554,7 +677,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -565,7 +691,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -574,7 +703,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -583,7 +715,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -592,7 +727,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -601,7 +739,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -610,7 +751,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -621,7 +765,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -630,7 +777,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -639,7 +789,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -648,7 +801,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -657,7 +813,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -666,7 +825,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -677,7 +839,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -686,7 +851,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -695,7 +863,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -704,7 +875,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -713,7 +887,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -722,7 +899,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -733,7 +913,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -742,7 +925,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -751,7 +937,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -760,7 +949,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -769,7 +961,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -778,7 +973,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -789,7 +987,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -798,7 +999,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -807,7 +1011,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -816,7 +1023,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -825,7 +1035,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -834,7 +1047,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -845,7 +1061,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -854,7 +1073,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -863,7 +1085,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -872,7 +1097,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -881,7 +1109,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -890,7 +1121,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -901,7 +1135,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -910,7 +1147,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -919,7 +1159,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -928,7 +1171,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -937,7 +1183,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -946,7 +1195,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   },
@@ -957,7 +1209,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG02": {
@@ -966,7 +1221,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG03": {
@@ -975,7 +1233,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG04": {
@@ -984,7 +1245,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG05": {
@@ -993,7 +1257,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    },
    "DG06": {
@@ -1002,7 +1269,10 @@
     "extrapolated": false,
     "group": null,
     "n_simulations": null,
-    "reason": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+    "reason": {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    },
     "x50_m": null
    }
   }
@@ -1023,114 +1293,198 @@
  "scores": {
   "crush-zone": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "group-discriminant": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuz-ram": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuznetsov": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuznetsov-capped": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuznetsov-transfer": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "published-neural-net": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "published-regression": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "random-forest": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "refitted-regression": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "stacking": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "svr-rbf": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "swebrec": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "xgboost": {
    "abstain_reasons": [
-    "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast."
+    {
+     "en": "this design is not a blast: the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. This is not a blast.",
+     "es": "este dise\u00f1o no es una voladura: el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, as\u00ed que no hay columna de carga. Esto no es una voladura."
+    }
    ],
    "n_abstained": 6,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   }
  },

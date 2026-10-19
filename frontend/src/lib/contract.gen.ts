@@ -266,7 +266,7 @@ export interface components {
         };
         /**
          * CaseArtifact
-         * @description Contract 2 (artifact), catalog row case-artifact 1.0.0: the per-case artifact the web replays, written by data-pipeline/pipeline/stages/export.py build_case_artifact to data/derived/<case>/case.json. digest is the SHA-256 of the canonical serialisation of the rest of the payload (sorted keys, compact separators); no value is NaN or Infinity (a non-finite float is exported as null). Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, representative_blast_id names a blast, every prediction arm answers every blast.
+         * @description Contract 2 (artifact), catalog row case-artifact 2.0.0: the per-case artifact the web replays, written by data-pipeline/pipeline/stages/export.py build_case_artifact to data/derived/<case>/case.json. digest is the SHA-256 of the canonical serialisation of the rest of the payload (sorted keys, compact separators); no value is NaN or Infinity (a non-finite float is exported as null). Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, representative_blast_id names a blast, every prediction arm answers every blast. Every reason (an arm's abstention, a score note, the geometry and degenerate-design notes of a blast, the geometry report's reason) is a bilingual text, written as such by the pipeline from 2.0.0 (BL-039).
          */
         CaseArtifact: {
             /** @constant */
@@ -617,7 +617,7 @@ export interface components {
         };
         /**
          * Benchmark
-         * @description Contract 2 (artifact), catalog row benchmark 1.0.0: the cross-case evidence every documentation page and the Benchmark page read, written by data-pipeline/pipeline/stages/benchmark.py to data/derived/benchmark.json (schema id fragmenta.benchmark/v3). digest is the SHA-256 of the canonical serialisation of the rest of the payload. The verdict is a measurement over the row set; the kill criterion text is in the document. Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, the corpus digest equal to the index's, every site in site_meta, the sizes of the row arrays.
+         * @description Contract 2 (artifact), catalog row benchmark 2.0.0: the cross-case evidence every documentation page and the Benchmark page read, written by data-pipeline/pipeline/stages/benchmark.py to data/derived/benchmark.json (schema id fragmenta.benchmark/v3). digest is the SHA-256 of the canonical serialisation of the rest of the payload. The verdict is a measurement over the row set; the kill criterion text is in the document. Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, the corpus digest equal to the index's, every site in site_meta, the sizes of the row arrays.
          */
         Benchmark: {
             /** @constant */
@@ -956,8 +956,8 @@ export interface components {
             usable: boolean;
             rock_factor: number | null;
             pattern?: components["schemas"]["pattern"];
-            geometry_reason?: string;
-            degenerate_reason?: string;
+            geometry_reason?: components["schemas"]["text"];
+            degenerate_reason?: components["schemas"]["text"];
         };
         pattern: {
             burden_m: number;
@@ -973,7 +973,8 @@ export interface components {
         prediction: {
             x50_m: number | null;
             abstained: boolean;
-            reason: string | null;
+            /** @description Why the arm refused, in both languages; null when it answered. */
+            reason: components["schemas"]["text"] | null;
             extrapolated: boolean;
             /**
              * @description The rock-stiffness group of the published two-group split; null when no arm assigned one.
@@ -987,11 +988,11 @@ export interface components {
         /** @description A metric block. Both variance statistics are present and each is named: pearson_r2 and r2_identity differ by a factor of two and a half for the classical arm on the published hold-out. */
         scoreBlock: {
             scoreable: boolean;
-            reason?: string;
+            reason?: components["schemas"]["text"];
             n_scored?: number;
             n_abstained: number;
             n_extrapolated?: number;
-            abstain_reasons?: string[];
+            abstain_reasons?: components["schemas"]["text"][];
             pearson_r2?: number | null;
             r2_identity?: number | null;
             rmse_m?: number | null;
@@ -1025,7 +1026,7 @@ export interface components {
         geometrySite: {
             n: number;
             reconstructable: boolean;
-            reason?: string;
+            reason?: components["schemas"]["text"];
             hole_diameter_mm?: number;
             burden_m?: [
                 number,
@@ -1224,7 +1225,8 @@ export interface components {
             rmse_m?: number;
             mae_m?: number;
             bias_m?: number;
-            abstain_reason?: string | null;
+            /** @description Why the arm answered no row of the site, in both languages; null when it answered. */
+            abstain_reason?: components["schemas"]["text"] | null;
         };
         reproduction: {
             n_rows: number;

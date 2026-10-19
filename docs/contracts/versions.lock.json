@@ -15,9 +15,9 @@
     "sha256": "c18341ba00355a59a9e4ec234baed8b9a2dc814fd9fdf093c5b1d57fc37f6829"
   },
   "case-artifact": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "schema": "docs/contracts/schemas/case-artifact.schema.json",
-    "sha256": "116456d386c5b5360280bf64fe0af5c168d494cd8e7ea8c5bd7631ec4f12cc5f"
+    "sha256": "9518b42625f7403e30a808ea7b92fe933efe0a3ff19d0b86bd49e96ad38a9de9"
   },
   "models-file": {
     "version": "1.0.0",
@@ -25,9 +25,9 @@
     "sha256": "ff5ddeebfd29a6dfd40c91493954d7a87a5f3dab01f5c45b39def60077205765"
   },
   "benchmark": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "schema": "docs/contracts/schemas/benchmark.schema.json",
-    "sha256": "c4709d93f317cecea0e86ac3d6e5b26f98935ccf82cc5883522b2da566d990a2"
+    "sha256": "113accd2049b4882d820bc4a3f4c20036f43ee585be2e095313641114a9304e7"
   },
   "readiness": {
     "version": "1.0.0",

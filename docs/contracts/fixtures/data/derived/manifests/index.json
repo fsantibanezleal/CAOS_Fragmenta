@@ -9,11 +9,11 @@
  "cases": [
   {
    "artifact_path": "fx01-fixture/case.json",
-   "bytes": 53904,
+   "bytes": 54903,
    "case_id": "fx01-fixture",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "3b77f0898aee80cd4a3e0a73c2ed45868a41c7d0123ff24f1ff2a50ad92dfe34",
+   "digest": "11a1dd42525f41cf480d80ec853a38dd608a3e0b79d74b9234156dc79daedaa2",
    "lane": "live",
    "manifest_path": "manifests/fx01-fixture.json",
    "real_or_synthetic": "real",
