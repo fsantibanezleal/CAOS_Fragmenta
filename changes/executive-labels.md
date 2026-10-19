@@ -1,0 +1,2 @@
+- The executive illustrations' labels are at size 22 in the 800 wide viewBox, so they render at 9 px or more on a phone in both languages: every chip is resized to the wider language with 8 units of padding, two-line labels sit 28 units apart, the "Energy" chip of pain and proposal moves left of the control room with a short leader, and the scenes are otherwise unchanged (CAOS_Fragmenta#33, U4d).
+- The illustrations test checks the size, the chip fit against measured widths, the two-line spacing and that no chip overlaps another or leaves the frame.
