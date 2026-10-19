@@ -550,10 +550,8 @@ def test_view_the_example_passes(tmp_path):
     assert r.returncode == 0, r.stdout
 
 
-# Fragmenta's own design document is not yet written to the 0.08.002 guard (U10b: executive brief, research basis, sizing,
-# technology, resources, one validation.md per feature). strict=True: the day the guard passes on the real tree this test
-# XPASSES and fails, which is the signal to delete the marker.
-@pytest.mark.xfail(strict=True, reason="U10b writes the design document to the template guard (CAOS_Fragmenta#33)")
+# Fragmenta's own design document passes the 0.08.002 guard: every section, and every live requirement with a real gate and
+# an adversarial validation row.
 def test_view_the_real_repository_passes():
     r = run("check_sdd.py", str(ROOT))
     assert r.returncode == 0 and "check_sdd: OK" in r.stdout, r.stdout

@@ -16,7 +16,8 @@ contract with its schema, and every reason the bake writes reads in English and 
 - The executive view (`content/executive.json`, rendered by the shell's `ExecutiveView`): the problem of blast
   fragmentation in hard-rock mining in five sub-tabs (the pain, the context, the current situation, the trends, the
   proposal with the 4 C's), three headline figures and 14 linked sources, in English and Spanish, with three drawn
-  scenes of the blast-to-mill chain (the pain animated, with its reduced-motion block). Researched from primary sources
+  scenes of the blast-to-mill chain (the pain animated, with its reduced-motion block; every label readable at 9 px on a
+  phone). Researched from primary sources
   (Cochilco, the United States Department of Energy, the International Energy Agency, Chile's mining ministry and
   peer-reviewed and conference papers) and read by a release reviewer against the standard: two figures that
   contradicted their sources were corrected at the source before release (the concentrators' share of Chilean
@@ -33,6 +34,11 @@ contract with its schema, and every reason the bake writes reads in English and 
   `check_contract_versions`, `check_documents`, `check_readiness`, `check_skeleton`, `check_doc_paths`,
   `check_svg_animation`), and the planted-defect suite (`tests/adversarial/`): every guard CI runs rejects a defect
   planted in a temporary copy.
+- The design document in the template's sections (the executive brief, the research basis with its sources, sizing and
+  contracts, technology and versions, resources) and the feature folder of this release. `check_sdd` passes on 106 live
+  requirements, each with a real gate and an adversarial validation row: a test under `tests/adversarial/` that plants the
+  defect the requirement forbids in a throwaway copy and shows its own gate fail on it (the ones that need node, a build
+  or a browser are local-only, said in their rows).
 - `docs/design/measured-resources.md`: the bake (677.5 s, 258 MB peak), the tests, the web install and build, and the
   deploy payload, each with its command and output.
 
