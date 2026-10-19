@@ -1,5 +1,8 @@
-"""DORMANT FastAPI app factory (ADR-0057). Serves the committed artifacts read-only (+ optionally the built SPA).
-Run only when the backend lane is activated:  uvicorn app.main:app --reload"""
+"""DORMANT FastAPI app factory (ADR-0057).
+
+Serves the committed artifacts read-only (and optionally the built SPA). Run only when the backend lane is
+activated:  uvicorn app.main:app --reload
+"""
 from __future__ import annotations
 
 from fastapi import FastAPI

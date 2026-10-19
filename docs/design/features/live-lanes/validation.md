@@ -1,0 +1,21 @@
+# Adversarial validation: the live lanes in the browser
+
+For each requirement of [`requirements.md`](requirements.md), the check that tries to break it: what was planted in a
+throwaway copy of the frontend source or of the committed data, and the test that plants it. Each plant is run through the
+requirement's own Node test (`frontend/test/parity.test.ts`, `learned.test.ts`, `src/lib/contract.test.ts`) on the copy, and
+the test must fail by name there while the same test passes on the clean copy
+(`test_every_node_gate_passes_on_the_clean_copy`). Every row is local-only for the same reason: the Node tests need node
+and the installed frontend, which the checks job does not install, and the tests skip where they are absent.
+
+| requirement | adversarial check | gate |
+|---|---|---|
+| LV-001 | the size exponent of the classical mean size is changed from 0.8 to 0.79 in the browser engine, and the parity test against the baked value fails (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv001_a_wrong_size_exponent_in_the_classical_mean_size_is_found` |
+| LV-002 | the modulus coefficient of the discriminant is distorted and the group-2 intercept of the published regression is changed, and the regression, the router and the separation tests all fail by name (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv002_a_distorted_discriminant_and_a_changed_intercept_are_found` |
+| LV-003 | four plants at once, each caught by its own test: a drifted Rosin-Rammler constant, a changed Swebrec tail, a percentile that returns the nearest grid point, and a sieve grid of 240 points instead of 241 (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv003_a_drifted_curve_a_broken_tail_a_nearest_point_percentile_and_a_short_grid_are_found` |
+| LV-004 | the spacing of the reconstructed pattern is scaled by 1.02, and the geometry test against the baked pattern fails (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv004_a_skewed_spacing_in_the_geometry_reconstruction_is_found` |
+| LV-005 | two plants in turn, each caught by one test only: a charge floor raised to 0.99 flags a normal blast, and a check that never refuses lets the degenerate control through (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv005_a_check_that_flags_a_normal_blast_and_one_that_lets_a_degenerate_design_through_are_found` |
+| LV-006 | the plausible range of the browser is widened from 3 m to 5 m, and the test against the engine's range fails (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv006_a_widened_plausible_range_is_found` |
+| LV-007 | the logistic of the network walker is given a drifting argument (1.001 times), and both the walker test against the fitted models and the replay test of the shipped predictions fail (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv007_a_logistic_that_drifts_in_the_network_walker_is_found` |
+| LV-008 | the walker's refusal of a value above the plausible range is removed, and the refitted power law at a 0.5 GPa modulus is drawn at about 377 m instead of refused (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv008_a_walker_that_no_longer_refuses_a_value_above_the_range_is_found` |
+| LV-009 | a property of a schema is renamed in the generated types and an arm id is renamed in the catalogue: the field test of the shipped artifacts, the property test of the generated file and the arm catalogue test all fail (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv009_a_field_the_generated_types_stopped_naming_and_an_arm_the_catalogue_forgot_are_found` |
+| LV-010 | one cell of an arm that shares the classical mean size is changed in the committed case artifact, and the test that holds the arm to its source on every case fails (local-only: needs node and npm ci in frontend) | `tests/adversarial/test_adv_web.py::test_lv010_an_arm_that_shares_a_mean_size_but_predicts_another_is_found` |

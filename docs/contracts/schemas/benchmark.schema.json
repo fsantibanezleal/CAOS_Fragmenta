@@ -1,0 +1,1805 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "benchmark.schema.json",
+  "title": "Benchmark",
+  "description": "Contract 2 (artifact), catalog row benchmark 2.0.0: the cross-case evidence every documentation page and the Benchmark page read, written by data-pipeline/pipeline/stages/benchmark.py to data/derived/benchmark.json (schema id fragmenta.benchmark/v3). digest is the SHA-256 of the canonical serialisation of the rest of the payload. The verdict is a measurement over the row set; the kill criterion text is in the document. Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, the corpus digest equal to the index's, every site in site_meta, the sizes of the row arrays.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "digest",
+    "app_version",
+    "engine_version",
+    "corpus_digest",
+    "seed",
+    "n_repeats",
+    "n_boot",
+    "kill_criterion",
+    "verdict",
+    "provenance",
+    "protocols",
+    "published_reproduction",
+    "network_seed_sweep",
+    "network_width_sweep",
+    "duplicate_groups",
+    "sites",
+    "site_counts",
+    "site_meta",
+    "diagnostics",
+    "corpus_rows",
+    "holdout_rows"
+  ],
+  "properties": {
+    "schema": {
+      "const": "fragmenta.benchmark/v3"
+    },
+    "digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "app_version": {
+      "$ref": "#/$defs/version"
+    },
+    "engine_version": {
+      "$ref": "#/$defs/version"
+    },
+    "corpus_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "n_repeats": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "n_boot": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "kill_criterion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "best_learned_arm",
+        "best_learned_r2_identity",
+        "best_learned_interval_95",
+        "null_r2_identity",
+        "null_pearson_r",
+        "margin_over_null",
+        "best_learned_is_positive",
+        "n_learned_arms_positive",
+        "n_learned_arms",
+        "generalises_across_sites",
+        "criterion",
+        "outcome",
+        "supports",
+        "depends_on_support",
+        "sites_outside_geometry_support",
+        "in_sample_arms",
+        "site_constant_arms",
+        "arms_with_positive_variance_explained_across_sites",
+        "intervals_95",
+        "arms_with_interval_above_zero",
+        "protocol_gap_random_minus_grouped",
+        "protocol_gap_basis",
+        "median_protocol_gap",
+        "median_protocol_gap_over",
+        "dedup_minus_random_median",
+        "published_random_split_figures"
+      ],
+      "properties": {
+        "best_learned_arm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "best_learned_r2_identity": {
+          "type": "number"
+        },
+        "best_learned_interval_95": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "null_r2_identity": {
+          "type": "number"
+        },
+        "null_pearson_r": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "margin_over_null": {
+          "type": "number"
+        },
+        "best_learned_is_positive": {
+          "type": "boolean"
+        },
+        "n_learned_arms_positive": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_learned_arms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generalises_across_sites": {
+          "type": "boolean"
+        },
+        "criterion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supports": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all",
+            "geometry"
+          ],
+          "properties": {
+            "all": {
+              "$ref": "#/$defs/criterionOnSupport"
+            },
+            "geometry": {
+              "$ref": "#/$defs/criterionOnSupport"
+            }
+          }
+        },
+        "depends_on_support": {
+          "type": "boolean"
+        },
+        "sites_outside_geometry_support": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "in_sample_arms": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ],
+            "items": false,
+            "minItems": 3
+          },
+          "description": "(arm, r2_identity, what it was fitted on)"
+        },
+        "site_constant_arms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "arms_with_positive_variance_explained_across_sites": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "items": false,
+            "minItems": 2
+          }
+        },
+        "intervals_95": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "all",
+              "geometry"
+            ],
+            "properties": {
+              "all": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "geometry": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "arms_with_interval_above_zero": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "protocol_gap_random_minus_grouped": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "protocol_gap_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "median_protocol_gap": {
+          "type": "number"
+        },
+        "median_protocol_gap_over": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dedup_minus_random_median": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "published_random_split_figures": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "published",
+              "share_of_draws_below",
+              "median_draw"
+            ],
+            "properties": {
+              "published": {
+                "type": "number"
+              },
+              "share_of_draws_below": {
+                "type": "number"
+              },
+              "median_draw": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "arm -> what it is, what it was fitted on and what it shares with another arm.",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/armProvenance"
+      }
+    },
+    "protocols": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "random-8020",
+        "dedup-random",
+        "leave-one-site-out"
+      ],
+      "properties": {
+        "random-8020": {
+          "$ref": "#/$defs/protocol"
+        },
+        "dedup-random": {
+          "$ref": "#/$defs/protocol"
+        },
+        "leave-one-site-out": {
+          "$ref": "#/$defs/protocol"
+        }
+      }
+    },
+    "published_reproduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "2010",
+        "2012",
+        "published_holdout_arms",
+        "without_the_leaked_row"
+      ],
+      "properties": {
+        "2010": {
+          "$ref": "#/$defs/reproduction"
+        },
+        "2012": {
+          "$ref": "#/$defs/reproduction"
+        },
+        "published_holdout_arms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "classical",
+            "regression",
+            "neural-net",
+            "null"
+          ],
+          "properties": {
+            "classical": {
+              "$ref": "#/$defs/engineScore"
+            },
+            "regression": {
+              "$ref": "#/$defs/engineScore"
+            },
+            "neural-net": {
+              "$ref": "#/$defs/engineScore"
+            },
+            "null": {
+              "$ref": "#/$defs/engineScore"
+            }
+          }
+        },
+        "without_the_leaked_row": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "classical",
+            "regression",
+            "neural-net"
+          ],
+          "properties": {
+            "classical": {
+              "$ref": "#/$defs/engineScore"
+            },
+            "regression": {
+              "$ref": "#/$defs/engineScore"
+            },
+            "neural-net": {
+              "$ref": "#/$defs/engineScore"
+            }
+          }
+        }
+      }
+    },
+    "network_seed_sweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_seeds",
+        "r2_identity",
+        "min",
+        "median",
+        "max",
+        "published",
+        "published_above_every_seed",
+        "per_blast"
+      ],
+      "properties": {
+        "n_seeds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "r2_identity": {
+          "type": "array",
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "minItems": 1
+        },
+        "min": {
+          "type": "number"
+        },
+        "median": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "published": {
+          "type": "number"
+        },
+        "published_above_every_seed": {
+          "type": "boolean"
+        },
+        "per_blast": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "measured_m",
+              "published_m",
+              "min_m",
+              "max_m"
+            ],
+            "properties": {
+              "measured_m": {
+                "type": "number"
+              },
+              "published_m": {
+                "type": "number"
+              },
+              "min_m": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "max_m": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "network_width_sweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "widths",
+        "n_simulations",
+        "seed",
+        "published_widths",
+        "published_protocol",
+        "leave_one_site_out"
+      ],
+      "properties": {
+        "widths": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+        "n_simulations": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "published_widths": {
+          "type": "object",
+          "description": "rock-stiffness group -> the width the source published.",
+          "propertyNames": {
+            "enum": [
+              "1",
+              "2"
+            ]
+          },
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "published_protocol": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "1",
+              "2"
+            ]
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "best_hidden",
+              "best_rmse",
+              "published_optimum",
+              "table"
+            ],
+            "properties": {
+              "best_hidden": {
+                "type": "integer"
+              },
+              "best_rmse": {
+                "type": "number"
+              },
+              "published_optimum": {
+                "type": "integer"
+              },
+              "table": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "hidden",
+                    "rmse",
+                    "correlation"
+                  ],
+                  "properties": {
+                    "hidden": {
+                      "type": "integer"
+                    },
+                    "rmse": {
+                      "type": "number"
+                    },
+                    "correlation": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        "leave_one_site_out": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "hidden",
+              "published",
+              "supports"
+            ],
+            "properties": {
+              "hidden": {
+                "type": "object",
+                "propertyNames": {
+                  "enum": [
+                    "1",
+                    "2"
+                  ]
+                },
+                "additionalProperties": {
+                  "type": "integer"
+                }
+              },
+              "published": {
+                "type": "boolean"
+              },
+              "supports": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "all",
+                  "geometry"
+                ],
+                "properties": {
+                  "all": {
+                    "$ref": "#/$defs/engineScore"
+                  },
+                  "geometry": {
+                    "$ref": "#/$defs/engineScore"
+                  }
+                }
+              }
+            }
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "duplicate_groups": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minItems": 2
+      }
+    },
+    "sites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "site_counts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "site_meta": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/siteMeta"
+      }
+    },
+    "diagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outliers",
+        "native_importance",
+        "published_importance",
+        "resampling_importance",
+        "transfer_fit"
+      ],
+      "properties": {
+        "outliers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "inputs",
+            "contamination",
+            "n_estimators",
+            "standardised",
+            "seed",
+            "n_blasts",
+            "flagged",
+            "flagged_by_site",
+            "anomaly_score",
+            "applied_as_filter"
+          ],
+          "properties": {
+            "method": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inputs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "contamination": {
+              "type": "number"
+            },
+            "n_estimators": {
+              "type": "integer"
+            },
+            "standardised": {
+              "type": "boolean"
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_blasts": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "flagged": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "flagged_by_site": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "anomaly_score": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "type": "number"
+              }
+            },
+            "applied_as_filter": {
+              "const": false
+            }
+          }
+        },
+        "native_importance": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "values"
+                ],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "values": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "additionalProperties": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "published_importance": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1
+            },
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        },
+        "resampling_importance": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/importance"
+          }
+        },
+        "transfer_fit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "intercept",
+            "slope",
+            "fit_sites",
+            "form"
+          ],
+          "properties": {
+            "intercept": {
+              "type": "number"
+            },
+            "slope": {
+              "type": "number"
+            },
+            "fit_sites": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "form": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "corpus_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "blast_id",
+          "site",
+          "x50_m",
+          "features"
+        ],
+        "properties": {
+          "blast_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "x50_m": {
+            "type": "number"
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7
+          }
+        }
+      },
+      "minItems": 1,
+      "description": "The corpus rows behind the pooled scores: measured size, site and the seven features."
+    },
+    "holdout_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "blast_id",
+          "site",
+          "set",
+          "x50_m",
+          "features",
+          "in_training_table",
+          "published"
+        ],
+        "properties": {
+          "blast_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "set": {
+            "enum": [
+              "published-2012",
+              "published-2010-only",
+              "field-2025"
+            ]
+          },
+          "x50_m": {
+            "type": "number"
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7
+          },
+          "in_training_table": {
+            "type": "boolean"
+          },
+          "published": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "classical": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "regression": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "neural_net": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "description": "The published hold-out and field blasts, with what each source printed for them."
+    }
+  },
+  "$defs": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+      "description": "A version in the product format X.XX.XXX."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 hex digest."
+    },
+    "engineScore": {
+      "type": "object",
+      "description": "The named figures of one score, as the engine writes them.",
+      "additionalProperties": false,
+      "required": [
+        "n_scored",
+        "n_abstained",
+        "n_extrapolated",
+        "pearson_r",
+        "pearson_r2",
+        "r2_identity",
+        "rmse_m",
+        "mae_m",
+        "mape_pct",
+        "bias_m"
+      ],
+      "properties": {
+        "n_scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_abstained": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_extrapolated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pearson_r": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pearson_r2": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "r2_identity": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rmse_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mae_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mape_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "bias_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "drawSummary": {
+      "type": "object",
+      "description": "A summary of draws; the quantile fields are absent when there are none.",
+      "additionalProperties": false,
+      "required": [
+        "n"
+      ],
+      "properties": {
+        "n": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p05": {
+          "type": "number"
+        },
+        "p25": {
+          "type": "number"
+        },
+        "median": {
+          "type": "number"
+        },
+        "p75": {
+          "type": "number"
+        },
+        "p95": {
+          "type": "number"
+        },
+        "mean": {
+          "type": "number"
+        }
+      }
+    },
+    "repeatedArm": {
+      "type": "object",
+      "description": "A random protocol's arm: 100 draws, each scored on its own; r2_identity is the median draw.",
+      "additionalProperties": false,
+      "required": [
+        "tier",
+        "r2_identity",
+        "seed0",
+        "repeats",
+        "rmse_repeats",
+        "draws",
+        "common"
+      ],
+      "properties": {
+        "tier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "r2_identity": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "seed0": {
+          "$ref": "#/$defs/engineScore"
+        },
+        "repeats": {
+          "$ref": "#/$defs/drawSummary"
+        },
+        "rmse_repeats": {
+          "$ref": "#/$defs/drawSummary"
+        },
+        "draws": {
+          "type": "array",
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "common": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "repeats",
+            "rmse_repeats",
+            "n_rows",
+            "draws_r2_identity",
+            "arms"
+          ],
+          "properties": {
+            "repeats": {
+              "$ref": "#/$defs/drawSummary"
+            },
+            "rmse_repeats": {
+              "$ref": "#/$defs/drawSummary"
+            },
+            "n_rows": {
+              "$ref": "#/$defs/drawSummary"
+            },
+            "draws_r2_identity": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "arms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "groupedArm": {
+      "type": "object",
+      "description": "A site-held-out protocol's arm: pooled over the folds; the top-level score fields are the all-blasts support.",
+      "additionalProperties": false,
+      "required": [
+        "n_scored",
+        "n_abstained",
+        "n_extrapolated",
+        "pearson_r",
+        "pearson_r2",
+        "r2_identity",
+        "rmse_m",
+        "mae_m",
+        "mape_pct",
+        "bias_m",
+        "tier",
+        "supports",
+        "per_site",
+        "predictions",
+        "common"
+      ],
+      "properties": {
+        "n_scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_abstained": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_extrapolated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pearson_r": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pearson_r2": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "r2_identity": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rmse_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mae_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mape_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "bias_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supports": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all",
+            "geometry"
+          ],
+          "properties": {
+            "all": {
+              "$ref": "#/$defs/supportScore"
+            },
+            "geometry": {
+              "$ref": "#/$defs/supportScore"
+            }
+          }
+        },
+        "per_site": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/siteError"
+          }
+        },
+        "predictions": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "common": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "score",
+            "interval_95",
+            "n_rows",
+            "n_sites",
+            "arms"
+          ],
+          "properties": {
+            "score": {
+              "$ref": "#/$defs/engineScore"
+            },
+            "interval_95": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "n_rows": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_sites": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "arms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_folds",
+        "repeated",
+        "arms"
+      ],
+      "properties": {
+        "n_folds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "repeated": {
+          "type": "boolean"
+        },
+        "arms": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/repeatedArm"
+              },
+              {
+                "$ref": "#/$defs/groupedArm"
+              }
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "repeated": {
+                "const": true
+              }
+            },
+            "required": [
+              "repeated"
+            ]
+          },
+          "then": {
+            "properties": {
+              "arms": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/repeatedArm"
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "arms": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/groupedArm"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "criterionOnSupport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_blasts",
+        "best_learned_arm",
+        "best_learned_r2_identity",
+        "best_learned_interval_95",
+        "null_r2_identity",
+        "null_pearson_r",
+        "margin_over_null",
+        "best_learned_is_positive",
+        "n_learned_arms_positive",
+        "n_learned_arms",
+        "generalises_across_sites"
+      ],
+      "properties": {
+        "n_blasts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "best_learned_arm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "best_learned_r2_identity": {
+          "type": "number"
+        },
+        "best_learned_interval_95": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "null_r2_identity": {
+          "type": "number"
+        },
+        "null_pearson_r": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "margin_over_null": {
+          "type": "number"
+        },
+        "best_learned_is_positive": {
+          "type": "boolean"
+        },
+        "n_learned_arms_positive": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_learned_arms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generalises_across_sites": {
+          "type": "boolean"
+        }
+      }
+    },
+    "armProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tier",
+        "lane",
+        "source",
+        "shares_mean_size_with",
+        "fitted_on",
+        "in_sample_corpus",
+        "uses_site_constant",
+        "router_in_sample"
+      ],
+      "properties": {
+        "tier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lane": {
+          "enum": [
+            "live",
+            "offline",
+            "offline-train-live-infer"
+          ],
+          "description": "Where the arm runs: live in the browser, offline only, or trained offline and run live."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shares_mean_size_with": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fitted_on": {
+          "type": "string",
+          "minLength": 1
+        },
+        "in_sample_corpus": {
+          "type": "boolean"
+        },
+        "uses_site_constant": {
+          "type": "boolean"
+        },
+        "router_in_sample": {
+          "type": "boolean"
+        },
+        "caps": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "declared_not_published": {
+          "type": "boolean"
+        }
+      }
+    },
+    "importance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "n_repeats",
+        "n_rows",
+        "seed",
+        "baseline_mse",
+        "mean_increase_in_mse",
+        "share"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "n_repeats": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "baseline_mse": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mean_increase_in_mse": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "share": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "siteMeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_blasts",
+        "mean_x50_m",
+        "E_GPa",
+        "mine",
+        "rock",
+        "hole_diameter_mm",
+        "rock_factor_recovered",
+        "rock_factor_transfer",
+        "measurement"
+      ],
+      "properties": {
+        "n_blasts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mean_x50_m": {
+          "type": "number"
+        },
+        "E_GPa": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1
+        },
+        "mine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rock": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hole_diameter_mm": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rock_factor_recovered": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rock_factor_transfer": {
+          "type": "number"
+        },
+        "measurement": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "supportScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "score",
+        "interval_95",
+        "n_sites"
+      ],
+      "properties": {
+        "score": {
+          "$ref": "#/$defs/engineScore"
+        },
+        "interval_95": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "n_sites": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "siteError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_blasts",
+        "n_scored",
+        "mean_measured_m"
+      ],
+      "properties": {
+        "n_blasts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mean_measured_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mean_predicted_m": {
+          "type": "number"
+        },
+        "rmse_m": {
+          "type": "number"
+        },
+        "mae_m": {
+          "type": "number"
+        },
+        "bias_m": {
+          "type": "number"
+        },
+        "abstain_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the arm answered no row of the site, in both languages; null when it answered."
+        }
+      }
+    },
+    "reproduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_rows",
+        "as_published",
+        "recomputed",
+        "gain_in_r2_identity"
+      ],
+      "properties": {
+        "n_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "as_published": {
+          "$ref": "#/$defs/engineScore"
+        },
+        "recomputed": {
+          "$ref": "#/$defs/engineScore"
+        },
+        "gain_in_r2_identity": {
+          "type": "number"
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "description": "Every reader-facing string is bilingual at the source.",
+      "additionalProperties": false,
+      "required": [
+        "en",
+        "es"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "es": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

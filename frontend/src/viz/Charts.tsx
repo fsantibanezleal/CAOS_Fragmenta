@@ -14,7 +14,7 @@ import { type ChartSeries, UPlotChart } from '@fasl-work/caos-app-shell/chart';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
-import { notAvailable, num } from '../lib/format';
+import { notAvailable, num, value } from '../lib/format';
 
 /** Read a CSS custom property off the document, with a fallback that is never a bare colour. */
 function token(name: string, fallback: string): string {
@@ -563,7 +563,9 @@ export function LineChart({
           ticks: { stroke: grid },
           label: xLabel,
           labelSize: 22,
-          values: xTickFormat ? (_u, ticks) => ticks.map(xTickFormat) : undefined,
+          // An axis without a format of its own reads in the interface language: uPlot's default follows the
+          // browser's locale, so an English page on a Spanish machine showed decimal commas.
+          values: (_u, ticks) => ticks.map(xTickFormat ?? ((t: number) => value(t, lang))),
           // Pinned, when given. On a categorical axis uPlot otherwise fills the range with ticks
           // and every one of them rounds to the same label, so the axis reads as the same word
           // printed twenty times.
@@ -575,7 +577,7 @@ export function LineChart({
           ticks: { stroke: grid },
           label: yLabel,
           labelSize: 30,
-          values: yTickFormat ? (_u, ticks) => ticks.map(yTickFormat) : undefined,
+          values: (_u, ticks) => ticks.map(yTickFormat ?? ((t: number) => value(t, lang))),
         },
       ],
       series: [
@@ -662,6 +664,7 @@ export function LineChart({
     yRange,
     zeroLine,
     epoch,
+    lang,
   ]);
 
   const fmt = valueFormat ?? ((v: number) => num(v, 3));

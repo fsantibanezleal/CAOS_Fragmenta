@@ -1,0 +1,988 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "case-artifact.schema.json",
+  "title": "CaseArtifact",
+  "description": "Contract 2 (artifact), catalog row case-artifact 2.0.0: the per-case artifact the web replays, written by data-pipeline/pipeline/stages/export.py build_case_artifact to data/derived/<case>/case.json. digest is the SHA-256 of the canonical serialisation of the rest of the payload (sorted keys, compact separators); no value is NaN or Infinity (a non-finite float is exported as null). Rules the schema cannot state, checked by tests/contracts/test_documents.py: the digest, representative_blast_id names a blast, every prediction arm answers every blast. Every reason (an arm's abstention, a score note, the geometry and degenerate-design notes of a blast, the geometry report's reason) is a bilingual text, written as such by the pipeline from 2.0.0 (BL-039).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "digest",
+    "case",
+    "provenance",
+    "blasts",
+    "variants",
+    "predictions",
+    "variant_curves",
+    "distributions",
+    "representative_blast_id",
+    "scores",
+    "null_mean_m",
+    "controls",
+    "geometry_report",
+    "live_models"
+  ],
+  "properties": {
+    "schema": {
+      "const": "fragmenta.case/v1"
+    },
+    "digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "category",
+        "real_or_synthetic",
+        "site",
+        "title",
+        "reason",
+        "expected_band",
+        "licence",
+        "doi"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "$ref": "#/$defs/category"
+        },
+        "real_or_synthetic": {
+          "$ref": "#/$defs/realOrSynthetic"
+        },
+        "site": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        },
+        "expected_band": {
+          "$ref": "#/$defs/text"
+        },
+        "licence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "doi": {
+          "type": "string"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine",
+        "app_version",
+        "corpus_digest",
+        "held_out_site",
+        "n_training_rows",
+        "leakage_note"
+      ],
+      "properties": {
+        "engine": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "package",
+            "version"
+          ],
+          "properties": {
+            "package": {
+              "const": "blastfrag"
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+              "description": "A version in the product format X.XX.XXX."
+            }
+          }
+        },
+        "app_version": {
+          "$ref": "#/$defs/version"
+        },
+        "corpus_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "held_out_site": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The site withheld from every learned arm on this case. Null when nothing was withheld."
+        },
+        "n_training_rows": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "leakage_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "blasts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/blastRow"
+      },
+      "minItems": 1
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "field",
+          "factor"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "field": {
+            "type": "string",
+            "minLength": 1
+          },
+          "factor": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "predictions": {
+      "type": "object",
+      "description": "arm -> blast_id -> the arm's answer or refusal.",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string",
+          "minLength": 1
+        },
+        "additionalProperties": {
+          "$ref": "#/$defs/prediction"
+        }
+      }
+    },
+    "variant_curves": {
+      "type": "object",
+      "description": "arm -> variant id -> the predicted mean size at the representative blast, null where the arm refuses.",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "additionalProperties": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "distributions": {
+      "type": "object",
+      "description": "The size distributions of the arms that predict one (present where the representative blast has geometry).",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/distribution"
+      }
+    },
+    "representative_blast_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The blast the What-if tab and the distributions are drawn for."
+    },
+    "scores": {
+      "type": "object",
+      "description": "arm -> metric block; the key null is the control that predicts the training mean.",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/scoreBlock"
+      }
+    },
+    "null_mean_m": {
+      "type": "number"
+    },
+    "controls": {
+      "$ref": "#/$defs/controls"
+    },
+    "geometry_report": {
+      "type": "object",
+      "description": "site -> what the pattern reconstruction could recover and check.",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/geometrySite"
+      }
+    },
+    "live_models": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "path",
+            "digest",
+            "arms"
+          ],
+          "properties": {
+            "scope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "string",
+              "pattern": "^models/[^/\\\\]+\\.json$"
+            },
+            "digest": {
+              "$ref": "#/$defs/sha256"
+            },
+            "arms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The fitted models this case's learned predictions came from, for the live lane."
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "object",
+      "description": "Every reader-facing string is bilingual at the source.",
+      "additionalProperties": false,
+      "required": [
+        "en",
+        "es"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "es": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+      "description": "A version in the product format X.XX.XXX."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 hex digest."
+    },
+    "category": {
+      "enum": [
+        "real-campaign",
+        "extrapolation-control",
+        "parameter-sweep",
+        "structural-control",
+        "negative-control",
+        "positive-control"
+      ]
+    },
+    "realOrSynthetic": {
+      "enum": [
+        "real",
+        "synthetic"
+      ]
+    },
+    "blastRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blast_id",
+        "site",
+        "group",
+        "features",
+        "x50_measured_m",
+        "has_geometry",
+        "usable",
+        "rock_factor"
+      ],
+      "properties": {
+        "blast_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "site": {
+          "type": "string",
+          "minLength": 1
+        },
+        "group": {
+          "enum": [
+            1,
+            2,
+            null
+          ],
+          "description": "The rock-stiffness group of the published two-group split; null when no arm assigned one."
+        },
+        "features": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "S_over_B",
+            "H_over_B",
+            "B_over_D",
+            "T_over_B",
+            "Pf_kg_m3",
+            "XB_m",
+            "E_GPa"
+          ],
+          "properties": {
+            "S_over_B": {
+              "type": "number"
+            },
+            "H_over_B": {
+              "type": "number"
+            },
+            "B_over_D": {
+              "type": "number"
+            },
+            "T_over_B": {
+              "type": "number"
+            },
+            "Pf_kg_m3": {
+              "type": "number"
+            },
+            "XB_m": {
+              "type": "number"
+            },
+            "E_GPa": {
+              "type": "number"
+            }
+          }
+        },
+        "x50_measured_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "has_geometry": {
+          "type": "boolean"
+        },
+        "usable": {
+          "type": "boolean"
+        },
+        "rock_factor": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pattern": {
+          "$ref": "#/$defs/pattern"
+        },
+        "geometry_reason": {
+          "$ref": "#/$defs/text"
+        },
+        "degenerate_reason": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "burden_m",
+        "spacing_m",
+        "bench_height_m",
+        "stemming_m",
+        "hole_diameter_mm",
+        "charge_length_m",
+        "rock_volume_m3",
+        "charge_mass_kg"
+      ],
+      "properties": {
+        "burden_m": {
+          "type": "number"
+        },
+        "spacing_m": {
+          "type": "number"
+        },
+        "bench_height_m": {
+          "type": "number"
+        },
+        "stemming_m": {
+          "type": "number"
+        },
+        "hole_diameter_mm": {
+          "type": "number"
+        },
+        "charge_length_m": {
+          "type": "number"
+        },
+        "rock_volume_m3": {
+          "type": "number"
+        },
+        "charge_mass_kg": {
+          "type": "number"
+        }
+      }
+    },
+    "prediction": {
+      "type": "object",
+      "description": "One arm's answer for one blast, or its refusal.",
+      "additionalProperties": false,
+      "required": [
+        "x50_m",
+        "abstained",
+        "reason",
+        "extrapolated",
+        "group",
+        "cv",
+        "n_simulations"
+      ],
+      "properties": {
+        "x50_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "abstained": {
+          "type": "boolean"
+        },
+        "reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the arm refused, in both languages; null when it answered."
+        },
+        "extrapolated": {
+          "type": "boolean"
+        },
+        "group": {
+          "enum": [
+            1,
+            2,
+            null
+          ],
+          "description": "The rock-stiffness group of the published two-group split; null when no arm assigned one."
+        },
+        "cv": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Coefficient of variation across the network's simulations: the uncertainty it reports."
+        },
+        "n_simulations": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "x50_m": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "x50_m"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scoreBlock": {
+      "type": "object",
+      "description": "A metric block. Both variance statistics are present and each is named: pearson_r2 and r2_identity differ by a factor of two and a half for the classical arm on the published hold-out.",
+      "additionalProperties": false,
+      "required": [
+        "scoreable",
+        "n_abstained"
+      ],
+      "properties": {
+        "scoreable": {
+          "type": "boolean"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        },
+        "n_scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_abstained": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_extrapolated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "abstain_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "pearson_r2": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "r2_identity": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rmse_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mae_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mape_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "bias_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "worst_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/worstRow"
+          }
+        },
+        "r2_identity_interval": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "r2_identity_point": {
+          "type": "number"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scoreable": {
+                "const": true
+              }
+            },
+            "required": [
+              "scoreable"
+            ]
+          },
+          "then": {
+            "required": [
+              "n_scored",
+              "n_extrapolated",
+              "pearson_r2",
+              "r2_identity",
+              "rmse_m",
+              "mae_m",
+              "mape_pct",
+              "bias_m",
+              "worst_rows"
+            ]
+          },
+          "else": {
+            "required": [
+              "reason",
+              "abstain_reasons"
+            ]
+          }
+        }
+      ]
+    },
+    "worstRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blast_id",
+        "site",
+        "measured_m",
+        "predicted_m",
+        "error_m",
+        "error_pct"
+      ],
+      "properties": {
+        "blast_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "site": {
+          "type": "string",
+          "minLength": 1
+        },
+        "measured_m": {
+          "type": "number"
+        },
+        "predicted_m": {
+          "type": "number"
+        },
+        "error_m": {
+          "type": "number"
+        },
+        "error_pct": {
+          "type": "number"
+        }
+      }
+    },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sizes_m",
+        "passing",
+        "x50_m",
+        "p20_m",
+        "p80_m",
+        "constants_published"
+      ],
+      "properties": {
+        "sizes_m": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2
+        },
+        "passing": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2
+        },
+        "x50_m": {
+          "type": "number"
+        },
+        "p20_m": {
+          "type": "number"
+        },
+        "p80_m": {
+          "type": "number"
+        },
+        "constants_published": {
+          "type": "boolean",
+          "description": "False for the crush-zone composition, whose branch constants no source prints."
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "description": "The control checks that apply to the case; each is present only where it was run.",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "geometry_negative_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_without_geometry",
+            "n_answered_anyway",
+            "passed"
+          ],
+          "properties": {
+            "n_without_geometry": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_answered_anyway": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "degenerate_negative_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_degenerate",
+            "n_answered_anyway",
+            "answered_by",
+            "passed"
+          ],
+          "properties": {
+            "n_degenerate": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_answered_anyway": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "answered_by": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "description": "(arm, blast_id) pairs of the arms that answered a design that is not a blast."
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "extrapolation_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_predictions",
+            "n_unstamped",
+            "unstamped",
+            "passed"
+          ],
+          "properties": {
+            "n_predictions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_unstamped": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unstamped": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "maxItems": 5
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "positive_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_checked",
+            "max_abs_error_m",
+            "passed"
+          ],
+          "properties": {
+            "n_checked": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_abs_error_m": {
+              "type": "number",
+              "minimum": 0
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "geometrySite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n",
+        "reconstructable",
+        "checks"
+      ],
+      "properties": {
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reconstructable": {
+          "type": "boolean"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        },
+        "hole_diameter_mm": {
+          "type": "number"
+        },
+        "burden_m": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/geometryCheck"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reconstructable": {
+                "const": true
+              }
+            },
+            "required": [
+              "reconstructable"
+            ]
+          },
+          "then": {
+            "required": [
+              "hole_diameter_mm",
+              "burden_m"
+            ]
+          },
+          "else": {
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      ]
+    },
+    "geometryCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quantity",
+        "stated",
+        "reconstructed",
+        "printed_precision_slack_m",
+        "ok"
+      ],
+      "properties": {
+        "quantity": {
+          "enum": [
+            "burden_m",
+            "spacing_m",
+            "bench_height_m"
+          ]
+        },
+        "stated": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "reconstructed": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "printed_precision_slack_m": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

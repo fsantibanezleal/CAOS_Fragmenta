@@ -32,7 +32,7 @@ export default defineConfig({
     react(),
     {
       // The shell's pre-paint script applies the stored theme and language before the first frame, on every
-      // route including the focus view, which renders outside AppShell (shell defect 4, carried by 0.7.0).
+      // route, the App with its Focus mode included (shell defect 4, carried by 0.7.0).
       name: 'fragmenta-boot',
       transformIndexHtml: (html) => html.replace('<!--caos-boot-->', `<script>${THEME_BOOT_SCRIPT}</script>`),
     },

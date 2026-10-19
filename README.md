@@ -89,8 +89,9 @@ The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-
 
 | Route | What it is |
 |---|---|
-| App | the shell's case workbench for one case: Predict (parity and every model's score), Distribution (the curves, and P80 against a crusher specification), Design (the response surface over burden and spacing, every model live on your design, the reconstructed bench in 3D), Rock, Compare the variants, The case |
-| Introduction | the problem, the relations, the question, the data, the scope |
+| Landing (`/`) | opens the Introduction on its executive view: the problem of blast fragmentation framed for a decision maker, from `content/executive.json`, with its three illustrations and a linked source for every figure |
+| App (`/app`) | the shell's case workbench for one case: Predict (parity and every model's score), Distribution (the curves, and P80 against a crusher specification), Design (the response surface over burden and spacing, every model live on your design, the reconstructed bench in 3D), Rock, Compare the variants, The case. Focus mode (`?focus=1`, or the Focus control) gives the open group the whole viewport; Escape returns, and an old `/focus/<id>` link forwards here |
+| Introduction | two views: the executive view first, then the technical one (the problem, the relations, the question, the data, the scope) |
 | Methodology | every predictor term by term, with its source, and the protocols and metrics |
 | Implementation | the data and the gate, the geometry, the bake, leakage control, the live lanes, the deploy |
 | Experiments | the design, the metrics, coverage, protocol sensitivity, per site, the design response, diagnostics |
@@ -126,7 +127,12 @@ PowerShell and bash. The engine is published separately: `pip install blastfrag`
 | release gate on the artifacts | `python data-pipeline/run.py --validate` (`scripts/check_artifacts.py`) | after every bake, and in the deploy |
 | browser gate (every route, tab, theme, language; figure, drawing, table, tab-strip and footer measurement; the App again at 390 and 768 px) | `npm run gate:browser -- --url http://localhost:4173`, once as is and once with `GATE_FONTS=dejavu` (the deploy runner's fonts) | before a push, and in the deploy on the build it publishes |
 | the base's measured gate (`caos-shell-gate`: reach, the drawn share of the viewport, control reactivity, at five sizes, both themes and languages) | `cd frontend && npm run gate` | before a release |
+| the shell gate with Focus mode required | `cd frontend && npm run gate` always passes `--require-focus` | before a release |
 | lint, guards, content standards, Spanish accents, CI budget | `ruff check data-pipeline tests scripts`, `python scripts/check_*.py` | CI |
+| the design document: sections, requirements with live gates, a validation file per feature | `python scripts/check_sdd.py` | CI |
+| the technology table is the pinned dependencies | `python scripts/check_tech_matrix.py` | CI |
+| the contract catalog, readiness, versions and documents | `python scripts/check_contracts.py docs/contracts/catalog.md --repo-root .`, `check_readiness.py`, `check_contract_versions.py`, `check_documents.py`, `check_skeleton.py docs/contracts/catalog.md` | CI |
+| the guards themselves, attacked with planted defects | `python -m pytest tests/adversarial -q` | CI |
 
 CI never trains, bakes or runs the Python suite (ADR-0074); the deploy verifies and publishes the
 committed artifacts.
@@ -141,7 +147,7 @@ published package this product pins exactly and consumes. This repository holds 
 | `data-pipeline/` | the case registry and the staged bake: ingest, preprocess, dataset, features, train, infer, evaluate, export (with each scope's portable models), validate; then the benchmark |
 | `data/derived/` | 16 case artifacts, 11 models files, the benchmark and the index, content-addressed |
 | `frontend/` | the React application on the shared CAOS app shell, the TypeScript closed forms and the portable-model walker, the browser gate |
-| `docs/` | the wiki |
+| `docs/` | the wiki, the design area (`docs/design/`) and the contract catalog (`docs/contracts/`) |
 
 Offline training and measurement, replay of committed artifacts, and two live lanes in the browser (the
 closed forms, held to the bake by a parity test; the fitted models, walked exactly from their exported

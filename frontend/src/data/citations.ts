@@ -4,6 +4,9 @@
  * Inline `<Cite>` at the point of use plus a per-section `<Refs>` list scoped to that section, never a
  * bibliography dump at the bottom that nobody can connect to a claim.
  *
+ * One file per page (citations/<page>.ts) holds the sources only that page uses and its sections' reference lists;
+ * this file holds the sources several pages use and composes the whole.
+ *
  * The eight sources marked "held" are in the private vault and were read for this work; claims about
  * their content are transcribed from them. The methods references (forests, boosting, kernels,
  * stacking, the bootstrap, the isolation forest) are cited for the method they define.
@@ -11,7 +14,14 @@
 
 import type { Citation } from '@fasl-work/caos-app-shell';
 
-export const CITATIONS: Citation[] = [
+import { BENCHMARK_CITATIONS, BENCHMARK_REFS } from './citations/benchmark';
+import { EXPERIMENTS_CITATIONS, EXPERIMENTS_REFS } from './citations/experiments';
+import { IMPLEMENTATION_CITATIONS, IMPLEMENTATION_REFS } from './citations/implementation';
+import { INTRODUCTION_CITATIONS, INTRODUCTION_REFS } from './citations/introduction';
+import { METHODOLOGY_CITATIONS, METHODOLOGY_REFS } from './citations/methodology';
+
+/** The sources more than one page uses, each defined once. A source only one page uses sits in that page's file. */
+const SHARED_CITATIONS: Citation[] = [
   {
     id: 'hudaverdi2010',
     label: 'Hudaverdi et al. 2010',
@@ -56,16 +66,6 @@ export const CITATIONS: Citation[] = [
     doi: '10.3390/app15031254',
   },
   {
-    id: 'babaeian2019',
-    label: 'Babaeian et al. 2019',
-    citation:
-      'Babaeian, M., Ataei, M., Sereshki, F., Sotoudeh, F. and Mohammadi, S. (2019). A new framework ' +
-      'for evaluation of rock fragmentation in open pit mines. Journal of Rock Mechanics and ' +
-      'Geotechnical Engineering 11:325-336. Held. The second blastability rating table, the ' +
-      'Protodyakonov lookup, and the site where the two-parameter distribution fitted better.',
-    doi: '10.1016/j.jrmge.2018.11.006',
-  },
-  {
     id: 'huan2025',
     label: 'Huan et al. 2025',
     citation:
@@ -77,16 +77,6 @@ export const CITATIONS: Citation[] = [
     doi: '10.1038/s41598-025-96005-7',
   },
   {
-    id: 'li2023',
-    label: 'Li et al. 2023',
-    citation:
-      'Li, P., Xie, S., Xia, H., Wang, D. and Xu, Z. (2023). Advanced analysis of blast pile ' +
-      'fragmentation in open-pit mining utilizing 3D point cloud technology. Traitement du Signal ' +
-      '40:6. Open access, CC BY. Held. Three-dimensional scanning as an alternative to image analysis ' +
-      'for measuring a muckpile.',
-    doi: '10.18280/ts.400615',
-  },
-  {
     id: 'kuznetsov1973',
     label: 'Kuznetsov 1973',
     citation:
@@ -94,42 +84,6 @@ export const CITATIONS: Citation[] = [
       'Mining Science 9:144-148. The original mean-size equation; the form used here is the one ' +
       'printed with Cunningham’s correction in the held sources.',
     doi: '10.1007/BF02506177',
-  },
-  {
-    id: 'ouchterlony2005',
-    label: 'Ouchterlony 2005',
-    citation:
-      'Ouchterlony, F. (2005). The Swebrec function: linking fragmentation by blasting and crushing. ' +
-      'Mining Technology 114:29-44. The three-parameter distribution; its form is used as printed in ' +
-      'Amoako et al. 2022.',
-    doi: '10.1179/037178405X44539',
-  },
-  {
-    id: 'ouchterlony2019',
-    label: 'Ouchterlony and Sanchidrián 2019',
-    citation:
-      'Ouchterlony, F. and Sanchidrián, J. A. (2019). A review of development of better prediction ' +
-      'equations for blast fragmentation. Journal of Rock Mechanics and Geotechnical Engineering ' +
-      '11:1094-1109. A review of the equation family this product starts from.',
-    doi: '10.1016/j.jrmge.2019.03.001',
-  },
-  {
-    id: 'cybenko1989',
-    label: 'Cybenko 1989',
-    citation:
-      'Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. Mathematics of ' +
-      'Control, Signals and Systems 2:303-314. The universal-approximation result the 2012 network ' +
-      'cites for its single hidden layer.',
-    doi: '10.1007/BF02551274',
-  },
-  {
-    id: 'marquardt1963',
-    label: 'Marquardt 1963',
-    citation:
-      'Marquardt, D. W. (1963). An algorithm for least-squares estimation of nonlinear parameters. ' +
-      'Journal of the Society for Industrial and Applied Mathematics 11:431-441. The damped ' +
-      'Gauss-Newton step that trains the published network.',
-    doi: '10.1137/0111030',
   },
   {
     id: 'smola2004',
@@ -155,23 +109,6 @@ export const CITATIONS: Citation[] = [
       '22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 785-794. The ' +
       'boosted additive tree model and its gain importance.',
     doi: '10.1145/2939672.2939785',
-  },
-  {
-    id: 'wolpert1992',
-    label: 'Wolpert 1992',
-    citation:
-      'Wolpert, D. H. (1992). Stacked generalization. Neural Networks 5:241-259. Stacking, which trains ' +
-      'the combiner on out-of-sample predictions of the base learners; the 2025 construction trains it ' +
-      'on in-sample ones.',
-    doi: '10.1016/S0893-6080(05)80023-1',
-  },
-  {
-    id: 'liu2008',
-    label: 'Liu et al. 2008',
-    citation:
-      'Liu, F. T., Ting, K. M. and Zhou, Z.-H. (2008). Isolation forest. Eighth IEEE International ' +
-      'Conference on Data Mining, 413-422. The outlier screen reported on the Experiments page.',
-    doi: '10.1109/ICDM.2008.17',
   },
   {
     id: 'roberts2017',
@@ -209,41 +146,21 @@ export const CITATIONS: Citation[] = [
   },
 ];
 
-/** The sources each page section leans on, so a Refs list is per section, never one dump. */
+/** Every citation the shell resolves a `<Cite>` or a `<Refs>` against: the shared sources, then each page's own. */
+export const CITATIONS: Citation[] = [
+  ...SHARED_CITATIONS,
+  ...INTRODUCTION_CITATIONS,
+  ...METHODOLOGY_CITATIONS,
+  ...IMPLEMENTATION_CITATIONS,
+  ...EXPERIMENTS_CITATIONS,
+  ...BENCHMARK_CITATIONS,
+];
+
+/** Section key to the ids its reference list shows, composed from the five page files. */
 export const SECTION_REFS: Record<string, string[]> = {
-  'intro-why': ['hudaverdi2010', 'amoako2022'],
-  'intro-controls': ['hudaverdi2010', 'amoako2022'],
-  'intro-math': ['kuznetsov1973', 'hudaverdi2010', 'amoako2022'],
-  'intro-question': ['sui2025', 'kulatilake2012', 'ouchterlony2019', 'roberts2017'],
-  'intro-path': ['hudaverdi2010', 'kulatilake2012', 'sui2025'],
-  'intro-data': ['hudaverdi2010', 'kulatilake2012', 'sui2025', 'li2023'],
-  'intro-scope': ['amoako2022', 'huan2025'],
-  'm-classical': ['kuznetsov1973', 'hudaverdi2010', 'amoako2022', 'kulatilake2012'],
-  'm-rock': ['hudaverdi2010', 'babaeian2019', 'sui2025'],
-  'm-distributions': ['amoako2022', 'ouchterlony2005', 'babaeian2019'],
-  'm-statistical': ['hudaverdi2010', 'kulatilake2012'],
-  'm-network': ['kulatilake2012', 'cybenko1989', 'marquardt1963'],
-  'm-ensembles': ['sui2025', 'amoako2022', 'smola2004', 'breiman2001', 'chen2016', 'wolpert1992'],
-  'm-protocols': ['sui2025', 'roberts2017', 'kapoor2023', 'efron1979', 'field2007'],
-  'i-architecture': ['hudaverdi2010'],
-  'i-data': ['hudaverdi2010', 'kulatilake2012', 'sui2025'],
-  'i-geometry': ['hudaverdi2010'],
-  'i-bake': ['hudaverdi2010'],
-  'i-leakage': ['roberts2017', 'kapoor2023'],
-  'i-live': ['amoako2022', 'hudaverdi2010'],
-  'i-models': ['breiman2001', 'chen2016', 'smola2004'],
-  'i-deploy': ['hudaverdi2010'],
-  'e-design': ['sui2025', 'roberts2017', 'kapoor2023'],
-  'e-metrics': ['efron1979', 'field2007'],
-  'e-coverage': ['hudaverdi2010', 'kulatilake2012', 'sui2025'],
-  'e-spread': ['sui2025'],
-  'e-sites': ['hudaverdi2010'],
-  'e-response': ['kuznetsov1973', 'hudaverdi2010'],
-  'e-diagnostics': ['liu2008', 'huan2025', 'breiman2001', 'chen2016', 'sui2025'],
-  'b-verdict': ['roberts2017', 'field2007'],
-  'b-protocols': ['sui2025'],
-  'b-sites': ['hudaverdi2010'],
-  'b-published': ['hudaverdi2010', 'kulatilake2012'],
-  'b-network': ['kulatilake2012'],
-  'b-live': ['kulatilake2012', 'sui2025'],
+  ...INTRODUCTION_REFS,
+  ...METHODOLOGY_REFS,
+  ...IMPLEMENTATION_REFS,
+  ...EXPERIMENTS_REFS,
+  ...BENCHMARK_REFS,
 };

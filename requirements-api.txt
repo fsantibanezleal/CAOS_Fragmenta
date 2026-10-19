@@ -1,0 +1,8 @@
+# The API lane (OPTIONAL, DORMANT). Fragmenta is a static deterministic-replay product and serves nothing at request time; app/
+# ships dormant, imports cleanly and is held to docs/contracts/api.openapi.json by tests/contracts/test_api.py. It is never
+# deployed. Install this file only to run those tests or to activate the lane on an ADR-0002 trigger.
+#
+# Pinned exactly, the versions tests/contracts/test_api.py was verified with on 2026-10-16 (PyPI, the latest at that date).
+fastapi==0.143.3
+uvicorn[standard]==0.54.0
+pydantic==2.14.1

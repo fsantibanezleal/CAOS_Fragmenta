@@ -379,7 +379,7 @@ test('every artifact path the app fetches is root-absolute', () => {
   // base URL stays at the root and nothing fails locally. This reads the source rather than the
   // behaviour, because the behaviour needs the host to reproduce.
   const source = readFileSync(new URL('../src/lib/artifacts.ts', import.meta.url), 'utf8');
-  const paths = [...source.matchAll(/fetchJson<[^>]+>\(\s*[`']([^`']+)[`']/g)].map((m) => m[1]);
+  const paths = [...source.matchAll(new RegExp('fetchJson<[^>]+>[(]\s*[`\']([^`\']+)[`\']', 'g'))].map((m) => m[1]);
   assert.ok(paths.length >= 3, `expected the three loaders, found ${paths.length}`);
   for (const path of paths) {
     assert.ok(path.startsWith('/'), `${path} is relative and will break on a nested route`);
@@ -426,7 +426,7 @@ test('an arm declared as sharing a mean size predicts it and scores as its sourc
   assert.equal(compared, shared.length * cases.length);
 });
 
-test('every field in every shipped artifact is named in the TypeScript contract mirror', () => {
+test('every field in every shipped artifact is named in the generated TypeScript types', () => {
   // The docs claimed "the web build fails on drift". It does not, and cannot: TypeScript is
   // structural, so a JSON file carrying a field the interface never declares type-checks perfectly
   // and the field is simply invisible to the app. Five already were, including
@@ -434,7 +434,9 @@ test('every field in every shipped artifact is named in the TypeScript contract 
   //
   // This compares NAMES rather than types on purpose. A type mismatch surfaces the moment the field
   // is used; a missing name never surfaces at all.
-  const mirror = readFileSync(new URL('../src/lib/contract.types.ts', import.meta.url), 'utf8');
+  // The types are generated from the schema files (contract.gen.ts, ADR-0080), no longer a hand mirror; the field names are
+  // read from that file. src/lib/contract.test.ts holds the same documents to the schemas themselves, with types.
+  const mirror = readFileSync(new URL('../src/lib/contract.gen.ts', import.meta.url), 'utf8');
   // Anywhere in the file, not only at the start of a line. The mirror declares plenty of small
   // shapes inline, `engine: { package: string; version: string }`, and a line-anchored match reports
   // every one of those as missing. That nearly sent a correct mirror off to be "fixed".
@@ -471,9 +473,7 @@ test('every field in every shipped artifact is named in the TypeScript contract 
     'benchmark.network_width_sweep.published_protocol', 'benchmark.network_width_sweep.published_widths',
     'benchmark.network_width_sweep.leave_one_site_out.hidden',
     'benchmark.network_width_sweep.leave_one_site_out.supports',
-    // ControlBlock is deliberately open: `[key: string]: unknown`. Each control reports the counts
-    // that make sense for the thing it controls, and forcing them into one shape would flatten
-    // what each one measures.
+    // The four controls each report the counts that make sense for the thing it controls (the schema names them).
     'case.controls.*',
   ].map((pattern) => new RegExp('^' + pattern.replace(/\./g, '\.').replace(/\*/g, '[^.]+') + '$'));
 
@@ -497,7 +497,7 @@ test('every field in every shipped artifact is named in the TypeScript contract 
   for (const one of cases) walk(one, ['case']);
   walk(index, ['index']);
 
-  assert.deepEqual([...missing].sort(), [], `fields the mirror never names: ${[...missing].sort().join(', ')}`);
+  assert.deepEqual([...missing].sort(), [], `fields the generated types never name: ${[...missing].sort().join(', ')}`);
 });
 
 test('every fragment size is stated in one unit, whatever its magnitude', () => {

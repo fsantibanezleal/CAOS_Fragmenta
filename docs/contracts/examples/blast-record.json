@@ -1,0 +1,13 @@
+{
+  "blast_id": "En1",
+  "site": "Enusa",
+  "S_over_B": 1.24,
+  "H_over_B": 1.33,
+  "B_over_D": 27.27,
+  "T_over_B": 0.78,
+  "Pf_kg_m3": 0.48,
+  "XB_m": 0.58,
+  "E_GPa": 60.0,
+  "x50_m": 0.37,
+  "group": 1
+}
