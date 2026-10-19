@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "2440c55f52bf4b8fa425f6068a72e13dcf961b8914df03f1b5f6e1661b813820",
+ "digest": "c4fcea5e517a7635c197a9b80a8ba8ee9ada8ed8b1a176c488ebf8a2886eb04f",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1848,7 +1848,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "c76cfd37420dccf0540ce27fc653f14d9239756340a7e7a2df375735f1b38832",
+  "digest": "075e72ee02b6452cb05f57b24878b0d108411eb80737748bcf2241f66a5b8fd8",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -3432,7 +3432,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.07.000",
+  "app_version": "0.08.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
