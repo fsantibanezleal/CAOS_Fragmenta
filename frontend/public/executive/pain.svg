@@ -41,38 +41,39 @@
 <g data-slot="mill-b" transform="translate(752,306)"><rect x="0" y="-44" width="44" height="44" rx="14" fill="var(--color-surface)" stroke="var(--color-fg-subtle)" stroke-width="2.5"/><path d="M 14 -44 V 0 M 30 -44 V 0" stroke="var(--color-border)" stroke-width="2"/></g>
 <path d="M 742 282 H 752" stroke="var(--color-fg-subtle)" stroke-width="4" fill="none"/>
 <path d="M 697 106 V 112" fill="none" stroke="var(--color-fg-subtle)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 222 90 H 338" fill="none" stroke="var(--color-fg-faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
-<path d="M 482 90 H 612" fill="none" stroke="var(--color-fg-faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
-<rect x="94" y="74" width="122" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="155" y="97" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Mine cost</text>
-<text data-lang="es" x="155" y="97" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Costo mina</text>
-<rect x="626" y="74" width="143" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="697" y="97" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Plant cost</text>
-<text data-lang="es" x="697" y="97" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Costo planta</text>
-<rect x="349" y="74" width="122" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-bad)" stroke-width="1.5" stroke-dasharray="5 4"/>
-<text data-lang="en" x="410" y="97" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">No link</text>
-<text data-lang="es" x="410" y="97" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Sin enlace</text>
-<rect x="594" y="212" width="91" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="640" y="235" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Energy</text>
-<text data-lang="es" x="640" y="235" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Energía</text>
-<rect x="692" y="212" width="101" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="742" y="235" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Tonnage</text>
-<text data-lang="es" x="742" y="235" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Tonelaje</text>
-<rect x="114" y="266" width="101" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="165" y="289" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Boulders</text>
-<text data-lang="es" x="165" y="289" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Bolones</text>
-<rect x="265" y="266" width="70" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="300" y="289" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Fines</text>
-<text data-lang="es" x="300" y="289" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Finos</text>
-<rect x="308" y="350" width="184" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="400" y="373" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Trucks wait</text>
-<text data-lang="es" x="400" y="373" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Camiones esperan</text>
-<rect x="532" y="336" width="132" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="598" y="359" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Crusher</text>
-<text data-lang="es" x="598" y="359" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Trituradora</text>
-<rect x="692" y="336" width="91" height="32" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="738" y="359" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Mills</text>
-<text data-lang="es" x="738" y="359" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Molinos</text>
+<path d="M 239 90 H 332" fill="none" stroke="var(--color-fg-faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
+<path d="M 488 90 H 604" fill="none" stroke="var(--color-fg-faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
+<rect x="77" y="73" width="156" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="155" y="98" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Mine cost</text>
+<text data-lang="es" x="155" y="98" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Costo mina</text>
+<rect x="610" y="73" width="174" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="697" y="98" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Plant cost</text>
+<text data-lang="es" x="697" y="98" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Costo planta</text>
+<rect x="338" y="73" width="144" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-bad)" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text data-lang="en" x="410" y="98" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">No link</text>
+<text data-lang="es" x="410" y="98" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Sin enlace</text>
+<rect x="491" y="192" width="112" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="547" y="217" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Energy</text>
+<text data-lang="es" x="547" y="217" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Energía</text>
+<path d="M 603 206 L 619 197" fill="none" stroke="var(--color-fg-subtle)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="671" y="211" width="124" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="733" y="236" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Tonnage</text>
+<text data-lang="es" x="733" y="236" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Tonelaje</text>
+<rect x="102" y="265" width="126" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="165" y="290" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Boulders</text>
+<text data-lang="es" x="165" y="290" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Bolones</text>
+<rect x="258" y="265" width="84" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="300" y="290" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Fines</text>
+<text data-lang="es" x="300" y="290" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Finos</text>
+<rect x="264" y="349" width="244" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="386" y="374" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Trucks wait</text>
+<text data-lang="es" x="386" y="374" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Camiones esperan</text>
+<rect x="517" y="335" width="158" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="596" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Crusher</text>
+<text data-lang="es" x="596" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Trituradora</text>
+<rect x="682" y="335" width="112" height="34" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="738" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Mills</text>
+<text data-lang="es" x="738" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="var(--color-fg)">Molinos</text>
 <path d="M 165 266 V 244" fill="none" stroke="var(--color-fg-subtle)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M 275 266 V 236" fill="none" stroke="var(--color-fg-subtle)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M 468 350 V 300" fill="none" stroke="var(--color-fg-subtle)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
