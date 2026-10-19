@@ -28,7 +28,7 @@
 <path d="M 178 203 V 124 H 361" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/>
 <path d="M 539 124 H 604 V 150" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/>
 <path d="M 60 60 V 144" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
-<path d="M 202 60 V 214" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+<path d="M 202 60 V 124" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 330 60 L 320 130" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 110 116 V 190" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
 <path d="M 548 60 V 156" fill="none" stroke="var(--color-fg-faint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
@@ -39,9 +39,9 @@
 <text data-lang="es" x="60" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Un solo</text>
 <text data-lang="es" x="60" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">sitio</text>
 <rect x="34" y="62" width="153" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="110" y="83" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Untested at</text>
+<text data-lang="en" x="110" y="83" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Unproven at</text>
 <text data-lang="en" x="110" y="109" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">a new mine</text>
-<text data-lang="es" x="110" y="83" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Sin probar en</text>
+<text data-lang="es" x="110" y="83" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Sin validar en</text>
 <text data-lang="es" x="110" y="109" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">otra mina</text>
 <rect x="136" y="4" width="132" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
 <text data-lang="en" x="202" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Varies</text>
@@ -76,10 +76,10 @@
 <text data-lang="en" x="548" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">manager</text>
 <text data-lang="es" x="548" y="25" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Gerente</text>
 <text data-lang="es" x="548" y="51" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">general</text>
-<rect x="661" y="140" width="122" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
-<text data-lang="en" x="722" y="161" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Plant</text>
-<text data-lang="en" x="722" y="187" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">manager</text>
-<text data-lang="es" x="722" y="161" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Gerente de</text>
-<text data-lang="es" x="722" y="187" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">planta</text>
+<rect x="644" y="140" width="152" height="56" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.5"/>
+<text data-lang="en" x="720" y="161" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Concentrator</text>
+<text data-lang="en" x="720" y="187" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">manager</text>
+<text data-lang="es" x="720" y="161" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">Gerente de</text>
+<text data-lang="es" x="720" y="187" text-anchor="middle" font-size="20" font-weight="600" fill="var(--color-fg)">planta</text>
 <rect x="1" y="1" width="798" height="398" rx="12" fill="none" stroke="var(--color-border)" stroke-width="2"/>
 </svg>

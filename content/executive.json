@@ -4,8 +4,8 @@
     "es": "La fragmentación por voladura y la energía de la reducción de tamaño"
   },
   "key_statement": {
-    "en": "The mine decides how finely to break rock at the blast, while the plant pays for that decision in energy and throughput. The direction is one shared decision on fragment size, predicted with a stated uncertainty, tested at a mine the method has not seen, and measured after each blast.",
-    "es": "La mina decide cuán fino romper la roca en la voladura, mientras la planta paga esa decisión en energía y capacidad de procesamiento. El rumbo es una decisión compartida del tamaño de fragmento, pronosticada con incertidumbre declarada, probada en una mina que el método no ha visto y medida tras cada voladura."
+    "en": "The mine decides how finely to break rock at the blast, while the plant pays for that decision in energy and throughput. The direction is one shared decision on fragment size: rock measured before each blast, size forecast and measured after it, and blasts judged on cost per tonne of product.",
+    "es": "La mina decide cuán fino romper la roca en la voladura, mientras la planta paga esa decisión en energía y capacidad de procesamiento. El rumbo es una decisión compartida del tamaño de fragmento: roca medida antes de cada voladura, tamaño pronosticado y medido después, y voladuras juzgadas por costo por tonelada de producto."
   },
   "headline_figures": [
     {
@@ -14,8 +14,8 @@
         "es": "Participación de las plantas concentradoras"
       },
       "value": {
-        "en": "55.2",
-        "es": "55,2"
+        "en": "53.2",
+        "es": "53,2"
       },
       "unit": {
         "en": "percent of the electricity of Chilean copper mining is used in concentrators, in 2023",
@@ -61,12 +61,12 @@
     },
     "paragraphs": [
       {
-        "en": "Blasting is the first step of size reduction, and what it produces is fed to every later step. Drilling and blasting are reported at 12 to 15 percent of total mining costs in 2008, while grinding is the largest energy user. In the equipment breakdown of a United States Department of Energy study, grinding takes 40 percent of mining industry energy use. In Chilean copper mining, concentrators took 55.2 percent of electricity in 2023, up from 42.6 percent in 2001. The same report finds that concentrator electricity per unit of fine copper rose 113.9 percent from 2001 to 2023. It ties this to deeper pits and harder rock that directly affect size reduction by crushing and grinding. The Department of Energy study adds that blasting reduces the size of ore before crushing and grinding, so improving blasting enables savings downstream.",
-        "es": "La voladura es el primer paso de la reducción de tamaño, y lo que produce alimenta cada paso posterior. La perforación y la voladura se informan en 12 a 15 por ciento de los costos totales de la minería en 2008. La molienda, en cambio, es el mayor consumidor de energía. En el desglose por equipos de un estudio del Departamento de Energía de Estados Unidos, la molienda toma 40 por ciento del uso de energía de la industria minera. En la minería chilena del cobre, las plantas concentradoras tomaron 55,2 por ciento de la electricidad en 2023, frente a 42,6 por ciento en 2001. El mismo informe halla que la electricidad de la planta concentradora por unidad de cobre fino subió 113,9 por ciento de 2001 a 2023. Lo atribuye a minas a cielo abierto más profundas y roca más dura, que afectan directamente la reducción de tamaño por trituración y molienda. El estudio del Departamento de Energía agrega que la voladura reduce el tamaño del mineral antes de la trituración y la molienda, así que mejorarla permite ahorros aguas abajo."
+        "en": "Blasting is the first step of size reduction, and what it produces is fed to every later step. Drilling and blasting are reported at 12 to 15 percent of total mining costs in 2008, while grinding is the largest energy user. In the equipment breakdown of a United States Department of Energy study, grinding takes 40 percent of mining industry energy use. In Chilean copper mining, concentrators took 53.2 percent of electricity in 2023, up from 42.6 percent in 2001. The same report finds that concentrator electricity per unit of fine copper rose 113.9 percent from 2001 to 2023. It ties this to ageing mines, deeper deposits and harder rock that directly affect size reduction by crushing and grinding. The Department of Energy study adds that blasting reduces the size of ore before crushing and grinding, so improving blasting enables savings downstream.",
+        "es": "La voladura es el primer paso de la reducción de tamaño, y lo que produce alimenta cada paso posterior. La perforación y la voladura se informan en 12 a 15 por ciento de los costos totales de la minería en 2008. La molienda, en cambio, es el mayor consumidor de energía. En el desglose por equipos de un estudio del Departamento de Energía de Estados Unidos, la molienda toma 40 por ciento del uso de energía de la industria minera. En la minería chilena del cobre, las plantas concentradoras tomaron 53,2 por ciento de la electricidad en 2023, frente a 42,6 por ciento en 2001. El mismo informe halla que la electricidad de la planta concentradora por unidad de cobre fino subió 113,9 por ciento de 2001 a 2023. Lo atribuye al envejecimiento de las minas, a yacimientos más profundos y a roca más dura, que afectan directamente la reducción de tamaño por trituración y molienda. El estudio del Departamento de Energía agrega que la voladura reduce el tamaño del mineral antes de la trituración y la molienda, así que mejorarla permite ahorros aguas abajo."
       },
       {
-        "en": "The effect of blasting on the plant is measurable but depends on the site. Reports give 5 to 20 percent higher concentrator throughput at many operations in 2007. Test blasts at one gold mine in 2003 suggested up to 15 percent higher mill throughput, and left open doubts on dilution, ore loss and wall damage. In a limestone quarry study of 2025, specific charge rose from 0.33 to 0.49 kilograms per cubic metre across seven blasts. Over the same blasts the Bond work index rose from 7.8 to 13.8 kilowatt hours per tonne. The mine side also gains, because finer breakage lets more rock pass the crusher and cuts crushing expense and truck waiting times. The pain is that the decision, how much explosive energy and where, is taken at the blast with little measured knowledge of the rock and of the size produced. Cost and benefit fall on different departments and budgets.",
-        "es": "El efecto de la voladura sobre la planta es medible, pero depende de la operación. Los informes dan 5 a 20 por ciento más de capacidad de procesamiento de la planta concentradora en muchas operaciones en 2007. Pruebas de voladura en una mina de oro en 2003 sugirieron hasta 15 por ciento más de capacidad del molino. Dejaron dudas abiertas sobre dilución, pérdida de mineral y daño a los muros. En un estudio de 2025 en una cantera de caliza, el consumo específico de explosivo subió de 0,33 a 0,49 kilogramos por metro cúbico en siete voladuras. En esas mismas voladuras el índice de trabajo de Bond subió de 7,8 a 13,8 kilovatios hora por tonelada. El lado mina también gana, porque una rotura más fina deja pasar más roca por la trituradora y reduce el gasto de trituración y las esperas de camiones. El problema es que la decisión, cuánta energía explosiva y dónde, se toma con poco conocimiento medido de la roca y del tamaño producido. El costo y el beneficio recaen en departamentos y presupuestos distintos."
+        "en": "The effect of blasting on the plant is measurable but depends on the site. Reports give 5 to 20 percent higher concentrator throughput at many operations in 2007. Test blasts at one gold mine from 2000 to 2002 suggested up to 15 percent higher mill throughput, and left open doubts on dilution, ore loss and wall damage. In a 2025 study of seven limestone quarry blasts, more explosive per cubic metre, from 0.33 to 0.49 kilograms, went with rock that was easier to grind. The Bond work index, the energy needed to grind it, ranged from 7.8 to 13.8 kilowatt hours per tonne and fell as the charge rose. The mine side also gains, because finer breakage lets more rock pass the crusher and cuts crushing expense and truck waiting times. The pain is that the decision, how much explosive energy and where, is taken at the blast with little measured knowledge of the rock and of the size produced. Cost and benefit fall on different departments and budgets.",
+        "es": "El efecto de la voladura sobre la planta es medible, pero depende de la operación. Los informes dan 5 a 20 por ciento más de capacidad de procesamiento de la planta concentradora en muchas operaciones en 2007. Pruebas de voladura en una mina de oro entre 2000 y 2002 sugirieron hasta 15 por ciento más de capacidad del molino. Dejaron dudas abiertas sobre dilución, pérdida de mineral y daño a los muros. En un estudio de 2025 de siete voladuras en una cantera de caliza, más explosivo, de 0,33 a 0,49 kilogramos por metro cúbico, dejó roca más fácil de moler. El índice de trabajo de Bond, la energía necesaria para molerla, varió de 7,8 a 13,8 kilovatios hora por tonelada y bajó al subir la carga. El lado mina también gana, porque una rotura más fina deja pasar más roca por la trituradora y reduce el gasto de trituración y las esperas de camiones. El problema es que la decisión, cuánta energía explosiva y dónde, se toma con poco conocimiento medido de la roca y del tamaño producido. El costo y el beneficio recaen en departamentos y presupuestos distintos."
       }
     ],
     "bearers": [
@@ -76,8 +76,8 @@
           "es": "La planta concentradora"
         },
         "cost": {
-          "en": "Electricity and lost throughput: 55.2 percent of Chilean copper-mining electricity in 2023.",
-          "es": "Electricidad y capacidad perdida: 55,2 por ciento de la electricidad de la minería chilena del cobre en 2023."
+          "en": "Electricity and lost throughput: 53.2 percent of Chilean copper-mining electricity in 2023.",
+          "es": "Electricidad y capacidad perdida: 53,2 por ciento de la electricidad de la minería chilena del cobre en 2023."
         },
         "measure": {
           "en": "Electricity per unit of fine copper, tonnes per hour, Bond work index.",
@@ -109,7 +109,7 @@
         },
         "measure": {
           "en": "Unit cost per tonne blasted and specific charge.",
-          "es": "Costo unitario por tonelada tronada y consumo específico de explosivo."
+          "es": "Costo unitario por tonelada volada y consumo específico de explosivo."
         }
       },
       {
@@ -132,12 +132,12 @@
           "es": "La sociedad y el presupuesto climático"
         },
         "cost": {
-          "en": "Copper mining emitted 14.56 million tonnes of carbon dioxide equivalent in 2022, 44 percent direct and 56 percent from electricity.",
-          "es": "La minería del cobre emitió 14,56 millones de toneladas de dióxido de carbono equivalente en 2022, 44 por ciento directas y 56 por ciento por electricidad."
+          "en": "Chilean copper mining emitted 14.56 million tonnes of carbon dioxide equivalent in 2022, 44 percent direct and 56 percent from electricity.",
+          "es": "La minería chilena del cobre emitió 14,56 millones de toneladas de dióxido de carbono equivalente en 2022, 44 por ciento directas y 56 por ciento por electricidad."
         },
         "measure": {
-          "en": "The national greenhouse gas inventory, direct emissions and emissions from electricity.",
-          "es": "El inventario nacional de gases de efecto invernadero, emisiones directas y por electricidad."
+          "en": "The sector's yearly estimate of direct emissions and emissions from purchased electricity.",
+          "es": "La estimación anual del sector de emisiones directas y por electricidad comprada."
         }
       }
     ],
@@ -167,8 +167,8 @@
           "es": "7,8 a 13,8"
         },
         "unit": {
-          "en": "kilowatt hours per tonne, the Bond work index of samples after seven blasts whose specific charge rose from 0.33 to 0.49 kilograms per cubic metre, in a 2025 study",
-          "es": "kilovatios hora por tonelada, índice de trabajo de Bond de muestras tras siete voladuras con consumo específico de 0,33 a 0,49 kilogramos por metro cúbico, estudio de 2025"
+          "en": "kilowatt hours per tonne, the Bond work index in seven quarry blasts, lower the more explosive was used, from 0.33 to 0.49 kilograms per cubic metre, in a 2025 study",
+          "es": "kilovatios hora por tonelada, índice de trabajo de Bond en siete voladuras de cantera, menor cuanto más explosivo, de 0,33 a 0,49 kilogramos por metro cúbico, estudio de 2025"
         },
         "source": "ongen-bond-2025"
       },
@@ -308,8 +308,8 @@
   },
   "situation": {
     "key_message": {
-      "en": "Five roles each hold a part of the picture, the approaches in use each have a limit, and none yet joins the blast to the plant's result.",
-      "es": "Cinco roles tienen cada uno una parte del cuadro, los enfoques en uso tienen cada uno un límite, y ninguno une aún la voladura con el resultado de la planta."
+      "en": "Five roles each hold part of the picture, every approach in use has a limit, and joint mine-to-plant programmes remain site specific.",
+      "es": "Cinco roles tienen cada uno parte del cuadro, cada enfoque en uso tiene un límite, y los programas conjuntos de mina y planta dependen de cada operación."
     },
     "roles": [
       {
@@ -385,7 +385,7 @@
     ],
     "interaction": {
       "en": "The blast engineer sets energy and pattern against drilling cost, the mine delivers the muckpile as it falls, and the plant receives it, each judged on its own indicators.",
-      "es": "El ingeniero de voladura fija energía y malla según el costo, la mina entrega la pila como queda y la planta la recibe, cada uno con sus propios indicadores."
+      "es": "El ingeniero de voladura fija energía y malla según el costo de perforación, la mina entrega la pila como queda y la planta la recibe, cada uno con sus indicadores."
     },
     "state_of_the_art": [
       {
@@ -409,8 +409,8 @@
           "es": "Programas integrados de la mina a la planta"
         },
         "achieves": {
-          "en": "Up to 15 percent higher mill throughput in 2003 test blasts at one gold mine.",
-          "es": "Hasta 15 por ciento más de capacidad del molino en pruebas de 2003 en una mina de oro."
+          "en": "Up to 15 percent higher mill throughput in 2000 to 2002 test blasts at one gold mine.",
+          "es": "Hasta 15 por ciento más de capacidad del molino en pruebas de 2000 a 2002 en una mina de oro."
         },
         "falls_short": {
           "en": "Gains are site specific; doubts remained on dilution, ore loss and wall damage, and economic effects went untracked.",
@@ -424,8 +424,8 @@
           "es": "Medición de tamaño de fragmento por imágenes"
         },
         "achieves": {
-          "en": "A size distribution in minutes, not by sieving; four commercial systems were tested blind on ten photographs.",
-          "es": "Una distribución de tamaños en minutos y no por tamizado; cuatro sistemas comerciales se probaron a ciegas con diez fotografías."
+          "en": "A size distribution from photographs instead of sieving; four commercial systems were tested blind on ten photographs.",
+          "es": "Una distribución de tamaños a partir de fotografías en lugar de tamizado; cuatro sistemas comerciales se probaron a ciegas con diez fotografías."
         },
         "falls_short": {
           "en": "In 2003 controlled tests the systems were accurate in some cases and inaccurate in others.",
@@ -443,8 +443,8 @@
           "es": "Un factor de roca a partir de datos de la perforadora clasifica estructura y resistencia, verificado en 302 barrenos de 26 voladuras."
         },
         "falls_short": {
-          "en": "It gives a rock class, not a fragment size, and was checked at one site.",
-          "es": "Entrega una clase de roca y no un tamaño de fragmento, y se verificó en una sola operación."
+          "en": "It gives a rock class, not a fragment size, and is not shown at other mines.",
+          "es": "Entrega una clase de roca y no un tamaño de fragmento, y el estudio no la muestra en otras minas."
         },
         "source": "navarro-drill-monitoring-2021"
       },
@@ -486,8 +486,8 @@
   },
   "trends": {
     "key_message": {
-      "en": "Energy rules, harder ore and growing measurement make a shared decision on fragment size more urgent, first for the concentrator manager and the site general manager.",
-      "es": "Las reglas de energía, el mineral más duro y la medición creciente vuelven urgente una decisión compartida de tamaño, primero para el gerente de planta concentradora y el gerente general."
+      "en": "Energy rules now, and harder ore and rising electricity within ten years, make a shared size decision urgent, first for the concentrator manager and the site general manager.",
+      "es": "Las reglas de energía vigentes y, en diez años, el mineral más duro y más electricidad urgen decidir el tamaño en conjunto, primero en planta concentradora y gerencia general."
     },
     "items": [
       {
@@ -543,7 +543,7 @@
         "signal": {
           "statement": {
             "en": "Chilean copper-mining electricity is projected to grow 31.4 percent against 20.7 percent for production from 2023 to 2034, with concentration at 58.9 percent of the sector in 2034.",
-            "es": "La electricidad de la minería del cobre crecería 31,4 por ciento hasta 2034 frente a 20,7 por ciento de la producción, y la concentración sería 58,9 por ciento del sector."
+            "es": "La electricidad de la minería chilena del cobre crecería 31,4 por ciento de 2023 a 2034, frente a 20,7 de la producción, y la concentración llegaría a 58,9 por ciento."
           },
           "source": "cochilco-electricity-2034"
         },
@@ -555,8 +555,8 @@
       },
       {
         "trend": {
-          "en": "Per-blast measurement and learned predictors become available",
-          "es": "La medición por voladura y los predictores aprendidos pasan a estar disponibles"
+          "en": "Learned predictors of fragment size spread",
+          "es": "Se extienden los predictores aprendidos del tamaño de fragmento"
         },
         "kind": "technological",
         "direction": "rising",
@@ -569,8 +569,8 @@
           "source": "chen-fragmentation-2025"
         },
         "effect": {
-          "en": "The geologist and the blast engineer get per-blast inputs from drill data, and the concentrator manager gets a forecast of feed size.",
-          "es": "El geólogo y el ingeniero de voladura obtienen insumos por voladura de la perforación, y el gerente de planta concentradora un pronóstico del tamaño de alimentación."
+          "en": "The blast engineer gets a forecast of fragment size and the concentrator manager a forecast of feed size, both not yet shown to hold at other sites.",
+          "es": "El ingeniero de voladura obtiene un pronóstico del tamaño de fragmento y el gerente de planta concentradora uno del tamaño de alimentación, ambos aún sin mostrar en otras operaciones."
         },
         "confidence": "low"
       },
@@ -584,8 +584,8 @@
         "horizon": "two_years",
         "signal": {
           "statement": {
-            "en": "A 2014 paper reports that companies hire fragmentation engineers and superintendents and that some move toward a mine-to-mill organisation.",
-            "es": "Un artículo de 2014 informa que las empresas contratan ingenieros y superintendentes de fragmentación y que algunas avanzan hacia una organización de la mina a la planta."
+            "en": "A 2014 paper reports that some companies have created fragmentation engineer and superintendent roles, and proposes mine-to-mill programmes as the next step.",
+            "es": "Un artículo de 2014 informa que algunas empresas crearon cargos de ingeniero y superintendente de fragmentación, y propone programas de la mina a la planta como paso siguiente."
           },
           "source": "cebrian-management-2014"
         },
@@ -600,12 +600,12 @@
   "proposal": {
     "key_message": {
       "en": "Treat fragment size as one decision shared by mine and plant, starting with the blast engineer keeping one record per blast that joins design, rock, execution and measured size.",
-      "es": "Tratar el tamaño de fragmento como decisión compartida de mina y planta, empezando por un registro por voladura que el ingeniero une con diseño, roca, ejecución y tamaño medido."
+      "es": "Tratar el tamaño de fragmento como decisión compartida de mina y planta, empezando por el ingeniero de voladura con un registro por voladura de diseño, roca, ejecución y tamaño medido."
     },
     "paragraphs": [
       {
         "en": "Treat the size of the blasted rock as one decision shared by the mine and the plant, not as an output of the blast alone. Measure the rock at blast scale, which answers the first cause, and forecast fragment size with a stated uncertainty.",
-        "es": "Tratar el tamaño de la roca tronada como una decisión compartida por la mina y la planta, y no como un producto solo de la voladura. Medir la roca a escala de voladura, lo que responde a la primera causa, y pronosticar el tamaño de fragmento con una incertidumbre declarada."
+        "es": "Tratar el tamaño de la roca volada como una decisión compartida por la mina y la planta, y no como un producto solo de la voladura. Medir la roca a escala de voladura, lo que responde a la primera causa, y pronosticar el tamaño de fragmento con una incertidumbre declarada."
       },
       {
         "en": "Test the forecast at a mine the method has not seen, which answers the weak prediction. Measure the size actually produced and give it back to the blast, record the execution of each blast, and judge the blast on the cost per tonne of final product.",
@@ -629,8 +629,8 @@
           "es": "Contexto"
         },
         "applies": {
-          "en": "Predictions carry the meaning of the blast, such as rock domain and mill feed target, so the blast engineer and the plant manager read the same figure.",
-          "es": "Las predicciones llevan el significado de la voladura, como el dominio de roca y la meta de alimentación, para que ingeniero y gerente de planta lean la misma cifra."
+          "en": "Predictions carry the meaning of the blast, such as rock domain and mill feed target, so the blast engineer and the concentrator manager read the same figure.",
+          "es": "Las predicciones llevan el sentido de la voladura, como dominio de roca y meta de alimentación, para que ingeniero de voladura y gerente de planta lean la misma cifra."
         }
       },
       {
@@ -775,7 +775,7 @@
       },
       {
         "en": "Measurement bias in image systems may mislead a feedback loop that returns size to the blast.",
-        "es": "El sesgo de medición de los sistemas de imágenes puede inducir a error un ciclo de retroalimentación que devuelve el tamaño a la voladura."
+        "es": "El sesgo de medición de los sistemas de imágenes puede inducir a error a un ciclo de retroalimentación que devuelve el tamaño a la voladura."
       },
       {
         "en": "A joint indicator can be gamed or ignored if the budgets of mine and plant stay separate.",
@@ -837,8 +837,8 @@
       },
       "url": "https://www.cochilco.cl/web/download/816/2024/13426/informe-de-consumo-de-energia-al-2023.pdf",
       "note": {
-        "en": "Figures are for Chilean copper mining; the concentrator figures are in the sections on consumption by process and unit consumption.",
-        "es": "Las cifras son de la minería chilena del cobre; las de las plantas concentradoras están en las secciones sobre consumo por procesos y consumos unitarios."
+        "en": "Figures are for Chilean copper mining; the report prints the concentrator share as 53.2 percent on page 5 and 55.2 percent on page 22, and its totals give 53.2.",
+        "es": "Cifras de la minería chilena del cobre; el informe da 53,2 por ciento para la concentradora en la página 5 y 55,2 en la 22, y sus totales dan 53,2."
       }
     },
     {
