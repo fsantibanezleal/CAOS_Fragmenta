@@ -1,0 +1,10 @@
+# Validation: the synthetic cases are not circular
+
+Each requirement of [`requirements.md`](requirements.md) has one row: what is planted in a throwaway copy of the committed tree, which gate finds it, and the adversarial test that plants it (ADR-0075, the template's design guard check 4). The test runs the requirement's own gate on the planted copy and asserts that it fails with a message naming the plant; the same gates pass on the clean copy (`test_every_pipeline_gate_passes_on_the_clean_copy`). The plants never write into the real tree and never bake (ADR-0074). The whole module skips where the engine is absent (CI's checks job installs only pytest), a precondition and not a gap: a clone with the pinned stack runs it.
+
+| requirement | adversarial check | gate |
+|---|---|---|
+| NC-001 | A synthetic design (synth-ibsd-capped) carries a measured size on its first blast: the no-measured-size test fails naming the case. | `tests/adversarial/test_adv_pipeline.py::test_nc001_a_synthetic_design_with_a_measured_size` |
+| NC-002 | A synthetic blast (SB01) is appended to the benchmark's corpus rows: the benchmark-membership test fails on `corpus_rows`. | `tests/adversarial/test_adv_pipeline.py::test_nc002_a_synthetic_blast_in_the_benchmark_rows` |
+| NC-003 | The synthetic blast builder asks the published regression for a prediction: the independence test, which disables every arm's prediction, fails with the message that a synthetic design asked an arm for one. | `tests/adversarial/test_adv_pipeline.py::test_nc003_a_synthetic_design_that_asks_an_arm_for_a_prediction` |
+| NC-004 | The oracle truth is scaled by 1.1 so it is no longer the published regression's output (gate fails on the truth); a second plant removes the case's statement that it tests the harness (gate fails on that phrase). | `tests/adversarial/test_adv_pipeline.py::test_nc004_a_positive_control_whose_truth_is_not_the_published_regressions_output`, `tests/adversarial/test_adv_pipeline.py::test_nc004_a_positive_control_that_no_longer_says_it_tests_the_harness` |
