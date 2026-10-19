@@ -2,6 +2,66 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.08.000] - 2026-10-19
+
+Fragmenta moves onto the current base: `@fasl-work/caos-app-shell` 0.15.0 pinned exactly, on the template 0.08.002. The
+product now lands on the Introduction's executive view, a frame of the industry problem around blast fragmentation for a
+decision maker, researched at primary sources and reviewed before release; the App moves to `/app` with the shell's
+Focus mode. The five documentation pages are rebuilt by the areas the base measures, every committed document has a
+contract with its schema, and every reason the bake writes reads in English and in Spanish. The engine is still
+`blastfrag==0.4.0`; the re-bake changed none of the 423,793 numbers of the 46 committed documents: only the version stamps and the digests over them. (#33)
+
+### Added
+
+- The executive view (`content/executive.json`, rendered by the shell's `ExecutiveView`): the problem of blast
+  fragmentation in hard-rock mining in five sub-tabs (the pain, the context, the current situation, the trends, the
+  proposal with the 4 C's), three headline figures and 14 linked sources, in English and Spanish, with three drawn
+  scenes of the blast-to-mill chain (the pain animated, with its reduced-motion block; every label readable at 9 px on a
+  phone). Researched from primary sources
+  (Cochilco, the United States Department of Energy, the International Energy Agency, Chile's mining ministry and
+  peer-reviewed and conference papers) and read by a release reviewer against the standard: two figures that
+  contradicted their sources were corrected at the source before release (the concentrators' share of Chilean
+  copper-mining electricity is 53.2 percent; in the 2025 quarry study the Bond work index fell as the charge rose).
+- The contract catalog of ADR-0080 (`docs/contracts/catalog.md`): eight rows (`blast-record`, `case-index`,
+  `case-manifest`, `case-artifact`, `models-file`, `benchmark`, `readiness`, `api`), one JSON Schema 2020-12 file per
+  document, the versions lock, a provider tree and the examples. Every writer of a catalog document validates it before
+  writing; the web's types are generated from the schemas and the build stops when they are not current; producer,
+  consumer and swap tests on both sides.
+- The readiness document (`data/derived/readiness.json`, written by `python data-pipeline/run.py readiness`): six
+  declared states per catalog row, shown by the views and the readiness table on Implementation; a partial build is
+  accepted only for what the document declares absent.
+- The template's design and contract guards, verbatim (`check_sdd`, `check_tech_matrix`, `check_contracts`,
+  `check_contract_versions`, `check_documents`, `check_readiness`, `check_skeleton`, `check_doc_paths`,
+  `check_svg_animation`), and the planted-defect suite (`tests/adversarial/`): every guard CI runs rejects a defect
+  planted in a temporary copy.
+- The design document in the template's sections (the executive brief, the research basis with its sources, sizing and
+  contracts, technology and versions, resources) and the feature folder of this release. `check_sdd` passes on 106 live
+  requirements, each with a real gate and an adversarial validation row: a test under `tests/adversarial/` that plants the
+  defect the requirement forbids in a throwaway copy and shows its own gate fail on it (the ones that need node, a build
+  or a browser are local-only, said in their rows).
+- `docs/design/measured-resources.md`: the bake (677.5 s, 258 MB peak), the tests, the web install and build, and the
+  deploy payload, each with its command and output.
+
+### Changed
+
+- Routes: the shell's standard routes, App first. The root lands on the Introduction's executive view, the App is at
+  `/app`, and old links (`/?case=...`, `/focus/<case>`) are forwarded. Focus mode is the shell's (`?focus=1`), in place of
+  the product's own focus page; the gate always requires it.
+- The documentation pages on the shell's `DocPage` and `DocSection`, each at the areas ADR-0017 section 2.1 measures:
+  the Introduction as two views (executive first, the technical view at its five areas); Methodology as six method
+  families, two learned; Implementation as twelve topics in four groups; Experiments as eight topics in two groups, with
+  the protocols and the forbidden leakage pattern drawn; Benchmark at its six areas, with a live panel.
+- Every reason the bake writes (an arm's abstention, a case's score note, a blast's geometry and degenerate-design
+  reasons) is an English and Spanish pair through one reason catalogue in the pipeline; an engine reason the catalogue
+  does not know stops the bake. `case-artifact` and `benchmark` move to 2.0.0. (BL-039)
+- The citations split one file per page; the product browser gate opens every top-level tab and every sub-tab under it;
+  the architecture modal describes the 0.08.000 product.
+
+### Fixed
+
+- A line chart's axes read in the interface language when the view passes no format (they followed the browser's
+  locale, so an English page on a Spanish machine showed decimal commas).
+
 ## [0.07.000] - 2026-10-05
 
 The App moves onto the shared base: one `CaseWorkbench` of `@fasl-work/caos-app-shell`, pinned to 0.10.0

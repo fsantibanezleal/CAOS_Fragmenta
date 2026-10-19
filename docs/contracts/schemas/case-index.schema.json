@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "case-index.schema.json",
+  "title": "CaseIndex",
+  "description": "Contract 2 (artifact), catalog row case-index 1.0.0: the flat inventory of every baked case, the benchmark and the models files, written by data-pipeline/pipeline/pipeline.py bake_all to data/derived/manifests/index.json. Rules the schema cannot state, checked by tests/contracts/test_documents.py: n_cases equals the number of entries, the entries are sorted by case_id and unique, every path exists and its bytes and digest match the file. app_version is the product that baked the index (compared with VERSION by readiness); engine_version is the pinned blastfrag.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "app_version",
+    "engine_version",
+    "corpus_digest",
+    "n_cases",
+    "cases",
+    "models"
+  ],
+  "properties": {
+    "schema": {
+      "const": "fragmenta.index/v1"
+    },
+    "app_version": {
+      "$ref": "#/$defs/version"
+    },
+    "engine_version": {
+      "$ref": "#/$defs/version"
+    },
+    "corpus_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "n_cases": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/indexEntry"
+      },
+      "minItems": 1
+    },
+    "benchmark": {
+      "type": "object",
+      "description": "Present when the bake ran the benchmark.",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "bytes",
+        "digest",
+        "verdict"
+      ],
+      "properties": {
+        "path": {
+          "const": "benchmark.json"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "verdict": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scope",
+          "path",
+          "bytes",
+          "digest",
+          "arms"
+        ],
+        "properties": {
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^models/[^/\\\\]+\\.json$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "digest": {
+            "$ref": "#/$defs/sha256"
+          },
+          "arms": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "indexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "category",
+        "real_or_synthetic",
+        "site",
+        "title",
+        "manifest_path",
+        "artifact_path",
+        "lane",
+        "bytes",
+        "digest",
+        "controls_passed"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "category": {
+          "$ref": "#/$defs/category"
+        },
+        "real_or_synthetic": {
+          "$ref": "#/$defs/realOrSynthetic"
+        },
+        "site": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "manifest_path": {
+          "type": "string",
+          "pattern": "^manifests/[^/\\\\]+\\.json$"
+        },
+        "artifact_path": {
+          "type": "string",
+          "pattern": "^[^/\\\\]+/case\\.json$"
+        },
+        "lane": {
+          "$ref": "#/$defs/lane"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "controls_passed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "description": "Every reader-facing string is bilingual at the source.",
+      "additionalProperties": false,
+      "required": [
+        "en",
+        "es"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "es": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{2}\\.\\d{3}$",
+      "description": "A version in the product format X.XX.XXX."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 hex digest."
+    },
+    "category": {
+      "enum": [
+        "real-campaign",
+        "extrapolation-control",
+        "parameter-sweep",
+        "structural-control",
+        "negative-control",
+        "positive-control"
+      ]
+    },
+    "realOrSynthetic": {
+      "enum": [
+        "real",
+        "synthetic"
+      ]
+    },
+    "lane": {
+      "enum": [
+        "live",
+        "precompute"
+      ]
+    }
+  }
+}

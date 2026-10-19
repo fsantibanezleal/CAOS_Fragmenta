@@ -1,11 +1,11 @@
-import { AppShell, applyTheme, CitationsProvider, readTheme, type ShellConfig } from '@fasl-work/caos-app-shell';
+import { AppShell, applyTheme, CitationsProvider, Landing, readTheme, STANDARD_ROUTES, type ShellConfig } from '@fasl-work/caos-app-shell';
 import '@fasl-work/caos-app-shell/styles.css';
 // The shell's chart (the parity plot) is sized by its own stylesheet: without it the plot has no height.
 import '@fasl-work/caos-app-shell/chart.css';
 import { Hammer } from 'lucide-react';
-import { StrictMode } from 'react';
+import { StrictMode, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router';
 
 import './fragmenta.css';
 import { architecture } from './architecture';
@@ -13,24 +13,18 @@ import { CITATIONS } from './data/citations';
 import { APP_VERSION } from './lib/artifacts';
 import Benchmark from './pages/Benchmark';
 import Experiments from './pages/Experiments';
-import Focus from './pages/Focus';
 import Implementation from './pages/Implementation';
 import Introduction from './pages/Introduction';
 import Methodology from './pages/Methodology';
+import { focusForwardTarget, ROUTE_TABLE, type PageName } from './routes';
 import Workbench from './workbench/Workbench';
 
 applyTheme(readTheme());
 
 const config: ShellConfig = {
   product: { name: 'Fragmenta', mark: <Hammer size={18} aria-hidden="true" /> },
-  routes: [
-    { path: '/', en: 'App', es: 'App' },
-    { path: '/introduction', en: 'Introduction', es: 'Introducción' },
-    { path: '/methodology', en: 'Methodology', es: 'Metodología' },
-    { path: '/implementation', en: 'Implementation', es: 'Implementación' },
-    { path: '/experiments', en: 'Experiments', es: 'Experimentos' },
-    { path: '/benchmark', en: 'Benchmark', es: 'Benchmark' },
-  ],
+  // The shell's order: App, Introduction, Methodology, Implementation, Experiments, Benchmark (shell 0.13.1).
+  routes: STANDARD_ROUTES,
   links: { github: 'https://github.com/fsantibanezleal/CAOS_Fragmenta' },
   version: APP_VERSION,
   build: __BUILD_ID__,
@@ -62,32 +56,36 @@ const config: ShellConfig = {
   },
 };
 
+/** An old `/focus/<caseId>` link: the App on that case in the shell's Focus mode (see routes.ts). */
+function FocusForward() {
+  const { caseId = '' } = useParams<{ caseId: string }>();
+  return <Navigate to={focusForwardTarget(caseId)} replace />;
+}
+
+// The Introduction is the landing: `/` and every unknown path render <Landing />, which opens /introduction and forwards
+// an old App link such as /?case=B2 to /app?case=B2. The path table is routes.ts.
+const ELEMENT: Record<PageName, ReactNode> = {
+  landing: <Landing />,
+  app: <Workbench />,
+  introduction: <Introduction />,
+  methodology: <Methodology />,
+  implementation: <Implementation />,
+  experiments: <Experiments />,
+  benchmark: <Benchmark />,
+  'focus-forward': <FocusForward />,
+};
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <CitationsProvider items={CITATIONS}>
-        <Routes>
-          {/* The focus view renders OUTSIDE the shell. The header and footer are exactly the chrome
-              a focus view exists to escape, so it cannot be a child of AppShell. */}
-          <Route path="/focus/:caseId" element={<Focus />} />
-          <Route
-            path="*"
-            element={
-              <AppShell config={config}>
-                <Routes>
-                  <Route path="/" element={<Workbench />} />
-                  <Route path="/app" element={<Workbench />} />
-                  <Route path="/introduction" element={<Introduction />} />
-                  <Route path="/methodology" element={<Methodology />} />
-                  <Route path="/implementation" element={<Implementation />} />
-                  <Route path="/experiments" element={<Experiments />} />
-                  <Route path="/benchmark" element={<Benchmark />} />
-                  <Route path="*" element={<Workbench />} />
-                </Routes>
-              </AppShell>
-            }
-          />
-        </Routes>
+        <AppShell config={config}>
+          <Routes>
+            {ROUTE_TABLE.map((r) => (
+              <Route key={r.path} path={r.path} element={ELEMENT[r.page]} />
+            ))}
+          </Routes>
+        </AppShell>
       </CitationsProvider>
     </BrowserRouter>
   </StrictMode>,

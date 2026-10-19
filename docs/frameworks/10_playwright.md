@@ -1,7 +1,7 @@
 # 10 · Playwright
 
-The browser automation behind the release's browser gate (`frontend/gates/browser-gate.mjs`) and the
-export of the documentation figures into this wiki (`frontend/gates/export-figures.mjs`), version 1.56.
+The browser automation behind the release's browser gate (`frontend/scripts/browser-gate.mjs`) and the
+export of the documentation figures into this wiki (`frontend/scripts/export-figures.mjs`), version 1.56.
 
 | | |
 |---|---|

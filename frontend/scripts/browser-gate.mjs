@@ -38,9 +38,9 @@
 //
 // Usage:
 //   npm run build && npx vite preview --port 4173 &
-//   node gates/browser-gate.mjs --url http://localhost:4173
-//   node gates/browser-gate.mjs --url https://fragmenta.fasl-work.com --shots ./out
-//   GATE_FONTS=dejavu node gates/browser-gate.mjs --url http://localhost:4173   (the runner's fonts)
+//   node scripts/browser-gate.mjs --url http://localhost:4173
+//   node scripts/browser-gate.mjs --url https://fragmenta.fasl-work.com --shots ./out
+//   GATE_FONTS=dejavu node scripts/browser-gate.mjs --url http://localhost:4173   (the runner's fonts)
 import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright';
 
@@ -62,8 +62,13 @@ if (SHOTS) mkdirSync(SHOTS, { recursive: true });
 // answers /benchmark directly with no redirect, so the base URL stays at the root, the relative
 // path resolves correctly and the bug is invisible until it is in production. It was: the site
 // 404ed its data on every route except the landing page while every local check passed.
+//
+// Since 0.08.000 (shell 0.15.0) the App is at /app and the root is the landing: it opens the Introduction. The root
+// is walked for that redirect (and the page it lands on), the App for everything it was measured on at the root.
 const ROUTES = [
   '/',
+  '/app',
+  '/app/',
   '/introduction',
   '/introduction/',
   '/methodology/',
@@ -73,6 +78,9 @@ const ROUTES = [
   '/benchmark',
   '/benchmark/',
 ];
+// An old link of the product, and where it has to arrive (0.08.000): the root with a query is the old App link, and
+// /focus/<id> was the product's own focus page, now the shell's Focus mode on the App.
+const LEGACY_CASE = 'real-murgul';
 const TABS = ['predict', 'distribution', 'design', 'rock', 'compare', 'context'];
 // ADR-0071 rule 8 (the drawn views cover half the viewport) is measured by the base's own gate, caos-shell-gate G6,
 // through frontend/scripts/gate.mjs. Until 0.07.000 this gate held the largest single drawing to 0.25 of the
@@ -490,7 +498,21 @@ for (const [w, h] of VIEWPORTS) {
         // Shell known defect 1: the document cannot scroll. Measured the way the defect record says,
         // with the content height taken through <body> as well, because the defect is precisely what
         // pins documentElement.scrollHeight to the viewport and makes a tall page look like it fits.
-        if (route !== '/' && route !== '/app') {
+        const isLanding = route === '/';
+        const isApp = route.startsWith('/app');
+        if (isLanding) {
+          // The landing: the root opens the Introduction (shell Landing), and the header order puts the App first.
+          const here = new URL(page.url()).pathname.replace(/\/$/, '');
+          if (here !== '/introduction') fail(where, `the root opened ${here || '/'}, not /introduction`);
+          else pass(`${where} landing`, 'the root opens the Introduction');
+          const order = await page.evaluate(() =>
+            [...document.querySelectorAll('header nav a')].map((a) => new URL(a.href).pathname.replace(/\/$/, '')),
+          );
+          const want = ['/app', '/introduction', '/methodology', '/implementation', '/experiments', '/benchmark'];
+          if (order.join() !== want.join()) fail(where, `the header order is ${order.join(' ')}, not ${want.join(' ')}`);
+          else pass(`${where} header order`, 'App, Introduction, Methodology, Implementation, Experiments, Benchmark');
+        }
+        if (!isLanding && !isApp) {
           const scroll = await page.evaluate(() => {
             const content = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
             const tall = content > window.innerHeight + 2;
@@ -527,7 +549,7 @@ for (const [w, h] of VIEWPORTS) {
         if (info.mixedUnits.length) fail(where, `a size column mixes units: ${info.mixedUnits.join(' | ')}`);
         if (info.repeatedTicks.length) fail(where, `an axis repeats its labels: ${info.repeatedTicks.join(' | ')}`);
 
-        if (route === '/' || route === '/app') {
+        if (isApp) {
           // The App route is locked to the viewport, so NOTHING may scroll the page itself.
           if (info.bodyOverflowY > 2) fail(where, `the App route scrolls the page by ${info.bodyOverflowY}px`);
           if (info.railControlsBelowFold === null) fail(where, 'the rail has no controls to check');
@@ -556,7 +578,8 @@ for (const [w, h] of VIEWPORTS) {
         // Documentation routes at the reading width: the footer is one line, and every sub-tab is
         // opened and every figure in it measured. Figures scale with their viewBox, so their text
         // geometry does not depend on the viewport; one width is enough.
-        const isDoc = route !== '/' && route !== '/app';
+        // The root is the Introduction again (checked as /introduction), so only the other routes are swept.
+        const isDoc = !isLanding && !isApp;
         if (isDoc && w === 1600) {
           const footer = await footerLines(page);
           if (!footer) fail(where, 'no footer');
@@ -564,8 +587,18 @@ for (const [w, h] of VIEWPORTS) {
           else if (footer.dangling.length) fail(where, `a footer separator stands alone: ${footer.dangling.join(' | ')}`);
           else pass(`${where} footer`, `one row, ${footer.height}px, every separator between two items`);
 
-          const subtabs = page.locator('.subtabs-vertical .subtablist [role="tab"]');
-          const count = await subtabs.count();
+          // A page's topics are the top-level tabs (`Tabs`, or the groups of `TabGroups`), each holding a sub-tab list or
+          // one panel; the Introduction's two views are top-level tabs too. Every top-level tab is opened, then every
+          // sub-tab visible under it, so no group or view is skipped (0.08.000: the walk opened only the first group).
+          const tops = await page.evaluate(() => {
+            const top = [...document.querySelectorAll('.tabs')].find((el) => !el.parentElement?.closest('.tabs, .subtabs'));
+            const list = top?.querySelector(':scope > .tablist');
+            if (!list) return 0;
+            list.setAttribute('data-gate-top', '');
+            return list.querySelectorAll(':scope > [role="tab"]').length;
+          });
+          const subtabs = page.locator('.subtabs .subtablist [role="tab"]:visible');
+          let count = 0;
           const seen = [];
           let sweepChecked = false;
           const doTab = async (label) => {
@@ -605,23 +638,75 @@ for (const [w, h] of VIEWPORTS) {
               await page.screenshot({ path: `${SHOTS}/${name}`, fullPage: true });
             }
           };
-          if (!count) {
-            await doTab('page');
-          }
-          for (let i = 0; i < count; i += 1) {
-            const tab = subtabs.nth(i);
-            const label = ((await tab.textContent()) || `tab ${i + 1}`).trim();
-            await tab.click();
+          const walkSubtabs = async (prefix) => {
+            const n = await subtabs.count();
+            if (!n) {
+              count += 1;
+              await doTab(prefix || 'page');
+              return;
+            }
+            for (let i = 0; i < n; i += 1) {
+              const tab = subtabs.nth(i);
+              const label = `${prefix ? `${prefix} / ` : ''}${((await tab.textContent()) || `tab ${i + 1}`).trim()}`;
+              await tab.click();
+              await page.waitForTimeout(500);
+              if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
+              count += 1;
+              await doTab(label);
+            }
+          };
+          if (!tops) await walkSubtabs('');
+          for (let t = 0; t < tops; t += 1) {
+            const top = page.locator('[data-gate-top] > [role="tab"]').nth(t);
+            const topLabel = ((await top.textContent()) || `view ${t + 1}`).trim();
+            await top.click();
             await page.waitForTimeout(500);
-            if ((await tab.getAttribute('aria-selected')) !== 'true') fail(`${where} ${label}`, 'the sub-tab did not open on a click');
-            await doTab(label);
+            if ((await top.getAttribute('aria-selected')) !== 'true') fail(`${where} ${topLabel}`, 'the tab did not open on a click');
+            await walkSubtabs(topLabel);
           }
           // A renamed sub-tab must not skip the check silently.
           if (route.startsWith('/benchmark') && !sweepChecked)
             fail(where, 'no sub-tab named "Published reproductions" ("Reproducciones publicadas") to check the width sweep on');
-          pass(`${where} figures`, `${count || 1} sections, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
+          pass(`${where} figures`, `${count} panels, ${seen.reduce((a, b) => a + b, 0)} figures measured`);
           problems.length = 0;
         }
+      }
+
+      // The product's old links still arrive (0.08.000), once per theme and language at 1280 px.
+      if (w === 1280) {
+        const legacy = async (label, path, expect) => {
+          const where = `${w}x${h} ${theme} ${lang} legacy ${label}`;
+          problems.length = 0;
+          await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 60000 });
+          await page.waitForTimeout(1200);
+          const url = new URL(page.url());
+          const got = await page.evaluate(() => ({
+            workbenchCase: document.querySelector('[data-case-workbench]')?.getAttribute('data-case') ?? null,
+            focus: !!document.querySelector('[data-focus-shell]'),
+            group: document.querySelector('[data-focus-group]')?.getAttribute('data-focus-group') ?? null,
+            error: !!document.querySelector('.fr-error'),
+          }));
+          const bad = expect(url, got);
+          if (bad) fail(where, bad);
+          else pass(where, `${path} arrives as ${url.pathname}${url.search}`);
+        };
+        await legacy('app link', `/?case=${LEGACY_CASE}`, (u, g) =>
+          u.pathname.replace(/\/$/, '') !== '/app' || u.searchParams.get('case') !== LEGACY_CASE
+            ? `arrived at ${u.pathname}${u.search}, not the App on ${LEGACY_CASE}`
+            : g.focus
+              ? 'the App link opened Focus mode'
+              : g.workbenchCase !== LEGACY_CASE ? `the workbench shows ${g.workbenchCase}, not ${LEGACY_CASE}` : null,
+        );
+        await legacy('focus link', `/focus/${LEGACY_CASE}`, (u, g) =>
+          u.pathname.replace(/\/$/, '') !== '/app' || u.searchParams.get('case') !== LEGACY_CASE || u.searchParams.get('focus') !== '1'
+            ? `arrived at ${u.pathname}${u.search}, not /app?case=${LEGACY_CASE}&focus=1`
+            : !g.focus
+              ? 'the App did not open in Focus mode'
+              : g.workbenchCase !== LEGACY_CASE ? `Focus shows ${g.workbenchCase}, not ${LEGACY_CASE}` : g.group !== 'predict' ? `Focus opened the ${g.group} group, not predict` : null,
+        );
+        await legacy('unknown case', '/?case=no-such-case', (u, g) =>
+          u.pathname.replace(/\/$/, '') !== '/app' ? `arrived at ${u.pathname}, not /app` : !g.error ? 'an unknown case shows no error state' : null,
+        );
       }
 
       // The architecture modal, once per theme and language at the reading width.
@@ -657,7 +742,7 @@ for (const [w, h] of VIEWPORTS) {
 
       // The workbench, tab by tab. A route that renders is not the same as a route that works.
       problems.length = 0;
-      await page.goto(BASE + '/', { waitUntil: 'networkidle', timeout: 60000 });
+      await page.goto(BASE + '/app', { waitUntil: 'networkidle', timeout: 60000 });
       await page.waitForTimeout(1200);
       const groupTabs = page.locator('[data-instrument] [role="tablist"]').first().locator('[role="tab"]');
       const groupCount = await groupTabs.count();
@@ -814,7 +899,7 @@ for (const [w, h] of [
       });
     }
     const page = await context.newPage();
-    await page.goto(BASE + '/', { waitUntil: 'networkidle', timeout: 60000 });
+    await page.goto(BASE + '/app', { waitUntil: 'networkidle', timeout: 60000 });
     await page.waitForTimeout(1200);
     const groupTabs = page.locator('[data-instrument] [role="tablist"]').first().locator('[role="tab"]');
     const groupCount = await groupTabs.count();

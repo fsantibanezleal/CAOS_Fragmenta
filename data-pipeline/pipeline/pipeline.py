@@ -121,6 +121,7 @@ def bake_case(case: Case, *, seed: int = 0, root: Path | None = None) -> BakeRes
     # The manifest lives beside the artifact it describes, under the same root: a sandbox bake
     # (scripts/compare_bakes.py) must never write into the canonical data/derived/manifests.
     manifest_path = root / "manifests" / f"{case.id}.json"
+    export.validate_document("case-manifest", manifest, where=f"manifests/{case.id}.json")
     write_json(manifest_path, manifest)
 
     controls_passed = all(
@@ -207,6 +208,7 @@ def bake_all(
             "verdict": payload["verdict"]["outcome"],
         }
 
+    export.validate_document("case-index", index, where="manifests/index.json")
     write_json(MANIFEST_ROOT / "index.json", index)
 
     report = validate.run(DATA_ROOT)

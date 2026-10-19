@@ -16,12 +16,13 @@ from typing import Any
 import blastfrag as bf
 
 from ..cases.fragmenta_cases import Case
-from ..core.jsonio import write_json
+from ..core.jsonio import dumps, write_json
+from ..io.contract import require_valid
 from .evaluate import CaseEvaluation
 from .infer import InferResult
 from .preprocess import PreprocessResult
 
-__all__ = ["ARTIFACT_SCHEMA", "build_case_artifact", "digest", "write_artifact"]
+__all__ = ["ARTIFACT_SCHEMA", "build_case_artifact", "digest", "validate_document", "write_artifact"]
 
 ARTIFACT_SCHEMA = "fragmenta.case/v1"
 
@@ -36,11 +37,13 @@ def digest(payload: Any) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def _prediction_row(prediction: bf.Prediction) -> dict:
+def _prediction_row(prediction: bf.Prediction, reason: dict | None) -> dict:
     return {
         "x50_m": None if prediction.x50_m is None else round(prediction.x50_m, 6),
         "abstained": prediction.abstained,
-        "reason": prediction.abstain_reason,
+        # In both languages (BL-039): the engine's English text went through the reason catalogue in the
+        # infer stage.
+        "reason": reason,
         "extrapolated": prediction.extrapolated,
         "group": prediction.group,
         # The network's simulation spread is the uncertainty of a learned prediction, and it
@@ -124,7 +127,10 @@ def build_case_artifact(
             for v in case.variants
         ],
         "predictions": {
-            arm: {blast_id: _prediction_row(p) for blast_id, p in row.items()}
+            arm: {
+                blast_id: _prediction_row(p, inferred.reasons.get(arm, {}).get(blast_id))
+                for blast_id, p in row.items()
+            }
             for arm, row in inferred.predictions.items()
         },
         "variant_curves": inferred.variant_curves,
@@ -166,11 +172,24 @@ def _serialisable(value: Any) -> Any:
     return value
 
 
+def validate_document(kind: str, payload: Any, *, where: str) -> None:
+    """Check ``payload`` against the schema file of the catalog row ``kind``.
+
+    The file is docs/contracts/schemas/<kind>.schema.json. A document that breaks it raises ``ContractError``
+    naming ``where`` and the path of each offending field, so the bake stops before the document is written,
+    never after a reader has met it. Every writer of a catalog document calls this. What is checked is the
+    payload after the serialisation ``write_json`` applies, so a value that would reach the file in another
+    type (a tuple, a numpy integer turned into a string) is judged as the file will hold it.
+    """
+    require_valid(kind, json.loads(dumps(payload)), where=where)
+
+
 def write_artifact(root: Path, case_id: str, payload: dict) -> tuple[Path, int]:
-    """Write the artifact and return its path and the size of the file on disk.
+    """Validate the artifact against its contract, write it, return its path and the size of the file on disk.
 
     The size is the one the manifest declares and the release gate re-reads, so it has to be the
     real file, not the length of a string that a platform newline translation is about to change.
     """
     path = root / case_id / "case.json"
+    validate_document("case-artifact", payload, where=f"{case_id}/case.json")
     return path, write_json(path, payload)

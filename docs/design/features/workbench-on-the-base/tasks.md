@@ -18,10 +18,10 @@
 |---|---|---|
 | WB-001, WB-006, WB-008 | `tests/test_guards.py` | passed, in a suite of 83; the WB-008 test failed on each statement in turn with VERSION moved ahead of the bake (the package, the changelog, then 45 artifacts) |
 | WB-002 to WB-005 | `frontend/scripts/gate.mjs` (`caos-shell-gate`, shell 0.7.2) | passed: 0 failures in 820 states at 390x844, 768x1024, 1280x800, 1600x900 and 2560x1440, both themes, both languages; the smallest drawn share 0.578 (the floor 0.5, at 1280x800 on Design) and the smallest stage fill 0.46 (the floor 0.3) |
-| WB-007, WB-011 | `frontend/gates/browser-gate.mjs` | passed: 420 of 420 with the native fonts and 420 of 420 with DejaVu Sans (`GATE_FONTS=dejavu`) |
+| WB-007, WB-011 | `frontend/scripts/browser-gate.mjs` | passed: 420 of 420 with the native fonts and 420 of 420 with DejaVu Sans (`GATE_FONTS=dejavu`) |
 | WB-009 | `scripts/check_web_baseline.py` | passed, in CI's frontend job |
 | WB-010 | `scripts/check_deploy_place.py` | passed, in CI's guards job |
-| WB-012 | `frontend/gates/browser-gate.mjs` | passed in both font sets, with the App's drawings measured at 1280, 1600 and 2560 px and again at 390 and 768 px; the check fails a label planted outside its drawing and two ticks planted on one another |
+| WB-012 | `frontend/scripts/browser-gate.mjs` | passed in both font sets, with the App's drawings measured at 1280, 1600 and 2560 px and again at 390 and 768 px; the check fails a label planted outside its drawing and two ticks planted on one another |
 | WB-013 | `tests/test_guards.py::test_the_spanish_guard_reads_what_the_bake_composed` | passed, in a suite of 83; the guard reported 41 decimal points in the bake's Spanish before the fix |
 
 Two things differ from the design. The readouts of the Distribution and Design views sit inside the views, under
@@ -72,7 +72,7 @@ The release checks:
 |---|---|---|
 | WB-001, WB-006, WB-008 | `tests/test_guards.py`; `scripts/check_version_coherence.py` in CI | passed, in a suite of 83; no shell override remains |
 | WB-002 to WB-005 | `frontend/scripts/gate.mjs` (`caos-shell-gate`, shell 0.10.0) | passed: 0 failures in 890 states (the 820 of the first convergence and the wide-font pass at 390 and 1280 px); the smallest drawn share 0.578 and the smallest stage fill 0.46 |
-| WB-007, WB-011, WB-012 | `frontend/gates/browser-gate.mjs` | passed: 420 of 420 with the native fonts and 420 of 420 with DejaVu Sans |
+| WB-007, WB-011, WB-012 | `frontend/scripts/browser-gate.mjs` | passed: 420 of 420 with the native fonts and 420 of 420 with DejaVu Sans |
 | WB-009 | `scripts/check_web_baseline.py` (the template's 0.03.000 guard: each rule judged by its subject, the exact pin) | passed |
 
 The shell 0.9.0 gate failed 2,860 of 889 states on its first run here, most of them the gate's own (shell 0.9.1

@@ -15,10 +15,12 @@
 // an actual file to serve and answers 200. The SPA still takes over on the client; the difference is
 // only in what the server says.
 //
-// Focus routes are dynamic (/focus/<caseId>), so the case ids come from the built manifest index rather
-// than a hardcoded list that would drift the moment a case is added or removed.
+// The product's own /focus/<caseId> page is gone (0.08.000): Focus mode is the shell's (`?focus=1` on /app), so no
+// file is written for those paths. An old /focus/<caseId> link falls to 404.html, which is this same SPA; the router
+// forwards it to /app?case=<caseId>&focus=1 (src/routes.ts). Its HTTP status is therefore 404 on Pages while the app
+// renders, which is acceptable for a retired link and is the one place this site answers 404 on purpose.
 
-import { copyFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const dist = join(process.cwd(), 'dist');
@@ -29,27 +31,12 @@ if (!existsSync(indexHtml)) {
   process.exit(0);
 }
 
-// 1. the fallback, for anything not pre-rendered below (an old link, a typo, a future route)
+// 1. the fallback, for anything not pre-rendered below (a retired /focus/<id> link, a typo, a future route)
 copyFileSync(indexHtml, join(dist, '404.html'));
 
-// 2. a real file per route. Keep in sync with `config.routes` in src/main.tsx; `/` is dist/index.html
-//    itself and needs no entry.
+// 2. a real file per route: the shell's six (`STANDARD_ROUTES`, which src/main.tsx hands to the shell). `/` is
+//    dist/index.html itself, the landing, and needs no entry.
 const routes = ['/app', '/introduction', '/methodology', '/implementation', '/experiments', '/benchmark'];
-
-// `/app` is not in config.routes (the App lives at `/`), but the nav and older shared links use it and
-// it falls through the router's `*` to the same page, so it gets a real file too.
-
-const manifestIndex = join(dist, 'data', 'manifests', 'index.json');
-if (existsSync(manifestIndex)) {
-  try {
-    const idx = JSON.parse(readFileSync(manifestIndex, 'utf8'));
-    for (const c of idx.cases ?? []) {
-      if (c.case_id) routes.push(`/focus/${c.case_id}`);
-    }
-  } catch (e) {
-    console.warn(`[spa-404] could not read the manifest index, focus routes not pre-rendered: ${e.message}`);
-  }
-}
 
 for (const route of routes) {
   const dir = join(dist, ...route.split('/').filter(Boolean));

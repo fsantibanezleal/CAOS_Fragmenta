@@ -91,6 +91,26 @@ export function ProvenancePanel({ artifact }: { artifact: CaseArtifact }) {
 /* Refusals                                                                                      */
 /* ------------------------------------------------------------------------------------------- */
 
+/** What the list says for a refusal with no reason; it should not occur once every reason is baked (BL-039). */
+const NO_REASON = { en: 'no reason recorded', es: 'sin razón registrada' };
+
+/**
+ * The refusals grouped by the text of their reason in the language shown (BL-039). The reasons are baked as {en, es};
+ * one language shows in one place, so a Spanish page never prints English, and a refusal with no reason says so in the
+ * language shown.
+ */
+export function refusalGroups(
+  refusals: readonly (readonly [string, PredictionCell])[],
+  lang: 'en' | 'es',
+): Map<string, string[]> {
+  const byReason = new Map<string, string[]>();
+  for (const [blastId, cell] of refusals) {
+    const reason = (cell.reason ?? NO_REASON)[lang];
+    byReason.set(reason, [...(byReason.get(reason) ?? []), blastId]);
+  }
+  return byReason;
+}
+
 /**
  * The refusals on this case, grouped by reason.
  *
@@ -109,11 +129,7 @@ export function AbstentionPanel({
   const refusals = Object.entries(row).filter(([, cell]) => cell.abstained);
   if (refusals.length === 0) return null;
 
-  const byReason = new Map<string, string[]>();
-  for (const [blastId, cell] of refusals) {
-    const reason = cell.reason ?? 'no reason recorded';
-    byReason.set(reason, [...(byReason.get(reason) ?? []), blastId]);
-  }
+  const byReason = refusalGroups(refusals, lang);
 
   return (
     <section className="fr-panel">
@@ -126,7 +142,7 @@ export function AbstentionPanel({
       <ul className="fr-reasons">
         {[...byReason.entries()].map(([reason, ids]) => (
           <li key={reason}>
-            <code>{ids.length === 1 ? ids[0] : `${ids.length} blasts`}</code>
+            <code>{ids.length === 1 ? ids[0] : `${ids.length} ${lang === 'es' ? 'tiros' : 'blasts'}`}</code>
             <span>{reason}</span>
           </li>
         ))}
@@ -167,7 +183,7 @@ export function ScorePanel({
       <section className="fr-panel">
         {title ? <h3>{title}</h3> : null}
         <p className="fr-note">
-          {score.reason ??
+          {score.reason?.[lang] ??
             (lang === 'es' ? 'este caso no es puntuable' : 'this case is not scoreable')}
         </p>
       </section>
