@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "c1ce3393788b22bc20a76a73b9fb61bb03cfaf9fef9ed36ce758b0d94ed8426a",
+ "digest": "af75837b4d950541be617f2314bed09f91830932b4c522ce71819f1a7b237a27",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1971,7 +1971,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI02": {
@@ -1980,7 +1983,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI03": {
@@ -1989,7 +1995,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI04": {
@@ -1998,7 +2007,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI05": {
@@ -2007,7 +2019,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI06": {
@@ -2016,7 +2031,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI07": {
@@ -2025,7 +2043,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI08": {
@@ -2034,7 +2055,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI09": {
@@ -2043,7 +2067,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI10": {
@@ -2052,7 +2079,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI11": {
@@ -2061,7 +2091,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "SI12": {
@@ -2070,7 +2103,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    }
   },
@@ -3071,7 +3107,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.02196 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.02196 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,02196 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI02": {
@@ -3080,7 +3119,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.06008 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.06008 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,06008 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI03": {
@@ -3089,7 +3131,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.08824 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.08824 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,08824 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI04": {
@@ -3098,7 +3143,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.1036 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.1036 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,1036 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI05": {
@@ -3107,7 +3155,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.1054 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.1054 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,1054 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI06": {
@@ -3116,7 +3167,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.0953 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.0953 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,0953 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI07": {
@@ -3125,7 +3179,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.07663 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.07663 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,07663 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI08": {
@@ -3134,7 +3191,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.05345 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.05345 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,05345 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI09": {
@@ -3143,7 +3203,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.02934 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.02934 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,02934 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI10": {
@@ -3152,7 +3215,10 @@
     "extrapolated": false,
     "group": 2,
     "n_simulations": null,
-    "reason": "the model returned -0.006483 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned -0.006483 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,006483 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "SI11": {
@@ -3412,91 +3478,145 @@
   "crush-zone": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "group-discriminant": {
    "abstain_reasons": [
-    "this arm assigns a rock-stiffness group rather than a fragment size"
+    {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    }
    ],
    "n_abstained": 12,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuz-ram": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuznetsov": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuznetsov-capped": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "kuznetsov-transfer": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "published-neural-net": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "published-regression": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "random-forest": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "refitted-regression": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "stacking": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "svr-rbf": {
    "abstain_reasons": [
-    "the model returned -0.006483 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
-    "the model returned -0.02196 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
-    "the model returned -0.02934 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction."
+    {
+     "en": "the model returned -0.006483 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,006483 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
+    {
+     "en": "the model returned -0.02196 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,02196 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
+    {
+     "en": "the model returned -0.02934 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 -0,02934 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    }
    ],
    "n_abstained": 10,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "swebrec": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   },
   "xgboost": {
    "abstain_reasons": [],
    "n_abstained": 0,
-   "reason": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+   "reason": {
+    "en": "this case carries no measured fragment sizes, so it shows a response rather than a score",
+    "es": "este caso no trae tama\u00f1os de fragmento medidos, as\u00ed que muestra una respuesta y no un puntaje"
+   },
    "scoreable": false
   }
  },

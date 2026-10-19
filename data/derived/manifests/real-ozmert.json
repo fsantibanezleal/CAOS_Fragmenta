@@ -2,14 +2,14 @@
  "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 65748,
+  "bytes": 66602,
   "format": "json",
   "path": "real-ozmert/case.json"
  },
  "case_id": "real-ozmert",
  "category": "real-campaign",
  "controls": {},
- "digest": "30785853c2eef055341bbf4d720f866851a610f4238be09c8637e5e5ddb11f99",
+ "digest": "fe23136dc81fea66b4ea0f21c1ca6ca34777154207af7c1660155e9922419757",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 65748,
+  "trace_bytes": 66602,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

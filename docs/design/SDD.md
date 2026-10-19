@@ -56,7 +56,7 @@ Non-goals, each something a reader could reasonably assume:
   size, measured on the committed files:
 
 <!-- facts:payload -->
-The committed artifacts come to about 4.2 MB: 2.7 MB of portable models, 368 kB of benchmark, 1.1 MB of cases and the manifests.
+The committed artifacts come to about 4.2 MB: 2.7 MB of portable models, 370 kB of benchmark, 1.1 MB of cases and the manifests.
 <!-- /facts -->
 
 - **Live, closed forms**: `frontend/src/engine/live.ts` recomputes the classical mean size, the regressions, the

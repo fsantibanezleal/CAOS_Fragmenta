@@ -2,7 +2,7 @@
  "app_version": "0.07.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 41355,
+  "bytes": 52690,
   "format": "json",
   "path": "real-miami/case.json"
  },
@@ -15,7 +15,7 @@
    "passed": true
   }
  },
- "digest": "c59c58b7e5624fb554bff332ca92a454cabb2248c8281189d5e6305c959a4626",
+ "digest": "0254adc7ff7ce542d2c378866bd2c11738449f8f6b4f9843e2629fccc0f4986f",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
@@ -30,7 +30,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 41355,
+  "trace_bytes": 52690,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
