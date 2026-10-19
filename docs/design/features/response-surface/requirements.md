@@ -2,7 +2,7 @@
 
 Status: live
 
-Designed 2026-10-05, before its code (ADR-0075), for backlog item BL-030 (research dossier on visualization,
+Designed 2026-10-05, before its code (ADR-0075), for backlog item 30 (research dossier on visualization,
 section 1.6; audit item G-04): the What if tab moves one lever at a time, which cannot show the interaction that
 makes blast design a design problem. EARS.
 
