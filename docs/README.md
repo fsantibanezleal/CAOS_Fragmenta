@@ -72,7 +72,7 @@ committed benchmark by `scripts/build_docs_results.py`, so it moves with the bak
 - The architecture drawings (`assets/arch-*.svg`) are generated from the committed artifacts by
   `scripts/build_architecture_svgs.py`, also checked by a test.
 - The method figures (`assets/fig-*.svg`) are exported from the rendered pages by
-  `frontend/gates/export-figures.mjs`, so the wiki and the site show the same drawing.
+  `frontend/scripts/export-figures.mjs`, so the wiki and the site show the same drawing.
 - Equations, sources and caveats are transcribed from the held papers; every DOI was resolved against
   Crossref on 2026-10-04.
 

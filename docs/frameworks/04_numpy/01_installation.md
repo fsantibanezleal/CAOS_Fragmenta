@@ -2,7 +2,7 @@
 
 ```bash
 pip install -r requirements-precompute.txt     # numpy==2.5.3, the bake's exact pin
-pip install -r requirements.txt                # numpy>=1.24,<3, enough to read an artifact
+pip install -r requirements.txt                # numpy==2.5.3, enough to read an artifact
 pip install blastfrag==0.3.0                   # pulls numpy as its one dependency
 ```
 

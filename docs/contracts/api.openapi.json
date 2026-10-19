@@ -1,0 +1,330 @@
+{
+  "openapi": "3.1.0",
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "info": {
+    "title": "Fragmenta dormant API",
+    "version": "1.0.0",
+    "summary": "Catalog row api 1.0.0: the read-only API of app/ (ADR-0057), dormant: Fragmenta is static and the site reads the committed documents.",
+    "description": "Serves the committed documents of data/derived unchanged, GET only: the case index, each case manifest and artifact, each models file, the benchmark and the readiness document. A document that does not exist yet is a declared state, never an empty body that looks like data: the API answers 503 with the state missing and its reason. The schemas are the catalog's schema files; this document and docs/contracts/schemas/ are the single source the TypeScript types are to be generated from (the next unit)."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Liveness.",
+        "responses": {
+          "200": {
+            "description": "The process answers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "healthz",
+        "summary": "Liveness (alias of /health).",
+        "responses": {
+          "200": {
+            "description": "The process answers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cases": {
+      "get": {
+        "operationId": "listCases",
+        "summary": "The case index (catalog row case-index).",
+        "responses": {
+          "200": {
+            "description": "The committed index.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseIndex"
+                }
+              }
+            }
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      }
+    },
+    "/api/cases/{case_id}/manifest": {
+      "get": {
+        "operationId": "getManifest",
+        "summary": "One case manifest (catalog row case-manifest).",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[^/\\\\.][^/\\\\]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The committed manifest.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseManifest"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      }
+    },
+    "/api/artifacts/{rel_path}": {
+      "get": {
+        "operationId": "getArtifact",
+        "summary": "A case artifact (catalog row case-artifact), by its path under data/derived.",
+        "description": "rel_path may contain a slash (for example real-murgul/case.json); only a path an indexed case lists is served; anything else is not found, and an artifact that cannot be read is unavailable.",
+        "parameters": [
+          {
+            "name": "rel_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The committed case artifact.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseArtifact"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      }
+    },
+    "/api/models/{scope}": {
+      "get": {
+        "operationId": "getModels",
+        "summary": "The fitted models of one training scope (catalog row models-file).",
+        "description": "scope is the withheld site or corpus; only a scope the index lists is served.",
+        "parameters": [
+          {
+            "name": "scope",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[^/\\\\.][^/\\\\]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The committed models file.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelsFile"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      }
+    },
+    "/api/benchmark": {
+      "get": {
+        "operationId": "getBenchmark",
+        "summary": "The cross-case benchmark (catalog row benchmark).",
+        "responses": {
+          "200": {
+            "description": "The committed benchmark.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Benchmark"
+                }
+              }
+            }
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      }
+    },
+    "/api/readiness": {
+      "get": {
+        "operationId": "getReadiness",
+        "summary": "What is real in this build (catalog row readiness).",
+        "description": "The committed readiness document, with the api row set to status real, state available and provenance real, because the API answering is the evidence.",
+        "responses": {
+          "200": {
+            "description": "The readiness document.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Readiness"
+                }
+              }
+            }
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BlastRecord": {
+        "$ref": "./schemas/blast-record.schema.json"
+      },
+      "CaseIndex": {
+        "$ref": "./schemas/case-index.schema.json"
+      },
+      "CaseManifest": {
+        "$ref": "./schemas/case-manifest.schema.json"
+      },
+      "CaseArtifact": {
+        "$ref": "./schemas/case-artifact.schema.json"
+      },
+      "ModelsFile": {
+        "$ref": "./schemas/models-file.schema.json"
+      },
+      "Benchmark": {
+        "$ref": "./schemas/benchmark.schema.json"
+      },
+      "Readiness": {
+        "$ref": "./schemas/readiness.schema.json"
+      },
+      "Health": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "const": "ok"
+          }
+        }
+      },
+      "NotFoundBody": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "detail"
+        ],
+        "properties": {
+          "detail": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "UnavailableBody": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "detail"
+        ],
+        "properties": {
+          "detail": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "state",
+              "reason"
+            ],
+            "properties": {
+              "state": {
+                "const": "missing"
+              },
+              "reason": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "en",
+                  "es"
+                ],
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "es": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "No such case or artifact.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundBody"
+            }
+          }
+        }
+      },
+      "Unavailable": {
+        "description": "The document does not exist in this build yet (state missing, with the reason).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnavailableBody"
+            }
+          }
+        }
+      }
+    }
+  }
+}

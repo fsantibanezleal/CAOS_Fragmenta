@@ -1,5 +1,5 @@
 {
- "app_version": "0.07.000",
+ "app_version": "0.08.000",
  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
  "corpus_rows": [
   {
@@ -1670,7 +1670,7 @@
    "slope": 0.5029089801679779
   }
  },
- "digest": "f4c27a473d3bd51f101952c9f647f159556a5836d778f4bf1d5e3d70082d9909",
+ "digest": "20d8924a019020e2ea692d832169272905ce41c791638ee5e5fac987c30ec874",
  "duplicate_groups": [
   [
    "En1",
@@ -6579,61 +6579,91 @@
      "pearson_r2": null,
      "per_site": {
       "Akdaglar": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.17090909090909093,
        "n_blasts": 22,
        "n_scored": 0
       },
       "Dongri-Buzurg": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.41333333333333333,
        "n_blasts": 9,
        "n_scored": 0
       },
       "Enusa": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.3958333333333333,
        "n_blasts": 12,
        "n_scored": 0
       },
       "Miami": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.08,
        "n_blasts": 6,
        "n_scored": 0
       },
       "Mrica": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.16636363636363638,
        "n_blasts": 11,
        "n_scored": 0
       },
       "Murgul": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.31142857142857144,
        "n_blasts": 7,
        "n_scored": 0
       },
       "Ozmert": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.19142857142857145,
        "n_blasts": 7,
        "n_scored": 0
       },
       "Reocin": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.616,
        "n_blasts": 10,
        "n_scored": 0
       },
       "Reocin-UG": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.5933333333333334,
        "n_blasts": 6,
        "n_scored": 0
       },
       "Soma": {
-       "abstain_reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+       "abstain_reason": {
+        "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+        "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+       },
        "mean_measured_m": 0.22428571428571428,
        "n_blasts": 7,
        "n_scored": 0
@@ -6849,7 +6879,10 @@
        "rmse_m": 0.14683142640673497
       },
       "Miami": {
-       "abstain_reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+       "abstain_reason": {
+        "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+        "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+       },
        "mean_measured_m": 0.08,
        "n_blasts": 6,
        "n_scored": 0
@@ -7125,7 +7158,10 @@
        "rmse_m": 0.14683142640673497
       },
       "Miami": {
-       "abstain_reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+       "abstain_reason": {
+        "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+        "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+       },
        "mean_measured_m": 0.08,
        "n_blasts": 6,
        "n_scored": 0
@@ -7401,7 +7437,10 @@
        "rmse_m": 0.1749810635916401
       },
       "Miami": {
-       "abstain_reason": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+       "abstain_reason": {
+        "en": "Miami publishes no hole diameter, so rock volume and charge mass cannot be resolved; this equation needs both",
+        "es": "Miami no publica el di\u00e1metro de perforaci\u00f3n, as\u00ed que no se pueden resolver el volumen de roca ni la masa de carga; esta ecuaci\u00f3n necesita ambos"
+       },
        "mean_measured_m": 0.08,
        "n_blasts": 6,
        "n_scored": 0

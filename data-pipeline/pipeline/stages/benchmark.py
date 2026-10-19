@@ -21,9 +21,9 @@ from pathlib import Path
 
 import blastfrag as bf
 
-from .. import __version__
+from .. import __version__, reasons
 from ..core.jsonio import write_json
-from .export import digest
+from .export import digest, validate_document
 
 __all__ = ["BENCHMARK_SCHEMA", "SITE_MEASUREMENT", "build", "write"]
 
@@ -41,6 +41,21 @@ SITE_MEASUREMENT: dict[str, str] = {
 
 def _score_block(result: bf.Score) -> dict:
     return result.as_dict()
+
+
+def _bilingual_per_site(per_site: dict) -> dict:
+    """The per-site rows with the abstention reason in both languages (BL-039).
+
+    The engine writes the reason of an arm that answered no row of a site as English text; it goes through the
+    reason catalogue, and a text the catalogue does not know stops the bake.
+    """
+    out = {}
+    for site, entry in per_site.items():
+        entry = dict(entry)
+        if entry.get("abstain_reason") is not None:
+            entry["abstain_reason"] = reasons.from_engine(entry["abstain_reason"])
+        out[site] = entry
+    return out
 
 
 def build(*, seed: int = 0, n_seeds: int = 30, n_repeats: int = 100, n_boot: int = 2000) -> dict:
@@ -81,7 +96,7 @@ def build(*, seed: int = 0, n_seeds: int = 30, n_repeats: int = 100, n_boot: int
                     "tier": row.tier,
                     **_score_block(row.score),
                     "supports": row.detail["supports"],
-                    "per_site": row.detail["per_site"],
+                    "per_site": _bilingual_per_site(row.detail["per_site"]),
                     "predictions": row.detail["predictions"],
                     "common": row.detail["common"],
                 }
@@ -339,4 +354,5 @@ def _serialisable(value):
 
 def write(root: Path, payload: dict) -> tuple[Path, int]:
     path = root / "benchmark.json"
+    validate_document("benchmark", payload, where="benchmark.json")
     return path, write_json(path, payload)

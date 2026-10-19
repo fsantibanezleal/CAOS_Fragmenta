@@ -2,4 +2,5 @@
 # implemented in TypeScript, so nothing here is required to SERVE the site.
 #
 # Present so that a reader can load and inspect a baked artifact without the heavy lane.
-numpy>=1.24,<3
+# The same pin as the precompute lane (requirements-precompute.txt): the API and the bake use one numpy.
+numpy==2.5.3

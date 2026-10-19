@@ -286,21 +286,22 @@ def tab2(F: dict, es: bool) -> tuple[str, float]:
 def tab3(F: dict, es: bool) -> tuple[str, float]:
     t = picker(es)
     app = column(22, 300, 64, 10, [
-        (t("App: the shell's case workbench", "App: el banco de trabajo del shell"), [t("the case, its variants, the model and the open group's controls in the rail", "el caso, sus variantes, el modelo y los controles del grupo abierto en el panel")], "accent"),
+        (t("App at /app: the shell's case workbench", "App en /app: el banco de trabajo del shell"), [t("the case, its variants, the model and the open group's controls in the rail", "el caso, sus variantes, el modelo y los controles del grupo abierto en el panel")], "accent"),
         (t("Six slots, by question", "Seis espacios, por pregunta"), [t("Predict, Distribution, Design, Rock, Compare the variants, The case", "Predecir, Distribución, Diseño, Roca, Comparar las variantes, El caso")]),
         (t("Design", "Diseño"), [t("the response surface over burden and spacing and every model on the design, live from the case's own fitted models", "la superficie de respuesta sobre bordo y espaciamiento y cada modelo sobre el diseño, en vivo con los modelos ajustados del caso")], "good"),
     ])
     docs = column(352, 260, 64, 10, [
-        (t("Introduction", "Introducción"), [t("why fragmentation matters, the relations, the question, the scope", "por qué importa, las relaciones, la pregunta, el alcance")]),
+        (t("Introduction, the landing", "Introducción, la entrada"), [t("the site opens on its executive view, then the technical view: why fragmentation matters, the relations, the question, the scope", "el sitio abre en su vista ejecutiva y sigue la técnica: por qué importa, las relaciones, la pregunta, el alcance")]),
         (t("Methodology, 6 sections", "Metodología, 6 secciones"), [t("every predictor term by term, protocols and metrics", "cada predictor término a término, protocolos y métricas")]),
-        (t("Implementation, 6 sections", "Implementación, 6 secciones"), [t("data, geometry, bake, leakage, live lanes, deploy", "datos, geometría, horneado, fuga, carriles vivos, despliegue")]),
+        (t("Implementation, 12 topics in 4 groups", "Implementación, 12 temas en 4 grupos"), [t("how it is built, what runs where, whether it can be trusted, how it ships", "cómo está construido, qué corre dónde, si se puede confiar, cómo se entrega")]),
         (t("Experiments and Benchmark", "Experimentos y Benchmark"), [t("the only routes that summarise across cases", "las únicas rutas que resumen entre casos")], "warn"),
     ])
     focus = column(642, 236, 64, 10, [
-        (t("Focus view", "Vista de foco"), [t("one case full screen, outside the header and footer, applying the theme itself", "un caso a pantalla completa, fuera del encabezado y el pie, aplicando el tema por sí misma")]),
+        (t("Focus mode, inside the App", "Modo foco, dentro de la App"), [t("the open group full screen on the same case (?focus=1); Escape returns to it", "el grupo abierto a pantalla completa sobre el mismo caso (?focus=1); Escape vuelve a él")]),
+        (t("An old focus link", "Un enlace de foco antiguo"), [t("/focus/<case> is forwarded to the App with Focus mode open", "/focus/<caso> se reenvía a la App con el modo foco abierto")]),
         (t("Every view reads values", "Cada vista lee valores"), [t("readouts under the pointer, never on top of the drawing", "lecturas bajo el puntero, nunca sobre el dibujo")]),
     ])
-    # App to the focus view passes over the documentation column, so it is routed through the free
+    # App to Focus mode passes over the documentation column, so it is routed through the free
     # band between the title and the boxes rather than straight through the Introduction box.
     arrows = [
         arrow(app[0].bottom(), app[1].top()),
@@ -311,7 +312,7 @@ def tab3(F: dict, es: bool) -> tuple[str, float]:
         "The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every route and every section in both themes and languages before a deploy publishes.",
         "El hospedaje estático sirve un archivo real en cada ruta, así que un enlace profundo compartido responde 200; la compilación los escribe. Una compuerta de navegador abre cada ruta y cada sección en ambos temas e idiomas antes de publicar.",
     )]
-    return layout(t("Six routes and one view outside the chrome", "Seis rutas y una vista fuera del marco"), [app, docs, focus], arrows, notes)
+    return layout(t("The App, five documentation routes and Focus mode", "La App, cinco rutas de documentación y el modo foco"), [app, docs, focus], arrows, notes)
 
 
 def tab4(F: dict, es: bool) -> tuple[str, float]:

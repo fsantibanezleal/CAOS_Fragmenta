@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 428" width="900" class="arch-svg" role="img" aria-label="The web flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 486" width="900" class="arch-svg" role="img" aria-label="The web flow">
   <style>
     .arch-svg text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; }
     .arch-svg .bx { fill: #f0f3f6; stroke: #d0d7de; stroke-width: 1.2; }
@@ -18,50 +18,59 @@
       <path d="M0,0 L8,4 L0,8 z" fill="#6e7781"/>
     </marker>
   </defs>
-<rect x="0" y="0" width="900" height="428" fill="#ffffff"/>
-<text class="ttl" x="22" y="28">Six routes and one view outside the chrome</text>
-<rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="66.0" rx="6"/>
-<text class="hd" x="32.0" y="85.0">App: the shell&#x27;s case workbench</text>
-<text class="mu" x="32.0" y="104.0">the case, its variants, the model and the</text>
-<text class="mu" x="32.0" y="118.0">open group&#x27;s controls in the rail</text>
-<rect class="bx" x="22.0" y="140.0" width="300.0" height="66.0" rx="6"/>
-<text class="hd" x="32.0" y="161.0">Six slots, by question</text>
-<text class="mu" x="32.0" y="180.0">Predict, Distribution, Design, Rock, Compare</text>
-<text class="mu" x="32.0" y="194.0">the variants, The case</text>
-<rect class="bx bx-good" x="22.0" y="216.0" width="300.0" height="80.0" rx="6"/>
-<text class="hd" x="32.0" y="237.0">Design</text>
-<text class="mu" x="32.0" y="256.0">the response surface over burden and spacing</text>
-<text class="mu" x="32.0" y="270.0">and every model on the design, live from the</text>
-<text class="mu" x="32.0" y="284.0">case&#x27;s own fitted models</text>
-<rect class="bx" x="352.0" y="64.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="85.0">Introduction</text>
-<text class="mu" x="362.0" y="104.0">why fragmentation matters, the</text>
-<text class="mu" x="362.0" y="118.0">relations, the question, the scope</text>
-<rect class="bx" x="352.0" y="140.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="161.0">Methodology, 6 sections</text>
-<text class="mu" x="362.0" y="180.0">every predictor term by term,</text>
-<text class="mu" x="362.0" y="194.0">protocols and metrics</text>
-<rect class="bx" x="352.0" y="216.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="237.0">Implementation, 6 sections</text>
-<text class="mu" x="362.0" y="256.0">data, geometry, bake, leakage, live</text>
-<text class="mu" x="362.0" y="270.0">lanes, deploy</text>
-<rect class="bx bx-warn" x="352.0" y="292.0" width="260.0" height="66.0" rx="6"/>
-<text class="hd" x="362.0" y="313.0">Experiments and Benchmark</text>
-<text class="mu" x="362.0" y="332.0">the only routes that summarise across</text>
-<text class="mu" x="362.0" y="346.0">cases</text>
+<rect x="0" y="0" width="900" height="486" fill="#ffffff"/>
+<text class="ttl" x="22" y="28">The App, five documentation routes and Focus mode</text>
+<rect class="bx bx-accent" x="22.0" y="64.0" width="300.0" height="82.0" rx="6"/>
+<text class="hd" x="32.0" y="85.0">App at /app: the shell&#x27;s case</text>
+<text class="hd" x="32.0" y="101.0">workbench</text>
+<text class="mu" x="32.0" y="120.0">the case, its variants, the model and the</text>
+<text class="mu" x="32.0" y="134.0">open group&#x27;s controls in the rail</text>
+<rect class="bx" x="22.0" y="156.0" width="300.0" height="66.0" rx="6"/>
+<text class="hd" x="32.0" y="177.0">Six slots, by question</text>
+<text class="mu" x="32.0" y="196.0">Predict, Distribution, Design, Rock, Compare</text>
+<text class="mu" x="32.0" y="210.0">the variants, The case</text>
+<rect class="bx bx-good" x="22.0" y="232.0" width="300.0" height="80.0" rx="6"/>
+<text class="hd" x="32.0" y="253.0">Design</text>
+<text class="mu" x="32.0" y="272.0">the response surface over burden and spacing</text>
+<text class="mu" x="32.0" y="286.0">and every model on the design, live from the</text>
+<text class="mu" x="32.0" y="300.0">case&#x27;s own fitted models</text>
+<rect class="bx" x="352.0" y="64.0" width="260.0" height="94.0" rx="6"/>
+<text class="hd" x="362.0" y="85.0">Introduction, the landing</text>
+<text class="mu" x="362.0" y="104.0">the site opens on its executive view,</text>
+<text class="mu" x="362.0" y="118.0">then the technical view: why</text>
+<text class="mu" x="362.0" y="132.0">fragmentation matters, the relations,</text>
+<text class="mu" x="362.0" y="146.0">the question, the scope</text>
+<rect class="bx" x="352.0" y="168.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="189.0">Methodology, 6 sections</text>
+<text class="mu" x="362.0" y="208.0">every predictor term by term,</text>
+<text class="mu" x="362.0" y="222.0">protocols and metrics</text>
+<rect class="bx" x="352.0" y="244.0" width="260.0" height="96.0" rx="6"/>
+<text class="hd" x="362.0" y="265.0">Implementation, 12 topics in 4</text>
+<text class="hd" x="362.0" y="281.0">groups</text>
+<text class="mu" x="362.0" y="300.0">how it is built, what runs where,</text>
+<text class="mu" x="362.0" y="314.0">whether it can be trusted, how it</text>
+<text class="mu" x="362.0" y="328.0">ships</text>
+<rect class="bx bx-warn" x="352.0" y="350.0" width="260.0" height="66.0" rx="6"/>
+<text class="hd" x="362.0" y="371.0">Experiments and Benchmark</text>
+<text class="mu" x="362.0" y="390.0">the only routes that summarise across</text>
+<text class="mu" x="362.0" y="404.0">cases</text>
 <rect class="bx" x="642.0" y="64.0" width="236.0" height="80.0" rx="6"/>
-<text class="hd" x="652.0" y="85.0">Focus view</text>
-<text class="mu" x="652.0" y="104.0">one case full screen, outside the</text>
-<text class="mu" x="652.0" y="118.0">header and footer, applying the</text>
-<text class="mu" x="652.0" y="132.0">theme itself</text>
+<text class="hd" x="652.0" y="85.0">Focus mode, inside the App</text>
+<text class="mu" x="652.0" y="104.0">the open group full screen on the</text>
+<text class="mu" x="652.0" y="118.0">same case (?focus=1); Escape</text>
+<text class="mu" x="652.0" y="132.0">returns to it</text>
 <rect class="bx" x="642.0" y="154.0" width="236.0" height="66.0" rx="6"/>
-<text class="hd" x="652.0" y="175.0">Every view reads values</text>
-<text class="mu" x="652.0" y="194.0">readouts under the pointer, never</text>
-<text class="mu" x="652.0" y="208.0">on top of the drawing</text>
-<line class="flow" x1="172.0" y1="130.0" x2="172.0" y2="138.0" marker-end="url(#arch-arrow)"/>
-<line class="flow" x1="172.0" y1="206.0" x2="172.0" y2="214.0" marker-end="url(#arch-arrow)"/>
+<text class="hd" x="652.0" y="175.0">An old focus link</text>
+<text class="mu" x="652.0" y="194.0">/focus/&lt;case&gt; is forwarded to the</text>
+<text class="mu" x="652.0" y="208.0">App with Focus mode open</text>
+<rect class="bx" x="642.0" y="230.0" width="236.0" height="66.0" rx="6"/>
+<text class="hd" x="652.0" y="251.0">Every view reads values</text>
+<text class="mu" x="652.0" y="270.0">readouts under the pointer, never</text>
+<text class="mu" x="652.0" y="284.0">on top of the drawing</text>
+<line class="flow" x1="172.0" y1="146.0" x2="172.0" y2="154.0" marker-end="url(#arch-arrow)"/>
+<line class="flow" x1="172.0" y1="222.0" x2="172.0" y2="230.0" marker-end="url(#arch-arrow)"/>
 <path class="flow" fill="none" d="M 262.0 64.0 V 46.0 H 682.0 V 64.0" marker-end="url(#arch-arrow)"/>
-<line class="band" x1="22" y1="370.0" x2="878" y2="370.0"/>
-<text class="nt" x="22" y="388.0">The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every</text>
-<text class="nt" x="22" y="403.0">route and every section in both themes and languages before a deploy publishes.</text>
+<line class="band" x1="22" y1="428.0" x2="878" y2="428.0"/>
+<text class="nt" x="22" y="446.0">The static host serves a real file at each route, so a shared deep link answers 200; the build writes them. A browser gate opens every</text>
+<text class="nt" x="22" y="461.0">route and every section in both themes and languages before a deploy publishes.</text>
 </svg>

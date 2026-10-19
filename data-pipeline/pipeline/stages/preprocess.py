@@ -11,8 +11,8 @@ from dataclasses import dataclass
 
 import blastfrag as bf
 
+from .. import reasons
 from ..cases.fragmenta_cases import Case
-from ..model.blasts import is_degenerate
 from .ingest import IngestResult
 
 __all__ = ["PreparedBlast", "PreprocessResult", "run"]
@@ -25,8 +25,10 @@ class PreparedBlast:
     blast: bf.Blast
     pattern: bf.Pattern | None
     rock_factor: float | None
-    geometry_reason: str | None
-    degenerate_reason: str | None
+    #: In both languages (BL-039): the engine's refusal through the reason catalogue, the design's built
+    #: bilingual.
+    geometry_reason: reasons.Reason | None
+    degenerate_reason: reasons.Reason | None
 
     @property
     def has_geometry(self) -> bool:
@@ -48,13 +50,13 @@ def run(case: Case, ingested: IngestResult) -> PreprocessResult:
     prepared: list[PreparedBlast] = []
 
     for blast in ingested.blasts:
-        degenerate = is_degenerate(blast)
+        degenerate = reasons.degenerate_reason(blast)
         pattern: bf.Pattern | None = None
-        reason: str | None = None
+        reason: reasons.Reason | None = None
         try:
             pattern = bf.reconstruct_pattern(blast)
         except bf.GeometryUnavailable as exc:
-            reason = str(exc)
+            reason = reasons.from_engine(str(exc))
 
         # A synthetic blast has no real site, so it gets the corpus-median rock factor and says so.
         factor = bf.SITE_ROCK_FACTOR.get(blast.site)
@@ -77,6 +79,9 @@ def run(case: Case, ingested: IngestResult) -> PreprocessResult:
     report: dict = {}
     if case.real_or_synthetic == "real" and case.dataset == "train" and case.site:
         report = bf.verify_reconstruction([p.blast for p in prepared])
+        for site_report in report.values():
+            if "reason" in site_report:
+                site_report["reason"] = reasons.from_engine(site_report["reason"])
 
     return PreprocessResult(case_id=case.id, prepared=tuple(prepared), geometry_report=report)
 

@@ -16,6 +16,7 @@ from dataclasses import dataclass
 
 import blastfrag as bf
 
+from .. import reasons
 from ..cases.fragmenta_cases import Case
 from .infer import InferResult
 from .preprocess import PreprocessResult
@@ -46,14 +47,9 @@ def run(case: Case, prepared: PreprocessResult, inferred: InferResult) -> CaseEv
             # rather than emitting a null-shaped metric block that reads as a score of zero.
             scores[arm_name] = {
                 "scoreable": False,
-                "reason": (
-                    "this case carries no measured fragment sizes, so it shows a response rather "
-                    "than a score"
-                ),
+                "reason": reasons.NO_MEASUREMENT,
                 "n_abstained": sum(1 for p in predictions if p.abstained),
-                "abstain_reasons": sorted(
-                    {p.abstain_reason for p in predictions if p.abstain_reason}
-                )[:3],
+                "abstain_reasons": _first_reasons(inferred.reasons.get(arm_name, {}), blasts),
             }
             continue
 
@@ -75,6 +71,12 @@ def run(case: Case, prepared: PreprocessResult, inferred: InferResult) -> CaseEv
         n_scoreable=len(measured),
         controls=_controls(case, prepared, inferred, measured),
     )
+
+
+def _first_reasons(why: dict[str, reasons.Reason], blasts, limit: int = 3) -> list[reasons.Reason]:
+    """The distinct abstention reasons of an arm over a case's blasts, in the order of their English text."""
+    distinct = {why[b.blast_id]["en"]: why[b.blast_id] for b in blasts if b.blast_id in why}
+    return [distinct[text] for text in sorted(distinct)][:limit]
 
 
 def _metric_block(result: bf.Score, measured, predictions) -> dict:

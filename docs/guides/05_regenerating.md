@@ -8,7 +8,7 @@ that a test runs, so a stale page fails the suite instead of reaching a reader.
 | `docs/results.md`, `docs/results/*.md` | `python scripts/build_docs_results.py` | `--check`, run by `tests/test_guards.py` | `data/derived/benchmark.json`, the index |
 | the `<!-- facts:... -->` blocks in hand-written pages | the same script | the same | the same |
 | `frontend/src/architecture/*.svg` (the architecture modal) and `docs/assets/arch-*.svg` | `python scripts/build_architecture_svgs.py` | `--check`, run by `tests/test_guards.py` | the benchmark and the index |
-| `docs/assets/fig-*.svg` (the method figures) | `node frontend/gates/export-figures.mjs --url http://localhost:4173` | by eye, and the browser gate's figure measurement on the site | the built site |
+| `docs/assets/fig-*.svg` (the method figures) | `node frontend/scripts/export-figures.mjs --url http://localhost:4173` | by eye, and the browser gate's figure measurement on the site | the built site |
 
 ## Fact blocks
 
@@ -40,7 +40,7 @@ python data-pipeline/run.py
 python scripts/build_docs_results.py
 python scripts/build_architecture_svgs.py
 cd frontend && npm run build && npm run preview &   # then:
-node gates/export-figures.mjs --url http://localhost:4173
+node scripts/export-figures.mjs --url http://localhost:4173
 npm run gate:browser -- --url http://localhost:4173
 ```
 
