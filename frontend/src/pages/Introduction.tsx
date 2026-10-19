@@ -28,8 +28,8 @@ export function IntroductionPage({ data, base, initial }: { data: unknown; base:
     <DocPage
       title={{ en: 'Introduction', es: 'Introducción' }}
       lede={t(
-        'Fragmenta tests what published blast fragmentation predictors are worth at a mine they have not seen: ten predictors, from the 1973 equation to the 2025 ensembles, over 97 published blasts, with the uncertainty of every result shown. It is not a mechanistic simulator and not a production design tool. The executive view frames the industry problem for a decision maker; the technical view gives the method, the pipeline and the limits of what the benchmark proves.',
-        'Fragmenta prueba cuánto valen los predictores publicados de fragmentación por voladura en una mina que no han visto: diez predictores, de la ecuación de 1973 a los ensambles de 2025, sobre 97 tiros publicados, con la incertidumbre de cada resultado a la vista. No es un simulador mecanicista ni una herramienta de diseño de producción. La vista ejecutiva enmarca el problema de la industria para quien decide; la vista técnica da el método, el pipeline y los límites de lo que el banco de pruebas demuestra.',
+        'This page frames the problem in two views. The executive view, first, sets out the industry problem for a decision maker: what goes wrong and for whom, what keeps it going, how it is handled today, what is changing, and a proposal. The technical view gives the method, the data, the pipeline and the limits of what the benchmark proves.',
+        'Esta página enmarca el problema en dos vistas. La vista ejecutiva, primero, expone el problema de la industria para quien decide: qué falla y a quién afecta, qué lo mantiene, cómo se aborda hoy, qué está cambiando y una propuesta. La vista técnica da el método, los datos, el flujo de procesamiento y los límites de lo que el banco de pruebas demuestra.',
       )}
     >
       <Tabs
