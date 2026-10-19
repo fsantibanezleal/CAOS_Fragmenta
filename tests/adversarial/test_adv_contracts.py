@@ -80,7 +80,7 @@ def test_contracts_a_producer_test_that_does_not_exist_and_a_provider_of_no_know
 
 def test_contracts_an_id_that_appears_twice(repo: Path) -> None:
     text = (repo / CATALOG).read_bytes().decode("utf-8")
-    row = next(ln for ln in text.split("\n") if ln.startswith("| benchmark | 1.0.0 | data-pipeline"))
+    row = next(ln for ln in text.split("\n") if re.match(r"\| benchmark \| \d+\.\d+\.\d+ \| data-pipeline", ln))
     edit(repo, CATALOG, row, row + "\n" + row)
     r = guard(repo, "check_contracts.py", CATALOG, "--repo-root", ".")
     assert r.returncode == 1 and "benchmark: duplicate id" in r.stdout, r.stdout

@@ -152,7 +152,7 @@ def test_the_geometry_negative_control_fires_and_passes(artifacts):
     for arm in ("kuznetsov", "kuz-ram", "swebrec", "crush-zone"):
         row = artifacts["real-miami"]["predictions"][arm]
         assert all(cell["x50_m"] is None for cell in row.values()), arm
-        assert all("hole diameter" in cell["reason"] for cell in row.values()), arm
+        assert all("hole diameter" in cell["reason"]["en"] for cell in row.values()), arm
 
 
 def test_the_degenerate_negative_control_is_refused_by_every_arm(artifacts):
@@ -165,7 +165,7 @@ def test_the_degenerate_negative_control_is_refused_by_every_arm(artifacts):
 
     for arm, row in payload["predictions"].items():
         assert all(cell["x50_m"] is None for cell in row.values()), arm
-        assert all("not a blast" in cell["reason"] for cell in row.values()), arm
+        assert all("not a blast" in cell["reason"]["en"] for cell in row.values()), arm
 
 
 def test_the_positive_control_recovers_its_own_truth_exactly(artifacts):
@@ -366,7 +366,7 @@ def test_a_case_with_no_measurements_says_so_rather_than_scoring_zero(artifacts)
     assert all(b["x50_measured_m"] is None for b in payload["blasts"])
     for arm, block in payload["scores"].items():
         assert block["scoreable"] is False
-        assert "no measured fragment sizes" in block["reason"]
+        assert "no measured fragment sizes" in block["reason"]["en"]
 
 
 def test_the_variant_curves_move_in_the_physically_correct_direction(artifacts):

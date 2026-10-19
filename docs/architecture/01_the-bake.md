@@ -140,7 +140,7 @@ Measured on the committed files by `scripts/build_docs_results.py`, so the table
 |---|---|---|
 | case artifacts | 16 | about 1.1 MB in all |
 | manifests | 16 plus the index | small |
-| benchmark | 1 | about 368 kB |
+| benchmark | 1 | about 370 kB |
 | models files | 11 | about 2.7 MB in all, about 245 kB each |
 
 The cases carry 2128 prediction cells, 311 of them abstentions, each with its reason.

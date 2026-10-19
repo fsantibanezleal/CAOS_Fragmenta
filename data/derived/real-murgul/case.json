@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "29870e915ce6a3970225ca1bc8ab78f8a32397c14b59014dba2ee3d2ac5a33c0",
+ "digest": "ced1f74ebb56cc33595edb14db3a093d7028164863fe266e1014a8b14ba40e78",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1837,7 +1837,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mg2": {
@@ -1846,7 +1849,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mg3": {
@@ -1855,7 +1861,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mg4": {
@@ -1864,7 +1873,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mg5": {
@@ -1873,7 +1885,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mg6": {
@@ -1882,7 +1897,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    },
    "Mg7": {
@@ -1891,7 +1909,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "this arm assigns a rock-stiffness group rather than a fragment size",
+    "reason": {
+     "en": "this arm assigns a rock-stiffness group rather than a fragment size",
+     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+    },
     "x50_m": null
    }
   },
@@ -2357,7 +2378,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "the model returned 10.48 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned 10.48 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 10,48 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "Mg2": {
@@ -2366,7 +2390,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "the model returned 10.43 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned 10.43 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 10,43 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "Mg3": {
@@ -2375,7 +2402,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "the model returned 6.207 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned 6.207 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 6,207 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "Mg4": {
@@ -2384,7 +2414,10 @@
     "extrapolated": false,
     "group": 1,
     "n_simulations": null,
-    "reason": "the model returned 6.065 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+    "reason": {
+     "en": "the model returned 6.065 m, which is outside the plausible fragment range 0.001 to 3.0 m. This is the model leaving its domain, not a prediction.",
+     "es": "el modelo devolvi\u00f3 6,065 m, que queda fuera del rango plausible de tama\u00f1os de fragmento, de 0,001 a 3,0 m. Es el modelo saliendo de su dominio, no una predicci\u00f3n."
+    },
     "x50_m": null
    },
    "Mg5": {
