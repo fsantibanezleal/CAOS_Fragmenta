@@ -1,2 +1,0 @@
-- The design document carries the executive brief, research basis, sizing and contracts, technology and versions and resources sections; the design area has a README, the release feature folder `base-0-08` and the requirement rows the guards flagged.
-- The wiki and the README describe the 0.08.000 product: the landing, the App at `/app`, Focus mode, the executive view, the contract catalog and readiness, and the guards.
