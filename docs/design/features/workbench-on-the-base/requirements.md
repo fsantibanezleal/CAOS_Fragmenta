@@ -2,7 +2,7 @@
 
 Status: live
 
-Designed 2026-10-05, before its code (ADR-0075), for backlog items BL-031 and BL-034 and issue #14: adopt the shell's
+Designed 2026-10-05, before its code (ADR-0075), for backlog items 31 and 34 and issue #14: adopt the shell's
 workbench (ADR-0078 s5), pinned exactly, and meet ADR-0071 rule 8 as the base measures it. EARS.
 
 | ID | Requirement | Gate |
