@@ -23,7 +23,7 @@ import time
 from pathlib import Path
 
 import pytest
-from planting import ROOT, edit, guard
+from planting import edit, guard
 from webtools import NODE, NODE_MODULES, SHELL_INSTALLED, link_node_modules, unlink_node_modules
 
 EM_DASH = chr(0x2014)
