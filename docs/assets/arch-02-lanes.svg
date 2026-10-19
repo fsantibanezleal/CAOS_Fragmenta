@@ -37,11 +37,11 @@
 <text class="mu" x="32.0" y="270.0">100 draws per random protocol, 10 site</text>
 <text class="mu" x="32.0" y="284.0">folds, 2000 site resamples per interval</text>
 <rect class="bx" x="312.0" y="64.0" width="270.0" height="66.0" rx="6"/>
-<text class="hd" x="322.0" y="85.0">16 case artifacts, 1047 kB</text>
+<text class="hd" x="322.0" y="85.0">16 case artifacts, 1110 kB</text>
 <text class="mu" x="322.0" y="104.0">predictions, refusals with reasons,</text>
 <text class="mu" x="322.0" y="118.0">curves</text>
 <rect class="bx" x="312.0" y="140.0" width="270.0" height="66.0" rx="6"/>
-<text class="hd" x="322.0" y="161.0">Benchmark, 359 kB</text>
+<text class="hd" x="322.0" y="161.0">Benchmark, 361 kB</text>
 <text class="mu" x="322.0" y="180.0">spreads, two supports, intervals, per</text>
 <text class="mu" x="322.0" y="194.0">site</text>
 <rect class="bx bx-warn" x="312.0" y="216.0" width="270.0" height="52.0" rx="6"/>
