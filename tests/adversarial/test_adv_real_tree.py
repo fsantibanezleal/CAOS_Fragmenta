@@ -8,11 +8,9 @@ fails, which is the signal to delete the marker and keep the test as the clean-t
 guard rejects a defect run on throwaway trees (test_spec_guards.py) and do not wait for U10b."""
 from __future__ import annotations
 
-import pytest
 from planting import ROOT, guard
 
 
-@pytest.mark.xfail(strict=True, reason="U10b writes the technology table to the template guard (CAOS_Fragmenta#33)")
 def test_the_technology_table_is_the_pinned_dependencies_on_the_real_tree() -> None:
     r = guard(ROOT, "check_tech_matrix.py", ok_marker="check_tech_matrix: OK")
     assert r.returncode == 0 and "check_tech_matrix: OK" in r.stdout, r.stdout
