@@ -1,6 +1,6 @@
 # Requirements: the hygiene items of issue #14
 
-Designed 2026-10-05, before its code (ADR-0075), for backlog item BL-035, plus two classes of Spanish errors the
+Designed 2026-10-05, before its code (ADR-0075), for backlog item 35, plus two classes of Spanish errors the
 accent guard cannot see. EARS.
 
 | ID | Requirement | Gate |

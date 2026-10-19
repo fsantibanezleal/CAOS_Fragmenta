@@ -4,13 +4,14 @@
 
 | Route | Page | Inside the shell |
 |---|---|---|
-| `/`, `/app` | `workbench/Workbench.tsx`: one shell `CaseWorkbench` for the selected case (Predict, Distribution, Design, Rock, Compare the variants, The case) | yes |
-| `/introduction` | `pages/Introduction.tsx` | yes |
-| `/methodology` | `pages/Methodology.tsx` (six vertical sub-tabs) | yes |
-| `/implementation` | `pages/Implementation.tsx` (eight) | yes |
-| `/experiments` | `pages/Experiments.tsx` (seven) | yes |
-| `/benchmark` | `pages/Benchmark.tsx` (seven) | yes |
-| `/focus/:caseId` | `pages/Focus.tsx`: one case full screen | no: it applies the theme itself |
+| `/` | the shell's landing, which opens `/introduction` on its executive view | yes |
+| `/app` | `workbench/Workbench.tsx`: one shell `CaseWorkbench` for the selected case (Predict, Distribution, Design, Rock, Compare the variants, The case) | yes |
+| `/introduction` | `pages/Introduction.tsx` (two views: the executive view from `content/executive.json`, then the technical view) | yes |
+| `/methodology` | `pages/Methodology.tsx` (six method topics) | yes |
+| `/implementation` | `pages/Implementation.tsx` (twelve topics in four groups) | yes |
+| `/experiments` | `pages/Experiments.tsx` (topics in groups of at most six) | yes |
+| `/benchmark` | `pages/Benchmark.tsx` (six topics) | yes |
+| `/focus/:caseId` | not a page: it forwards to `/app?case=<id>&focus=1`; Focus mode is the shell workbench's `focus` property | no |
 
 ## Shell components used
 
@@ -20,7 +21,7 @@
 | `SubTabs` (vertical) | the four documentation pages with sections |
 | `Tabs`, `CaseSelector` | the workbench |
 | `Callout`, `Equation`, `InlineMath`, `Cite`, `Refs` | every documentation page; citations come from `frontend/src/data/citations.ts` (composed from one file per page in `frontend/src/data/citations/`), scoped per section by `SECTION_REFS` |
-| `useShellLang`, `applyTheme`, `readTheme` | every bilingual component; the focus view's own theme |
+| `useShellLang` | every bilingual component |
 
 ## How the pages get their numbers
 

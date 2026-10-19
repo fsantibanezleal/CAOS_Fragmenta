@@ -379,7 +379,7 @@ test('every artifact path the app fetches is root-absolute', () => {
   // base URL stays at the root and nothing fails locally. This reads the source rather than the
   // behaviour, because the behaviour needs the host to reproduce.
   const source = readFileSync(new URL('../src/lib/artifacts.ts', import.meta.url), 'utf8');
-  const paths = [...source.matchAll(/fetchJson<[^>]+>\(\s*[`']([^`']+)[`']/g)].map((m) => m[1]);
+  const paths = [...source.matchAll(new RegExp('fetchJson<[^>]+>[(]\s*[`\']([^`\']+)[`\']', 'g'))].map((m) => m[1]);
   assert.ok(paths.length >= 3, `expected the three loaders, found ${paths.length}`);
   for (const path of paths) {
     assert.ok(path.startsWith('/'), `${path} is relative and will break on a nested route`);

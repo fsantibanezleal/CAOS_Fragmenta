@@ -80,6 +80,12 @@ content digest ([data/01](01_corpus.md) section 5).
 
 ## Contract 2: what the web reads
 
+Contract 2 is eight rows of the [contract catalog](../contracts/catalog.md) (the case index, the case manifest, the case
+artifact, the models file, the benchmark, the readiness document and the API, beside contract 1's blast record). Each has
+a JSON Schema file under `docs/contracts/schemas/` that the bake validates against before it writes, and the web's types
+are generated from them. The schema names below are those of the documents; the case artifact and the benchmark are at
+catalog version 2.0.0, where every reason is a text in English and Spanish (`{"en": ..., "es": ...}`).
+
 ### The artifacts
 
 | File | Schema | One per | What it holds |
@@ -87,8 +93,9 @@ content digest ([data/01](01_corpus.md) section 5).
 | `data/derived/<case>/case.json` | `fragmenta.case/v1` | case (16) | the case's blasts and patterns, every arm's prediction or abstention with its reason, the case's scores, distributions, variants, controls, provenance, and which models file it runs live |
 | `data/derived/benchmark.json` | `fragmenta.benchmark/v3` | release | the three protocols with draws, spreads, pooled scores on two row sets and site-resampled intervals; every arm's score on the rows every size-predicting arm answers (`common`); per-site errors; the verdict; arm provenance; diagnostics; the published reproductions, the seed sweep and the width sweep of the network; the corpus, hold-out and field rows |
 | `data/derived/models/<scope>.json` | `fragmenta.models/v1` (arms in `blastfrag.portable/v1`) | training scope (11) | the fitted learned arms, exported, and fixtures of the original models' predictions at the 116 shipped blasts |
-| `data/derived/manifests/<case>.json` | | case | the case's lane measurement and budgets |
-| `data/derived/manifests/index.json` | | release | every case, the benchmark and every models file, each with its path, byte size and digest; the app and engine versions; the corpus digest |
+| `data/derived/manifests/<case>.json` | `fragmenta.manifest/v1` | case |
+| `data/derived/readiness.json` | `fragmenta.readiness/v1` | release | what is real in this build, row by row, in one of six declared states | the case's lane measurement and budgets |
+| `data/derived/manifests/index.json` | `fragmenta.index/v1` | release | every case, the benchmark and every models file, each with its path, byte size and digest; the app and engine versions; the corpus digest |
 
 ### Rules every artifact follows
 
@@ -102,8 +109,10 @@ content digest ([data/01](01_corpus.md) section 5).
   them (`allow_nan=False`), and the release gate searches the written text for the three tokens.
 - **One writer, LF line endings**, so a bake on Windows and on Linux writes the same bytes for the
   same numbers.
-- **A typed mirror.** `frontend/src/lib/contract.types.ts` names every field the artifacts carry, and
-  a test fails when a field appears on one side only.
+- **Generated types.** `frontend/src/lib/contract.gen.ts` is generated from the schema files, the build fails
+  when it is not current, and a test reads every committed document against the schemas.
+- **Declared states.** `data/derived/readiness.json` says which of six states each row is in, so a missing or stale
+  document is named on the page and never drawn as an empty chart.
 
 ### The release gate
 
