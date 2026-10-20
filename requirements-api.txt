@@ -3,6 +3,6 @@
 # deployed. Install this file only to run those tests or to activate the lane on an ADR-0002 trigger.
 #
 # Pinned exactly, the versions tests/contracts/test_api.py was verified with on 2026-10-16 (PyPI, the latest at that date).
-fastapi==0.143.3
+fastapi==0.151.0
 uvicorn[standard]==0.54.0
 pydantic==2.14.1

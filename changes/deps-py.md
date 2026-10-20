@@ -1,2 +1,3 @@
 - Test: the browser plants' precondition (`browser_available()` in `tests/adversarial/test_adv_web.py`, shared with `test_adv_pipeline.py`) now requires the Chromium build the installed `playwright-core` declares in its `browsers.json`; a browsers folder holding only another revision skips the plants instead of failing them on "Executable doesn't exist" (BL-053).
 - Tooling: ruff 0.16.6 to 0.17.1, with no lint finding on the CI scope.
+- API (dormant): fastapi 0.143.3 to 0.151.0; the API contract tests (`tests/contracts`) pass against `docs/contracts/api.openapi.json` unchanged. Starlette's test client now warns that `httpx` is deprecated in favour of `httpx2`; httpx stays at 0.28.1 until a release adopts the replacement.
