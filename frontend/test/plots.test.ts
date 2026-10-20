@@ -1,5 +1,5 @@
 /**
- * The product's charts on the shell's `UPlotChart` (BL-042, shell 0.17.0): the three kinds (the size distribution, the
+ * The product's charts on the shell's `UPlotChart` (BL-042, shell 0.17.0 and 0.18.0): the three kinds (the size distribution, the
  * parity plot, the lines) and the pages that draw them, rendered to markup. The shell's chart declares what it was asked
  * to draw on its host element (`data-series`, `data-log-x`, `data-y-marks`, `data-overlay`, `data-parity`, `data-pick`),
  * so these tests read the declaration; the pixels are the gate's. The last tests hold the removal: the product carries no

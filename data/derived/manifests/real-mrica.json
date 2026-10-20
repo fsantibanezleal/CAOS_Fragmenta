@@ -1,5 +1,5 @@
 {
- "app_version": "0.08.001",
+ "app_version": "0.09.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 78940,
@@ -9,7 +9,7 @@
  "case_id": "real-mrica",
  "category": "real-campaign",
  "controls": {},
- "digest": "895b11396a49b5acfa5ce76699ee8bf74ce413d490b4cede4322ee241f8264a7",
+ "digest": "8f6e258a90ed703c5b9fea7033284557be6f13c8d240466ce38d077e25bf0d4e",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
