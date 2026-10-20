@@ -361,7 +361,8 @@ function AllModelsChart({ sel }: { sel: Selection }) {
               yLabel={t(lang, 'predicted x50, cm', 'x50 predicho, cm')}
               height={Math.max(180, height - 62 - legendRows * 25)}
               xFormat={{ decimals: 0 }}
-              xText={(v) => blasts[Math.round(v) - 1]?.blast_id ?? ''}
+              xTicks={blasts.map((b, i) => ({ value: i + 1, label: { en: b.blast_id, es: b.blast_id } }))}
+              solo
               valueText={(v) => `${num(v, 1)} cm`}
             />
           </div>
