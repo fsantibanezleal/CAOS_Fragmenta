@@ -44,7 +44,8 @@ import {
 } from '../lib/artifacts';
 import type { CaseArtifact, Lang } from '../lib/contract.types';
 import { notAvailable, num, value } from '../lib/format';
-import { DistributionChart, LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
+import { DistributionChart, ParityChart, type SeriesSpec } from '../viz/Charts';
+import { Lines, type LineSpec } from '../viz/plots';
 import { AbstentionPanel, DecisionPanel, ProvenancePanel, RefusalsPanel, refusalsOfCase, SimulationSpread, TierBadge } from '../viz/Panels';
 import { provenanceOf, type DistributionView, type Selection } from './model';
 
@@ -323,7 +324,7 @@ function AllModelsChart({ sel }: { sel: Selection }) {
   const lang = useShellLang();
   const arms = answering(sel);
   const blasts = sel.artifact.blasts;
-  const series: SeriesSpec[] = arms.map((arm) => ({
+  const series: LineSpec[] = arms.map((arm) => ({
     id: arm,
     label: ARM_BY_ID.get(arm)?.label[lang] ?? arm,
     values: blasts.map((b) => {
@@ -354,16 +355,15 @@ function AllModelsChart({ sel }: { sel: Selection }) {
         }
         return (
           <div className="fr-scrolly" style={{ width, height }}>
-            <LineChart
+            <Lines
               x={index}
               series={series}
               xLabel={t(lang, 'design of the case, in order', 'diseño del caso, en orden')}
               yLabel={t(lang, 'predicted x50, cm', 'x50 predicho, cm')}
               height={Math.max(180, height - 62 - legendRows * 25)}
-              legend
-              xTicks={index}
-              xTickFormat={(v) => blasts[Math.round(v) - 1]?.blast_id ?? ''}
-              valueFormat={(v) => `${num(v, 1)} cm`}
+              xFormat={{ decimals: 0 }}
+              xText={(v) => blasts[Math.round(v) - 1]?.blast_id ?? ''}
+              valueText={(v) => `${num(v, 1)} cm`}
             />
           </div>
         );

@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { SECTION_REFS } from '../../data/citations';
 import { f, facts } from '../../lib/facts';
 import { notAvailable, num, signed } from '../../lib/format';
-import { LineChart, type SeriesSpec } from '../../viz/Charts';
+import { Lines, type LineSpec } from '../../viz/plots';
 import { DrawHistogram } from '../../viz/Evidence';
 import { label, ORDER, tr, type TopicData } from './shared';
 
@@ -31,7 +31,7 @@ export default function Robustness({ b }: TopicData) {
   const testRows = seed0 ? seed0.n_scored + seed0.n_abstained : null;
   const kernelShift = Math.max(...['random-forest', 'xgboost', 'stacking', 'svr-rbf', 'svr-poly'].map((a) => Math.abs(b.verdict.dedup_minus_random_median[a] ?? 0)));
   const gapArms = ORDER.filter((a) => a !== 'null' && b.verdict.protocol_gap_random_minus_grouped[a] !== undefined);
-  const series: SeriesSpec[] = block
+  const series: LineSpec[] = block
     ? [
         { id: 'draws', label: t('the draws, sorted', 'los sorteos, ordenados'), values: drawn },
         { id: 'median', label: t('median', 'mediana'), values: drawn.map(() => block.repeats.median ?? null), dashed: true },
@@ -82,16 +82,16 @@ export default function Robustness({ b }: TopicData) {
               ]}
             />
           </Figure>
-          <LineChart
-            x={drawn.map((_, i) => i)}
+          <Lines
+            x={drawn.map((_, i) => i + 1)}
             series={series}
             xLabel={t('draw, sorted by score', 'sorteo, ordenado por puntaje')}
             yLabel={t('variance explained', 'varianza explicada')}
             height={240}
-            legend
             zeroLine
-            xTickFormat={(v) => `#${Math.round(v) + 1}`}
-            valueFormat={(v) => f(v)}
+            xFormat={{ decimals: 0 }}
+            xText={(v) => `#${Math.round(v)}`}
+            valueText={(v) => f(v)}
           />
         </>
       ) : null}
