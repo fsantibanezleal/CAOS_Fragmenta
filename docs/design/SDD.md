@@ -162,12 +162,12 @@ where none is recorded it says so.
 | API | pydantic | 2.14.1 | the dormant API's models | none recorded |
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
 | API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
-| shell | @fasl-work/caos-app-shell | 0.15.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
+| shell | @fasl-work/caos-app-shell | 0.17.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
 | web | react | 19.3.1 | the UI | none recorded |
 | web | react-dom | 19.3.1 | the UI renderer | none recorded |
 | web | react-router | 8.5.0 | the routes | none recorded |
 | web | zustand | 5.0.15 | the workbench selection store | none recorded |
-| web | katex | 0.16.47 | typeset equations on the pages | 0.19.0 is current but refused by the shell 0.15.0 peer range (katex ^0.16.0), so npm ci fails on it; the shell units widen the range |
+| web | katex | 0.19.0 | typeset equations on the pages | none recorded (shell 0.17.0 widened its peer range to 0.16 through 0.19) |
 | web | lucide-react | 1.60.0 | icons | none recorded |
 | web | uplot | 1.6.32 | the interactive curves: parity, residual, distribution, slope | a static chart image, rejected: every view reads values at the cursor (visualization dossier) |
 | web | three | 0.186.1 | the 3D bench, whose geometry is three-dimensional | a 2D plan dot grid, rejected: the stiffness ratio and the free face are three-dimensional |
@@ -289,8 +289,8 @@ Sans), and only then publishes.
 | ADR-0070 | Focus mode for the App: the open group in the full viewport, `?focus=1`, Escape or the exit button returns | yes: the App sets the shell's `focus`, an old `/focus/<id>` link forwards, and the shell gate runs with `--require-focus` (`features/base-0-08/`) | none |
 | ADR-0071 | the page is the viewport; one nav row; instrument at least half the App route | yes: rules 1 to 7 and 9 by the product's gate, rule 8 by the base's (G6) | none |
 | ADR-0074 | CI runs cheap checks only | yes: `scripts/check_ci_budget.py`; the one pytest command CI runs is the planted-defect suite | none |
-| ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before; 0.08.000 designed from its sizing and catalog, this document completed after its units | `scripts/check_sdd.py` and `scripts/check_tech_matrix.py` (template 0.08.002, verbatim) in the guards job |
-| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` still reads 0.03.001 until the release unit records 0.08.002 |
+| ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before; 0.08.000 designed from its sizing and catalog, this document completed after its units | `scripts/check_sdd.py` and `scripts/check_tech_matrix.py` (template 0.09.000, verbatim) in the guards job |
+| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` reads 0.09.000 (the base-integrity, documents, contracts, content-standards, SDD and technology-table guards and the gate runner taken verbatim) |
 | ADR-0080 | contract-first parallel delivery: catalog, one schema per boundary, providers, declared states, readiness | yes: `docs/contracts/`, `tests/contracts/`, `frontend/src/readiness/`, the template's contract guards | none |
 | ADR-0067 | no em-dash, no emoji | yes: `scripts/check_content_standards.py` | none |
 

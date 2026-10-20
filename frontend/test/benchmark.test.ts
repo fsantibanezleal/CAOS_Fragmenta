@@ -113,7 +113,7 @@ const figures = (html: string) =>
 const honest = (html: string) => count(html, /data-callout="honest"/g);
 const strong = (html: string) => count(html, /data-callout="strong"/g);
 const tables = (html: string) => count(html, /<table\b/g);
-const charts = (html: string) => count(html, /class="fr-chart"/g);
+const charts = (html: string) => count(html, /class="caos-chart[ "]/g);
 const controls = (html: string) => count(html, /data-control="/g);
 
 /** The sections of a rendered topic: its area, and the markup from its tag on. */

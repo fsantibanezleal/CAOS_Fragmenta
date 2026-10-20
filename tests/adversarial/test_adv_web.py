@@ -471,7 +471,7 @@ BASE_PLANTS = [
     e("src/workbench/Workbench.tsx", "layout: 'select',", "layout: 'chips',"),
     a("src/fragmenta.css", "\n[data-rail] { padding-top: 900px !important; }\nbody::before { content: ''; display: block; width: 1px; height: 3000px; }\n"),
     # ST-006: every chart declares zero of what it drew.
-    e("src/viz/Charts.tsx", "node.setAttribute(`data-chart-${key}`, String(value));", "node.setAttribute(`data-chart-${key}`, String(0 * value));"),
+    e("src/viz/plots.tsx", "node.setAttribute(`data-chart-${key}`, String(count));", "node.setAttribute(`data-chart-${key}`, String(0 * count));"),
     # ST-007: the axis title of a documentation figure moves onto its tick labels.
     e("src/viz/figures/benchmark.tsx", "y={bottom + 36}", "y={bottom + 16}"),
     # ST-008: the footer is held to a narrow box and wraps.
