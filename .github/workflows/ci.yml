@@ -91,16 +91,6 @@ jobs:
         run: |-
           python scripts/check_spanish_accents.py
 
-      - name: No template residue survived instantiation
-        run: |
-          fail=0
-          if git ls-files | grep -q 'data-pipeline/pipeline/model/sir'; then
-            echo "::error::the template example model is still here"; fail=1; fi
-          if git grep -nlE '\bSIR\b|EX0[0-9]_|example_case' -- . ':!.github' >/dev/null 2>&1; then
-            echo "::error::template example text survived instantiation"; fail=1; fi
-          if [ "$fail" -eq 0 ]; then echo "no residue"; fi
-          exit $fail
-
       - name: No template residue (the template's guard, verbatim)
         run: python scripts/check_template_residue.py
 
