@@ -13,7 +13,22 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import openapiTS, { astToString } from 'openapi-typescript';
+import { register } from 'node:module';
+
+// openapi-typescript renders its output through the TypeScript 5 compiler API (`ts.factory`), which the native
+// TypeScript 7 of this product (`typescript`, the type check) does not have. The generator therefore loads the
+// TypeScript 5.9.3 kept for it under the name `zz-typescript5` (a name that sorts after `typescript`, so that `tsc`
+// stays the native compiler); package.json overrides the package's peer dependency to the root `typescript` so that
+// `npm ci` resolves. The hook below points the import of `typescript` made by openapi-typescript, and only by it,
+// at that copy.
+register(
+  'data:text/javascript,' +
+    encodeURIComponent(`export async function resolve(specifier, context, next) {
+  if (specifier === 'typescript' && /[\/]openapi-typescript[\/]/.test(context.parentURL ?? '')) return next('zz-typescript5', context);
+  return next(specifier, context);
+}`),
+);
+const { default: openapiTS, astToString } = await import('openapi-typescript');
 
 const here = dirname(fileURLToPath(import.meta.url));
 const contracts = join(here, '..', '..', 'docs', 'contracts');

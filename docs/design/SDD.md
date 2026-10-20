@@ -163,25 +163,26 @@ where none is recorded it says so.
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
 | API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
 | shell | @fasl-work/caos-app-shell | 0.15.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
-| web | react | 19.3.0 | the UI | 19.3.1 is current, not adopted |
-| web | react-dom | 19.3.0 | the UI renderer | 19.3.1 is current, not adopted |
-| web | react-router | 7.18.3 | the routes | 8.4.0 is current; the shell's peer range decides |
+| web | react | 19.3.1 | the UI | none recorded |
+| web | react-dom | 19.3.1 | the UI renderer | none recorded |
+| web | react-router | 8.5.0 | the routes | none recorded |
 | web | zustand | 5.0.15 | the workbench selection store | none recorded |
-| web | katex | 0.16.47 | typeset equations on the pages | 0.19.0 is current, not adopted |
-| web | lucide-react | 0.469.0 | icons | none recorded |
+| web | katex | 0.16.47 | typeset equations on the pages | 0.19.0 is current but refused by the shell 0.15.0 peer range (katex ^0.16.0), so npm ci fails on it; the shell units widen the range |
+| web | lucide-react | 1.60.0 | icons | none recorded |
 | web | uplot | 1.6.32 | the interactive curves: parity, residual, distribution, slope | a static chart image, rejected: every view reads values at the cursor (visualization dossier) |
-| web | three | 0.171.0 | the 3D bench, whose geometry is three-dimensional | a 2D plan dot grid, rejected: the stiffness ratio and the free face are three-dimensional; 0.186.1 is current, not adopted |
-| build | vite | 6.4.3 | bundler and dev server | 8.3.4 is current, not adopted |
-| build | @vitejs/plugin-react | 4.7.0 | the React transform for vite | none recorded |
-| build | typescript | 5.9.3 | type check of the web and the generated contract types | 7.0.2 is current, a major change, not adopted |
+| web | three | 0.186.1 | the 3D bench, whose geometry is three-dimensional | a 2D plan dot grid, rejected: the stiffness ratio and the free face are three-dimensional |
+| build | vite | 8.3.4 | bundler and dev server | none recorded |
+| build | @vitejs/plugin-react | 6.1.2 | the React transform for vite | none recorded |
+| build | typescript | 7.0.2 | native type check of the web (no compiler API) | none recorded |
+| build | zz-typescript5 | 5.9.3 | TypeScript 5 compiler API for the contract generator (`openapi-typescript` needs `ts.factory`), under an npm alias | typescript 7.0.2 for the generator, rejected: it has no compiler API |
 | build | openapi-typescript | 7.13.0 | generates `contract.gen.ts` from the OpenAPI document | the former hand-kept mirror of 544 lines, replaced: it drifted from the documents |
-| build | tsx | 4.23.13 | runs the TypeScript tests and scripts under Node | none recorded |
-| build | wait-on | 9.1.0 | waits for the preview server before the browser gate | none recorded |
-| build | @types/node | 22.20.2 | types of the build scripts | none: matches Node 22 in CI |
+| build | tsx | 4.23.15 | runs the TypeScript tests and scripts under Node | none recorded |
+| build | wait-on | 9.5.1 | waits for the preview server before the browser gate | none recorded |
+| build | @types/node | 24.19.2 | types of the build scripts | none: matches Node 24, which the product runs |
 | build | @types/react | 19.3.0 | types of React | none recorded |
 | build | @types/react-dom | 19.3.0 | types of React DOM | none recorded |
-| build | @types/three | 0.171.0 | types of three | none recorded |
-| gate | playwright | 1.56.1 | the measured browser gate (`npm run gate:browser`), local and in the deploy | 1.64.1 is current; the shell gate's own range decides |
+| build | @types/three | 0.186.0 | types of three | none recorded |
+| gate | playwright | 1.64.1 | the measured browser gate (`npm run gate:browser`), local and in the deploy | none recorded |
 
 ## Resources
 
