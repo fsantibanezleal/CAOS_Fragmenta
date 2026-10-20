@@ -48,7 +48,7 @@ def run(case: Case) -> IngestResult:
         degenerate = is_degenerate(blast)
         if degenerate is not None:
             flags.append(
-                {"blast_id": blast.blast_id, "kind": "degenerate-design", "detail": degenerate}
+                {"blast_id": blast.blast_id, "kind": "degenerate-design", "detail": degenerate["en"]}
             )
 
     if case.real_or_synthetic == "real" and case.dataset == "train":

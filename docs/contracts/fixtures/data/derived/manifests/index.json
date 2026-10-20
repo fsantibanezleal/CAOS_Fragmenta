@@ -1,8 +1,8 @@
 {
- "app_version": "0.08.000",
+ "app_version": "0.08.001",
  "benchmark": {
   "bytes": 49890,
-  "digest": "41f31cfe1d90804d3a2b36e69793d28e83243acbf6494434240fb4010c380742",
+  "digest": "e385794e680ca2df50879bfee9a9a3dd88a3909b81fe075fc04d823558f0b508",
   "path": "benchmark.json",
   "verdict": "THE VERDICT DEPENDS ON THE ROW SET. Over all 97 blasts the best learned arm under leave-one-site-out, xgboost, scores -0.034 and the learned tier does not meet the criterion. Over the 91 blasts whose pattern geometry is resolvable, the rows on which the classical arms are also scored, stacking scores 0.034, 0.266 above the null, and the tier meets it. The blasts that separate the two row sets come from Miami. Apart from arms whose source fitted them on this corpus, no arm has a site-resampled 95 percent interval above zero: with ten sites, none of them is distinguishable from predicting the corpus mean. The null's held-out predictions correlate with the measurements at -0.79: holding out a coarse site lowers the training mean, so any margin over the null under this protocol is larger than the skill it measures."
  },
@@ -13,7 +13,7 @@
    "case_id": "fx01-fixture",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "0d1bc7dc1aaf73ce9d9c8ddd6b61f3d7b7e126661fe6175ce6bd99198c458304",
+   "digest": "dc6635c79990c2880620b33bc8cbb9813f7128246601bc531e37017ef54b3e0d",
    "lane": "live",
    "manifest_path": "manifests/fx01-fixture.json",
    "real_or_synthetic": "real",
@@ -38,7 +38,7 @@
     "xgboost"
    ],
    "bytes": 16112,
-   "digest": "7a574f0387041743060ed476658ee870382aa2cac627b175c47a47770a57de5c",
+   "digest": "4c84b3db9fb83c3cd909d719c0ae839d2d4146e16e73ba22386ca7d23f58bcc1",
    "path": "models/Fixture.json",
    "scope": "Fixture"
   }
