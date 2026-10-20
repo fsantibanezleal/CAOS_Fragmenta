@@ -13,6 +13,7 @@ import blastfrag as bf
 
 from .. import reasons
 from ..cases.fragmenta_cases import Case
+from ..model.blasts import is_degenerate
 from .ingest import IngestResult
 
 __all__ = ["PreparedBlast", "PreprocessResult", "run"]
@@ -50,7 +51,7 @@ def run(case: Case, ingested: IngestResult) -> PreprocessResult:
     prepared: list[PreparedBlast] = []
 
     for blast in ingested.blasts:
-        degenerate = reasons.degenerate_reason(blast)
+        degenerate = is_degenerate(blast)
         pattern: bf.Pattern | None = None
         reason: reasons.Reason | None = None
         try:

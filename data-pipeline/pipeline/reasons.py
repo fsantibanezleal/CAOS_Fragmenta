@@ -34,7 +34,6 @@ __all__ = [
     "Reason",
     "UnknownReason",
     "degenerate_abstention",
-    "degenerate_reason",
     "from_engine",
     "pair",
 ]
@@ -68,34 +67,9 @@ NO_MEASUREMENT: Reason = pair(
 )
 
 
-def degenerate_reason(blast) -> Reason | None:
-    """Why this design is not a blast, or None if it is one, in both languages.
-
-    The decision stays in ``is_degenerate`` (the one place that says a design is degenerate); this writes the
-    words, so the English text is character for character the one the bake has always carried.
-    """
-    if is_degenerate(blast) is None:
-        return None
-    if blast.T_over_B >= blast.H_over_B:
-        t, h = f"{blast.T_over_B:.2f}", f"{blast.H_over_B:.2f}"
-        return pair(
-            f"the stemming is {t} burdens in a bench {h} burdens tall, so there is no charge column. "
-            "This is not a blast.",
-            f"el taco mide {_comma(t)} bordos en un banco de {_comma(h)} bordos de alto, así que no hay "
-            "columna de carga. Esto no es una voladura.",
-        )
-    charged = f"{1.0 - blast.T_over_B / blast.H_over_B:.1%}"
-    return pair(
-        f"only {charged} of the hole carries explosive after stemming, which is below any practical charge. "
-        "This is not a blast.",
-        f"solo el {_comma(charged[:-1])} % de la perforación lleva explosivo después del taco, por debajo de "
-        "cualquier carga práctica. Esto no es una voladura.",
-    )
-
-
 def degenerate_abstention(blast) -> Reason:
     """The abstention of every arm on a design that is not a blast (stages/infer.py)."""
-    inner = degenerate_reason(blast)
+    inner = is_degenerate(blast)
     if inner is None:
         raise ValueError(f"{blast.blast_id} is a blast: there is no degenerate abstention to write")
     return pair(
