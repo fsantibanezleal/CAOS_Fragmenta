@@ -2,6 +2,67 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.09.000] - 2026-10-20
+
+Fragmenta moves onto the current base, `@fasl-work/caos-app-shell` 0.18.0 and the template 0.10.000, both pinned exactly, and
+takes every dependency at its current release. Its charts are drawn by the shell's `UPlotChart` and the product's own uPlot
+wrapper is removed with nothing lost: shell 0.17.0 and 0.18.0 were made for it (draggable reference lines, points on their
+own x, decade labels, named x ticks, an x range, a key that solos a series, dots on a line, an unlabelled reference line). The
+product gains didactic notebooks in English and Spanish and its README is stated by areas. The engine is still
+`blastfrag==0.4.0`; the re-bake on the release's pins changed none of the 428,171 numbers of the 52 committed
+documents (`data/` and the provider tree, against 0.08.001): only the version stamps, the catalog digest and the digests over them.
+
+### Added
+
+- The product notebooks, `notebooks/en/` and `notebooks/es/` with the same 19 notebooks each, in six topics from the data to the
+  live design response (the data, the classical prediction, the size distribution, the benchmark protocol, the learned arms, the
+  design response). Every notebook is executed in a fresh kernel on the committed artifacts and on the engine `blastfrag` 0.4.0,
+  imports the methods and never re-implements them, and carries its sources, with a level (fundamentals, the method in practice,
+  state of the art, beyond the state of the art) and the five beyond-the-state-of-the-art claims (BS-1 to BS-5) covered by a
+  level 4 notebook in each language. The SDD gains its "Beyond the state of the art" section (BS-1 to BS-5).
+- `notebooks/requirements.txt` (the bake's exact pins plus the plotting library and the notebook runtime), `notebooks/README.md`
+  and an index per language that lists every notebook and the reason a topic has no state-of-the-art notebook;
+  `scripts/setup.sh --notebooks` and `scripts/setup.ps1 -Notebooks` build the notebook environment, `.venv-notebooks`.
+- The README by areas: an `## Areas` section with one row per area (web, API, core pipelines, packages, notebooks, data,
+  contracts, documentation, tests and gates, deploy), each with its folder, whether it is active or dormant, and what it holds.
+
+### Changed
+
+- The base: the shell pinned at 0.18.0 (exact, lock file included) and the template at 0.10.000 (`.template-version`);
+  `product.json` records the App as a workbench (`"app": "workbench"`). The template's guards taken verbatim from v0.10.000:
+  `check_sdd.py`, `check_tech_matrix.py` (it reads npm aliases and `notebooks/requirements.txt`), `check_documents.py`,
+  `check_contracts.py`, `check_base_integrity.py`, `check_content_standards.py` and `check_template_residue.py` (both now scan
+  the notebooks), `check_notebooks.py` and `check_readme_areas.py` (two new CI steps), `run_notebooks.py` (the local execution
+  gate), `scripts/.content_standards_allow` and `frontend/scripts/gate.mjs`; the guards job runs `check_base_integrity.py` beside
+  the product's own `check_guards.py`.
+- The contract catalog gains the `documents` column (which committed files each row's schema governs); `check_documents.py` no
+  longer names a document, and the readiness document and the fixture tree are recomputed for the changed catalog.
+- The charts (BL-042): the size distribution, the parity plot and every line chart are drawn by the shell's `UPlotChart` through
+  `viz/plots.tsx`, and `viz/Charts.tsx` is removed. The line charts keep what the wrapper gave them: named x ticks (the protocols
+  on the protocol sensitivity chart, the hidden-unit widths on the width sweep, the blast ids on the all-models view) with the
+  readout naming a tick by its label in the interface language, the x range, a key that solos a series, dots on a line of fewer
+  than 40 values, and a zero line with no label.
+- The case select shows every case name whole beside the Focus control, which moved to the end of the group tab row (shell
+  0.17.0, BL-074): the App and Focus rails cut "Mina de cob" in 0.08.001.
+- Web dependencies at their current releases, pinned exactly with no change of behaviour: react and react-dom 19.3.1,
+  react-router 8.5.0, vite 8.3.4, @vitejs/plugin-react 6.1.2, typescript 7.0.2, three 0.186.1, @types/three 0.186.0, lucide-react
+  1.60.0, playwright 1.64.1, uplot 1.6.32, tsx 4.23.15, wait-on 9.5.1, @types/react and @types/react-dom 19.3.0, @types/node
+  24.19.2, katex 0.19.0 (once shell 0.17.0 widened its peer range to 0.16 through 0.19). The contract generator keeps TypeScript
+  5.9.3 under the alias `zz-typescript5` (openapi-typescript needs the TypeScript 5 compiler API; TypeScript 7 has none).
+- Python dependencies at their current releases: numpy 2.5.4 and scikit-learn 1.9.1 in the bake lane (the re-bake with them is
+  byte for byte identical), ruff 0.17.1 (no lint finding), fastapi 0.156.1 for the dormant API (the API contract tests pass
+  against `docs/contracts/api.openapi.json` unchanged; Starlette's test client warns that `httpx` is deprecated in favour of
+  `httpx2`, and httpx stays at 0.28.1 until a release adopts the replacement).
+- Three comments of `.gitignore` carried an em-dash, which the content-standards guard now finds; they read with a colon or a
+  comma.
+
+### Fixed
+
+- BL-053: the browser plants' precondition (`browser_available()` in `tests/adversarial/test_adv_web.py`, shared with
+  `test_adv_pipeline.py`) requires the Chromium build the installed `playwright-core` declares in its `browsers.json`; a browsers
+  folder holding only another revision skips the plants instead of failing them on "Executable doesn't exist".
+- The planted-defect suite's copy of the repository carries `notebooks/`, which the README links.
+
 ## [0.08.001] - 2026-10-20
 
 A patch on the current base (shell 0.15.0, template 0.08.002): every reason a reader sees is now written in the
