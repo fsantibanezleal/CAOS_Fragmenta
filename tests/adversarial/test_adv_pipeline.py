@@ -710,9 +710,9 @@ def test_en003_a_capped_mean_size_the_browser_cannot_reproduce_is_found(repo: Pa
     assert "TypeScript" in out, out[-1500:]
 
 
-BROWSERS = os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "D:/_Temp/ms-playwright")  # the temp root's browsers (the disks rule)
+BROWSERS = os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "")  # the temp root's browsers (the disks rule), set by the caller: no machine default
 NEEDS_BROWSER = pytest.mark.skipif(
-    NODE is None or not SHELL_INSTALLED or not (NODE_MODULES / "playwright").is_dir() or not list(Path(BROWSERS).glob("chromium*")),
+    NODE is None or not SHELL_INSTALLED or not (NODE_MODULES / "playwright").is_dir() or not BROWSERS or not list(Path(BROWSERS).glob("chromium*")),
     reason="local-only: needs node, `npm ci` in frontend/ and a Playwright chromium (PLAYWRIGHT_BROWSERS_PATH)",
 )
 
