@@ -7,10 +7,11 @@
  * and wording onto the shell chart's props, and declares on the chart's host what was drawn, which the browser gate
  * reads (`data-chart`, `data-chart-*`), because pixels cannot tell an empty canvas from one that never mounted.
  *
- * Two charts so far: the parity plot and the lines of the documentation pages and of the all-models view.
+ * Three charts: the size distribution (log x, percentile lines, size markers, the measured point), the parity plot
+ * and the lines of the documentation pages and of the all-models view.
  */
 
-import { useShellLang, type BiText, type FormatOptions } from '@fasl-work/caos-app-shell';
+import { pick, useShellLang, type BiText, type FormatOptions } from '@fasl-work/caos-app-shell';
 import { type ChartSeries, UPlotChart } from '@fasl-work/caos-app-shell/chart';
 import { useEffect, useRef } from 'react';
 
@@ -38,6 +39,7 @@ function declare(node: HTMLElement | null, chart: string, drawn: Record<string, 
 /** The hint under an idle chart, in both languages (the shell's default says "hover the chart"). */
 const HINTS = {
   line: { en: 'Move the pointer across the chart to read values', es: 'Mueva el puntero por el gráfico para leer los valores' },
+  curve: { en: 'Move the pointer over the curve to read values', es: 'Mueva el puntero sobre la curva para leer los valores' },
   // One line under the plot, cut with an ellipsis where it does not fit: 62 characters fit the Predict card at 1280 px.
   parity: { en: 'Point at a blast for its error and site; click to select it.', es: 'Apunte a un tiro: su error y su sitio; clic para elegirlo.' },
   // where a click selects nothing (the documentation pages), the hint does not promise it
@@ -48,14 +50,98 @@ const AXES = {
   measured: { en: 'measured', es: 'medido' },
   predicted: { en: 'predicted', es: 'predicho' },
   nullModel: { en: 'null model', es: 'modelo nulo' },
+  fragmentSize: { en: 'fragment size', es: 'tamaño de fragmento' },
+  percentPassing: { en: 'percent passing', es: 'porcentaje pasante' },
 } as const;
 
-/** The box of a chart: the card the product has always drawn it in, filling its stage or at the height asked for. */
-function Box({ fill, children, host }: { fill: boolean; children: React.ReactNode; host: React.RefObject<HTMLDivElement | null> }) {
+/** The box of a chart: the card the product has always drawn it in; filling, it takes the height its stage gives it. */
+function Box({ children, host }: { children: React.ReactNode; host: React.RefObject<HTMLDivElement | null> }) {
   return (
-    <div ref={host} className="fr-chart" style={fill ? { height: '100%', minHeight: 0 } : undefined}>
+    <div ref={host} className="fr-chart">
       {children}
     </div>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------- */
+/* The size distribution                                                                         */
+/* ------------------------------------------------------------------------------------------- */
+
+export interface CurveSpec {
+  id: string;
+  label: BiText;
+  /** Fraction passing at each size of `sizesM`, or null. */
+  values: (number | null)[];
+  dashed?: boolean;
+}
+
+export interface SizeCurvesProps {
+  sizesM: number[];
+  curves: CurveSpec[];
+  /** Horizontal percentile lines, as fractions passing. */
+  percentiles?: { fraction: number; label: string }[];
+  /** The measured mean size, drawn on its own x over the curves. */
+  measured?: { sizeM: number; passing: number }[];
+  /** Vertical size markers, such as the in-situ block, a target or a limit. */
+  sizeMarkers?: { sizeM: number; label: BiText }[];
+  /** Pixels, or `fill` to take the height of the box the stage gives it. */
+  height: number | 'fill';
+}
+
+const sizeText = (sizeM: number) => (sizeM < 0.1 ? `${num(sizeM * 1000, 1)} mm` : `${num(sizeM * 100, 1)} cm`);
+
+/**
+ * Cumulative percent passing against size, on a log x axis (in millimetres, so the decades read 0.1, 1, 10 ... 1,000).
+ *
+ * Settled against a bar histogram, which hides both tails, and against linear axes, which compress the fines branch
+ * into nothing. The tails are the entire reason the three-parameter form exists.
+ */
+export function SizeCurves({ sizesM, curves, percentiles = [], measured = [], sizeMarkers = [], height }: SizeCurvesProps) {
+  const lang = useShellLang();
+  const host = useRef<HTMLDivElement | null>(null);
+  const series: ChartSeries[] = [
+    ...curves.map((c, i) => ({
+      label: c.label,
+      values: c.values.map((v) => (v === null ? null : v * 100)),
+      ...styleOf(i, c.dashed),
+    })),
+    ...(measured.length
+      ? [
+          {
+            label: { en: 'measured mean size', es: 'tamaño medio medido' },
+            values: measured.map((m) => m.passing * 100),
+            x: measured.map((m) => m.sizeM * 1000),
+            mode: 'points' as const,
+            size: 8,
+            color: '--color-bad' as const,
+          },
+        ]
+      : []),
+  ];
+  useEffect(() => {
+    declare(host.current, 'distribution', {
+      series: curves.length,
+      points: sizesM.length,
+      markers: percentiles.length,
+      measured: measured.length,
+      size_markers: sizeMarkers.length,
+    });
+  }, [curves.length, sizesM.length, percentiles.length, measured.length, sizeMarkers.length]);
+  const readout = (i: number) =>
+    [sizeText(sizesM[i]), ...curves.map((c) => `${pick(c.label, lang)} ${c.values[i] === null || c.values[i] === undefined ? '-' : `${num((c.values[i] as number) * 100, 1)} %`}`)].join(' · ');
+  return (
+    <Box host={host}>
+      <UPlotChart
+        height={height}
+        x={{ values: sizesM.map((s) => s * 1000), log: true, label: AXES.fragmentSize, unit: 'mm' }}
+        y={{ label: AXES.percentPassing, range: [0, 100], format: { decimals: 0 } }}
+        series={series}
+        marks={sizeMarkers.map((m) => ({ x: m.sizeM * 1000, label: m.label }))}
+        yMarks={percentiles.map((p) => ({ y: p.fraction * 100, label: bi(p.label), tone: 'neutral' as const }))}
+        readout={readout}
+        hint={HINTS.curve}
+      />
+    </Box>
   );
 }
 
@@ -181,7 +267,7 @@ export function Lines({ x, series, xLabel, yLabel, height = 260, xFormat, yForma
     [xText ? xText(x[i]) : num(x[i], 3), ...series.map((s) => `${s.label} ${s.values[i] === null || s.values[i] === undefined ? '-' : fmt(s.values[i] as number)}`)].join(' · ');
   if (x.length === 0) return <div ref={host} className="fr-chart" style={{ minHeight: height }} />;
   return (
-    <Box fill={false} host={host}>
+    <Box host={host}>
       <UPlotChart
         height={height}
         x={{ values: x, label: bi(xLabel), format: xFormat }}

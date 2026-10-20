@@ -44,8 +44,7 @@ import {
 } from '../lib/artifacts';
 import type { CaseArtifact, Lang } from '../lib/contract.types';
 import { notAvailable, num, value } from '../lib/format';
-import { DistributionChart, type SeriesSpec } from '../viz/Charts';
-import { Lines, type LineSpec, ParityPlot } from '../viz/plots';
+import { type CurveSpec, Lines, type LineSpec, ParityPlot, SizeCurves } from '../viz/plots';
 import { AbstentionPanel, DecisionPanel, ProvenancePanel, RefusalsPanel, refusalsOfCase, SimulationSpread, TierBadge } from '../viz/Panels';
 import { provenanceOf, type DistributionView, type Selection } from './model';
 
@@ -490,10 +489,10 @@ function CurvesView({ sel }: { sel: Selection }) {
   const curves = useCurves(sel);
   const title: BiText = { en: 'Fragment-size distribution of the design', es: 'Curva granulométrica del diseño' };
   if (!curves) return <NoCurve sel={sel} title={title} />;
-  const series: SeriesSpec[] = [
-    { id: 'classical', label: t(lang, 'Classical', 'Clásica'), values: curves.classical.passing },
-    { id: 'three', label: t(lang, 'Three-parameter', 'Tres parámetros'), values: curves.three.passing },
-    { id: 'crush', label: t(lang, 'Crush zone', 'Zona triturada'), values: curves.crush.passing, dashed: true },
+  const series: CurveSpec[] = [
+    { id: 'classical', label: { en: 'Classical', es: 'Clásica' }, values: curves.classical.passing },
+    { id: 'three', label: { en: 'Three-parameter', es: 'Tres parámetros' }, values: curves.three.passing },
+    { id: 'crush', label: { en: 'Crush zone', es: 'Zona triturada' }, values: curves.crush.passing, dashed: true },
   ];
   const measured = sel.asFired && sel.blast.x50_measured_m !== null ? [{ sizeM: sel.blast.x50_measured_m, passing: 0.5 }] : [];
   return (
@@ -516,17 +515,17 @@ function CurvesView({ sel }: { sel: Selection }) {
           const Box = compact ? ScrollBox : StageBox;
           return (
           <Box width={width} height={height}>
-            <DistributionChart
+            <SizeCurves
               sizesM={GRID}
-              series={series}
-              markers={[
+              curves={series}
+              percentiles={[
                 { fraction: 0.2, label: 'P20' },
                 { fraction: 0.5, label: 'P50' },
                 { fraction: 0.8, label: 'P80' },
               ]}
               measured={measured}
-              sizeMarkers={[{ sizeM: sel.design.XB_m, label: t(lang, 'in-situ block', 'bloque in situ') }]}
-              height={compact ? 240 : Math.max(200, height - 84)}
+              sizeMarkers={[{ sizeM: sel.design.XB_m, label: { en: 'in-situ block', es: 'bloque in situ' } }]}
+              height={compact ? 240 : 'fill'}
             />
             {/* The live percentiles of the classical curve, under the curve they are read from. */}
             <p className="fr-readout" data-readout="percentiles">
@@ -590,16 +589,16 @@ function DecideView({ sel }: { sel: Selection }) {
       {decided ? (
         <Stage label={title}>
           {({ width, height }) => {
-            const chart = (minHeight: number) => (
-              <DistributionChart
+            const chart = (height: number | 'fill') => (
+              <SizeCurves
                 sizesM={GRID}
-                series={[{ id: 'selected', label: ARM_BY_ID.get(sel.armId)?.label[lang] ?? sel.armId, values: decided.curve.passing }]}
-                markers={[{ fraction: 0.8, label: 'P80' }]}
+                curves={[{ id: 'selected', label: ARM_BY_ID.get(sel.armId)?.label ?? { en: sel.armId, es: sel.armId }, values: decided.curve.passing }]}
+                percentiles={[{ fraction: 0.8, label: 'P80' }]}
                 sizeMarkers={[
-                  { sizeM: target, label: t(lang, 'target P80', 'P80 objetivo') },
-                  { sizeM: oversize, label: t(lang, 'oversize limit', 'límite de sobretamaño') },
+                  { sizeM: target, label: { en: 'target P80', es: 'P80 objetivo' } },
+                  { sizeM: oversize, label: { en: 'oversize limit', es: 'límite de sobretamaño' } },
                 ]}
-                height={minHeight}
+                height={height}
               />
             );
             const decision = (
@@ -621,7 +620,7 @@ function DecideView({ sel }: { sel: Selection }) {
             if (width >= 600) {
               return (
                 <div className="fr-stagebox" style={{ width, height, flexDirection: 'row', gap: 12 }}>
-                  {chart(180)}
+                  {chart('fill')}
                   <div className="fr-scrolly" style={{ width: Math.min(400, Math.round(width * 0.42)), flex: 'none' }}>
                     {decision}
                   </div>
@@ -632,7 +631,7 @@ function DecideView({ sel }: { sel: Selection }) {
             const Box = compact ? ScrollBox : StageBox;
             return (
               <Box width={width} height={height}>
-                {chart(compact ? 220 : 180)}
+                {chart(compact ? 220 : 'fill')}
                 {decision}
               </Box>
             );
