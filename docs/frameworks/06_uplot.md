@@ -1,7 +1,7 @@
 # 06 · uPlot
 
-The canvas chart library behind the passing curves and the line charts (`frontend/src/viz/Charts.tsx`),
-version 1.6.32.
+The canvas chart library behind the shell's `UPlotChart`, which draws the passing curves, the parity plots and the line
+charts (the product maps its data onto it in `frontend/src/viz/plots.tsx`, and imports no uPlot itself), version 1.6.32.
 
 | | |
 |---|---|
