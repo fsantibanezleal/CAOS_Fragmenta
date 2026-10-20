@@ -3,4 +3,4 @@
 #
 # Present so that a reader can load and inspect a baked artifact without the heavy lane.
 # The same pin as the precompute lane (requirements-precompute.txt): the API and the bake use one numpy.
-numpy==2.5.3
+numpy==2.5.4
