@@ -575,3 +575,45 @@ def test_st013_a_page_that_ignores_the_runners_fonts_is_found(console_run: GateR
     pattern = "asked for the runner's fonts and the page is set in"
     assert "checks passed" in fonts_clean_run.out and not fonts_clean_run.failed_with(pattern), fonts_clean_run.out[-1500:]
     caught(console_run, pattern)
+
+
+# ---------------------------------------------------------------- BL-049: the live engine's reasons and the refusal list
+
+REASONS_TEST = "test/reasons.test.ts"
+BR003 = ["the live engine’s reasons are written in both languages, with the Spanish decimal comma"]
+BR004 = ["on a case where every arm abstains the refusals are listed for every arm, in both languages",
+         "the refusal list is drawn on ctrl-degenerate, in the language shown, and says that no model answers",
+         "the Predict group lists the refusals where no arm is ranked and draws none beside a ranked arm"]
+
+
+@needs_node
+def test_br003_a_live_reason_left_in_english_on_the_spanish_page_is_found(web: Path) -> None:
+    assert_clean(web, LEARNED, BR003)
+    edit(web, fe(LEARNED_SRC), "'tipo de modelo desconocido'", "'unknown model kind'")
+    assert_caught(web, LEARNED, BR003)
+
+
+ARM_SOURCES = "test/arm-sources.test.ts"
+BR005 = ["the source of every model is written in English and in Spanish",
+         "the selected model shows its source in the language of the page"]
+
+
+@needs_node
+def test_br005_a_model_source_left_in_english_or_shown_in_one_language_is_found(web: Path) -> None:
+    assert_clean(web, ARM_SOURCES, BR005)
+    # The Spanish source of the published regression planted back in English, as 0.08.000 showed it on a Spanish page.
+    edit(web, fe(ARTIFACTS), "es: 'Hudaverdi et al. 2010, Ecs. 9 y 10'", "es: 'Hudaverdi et al. 2010, Eqs. 9 and 10'")
+    # And the case view reading the English source whatever the page's language.
+    edit(web, fe("src/workbench/views.tsx"), "{arm.source[lang]}", "{arm.source.en}")
+    assert_caught(web, ARM_SOURCES, BR005)
+
+@needs_node
+def test_br004_a_predict_group_without_the_refusal_list_and_a_list_in_english_are_found(web: Path) -> None:
+    assert_clean(web, REASONS_TEST, BR004)
+    # The list removed from the group: the wiring test fails.
+    edit(web, fe("src/workbench/views.tsx"), "<RefusalsPanel artifact={sel.artifact} noneAnswers={!answering(sel).length} />", "{null}")
+    # And the panel's statement left in English on the Spanish page: the render test fails.
+    edit(web, fe("src/viz/Panels.tsx"), "? 'Ningún modelo responde en este caso: todos rechazan sus diseños.'",
+         "? 'No model answers on this case: every model refuses its designs.'")
+    code, results, out = run_node(web, REASONS_TEST, BR004[1:])
+    assert code != 0 and all(results.get(n) is False for n in BR004[1:]), out[-2500:]

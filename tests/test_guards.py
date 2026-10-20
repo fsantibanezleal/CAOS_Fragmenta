@@ -16,9 +16,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+import check_guards  # noqa: E402
 from check_guards import (  # noqa: E402
     no_copyrighted_sources,
     no_environments_or_binaries,
+    no_local_machine_paths,
     no_package_of_its_own,
     no_real_env_but_an_example,
 )
@@ -51,6 +53,32 @@ def test_the_binary_guard_rejects_environments_and_native_artifacts():
 def test_the_binary_guard_does_not_reject_ordinary_source():
     """`venv` inside a longer word is not a virtual environment, and `.ts` is not `.pt`."""
     assert no_environments_or_binaries([*CLEAN, "docs/venvs-explained.md", "src/convention.ts"]) == []
+
+
+def test_the_path_guard_rejects_every_machine_root_with_either_slash(tmp_path, monkeypatch):
+    """The template's base-integrity rule (BL-050): any drive; the repos, worktrees or temp root; any slash.
+
+    The old guard looked for one drive and one root with a backslash only, and missed a forward-slash
+    temp path in a test. The paths are composed here so this file never holds one.
+    """
+    monkeypatch.setattr(check_guards, "ROOT", tmp_path)
+    leaks = {
+        "a.py": "D:" + "/_Temp/ms-playwright",
+        "b.md": "E:" + chr(92) + "_worktrees" + chr(92) + "x",
+        "c.ts": "C:" + "/_Repos/y",
+    }
+    for name, text in leaks.items():
+        (tmp_path / name).write_text(f"x = '{text}'\n", encoding="utf-8")
+        problems = no_local_machine_paths([name])
+        assert len(problems) == 1 and name in problems[0], name
+
+
+def test_the_path_guard_passes_ordinary_text(tmp_path, monkeypatch):
+    """A drive letter alone, a relative temp folder or a URL is not a machine path."""
+    monkeypatch.setattr(check_guards, "ROOT", tmp_path)
+    text = "Use the temp root, for example `<temp root>/ms-playwright`; see https://x/_Temp\n"
+    (tmp_path / "ok.md").write_text(text, encoding="utf-8")
+    assert no_local_machine_paths(["ok.md"]) == []
 
 
 def test_the_package_guard_rejects_an_internal_lab():
