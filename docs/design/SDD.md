@@ -8,7 +8,9 @@ was checked by running it. The units of the 2026-10-05 gap cycle (`features/benc
 `features/response-surface/`) were designed here before their code. **Release 0.08.000 (shell 0.15.0, template
 0.08.002) was designed from its sizing and its contract catalog before its units were built; this document and its
 feature folder `features/base-0-08/` were completed after them, on 2026-10-18, from the code, the tests, the catalog
-and the measurements, and say so where it matters.** The science is designed in the engine's own SDD
+and the measurements, and say so where it matters.** Release 0.09.000 (shell 0.18.0, template 0.10.000) was planned before its
+units in CAOS_MANAGE `plans/fragmenta/plan.md` section 11 (every dependency at its current release, the charts on the shell's
+`UPlotChart`, the notebooks and the README by areas); the base changes it needed were made in the shell first (0.17.0, 0.18.0). The science is designed in the engine's own SDD
 (`docs/design/SDD.md` in CAOS_BlastFrag). The layout of this area is in [`README.md`](README.md).
 
 ## Problem and non-goals
@@ -151,37 +153,42 @@ where none is recorded it says so.
 | component | package | version | use | alternative considered |
 |---|---|---|---|---|
 | engine | blastfrag | 0.4.0 | the predictors, the protocols, the benchmark and the portable model export, a separate PyPI package (ADR-0057) | none: the product declares no package of its own |
-| engine | numpy | 2.5.3 | arrays in the bake and in the runtime lane | 2.5.4 is current, not adopted: a re-bake on a new numpy is its own release |
-| engine | scikit-learn | 1.9.0 | the learned arms fitted in the bake | 1.9.1 is current, not adopted, same reason |
+| engine | numpy | 2.5.4 | arrays in the bake and in the runtime lane | none recorded |
+| engine | scikit-learn | 1.9.1 | the learned arms fitted in the bake | none recorded |
 | engine | xgboost | 3.4.1 | the gradient-boosted arm and the stacking base learner | none recorded |
+| notebooks | matplotlib | 3.11.2 | the figures of the didactic notebooks (`notebooks/`, local only) | none recorded |
+| notebooks | nbclient | 0.11.0 | executes each notebook in a fresh kernel (`scripts/run_notebooks.py`, the template's) | none: the template's runner |
+| notebooks | nbformat | 5.11.1 | reads and writes the notebooks for the runner | none: the template's runner |
+| notebooks | ipykernel | 7.4.0 | the Python kernel the runner starts | none recorded |
 | tests | pytest | 9.1.1 | the pipeline, contract, guard and planted-defect tests | none recorded |
-| lint | ruff | 0.16.6 | lint of data-pipeline, tests, scripts and app | 0.17.1 is current, not adopted |
+| lint | ruff | 0.17.1 | lint of data-pipeline, tests, scripts and app | none recorded |
 | contracts | jsonschema | 4.26.0 | validates every document against its schema file | none: the template's pin |
 | contracts | openapi-spec-validator | 0.9.0 | validates `docs/contracts/api.openapi.json` | none recorded |
-| API | fastapi | 0.143.3 | the dormant `app/`, run by the API contract tests | none recorded |
+| API | fastapi | 0.156.1 | the dormant `app/`, run by the API contract tests | none recorded |
 | API | pydantic | 2.14.1 | the dormant API's models | none recorded |
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
 | API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
-| shell | @fasl-work/caos-app-shell | 0.15.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
-| web | react | 19.3.0 | the UI | 19.3.1 is current, not adopted |
-| web | react-dom | 19.3.0 | the UI renderer | 19.3.1 is current, not adopted |
-| web | react-router | 7.18.3 | the routes | 8.4.0 is current; the shell's peer range decides |
+| shell | @fasl-work/caos-app-shell | 0.18.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
+| web | react | 19.3.1 | the UI | none recorded |
+| web | react-dom | 19.3.1 | the UI renderer | none recorded |
+| web | react-router | 8.5.0 | the routes | none recorded |
 | web | zustand | 5.0.15 | the workbench selection store | none recorded |
-| web | katex | 0.16.47 | typeset equations on the pages | 0.19.0 is current, not adopted |
-| web | lucide-react | 0.469.0 | icons | none recorded |
+| web | katex | 0.19.0 | typeset equations on the pages | none recorded (shell 0.17.0 widened its peer range to 0.16 through 0.19) |
+| web | lucide-react | 1.60.0 | icons | none recorded |
 | web | uplot | 1.6.32 | the interactive curves: parity, residual, distribution, slope | a static chart image, rejected: every view reads values at the cursor (visualization dossier) |
-| web | three | 0.171.0 | the 3D bench, whose geometry is three-dimensional | a 2D plan dot grid, rejected: the stiffness ratio and the free face are three-dimensional; 0.186.1 is current, not adopted |
-| build | vite | 6.4.3 | bundler and dev server | 8.3.4 is current, not adopted |
-| build | @vitejs/plugin-react | 4.7.0 | the React transform for vite | none recorded |
-| build | typescript | 5.9.3 | type check of the web and the generated contract types | 7.0.2 is current, a major change, not adopted |
+| web | three | 0.186.1 | the 3D bench, whose geometry is three-dimensional | a 2D plan dot grid, rejected: the stiffness ratio and the free face are three-dimensional |
+| build | vite | 8.3.4 | bundler and dev server | none recorded |
+| build | @vitejs/plugin-react | 6.1.2 | the React transform for vite | none recorded |
+| build | typescript | 7.0.2 | native type check of the web (no compiler API) | none recorded |
+| build | zz-typescript5 | 5.9.3 | TypeScript 5 compiler API for the contract generator (`openapi-typescript` needs `ts.factory`), under an npm alias | typescript 7.0.2 for the generator, rejected: it has no compiler API |
 | build | openapi-typescript | 7.13.0 | generates `contract.gen.ts` from the OpenAPI document | the former hand-kept mirror of 544 lines, replaced: it drifted from the documents |
-| build | tsx | 4.23.13 | runs the TypeScript tests and scripts under Node | none recorded |
-| build | wait-on | 9.1.0 | waits for the preview server before the browser gate | none recorded |
-| build | @types/node | 22.20.2 | types of the build scripts | none: matches Node 22 in CI |
+| build | tsx | 4.23.15 | runs the TypeScript tests and scripts under Node | none recorded |
+| build | wait-on | 9.5.1 | waits for the preview server before the browser gate | none recorded |
+| build | @types/node | 24.19.2 | types of the build scripts | none: matches Node 24, which the product runs |
 | build | @types/react | 19.3.0 | types of React | none recorded |
 | build | @types/react-dom | 19.3.0 | types of React DOM | none recorded |
-| build | @types/three | 0.171.0 | types of three | none recorded |
-| gate | playwright | 1.56.1 | the measured browser gate (`npm run gate:browser`), local and in the deploy | 1.64.1 is current; the shell gate's own range decides |
+| build | @types/three | 0.186.0 | types of three | none recorded |
+| gate | playwright | 1.64.1 | the measured browser gate (`npm run gate:browser`), local and in the deploy | none recorded |
 
 ## Resources
 
@@ -202,7 +209,7 @@ network after the install. Training is not a stage of its own: the learned arms 
 ## Lanes
 
 - **Offline**: `data-pipeline/run.py` bakes sixteen cases, eleven models files and the benchmark against exact pins
-  (numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1). The benchmark's 100-draw protocols and the network's
+  (numpy 2.5.4, scikit-learn 1.9.1, xgboost 3.4.1). The benchmark's 100-draw protocols and the network's
   Levenberg-Marquardt fits put it offline; it never runs in CI (ADR-0074). It pins BLAS to one thread before numpy
   loads: on the network's small matrices a multi-threaded BLAS spun, and one fit at width 15 took more than six
   minutes on a loaded workstation against about two seconds on one thread. The full bake took 745 s at 0.06.000
@@ -282,13 +289,25 @@ Sans), and only then publishes.
 |---|---|---|---|
 | ADR-0057 | two contracts, named stages, no internal package | yes: `data-pipeline/`, the contract catalog, the engine on PyPI | none |
 | ADR-0069 | method vertical with its acceptance criterion | yes, split with the engine | none |
-| ADR-0016, ADR-0017 | routes on the shared shell; documentation depth | yes, on shell 0.15.0 pinned exactly: the landing on the Introduction (executive view first), the App at `/app`, five documentation pages declaring their areas (`features/base-0-08/`) | none |
+| ADR-0016, ADR-0017 | routes on the shared shell; documentation depth | yes, on shell 0.18.0 pinned exactly: the landing on the Introduction (executive view first), the App at `/app`, five documentation pages declaring their areas (`features/base-0-08/`) | none |
 | ADR-0056 | the `docs/` wiki | yes | none |
 | ADR-0058 | architecture modal, five themed bilingual tabs | yes, generated from the artifacts | none |
 | ADR-0070 | Focus mode for the App: the open group in the full viewport, `?focus=1`, Escape or the exit button returns | yes: the App sets the shell's `focus`, an old `/focus/<id>` link forwards, and the shell gate runs with `--require-focus` (`features/base-0-08/`) | none |
 | ADR-0071 | the page is the viewport; one nav row; instrument at least half the App route | yes: rules 1 to 7 and 9 by the product's gate, rule 8 by the base's (G6) | none |
 | ADR-0074 | CI runs cheap checks only | yes: `scripts/check_ci_budget.py`; the one pytest command CI runs is the planted-defect suite | none |
-| ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before; 0.08.000 designed from its sizing and catalog, this document completed after its units | `scripts/check_sdd.py` and `scripts/check_tech_matrix.py` (template 0.08.002, verbatim) in the guards job |
-| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` still reads 0.03.001 until the release unit records 0.08.002 |
+| ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before; 0.08.000 designed from its sizing and catalog, this document completed after its units | `scripts/check_sdd.py`, `scripts/check_tech_matrix.py`, `scripts/check_notebooks.py` and `scripts/check_readme_areas.py` (template 0.10.000, verbatim) in the guards job |
+| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` reads 0.10.000 (the base-integrity, documents, contracts, content-standards, residue, SDD, technology-table, notebooks and README-areas guards, the notebook runner and the gate runner taken verbatim) |
 | ADR-0080 | contract-first parallel delivery: catalog, one schema per boundary, providers, declared states, readiness | yes: `docs/contracts/`, `tests/contracts/`, `frontend/src/readiness/`, the template's contract guards | none |
 | ADR-0067 | no em-dash, no emoji | yes: `scripts/check_content_standards.py` | none |
+
+## Beyond the state of the art
+
+Each claim names what the product adds, the evidence that can be re-run (a level 4 notebook in each language under `notebooks/`) and the source it goes beyond.
+
+| id | claim | evidence | goes beyond |
+|---|---|---|---|
+| BS-1 | The learned tier is judged by whole campaigns held out, with intervals that resample campaigns and a criterion declared before the run and pinned by a hash. | `notebooks/en/04-benchmark-protocol/04-the-site-held-out-protocol-and-its-pre-declared-criterion.ipynb`: every learned arm loses most of its random-split score (a median gap of 0.984) and no arm outside the in-sample ones has an interval above zero. | Sui et al. 2025, https://doi.org/10.3390/app15031254 (one random 80/20 split) and Roberts et al. 2017, https://doi.org/10.1111/ecog.02881 |
+| BS-2 | Refusal is a first-class result: the geometry is reconstructed or refused, and a guard refuses designs that are not blasts. | `notebooks/en/01-the-data/03-integrity-gate-and-negative-controls.ipynb`: the two negative controls (six blasts with no scale, six degenerate designs) pass in the committed artifacts. | Amoako, Jha and Zhong 2022, https://doi.org/10.3390/mining2020013 and Sui et al. 2025, https://doi.org/10.3390/app15031254 (predictors that return a number for any input vector) |
+| BS-3 | The corpus is held to the paper at every load: its printed statistics and a pinned digest are reproduced. | `notebooks/en/01-the-data/03-integrity-gate-and-negative-controls.ipynb`: four planted defects, the statistics catch two and the digest catches all four. | Hudaverdi, Kulatilake and Kuzu 2010, https://doi.org/10.1002/nag.957 (a table reused as given) |
+| BS-4 | A rock factor predicted from the Young modulus over the other sites, so the classical score uses nothing from the held-out site. | `notebooks/en/02-classical-prediction/04-a-rock-factor-that-uses-nothing-from-the-target-site.ipynb`: the score moves by 0.013 and both intervals span zero. | Kulatilake, Hudaverdi and Wu 2012, https://doi.org/10.1007/s10706-012-9496-3 (the factor estimated for each blast) |
+| BS-5 | Learned arms exported to portable documents that a browser evaluates, with fixtures and a content address. | `notebooks/en/06-design-response/03-learned-arms-served-live-from-a-portable-document.ipynb`: parity with a fresh fit to floating-point rounding. | Sui et al. 2025, https://doi.org/10.3390/app15031254 and Kulatilake et al. 2012, https://doi.org/10.1007/s10706-012-9496-3 (parameters and scores, no runnable form) |
