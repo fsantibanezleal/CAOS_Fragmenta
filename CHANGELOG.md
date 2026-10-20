@@ -2,6 +2,34 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.08.001] - 2026-10-20
+
+A patch on the current base (shell 0.15.0, template 0.08.002): every reason a reader sees is now written in the
+language of the page where it is decided, the Predict group shows the refusals when no arm answers a case, and two
+defects the template's own guards found on the released 0.08.000 are fixed. No baked number changes; the re-bake
+moves only the version stamps and the digests over them.
+
+### Changed
+
+- The reason a design is not a blast is written in English and Spanish where it is decided (`is_degenerate`), word
+  for word as baked before; the reason catalogue no longer words it a second time. No baked number or text changes.
+- The Predict group lists the refusals of every arm, grouped by reason in the language shown, on a case where no arm
+  is ranked (the degenerate-design control shows them now), and says so when no model answers.
+- The reasons the live engine composes (`predictModel`) read in the language of the page, with the decimal comma in
+  Spanish.
+- The source of every model reads in the language of the page in the App's case view (BL-052): a Spanish page showed
+  the English source, for example "Eqs. 9 and 10".
+- Requirements BR-002 to BR-005 with their adversarial gates in the base-0-08 design area.
+
+### Fixed
+
+- BL-050: the adversarial pipeline suite reads `PLAYWRIGHT_BROWSERS_PATH` with no machine default, and skips its
+  browser plants when it is unset; the product's local-path guard follows the template's base-integrity rule (any
+  drive; the repos, worktrees or temp root; either slash), with two tests. Found by `tools/git/base_gap.py` on main.
+- BL-051: template residue the template's v0.08.002 guard reports: `.vscode/settings.json` (a blueprint file) is
+  deleted; the planted SDD research text of `tests/adversarial/test_spec_guards.py` carries Fragmenta's own sources
+  instead of the template example's; the template's `check_template_residue.py` runs verbatim in CI.
+
 ## [0.08.000] - 2026-10-19
 
 Fragmenta moves onto the current base: `@fasl-work/caos-app-shell` 0.15.0 pinned exactly, on the template 0.08.002. The

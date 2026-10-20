@@ -156,6 +156,99 @@ export function AbstentionPanel({
   );
 }
 
+/**
+ * Every arm's refusals on a case, each arm's grouped by reason in the language shown (BL-049). Only an arm that
+ * abstained on some blast is listed, and only its abstained blasts: an arm that answered shows no refusal.
+ */
+export function refusalsOfCase(
+  artifact: CaseArtifact,
+  lang: 'en' | 'es',
+): { arm: string; total: number; groups: Map<string, string[]> }[] {
+  const lists: { arm: string; total: number; groups: Map<string, string[]> }[] = [];
+  for (const [arm, row] of Object.entries(artifact.predictions)) {
+    const refusals = Object.entries(row).filter(([, cell]) => cell.abstained);
+    if (refusals.length) lists.push({ arm, total: Object.keys(row).length, groups: refusalGroups(refusals, lang) });
+  }
+  return lists;
+}
+
+/**
+ * The refusals of a case grouped by reason across its arms, in the language shown (BL-049): one row per reason, with the
+ * arms that give it and the blasts it covers. A case where every arm refuses one design for one reason reads as one row.
+ */
+export function refusalsByReason(
+  artifact: CaseArtifact,
+  lang: 'en' | 'es',
+): { reason: string; arms: string[]; blasts: string[] }[] {
+  const byReason = new Map<string, { arms: string[]; blasts: Set<string> }>();
+  for (const { arm, groups } of refusalsOfCase(artifact, lang)) {
+    for (const [reason, ids] of groups) {
+      const entry = byReason.get(reason) ?? { arms: [], blasts: new Set<string>() };
+      entry.arms.push(arm);
+      for (const id of ids) entry.blasts.add(id);
+      byReason.set(reason, entry);
+    }
+  }
+  return [...byReason.entries()].map(([reason, { arms, blasts }]) => ({ reason, arms, blasts: [...blasts] }));
+}
+
+/**
+ * The refusals of every arm, for a case where no arm is ranked (BL-049). That is where they matter most: a case where
+ * every arm abstains, such as the degenerate-design control, would otherwise show a chart and no list of the refusals.
+ * When no arm answers any blast it says so plainly.
+ */
+export function RefusalsPanel({
+  artifact,
+  noneAnswers,
+  lang: forced,
+}: {
+  artifact: CaseArtifact;
+  noneAnswers: boolean;
+  /** The language to write in; the shell's by default (a server render has no live store, so the tests name it). */
+  lang?: 'en' | 'es';
+}) {
+  const shell = useShellLang();
+  const lang = forced ?? shell;
+  const rows = refusalsByReason(artifact, lang);
+  if (rows.length === 0) return null;
+  return (
+    <section className="fr-panel" data-panel="refusals" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <p className="fr-note">
+        {noneAnswers
+          ? lang === 'es'
+            ? 'Ningún modelo responde en este caso: todos rechazan sus diseños.'
+            : 'No model answers on this case: every model refuses its designs.'
+          : lang === 'es'
+            ? 'Estos modelos rechazan parte de los diseños de este caso.'
+            : 'These models refuse some of the designs of this case.'}
+      </p>
+      <table className="fr-table caos-table" data-refusals={rows.length} style={{ flex: '1 1 auto', width: '100%', tableLayout: 'auto' }}>
+        <thead>
+          <tr>
+            <th scope="col">{lang === 'es' ? 'Razón' : 'Reason'}</th>
+            <th scope="col">{lang === 'es' ? 'Modelos' : 'Models'}</th>
+            <th scope="col">{lang === 'es' ? 'Tiros' : 'Blasts'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(({ reason, arms, blasts }) => (
+            <tr key={reason} data-reason-arms={arms.length}>
+              <td style={{ whiteSpace: 'normal' }}>{reason}</td>
+              <td style={{ whiteSpace: 'normal' }} data-arms={arms.join(' ')}>{arms.join(', ')}</td>
+              <td>{blasts.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="fr-fine">
+        {lang === 'es'
+          ? 'Una abstención es un resultado. Un número aquí sería una invención.'
+          : 'An abstention is a result. A number here would be an invention.'}
+      </p>
+    </section>
+  );
+}
+
 /* ------------------------------------------------------------------------------------------- */
 /* The metric block                                                                              */
 /* ------------------------------------------------------------------------------------------- */
