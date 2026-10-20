@@ -155,7 +155,7 @@ where none is recorded it says so.
 | engine | scikit-learn | 1.9.0 | the learned arms fitted in the bake | 1.9.1 is current, not adopted, same reason |
 | engine | xgboost | 3.4.1 | the gradient-boosted arm and the stacking base learner | none recorded |
 | tests | pytest | 9.1.1 | the pipeline, contract, guard and planted-defect tests | none recorded |
-| lint | ruff | 0.16.6 | lint of data-pipeline, tests, scripts and app | 0.17.1 is current, not adopted |
+| lint | ruff | 0.17.1 | lint of data-pipeline, tests, scripts and app | none recorded |
 | contracts | jsonschema | 4.26.0 | validates every document against its schema file | none: the template's pin |
 | contracts | openapi-spec-validator | 0.9.0 | validates `docs/contracts/api.openapi.json` | none recorded |
 | API | fastapi | 0.143.3 | the dormant `app/`, run by the API contract tests | none recorded |
