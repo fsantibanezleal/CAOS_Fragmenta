@@ -15,7 +15,7 @@ from planting import add_schema
 ROOT = Path(__file__).resolve().parents[2]
 SKIP = shutil.ignore_patterns("node_modules", "dist", "gate-output", "__pycache__", ".venv*", ".git", ".pytest_cache",
                               ".ruff_cache", "*.pyc", "build")
-COPIED = ("scripts", "docs", "data", "data-pipeline", "models", "frontend", "tests", ".github", "deploy", "app", "manifests",
+COPIED = ("scripts", "docs", "data", "data-pipeline", "models", "frontend", "tests", ".github", "deploy", "app", "manifests", "notebooks",
           "content")
 FILES = ("VERSION", "product.json", "CHANGELOG.md", "requirements.txt", "requirements-precompute.txt", "requirements-dev.txt",
          "requirements-gpu.txt", "requirements-api.txt", ".template-source", ".template-version", "pyproject.toml",
