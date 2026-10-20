@@ -8,7 +8,9 @@ was checked by running it. The units of the 2026-10-05 gap cycle (`features/benc
 `features/response-surface/`) were designed here before their code. **Release 0.08.000 (shell 0.15.0, template
 0.08.002) was designed from its sizing and its contract catalog before its units were built; this document and its
 feature folder `features/base-0-08/` were completed after them, on 2026-10-18, from the code, the tests, the catalog
-and the measurements, and say so where it matters.** The science is designed in the engine's own SDD
+and the measurements, and say so where it matters.** Release 0.09.000 (shell 0.18.0, template 0.10.000) was planned before its
+units in CAOS_MANAGE `plans/fragmenta/plan.md` section 11 (every dependency at its current release, the charts on the shell's
+`UPlotChart`, the notebooks and the README by areas); the base changes it needed were made in the shell first (0.17.0, 0.18.0). The science is designed in the engine's own SDD
 (`docs/design/SDD.md` in CAOS_BlastFrag). The layout of this area is in [`README.md`](README.md).
 
 ## Problem and non-goals
@@ -166,7 +168,7 @@ where none is recorded it says so.
 | API | pydantic | 2.14.1 | the dormant API's models | none recorded |
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
 | API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
-| shell | @fasl-work/caos-app-shell | 0.17.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
+| shell | @fasl-work/caos-app-shell | 0.18.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
 | web | react | 19.3.1 | the UI | none recorded |
 | web | react-dom | 19.3.1 | the UI renderer | none recorded |
 | web | react-router | 8.5.0 | the routes | none recorded |
@@ -287,14 +289,14 @@ Sans), and only then publishes.
 |---|---|---|---|
 | ADR-0057 | two contracts, named stages, no internal package | yes: `data-pipeline/`, the contract catalog, the engine on PyPI | none |
 | ADR-0069 | method vertical with its acceptance criterion | yes, split with the engine | none |
-| ADR-0016, ADR-0017 | routes on the shared shell; documentation depth | yes, on shell 0.15.0 pinned exactly: the landing on the Introduction (executive view first), the App at `/app`, five documentation pages declaring their areas (`features/base-0-08/`) | none |
+| ADR-0016, ADR-0017 | routes on the shared shell; documentation depth | yes, on shell 0.18.0 pinned exactly: the landing on the Introduction (executive view first), the App at `/app`, five documentation pages declaring their areas (`features/base-0-08/`) | none |
 | ADR-0056 | the `docs/` wiki | yes | none |
 | ADR-0058 | architecture modal, five themed bilingual tabs | yes, generated from the artifacts | none |
 | ADR-0070 | Focus mode for the App: the open group in the full viewport, `?focus=1`, Escape or the exit button returns | yes: the App sets the shell's `focus`, an old `/focus/<id>` link forwards, and the shell gate runs with `--require-focus` (`features/base-0-08/`) | none |
 | ADR-0071 | the page is the viewport; one nav row; instrument at least half the App route | yes: rules 1 to 7 and 9 by the product's gate, rule 8 by the base's (G6) | none |
 | ADR-0074 | CI runs cheap checks only | yes: `scripts/check_ci_budget.py`; the one pytest command CI runs is the planted-defect suite | none |
-| ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before; 0.08.000 designed from its sizing and catalog, this document completed after its units | `scripts/check_sdd.py` and `scripts/check_tech_matrix.py` (template 0.09.000, verbatim) in the guards job |
-| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` reads 0.09.000 (the base-integrity, documents, contracts, content-standards, SDD and technology-table guards and the gate runner taken verbatim) |
+| ADR-0075 | design before code, every requirement gated | from 0.06.000, retroactively before; 0.08.000 designed from its sizing and catalog, this document completed after its units | `scripts/check_sdd.py`, `scripts/check_tech_matrix.py`, `scripts/check_notebooks.py` and `scripts/check_readme_areas.py` (template 0.10.000, verbatim) in the guards job |
+| ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` reads 0.10.000 (the base-integrity, documents, contracts, content-standards, residue, SDD, technology-table, notebooks and README-areas guards, the notebook runner and the gate runner taken verbatim) |
 | ADR-0080 | contract-first parallel delivery: catalog, one schema per boundary, providers, declared states, readiness | yes: `docs/contracts/`, `tests/contracts/`, `frontend/src/readiness/`, the template's contract guards | none |
 | ADR-0067 | no em-dash, no emoji | yes: `scripts/check_content_standards.py` | none |
 

@@ -1,5 +1,5 @@
 /**
- * The product's charts, as data-to-props adapters on the shell's `UPlotChart` (BL-042, shell 0.17.0).
+ * The product's charts, as data-to-props adapters on the shell's `UPlotChart` (BL-042, shell 0.17.0 and 0.18.0).
  *
  * Until 0.09.000 the product drew its size distributions and its lines with a uPlot wrapper of its own
  * (`viz/Charts.tsx`), because the shell's chart had no log x axis, no parity form, no reference lines and no points
