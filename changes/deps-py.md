@@ -1,0 +1,2 @@
+- Test: the browser plants' precondition (`browser_available()` in `tests/adversarial/test_adv_web.py`, shared with `test_adv_pipeline.py`) now requires the Chromium build the installed `playwright-core` declares in its `browsers.json`; a browsers folder holding only another revision skips the plants instead of failing them on "Executable doesn't exist" (BL-053).
+- Tooling: ruff 0.16.6 to 0.17.1, with no lint finding on the CI scope.

@@ -4,7 +4,7 @@
 # a published number. These are pinned so that a release of a linter cannot turn a green build red
 # overnight, on a commit that changed nothing. Bump them deliberately, on their own commit.
 pytest==9.1.1
-ruff==0.16.6
+ruff==0.17.1
 #
 # The contract lane (ADR-0080): the schema registry of tests/contracts, scripts/check_documents.py and the producer
 # tests of the dormant API. Pinned exactly for the same reason: a release of a validator must not turn a build red.
