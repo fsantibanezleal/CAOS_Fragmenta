@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { EXPERIMENTS_REFS } from '../../data/citations/experiments';
 import { f, facts } from '../../lib/facts';
 import { notAvailable } from '../../lib/format';
-import { ParityChart } from '../../viz/Charts';
+import { ParityPlot } from '../../viz/plots';
 import { RatioTable } from '../../viz/Evidence';
 import { armLabel, Loading, tr, type TopicProps } from './shared';
 
@@ -89,7 +89,7 @@ export function PerSite({ es, b }: TopicProps) {
       </label>
       {F ? (
         <div className="fr-parity-box">
-          <ParityChart points={points} height={420} />
+          <ParityPlot points={points} height={420} />
         </div>
       ) : (
         <Loading es={es} />

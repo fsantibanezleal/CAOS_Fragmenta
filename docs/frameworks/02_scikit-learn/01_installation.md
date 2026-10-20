@@ -3,7 +3,7 @@
 It comes with the pinned environment:
 
 ```bash
-pip install -r requirements-precompute.txt      # scikit-learn==1.9.0 among the exact pins
+pip install -r requirements-precompute.txt      # scikit-learn==1.9.1 among the exact pins
 ```
 
 or, outside this product, with the engine's extra:
@@ -14,7 +14,7 @@ pip install "blastfrag[learned]==0.3.0"
 
 ```python
 import sklearn
-print(sklearn.__version__)   # 1.9.0 for this release's artifacts
+print(sklearn.__version__)   # 1.9.1 for this release's artifacts
 ```
 
 A different version can change the last bits of a forest's thresholds or a kernel's dual coefficients,

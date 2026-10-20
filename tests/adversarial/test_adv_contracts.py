@@ -13,9 +13,9 @@ from pathlib import Path
 from planting import edit, guard, set_cell
 
 CATALOG = "docs/contracts/catalog.md"
-# column of the contract table: id 0, version 1, owner 2, schema 3, example 4, producer test 5, consumer test 6,
-# missing-data behavior 7, provider 8, model io 9, swap test 10, status 11
-SCHEMA, PRODUCER, PROVIDER, MODEL_IO, STATUS = 3, 5, 8, 9, 11
+# column of the contract table: id 0, version 1, owner 2, schema 3, example 4, documents 5 (template 0.09.000),
+# producer test 6, consumer test 7, missing-data behavior 8, provider 9, model io 10, swap test 11, status 12
+SCHEMA, PRODUCER, PROVIDER, MODEL_IO, STATUS = 3, 6, 9, 10, 12
 
 
 def test_every_contract_guard_passes_on_the_clean_copy(repo: Path) -> None:
