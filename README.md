@@ -16,6 +16,23 @@ It is for blast engineers deciding how far to trust a fragmentation prediction, 
 comparing a predictor on this corpus, and for anyone citing one of the published scores. It is not a
 mechanistic simulator and not a production design tool.
 
+## Areas
+
+The repository by area. Each row names its folder, says whether the area is active or dormant, and points to the area's own README or document.
+
+| Area | Folder | Status | What it holds |
+|---|---|---|---|
+| Web | [frontend/](frontend/) | active | The React and Vite application on the shared CAOS app shell (`@fasl-work/caos-app-shell`, pinned exactly in `frontend/package.json`): the routes Landing, App, Introduction, Methodology, Implementation, Experiments and Benchmark, the TypeScript closed forms, the portable-model walker and the browser gate. Run it with `npm run dev` in `frontend/`; the routes are described in [The application](#the-application). |
+| API | [app/](app/) | dormant: this solution does not require it at the moment, because the committed documents are served as static files | A read-only FastAPI service over the committed documents, GET only, answering 503 with the declared state when a document is absent. It is never deployed; its contract tests run in the suite. See [app/README.md](app/README.md). |
+| Core pipelines | [data-pipeline/](data-pipeline/) | active | The case registry and the staged bake: ingest, preprocess, dataset, features, train, infer, evaluate, export with each scope's portable models, validate, then the benchmark. Bake with `python data-pipeline/run.py` and re-check what is on disk with `python data-pipeline/run.py --validate`. |
+| Packages | [blastfrag on PyPI](https://pypi.org/project/blastfrag/) | active | The engine `blastfrag`, the only package the product consumes for its methods, published separately and pinned exactly in `requirements-precompute.txt`; its repository is [CAOS_BlastFrag](https://github.com/fsantibanezleal/CAOS_BlastFrag). The product declares no package of its own. |
+| Notebooks | [notebooks/](notebooks/) | active | Nineteen didactic notebooks, each in [English](notebooks/en/README.md) and in [Spanish](notebooks/es/README.md), in six topics from the data to the live design response, executed on the product's own data with the engine. How to run them is in [notebooks/README.md](notebooks/README.md). |
+| Data | [data/](data/) | active | The three sources with their licence classes (see [Data and licence](#data-and-licence)) and the committed derived artifacts under `data/derived/`: 16 case artifacts, 11 models files, the benchmark and the index, content-addressed. See [data/README.md](data/README.md). |
+| Contracts | [docs/contracts/](docs/contracts/) | active | The contract catalog with one JSON Schema per committed document, the versions lock, the examples and fixtures, and the OpenAPI document of the dormant API. See [docs/contracts/catalog.md](docs/contracts/catalog.md). |
+| Documentation | [docs/](docs/) | active | The wiki (methods, protocols, data, relevance, results, architecture, frameworks, cases, guides) and the design area with the software design document. Start at [docs/README.md](docs/README.md). |
+| Tests and gates | [tests/](tests/), [scripts/](scripts/) | active | The Python suite, the adversarial tests that attack the guards with planted defects, and the guard scripts; the table in [Tests and gates](#tests-and-gates) lists each check and where it runs. |
+| Deploy | [deploy/](deploy/) | active | The GitHub Pages deploy of `fragmenta.fasl-work.com`: the one deploy place, the custom-domain notes and what the workflow verifies, never credentials. See [deploy/README.md](deploy/README.md). |
+
 ## The result
 
 Every predictor runs under three protocols on the same rows: 100 random 80/20 draws (the protocol the
@@ -140,14 +157,9 @@ committed artifacts.
 ## How it is built
 
 The science lives in **[blastfrag](https://github.com/fsantibanezleal/CAOS_BlastFrag)**, a separately
-published package this product pins exactly and consumes. This repository holds the product:
-
-| | |
-|---|---|
-| `data-pipeline/` | the case registry and the staged bake: ingest, preprocess, dataset, features, train, infer, evaluate, export (with each scope's portable models), validate; then the benchmark |
-| `data/derived/` | 16 case artifacts, 11 models files, the benchmark and the index, content-addressed |
-| `frontend/` | the React application on the shared CAOS app shell, the TypeScript closed forms and the portable-model walker, the browser gate |
-| `docs/` | the wiki, the design area (`docs/design/`) and the contract catalog (`docs/contracts/`) |
+published package this product pins exactly and consumes. This repository holds the product, laid out by
+the areas above: the pipeline in `data-pipeline/`, the committed evidence in `data/derived/`, the application in `frontend/`,
+the notebooks that teach the methods in `notebooks/`, and the documentation in `docs/`.
 
 Offline training and measurement, replay of committed artifacts, and two live lanes in the browser (the
 closed forms, held to the bake by a parity test; the fitted models, walked exactly from their exported
