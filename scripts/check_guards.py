@@ -55,7 +55,8 @@ def no_local_machine_paths(files: list[str]) -> list[str]:
     has to be able to name the pattern it looks for.
     """
     problems = []
-    needle = "D:" + chr(92) + "_Repos"
+    # the template's base-integrity rule: any drive, the repos, worktrees or temp root, either slash
+    needle = re.compile(r"[A-Z]:[" + chr(92) * 2 + r"/]_(Repos|worktrees|Temp)")
     for path in files:
         if path.startswith(".github/") or path.startswith("scripts/check_guards"):
             continue
@@ -64,7 +65,7 @@ def no_local_machine_paths(files: list[str]) -> list[str]:
             text = full.read_text(encoding="utf-8")
         except (UnicodeDecodeError, OSError):
             continue
-        if needle in text:
+        if needle.search(text):
             problems.append(f"a local machine path is written into {path}")
     return problems
 

@@ -130,7 +130,8 @@ export interface ArmMeta {
   sharesMeanSizeWith?: string;
   /** The arm this one caps at the in-situ block (the engine's `InSituCap`); equal to it wherever the cap does not bind. */
   cappedFrom?: string;
-  source: string;
+  /** Where the arm comes from, in the reader's language (BR-005). */
+  source: Record<Lang, string>;
 }
 
 export const ARMS: ArmMeta[] = [
@@ -143,7 +144,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Predice la media de entrenamiento para todo tiro. La comparación contra la que se mide todo lo demás.',
     },
     distribution: false,
-    source: 'the mean measured size of the training blasts',
+    source: { en: 'the mean measured size of the training blasts', es: 'el tamaño medio medido de los tiros de entrenamiento' },
   },
   {
     id: 'kuznetsov',
@@ -154,7 +155,7 @@ export const ARMS: ArmMeta[] = [
       es: 'La ecuación de 1973 con la corrección por potencia del explosivo. Su factor de roca se recupera de las predicciones publicadas para el propio sitio del tiro. Necesita volumen de roca y masa de carga, así que se abstiene donde no se publica la escala.',
     },
     distribution: false,
-    source: 'Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957, Eq. 1',
+    source: { en: 'Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957, Eq. 1', es: 'Hudaverdi, Kulatilake y Kuzu 2010, doi:10.1002/nag.957, Ec. 1' },
   },
   {
     id: 'kuznetsov-transfer',
@@ -165,7 +166,7 @@ export const ARMS: ArmMeta[] = [
       es: 'La misma ecuación con el factor de roca predicho desde el módulo de Young por una recta ajustada solo sobre los sitios de entrenamiento, así que no se usa nada del sitio objetivo. Una calibración de este producto, no una relación publicada.',
     },
     distribution: false,
-    source: 'Kuznetsov 1973 with Cunningham’s correction; rock-factor line fitted here',
+    source: { en: 'Kuznetsov 1973 with Cunningham’s correction; rock-factor line fitted here', es: 'Kuznetsov 1973 con la corrección de Cunningham; recta del factor de roca ajustada aquí' },
   },
   {
     id: 'kuznetsov-capped',
@@ -180,7 +181,7 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: false,
     cappedFrom: 'kuznetsov',
-    source: 'Kuznetsov 1973 with Cunningham’s correction (Hudaverdi et al. 2010 Eq. 1), capped at the in-situ block size: a declared choice of blastfrag 0.4.0',
+    source: { en: 'Kuznetsov 1973 with Cunningham’s correction (Hudaverdi et al. 2010 Eq. 1), capped at the in-situ block size: a declared choice of blastfrag 0.4.0', es: 'Kuznetsov 1973 con la corrección de Cunningham (Hudaverdi et al. 2010, Ec. 1), limitado al tamaño del bloque in situ: una elección declarada de blastfrag 0.4.0' },
   },
   {
     id: 'kuz-ram',
@@ -192,7 +193,7 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',
-    source: 'Amoako, Jha and Zhong 2022, doi:10.3390/mining2020013, Eqs. 3, 5 and 7',
+    source: { en: 'Amoako, Jha and Zhong 2022, doi:10.3390/mining2020013, Eqs. 3, 5 and 7', es: 'Amoako, Jha y Zhong 2022, doi:10.3390/mining2020013, Ecs. 3, 5 y 7' },
   },
   {
     id: 'swebrec',
@@ -204,7 +205,7 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',
-    source: 'Ouchterlony 2005, as printed in Amoako 2022 Eqs. 10 and 11',
+    source: { en: 'Ouchterlony 2005, as printed in Amoako 2022 Eqs. 10 and 11', es: 'Ouchterlony 2005, como lo imprime Amoako 2022, Ecs. 10 y 11' },
   },
   {
     id: 'crush-zone',
@@ -216,7 +217,7 @@ export const ARMS: ArmMeta[] = [
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',
-    source: 'structure from Amoako 2022 section 3; branch constants not published',
+    source: { en: 'structure from Amoako 2022 section 3; branch constants not published', es: 'estructura de Amoako 2022, sección 3; las constantes de las ramas no están publicadas' },
   },
   {
     id: 'group-discriminant',
@@ -227,7 +228,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Asigna un tiro al grupo de módulo alto o bajo, lo que decide qué regresión se usa. Exacto en los 109 tiros etiquetados. Predice un grupo, no un tamaño.',
     },
     distribution: false,
-    source: 'Hudaverdi et al. 2010, Eq. 8',
+    source: { en: 'Hudaverdi et al. 2010, Eq. 8', es: 'Hudaverdi et al. 2010, Ec. 8' },
   },
   {
     id: 'published-regression',
@@ -238,7 +239,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Dos leyes de potencia, una por grupo de rigidez, con los exponentes tomados literalmente de la fuente. La fuente las ajustó sobre estos mismos 97 tiros, así que todo puntaje que obtiene aquí es dentro de la muestra; al excluir un sitio, su comparación justa es la regresión reajustada.',
     },
     distribution: false,
-    source: 'Hudaverdi et al. 2010, Eqs. 9 and 10',
+    source: { en: 'Hudaverdi et al. 2010, Eqs. 9 and 10', es: 'Hudaverdi et al. 2010, Ecs. 9 y 10' },
   },
   {
     id: 'refitted-regression',
@@ -249,7 +250,7 @@ export const ARMS: ArmMeta[] = [
       es: 'La misma forma funcional, reajustada a las filas de entrenamiento en vez de tomada como constantes. Se derrumba al excluir un sitio completo, y ese es el punto.',
     },
     distribution: false,
-    source: 'the published form, coefficients refitted here',
+    source: { en: 'the published form, coefficients refitted here', es: 'la forma publicada, con los coeficientes reajustados aquí' },
   },
   {
     id: 'published-neural-net',
@@ -260,7 +261,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Siete entradas, una capa oculta, entrenada por grupo con Levenberg-Marquardt, ocho simulaciones promediadas. Reproducida según su especificación publicada; su puntaje publicado no se alcanza en ninguna semilla.',
     },
     distribution: false,
-    source: 'Kulatilake, Hudaverdi and Wu 2012, doi:10.1007/s10706-012-9496-3, section 5',
+    source: { en: 'Kulatilake, Hudaverdi and Wu 2012, doi:10.1007/s10706-012-9496-3, section 5', es: 'Kulatilake, Hudaverdi y Wu 2012, doi:10.1007/s10706-012-9496-3, sección 5' },
   },
   {
     id: 'svr-rbf',
@@ -271,7 +272,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Núcleo radial con los hiperparámetros que un estudio de 2025 eligió en una búsqueda de 2700 combinaciones. Otro estudio eligió núcleo polinomial y lo reportó como su peor modelo.',
     },
     distribution: false,
-    source: 'Amoako, Jha and Zhong 2022, section 4.2.1',
+    source: { en: 'Amoako, Jha and Zhong 2022, section 4.2.1', es: 'Amoako, Jha y Zhong 2022, sección 4.2.1' },
   },
   {
     // Present in the benchmark only. It is the second study's own choice of kernel, reported by that
@@ -285,7 +286,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Núcleo polinomial de grado 5, el que un segundo estudio eligió y luego reportó como su peor modelo. Se mantiene en el benchmark para que el fracaso del nivel aprendido no pueda atribuirse a la elección de un núcleo.',
     },
     distribution: false,
-    source: 'Sui et al. 2025, doi:10.3390/app15031254',
+    source: { en: 'Sui et al. 2025, doi:10.3390/app15031254', es: 'Sui et al. 2025, doi:10.3390/app15031254' },
   },
   {
     // The ceiling. It returns the measurement, so it is not a prediction and never appears on a
@@ -299,7 +300,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Devuelve la medición misma. No es un modelo ni una predicción: es el techo, y una comprobación de que el andamiaje de puntuación está bien. Si no puntúa perfecto, lo que está roto es la puntuación.',
     },
     distribution: false,
-    source: 'the measured value itself',
+    source: { en: 'the measured value itself', es: 'el propio valor medido' },
   },
   {
     id: 'random-forest',
@@ -310,7 +311,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Setenta y seis árboles con los parámetros finales del estudio de 2025. Fuerte en una partición aleatoria y negativo en un sitio no visto.',
     },
     distribution: false,
-    source: 'Sui, Zhou, Zhao, Yang and Zou 2025, doi:10.3390/app15031254',
+    source: { en: 'Sui, Zhou, Zhao, Yang and Zou 2025, doi:10.3390/app15031254', es: 'Sui, Zhou, Zhao, Yang y Zou 2025, doi:10.3390/app15031254' },
   },
   {
     id: 'xgboost',
@@ -321,7 +322,7 @@ export const ARMS: ArmMeta[] = [
       es: 'Reproducido con la tasa de aprendizaje publicada de 0,5, que su propia fuente reporta como sobreajuste. Se deja visible en vez de corregirlo.',
     },
     distribution: false,
-    source: 'Sui et al. 2025, final parameters',
+    source: { en: 'Sui et al. 2025, final parameters', es: 'Sui et al. 2025, parámetros finales' },
   },
   {
     id: 'stacking',
@@ -332,7 +333,7 @@ export const ARMS: ArmMeta[] = [
       es: 'El estado del arte 2025 sobre este corpus: bosque y potenciación bajo un meta-modelo lineal ajustado sobre sus predicciones en muestra, como se publicó. Ajustado así, le da casi todo el peso al aprendiz de potenciación y se comporta como él.',
     },
     distribution: false,
-    source: 'Sui et al. 2025, section 4',
+    source: { en: 'Sui et al. 2025, section 4', es: 'Sui et al. 2025, sección 4' },
   },
 ];
 

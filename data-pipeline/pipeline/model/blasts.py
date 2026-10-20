@@ -156,25 +156,39 @@ def oracle_truth() -> list[bf.Blast]:
     return out
 
 
-def is_degenerate(blast: bf.Blast) -> str | None:
-    """Why this design is not a blast, or None if it is one.
+def is_degenerate(blast: bf.Blast) -> dict[str, str] | None:
+    """Why this design is not a blast, in English and Spanish, or None if it is one.
 
     Checked at the design level rather than at the number level, because a ratio-only model will
     happily price a hole with no charge in it: nothing in a power law over seven ratios knows that
     the stemming has swallowed the bench.
+
+    The decision and its words live here, once (BL-049): the pair is ``{"en", "es"}``, the Spanish with the
+    product's terms (taco, bordo, banco, voladura) and the decimal comma.
     """
     if blast.T_over_B >= blast.H_over_B:
-        return (
-            f"the stemming is {blast.T_over_B:.2f} burdens in a bench {blast.H_over_B:.2f} burdens "
-            "tall, so there is no charge column. This is not a blast."
-        )
+        t, h = f"{blast.T_over_B:.2f}", f"{blast.H_over_B:.2f}"
+        return {
+            "en": f"the stemming is {t} burdens in a bench {h} burdens tall, so there is no charge column. "
+            "This is not a blast.",
+            "es": f"el taco mide {_comma(t)} bordos en un banco de {_comma(h)} bordos de alto, así que no "
+            "hay columna de carga. Esto no es una voladura.",
+        }
     charged_fraction = 1.0 - blast.T_over_B / blast.H_over_B
     if charged_fraction < 0.05:
-        return (
-            f"only {charged_fraction:.1%} of the hole carries explosive after stemming, which is "
-            "below any practical charge. This is not a blast."
-        )
+        charged = f"{charged_fraction:.1%}"
+        return {
+            "en": f"only {charged} of the hole carries explosive after stemming, which is below any "
+            "practical charge. This is not a blast.",
+            "es": f"solo el {_comma(charged[:-1])} % de la perforación lleva explosivo después del taco, por "
+            "debajo de cualquier carga práctica. Esto no es una voladura.",
+        }
     return None
+
+
+def _comma(number: str) -> str:
+    """A number as printed, with the Spanish decimal comma."""
+    return number.replace(".", ",")
 
 
 def _linspace(low: float, high: float, n: int) -> list[float]:

@@ -45,7 +45,7 @@ import {
 import type { CaseArtifact, Lang } from '../lib/contract.types';
 import { notAvailable, num, value } from '../lib/format';
 import { DistributionChart, LineChart, ParityChart, type SeriesSpec } from '../viz/Charts';
-import { AbstentionPanel, DecisionPanel, ProvenancePanel, SimulationSpread, TierBadge } from '../viz/Panels';
+import { AbstentionPanel, DecisionPanel, ProvenancePanel, RefusalsPanel, refusalsOfCase, SimulationSpread, TierBadge } from '../viz/Panels';
 import { provenanceOf, type DistributionView, type Selection } from './model';
 
 const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
@@ -100,6 +100,8 @@ export function PredictGroup({
   const cell = row[sel.blast.blast_id];
   // With no measured size there is no ranking to show beside the drawing, so the drawing takes the row.
   const ranked = ARMS.some((a) => sel.artifact.scores[a.id]?.scoreable && sel.artifact.scores[a.id]?.r2_identity !== null);
+  // With no arm ranked the refusals are listed beside the drawing (BL-049), in the place the ranking would be.
+  const listed = !ranked && refusalsOfCase(sel.artifact, 'en').length > 0;
   return (
     <ViewsRow>
       <PlotCard
@@ -146,6 +148,19 @@ export function PredictGroup({
             <ArmComparison artifact={sel.artifact} armId={sel.armId} onArm={onArm} />
             {cell ? <SimulationSpread cell={cell} /> : null}
             <AbstentionPanel artifact={sel.artifact} arm={sel.armId} />
+          </div>
+        </PlotCard>
+      ) : listed ? (
+        // BL-049: with no arm ranked the refusals are the result, so they are listed in the place the ranking would be.
+        <PlotCard
+          fill
+          title={{ en: 'Refusals on this case', es: 'Rechazos en este caso' }}
+          lane="replay"
+          provenance={provenanceOf(sel, false)}
+          dataKey={sel.stateKey}
+        >
+          <div className="fr-scrolly">
+            <RefusalsPanel artifact={sel.artifact} noneAnswers={!answering(sel).length} />
           </div>
         </PlotCard>
       ) : null}
@@ -917,7 +932,7 @@ export function ContextView({ sel }: { sel: Selection }) {
           <p>
             <TierBadge tier={arm.tier} /> {arm.blurb[lang]}
           </p>
-          <p className="fr-fine">{arm.source}</p>
+          <p className="fr-fine">{arm.source[lang]}</p>
         </>
       ) : null}
       {report?.checks?.length ? (
