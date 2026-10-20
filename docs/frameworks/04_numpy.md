@@ -1,6 +1,6 @@
 # 04 · numpy
 
-The engine's only hard dependency, pinned at 2.5.3. The published network and its Levenberg-Marquardt
+The engine's only hard dependency, pinned at 2.5.4. The published network and its Levenberg-Marquardt
 training, the refitted power law's least squares, the transfer line and the diagnostics are written on
 it; the splits,
 the metrics and the bootstrap are plain Python (`random`, `math`) in the engine, and numpy is the
