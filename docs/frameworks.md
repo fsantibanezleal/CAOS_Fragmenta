@@ -32,8 +32,8 @@ pinned versions for this release.
 | Library | Version | Where pinned |
 |---|---|---|
 | blastfrag | 0.3.0 | `requirements-precompute.txt` (exact) |
-| numpy | 2.5.3 | `requirements-precompute.txt` (exact) |
-| scikit-learn | 1.9.0 | `requirements-precompute.txt` (exact) |
+| numpy | 2.5.4 | `requirements-precompute.txt` (exact) |
+| scikit-learn | 1.9.1 | `requirements-precompute.txt` (exact) |
 | xgboost | 3.4.1 | `requirements-precompute.txt` (exact) |
 | Python | 3.13 | the bake's environment; CI and the deploy use the same |
 | React, react-dom | 19.3 | `frontend/package-lock.json` |

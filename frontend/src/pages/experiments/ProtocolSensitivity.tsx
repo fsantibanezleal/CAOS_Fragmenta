@@ -9,7 +9,7 @@ import { Callout, Cite, DocSection } from '@fasl-work/caos-app-shell';
 import { EXPERIMENTS_REFS } from '../../data/citations/experiments';
 import { f, facts } from '../../lib/facts';
 import { notAvailable, num } from '../../lib/format';
-import { LineChart, type SeriesSpec } from '../../viz/Charts';
+import { Lines, type LineSpec } from '../../viz/plots';
 import { armInSentence, armLabel, Loading, tr, type TopicProps } from './shared';
 
 const TREES_AND_KERNELS = ['random-forest', 'xgboost', 'stacking', 'svr-rbf', 'svr-poly'];
@@ -21,7 +21,7 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
   const order: ('random' | 'dedup' | 'site')[] = ['random', 'dedup', 'site'];
   const value = (arm: string, p: 'random' | 'dedup' | 'site') =>
     !F ? null : p === 'random' ? F.random(arm)?.r2_identity ?? null : p === 'dedup' ? F.dedup(arm)?.r2_identity ?? null : F.site(arm);
-  const series: SeriesSpec[] = F
+  const series: LineSpec[] = F
     ? [
         ...F.learned.map((arm) => ({
           id: arm,
@@ -51,20 +51,24 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
         )}
       </p>
       {F ? (
-        <LineChart
+        <Lines
           x={[0, 1, 2]}
           series={series}
           xLabel={t('protocol', 'protocolo')}
           yLabel={t('variance explained', 'varianza explicada')}
           height={320}
           zeroLine
-          legend
           yRange={[-1.1, 1]}
-          xTicks={[0, 1, 2]}
+          xFormat={{ decimals: 0 }}
+          yFormat={{ decimals: 1 }}
+          xTicks={[
+            { value: 0, label: { en: 'random', es: 'aleatorio' } },
+            { value: 1, label: { en: 'deduplicated', es: 'deduplicado' } },
+            { value: 2, label: { en: 'site held out', es: 'sitio excluido' } },
+          ]}
           xRange={[-0.12, 2.12]}
-          xTickFormat={(x) => [t('random', 'aleatorio'), t('deduplicated', 'deduplicado'), t('site held out', 'sitio excluido')][Math.round(x)] ?? ''}
-          yTickFormat={(x) => num(x, 1)}
-          valueFormat={(x) => f(x)}
+          solo
+          valueText={(x) => f(x)}
         />
       ) : (
         <Loading es={es} />
