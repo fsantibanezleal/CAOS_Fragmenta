@@ -26,7 +26,7 @@ registerHooks({
     return url.endsWith('.css') ? { format: 'module', source: '', shortCircuit: true } : nextLoad(url, context);
   },
 });
-const { Lines } = await import('../src/viz/plots');
+const { ParityPlot, Lines } = await import('../src/viz/plots');
 const { TOPICS: BENCH_TOPICS } = await import('../src/pages/benchmark/index');
 const { TOPICS: EXP_TOPICS } = await import('../src/pages/experiments/topics');
 
@@ -45,6 +45,33 @@ function render(node: ReturnType<typeof createElement>, lang: 'en' | 'es' = 'en'
 function hosts(html: string): Record<string, string>[] {
   return [...html.matchAll(/<div class="caos-chart(?: fill)?"([^>]*)>/g)].map((m) => Object.fromEntries([...m[1].matchAll(/([\w-]+)="([^"]*)"/g)].map((a) => [a[1], a[2]])));
 }
+
+// ------------------------------------------------------------------------------------------------ the parity plot
+
+const BLASTS = [
+  { blastId: 'a1', site: 'Murgul', measuredM: 0.2, predictedM: 0.25 },
+  { blastId: 'a2', site: 'Miami', measuredM: 0.1, predictedM: 0.12, extrapolated: true },
+  { blastId: 'a3', site: 'Soma', measuredM: 0.4, predictedM: 0.3 },
+];
+
+test('the parity plot is the shell chart in its parity form, with the identity range, the null line and a pick', () => {
+  const html = render(createElement(ParityPlot, { points: BLASTS, nullMeanM: 0.2, selected: 'a3', onSelect: () => {}, height: 320 }));
+  const [host] = hosts(html);
+  assert.equal(host['data-parity'], '1');
+  assert.equal(host['data-pick'], '1', 'a click selects a blast');
+  assert.equal(host['data-y-marks'], '1', 'the null model');
+  assert.equal(host['data-series'], '3', 'blasts, outside the training range, the selected blast');
+  assert.match(html, /class="fr-chart fr-parity"/);
+});
+
+test('the parity plot without a selection handler or a null level asks for neither', () => {
+  const html = render(createElement(ParityPlot, { points: BLASTS.filter((b) => !b.extrapolated), fill: true }));
+  const [host] = hosts(html);
+  assert.equal(host['data-pick'], undefined);
+  assert.equal(host['data-y-marks'], undefined);
+  assert.equal(host['data-series'], '1');
+  assert.match(html, /class="fr-chart fr-parity fill"/);
+});
 
 // ---------------------------------------------------------------------------------------------------------- lines
 

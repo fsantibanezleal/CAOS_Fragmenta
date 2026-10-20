@@ -7,10 +7,11 @@
  * and wording onto the shell chart's props, and declares on the chart's host what was drawn, which the browser gate
  * reads (`data-chart`, `data-chart-*`), because pixels cannot tell an empty canvas from one that never mounted.
  *
+ * Two charts so far: the parity plot and the lines of the documentation pages and of the all-models view.
  */
 
-import { type BiText, type FormatOptions } from '@fasl-work/caos-app-shell';
-import { UPlotChart } from '@fasl-work/caos-app-shell/chart';
+import { useShellLang, type BiText, type FormatOptions } from '@fasl-work/caos-app-shell';
+import { type ChartSeries, UPlotChart } from '@fasl-work/caos-app-shell/chart';
 import { useEffect, useRef } from 'react';
 
 import { num } from '../lib/format';
@@ -37,6 +38,16 @@ function declare(node: HTMLElement | null, chart: string, drawn: Record<string, 
 /** The hint under an idle chart, in both languages (the shell's default says "hover the chart"). */
 const HINTS = {
   line: { en: 'Move the pointer across the chart to read values', es: 'Mueva el puntero por el gráfico para leer los valores' },
+  // One line under the plot, cut with an ellipsis where it does not fit: 62 characters fit the Predict card at 1280 px.
+  parity: { en: 'Point at a blast for its error and site; click to select it.', es: 'Apunte a un tiro: su error y su sitio; clic para elegirlo.' },
+  // where a click selects nothing (the documentation pages), the hint does not promise it
+  parityRead: { en: 'Point at a blast for its error and site.', es: 'Apunte a un tiro: su error y su sitio.' },
+} as const;
+
+const AXES = {
+  measured: { en: 'measured', es: 'medido' },
+  predicted: { en: 'predicted', es: 'predicho' },
+  nullModel: { en: 'null model', es: 'modelo nulo' },
 } as const;
 
 /** The box of a chart: the card the product has always drawn it in, filling its stage or at the height asked for. */
@@ -44,6 +55,84 @@ function Box({ fill, children, host }: { fill: boolean; children: React.ReactNod
   return (
     <div ref={host} className="fr-chart" style={fill ? { height: '100%', minHeight: 0 } : undefined}>
       {children}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------- */
+/* Parity                                                                                         */
+/* ------------------------------------------------------------------------------------------- */
+
+export interface ParityPoint {
+  blastId: string;
+  site: string;
+  measuredM: number;
+  predictedM: number;
+  extrapolated?: boolean;
+}
+
+export interface ParityProps {
+  points: ParityPoint[];
+  /** The null model's level, drawn so that "better than a constant" is visible rather than argued. */
+  nullMeanM?: number;
+  height?: number;
+  onSelect?: (blastId: string) => void;
+  selected?: string | null;
+  /** Take the height the container gives instead of the `height` floor. ADR-0071 rule 8. */
+  fill?: boolean;
+}
+
+/**
+ * Predicted against measured, on equal axes, with the identity line: the shell's `UPlotChart` in its parity form
+ * (one shared range in a square box, the null model as a reference line, the selected blast as a larger point of its
+ * own colour, the blast under the pointer found in the plane).
+ */
+export function ParityPlot({ points, nullMeanM, height = 320, onSelect, selected, fill = false }: ParityProps) {
+  const lang = useShellLang();
+  const host = useRef<HTMLDivElement | null>(null);
+  const es = lang === 'es';
+  const at = selected ? points.findIndex((p) => p.blastId === selected) : -1;
+  const cm = (m: number) => m * 100;
+  const inside = points.map((p, i) => (i === at || p.extrapolated ? null : cm(p.predictedM)));
+  const outside = points.map((p, i) => (i !== at && p.extrapolated ? cm(p.predictedM) : null));
+  const chosen = points.map((p, i) => (i === at ? cm(p.predictedM) : null));
+  const series: ChartSeries[] = [
+    { label: { en: 'Blasts', es: 'Tiros' }, values: inside, mode: 'points' },
+    ...(outside.some((v) => v !== null)
+      ? [{ label: { en: 'Outside the training range', es: 'Fuera del rango de entrenamiento' }, values: outside, mode: 'points' as const, color: '--color-warn' as const }]
+      : []),
+    ...(at >= 0
+      ? [{ label: { en: 'The selected blast', es: 'El tiro elegido' }, values: chosen, mode: 'points' as const, size: 14, color: '--color-magenta' as const }]
+      : []),
+  ];
+  useEffect(() => {
+    declare(host.current, 'parity', { points: points.length, selected: at >= 0 ? 1 : 0, 'null-line': nullMeanM === undefined || nullMeanM === null ? 0 : 1 });
+  }, [points.length, at, nullMeanM]);
+  const readout = (i: number) => {
+    const p = points[i];
+    const err = cm(p.predictedM - p.measuredM);
+    const rel = ((p.predictedM - p.measuredM) / p.measuredM) * 100;
+    const sign = err >= 0 ? '+' : '';
+    const outsideNote = p.extrapolated ? (es ? '; extrapolado' : '; extrapolated') : '';
+    // The error first: the readout is one line, cut with an ellipsis in a narrow card, and the sizes it would lose
+    // are the ones the axes already show.
+    return es
+      ? `${p.blastId}, ${p.site}: error ${sign}${num(err, 1)} cm (${sign}${num(rel, 0)} %); medido ${num(cm(p.measuredM), 1)} cm, predicho ${num(cm(p.predictedM), 1)} cm${outsideNote}`
+      : `${p.blastId}, ${p.site}: error ${sign}${num(err, 1)} cm (${sign}${num(rel, 0)} %); measured ${num(cm(p.measuredM), 1)} cm, predicted ${num(cm(p.predictedM), 1)} cm${outsideNote}`;
+  };
+  return (
+    <div ref={host} className={fill ? 'fr-chart fr-parity fill' : 'fr-chart fr-parity'}>
+      <UPlotChart
+        parity
+        height={fill ? 'fill' : height}
+        x={{ values: points.map((p) => cm(p.measuredM)), label: AXES.measured, unit: 'cm', format: { decimals: 0 } }}
+        y={{ label: AXES.predicted, unit: 'cm', format: { decimals: 0 } }}
+        series={series}
+        yMarks={nullMeanM === undefined || nullMeanM === null ? undefined : [{ y: cm(nullMeanM), label: AXES.nullModel }]}
+        readout={readout}
+        hint={onSelect ? HINTS.parity : HINTS.parityRead}
+        onPick={onSelect ? (i) => onSelect(points[i].blastId) : undefined}
+      />
     </div>
   );
 }

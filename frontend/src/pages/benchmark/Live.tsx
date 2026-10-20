@@ -12,7 +12,7 @@ import { SECTION_REFS } from '../../data/citations';
 import { fittedArms, predictModel } from '../../engine/learned';
 import { ARM_BY_ID, formatSize } from '../../lib/artifacts';
 import { f, facts } from '../../lib/facts';
-import { ParityChart } from '../../viz/Charts';
+import { ParityPlot } from '../../viz/plots';
 import { tr, type TopicData } from './shared';
 
 const LIVE_ARMS = ['random-forest', 'xgboost', 'stacking', 'published-neural-net', 'svr-rbf', 'refitted-regression'];
@@ -117,7 +117,7 @@ export default function Live({ b, corpus }: TopicData) {
             </tbody>
           </table>
           <div className="fr-parity-box">
-            <ParityChart points={points} height={380} />
+            <ParityPlot points={points} height={380} />
           </div>
         </>
       ) : (
