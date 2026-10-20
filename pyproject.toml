@@ -26,6 +26,8 @@ select = ["E", "F", "W", "I"]
 "scripts/build_docs_results.py" = ["E501"]
 # The template's guards, kept verbatim so they stay the base's (ADR-0078): a long line there is the template's.
 "scripts/check_sdd.py" = ["E501"]
+"scripts/check_content_standards.py" = ["E501"]
+"scripts/check_base_integrity.py" = ["E501", "I001"]
 "scripts/check_deploy_place.py" = ["E501"]
 "scripts/check_web_baseline.py" = ["E501"]
 "scripts/check_template_residue.py" = ["E501"]

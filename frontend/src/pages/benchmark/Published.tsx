@@ -12,7 +12,7 @@ import { formatSize } from '../../lib/artifacts';
 import type { BenchmarkArtifact, GroupedArmBlock, ReproductionBlock } from '../../lib/contract.types';
 import { f } from '../../lib/facts';
 import { notAvailable, num } from '../../lib/format';
-import { LineChart, type SeriesSpec } from '../../viz/Charts';
+import { Lines, type LineSpec } from '../../viz/plots';
 import { BarsFigure } from '../../viz/figures/benchmark';
 import { tr, type TopicData } from './shared';
 
@@ -23,7 +23,7 @@ function WidthSweep({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
   const held = ws.leave_one_site_out.filter((row) => !row.published);
   const pub = ws.leave_one_site_out.find((row) => row.published);
   const nullScore = (b.protocols['leave-one-site-out'].arms.null as GroupedArmBlock).r2_identity;
-  const series: SeriesSpec[] = [
+  const series: LineSpec[] = [
     { id: 'all', label: t('every blast', 'cada tiro'), values: held.map((row) => row.supports.all.r2_identity) },
     { id: 'geometry', label: t('with geometry', 'con geometría'), values: held.map((row) => row.supports.geometry.r2_identity) },
     {
@@ -47,17 +47,16 @@ function WidthSweep({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
           `La fuente barrió de ${ws.widths[0]} a ${ws.widths[ws.widths.length - 1]} unidades ocultas, ${ws.n_simulations} simulaciones cada una, y eligió el ancho de cada grupo sobre su propio conjunto de validación. El mismo procedimiento, reproducido, no cae en los anchos publicados; y con el sitio excluido ningún ancho explica varianza alguna ni supera al nulo, que predice la media de entrenamiento.`,
         )}
       </p>
-      <LineChart
+      <Lines
         x={held.map((row) => row.hidden['1'])}
         series={series}
         xLabel={t('hidden units, the same in both groups', 'unidades ocultas, igual en ambos grupos')}
         yLabel={t('variance explained, site held out', 'varianza explicada, sitio excluido')}
         height={240}
-        legend
         zeroLine
-        xTicks={held.map((row) => row.hidden['1'])}
-        xTickFormat={(v) => String(Math.round(v))}
-        valueFormat={(v) => f(v)}
+        xFormat={{ decimals: 0, grouping: false }}
+        xText={(v) => String(Math.round(v))}
+        valueText={(v) => f(v)}
       />
       <table className="fr-table">
         <thead>
@@ -105,7 +104,7 @@ export default function Published({ b }: TopicData) {
   const gain = arms.classical?.rmse_m && arms.null?.rmse_m ? 1 - arms.classical.rmse_m / arms.null.rmse_m : null;
   const sweep = b.network_seed_sweep;
   const sorted = [...sweep.r2_identity].filter((v): v is number => v !== null).sort((x, y) => x - y);
-  const series: SeriesSpec[] = [
+  const series: LineSpec[] = [
     { id: 'seeds', label: t('reproduction, per seed', 'reproducción, por semilla'), values: sorted },
     { id: 'published', label: t('published', 'publicado'), values: sorted.map(() => sweep.published), dashed: true },
   ];
@@ -226,15 +225,15 @@ export default function Published({ b }: TopicData) {
           )}{' '}
           <Cite id="kulatilake2012" />
         </p>
-        <LineChart
+        <Lines
           x={sorted.map((_, i) => i)}
           series={series}
           xLabel={t('seed, sorted', 'semilla, ordenada')}
           yLabel={t('variance explained', 'varianza explicada')}
           height={240}
-          legend
-          xTickFormat={(v) => `#${Math.round(v)}`}
-          valueFormat={(v) => f(v)}
+          xFormat={{ decimals: 0 }}
+          xText={(v) => `#${Math.round(v)}`}
+          valueText={(v) => f(v)}
         />
         <table className="fr-table">
           <thead>

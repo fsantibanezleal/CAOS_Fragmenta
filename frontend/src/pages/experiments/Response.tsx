@@ -12,7 +12,7 @@ import { formatSize, loadCase } from '../../lib/artifacts';
 import type { CaseArtifact } from '../../lib/contract.types';
 import { f, facts, iv } from '../../lib/facts';
 import { num } from '../../lib/format';
-import { LineChart, type SeriesSpec } from '../../viz/Charts';
+import { Lines, type LineSpec } from '../../viz/plots';
 import { ResponseHeatmap } from '../../viz/Evidence';
 import { armLabel, Loading, tr, type TopicProps } from './shared';
 
@@ -30,7 +30,7 @@ export function Response({ es, b }: TopicProps) {
   const sweep = (artifact: CaseArtifact | null, field: 'Pf_kg_m3' | 'B_over_D') => {
     if (!artifact) return null;
     const x = artifact.blasts.map((blast) => blast.features[field]);
-    const series: SeriesSpec[] = SWEPT_ARMS.filter((a) => artifact.predictions[a]).map((a) => ({
+    const series: LineSpec[] = SWEPT_ARMS.filter((a) => artifact.predictions[a]).map((a) => ({
       id: a,
       label: armLabel(a, lang),
       values: artifact.blasts.map((blast) => artifact.predictions[a][blast.blast_id]?.x50_m ?? null),
@@ -73,7 +73,7 @@ export function Response({ es, b }: TopicProps) {
       {p ? (
         <>
           <h3>{t('Powder factor', 'Factor de carga')}</h3>
-          <LineChart x={p.x} series={p.series} xLabel={t('powder factor, kg/m³', 'factor de carga, kg/m³')} yLabel={t('predicted x50', 'x50 predicho')} height={280} legend xTickFormat={(v) => num(v, 2)} yTickFormat={(v) => num(v, 1)} valueFormat={(v) => formatSize(v)} />
+          <Lines x={p.x} series={p.series} xLabel={t('powder factor, kg/m³', 'factor de carga, kg/m³')} yLabel={t('predicted x50', 'x50 predicho')} height={280} xFormat={{ decimals: 2 }} yFormat={{ decimals: 1 }} xText={(v) => num(v, 2)} valueText={(v) => formatSize(v)} />
         </>
       ) : (
         <Loading es={es} />
@@ -81,7 +81,7 @@ export function Response({ es, b }: TopicProps) {
       {bd ? (
         <>
           <h3>{t('Burden over hole diameter', 'Bordo sobre diámetro')}</h3>
-          <LineChart x={bd.x} series={bd.series} xLabel="B/D" yLabel={t('predicted x50', 'x50 predicho')} height={280} legend xTickFormat={(v) => num(v, 1)} yTickFormat={(v) => num(v, 1)} valueFormat={(v) => formatSize(v)} />
+          <Lines x={bd.x} series={bd.series} xLabel="B/D" yLabel={t('predicted x50', 'x50 predicho')} height={280} xFormat={{ decimals: 1 }} yFormat={{ decimals: 1 }} xText={(v) => num(v, 1)} valueText={(v) => formatSize(v)} />
         </>
       ) : (
         <Loading es={es} />

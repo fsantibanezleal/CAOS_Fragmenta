@@ -73,7 +73,10 @@ jobs:
         run: cd frontend && npm ci
       - name: Install the schema validator (the SDD guard, the document check and the planted-defect suite)
         run: pip install jsonschema==4.26.0
-      - name: Base-integrity guards
+      - name: Base-integrity guards (the template's, verbatim; a model file a catalog row declares is admitted, 0.09.000)
+        run: python scripts/check_base_integrity.py
+
+      - name: The product's own guards (no package of its own, no copyrighted sources)
         # A script rather than shell one-liners, so a developer can run the same check before
         # pushing, and so the guards themselves can be tested. They are: tests/test_guards.py.
         run: python scripts/check_guards.py
@@ -100,7 +103,7 @@ jobs:
       - name: The design document, every requirement naming a gate that exists (ADR-0075)
         run: python scripts/check_sdd.py
 
-      - name: The SDD technology table is the pinned dependencies (template 0.08.002, ADR-0078)
+      - name: The SDD technology table is the pinned dependencies (template 0.09.000, ADR-0078)
         run: python scripts/check_tech_matrix.py
 
       - name: One deploy place, GitHub Pages, and no files of another (ADR-0055)
