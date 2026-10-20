@@ -13,5 +13,5 @@ openapi-spec-validator==0.9.0
 httpx==0.28.1
 # the dormant API's own pins (requirements-api.txt), so the API contract tests run on exactly those versions; uvicorn
 # is not needed to test it
-fastapi==0.151.0
+fastapi==0.156.1
 pydantic==2.14.1
