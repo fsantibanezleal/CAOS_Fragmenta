@@ -158,7 +158,7 @@ where none is recorded it says so.
 | lint | ruff | 0.17.1 | lint of data-pipeline, tests, scripts and app | none recorded |
 | contracts | jsonschema | 4.26.0 | validates every document against its schema file | none: the template's pin |
 | contracts | openapi-spec-validator | 0.9.0 | validates `docs/contracts/api.openapi.json` | none recorded |
-| API | fastapi | 0.143.3 | the dormant `app/`, run by the API contract tests | none recorded |
+| API | fastapi | 0.151.0 | the dormant `app/`, run by the API contract tests | none recorded |
 | API | pydantic | 2.14.1 | the dormant API's models | none recorded |
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
 | API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
