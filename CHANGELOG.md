@@ -17,7 +17,9 @@ moves only the version stamps and the digests over them.
   is ranked (the degenerate-design control shows them now), and says so when no model answers.
 - The reasons the live engine composes (`predictModel`) read in the language of the page, with the decimal comma in
   Spanish.
-- Requirements BR-002 to BR-004 with their adversarial gates in the base-0-08 design area.
+- The source of every model reads in the language of the page in the App's case view (BL-052): a Spanish page showed
+  the English source, for example "Eqs. 9 and 10".
+- Requirements BR-002 to BR-005 with their adversarial gates in the base-0-08 design area.
 
 ### Fixed
 

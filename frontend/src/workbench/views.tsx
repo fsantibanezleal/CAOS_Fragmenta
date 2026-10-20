@@ -932,7 +932,7 @@ export function ContextView({ sel }: { sel: Selection }) {
           <p>
             <TierBadge tier={arm.tier} /> {arm.blurb[lang]}
           </p>
-          <p className="fr-fine">{arm.source}</p>
+          <p className="fr-fine">{arm.source[lang]}</p>
         </>
       ) : null}
       {report?.checks?.length ? (
