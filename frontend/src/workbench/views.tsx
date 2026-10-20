@@ -44,8 +44,8 @@ import {
 } from '../lib/artifacts';
 import type { CaseArtifact, Lang } from '../lib/contract.types';
 import { notAvailable, num, value } from '../lib/format';
-import { DistributionChart, ParityChart, type SeriesSpec } from '../viz/Charts';
-import { Lines, type LineSpec } from '../viz/plots';
+import { DistributionChart, type SeriesSpec } from '../viz/Charts';
+import { Lines, type LineSpec, ParityPlot } from '../viz/plots';
 import { AbstentionPanel, DecisionPanel, ProvenancePanel, RefusalsPanel, refusalsOfCase, SimulationSpread, TierBadge } from '../viz/Panels';
 import { provenanceOf, type DistributionView, type Selection } from './model';
 
@@ -116,7 +116,7 @@ export function PredictGroup({
           <Stage label={title}>
             {({ width, height }) => (
               <StageBox width={width} height={height}>
-                <ParityChart
+                <ParityPlot
                   points={points}
                   nullMeanM={sel.artifact.null_mean_m}
                   selected={sel.blast.blast_id}
