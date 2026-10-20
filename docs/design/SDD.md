@@ -154,6 +154,10 @@ where none is recorded it says so.
 | engine | numpy | 2.5.4 | arrays in the bake and in the runtime lane | none recorded |
 | engine | scikit-learn | 1.9.1 | the learned arms fitted in the bake | none recorded |
 | engine | xgboost | 3.4.1 | the gradient-boosted arm and the stacking base learner | none recorded |
+| notebooks | matplotlib | 3.11.2 | the figures of the didactic notebooks (`notebooks/`, local only) | none recorded |
+| notebooks | nbclient | 0.11.0 | executes each notebook in a fresh kernel (`scripts/run_notebooks.py`, the template's) | none: the template's runner |
+| notebooks | nbformat | 5.11.1 | reads and writes the notebooks for the runner | none: the template's runner |
+| notebooks | ipykernel | 7.4.0 | the Python kernel the runner starts | none recorded |
 | tests | pytest | 9.1.1 | the pipeline, contract, guard and planted-defect tests | none recorded |
 | lint | ruff | 0.17.1 | lint of data-pipeline, tests, scripts and app | none recorded |
 | contracts | jsonschema | 4.26.0 | validates every document against its schema file | none: the template's pin |
