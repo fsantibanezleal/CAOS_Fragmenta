@@ -1,7 +1,7 @@
 # 02 · scikit-learn
 
 The library behind the random forest, both support-vector arms, the input standardisation, the stacking
-meta-learner and the Isolation Forest screen. Pinned at 1.9.0, installed with the engine's `learned`
+meta-learner and the Isolation Forest screen. Pinned at 1.9.1, installed with the engine's `learned`
 extra, used only in the bake.
 
 | | |
