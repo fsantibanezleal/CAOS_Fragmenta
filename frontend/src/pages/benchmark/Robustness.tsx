@@ -91,6 +91,7 @@ export default function Robustness({ b }: TopicData) {
             zeroLine
             xFormat={{ decimals: 0 }}
             xText={(v) => `#${Math.round(v)}`}
+            solo
             valueText={(v) => f(v)}
           />
         </>

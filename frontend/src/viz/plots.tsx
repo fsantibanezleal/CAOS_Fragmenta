@@ -11,8 +11,8 @@
  * and the lines of the documentation pages and of the all-models view.
  */
 
-import { pick, useShellLang, type BiText, type FormatOptions } from '@fasl-work/caos-app-shell';
-import { type ChartSeries, UPlotChart } from '@fasl-work/caos-app-shell/chart';
+import { pick, useShellLang, type BiText, type FormatOptions, type Lang } from '@fasl-work/caos-app-shell';
+import { type ChartSeries, type ChartTick, tickLabelAt, UPlotChart, type UPlotChartProps } from '@fasl-work/caos-app-shell/chart';
 import { useEffect, useRef } from 'react';
 
 import { num } from '../lib/format';
@@ -250,33 +250,59 @@ export interface LinesProps {
   /** A y value as the readout writes it. */
   valueText?: (v: number) => string;
   yRange?: [number, number];
-  /** A reference line at zero. */
+  /** A reference line at zero, with no label. */
   zeroLine?: boolean;
+  /** The x axis ticks exactly at these values with these labels (a categorical axis); the readout names an x on one by its label. */
+  xTicks?: ChartTick[];
+  /** The x scale spans at least this range, so an end tick's label is not cut by the plot edge. */
+  xRange?: [number, number];
+  /** The key solos a series: an entry dims the others, a second press releases it. */
+  solo?: boolean;
+}
+
+/** A line chart with fewer x values than this gets a dot at each value (the removed wrapper's rule). */
+export const DOTS_BELOW = 40;
+
+/** What `Lines` asks of the shell chart, as plain props (the tests read it). */
+export function lineChartProps(
+  { x, series, xLabel, yLabel, height = 260, xFormat, yFormat, xText, valueText, yRange, zeroLine = false, xTicks, xRange, solo }: LinesProps,
+  lang: Lang,
+): UPlotChartProps {
+  const fmt = valueText ?? ((v: number) => num(v, 3));
+  const nameOf = (v: number) => tickLabelAt(xTicks, v, lang) ?? (xText ? xText(v) : num(v, 3));
+  const dots = x.length < DOTS_BELOW;
+  return {
+    height,
+    x: { values: x, label: bi(xLabel), format: xFormat, ticks: xTicks, range: xRange },
+    y: { label: bi(yLabel), range: yRange, format: yFormat },
+    series: series.map((s, i) => ({ label: bi(s.label), values: s.values, width: s.width, ...(dots ? { dots: true } : {}), ...styleOf(i, s.dashed) })),
+    yMarks: zeroLine ? [{ y: 0, tone: 'neutral' as const }] : undefined,
+    solo: solo || undefined,
+    readout: (i: number) =>
+      [nameOf(x[i]), ...series.map((s) => `${s.label} ${s.values[i] === null || s.values[i] === undefined ? '-' : fmt(s.values[i] as number)}`)].join(' · '),
+    hint: HINTS.line,
+  };
 }
 
 /** Lines against one x: the response curves, the sorted draws, the slope charts and the all-models view. */
-export function Lines({ x, series, xLabel, yLabel, height = 260, xFormat, yFormat, xText, valueText, yRange, zeroLine = false }: LinesProps) {
+export function Lines(props: LinesProps) {
+  const { x, series, height = 260 } = props;
+  const lang = useShellLang();
   const host = useRef<HTMLDivElement | null>(null);
   const drawn = series.filter((s) => s.values.some((v) => v !== null && v !== undefined)).length;
   useEffect(() => {
     // A series of all-nulls draws nothing while still counting as a series, so count the ones that put a value on it.
     declare(host.current, 'line', { series: series.length, points: x.length, 'series-with-values': drawn });
   }, [series.length, x.length, drawn]);
-  const fmt = valueText ?? ((v: number) => num(v, 3));
-  const readout = (i: number) =>
-    [xText ? xText(x[i]) : num(x[i], 3), ...series.map((s) => `${s.label} ${s.values[i] === null || s.values[i] === undefined ? '-' : fmt(s.values[i] as number)}`)].join(' · ');
   if (x.length === 0) return <div ref={host} className="fr-chart" style={{ minHeight: height }} />;
+  const asked = lineChartProps(props, lang);
+  // What the chart was asked for, on its box, so the tests and the gate can read it where the shell's own declarations
+  // (made once the chart is drawn) are not there yet.
+  const ticks = asked.x.ticks?.map((t) => pick(t.label, lang)).join('|');
+  const range = asked.x.range?.join(',');
   return (
-    <Box host={host}>
-      <UPlotChart
-        height={height}
-        x={{ values: x, label: bi(xLabel), format: xFormat }}
-        y={{ label: bi(yLabel), range: yRange, format: yFormat }}
-        series={series.map((s, i) => ({ label: bi(s.label), values: s.values, width: s.width, ...styleOf(i, s.dashed) }))}
-        yMarks={zeroLine ? [{ y: 0, label: bi(''), tone: 'neutral' as const }] : undefined}
-        readout={readout}
-        hint={HINTS.line}
-      />
-    </Box>
+    <div ref={host} className="fr-chart" data-x-ticks={ticks} data-x-range={range} data-solo-key={asked.solo ? '1' : undefined}>
+      <UPlotChart {...asked} />
+    </div>
   );
 }

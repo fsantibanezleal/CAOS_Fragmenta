@@ -73,7 +73,7 @@ export function Response({ es, b }: TopicProps) {
       {p ? (
         <>
           <h3>{t('Powder factor', 'Factor de carga')}</h3>
-          <Lines x={p.x} series={p.series} xLabel={t('powder factor, kg/m³', 'factor de carga, kg/m³')} yLabel={t('predicted x50', 'x50 predicho')} height={280} xFormat={{ decimals: 2 }} yFormat={{ decimals: 1 }} xText={(v) => num(v, 2)} valueText={(v) => formatSize(v)} />
+          <Lines x={p.x} series={p.series} xLabel={t('powder factor, kg/m³', 'factor de carga, kg/m³')} yLabel={t('predicted x50', 'x50 predicho')} height={280} xFormat={{ decimals: 2 }} yFormat={{ decimals: 1 }} xText={(v) => num(v, 2)} solo valueText={(v) => formatSize(v)} />
         </>
       ) : (
         <Loading es={es} />
@@ -81,7 +81,7 @@ export function Response({ es, b }: TopicProps) {
       {bd ? (
         <>
           <h3>{t('Burden over hole diameter', 'Bordo sobre diámetro')}</h3>
-          <Lines x={bd.x} series={bd.series} xLabel="B/D" yLabel={t('predicted x50', 'x50 predicho')} height={280} xFormat={{ decimals: 1 }} yFormat={{ decimals: 1 }} xText={(v) => num(v, 1)} valueText={(v) => formatSize(v)} />
+          <Lines x={bd.x} series={bd.series} xLabel="B/D" yLabel={t('predicted x50', 'x50 predicho')} height={280} xFormat={{ decimals: 1 }} yFormat={{ decimals: 1 }} xText={(v) => num(v, 1)} solo valueText={(v) => formatSize(v)} />
         </>
       ) : (
         <Loading es={es} />
