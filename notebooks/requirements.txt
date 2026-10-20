@@ -3,8 +3,8 @@
 # exactly as requirements-precompute.txt pins them for the bake, so a notebook reproduces the committed numbers.
 # A bump of the bake's pins is a bump here, followed by a run of every notebook.
 blastfrag==0.4.0
-numpy==2.5.3
-scikit-learn==1.9.0
+numpy==2.5.4
+scikit-learn==1.9.1
 xgboost==3.4.1
 matplotlib==3.11.2
 # the runtime that executes the notebooks (the template's run_notebooks.py)
