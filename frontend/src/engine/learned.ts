@@ -17,7 +17,7 @@
  *   rounded after every tree.
  */
 
-import type { FlatTree, ModelsFile, PortableModel, Router, Standardise } from '../lib/contract.types';
+import type { FlatTree, Lang, ModelsFile, PortableModel, Router, Standardise } from '../lib/contract.types';
 
 export const FEATURE_ORDER = [
   'S_over_B',
@@ -107,8 +107,14 @@ export function resolveModel(name: string, file: ModelsFile): PortableModel {
 
 const logistic = (v: number) => 1 / (1 + Math.exp(-v));
 
-/** Predict a mean fragment size, in metres, or the reason the arm would refuse. */
-export function predictModel(model: PortableModel, x: number[]): LearnedResult {
+/** A number with the decimal comma on the Spanish page (the engine's reasons carry numbers; BL-049). */
+const spoken = (text: string, lang: Lang) => (lang === 'es' ? text.replace('.', ',') : text);
+
+/**
+ * Predict a mean fragment size, in metres, or the reason the arm would refuse, written in `lang` (BL-049: the live
+ * engine's reasons read in the language of the page, as the baked ones do; English by default).
+ */
+export function predictModel(model: PortableModel, x: number[], lang: Lang = 'en'): LearnedResult {
   let value: number;
   switch (model.kind) {
     case 'kuznetsov-transfer': {
@@ -118,7 +124,7 @@ export function predictModel(model: PortableModel, x: number[]): LearnedResult {
     case 'power-law': {
       const g = group(model.router, x);
       const coefficients = model.groups[String(g)];
-      if (!coefficients) return { value: null, reason: `no refitted equation for group ${g}` };
+      if (!coefficients) return { value: null, reason: lang === 'es' ? `no hay ecuación reajustada para el grupo ${g}` : `no refitted equation for group ${g}` };
       value = coefficients.intercept;
       for (let i = 0; i < x.length; i += 1) value *= x[i] ** coefficients.exponents[i];
       break;
@@ -126,7 +132,7 @@ export function predictModel(model: PortableModel, x: number[]): LearnedResult {
     case 'network': {
       const g = group(model.router, x);
       const spec = model.groups[String(g)];
-      if (!spec) return { value: null, reason: `no network was trained for group ${g}` };
+      if (!spec) return { value: null, reason: lang === 'es' ? `no se entrenó ninguna red para el grupo ${g}` : `no network was trained for group ${g}` };
       const scaled = x.map((v, i) => {
         const span = spec.maximum[i] - spec.minimum[i];
         return span === 0 ? 0.5 : (v - spec.minimum[i]) / span;
@@ -190,13 +196,16 @@ export function predictModel(model: PortableModel, x: number[]): LearnedResult {
       break;
     }
     default:
-      return { value: null, reason: 'unknown model kind' };
+      return { value: null, reason: lang === 'es' ? 'tipo de modelo desconocido' : 'unknown model kind' };
   }
   const [low, high] = model.plausible_x50_m;
   if (!Number.isFinite(value) || value < low || value > high) {
     return {
       value: null,
-      reason: `the model returned ${value.toPrecision(4)} m, outside the plausible fragment range ${low} to ${high} m`,
+      reason:
+        lang === 'es'
+          ? `el modelo devolvió ${spoken(value.toPrecision(4), lang)} m, fuera del rango plausible de tamaños de fragmento, de ${spoken(String(low), lang)} a ${spoken(String(high), lang)} m`
+          : `the model returned ${value.toPrecision(4)} m, outside the plausible fragment range ${low} to ${high} m`,
     };
   }
   return { value, reason: null };

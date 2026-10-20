@@ -87,3 +87,34 @@ test('a design outside the physical range is refused, not drawn', () => {
   assert.equal(value, null);
   assert.match(reason ?? '', /plausible fragment range/);
 });
+
+// BL-049: the reasons the live engine composes read in the language of the page, like the baked ones.
+const ENGLISH_WORDS = /\b(the|no|was|for|model|network|returned|outside|range|equation|refitted)\b/i;
+
+test('the live engine’s reasons are written in both languages, with the Spanish decimal comma', () => {
+  const corpus = files.find((f) => f.scope === 'corpus') as ModelsFile;
+  const arms = fittedArms(corpus);
+  const x = [3, 15, 80, 0.1, 0.05, 10, 0.5];
+
+  const range = (lang: 'en' | 'es') => predictModel(arms['refitted-regression'], x, lang).reason ?? '';
+  assert.match(range('en'), /^the model returned \d+(\.\d+)? m, outside the plausible fragment range /);
+  assert.match(range('es'), /^el modelo devolvió \d+(,\d+)? m, fuera del rango plausible de tamaños de fragmento, de /);
+  assert.ok(!ENGLISH_WORDS.test(range('es')), range('es'));
+
+  const noGroup = (kind: 'refitted-regression' | 'network-ensemble') => {
+    const base = Object.values(arms).find((m) => m.kind === (kind === 'refitted-regression' ? 'power-law' : 'network'))!;
+    return { ...base, groups: {} } as typeof base;
+  };
+  const power = noGroup('refitted-regression');
+  assert.match(predictModel(power, x, 'en').reason ?? '', /^no refitted equation for group \d$/);
+  assert.match(predictModel(power, x, 'es').reason ?? '', /^no hay ecuación reajustada para el grupo \d$/);
+  const network = noGroup('network-ensemble');
+  assert.match(predictModel(network, x, 'en').reason ?? '', /^no network was trained for group \d$/);
+  assert.match(predictModel(network, x, 'es').reason ?? '', /^no se entrenó ninguna red para el grupo \d$/);
+
+  const unknown = { ...arms['refitted-regression'], kind: 'bogus' } as unknown as typeof power;
+  assert.equal(predictModel(unknown, x, 'en').reason, 'unknown model kind');
+  assert.equal(predictModel(unknown, x, 'es').reason, 'tipo de modelo desconocido');
+  // The language is optional and defaults to English, as before.
+  assert.equal(predictModel(unknown, x).reason, 'unknown model kind');
+});

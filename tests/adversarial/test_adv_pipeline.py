@@ -756,3 +756,19 @@ def test_en008_a_benchmark_page_that_draws_no_width_sweep_fails_the_browser_gate
     finally:
         unlink_node_modules(repo / "frontend")
     assert r.returncode != 0 and "width sweep" in r.stdout + r.stderr, (r.stdout + r.stderr)[-3000:]
+
+
+# ---------------------------------------------------------------- BL-049: the design reason bilingual at its source
+
+REASONS = "tests/test_bilingual_reasons.py::"
+
+
+def test_br002_a_design_reason_whose_spanish_is_english_or_re_worded_outside_the_decision_is_found(repo: Path) -> None:
+    """The Spanish of the stemming reason planted in English at its source (``is_degenerate``): the gate that holds the pair
+    word for word fails, and it names the Spanish words that are gone."""
+    gate = REASONS + "test_the_degenerate_design_reason_is_built_bilingual_at_its_source"
+    outcomes, out = run_gates(repo, gate)
+    assert outcomes[gate] == "PASSED", out[-1500:]
+    edit(repo, "data-pipeline/pipeline/model/blasts.py", 'f"el taco mide {_comma(t)} bordos', 'f"the stemming is {_comma(t)} bordos')
+    outcomes, out = run_gates(repo, gate)
+    Run(outcomes, out).must_fail(gate, "el taco mide")
