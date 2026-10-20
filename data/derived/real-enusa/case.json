@@ -358,7 +358,7 @@
   }
  },
  "controls": {},
- "digest": "cc5981fecb02fa748f147c71c29515f56065c5aecb4a086f3171024e83a746bf",
+ "digest": "ac7a747d0da273ed085b761408c2413664cca809c1def193caaa200909f8eb51",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1873,7 +1873,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "38e936224d0787ea8b5f3948821ae324e9ef1f09555d49d857c69ffb2d8e82d5",
+  "digest": "9eb6c107adeba4a0611bbb4e729de505d5db6061c7cd4f419dd6d32d12b1232a",
   "path": "models/Enusa.json",
   "scope": "Enusa"
  },
@@ -3457,7 +3457,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.08.001",
+  "app_version": "0.09.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

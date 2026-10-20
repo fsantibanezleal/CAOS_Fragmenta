@@ -35,7 +35,7 @@ from pathlib import Path
 
 import pytest
 from planting import edit
-from webtools import NODE, SHELL_INSTALLED, link_node_modules, unlink_node_modules
+from webtools import NODE, NODE_MODULES, SHELL_INSTALLED, link_node_modules, unlink_node_modules
 
 needs_node = pytest.mark.skipif(NODE is None or not SHELL_INSTALLED, reason="needs node and `npm ci` in frontend/")
 
@@ -297,15 +297,71 @@ GATE = "frontend/scripts/browser-gate.mjs"
 PORT = int(os.environ.get("ADV_WEB_PORT", "4191"))
 
 
-def browser_available() -> bool:
-    """A Playwright browser is installed: in PLAYWRIGHT_BROWSERS_PATH when set, else in the OS default cache."""
-    roots = [os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "")]
-    roots.append(str(Path(os.environ.get("LOCALAPPDATA", "")) / "ms-playwright") if os.name == "nt" else str(Path.home() / ".cache" / "ms-playwright"))
-    return any(r and Path(r).is_dir() and any(Path(r).glob("chromium*")) for r in roots)
+def needed_chromium_folders(node_modules: Path = NODE_MODULES) -> list[str]:
+    """The folders under the browsers path that hold the Chromium build the installed ``playwright-core`` runs: the
+    revision its ``browsers.json`` declares, for the headless shell (the default of a headless launch) or the full
+    chromium. Empty when ``playwright-core`` is not installed (the needed build is then unknown)."""
+    try:
+        listing = json.loads((node_modules / "playwright-core" / "browsers.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    revisions = {b["name"]: b["revision"] for b in listing.get("browsers", []) if "revision" in b}
+    return [f"{name.replace('-', '_')}-{revisions[name]}" for name in ("chromium-headless-shell", "chromium") if name in revisions]
+
+
+def browser_available(roots: list[str] | None = None, node_modules: Path = NODE_MODULES) -> bool:
+    """The Chromium build the product's Playwright needs is installed (BL-053): in PLAYWRIGHT_BROWSERS_PATH when set,
+    else in the OS default cache. Any other chromium folder (another revision) does not count, because the browser
+    plants would fail on "Executable doesn't exist" instead of skipping."""
+    if roots is None:
+        roots = [os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "")]
+        roots.append(str(Path(os.environ.get("LOCALAPPDATA", "")) / "ms-playwright") if os.name == "nt" else str(Path.home() / ".cache" / "ms-playwright"))
+    needed = needed_chromium_folders(node_modules)
+    return any(r and Path(r).is_dir() and any((Path(r) / n).is_dir() for n in needed) for r in roots)
 
 
 needs_browser = pytest.mark.skipif(NODE is None or not SHELL_INSTALLED or not browser_available(),
                                    reason="needs node, `npm ci` in frontend/ and a Playwright browser (PLAYWRIGHT_BROWSERS_PATH)")
+
+
+def _fake_playwright(root: Path, shell_rev: str = "1194", chromium_rev: str = "1194") -> Path:
+    """A ``node_modules`` holding only the ``browsers.json`` of a ``playwright-core`` that needs the given revisions."""
+    core = root / "node_modules" / "playwright-core"
+    core.mkdir(parents=True)
+    (core / "browsers.json").write_text(json.dumps({"browsers": [
+        {"name": "chromium", "revision": chromium_rev}, {"name": "chromium-headless-shell", "revision": shell_rev},
+        {"name": "firefox", "revision": "1495"}]}), encoding="utf-8")
+    return root / "node_modules"
+
+
+def test_bl053_a_browsers_folder_holding_only_another_revision_is_not_available(tmp_path: Path) -> None:
+    modules = _fake_playwright(tmp_path)
+    browsers = tmp_path / "browsers"
+    for other in ("chromium-1243", "chromium_headless_shell-1243", "chromium-1100"):
+        (browsers / other).mkdir(parents=True)
+    assert browser_available([str(browsers)], modules) is False
+
+
+def test_bl053_the_needed_headless_shell_or_chromium_makes_the_browser_available(tmp_path: Path) -> None:
+    modules = _fake_playwright(tmp_path)
+    for needed in ("chromium_headless_shell-1194", "chromium-1194"):
+        browsers = tmp_path / needed
+        (browsers / needed).mkdir(parents=True)
+        (browsers / "chromium-1243").mkdir()
+        assert browser_available([str(browsers)], modules) is True, needed
+
+
+def test_bl053_the_second_root_counts_and_a_missing_or_empty_root_does_not(tmp_path: Path) -> None:
+    modules = _fake_playwright(tmp_path, shell_rev="1300", chromium_rev="1300")
+    (tmp_path / "a" / "chromium_headless_shell-1300").mkdir(parents=True)
+    assert browser_available(["", str(tmp_path / "missing"), str(tmp_path / "a")], modules) is True
+    assert browser_available(["", str(tmp_path / "missing")], modules) is False
+
+
+def test_bl053_without_playwright_core_the_needed_build_is_unknown_and_the_browser_is_not_available(tmp_path: Path) -> None:
+    (tmp_path / "browsers" / "chromium-1194").mkdir(parents=True)
+    assert needed_chromium_folders(tmp_path / "no_modules") == []
+    assert browser_available([str(tmp_path / "browsers")], tmp_path / "no_modules") is False
 
 
 def append(repo: Path, rel: str, text: str) -> None:
@@ -415,7 +471,7 @@ BASE_PLANTS = [
     e("src/workbench/Workbench.tsx", "layout: 'select',", "layout: 'chips',"),
     a("src/fragmenta.css", "\n[data-rail] { padding-top: 900px !important; }\nbody::before { content: ''; display: block; width: 1px; height: 3000px; }\n"),
     # ST-006: every chart declares zero of what it drew.
-    e("src/viz/Charts.tsx", "node.setAttribute(`data-chart-${key}`, String(value));", "node.setAttribute(`data-chart-${key}`, String(0 * value));"),
+    e("src/viz/plots.tsx", "node.setAttribute(`data-chart-${key}`, String(count));", "node.setAttribute(`data-chart-${key}`, String(0 * count));"),
     # ST-007: the axis title of a documentation figure moves onto its tick labels.
     e("src/viz/figures/benchmark.tsx", "y={bottom + 36}", "y={bottom + 16}"),
     # ST-008: the footer is held to a narrow box and wraps.
