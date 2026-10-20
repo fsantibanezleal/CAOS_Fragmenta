@@ -593,6 +593,20 @@ def test_br003_a_live_reason_left_in_english_on_the_spanish_page_is_found(web: P
     assert_caught(web, LEARNED, BR003)
 
 
+ARM_SOURCES = "test/arm-sources.test.ts"
+BR005 = ["the source of every model is written in English and in Spanish",
+         "the selected model shows its source in the language of the page"]
+
+
+@needs_node
+def test_br005_a_model_source_left_in_english_or_shown_in_one_language_is_found(web: Path) -> None:
+    assert_clean(web, ARM_SOURCES, BR005)
+    # The Spanish source of the published regression planted back in English, as 0.08.000 showed it on a Spanish page.
+    edit(web, fe(ARTIFACTS), "es: 'Hudaverdi et al. 2010, Ecs. 9 y 10'", "es: 'Hudaverdi et al. 2010, Eqs. 9 and 10'")
+    # And the case view reading the English source whatever the page's language.
+    edit(web, fe("src/workbench/views.tsx"), "{arm.source[lang]}", "{arm.source.en}")
+    assert_caught(web, ARM_SOURCES, BR005)
+
 @needs_node
 def test_br004_a_predict_group_without_the_refusal_list_and_a_list_in_english_are_found(web: Path) -> None:
     assert_clean(web, REASONS_TEST, BR004)
