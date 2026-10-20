@@ -36,6 +36,7 @@ from pathlib import Path
 
 import pytest
 from planting import edit, guard
+from test_adv_web import browser_available
 from webtools import NODE, NODE_MODULES, SHELL_INSTALLED, link_node_modules, unlink_node_modules
 
 # The engine and numpy are pinned (requirements-precompute.txt) but CI's checks job installs only pytest: there the module is a
@@ -712,7 +713,7 @@ def test_en003_a_capped_mean_size_the_browser_cannot_reproduce_is_found(repo: Pa
 
 BROWSERS = os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "")  # the temp root's browsers (the disks rule), set by the caller: no machine default
 NEEDS_BROWSER = pytest.mark.skipif(
-    NODE is None or not SHELL_INSTALLED or not (NODE_MODULES / "playwright").is_dir() or not BROWSERS or not list(Path(BROWSERS).glob("chromium*")),
+    NODE is None or not SHELL_INSTALLED or not (NODE_MODULES / "playwright").is_dir() or not BROWSERS or not browser_available([BROWSERS]),
     reason="local-only: needs node, `npm ci` in frontend/ and a Playwright chromium (PLAYWRIGHT_BROWSERS_PATH)",
 )
 
