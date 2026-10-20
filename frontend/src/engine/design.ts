@@ -153,12 +153,12 @@ export function answerOnDesign(arm: string, design: LiveBlast, holeMm: number, c
       if (!model) return undefined;
       const x = FEATURES.map((k) => design[k]);
       if (arm === 'kuznetsov-transfer') {
-        const factor = predictModel(model, x).value;
+        const factor = predictModel(model, x, ctx.lang).value;
         return factor === null
           ? { value: null, reason: es ? 'sin factor de roca' : 'no rock factor' }
           : plausible(kuznetsovX50M(pattern, factor), ctx.lang);
       }
-      return predictModel(model, x);
+      return predictModel(model, x, ctx.lang);
     }
   }
 }

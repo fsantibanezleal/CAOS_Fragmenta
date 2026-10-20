@@ -259,29 +259,44 @@ def _design(t_over_b: float, h_over_b: float) -> bf.Blast:
     return dataclasses.replace(_blast("Akdaglar"), T_over_B=t_over_b, H_over_B=h_over_b)
 
 
-def test_the_degenerate_design_reason_is_built_bilingual_with_the_decimal_comma():
-    blast = _design(4.6, 1.4)
-    pair = reasons.degenerate_reason(blast)
-    assert pair["en"] == is_degenerate(blast)
-    assert "4,60 bordos" in pair["es"] and "1,40 bordos" in pair["es"] and "taco" in pair["es"]
+def test_the_degenerate_design_reason_is_built_bilingual_at_its_source():
+    """BL-049: ``is_degenerate`` returns the pair itself, with the words the bake has always carried."""
+    pair = is_degenerate(_design(4.6, 1.4))
+    assert pair == {
+        "en": "the stemming is 4.60 burdens in a bench 1.40 burdens tall, so there is no charge column. "
+        "This is not a blast.",
+        "es": "el taco mide 4,60 bordos en un banco de 1,40 bordos de alto, así que no hay columna de carga. "
+        "Esto no es una voladura.",
+    }
     assert not ENGLISH_ONLY.search(pair["es"]), pair["es"]
 
 
-def test_the_thin_charge_reason_is_built_bilingual():
-    blast = _design(1.29, 1.3)
-    pair = reasons.degenerate_reason(blast)
-    assert pair["en"] == is_degenerate(blast) and "%" in pair["es"], pair
+def test_the_thin_charge_reason_is_built_bilingual_at_its_source():
+    pair = is_degenerate(_design(1.29, 1.3))
+    assert pair == {
+        "en": "only 0.8% of the hole carries explosive after stemming, which is below any practical charge. "
+        "This is not a blast.",
+        "es": "solo el 0,8 % de la perforación lleva explosivo después del taco, por debajo de cualquier "
+        "carga práctica. Esto no es una voladura.",
+    }
     assert not ENGLISH_ONLY.search(pair["es"]), pair["es"]
 
 
 def test_a_sound_design_has_no_degenerate_reason():
-    assert reasons.degenerate_reason(_blast("Akdaglar")) is None
+    assert is_degenerate(_blast("Akdaglar")) is None
+
+
+def test_the_catalogue_does_not_re_word_the_degenerate_reason():
+    """The decision and its words live in one place: the catalogue has no second wording of the reason."""
+    assert not hasattr(reasons, "degenerate_reason")
 
 
 def test_the_degenerate_abstention_wraps_the_design_reason_in_both_languages():
-    pair = reasons.degenerate_abstention(_design(4.6, 1.4))
-    assert pair["en"].startswith("this design is not a blast: ")
-    assert pair["es"].startswith("este diseño no es una voladura: ")
+    blast = _design(4.6, 1.4)
+    pair = reasons.degenerate_abstention(blast)
+    inner = is_degenerate(blast)
+    assert pair["en"] == f"this design is not a blast: {inner['en']}"
+    assert pair["es"] == f"este diseño no es una voladura: {inner['es']}"
 
 
 def test_the_unscoreable_case_reason_is_bilingual():
