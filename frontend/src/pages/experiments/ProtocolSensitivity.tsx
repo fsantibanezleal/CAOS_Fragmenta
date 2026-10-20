@@ -54,14 +54,20 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
         <Lines
           x={[0, 1, 2]}
           series={series}
-          xLabel={t('protocol: 0 random, 1 deduplicated, 2 site held out', 'protocolo: 0 aleatorio, 1 deduplicado, 2 sitio excluido')}
+          xLabel={t('protocol', 'protocolo')}
           yLabel={t('variance explained', 'varianza explicada')}
           height={320}
           zeroLine
           yRange={[-1.1, 1]}
           xFormat={{ decimals: 0 }}
           yFormat={{ decimals: 1 }}
-          xText={(x) => [t('random', 'aleatorio'), t('deduplicated', 'deduplicado'), t('site held out', 'sitio excluido')][Math.round(x)] ?? ''}
+          xTicks={[
+            { value: 0, label: { en: 'random', es: 'aleatorio' } },
+            { value: 1, label: { en: 'deduplicated', es: 'deduplicado' } },
+            { value: 2, label: { en: 'site held out', es: 'sitio excluido' } },
+          ]}
+          xRange={[-0.12, 2.12]}
+          solo
           valueText={(x) => f(x)}
         />
       ) : (

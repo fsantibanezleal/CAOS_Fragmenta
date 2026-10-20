@@ -26,7 +26,7 @@ registerHooks({
     return url.endsWith('.css') ? { format: 'module', source: '', shortCircuit: true } : nextLoad(url, context);
   },
 });
-const { SizeCurves, ParityPlot, Lines, SERIES_COLOURS } = await import('../src/viz/plots');
+const { SizeCurves, ParityPlot, Lines, SERIES_COLOURS, lineChartProps } = await import('../src/viz/plots');
 const { TOPICS: BENCH_TOPICS } = await import('../src/pages/benchmark/index');
 const { TOPICS: EXP_TOPICS } = await import('../src/pages/experiments/topics');
 
@@ -148,6 +148,49 @@ test('lines are the shell chart with the series in order; a zero line is a refer
   assert.equal(zero['data-axis-titles'], 'x|y');
 });
 
+const TICKS = [
+  { value: 0, label: { en: 'random', es: 'aleatorio' } },
+  { value: 1, label: { en: 'deduplicated', es: 'deduplicado' } },
+  { value: 2, label: { en: 'site held out', es: 'sitio excluido' } },
+];
+const LINE_BASE = { x: [0, 1, 2], series: [{ id: 's1', label: 'one', values: [1, 2, 3] }], xLabel: 'x', yLabel: 'y' };
+
+test('lines pass the named ticks, the x range, the solo key, the dots and an unlabelled zero line to the shell chart (0.18.0)', () => {
+  const asked = lineChartProps({ ...LINE_BASE, xTicks: TICKS, xRange: [-0.12, 2.12], solo: true, zeroLine: true }, 'en');
+  assert.deepEqual(asked.x.ticks, TICKS);
+  assert.deepEqual(asked.x.range, [-0.12, 2.12]);
+  assert.equal(asked.solo, true);
+  assert.equal(asked.series[0].dots, true, 'fewer than 40 x values: a dot at each value');
+  assert.deepEqual(asked.yMarks, [{ y: 0, tone: 'neutral' }], 'the zero line carries no label');
+  assert.equal('label' in (asked.yMarks?.[0] ?? {}), false);
+  const plain = lineChartProps(LINE_BASE, 'en');
+  assert.equal(plain.x.ticks, undefined);
+  assert.equal(plain.x.range, undefined);
+  assert.equal(plain.solo, undefined);
+  assert.equal(plain.yMarks, undefined);
+});
+
+test('lines draw no dots from 40 x values on, as the wrapper did', () => {
+  const x = Array.from({ length: 40 }, (_, i) => i);
+  const props = lineChartProps({ ...LINE_BASE, x, series: [{ id: 's', label: 's', values: x }] }, 'en');
+  assert.equal(props.series[0].dots, undefined);
+  const short = lineChartProps({ ...LINE_BASE, x: x.slice(0, 39), series: [{ id: 's', label: 's', values: x.slice(0, 39) }] }, 'en');
+  assert.equal(short.series[0].dots, true);
+});
+
+test('the readout names an x on a tick by its label in the page language, never by its number', () => {
+  for (const lang of ['en', 'es'] as const) {
+    const props = lineChartProps({ ...LINE_BASE, xTicks: TICKS }, lang);
+    assert.match(props.readout?.(1) ?? '', new RegExp(`^${TICKS[1].label[lang]} · one 2`));
+  }
+});
+
+test('a lines chart with one series keeps the solo key', () => {
+  const html = render(createElement(Lines, { ...LINE_BASE, solo: true }));
+  assert.match(hosts(html)[0]['data-series'], /^1$/);
+  assert.match(html, /caos-chart-legend/);
+});
+
 test('lines with no x draw no chart, as the wrapper they replace did', () => {
   const html = render(createElement(Lines, { x: [], series: [], xLabel: 'x', yLabel: 'y' }));
   assert.deepEqual(hosts(html), []);
@@ -184,6 +227,28 @@ test('the Experiments draw the protocol sensitivity on the shell chart with its 
     assert.equal(host['data-y-marks'], '1');
     assert.ok(Number(host['data-series']) >= 3, `${lang}: one line per learned arm and the classical`);
     assert.doesNotMatch(html, /class="fr-chart-canvas"/, 'no canvas of the old wrapper');
+  }
+});
+
+
+test('each page asks for what the removed wrapper gave its chart, in both languages', () => {
+  const read = (html: string) => {
+    const m = [...html.matchAll(/<div class="fr-chart"([^>]*)>/g)].map((x) => Object.fromEntries([...x[1].matchAll(/([\w-]+)="([^"]*)"/g)].map((a) => [a[1], a[2]])));
+    return m;
+  };
+  const es = { en: 'random|deduplicated|site held out', es: 'aleatorio|deduplicado|sitio excluido' };
+  for (const lang of ['en', 'es'] as const) {
+    const [ps] = read(topic(EXP_TOPICS as never, 'protocol-sensitivity', { es: lang === 'es', b: benchmark }, lang));
+    assert.equal(ps['data-x-ticks'], es[lang], `${lang}: the protocols name the axis`);
+    assert.equal(ps['data-x-range'], '-0.12,2.12');
+    assert.equal(ps['data-solo-key'], '1');
+    const pub = read(topic(BENCH_TOPICS as never, 'published', { b: benchmark, corpus }, lang));
+    assert.ok(pub.length >= 2 && pub.every((h) => h['data-solo-key'] === '1'), `${lang}: a solo key on every published chart`);
+    const sweep = pub.find((h) => h['data-x-ticks']);
+    assert.ok(sweep, `${lang}: the width sweep ticks at the widths`);
+    assert.equal(sweep['data-x-ticks'], benchmark.network_width_sweep.leave_one_site_out.filter((r) => !r.published).map((r) => String(Math.round(r.hidden['1']))).join('|'));
+    const rob = read(topic(BENCH_TOPICS as never, 'robustness', { b: benchmark, corpus }, lang));
+    assert.ok(rob.length >= 1 && rob.every((h) => h['data-solo-key'] === '1'));
   }
 });
 

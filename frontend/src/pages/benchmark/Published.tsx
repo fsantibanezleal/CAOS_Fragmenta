@@ -55,7 +55,8 @@ function WidthSweep({ es, b }: { es: boolean; b: BenchmarkArtifact }) {
         height={240}
         zeroLine
         xFormat={{ decimals: 0, grouping: false }}
-        xText={(v) => String(Math.round(v))}
+        xTicks={held.map((row) => ({ value: row.hidden['1'], label: { en: String(Math.round(row.hidden['1'])), es: String(Math.round(row.hidden['1'])) } }))}
+        solo
         valueText={(v) => f(v)}
       />
       <table className="fr-table">
@@ -233,6 +234,7 @@ export default function Published({ b }: TopicData) {
           height={240}
           xFormat={{ decimals: 0 }}
           xText={(v) => `#${Math.round(v)}`}
+          solo
           valueText={(v) => f(v)}
         />
         <table className="fr-table">
