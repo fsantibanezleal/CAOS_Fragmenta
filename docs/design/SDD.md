@@ -292,3 +292,15 @@ Sans), and only then publishes.
 | ADR-0078 | rules live in the base | yes: the App is the base's `CaseWorkbench`, measured by `caos-shell-gate`; the template's guards run in CI | `.template-version` still reads 0.03.001 until the release unit records 0.08.002 |
 | ADR-0080 | contract-first parallel delivery: catalog, one schema per boundary, providers, declared states, readiness | yes: `docs/contracts/`, `tests/contracts/`, `frontend/src/readiness/`, the template's contract guards | none |
 | ADR-0067 | no em-dash, no emoji | yes: `scripts/check_content_standards.py` | none |
+
+## Beyond the state of the art
+
+Each claim names what the product adds, the evidence that can be re-run (a level 4 notebook in each language under `notebooks/`) and the source it goes beyond.
+
+| id | claim | evidence | goes beyond |
+|---|---|---|---|
+| BS-1 | The learned tier is judged by whole campaigns held out, with intervals that resample campaigns and a criterion declared before the run and pinned by a hash. | `notebooks/en/04-benchmark-protocol/04-the-site-held-out-protocol-and-its-pre-declared-criterion.ipynb`: every learned arm loses most of its random-split score (a median gap of 0.984) and no arm outside the in-sample ones has an interval above zero. | Sui et al. 2025, https://doi.org/10.3390/app15031254 (one random 80/20 split) and Roberts et al. 2017, https://doi.org/10.1111/ecog.02881 |
+| BS-2 | Refusal is a first-class result: the geometry is reconstructed or refused, and a guard refuses designs that are not blasts. | `notebooks/en/01-the-data/03-integrity-gate-and-negative-controls.ipynb`: the two negative controls (six blasts with no scale, six degenerate designs) pass in the committed artifacts. | Amoako, Jha and Zhong 2022, https://doi.org/10.3390/mining2020013 and Sui et al. 2025, https://doi.org/10.3390/app15031254 (predictors that return a number for any input vector) |
+| BS-3 | The corpus is held to the paper at every load: its printed statistics and a pinned digest are reproduced. | `notebooks/en/01-the-data/03-integrity-gate-and-negative-controls.ipynb`: four planted defects, the statistics catch two and the digest catches all four. | Hudaverdi, Kulatilake and Kuzu 2010, https://doi.org/10.1002/nag.957 (a table reused as given) |
+| BS-4 | A rock factor predicted from the Young modulus over the other sites, so the classical score uses nothing from the held-out site. | `notebooks/en/02-classical-prediction/04-a-rock-factor-that-uses-nothing-from-the-target-site.ipynb`: the score moves by 0.013 and both intervals span zero. | Kulatilake, Hudaverdi and Wu 2012, https://doi.org/10.1007/s10706-012-9496-3 (the factor estimated for each blast) |
+| BS-5 | Learned arms exported to portable documents that a browser evaluates, with fixtures and a content address. | `notebooks/en/06-design-response/03-learned-arms-served-live-from-a-portable-document.ipynb`: parity with a fresh fit to floating-point rounding. | Sui et al. 2025, https://doi.org/10.3390/app15031254 and Kulatilake et al. 2012, https://doi.org/10.1007/s10706-012-9496-3 (parameters and scores, no runnable form) |
