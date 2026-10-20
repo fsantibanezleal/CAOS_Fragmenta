@@ -151,14 +151,14 @@ where none is recorded it says so.
 | component | package | version | use | alternative considered |
 |---|---|---|---|---|
 | engine | blastfrag | 0.4.0 | the predictors, the protocols, the benchmark and the portable model export, a separate PyPI package (ADR-0057) | none: the product declares no package of its own |
-| engine | numpy | 2.5.3 | arrays in the bake and in the runtime lane | 2.5.4 is current, not adopted: a re-bake on a new numpy is its own release |
-| engine | scikit-learn | 1.9.0 | the learned arms fitted in the bake | 1.9.1 is current, not adopted, same reason |
+| engine | numpy | 2.5.4 | arrays in the bake and in the runtime lane | none recorded |
+| engine | scikit-learn | 1.9.1 | the learned arms fitted in the bake | none recorded |
 | engine | xgboost | 3.4.1 | the gradient-boosted arm and the stacking base learner | none recorded |
 | tests | pytest | 9.1.1 | the pipeline, contract, guard and planted-defect tests | none recorded |
-| lint | ruff | 0.16.6 | lint of data-pipeline, tests, scripts and app | 0.17.1 is current, not adopted |
+| lint | ruff | 0.17.1 | lint of data-pipeline, tests, scripts and app | none recorded |
 | contracts | jsonschema | 4.26.0 | validates every document against its schema file | none: the template's pin |
 | contracts | openapi-spec-validator | 0.9.0 | validates `docs/contracts/api.openapi.json` | none recorded |
-| API | fastapi | 0.143.3 | the dormant `app/`, run by the API contract tests | none recorded |
+| API | fastapi | 0.151.0 | the dormant `app/`, run by the API contract tests | none recorded |
 | API | pydantic | 2.14.1 | the dormant API's models | none recorded |
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
 | API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
@@ -202,7 +202,7 @@ network after the install. Training is not a stage of its own: the learned arms 
 ## Lanes
 
 - **Offline**: `data-pipeline/run.py` bakes sixteen cases, eleven models files and the benchmark against exact pins
-  (numpy 2.5.3, scikit-learn 1.9.0, xgboost 3.4.1). The benchmark's 100-draw protocols and the network's
+  (numpy 2.5.4, scikit-learn 1.9.1, xgboost 3.4.1). The benchmark's 100-draw protocols and the network's
   Levenberg-Marquardt fits put it offline; it never runs in CI (ADR-0074). It pins BLAS to one thread before numpy
   loads: on the network's small matrices a multi-threaded BLAS spun, and one fit at width 15 took more than six
   minutes on a loaded workstation against about two seconds on one thread. The full bake took 745 s at 0.06.000
