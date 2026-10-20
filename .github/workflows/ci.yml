@@ -101,6 +101,9 @@ jobs:
           if [ "$fail" -eq 0 ]; then echo "no residue"; fi
           exit $fail
 
+      - name: No template residue (the template's guard, verbatim)
+        run: python scripts/check_template_residue.py
+
       - name: CI budget, trunk-only triggers, no training (ADR-0074)
         run: python scripts/check_ci_budget.py
 
