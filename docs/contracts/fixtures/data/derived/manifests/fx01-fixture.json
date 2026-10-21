@@ -1,5 +1,5 @@
 {
- "app_version": "0.09.001",
+ "app_version": "0.09.002",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 54903,
@@ -9,7 +9,7 @@
  "case_id": "fx01-fixture",
  "category": "real-campaign",
  "controls": {},
- "digest": "142361d8e68e0ef11b3ad00024362dfe720dff0733ae5f45000284fe7da0e3be",
+ "digest": "10d136c39766ad1df8b8c1bd6a7099fc766c2a0d85b4eae34cb9d068fdb63c8d",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
