@@ -302,7 +302,7 @@
   }
  },
  "controls": {},
- "digest": "fa6ce2bdc81ed07d441f679b088fcb0c5abbbd22158b15de8d7eaa4298ef2c1e",
+ "digest": "c5528f70fbe764519dce032fcda7ca5bc7172e593b429382f07cc4823d770110",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1817,7 +1817,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "d67d4441eee4a0ae3fe171e400b085d25dbd7847f6266ab57701a9f9f6da7e72",
+  "digest": "c5061091c2b82dd55ab9ee17f196ca80f358c5a1ef23b5c6f3da184e30e75a02",
   "path": "models/Reocin.json",
   "scope": "Reocin"
  },
@@ -3143,7 +3143,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.000",
+  "app_version": "0.09.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

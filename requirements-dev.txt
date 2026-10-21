@@ -10,8 +10,8 @@ ruff==0.17.1
 # tests of the dormant API. Pinned exactly for the same reason: a release of a validator must not turn a build red.
 jsonschema==4.26.0
 openapi-spec-validator==0.9.0
-httpx==0.28.1
+httpx2==2.16.0
 # the dormant API's own pins (requirements-api.txt), so the API contract tests run on exactly those versions; uvicorn
 # is not needed to test it
-fastapi==0.156.1
+fastapi==0.156.5
 pydantic==2.14.1
