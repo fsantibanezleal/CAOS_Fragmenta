@@ -2,6 +2,25 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.09.003] - 2026-10-21
+
+A patch on 0.09.002: the Spanish of the executive view, the tagline, the notebooks README and the seven Spanish
+notebooks of topics 01 and 02, revised for a reader in Chile and Latin America. No fact, number, source or structure
+changed with it. The re-bake changed none of the 428,171 numbers of the 52
+committed documents (against 0.09.002): only the version stamps and the digests over them.
+
+### Changed
+
+- `content/executive.json`: 64 of the Spanish strings rewritten where they were calques of the English, stiff or
+  unclear, with every number per field and every English string unchanged. A method or a predictor no longer "sees" a
+  mine: the proposal, the hand-off and the acceptance check say a mine that was not used to build the method or to
+  train the predictors. The blast is "voladura" throughout ("material tronado" became "material volado").
+- `product.json`: the Spanish tagline says "voladura" and states the held-out mine the same way.
+- `notebooks/README.md` and `notebooks/es/README.md`: the Spanish revised under the same rules ("tronadura" became
+  "voladura"; a learned model is a "predictor", not a "brazo").
+- The markdown cells of `notebooks/es/01-the-data/*` and `notebooks/es/02-classical-prediction/*`: the same revision;
+  no code cell or output changed, and the notebook titles stand.
+
 ## [0.09.002] - 2026-10-21
 
 A patch on 0.09.001: the template 0.11.000 notebook tooling. The re-bake changed none of the 428,171 numbers of the 52
