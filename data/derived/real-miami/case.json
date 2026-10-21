@@ -160,7 +160,7 @@
    "passed": true
   }
  },
- "digest": "53a6f9ef4fec413d19f4c153e971f51f6b68526008997ea6516785805d3b1321",
+ "digest": "075f87149823c7cafb9712360f09938736e8ed578a54fd5f8dd867576139fbab",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -183,7 +183,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "641cf5b18e8cf7b6634fa404bbcea1050c2d27aab52a13eda54088f8a9f291d4",
+  "digest": "7562962821a7aec05897c8124e2c86a099f90ebec89849e9cc2059a765b1b2e6",
   "path": "models/Miami.json",
   "scope": "Miami"
  },
@@ -1101,7 +1101,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.002",
+  "app_version": "0.09.003",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

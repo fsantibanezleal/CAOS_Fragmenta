@@ -1,5 +1,5 @@
 {
- "app_version": "0.09.002",
+ "app_version": "0.09.003",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 82292,
@@ -9,7 +9,7 @@
  "case_id": "real-enusa",
  "category": "real-campaign",
  "controls": {},
- "digest": "8c0f6bde1b70b4d54648a6a28b6ea6113df395155b9ae3f5ce22242485cfdb6e",
+ "digest": "3e240c9917801bb08fa80580469f9b430c12cd31b4e942f018d7efaad61630dd",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
