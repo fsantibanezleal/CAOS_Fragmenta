@@ -19,7 +19,7 @@
   "dependencies": {
     "@fasl-work/caos-app-shell": "0.18.0",
     "katex": "0.19.0",
-    "lucide-react": "1.60.0",
+    "lucide-react": "1.61.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-router": "8.5.0",
@@ -37,7 +37,7 @@
     "playwright": "1.64.1",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
-    "vite": "8.3.4",
+    "vite": "8.3.5",
     "wait-on": "9.5.1",
     "zz-typescript5": "npm:typescript@5.9.3"
   },

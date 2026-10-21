@@ -164,20 +164,20 @@ where none is recorded it says so.
 | lint | ruff | 0.17.1 | lint of data-pipeline, tests, scripts and app | none recorded |
 | contracts | jsonschema | 4.26.0 | validates every document against its schema file | none: the template's pin |
 | contracts | openapi-spec-validator | 0.9.0 | validates `docs/contracts/api.openapi.json` | none recorded |
-| API | fastapi | 0.156.1 | the dormant `app/`, run by the API contract tests | none recorded |
+| API | fastapi | 0.156.5 | the dormant `app/`, run by the API contract tests | none recorded |
 | API | pydantic | 2.14.1 | the dormant API's models | none recorded |
 | API | uvicorn | 0.54.0 | the server the dormant API would use, never deployed | none recorded |
-| API | httpx | 0.28.1 | the test client of the dormant API | none recorded |
+| API | httpx2 | 2.16.0 | the test client of the dormant API (Starlette's `TestClient` runs on it) | httpx 0.28.1, replaced: Starlette deprecates it for its test client |
 | shell | @fasl-work/caos-app-shell | 0.18.0 | the shared app shell, pinned exactly (ADR-0078) | a hand-rolled shell, forbidden by ADR-0078 |
 | web | react | 19.3.1 | the UI | none recorded |
 | web | react-dom | 19.3.1 | the UI renderer | none recorded |
 | web | react-router | 8.5.0 | the routes | none recorded |
 | web | zustand | 5.0.15 | the workbench selection store | none recorded |
 | web | katex | 0.19.0 | typeset equations on the pages | none recorded (shell 0.17.0 widened its peer range to 0.16 through 0.19) |
-| web | lucide-react | 1.60.0 | icons | none recorded |
+| web | lucide-react | 1.61.0 | icons | none recorded |
 | web | uplot | 1.6.32 | the interactive curves: parity, residual, distribution, slope | a static chart image, rejected: every view reads values at the cursor (visualization dossier) |
 | web | three | 0.186.1 | the 3D bench, whose geometry is three-dimensional | a 2D plan dot grid, rejected: the stiffness ratio and the free face are three-dimensional |
-| build | vite | 8.3.4 | bundler and dev server | none recorded |
+| build | vite | 8.3.5 | bundler and dev server | none recorded |
 | build | @vitejs/plugin-react | 6.1.2 | the React transform for vite | none recorded |
 | build | typescript | 7.0.2 | native type check of the web (no compiler API) | none recorded |
 | build | zz-typescript5 | 5.9.3 | TypeScript 5 compiler API for the contract generator (`openapi-typescript` needs `ts.factory`), under an npm alias | typescript 7.0.2 for the generator, rejected: it has no compiler API |
