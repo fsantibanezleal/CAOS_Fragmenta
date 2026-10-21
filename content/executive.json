@@ -385,7 +385,7 @@
     ],
     "interaction": {
       "en": "The blast engineer sets energy and pattern against drilling cost, the mine delivers the muckpile as it falls, and the plant receives it, each judged on its own indicators.",
-      "es": "El ingeniero de voladura fija energía y malla según el costo de perforación, la mina entrega la pila como quedó y la planta la recibe, cada uno con sus indicadores."
+      "es": "El ingeniero de voladura fija energía y malla según el costo de perforación, la mina entrega la pila tal cual y la planta la recibe, cada uno con sus indicadores."
     },
     "state_of_the_art": [
       {
@@ -487,7 +487,7 @@
   "trends": {
     "key_message": {
       "en": "Energy rules now, and harder ore and rising electricity within ten years, make a shared size decision urgent, first for the concentrator manager and the site general manager.",
-      "es": "Con reglas de energía vigentes y, en diez años, mineral más duro y más electricidad, urge decidir el tamaño de fragmento en conjunto, primero en planta concentradora y gerencia general."
+      "es": "Las reglas de energía vigentes, y en diez años un mineral más duro y más consumo eléctrico, hacen urgente decidir en conjunto el tamaño, primero en concentradora y gerencia general."
     },
     "items": [
       {
