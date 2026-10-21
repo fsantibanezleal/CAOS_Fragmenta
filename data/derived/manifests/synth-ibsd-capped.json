@@ -1,5 +1,5 @@
 {
- "app_version": "0.09.000",
+ "app_version": "0.09.001",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 76926,
@@ -9,7 +9,7 @@
  "case_id": "synth-ibsd-capped",
  "category": "structural-control",
  "controls": {},
- "digest": "11d936dbfedbb75f238e3ec1c811ad43706a5a256c3c811b24c00037ec4c6a9c",
+ "digest": "1cf0340cddfbbe6ee84702dd7ac360ee845ae5bd9392ff8245705b48e1336702",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"

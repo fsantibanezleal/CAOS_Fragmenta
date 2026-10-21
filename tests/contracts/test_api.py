@@ -12,7 +12,7 @@ import pytest
 from contract_schemas import DERIVED_ROOTS, OPENAPI, ROOT, load_json, response_errors
 
 pytest.importorskip("fastapi")
-pytest.importorskip("httpx")
+pytest.importorskip("httpx2")
 
 from fastapi.testclient import TestClient  # noqa: E402
 
