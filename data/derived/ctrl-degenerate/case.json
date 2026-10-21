@@ -221,7 +221,7 @@
    "passed": true
   }
  },
- "digest": "49dd254efaff3e113dc1c57ca2e0847d44ea086a0e749d84bb2cc89220b1a1ac",
+ "digest": "07609c145587e349b12bbea91bca5981003fffec59d4d7f71d29806ea6373d23",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -234,7 +234,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "298ad6de3c39552735530182bcb9cae49b8752869b8a6fdf92576fd8797f70c0",
+  "digest": "31dbb51235176e632ab6b69469c54a83075148eb1f322f087013c012ea6bf807",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -1278,7 +1278,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.001",
+  "app_version": "0.09.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
