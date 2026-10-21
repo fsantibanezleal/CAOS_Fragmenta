@@ -638,7 +638,7 @@
   }
  },
  "controls": {},
- "digest": "2541b314202b4645b9a5f1c6fcaceb243198e9270932ca9afc3fbe7a649dbf78",
+ "digest": "3382b232a6a1e85a4af4eb963fff8fbf639100e87bb7b939c7438c12afe38a6f",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -2153,7 +2153,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "d94e2584028c25d3018355a52ccfe113842102eb60c02f27fdb92e66676b986d",
+  "digest": "df1bf7263aff365c77cabbdeec3f3f98a6627ede2e93b570863b07011bb3e294",
   "path": "models/Akdaglar.json",
   "scope": "Akdaglar"
  },
@@ -5030,7 +5030,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.001",
+  "app_version": "0.09.002",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

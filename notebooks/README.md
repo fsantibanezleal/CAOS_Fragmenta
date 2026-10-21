@@ -48,8 +48,11 @@ The pins in `requirements.txt` are exactly those of the bake (`requirements-prec
 notebook reproduces the committed numbers. Open a notebook in Jupyter or VS Code with that environment's kernel to read and rerun it step by step.
 
 The outputs are committed, so the notebooks read as finished material on GitHub. They are written only by the runner of the template (`run_notebooks.py`,
-which executes each notebook top to bottom in a fresh kernel and strips the volatile metadata), never by hand; its `--check` mode executes copies and fails
-on a notebook that errors or whose committed outputs differ from a fresh run. It is a local release gate and never runs in CI.
+which executes each notebook top to bottom in a fresh kernel and strips the volatile metadata), never by hand; its `--check` mode executes copies under a temp root the
+caller names (`--tmp <temp root>` or `CAOS_TEMP_ROOT`; without one it stops with exit 2) and fails on a notebook that errors or whose committed outputs
+differ from a fresh run. It is a local release gate and never runs in CI. `blastfrag` is the product's method package (`product.json`
+`method_packages`): `scripts/check_notebooks.py` fails a cell that defines a function or a class `blastfrag` defines, and `--pypi` confirms its pin is
+published.
 
 ## Cómo ejecutarlos
 
@@ -57,7 +60,10 @@ Cada número que imprime un cuaderno se lee de un artefacto versionado bajo `dat
 Los cuadernos corren desde su propia carpeta, así que la raíz del repositorio está tres niveles arriba, y ninguna ruta es absoluta. Los comandos de arriba
 crean el entorno con los pines exactos de `requirements.txt` (los mismos del bake más la biblioteca de gráficos y el runtime de los cuadernos), con un solo hilo de BLAS.
 Las salidas están versionadas, de modo que los cuadernos se leen como material terminado en GitHub. Solo las escribe el ejecutor de la plantilla (`run_notebooks.py`), nunca a mano;
-su modo `--check` ejecuta copias y falla ante un cuaderno que da error o cuyas salidas versionadas difieren de una ejecución nueva. Es una compuerta local de versión y no corre en CI.
+su modo `--check` ejecuta copias bajo una raíz temporal que indica quien lo llama (`--tmp <raíz temporal>` o `CAOS_TEMP_ROOT`; sin ella se detiene con
+salida 2) y falla ante un cuaderno que da error o cuyas salidas versionadas difieren de una ejecución nueva. Es una compuerta local de versión y no corre en CI.
+`blastfrag` es el paquete de métodos del producto (`method_packages` en `product.json`): `scripts/check_notebooks.py` rechaza una celda que define una
+función o una clase que `blastfrag` define, y `--pypi` confirma que su versión fijada está publicada.
 
 ## Reading order
 

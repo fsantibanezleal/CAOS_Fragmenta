@@ -10,5 +10,6 @@
   "license": "MIT",
   "holder": "Felipe Santibáñez-Leal",
   "year": 2026,
-  "app": "workbench"
+  "app": "workbench",
+  "method_packages": ["blastfrag"]
 }
