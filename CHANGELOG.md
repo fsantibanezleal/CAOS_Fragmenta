@@ -2,6 +2,19 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.09.001] - 2026-10-21
+
+A patch on 0.09.000: the dormant API's test client moves to the replacement Starlette asks for, and three pins move to the
+releases published since 0.09.000. The re-bake changed none of the 428,171 numbers of the 52 committed documents (against
+0.09.000): only the version stamps and the digests over them.
+
+### Changed
+
+- The test client of the dormant API runs on `httpx2` 2.16.0 instead of `httpx` 0.28.1, which Starlette deprecates for its
+  `TestClient`; the API contract tests (`tests/contracts`) pass with `httpx` absent and with deprecation warnings raised as
+  errors. fastapi 0.156.1 to 0.156.5.
+- lucide-react 1.60.0 to 1.61.0 and vite 8.3.4 to 8.3.5, pinned exactly.
+
 ## [0.09.000] - 2026-10-20
 
 Fragmenta moves onto the current base, `@fasl-work/caos-app-shell` 0.18.0 and the template 0.10.000, both pinned exactly, and
