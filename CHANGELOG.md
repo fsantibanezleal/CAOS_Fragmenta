@@ -2,6 +2,20 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.09.002] - 2026-10-21
+
+A patch on 0.09.001: the template 0.11.000 notebook tooling. The re-bake changed none of the 428,171 numbers of the 52
+committed documents (against 0.09.001): only the version stamps and the digests over them.
+
+### Changed
+
+- Base: template 0.11.000 (`.template-version`). `scripts/check_notebooks.py` and `scripts/run_notebooks.py` taken verbatim:
+  `run_notebooks.py --check` writes its copies under a temp root the caller names (`--tmp` or `CAOS_TEMP_ROOT`) and removes
+  them; `check_notebooks.py` fails a notebook cell that defines a function or a class of the product's method packages, and
+  `--pypi` confirms each one's pin is published. `product.json` declares `blastfrag` in `method_packages`; the 38 notebooks
+  define none of its names and its pin `blastfrag==0.4.0` is on PyPI.
+- `notebooks/README.md` states the runner's temp root and the method-package rule, in English and Spanish.
+
 ## [0.09.001] - 2026-10-21
 
 A patch on 0.09.000: the dormant API's test client moves to the replacement Starlette asks for, and three pins move to the
