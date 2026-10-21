@@ -6,9 +6,9 @@ state of the art, and what the product adds beyond it. The methods live in the e
 [`blastfrag`](https://pypi.org/project/blastfrag/) (pinned `0.4.0`), and in the named pipeline `data-pipeline/`; a notebook imports them and never
 re-implements them.
 
-Los cuadernos didácticos del banco de pruebas de fragmentación por tronadura, en dos árboles con los mismos cuadernos: [`en/`](en/README.md) en inglés y
+Los cuadernos didácticos del banco de pruebas de fragmentación por voladura, en dos árboles que contienen los mismos cuadernos: [`en/`](en/README.md) en inglés y
 [`es/`](es/README.md) en español. Enseñan, paso a paso y sobre los datos del propio producto, cómo funcionan los métodos del motor, dónde está cada uno
-frente al estado del arte y qué agrega el producto más allá. Los métodos viven en el motor, el paquete de PyPI
+frente al estado del arte y qué aporta el producto más allá de él. Los métodos viven en el motor, el paquete de PyPI
 [`blastfrag`](https://pypi.org/project/blastfrag/) (fijado en `0.4.0`), y en el pipeline `data-pipeline/`; un cuaderno los importa y nunca los reimplementa.
 
 ## What the set covers
@@ -29,7 +29,7 @@ teaches and the reason a topic has no state-of-the-art notebook.
 
 ## Cubre el conjunto
 
-Seis temas, de simple a complejo. Cada tema tiene un cuaderno de fundamentos y uno del método, y algunos agregan uno de estado del arte y uno más allá del estado del arte.
+Seis temas, de simple a complejo. Cada tema tiene un cuaderno de fundamentos y uno del método, y algunos suman uno de estado del arte y otro más allá del estado del arte.
 Los niveles son los mismos: 1 fundamentos, 2 el método en la práctica, 3 estado del arte, 4 más allá del estado del arte. El índice de cada árbol lista cada cuaderno,
 qué enseña y la razón por la que un tema no tiene cuaderno de estado del arte.
 
@@ -58,7 +58,7 @@ published.
 
 Cada número que imprime un cuaderno se lee de un artefacto versionado bajo `data/derived/` o lo calcula el motor en esa ejecución; nada se escribe a mano.
 Los cuadernos corren desde su propia carpeta, así que la raíz del repositorio está tres niveles arriba, y ninguna ruta es absoluta. Los comandos de arriba
-crean el entorno con los pines exactos de `requirements.txt` (los mismos del bake más la biblioteca de gráficos y el runtime de los cuadernos), con un solo hilo de BLAS.
+crean el entorno con las versiones exactas de `requirements.txt` (los mismos del bake más la biblioteca de gráficos y el runtime de los cuadernos), con un solo hilo de BLAS.
 Las salidas están versionadas, de modo que los cuadernos se leen como material terminado en GitHub. Solo las escribe el ejecutor de la plantilla (`run_notebooks.py`), nunca a mano;
 su modo `--check` ejecuta copias bajo una raíz temporal que indica quien lo llama (`--tmp <raíz temporal>` o `CAOS_TEMP_ROOT`; sin ella se detiene con
 salida 2) y falla ante un cuaderno que da error o cuyas salidas versionadas difieren de una ejecución nueva. Es una compuerta local de versión y no corre en CI.
