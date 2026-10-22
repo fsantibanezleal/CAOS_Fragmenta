@@ -111,7 +111,7 @@ export function IntervalChart({
         ))}
         <li className="fr-fine">{es ? 'hueco: más allá del eje, valor exacto en la lectura' : 'hollow: beyond the axis, exact value in the readout'}</li>
       </ul>
-      <svg viewBox={`0 0 ${W} ${H}`} className="fr-svg" role="img" aria-label={es ? 'Puntaje de cada brazo por protocolo' : 'Every arm’s score by protocol'} onPointerLeave={() => setHover(null)}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="fr-svg" role="img" aria-label={es ? 'Puntaje de cada predictor por protocolo' : 'Every arm’s score by protocol'} onPointerLeave={() => setHover(null)}>
         <line x1={x(0)} y1={top - 4} x2={x(0)} y2={top + rows.length * rowH} stroke={FG} strokeWidth={1.2} />
         {ticks.map((t) => (
           <g key={t}>

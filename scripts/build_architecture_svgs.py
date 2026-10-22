@@ -242,7 +242,7 @@ def tab1(F: dict, es: bool) -> tuple[str, float]:
         (t("What it finds", "Lo que encuentra"), [
             t(f"learned arms explain a median {F['medians'][0]:.2f} to {F['medians'][1]:.2f} on random splits and lose {F['gap'][0]:.2f} to {F['gap'][1]:.2f} with a site held out", f"los aprendidos explican una mediana de {F['medians'][0]:.2f} a {F['medians'][1]:.2f} al azar y pierden de {F['gap'][0]:.2f} a {F['gap'][1]:.2f} con el sitio excluido"),
             t(f"the classical equation scores about 0.30 under every protocol ({F['kuz_site']:.3f} held out by site)", f"la ecuación clásica puntúa cerca de 0.30 en todo protocolo ({F['kuz_site']:.3f} con el sitio excluido)"),
-            t("no arm fitted without the corpus has an interval above zero", "ningún brazo ajustado sin el corpus tiene un intervalo sobre cero"),
+            t("no arm fitted without the corpus has an interval above zero", "ningún predictor ajustado sin el corpus tiene un intervalo sobre cero"),
         ], "bad"),
     ])
     nots = column(22, 856, max(b.y + b.h for b in left + mid + right) + 18, 10, [
@@ -266,7 +266,7 @@ def tab2(F: dict, es: bool) -> tuple[str, float]:
     replay = column(312, 270, 64, 10, [
         (t(f"{F['n_cases']} case artifacts, {F['case_kb']} kB", f"{F['n_cases']} artefactos de caso, {F['case_kb']} kB"), [t("predictions, refusals with reasons, curves", "predicciones, negativas con razón, curvas")]),
         (t(f"Benchmark, {F['bench_kb']} kB", f"Benchmark, {F['bench_kb']} kB"), [t("spreads, two supports, intervals, per site", "dispersiones, dos soportes, intervalos, por sitio")]),
-        (t(f"{F['n_models']} model files, {F['model_kb']} kB", f"{F['n_models']} archivos de modelos, {F['model_kb']} kB"), [t("the fitted arms of each training scope", "los brazos ajustados de cada alcance")], "warn"),
+        (t(f"{F['n_models']} model files, {F['model_kb']} kB", f"{F['n_models']} archivos de modelos, {F['model_kb']} kB"), [t("the fitted arms of each training scope", "los predictores ajustados de cada alcance")], "warn"),
     ])
     live = column(602, 276, 64, 10, [
         (t("Live: closed forms", "Vivo: formas cerradas"), [t("classical, curves, router, regression, in TypeScript; parity-tested on every baked blast", "clásica, curvas, enrutador, regresión, en TypeScript; paridad probada en cada tiro")], "good"),
@@ -335,7 +335,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
     arrows = [arrow(a[0].bottom(), a[1].top()), arrow(a[1].bottom(), a[2].top()), arrow(a[1].right(), b[0].left()), arrow(b[0].bottom(), b[1].top()), arrow(b[1].right(), c[0].left())]
     notes = [t(
         "The tenth site, Miami, publishes nothing absolute, so its six blasts are not reconstructed and every arm that needs a volume abstains there with a reason; those six blasts are also what the verdict turns on.",
-        "El décimo sitio, Miami, no publica nada absoluto, así que sus seis tiros no se reconstruyen y todo brazo que necesita volumen se abstiene allí con una razón; esos seis tiros son también de los que depende el veredicto.",
+        "El décimo sitio, Miami, no publica nada absoluto, así que sus seis tiros no se reconstruyen y todo predictor que necesita volumen se abstiene allí con una razón; esos seis tiros son también de los que depende el veredicto.",
     )]
     return layout(t("The obstacle, and how it was closed", "El obstáculo, y cómo se cerró"), [a, b, c], arrows, notes)
 

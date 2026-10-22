@@ -65,18 +65,18 @@ export default function Arms({ b }: TopicData) {
 
   return (
     <>
-      <DocSection title={{ en: 'Every arm, every protocol', es: 'Cada brazo, cada protocolo' }} area="results" refs={SECTION_REFS['b-arms']}>
+      <DocSection title={{ en: 'Every arm, every protocol', es: 'Cada predictor, cada protocolo' }} area="results" refs={SECTION_REFS['b-arms']}>
         <p>
           {t(
             'Each row is an arm; each mark, a protocol. The bars of the random protocols run from the 5th to the 95th percentile of a hundred draws; those of the site hold-out are site-resampled 95 percent intervals. Zero is predicting the mean of the scored rows. The random draws score a model on rows from campaigns it has trained on, the deduplicated draws remove the repeated input vectors first, and the site hold-out removes a whole campaign, which is the question a new mine asks.',
-            'Cada fila es un brazo; cada marca, un protocolo. Las barras de los protocolos aleatorios van del percentil 5 al 95 de cien sorteos; las de la retención de sitio son intervalos al 95 por ciento por remuestreo de sitios. El cero es predecir la media de las filas puntuadas. Los sorteos aleatorios puntúan un modelo sobre filas de campañas con las que se entrenó, los sorteos deduplicados quitan antes los vectores de entrada repetidos, y la retención de sitio quita una campaña completa, que es la pregunta que hace una mina nueva.',
+            'Cada fila es un predictor; cada marca, un protocolo. Las barras de los protocolos aleatorios van del percentil 5 al 95 de cien sorteos; las de la retención de sitio son intervalos al 95 por ciento por remuestreo de sitios. El cero es predecir la media de las filas puntuadas. Los sorteos aleatorios puntúan un modelo sobre filas de campañas con las que se entrenó, los sorteos deduplicados quitan antes los vectores de entrada repetidos, y la retención de sitio quita una campaña completa, que es la pregunta que hace una mina nueva.',
           )}{' '}
           <Cite id="efron1979" />
         </p>
         <Figure
           caption={t(
             'The variance explained by every arm under the four scores: the median of a hundred random 80/20 draws, of a hundred deduplicated draws, and the pooled leave-one-site-out score on every blast and on the blasts with geometry. The bar is the 5th to 95th percentile of the draws or the site-resampled 95 percent interval; zero is predicting the mean.',
-            'La varianza explicada por cada brazo bajo las cuatro puntuaciones: la mediana de cien sorteos aleatorios 80/20, de cien sorteos deduplicados, y la puntuación agrupada con un sitio excluido sobre todos los tiros y sobre los tiros con geometría. La barra es el percentil 5 al 95 de los sorteos o el intervalo al 95 por ciento por remuestreo de sitios; el cero es predecir la media.',
+            'La varianza explicada por cada predictor bajo las cuatro puntuaciones: la mediana de cien sorteos aleatorios 80/20, de cien sorteos deduplicados, y la puntuación agrupada con un sitio excluido sobre todos los tiros y sobre los tiros con geometría. La barra es el percentil 5 al 95 de los sorteos o el intervalo al 95 por ciento por remuestreo de sitios; el cero es predecir la media.',
           )}
         >
           <IntervalChart rows={rows} labels={labels} />
@@ -85,13 +85,13 @@ export default function Arms({ b }: TopicData) {
           <table className="fr-table fr-table-wide">
             <thead>
               <tr>
-                <th>{t('arm', 'brazo')}</th>
+                <th>{t('arm', 'predictor')}</th>
                 <th>{t('random', 'aleatorio')}</th>
                 <th>{t('deduplicated', 'deduplicado')}</th>
                 <th>{t('site held out, all', 'sitio excluido, todos')}</th>
                 <th>{t('abst.', 'abst.')}</th>
                 <th>{t('with geometry', 'con geometría')}</th>
-                <th title={t('the rows every size-predicting arm answered', 'las filas que respondió todo brazo que predice un tamaño')}>{t('common rows', 'filas comunes')}</th>
+                <th title={t('the rows every size-predicting arm answered', 'las filas que respondió todo predictor que entrega un tamaño')}>{t('common rows', 'filas comunes')}</th>
                 <th>RMSE</th>
                 <th>{t('fitted on', 'ajustado con')}</th>
               </tr>
@@ -132,16 +132,16 @@ export default function Arms({ b }: TopicData) {
         <Callout variant="note" title={t('How to read the table', 'Cómo leer la tabla')}>
           {t(
             'The published regression was fitted on these 97 blasts, so its site-held-out column is an in-sample fit and not transfer. The site-factor classical arm uses information about the site itself; the transfer arm does not, and scores almost the same. Arms with abstentions are scored on fewer rows, which is why the with-geometry column compares them all on the same ones.',
-            'La regresión publicada se ajustó sobre estos 97 tiros, así que su columna con el sitio excluido es un ajuste dentro de la muestra y no transferencia. El brazo clásico de factor del sitio usa información del propio sitio; el de transferencia no, y puntúa casi lo mismo. Los brazos con abstenciones se puntúan sobre menos filas, por eso la columna con geometría compara a todos sobre las mismas.',
+            'La regresión publicada se ajustó sobre estos 97 tiros, así que su columna con el sitio excluido es un ajuste dentro de la muestra y no transferencia. El predictor clásico de factor del sitio usa información del propio sitio; el de transferencia no, y puntúa casi lo mismo. Los predictores con abstenciones se puntúan sobre menos filas, por eso la columna con geometría compara a todos sobre las mismas.',
           )}
         </Callout>
       </DocSection>
-      <DocSection title={{ en: 'Every arm, every campaign', es: 'Cada brazo, cada campaña' }} area="results" refs={SECTION_REFS['b-persite']}>
+      <DocSection title={{ en: 'Every arm, every campaign', es: 'Cada predictor, cada campaña' }} area="results" refs={SECTION_REFS['b-persite']}>
         <p>
           {worst
             ? t(
                 `The root mean square error, in centimetres, of each arm on each campaign it did not see; an abstention reads as not available, and the last row is the mean measured size of the campaign, the scale an error is read against. The best learned arm on every blast, ${label(best, 'en')}, errs most on ${worst[0]}, by ${num(worst[1] * 100, 1)} cm against a mean measured size of ${num((worstMean ?? 0) * 100, 1)} cm. A pooled score hides this spread: a campaign of seven blasts and one of twenty-two weigh as the rows they hold, and the campaigns differ in rock, rig and measurement.`,
-                `La raíz del error cuadrático medio, en centímetros, de cada brazo en cada campaña que no vio; una abstención se lee como no disponible, y la última fila es el tamaño medio medido de la campaña, la escala contra la que se lee un error. El mejor brazo aprendido sobre todos los tiros, ${label(best, 'es')}, yerra más en ${worst[0]}, por ${num(worst[1] * 100, 1)} cm frente a un tamaño medio medido de ${num((worstMean ?? 0) * 100, 1)} cm. Una puntuación agrupada oculta esta dispersión: una campaña de siete tiros y una de veintidós pesan como las filas que contienen, y las campañas difieren en roca, equipo y medición.`,
+                `La raíz del error cuadrático medio, en centímetros, de cada predictor en cada campaña que no vio; una abstención se lee como no disponible, y la última fila es el tamaño medio medido de la campaña, la escala contra la que se lee un error. El mejor predictor aprendido sobre todos los tiros, ${label(best, 'es')}, yerra más en ${worst[0]}, por ${num(worst[1] * 100, 1)} cm frente a un tamaño medio medido de ${num((worstMean ?? 0) * 100, 1)} cm. Una puntuación agrupada oculta esta dispersión: una campaña de siete tiros y una de veintidós pesan como las filas que contienen, y las campañas difieren en roca, equipo y medición.`,
               )
             : notAvailable()}{' '}
           <Cite id="hudaverdi2010" />
@@ -150,7 +150,7 @@ export default function Arms({ b }: TopicData) {
           <table className="fr-table fr-table-wide">
             <thead>
               <tr>
-                <th>{t('arm, RMSE in cm', 'brazo, RMSE en cm')}</th>
+                <th>{t('arm, RMSE in cm', 'predictor, RMSE en cm')}</th>
                 {b.sites.map((site) => (
                   <th key={site}>{site}</th>
                 ))}
@@ -176,11 +176,11 @@ export default function Arms({ b }: TopicData) {
           </table>
         </div>
       </DocSection>
-      <DocSection title={{ en: 'The best learned arm against the classical arm, on the same rows', es: 'El mejor brazo aprendido frente al clásico, sobre las mismas filas' }} area="comparison" refs={SECTION_REFS['b-comparison']}>
+      <DocSection title={{ en: 'The best learned arm against the classical arm, on the same rows', es: 'El mejor predictor aprendido frente al clásico, sobre las mismas filas' }} area="comparison" refs={SECTION_REFS['b-comparison']}>
         <p>
           {t(
             `Even with geometry, each arm drops its own abstentions, so two arms in the table above are scored on different rows when one refuses a prediction outside the plausible range. The comparison here scores every arm on the rows every size-predicting arm answered: held out by site, ${common.n_rows} blasts from ${common.n_sites} sites. The classical equation scores ${f(classicalCommon)} on those rows and the best learned arm ${f(bestLearnedCommon)}, so on the same rows the learned arm is ${learnedAhead ? 'ahead' : 'behind'}${overlap ? ', and each interval contains the other’s point estimate' : ''}.`,
-            `Aun con geometría, cada brazo descarta sus propias abstenciones, así que dos brazos de la tabla de arriba se puntúan sobre filas distintas cuando uno rehúsa una predicción fuera del rango plausible. La comparación de aquí puntúa a todos los brazos sobre las filas que respondió todo brazo que predice un tamaño: con el sitio excluido, ${common.n_rows} tiros de ${common.n_sites} sitios. La ecuación clásica puntúa ${f(classicalCommon)} sobre esas filas y el mejor brazo aprendido ${f(bestLearnedCommon)}, así que sobre las mismas filas el brazo aprendido queda ${learnedAhead ? 'por delante' : 'por detrás'}${overlap ? ', y cada intervalo contiene la estimación puntual del otro' : ''}.`,
+            `Aun con geometría, cada predictor descarta sus propias abstenciones, así que dos predictores de la tabla de arriba se puntúan sobre filas distintas cuando uno rehúsa una predicción fuera del rango plausible. La comparación de aquí puntúa a todos los predictores sobre las filas que respondió todo predictor que entrega un tamaño: con el sitio excluido, ${common.n_rows} tiros de ${common.n_sites} sitios. La ecuación clásica puntúa ${f(classicalCommon)} sobre esas filas y el mejor predictor aprendido ${f(bestLearnedCommon)}, así que sobre las mismas filas el predictor aprendido queda ${learnedAhead ? 'por delante' : 'por detrás'}${overlap ? ', y cada intervalo contiene la estimación puntual del otro' : ''}.`,
           )}{' '}
           <Cite id="kuznetsov1973" />
         </p>
@@ -188,14 +188,14 @@ export default function Arms({ b }: TopicData) {
           tex={String.raw`C = \bigcap_{a \in \mathcal{A}} \left\{\, i : \hat y_i^{(a)} \ \text{is not an abstention} \,\right\}`}
           caption={t(
             'The common rows: C is the set of blasts i that every size-predicting arm a in the set of arms A answered with a prediction. Every arm is scored on C, so the denominators agree; C is chosen by the arms’ own refusals, so it is never the set the criterion reads.',
-            'Las filas comunes: C es el conjunto de tiros i que todo brazo a que predice un tamaño, del conjunto de brazos A, respondió con una predicción. Todo brazo se puntúa sobre C, de modo que los denominadores coinciden; C lo eligen los propios rechazos de los brazos, así que nunca es el conjunto que lee el criterio.',
+            'Las filas comunes: C es el conjunto de tiros i que todo predictor a que entrega un tamaño, del conjunto de predictores A, respondió con una predicción. Todo predictor se puntúa sobre C, de modo que los denominadores coinciden; C lo eligen los propios rechazos de los predictores, así que nunca es el conjunto que lee el criterio.',
           )}
         />
         <div className="fr-scroll-x">
           <table className="fr-table">
             <thead>
               <tr>
-                <th>{t('arm', 'brazo')}</th>
+                <th>{t('arm', 'predictor')}</th>
                 <th>{t('kind', 'clase')}</th>
                 <th>{t('random, median on the common rows', 'aleatorio, mediana en las filas comunes')}</th>
                 <th>{t('held out by site, common rows', 'sitio excluido, filas comunes')}</th>
@@ -221,7 +221,7 @@ export default function Arms({ b }: TopicData) {
         <Callout variant="note" title={t('The common rows', 'Las filas comunes')}>
           {t(
             `Those rows are chosen by the arms' own refusals, and an arm refuses where it extrapolates, so the rows left out are the hard ones and every score rises on them. That is why the criterion is evaluated only on the two row sets declared before the run, never on these.`,
-            'Esas filas las eligen los propios rechazos de los brazos, y un brazo rehúsa donde extrapola, así que las filas que quedan fuera son las difíciles y todo puntaje sube en ellas. Por eso el criterio se evalúa solo sobre los dos conjuntos declarados antes de la corrida, nunca sobre estos.',
+            'Esas filas las eligen los propios rechazos de los predictores, y un predictor rehúsa donde extrapola, así que las filas que quedan fuera son las difíciles y todo puntaje sube en ellas. Por eso el criterio se evalúa solo sobre los dos conjuntos declarados antes de la corrida, nunca sobre estos.',
           )}
         </Callout>
       </DocSection>

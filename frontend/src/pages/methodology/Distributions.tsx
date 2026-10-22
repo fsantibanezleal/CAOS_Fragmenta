@@ -36,7 +36,7 @@ function CapParagraphs({ es, b }: { es: boolean; b: BenchmarkArtifact | null }) 
       />
       <p>
         {es
-          ? `En el corpus el límite actúa en ${f(moved.length, 0)} tiros (${moved.join(', ') || notAvailable()}), donde la predicción clásica supera el bloque; ningún tamaño medido en ninguna parte lo supera. Con el sitio excluido lleva el brazo clásico de ${f(classical?.r2_identity)} a ${f(capped?.r2_identity)}, con un intervalo que sigue cruzando el cero (${iv(capped?.supports.all.interval_95, 2, true)}). Ninguna curva medida valida la forma limitada; solo se puntúa su efecto en el tamaño medio.`
+          ? `En el corpus el límite actúa en ${f(moved.length, 0)} tiros (${moved.join(', ') || notAvailable()}), donde la predicción clásica supera el bloque; ningún tamaño medido en ninguna parte lo supera. Con el sitio excluido lleva el predictor clásico de ${f(classical?.r2_identity)} a ${f(capped?.r2_identity)}, con un intervalo que sigue cruzando el cero (${iv(capped?.supports.all.interval_95, 2, true)}). Ninguna curva medida valida la forma limitada; solo se puntúa su efecto en el tamaño medio.`
           : `On the corpus the cap binds on ${f(moved.length, 0)} blasts (${moved.join(', ') || notAvailable()}), where the classical prediction exceeds the block; no measured size anywhere exceeds it. Held out by site it moves the classical arm from ${f(classical?.r2_identity)} to ${f(capped?.r2_identity)}, with an interval that still spans zero (${iv(capped?.supports.all.interval_95)}). No measured curve validates the capped shape; only its effect on the mean size is scored.`}
       </p>
     </>

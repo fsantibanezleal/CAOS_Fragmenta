@@ -1,15 +1,15 @@
 {
- "app_version": "0.09.004",
+ "app_version": "0.09.005",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 76926,
+  "bytes": 76978,
   "format": "json",
   "path": "synth-ibsd-capped/case.json"
  },
  "case_id": "synth-ibsd-capped",
  "category": "structural-control",
  "controls": {},
- "digest": "d73399f97a11f3665d4298cd2e3f8c04a9fd3bdfb39cac9215ed6b9fdc94e24d",
+ "digest": "4b1697e1924bc8a389ac38892396cfdcf73ec1f8931509b9190ec548eab470ac",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 76926,
+  "trace_bytes": 76978,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"

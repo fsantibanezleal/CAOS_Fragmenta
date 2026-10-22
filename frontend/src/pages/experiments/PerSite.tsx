@@ -53,7 +53,7 @@ export function PerSite({ es, b }: TopicProps) {
       <p>
         {t(
           'The rows of a campaign are not independent samples: they share a rock mass, a rig, an explosive and, in this corpus, the measurement method of whoever studied it. That is why each campaign is held out whole, and why the error is also read campaign by campaign. Each cell is an arm’s root mean square error, in metres, on the campaign it did not see; the colour compares it with the null’s on that same campaign.',
-          'Las filas de una campaña no son muestras independientes: comparten macizo, equipo, explosivo y, en este corpus, el método de medición de quien la estudió. Por eso cada campaña se retiene completa, y por eso el error se mira también campaña por campaña. Cada celda es el error cuadrático medio, en metros, de un brazo sobre la campaña que no vio; el color compara con el del nulo en esa misma campaña.',
+          'Las filas de una campaña no son muestras independientes: comparten macizo, equipo, explosivo y, en este corpus, el método de medición de quien la estudió. Por eso cada campaña se retiene completa, y por eso el error se mira también campaña por campaña. Cada celda es el error cuadrático medio, en metros, de un predictor sobre la campaña que no vio; el color compara con el del nulo en esa misma campaña.',
         )}{' '}
         <Cite id="hudaverdi2010" />
       </p>
@@ -76,11 +76,11 @@ export function PerSite({ es, b }: TopicProps) {
       <p>
         {t(
           `Two campaigns concentrate the learned arms’ drop. At Murgul the boosting model’s error is ${f(ratio('xgboost', 'Murgul'), 1)} times the null’s, and at Miami, the campaign with the finest fragments (mean ${f(meta('Miami')?.mean_x50_m, 3)} m), the forest errs by ${f(rmse('random-forest', 'Miami'), 3)} m and the boosting model by ${f(rmse('xgboost', 'Miami'), 3)} m. The two Reocin campaigns are the coarsest, with means of ${f(meta('Reocin')?.mean_x50_m, 3)} and ${f(meta('Reocin-UG')?.mean_x50_m, 3)} m, and no training site is as coarse: the smallest error among the arms that are not in sample is ${f(smallest('Reocin'), 3)} m at Reocin and ${f(smallest('Reocin-UG'), 3)} m at Reocin-UG. Below, the chosen arm’s out-of-fold predictions against the measurement; point at a blast to read its site.`,
-          `Dos campañas concentran la caída de los aprendidos. En Murgul el error del modelo de potenciación es ${f(ratio('xgboost', 'Murgul'), 1)} veces el del nulo, y en Miami, la campaña de fragmentos más finos (media ${f(meta('Miami')?.mean_x50_m, 3)} m), el bosque se equivoca en ${f(rmse('random-forest', 'Miami'), 3)} m y el modelo de potenciación en ${f(rmse('xgboost', 'Miami'), 3)} m. Las dos campañas de Reocin son las más gruesas, con medias de ${f(meta('Reocin')?.mean_x50_m, 3)} y ${f(meta('Reocin-UG')?.mean_x50_m, 3)} m, y ningún sitio de entrenamiento es tan grueso: el menor error entre los brazos que no están dentro de la muestra es ${f(smallest('Reocin'), 3)} m en Reocin y ${f(smallest('Reocin-UG'), 3)} m en Reocin-UG. Abajo, las predicciones fuera de pliegue del brazo elegido contra lo medido; al apuntar a un tiro se lee su sitio.`,
+          `Dos campañas concentran la caída de los aprendidos. En Murgul el error del modelo de potenciación es ${f(ratio('xgboost', 'Murgul'), 1)} veces el del nulo, y en Miami, la campaña de fragmentos más finos (media ${f(meta('Miami')?.mean_x50_m, 3)} m), el bosque se equivoca en ${f(rmse('random-forest', 'Miami'), 3)} m y el modelo de potenciación en ${f(rmse('xgboost', 'Miami'), 3)} m. Las dos campañas de Reocin son las más gruesas, con medias de ${f(meta('Reocin')?.mean_x50_m, 3)} y ${f(meta('Reocin-UG')?.mean_x50_m, 3)} m, y ningún sitio de entrenamiento es tan grueso: el menor error entre los predictores que no están dentro de la muestra es ${f(smallest('Reocin'), 3)} m en Reocin y ${f(smallest('Reocin-UG'), 3)} m en Reocin-UG. Abajo, las predicciones fuera de pliegue del predictor elegido contra lo medido; al apuntar a un tiro se lee su sitio.`,
         )}
       </p>
       <label className="fr-control fr-control-inline">
-        {t('Arm', 'Brazo')}
+        {t('Arm', 'Predictor')}
         <select value={arm} onChange={(e) => setArm(e.target.value)}>
           {(arms.length ? arms : ['xgboost']).map((a) => (
             <option key={a} value={a}>{armLabel(a, lang)}</option>

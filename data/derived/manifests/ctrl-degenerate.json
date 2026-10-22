@@ -1,8 +1,8 @@
 {
- "app_version": "0.09.004",
+ "app_version": "0.09.005",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 62309,
+  "bytes": 62313,
   "format": "json",
   "path": "ctrl-degenerate/case.json"
  },
@@ -16,14 +16,14 @@
    "passed": true
   }
  },
- "digest": "10366d93a6a81da401531c7d943bee0ffd06ec2e9870d294b79c602689667457",
+ "digest": "b37fb9ee716b8928f52b5c166f99be14a9222871c1f0b2c8e2c51aa0428206c4",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
  },
  "expected_band": {
   "en": "every arm abstains, with a reason",
-  "es": "todo brazo se abstiene, con una raz\u00f3n"
+  "es": "todo predictor se abstiene, con una raz\u00f3n"
  },
  "flags": [
   {
@@ -62,7 +62,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 62309,
+  "trace_bytes": 62313,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
