@@ -64,7 +64,7 @@ export function EnginePortableModels({ es, b, index }: TopicProps) {
       <p>
         {t(
           'The learned arms are fitted offline with numpy, scikit-learn and xgboost, which a browser does not have, and ONNX Runtime Web has no tree-ensemble kernel. So the engine exports each fitted model as plain JSON (the network’s weights, the support vectors, and every tree as four arrays: left child, right child, feature, and threshold or leaf), and the App walks them in TypeScript. A forest of 76 trees is most of what needs to run, which is why a custom format won over the usual route.',
-          'Los brazos aprendidos se ajustan sin conexión con numpy, scikit-learn y xgboost, que un navegador no tiene, y ONNX Runtime Web no trae un núcleo para ensambles de árboles. Así que el motor exporta cada modelo ajustado como JSON plano (los pesos de la red, los vectores de soporte, y cada árbol como cuatro arreglos: hijo izquierdo, hijo derecho, variable y umbral u hoja), y la App los recorre en TypeScript. Un bosque de 76 árboles es casi todo lo que hay que correr, y por eso un formato propio se impuso a la vía habitual.',
+          'Los predictores aprendidos se ajustan sin conexión con numpy, scikit-learn y xgboost, que un navegador no tiene, y ONNX Runtime Web no trae un núcleo para ensambles de árboles. Así que el motor exporta cada modelo ajustado como JSON plano (los pesos de la red, los vectores de soporte, y cada árbol como cuatro arreglos: hijo izquierdo, hijo derecho, variable y umbral u hoja), y la App los recorre en TypeScript. Un bosque de 76 árboles es casi todo lo que hay que correr, y por eso un formato propio se impuso a la vía habitual.',
         )}{' '}
         <Cite id="breiman2001" />{' '}
         <Cite id="chen2016" />{' '}
@@ -74,7 +74,7 @@ export function EnginePortableModels({ es, b, index }: TopicProps) {
       <p>
         {t(
           `One models file holds one training scope: the withheld campaign, or the whole corpus, with what the arms were fitted on, ${count(arms)} portable arm documents, the fixtures and the content address. The kinds are listed below with what each stores and how it is evaluated. A stacked model stores its forest and its booster as references to the standalone arms, after the stage asserts that the trees are identical, which keeps each file small.`,
-          `Un archivo de modelos contiene un alcance de entrenamiento: la campaña retenida, o el corpus completo, con aquello con que se ajustaron los brazos, ${count(arms)} documentos de brazo portátiles, las fijaciones y la dirección de contenido. Los tipos se listan abajo con lo que guarda cada uno y cómo se evalúa. Un modelo apilado guarda su bosque y su potenciación como referencias a los brazos independientes, después de que la etapa verifica que los árboles son idénticos, lo que mantiene pequeño cada archivo.`,
+          `Un archivo de modelos contiene un alcance de entrenamiento: la campaña retenida, o el corpus completo, con aquello con que se ajustaron los predictores, ${count(arms)} documentos de predictor portátiles, las fijaciones y la dirección de contenido. Los tipos se listan abajo con lo que guarda cada uno y cómo se evalúa. Un modelo apilado guarda su bosque y su potenciación como referencias a los predictores independientes, después de que la etapa verifica que los árboles son idénticos, lo que mantiene pequeño cada archivo.`,
         )}
       </p>
       <div className="fr-scroll-x">
@@ -120,7 +120,7 @@ export function EnginePortableModels({ es, b, index }: TopicProps) {
       <Callout variant="note" title={t('Where it works and where it fails', 'Dónde funciona y dónde falla')}>
         {t(
           'A learned number that moves as you drag a control is the fitted model’s number, not an approximation of it. That does not make it reliable outside the training envelope: the model is the same, and what the benchmark measures about it, including its drop with a site held out, applies to your design too. The polynomial kernel is left out of the live arms by choice, because the radial one is the better of the two under every protocol.',
-          'Un número aprendido que se mueve cuando usted arrastra un control es el del modelo ajustado, no una aproximación. Eso no lo vuelve confiable fuera de la envolvente de entrenamiento: el modelo es el mismo, y lo que el benchmark mide de él, incluida su caída al excluir un sitio, también vale para su diseño. El núcleo polinómico queda fuera de los brazos en vivo por elección, porque el radial es el mejor de los dos bajo todo protocolo.',
+          'Un número aprendido que se mueve cuando usted arrastra un control es el del modelo ajustado, no una aproximación. Eso no lo vuelve confiable fuera de la envolvente de entrenamiento: el modelo es el mismo, y lo que el benchmark mide de él, incluida su caída al excluir un sitio, también vale para su diseño. El núcleo polinómico queda fuera de los predictores en vivo por elección, porque el radial es el mejor de los dos bajo todo protocolo.',
         )}
       </Callout>
     </DocSection>

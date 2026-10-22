@@ -40,7 +40,7 @@ export function EngineGeometry({ es, b }: TopicProps) {
       <p>
         {t(
           `A ninth site, Reocin underground, states no diameter but an 18 m bench height; inverting the chain returns the same diameter, 91.2 mm, on all six of its rows, a six-fold internal check rather than an assumption. The tenth, ${miami ? miami[0] : notAvailable()}, publishes nothing absolute: its ${count(miami?.[1].n_blasts)} blasts are not reconstructed, the engine raises rather than returning a pattern, and every arm that needs a volume abstains there with the reason.`,
-          `Un noveno sitio, Reocin subterránea, no declara diámetro pero sí una altura de banco de 18 m; invertir la cadena da el mismo diámetro, 91,2 mm, en sus seis filas, una comprobación interna de seis veces y no un supuesto. El décimo, ${miami ? miami[0] : notAvailable()}, no publica nada absoluto: sus ${count(miami?.[1].n_blasts)} tiros no se reconstruyen, el motor lanza un error en vez de devolver una malla y todo brazo que necesita volumen se abstiene allí con la razón.`,
+          `Un noveno sitio, Reocin subterránea, no declara diámetro pero sí una altura de banco de 18 m; invertir la cadena da el mismo diámetro, 91,2 mm, en sus seis filas, una comprobación interna de seis veces y no un supuesto. El décimo, ${miami ? miami[0] : notAvailable()}, no publica nada absoluto: sus ${count(miami?.[1].n_blasts)} tiros no se reconstruyen, el motor lanza un error en vez de devolver una malla y todo predictor que necesita volumen se abstiene allí con la razón.`,
         )}
       </p>
       <Equation

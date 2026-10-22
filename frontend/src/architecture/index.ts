@@ -149,12 +149,12 @@ sample.`,
 masa de explosivo por barreno. La prosa de la fuente da un diámetro de perforación en ocho de sus diez
 sitios, un noveno sale de su altura de banco declarada, y la reconstrucción se comprueba contra quince
 restricciones dimensionales que la misma prosa declara. El décimo sitio no publica nada absoluto y todo
-brazo que necesita un volumen se abstiene allí con una razón.
+predictor que necesita un volumen se abstiene allí con una razón.
 
 El factor de roca que ambos artículos dicen haber estimado, y ninguno imprimió, se recupera invirtiendo
 la ecuación sobre las predicciones publicadas, y casi no varía dentro de un sitio. Una forma de
 transferencia lo predice desde el módulo de Young con una recta ajustada solo sobre los sitios de
-entrenamiento, así que el brazo clásico se puede puntuar en un sitio sin información de ese sitio, y
+entrenamiento, así que el predictor clásico se puede puntuar en un sitio sin información de ese sitio, y
 puntúa casi lo mismo.
 
 Los predictores corren entonces bajo los tres protocolos, cada uno declarando con qué se ajustó: el

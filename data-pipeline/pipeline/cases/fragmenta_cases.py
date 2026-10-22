@@ -310,7 +310,7 @@ def _real_cases() -> list[Case]:
             ),
             expected_band=_band(
                 "the classical arm abstains on all six; the ratio arms answer",
-                "el brazo clásico se abstiene en los seis; los brazos de razones responden",
+                "el predictor clásico se abstiene en los seis; los predictores de razones responden",
             ),
             variants=_STANDARD_VARIANTS,
         )
@@ -449,7 +449,7 @@ _SYNTHETIC: tuple[Case, ...] = (
         ),
         expected_band=_band(
             "every arm abstains, with a reason",
-            "todo brazo se abstiene, con una razón",
+            "todo predictor se abstiene, con una razón",
         ),
         variants=_STANDARD_VARIANTS[:6],
         dataset="synthetic",
@@ -477,7 +477,7 @@ _SYNTHETIC: tuple[Case, ...] = (
         ),
         expected_band=_band(
             "the generating arm recovers its own truth to within 1e-9",
-            "el brazo generador recupera su propia verdad dentro de 1e-9",
+            "el predictor generador recupera su propia verdad dentro de 1e-9",
         ),
         variants=_STANDARD_VARIANTS[:6],
         dataset="synthetic",

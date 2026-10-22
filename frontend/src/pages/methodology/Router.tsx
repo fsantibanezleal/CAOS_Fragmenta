@@ -41,7 +41,7 @@ export default function Router({ b, corpus }: TopicData) {
       />
       <p>
         {es
-          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10,318 y el menor del alto, 13,067. Es una compuerta real, así que enruta diseños que no están en el corpus. El enrutador predice un grupo y no un tamaño, así que como brazo de tamaño se abstiene en todos los tiros, con esa razón; está en la escalera porque las regresiones y la red dependen de él y su exactitud acota la de ellas. Cada grupo tiene su ley de potencia, con siete exponentes:'
+          ? 'Reproduce la pertenencia publicada de los 109 tiros etiquetados sin un error, y los grupos no se traslapan: el mayor valor del grupo bajo es 10,318 y el menor del alto, 13,067. Es una compuerta real, así que enruta diseños que no están en el corpus. El enrutador predice un grupo y no un tamaño, así que como predictor de tamaño se abstiene en todos los tiros, con esa razón; está en la escalera porque las regresiones y la red dependen de él y su exactitud acota la de ellas. Cada grupo tiene su ley de potencia, con siete exponentes:'
           : 'It reproduces the published membership of all 109 labelled blasts with no error, and the groups do not overlap: the low group’s maximum is 10.318 and the high group’s minimum 13.067. It is a real gate, so it routes designs that are not in the corpus. The router predicts a group and not a size, so as a size arm it abstains on every blast, with that reason; it is on the ladder because the regressions and the network depend on it and its accuracy bounds theirs. Each group has its power law, with seven exponents:'}
       </p>
       <Equation
