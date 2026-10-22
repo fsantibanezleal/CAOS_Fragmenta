@@ -140,7 +140,7 @@ ENTRIES: tuple[Entry, ...] = (
     Entry(
         "group-assignment",
         re.compile(r"this arm assigns a rock-stiffness group rather than a fragment size"),
-        lambda m: "este brazo asigna un grupo de rigidez de la roca en lugar de un tamaño de fragmento",
+        lambda m: "este predictor asigna un grupo de rigidez de la roca en lugar de un tamaño de fragmento",
         "this arm assigns a rock-stiffness group rather than a fragment size",
     ),
     Entry(

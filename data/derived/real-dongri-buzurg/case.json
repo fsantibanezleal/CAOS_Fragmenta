@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "66cf16db816d77f9c57753b56625b2cd1f1e1a991ea17562619244bbb8d6855a",
+ "digest": "3795c4a489fce87439aca4e120b0246a8371f58e5dc5e19a71b2e6e173eef44e",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1815,7 +1815,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "caa26b2bd7fbf64fd5fb222e50e663e61c0404ab253f036410bc6bdb3b0d5789",
+  "digest": "6963d51c249a697e06a34da0d3b3e29a4eb7b399baf99dc781c6b08190617f74",
   "path": "models/Dongri-Buzurg.json",
   "scope": "Dongri-Buzurg"
  },
@@ -1913,7 +1913,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1925,7 +1925,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1937,7 +1937,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1949,7 +1949,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1961,7 +1961,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1973,7 +1973,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1985,7 +1985,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -1997,7 +1997,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -2009,7 +2009,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    }
@@ -3012,7 +3012,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.004",
+  "app_version": "0.09.005",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

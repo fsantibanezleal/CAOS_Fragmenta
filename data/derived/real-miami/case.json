@@ -138,7 +138,7 @@
   "doi": "10.1002/nag.957",
   "expected_band": {
    "en": "the classical arm abstains on all six; the ratio arms answer",
-   "es": "el brazo cl\u00e1sico se abstiene en los seis; los brazos de razones responden"
+   "es": "el predictor cl\u00e1sico se abstiene en los seis; los predictores de razones responden"
   },
   "id": "real-miami",
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
@@ -160,7 +160,7 @@
    "passed": true
   }
  },
- "digest": "081ed04bdca672b7bb60288aedfa30a04d9409cf698ac43932aac702f49fd982",
+ "digest": "7d9099c4698048d4e96c99cd94c0d2b2fb4ba29c91f729ff253d3ecedb227c87",
  "distributions": {},
  "geometry_report": {
   "Miami": {
@@ -183,7 +183,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "83a883dc4bd595f10cc409c6d7fcbac9217daddeac91bd88e825fcdec7b1c20e",
+  "digest": "93ad17ede94c67adb3a09aa4e38331d8f556ccde53569ccdd5f2c4605ca583d9",
   "path": "models/Miami.json",
   "scope": "Miami"
  },
@@ -272,7 +272,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -284,7 +284,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -296,7 +296,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -308,7 +308,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -320,7 +320,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    },
@@ -332,7 +332,7 @@
     "n_simulations": null,
     "reason": {
      "en": "this arm assigns a rock-stiffness group rather than a fragment size",
-     "es": "este brazo asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
+     "es": "este predictor asigna un grupo de rigidez de la roca en lugar de un tama\u00f1o de fragmento"
     },
     "x50_m": null
    }
@@ -1101,7 +1101,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.004",
+  "app_version": "0.09.005",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

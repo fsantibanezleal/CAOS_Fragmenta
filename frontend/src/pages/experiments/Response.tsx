@@ -66,7 +66,7 @@ export function Response({ es, b }: TopicProps) {
       <p>
         {t(
           'The two synthetic sweeps move one lever alone and compare every arm along the same path. No synthetic blast has a measurement, so a response is shown rather than a score. More explosive must predict finer rock and a wider burden coarser rock; an arm that inverts the sign has a problem, and the product’s tests check it for the classical arms.',
-          'Los dos barridos sintéticos mueven una sola palanca y comparan a todos los brazos sobre el mismo recorrido. Ningún tiro sintético tiene medición, así que se muestra una respuesta y no un puntaje. Más explosivo debe predecir roca más fina y un bordo mayor, roca más gruesa; un brazo que invierta el signo tiene un problema, y las pruebas del producto lo comprueban para los brazos clásicos.',
+          'Los dos barridos sintéticos mueven una sola palanca y comparan a todos los predictores sobre el mismo recorrido. Ningún tiro sintético tiene medición, así que se muestra una respuesta y no un puntaje. Más explosivo debe predecir roca más fina y un bordo mayor, roca más gruesa; un predictor que invierta el signo tiene un problema, y las pruebas del producto lo comprueban para los predictores clásicos.',
         )}{' '}
         <Cite id="hudaverdi2010" />
       </p>
@@ -89,7 +89,7 @@ export function Response({ es, b }: TopicProps) {
       <p>
         {t(
           'The arms do not answer a lever in the same way, and the shape of the answer is a property of the method. The classical equation and the published regression are smooth power laws of the ratios, so a lever moves them continuously and monotonically. The trees and the stacked ensemble are piecewise constant in every input, so along a sweep they step between the values their training blasts support, and the network bends where its hidden units saturate. A step is therefore not a physical threshold, and a response outside the training envelope is a statement about the method.',
-          'Los brazos no responden a una palanca de la misma manera, y la forma de la respuesta es una propiedad del método. La ecuación clásica y la regresión publicada son leyes de potencia suaves de las razones, así que una palanca las mueve de forma continua y monótona. Los árboles y el ensamble apilado son constantes por tramos en cada entrada, así que a lo largo de un barrido saltan entre los valores que sostienen sus tiros de entrenamiento, y la red se curva donde sus unidades ocultas se saturan. Un salto no es entonces un umbral físico, y una respuesta fuera de la envolvente de entrenamiento es una afirmación sobre el método.',
+          'Los predictores no responden a una palanca de la misma manera, y la forma de la respuesta es una propiedad del método. La ecuación clásica y la regresión publicada son leyes de potencia suaves de las razones, así que una palanca las mueve de forma continua y monótona. Los árboles y el ensamble apilado son constantes por tramos en cada entrada, así que a lo largo de un barrido saltan entre los valores que sostienen sus tiros de entrenamiento, y la red se curva donde sus unidades ocultas se saturan. Un salto no es entonces un umbral físico, y una respuesta fuera de la envolvente de entrenamiento es una afirmación sobre el método.',
         )}
       </p>
       <Callout variant="honest" title={t('What the map does not say', 'Lo que el mapa no dice')}>

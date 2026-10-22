@@ -148,11 +148,11 @@ export default function Provenance({ b }: TopicData) {
           </table>
         </div>
       </DocSection>
-      <DocSection title={{ en: 'What each arm was fitted on', es: 'Con qué se ajustó cada brazo' }} area="provenance" refs={SECTION_REFS['b-arms-provenance']}>
+      <DocSection title={{ en: 'What each arm was fitted on', es: 'Con qué se ajustó cada predictor' }} area="provenance" refs={SECTION_REFS['b-arms-provenance']}>
         <p>
           {t(
             'Withholding rows is not enough for every arm, so each arm declares what it was fitted on. An arm whose coefficients its source fitted on these 97 blasts is in sample under every protocol; an arm that fits its own parameters per split but chooses the stiffness group with the published router has that router in sample; an arm that reads a constant derived from the held-out campaign itself says so. The verdict lists the in-sample and the site-constant arms by name and excludes the in-sample ones from the line on intervals above zero, so a source’s own fit is never read as transfer.',
-            'Retener filas no basta para todos los brazos, así que cada brazo declara con qué se ajustó. Un brazo cuyos coeficientes su fuente ajustó sobre estos 97 tiros está dentro de la muestra bajo todo protocolo; un brazo que ajusta sus propios parámetros por partición pero elige el grupo de rigidez con el enrutador publicado tiene ese enrutador en muestra; un brazo que lee una constante derivada de la propia campaña retenida lo declara. El veredicto nombra los brazos dentro de la muestra y los de constante del sitio, y excluye a los primeros de la línea de intervalos sobre cero, de modo que el ajuste propio de una fuente nunca se lee como transferencia.',
+            'Retener filas no basta para todos los predictores, así que cada predictor declara con qué se ajustó. Un predictor cuyos coeficientes su fuente ajustó sobre estos 97 tiros está dentro de la muestra bajo todo protocolo; un predictor que ajusta sus propios parámetros por partición pero elige el grupo de rigidez con el enrutador publicado tiene ese enrutador en muestra; un predictor que lee una constante derivada de la propia campaña retenida lo declara. El veredicto nombra los predictores dentro de la muestra y los de constante del sitio, y excluye a los primeros de la línea de intervalos sobre cero, de modo que el ajuste propio de una fuente nunca se lee como transferencia.',
           )}{' '}
           <Cite id="kuznetsov1973" />
         </p>
@@ -160,7 +160,7 @@ export default function Provenance({ b }: TopicData) {
           <table className="fr-table fr-table-wide">
             <thead>
               <tr>
-                <th>{t('arm', 'brazo')}</th>
+                <th>{t('arm', 'predictor')}</th>
                 <th>{t('source', 'fuente')}</th>
                 <th>{t('fitted on', 'ajustado con')}</th>
                 <th>{t('declared', 'declarado')}</th>
