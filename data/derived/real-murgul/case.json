@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "4b863b77e9b906a39618c93ca32c52af0c70c318996b2f0252e201cc19f51a9c",
+ "digest": "beb2e074e4c2c78fa212c1b1d67a6e82aced32f4df5d6ff412584bad5268fa32",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1759,7 +1759,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "e35b82d4f4db2cc77e014d143ad7e339e12d523b783a8f112074039f49e2a13b",
+  "digest": "c6664f26751a111f96d37d61e984c607fe91e62dfb24250ad2cd2ad9899eb1ed",
   "path": "models/Murgul.json",
   "scope": "Murgul"
  },
@@ -2710,7 +2710,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.003",
+  "app_version": "0.09.004",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
