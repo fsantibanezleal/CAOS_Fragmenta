@@ -2,6 +2,27 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.09.005] - 2026-10-22
+
+A patch on 0.09.004: in Spanish a benchmark arm is a "predictor", never a "brazo", on every surface. 0.09.003 made that
+decision for the executive content and the prose of topics 01 and 02; this release carries it to the web app, the
+pipeline's reasons, the architecture diagrams and every Spanish notebook. The re-bake moved no
+measured number: of the 428,171 numbers of the 52 committed documents, only 52 byte sizes changed (`bytes`,
+`trace_bytes`), because the Spanish reasons are longer; the rest of the change is the version stamps and the digests.
+
+### Changed
+
+- "brazo" became "predictor" in 411 places, case and number kept: 166 Spanish strings in 35 files of `frontend/src`, the
+  Spanish text of `scripts/build_architecture_svgs.py` (3) and the diagrams it draws, the Spanish reasons of
+  `data-pipeline/pipeline/reasons.py` and `data-pipeline/pipeline/cases/fragmenta_cases.py` (5), and 14 of the 19
+  notebooks of `notebooks/es/` (237: titles, prose, code comments, printed labels and the title in their metadata).
+- Where "predictor" beside "predecir" read redundantly, the phrase was reworded (11 phrases): "los brazos predictores de
+  tamaño" became "los predictores de tamaño", "todo brazo que predice un tamaño" became "todo predictor que entrega un
+  tamaño", and "predice" became "estima" where a predictor is its subject.
+- The eleven Spanish notebooks whose outputs print the word were re-run (01-01, 01-03, 02-01, 02-04, 04-02, 04-03,
+  04-04, 05-01, 05-02, 06-02, 06-03), and the English 01-01 for its printed bake version; in their outputs only those
+  labels and the version changed.
+
 ## [0.09.004] - 2026-10-22
 
 A patch on 0.09.003: in the Spanish notebooks a notebook is "notebook", never "cuaderno" (Felipe, 2026-10-22: "in
