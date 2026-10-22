@@ -29,22 +29,22 @@ const STAGES: { id: string; does: Bi; refuses: Bi }[] = [
   },
   {
     id: 'feature_extraction',
-    does: { en: 'the seven ratios plus the derived absolutes; each arm keeps its own normalisation', es: 'las siete razones más los absolutos derivados; cada brazo conserva su propia normalización' },
+    does: { en: 'the seven ratios plus the derived absolutes; each arm keeps its own normalisation', es: 'las siete razones más los absolutos derivados; cada predictor conserva su propia normalización' },
     refuses: { en: 'unifying normalisations that are not interchangeable', es: 'unificar normalizaciones que no son intercambiables' },
   },
   {
     id: 'train',
-    does: { en: 'fits every learned arm and the transfer line on those training rows', es: 'ajusta cada brazo aprendido y la recta de transferencia sobre esas filas de entrenamiento' },
+    does: { en: 'fits every learned arm and the transfer line on those training rows', es: 'ajusta cada predictor aprendido y la recta de transferencia sobre esas filas de entrenamiento' },
     refuses: { en: 'training on everything and showing the result as a prediction', es: 'entrenar con todo y mostrar el resultado como predicción' },
   },
   {
     id: 'infer',
-    does: { en: 'every arm over every blast and every design variant, each cell a number or an abstention with its reason', es: 'cada brazo sobre cada tiro y cada variante de diseño, cada celda un número o una abstención con su razón' },
+    does: { en: 'every arm over every blast and every design variant, each cell a number or an abstention with its reason', es: 'cada predictor sobre cada tiro y cada variante de diseño, cada celda un número o una abstención con su razón' },
     refuses: { en: 'a number where the model cannot answer', es: 'un número donde el modelo no puede responder' },
   },
   {
     id: 'evaluate',
-    does: { en: 'variance explained and correlation, the null beside every arm, the case’s controls', es: 'varianza explicada y correlación, el nulo junto a cada brazo, los controles del caso' },
+    does: { en: 'variance explained and correlation, the null beside every arm, the case’s controls', es: 'varianza explicada y correlación, el nulo junto a cada predictor, los controles del caso' },
     refuses: { en: 'a statistic under a bare label', es: 'un estadístico bajo una etiqueta sin más' },
   },
   {
@@ -72,7 +72,7 @@ export function EngineBake({ es, b, index }: TopicProps) {
       <p>
         {t(
           `One runner takes each of the ${count(index?.n_cases)} cases through ${STAGES.length} stages and then runs the cross-case benchmark: ingest with the contract and the gate; preprocess with the geometry and the rock factor; split with its leakage guards; features; train without the case’s own site; infer every arm, with a value or a reason; evaluate with both statistics and the null; export, content-addressed, including each scope’s fitted models; and validate, which re-reads, re-hashes and fails on a hole. A real case is trained on the corpus without its own campaign, and the models stage writes that scope’s fitted arms, so cases that share a scope share one file.`,
-          `Un solo ejecutor lleva cada uno de los ${count(index?.n_cases)} casos por ${STAGES.length} etapas y después corre el benchmark entre casos: ingesta con el contrato y la compuerta; preproceso con la geometría y el factor de roca; partición con sus guardas de fuga; variables; entrenamiento sin el sitio del caso; inferencia de todo brazo, con valor o razón; evaluación con ambos estadísticos y el nulo; exportación direccionada por contenido, incluidos los modelos ajustados de cada alcance; y validación, que vuelve a leer, a calcular los resúmenes y falla ante un hueco. Un caso real se entrena con el corpus sin su propia campaña, y la etapa de modelos escribe los brazos ajustados de ese alcance, así que los casos que comparten alcance comparten un archivo.`,
+          `Un solo ejecutor lleva cada uno de los ${count(index?.n_cases)} casos por ${STAGES.length} etapas y después corre el benchmark entre casos: ingesta con el contrato y la compuerta; preproceso con la geometría y el factor de roca; partición con sus guardas de fuga; variables; entrenamiento sin el sitio del caso; inferencia de todo predictor, con valor o razón; evaluación con ambos estadísticos y el nulo; exportación direccionada por contenido, incluidos los modelos ajustados de cada alcance; y validación, que vuelve a leer, a calcular los resúmenes y falla ante un hueco. Un caso real se entrena con el corpus sin su propia campaña, y la etapa de modelos escribe los predictores ajustados de ese alcance, así que los casos que comparten alcance comparten un archivo.`,
         )}
       </p>
       <PipelineDiagram />
@@ -99,7 +99,7 @@ export function EngineBake({ es, b, index }: TopicProps) {
       <p>
         {t(
           `After the cases, the benchmark stage runs the engine’s benchmark on the corpus: ${count(b?.n_repeats)} random draws, ${count(b?.n_repeats)} deduplicated draws, the ${count(sites)}-fold leave-one-site-out with intervals from ${count(b?.n_boot)} site resamples, the verdict on both row sets, the per-site errors, the arm provenance and the diagnostics. It adds the published reproductions, the seed sweep and the width sweep of the published network, the per-site metadata and the rows the Benchmark page re-scores in the browser. The result is one document, ${BENCHMARK_SCHEMA}. Most of the bake’s time goes here, mostly to the network’s Levenberg-Marquardt training.`,
-          `Después de los casos, la etapa del benchmark corre el benchmark del motor sobre el corpus: ${count(b?.n_repeats)} sorteos aleatorios, ${count(b?.n_repeats)} sorteos deduplicados, la retención de un sitio a la vez en ${count(sites)} pliegues con intervalos de ${count(b?.n_boot)} remuestreos de sitios, el veredicto sobre ambos conjuntos de filas, los errores por sitio, la procedencia de cada brazo y los diagnósticos. Agrega las reproducciones publicadas, el barrido de semillas y el barrido de anchuras de la red publicada, los metadatos por sitio y las filas que la página Benchmark vuelve a puntuar en el navegador. El resultado es un solo documento, ${BENCHMARK_SCHEMA}. La mayor parte del tiempo del horneado se va aquí, sobre todo en el entrenamiento de Levenberg-Marquardt de la red.`,
+          `Después de los casos, la etapa del benchmark corre el benchmark del motor sobre el corpus: ${count(b?.n_repeats)} sorteos aleatorios, ${count(b?.n_repeats)} sorteos deduplicados, la retención de un sitio a la vez en ${count(sites)} pliegues con intervalos de ${count(b?.n_boot)} remuestreos de sitios, el veredicto sobre ambos conjuntos de filas, los errores por sitio, la procedencia de cada predictor y los diagnósticos. Agrega las reproducciones publicadas, el barrido de semillas y el barrido de anchuras de la red publicada, los metadatos por sitio y las filas que la página Benchmark vuelve a puntuar en el navegador. El resultado es un solo documento, ${BENCHMARK_SCHEMA}. La mayor parte del tiempo del horneado se va aquí, sobre todo en el entrenamiento de Levenberg-Marquardt de la red.`,
         )}
       </p>
       <Equation
@@ -112,7 +112,7 @@ export function EngineBake({ es, b, index }: TopicProps) {
       <p>
         {t(
           `The release gate closes the bake: it re-reads every artifact from disk and checks the digests, the corpus digest, the finite numbers, each real case’s withheld site, the controls and the reasons of every abstention. The models stage exports the fitted arms of each scope, the ${count(sites)} campaigns withheld one at a time and the whole corpus, ${count(index?.models?.length)} files and ${mb(modelBytes)} in all. The full bake of release 0.06.000 took 745 s on the development workstation.`,
-          `La compuerta de publicación cierra el horneado: relee de disco cada artefacto y comprueba los resúmenes, el resumen del corpus, los números finitos, el sitio retenido de cada caso real, los controles y las razones de cada abstención. La etapa de modelos exporta los brazos ajustados de cada alcance, las ${count(sites)} campañas retenidas una a la vez y el corpus completo, ${count(index?.models?.length)} archivos y ${mb(modelBytes)} en total. El horneado completo de la versión 0.06.000 tomó 745 s en la estación de desarrollo.`,
+          `La compuerta de publicación cierra el horneado: relee de disco cada artefacto y comprueba los resúmenes, el resumen del corpus, los números finitos, el sitio retenido de cada caso real, los controles y las razones de cada abstención. La etapa de modelos exporta los predictores ajustados de cada alcance, las ${count(sites)} campañas retenidas una a la vez y el corpus completo, ${count(index?.models?.length)} archivos y ${mb(modelBytes)} en total. El horneado completo de la versión 0.06.000 tomó 745 s en la estación de desarrollo.`,
         )}
       </p>
       <Callout variant="note" title={t('Where it works and where it fails', 'Dónde funciona y dónde falla')}>

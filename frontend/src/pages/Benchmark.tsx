@@ -27,7 +27,7 @@ export function BenchmarkPage({ b, corpus }: TopicData) {
       title={{ en: 'Benchmark', es: 'Benchmark' }}
       lede={
         es
-          ? `Los mismos ${facts(b).nBlasts} tiros, los mismos brazos y tres formas de partirlos: cien sorteos aleatorios, cien deduplicados y diez retenciones de campaña completa con un intervalo por remuestreo de sitios. Cada número sale del artefacto comprometido o se recalcula en su navegador desde los modelos comprometidos. El veredicto va primero, sobre los dos conjuntos de filas de los que depende.`
+          ? `Los mismos ${facts(b).nBlasts} tiros, los mismos predictores y tres formas de partirlos: cien sorteos aleatorios, cien deduplicados y diez retenciones de campaña completa con un intervalo por remuestreo de sitios. Cada número sale del artefacto comprometido o se recalcula en su navegador desde los modelos comprometidos. El veredicto va primero, sobre los dos conjuntos de filas de los que depende.`
           : `The same ${facts(b).nBlasts} blasts, the same arms and three ways of splitting them: a hundred random draws, a hundred deduplicated draws and ten whole-campaign hold-outs with a site-resampled interval. Every number comes from the committed artifact or is recomputed in your browser from the committed models. The verdict leads, on the two row sets it depends on.`
       }
     >

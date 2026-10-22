@@ -44,13 +44,13 @@ export default function Robustness({ b }: TopicData) {
       <p>
         {t(
           `A single draw of ${testRows ?? notAvailable()} test rows does not measure a protocol. The histogram shows an arm’s hundred draws, with their median, the score with each site held out and, where there is one, the figure the source published from a single draw; the curve below it is the same draws sorted, so the spread reads as a slope.`,
-          `Un solo sorteo de ${testRows ?? notAvailable()} filas de prueba no mide un protocolo. El histograma muestra los cien sorteos de un brazo, con su mediana, el puntaje con cada sitio excluido y, donde existe, la cifra que la fuente publicó de un único sorteo; la curva de abajo son los mismos sorteos ordenados, de modo que la dispersión se lee como una pendiente.`,
+          `Un solo sorteo de ${testRows ?? notAvailable()} filas de prueba no mide un protocolo. El histograma muestra los cien sorteos de un predictor, con su mediana, el puntaje con cada sitio excluido y, donde existe, la cifra que la fuente publicó de un único sorteo; la curva de abajo son los mismos sorteos ordenados, de modo que la dispersión se lee como una pendiente.`,
         )}{' '}
         <Cite id="sui2025" />
       </p>
       <div className="fr-inline-controls">
         <label className="fr-control">
-          {t('Arm', 'Brazo')}
+          {t('Arm', 'Predictor')}
           <select value={arm} onChange={(e) => setArm(e.target.value)}>
             {arms.map((a) => (
               <option key={a} value={a}>{label(a, lang)}</option>
@@ -99,27 +99,27 @@ export default function Robustness({ b }: TopicData) {
       <p>
         {t(
           `For the stacked ensemble the median is ${f(F.random('stacking')?.r2_identity)} and the 95th percentile ${f(F.random('stacking')?.repeats.p95)}; the published ${f(stacking?.published)} lies above ${num((stacking?.share_of_draws_below ?? 0) * 100, 0)} of 100 draws. For the classical arm, the draws run from ${f(F.random('kuznetsov')?.repeats.p05, 2)} to ${f(F.random('kuznetsov')?.repeats.p95, 2)} between the 5th and 95th percentiles: a single draw can land on either side of zero, and seed 0 landed below it.`,
-          `Para el ensamble apilado la mediana es ${f(F.random('stacking')?.r2_identity)} y el percentil 95, ${f(F.random('stacking')?.repeats.p95)}; el ${f(stacking?.published)} publicado queda por encima de ${num((stacking?.share_of_draws_below ?? 0) * 100, 0)} de cada 100 sorteos. Para el brazo clásico, los sorteos van de ${f(F.random('kuznetsov')?.repeats.p05, 2)} a ${f(F.random('kuznetsov')?.repeats.p95, 2)} entre los percentiles 5 y 95: un único sorteo puede caer a cualquier lado de cero, y la semilla 0 cayó bajo cero.`,
+          `Para el ensamble apilado la mediana es ${f(F.random('stacking')?.r2_identity)} y el percentil 95, ${f(F.random('stacking')?.repeats.p95)}; el ${f(stacking?.published)} publicado queda por encima de ${num((stacking?.share_of_draws_below ?? 0) * 100, 0)} de cada 100 sorteos. Para el predictor clásico, los sorteos van de ${f(F.random('kuznetsov')?.repeats.p05, 2)} a ${f(F.random('kuznetsov')?.repeats.p95, 2)} entre los percentiles 5 y 95: un único sorteo puede caer a cualquier lado de cero, y la semilla 0 cayó bajo cero.`,
         )}
       </p>
       <Equation
         tex={String.raw`\Delta_a = \operatorname{median}_{r=1,\dots,100}\, R²_{a,r} - R^2_{\mathrm{LOSO}}(a)`}
         caption={t(
           'The protocol gap of an arm a: the median over the hundred random 80/20 draws r of the variance explained R²_{a,r}, minus the pooled score of the same arm with one campaign held out at a time, R²_LOSO(a). A positive gap is what a random split promises and a campaign hold-out does not deliver.',
-          'La brecha de protocolo de un brazo a: la mediana, sobre los cien sorteos aleatorios r 80/20, de la varianza explicada R²_{a,r}, menos el puntaje agrupado del mismo brazo con una campaña retenida a la vez, R²_LOSO(a). Una brecha positiva es lo que promete una partición aleatoria y una retención de campaña no cumple.',
+          'La brecha de protocolo de un predictor a: la mediana, sobre los cien sorteos aleatorios r 80/20, de la varianza explicada R²_{a,r}, menos el puntaje agrupado del mismo predictor con una campaña retenida a la vez, R²_LOSO(a). Una brecha positiva es lo que promete una partición aleatoria y una retención de campaña no cumple.',
         )}
       />
       <p>
         {t(
           `Taken over the learned arms, the median gap is ${f(b.verdict.median_protocol_gap)}. The table lists it for each arm, with the change the deduplicated draws make to the random median: removing the repeated input vectors moves the forest, boosting, stacking and kernel arms by at most ${f(kernelShift)}, and the published network, at ${signed(b.verdict.dedup_minus_random_median['published-neural-net'])}, by the most. The polynomial support vector and the refitted regression show the largest gaps because they fail under the campaign hold-out, at ${f(F.site('svr-poly'))} and ${f(F.site('refitted-regression'))}, not because they excel on the random draws.`,
-          `Tomada sobre los brazos aprendidos, la brecha mediana es ${f(b.verdict.median_protocol_gap)}. La tabla la da para cada brazo, con el cambio que hacen los sorteos deduplicados a la mediana aleatoria: quitar los vectores de entrada repetidos mueve al bosque, la potenciación, el apilado y los brazos de núcleos en ${f(kernelShift)} como máximo, y a la red publicada, con ${signed(b.verdict.dedup_minus_random_median['published-neural-net'])}, en lo máximo. El vector de soporte polinomial y la regresión reajustada muestran las mayores brechas porque fallan con la retención de campaña, con ${f(F.site('svr-poly'))} y ${f(F.site('refitted-regression'))}, no porque destaquen en los sorteos aleatorios.`,
+          `Tomada sobre los predictores aprendidos, la brecha mediana es ${f(b.verdict.median_protocol_gap)}. La tabla la da para cada predictor, con el cambio que hacen los sorteos deduplicados a la mediana aleatoria: quitar los vectores de entrada repetidos mueve al bosque, la potenciación, el apilado y los predictores de núcleos en ${f(kernelShift)} como máximo, y a la red publicada, con ${signed(b.verdict.dedup_minus_random_median['published-neural-net'])}, en lo máximo. El vector de soporte polinomial y la regresión reajustada muestran las mayores brechas porque fallan con la retención de campaña, con ${f(F.site('svr-poly'))} y ${f(F.site('refitted-regression'))}, no porque destaquen en los sorteos aleatorios.`,
         )}{' '}
         <Cite id="roberts2017" />
       </p>
       <table className="fr-table">
         <thead>
           <tr>
-            <th>{t('arm', 'brazo')}</th>
+            <th>{t('arm', 'predictor')}</th>
             <th>{t('random median', 'mediana aleatoria')}</th>
             <th>{t('deduplicated minus random', 'deduplicado menos aleatorio')}</th>
             <th>{t('random minus held out by site', 'aleatorio menos sitio excluido')}</th>
