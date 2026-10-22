@@ -2,6 +2,18 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.09.004] - 2026-10-22
+
+A patch on 0.09.003: in the Spanish notebooks a notebook is "notebook", never "cuaderno" (Felipe, 2026-10-22: "in
+spanish never uses "cuaderno", it is always "notebook""). The re-bake changed none of the 428,171 numbers of the 52 committed
+documents (against 0.09.003): only the version stamps and the digests over them.
+
+### Changed
+
+- The 19 notebooks of `notebooks/es/`, `notebooks/es/README.md` and the Spanish text of `notebooks/README.md`: "cuaderno"
+  became "notebook" in 148 places (prose, the comment of every version cell, one printed label), case and number kept.
+  `05-learned-arms/03-reproducing-the-published-network` was re-run for its printed label; its numbers are unchanged.
+
 ## [0.09.003] - 2026-10-21
 
 A patch on 0.09.002: the Spanish of the executive view, the tagline, the notebooks README and the seven Spanish

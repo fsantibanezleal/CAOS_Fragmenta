@@ -1,5 +1,5 @@
 {
- "app_version": "0.09.003",
+ "app_version": "0.09.004",
  "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
  "corpus_rows": [
   {
@@ -1670,7 +1670,7 @@
    "slope": 0.5029089801679779
   }
  },
- "digest": "614e2e6ad76a5604530e1605b4d7c10af02414fe95cae147cff5a7fbcef3566e",
+ "digest": "249382c8b07473ca175b6202e77176794d187d25f4e4290db229ddec89c458b7",
  "duplicate_groups": [
   [
    "En1",

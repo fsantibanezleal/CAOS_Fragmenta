@@ -1,16 +1,16 @@
-# Cuadernos, español
+# Notebooks, español
 
-El índice del árbol en español. Los temas van de simple a complejo; dentro de un tema el orden de lectura es el número del cuaderno y el nivel nunca
-baja. La contraparte en inglés de cada cuaderno está en la misma ruta bajo [`../en/`](../en/README.md). Cómo ejecutarlos está en
+El índice del árbol en español. Los temas van de simple a complejo; dentro de un tema el orden de lectura es el número del notebook y el nivel nunca
+baja. La contraparte en inglés de cada notebook está en la misma ruta bajo [`../en/`](../en/README.md). Cómo ejecutarlos está en
 [`../README.md`](../README.md).
 
-Niveles: 1 fundamentos, 2 el método en la práctica, 3 estado del arte, 4 más allá del estado del arte. Cada cuaderno lee sus números de los
+Niveles: 1 fundamentos, 2 el método en la práctica, 3 estado del arte, 4 más allá del estado del arte. Cada notebook lee sus números de los
 artefactos versionados o del motor `blastfrag` 0.4.0 en la ejecución, y termina con sus referencias. El código de las celdas es el mismo que el del
 árbol en inglés, y los números que imprimen son los mismos (con el punto decimal de Python); solo la prosa, los comentarios y las etiquetas están en español.
 
 ## Temas
 
-Un tema sin cuaderno de nivel 3 dice por qué en su fila.
+Un tema sin notebook de nivel 3 dice por qué en su fila.
 
 | Tema | Requiere | Nivel 3 |
 |---|---|---|
@@ -21,9 +21,9 @@ Un tema sin cuaderno de nivel 3 dice por qué en su fila.
 | [05-learned-arms](05-learned-arms/) | tema 04-benchmark-protocol | [03-reproducing-the-published-network](05-learned-arms/03-reproducing-the-published-network.ipynb) |
 | [06-design-response](06-design-response/) | temas 02-classical-prediction y 05-learned-arms | Sin nivel 3: ningún predictor publicado informa cómo responde su predicción a un cambio de diseño en este corpus, así que no hay con qué comparar |
 
-## Cuadernos
+## Notebooks
 
-| Cuaderno | Nivel | Qué enseña |
+| Notebook | Nivel | Qué enseña |
 |---|---|---|
 | [01-the-data/01-the-corpus-and-the-cases.ipynb](01-the-data/01-the-corpus-and-the-cases.ipynb) | 1 | los 97 tiros publicados y sus siete entradas, las diez campañas, los tres conjuntos de hold-out, los dieciséis casos y qué guarda un artefacto de caso versionado |
 | [01-the-data/02-geometry-reconstruction.ipynb](01-the-data/02-geometry-reconstruction.ipynb) | 2 | de razones a metros con un diámetro de perforación guardado, la verificación contra 15 afirmaciones de la prosa de la fuente, una verificación que falla cuando el diámetro es incorrecto, y el único sitio que se rechaza |
@@ -47,9 +47,9 @@ Un tema sin cuaderno de nivel 3 dice por qué en su fila.
 
 ## Más allá del estado del arte
 
-Las cinco afirmaciones del documento de diseño (`docs/design/SDD.md`, sección "Beyond the state of the art"), cada una demostrada por un cuaderno de nivel 4 en ambos idiomas:
+Las cinco afirmaciones del documento de diseño (`docs/design/SDD.md`, sección "Beyond the state of the art"), cada una demostrada por un notebook de nivel 4 en ambos idiomas:
 
-| Afirmación | Qué afirma | Cuaderno |
+| Afirmación | Qué afirma | Notebook |
 |---|---|---|
 | BS-1 | el protocolo con sitio fuera, intervalos con remuestreo de sitios y un criterio declarado antes de la ejecución y fijado por un hash | [04-benchmark-protocol/04-the-site-held-out-protocol-and-its-pre-declared-criterion](04-benchmark-protocol/04-the-site-held-out-protocol-and-its-pre-declared-criterion.ipynb) |
 | BS-2 | la negativa como resultado de primera clase: geometría reconstruida o rechazada, y una guarda contra diseños que no son tiros | [01-the-data/03-integrity-gate-and-negative-controls](01-the-data/03-integrity-gate-and-negative-controls.ipynb) |
