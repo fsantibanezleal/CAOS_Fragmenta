@@ -1,15 +1,15 @@
 {
- "app_version": "0.09.004",
+ "app_version": "0.09.005",
  "arms_that_failed_to_fit": {},
  "artifact": {
-  "bytes": 54903,
+  "bytes": 54915,
   "format": "json",
   "path": "fx01-fixture/case.json"
  },
  "case_id": "fx01-fixture",
  "category": "real-campaign",
  "controls": {},
- "digest": "337a9b2f2eb645f7a0ef9ab89184a4434f0014672896d4ac5704313145493b6e",
+ "digest": "8b8c9d3aa7553e73c0ca4b3119abe2993e79127a7e0b1acc4893b1e176b8fc80",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
@@ -24,7 +24,7 @@
   "pure_python": true,
   "reasons": [],
   "run_ms_budget": 1500.0,
-  "trace_bytes": 54903,
+  "trace_bytes": 54915,
   "trace_bytes_budget": 262144,
   "wheels": [
    "numpy"
