@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "222a30186368a9fd1ea9cd706d5b1e320ebab64c41dcd4b6ba045c60cb12afcc",
+ "digest": "66cf16db816d77f9c57753b56625b2cd1f1e1a991ea17562619244bbb8d6855a",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1815,7 +1815,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "4947667ce1f84349619de28170d76d62c004d98271255ebb77ab3fc16a709133",
+  "digest": "caa26b2bd7fbf64fd5fb222e50e663e61c0404ab253f036410bc6bdb3b0d5789",
   "path": "models/Dongri-Buzurg.json",
   "scope": "Dongri-Buzurg"
  },
@@ -3012,7 +3012,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.003",
+  "app_version": "0.09.004",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",

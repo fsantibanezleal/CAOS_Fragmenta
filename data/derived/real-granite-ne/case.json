@@ -169,7 +169,7 @@
    "unstamped": []
   }
  },
- "digest": "4a5ba0385173452778b8f4692ac21c4c0e273823035e3da12f57523fcc9be9f6",
+ "digest": "711788ce731408c76bdabc5b985a3ec6a2fca94b83aadadeeb07561e1416a7f2",
  "distributions": {},
  "geometry_report": {},
  "live_models": {
@@ -182,7 +182,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "4348300e0a51abdaea9a290fd8cf4d90450e72ab9fa8306865d91a7bbac05ac6",
+  "digest": "d5d86673f886beddc372420819c2dfdf37dfe6449a17ccd42aa1052ada04e022",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -938,7 +938,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.003",
+  "app_version": "0.09.004",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
