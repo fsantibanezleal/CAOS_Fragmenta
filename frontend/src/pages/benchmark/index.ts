@@ -27,7 +27,7 @@ export interface Topic {
 
 export const TOPICS: Topic[] = [
   { id: 'verdict', label: { en: 'The verdict', es: 'El veredicto' }, areas: ['caveat', 'results'], Body: Verdict },
-  { id: 'arms', label: { en: 'Every arm', es: 'Cada brazo' }, areas: ['results', 'results', 'comparison'], Body: Arms },
+  { id: 'arms', label: { en: 'Every arm', es: 'Cada predictor' }, areas: ['results', 'results', 'comparison'], Body: Arms },
   { id: 'published', label: { en: 'Published reproductions', es: 'Reproducciones publicadas' }, areas: ['comparison', 'robustness'], Body: Published },
   { id: 'robustness', label: { en: 'Robustness', es: 'Robustez' }, areas: ['robustness'], Body: Robustness },
   { id: 'live', label: { en: 'Live check', es: 'Comprobación en vivo' }, areas: ['live'], Body: Live },

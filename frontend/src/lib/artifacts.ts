@@ -189,7 +189,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Classical distribution', es: 'Distribución clásica' },
     blurb: {
       en: 'The classical mean size with a two-parameter Rosin-Rammler curve around it, shaped by the Cunningham uniformity index. Same mean size as the classical arm; only the shape is added, and no measured curve validates it.',
-      es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham. Mismo tamaño medio que el brazo clásico; solo agrega la forma, y ninguna curva medida la valida.',
+      es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham. Mismo tamaño medio que el predictor clásico; solo agrega la forma, y ninguna curva medida la valida.',
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',
@@ -201,7 +201,7 @@ export const ARMS: ArmMeta[] = [
     label: { en: 'Three-parameter distribution', es: 'Distribución de tres parámetros' },
     blurb: {
       en: 'Adds an explicit upper size limit, which bounds the coarse tail and reshapes the fines branch. Same mean size as the classical arm; no measured curve validates the shape.',
-      es: 'Agrega un límite superior explícito, que acota la cola gruesa y reforma la rama de finos. Mismo tamaño medio que el brazo clásico; ninguna curva medida valida la forma.',
+      es: 'Agrega un límite superior explícito, que acota la cola gruesa y reforma la rama de finos. Mismo tamaño medio que el predictor clásico; ninguna curva medida valida la forma.',
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',

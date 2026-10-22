@@ -89,7 +89,7 @@ function TechnicalView() {
             <ul className="fr-list">
               <li>
                 {es
-                  ? `Sobre cien particiones aleatorias, los brazos aprendidos explican una mediana de ${f(F.learnedRandomRange[0], 2)} a ${f(F.learnedRandomRange[1], 2)} de la varianza. Al retener cada campaña completa, cada uno pierde entre ${f(F.learnedGapRange[0], 2)} y ${f(F.learnedGapRange[1], 2)}.`
+                  ? `Sobre cien particiones aleatorias, los predictores aprendidos explican una mediana de ${f(F.learnedRandomRange[0], 2)} a ${f(F.learnedRandomRange[1], 2)} de la varianza. Al retener cada campaña completa, cada uno pierde entre ${f(F.learnedGapRange[0], 2)} y ${f(F.learnedGapRange[1], 2)}.`
                   : `Over a hundred random splits, the learned arms explain a median of ${f(F.learnedRandomRange[0], 2)} to ${f(F.learnedRandomRange[1], 2)} of the variance. With each whole campaign held out, every one of them loses between ${f(F.learnedGapRange[0], 2)} and ${f(F.learnedGapRange[1], 2)}.`}
               </li>
               <li>
@@ -104,7 +104,7 @@ function TechnicalView() {
               </li>
               <li>
                 {es
-                  ? `Con diez sitios, ningún brazo que no se haya ajustado sobre el propio corpus tiene un intervalo por encima de cero: el clásico va de ${iv(F.interval('kuznetsov'), 2, true)}, el mejor aprendido de ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'), 2, true)}. Que el nivel aprendido cumpla el criterio declarado depende de si se puntúan los seis tiros de Miami.`
+                  ? `Con diez sitios, ningún predictor que no se haya ajustado sobre el propio corpus tiene un intervalo por encima de cero: el clásico va de ${iv(F.interval('kuznetsov'), 2, true)}, el mejor aprendido de ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'), 2, true)}. Que el nivel aprendido cumpla el criterio declarado depende de si se puntúan los seis tiros de Miami.`
                   : `With ten sites, no arm that was not fitted on the corpus itself has an interval above zero: the classical arm runs ${iv(F.interval('kuznetsov'))}, the best learned arm ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'))}. Whether the learned tier meets the declared criterion depends on whether the six Miami blasts are scored.`}
               </li>
             </ul>
@@ -115,7 +115,7 @@ function TechnicalView() {
           <Link to="/benchmark">{es ? 'Benchmark' : 'Benchmark'}</Link>
           {es ? ' y el diseño de los experimentos en ' : ', and the design of the experiments on '}
           <Link to="/experiments">{es ? 'Experimentos' : 'Experiments'}</Link>.
-          {F ? (es ? ` El mejor brazo aprendido con todos los tiros es ${label(benchmark?.verdict.supports.all.best_learned_arm ?? '')}.` : ` The best learned arm over every blast is ${label(benchmark?.verdict.supports.all.best_learned_arm ?? '')}.`) : null}
+          {F ? (es ? ` El mejor predictor aprendido con todos los tiros es ${label(benchmark?.verdict.supports.all.best_learned_arm ?? '')}.` : ` The best learned arm over every blast is ${label(benchmark?.verdict.supports.all.best_learned_arm ?? '')}.`) : null}
         </p>
       </DocSection>
 
@@ -195,7 +195,7 @@ function TechnicalView() {
           <li>{es ? 'Se recupera la malla en metros desde las razones y los diámetros que declara la prosa de la fuente, y se verifica contra quince restricciones que esa prosa también declara.' : 'Recover the pattern in metres from the ratios and the hole diameters the source prose states, and verify it against fifteen constraints the same prose states.'}</li>
           <li>{es ? 'Se recupera un factor de roca por sitio invirtiendo la ecuación clásica sobre las predicciones publicadas.' : 'Recover a rock factor per site by inverting the classical equation on the published predictions.'}</li>
           <li>{es ? 'Se parte la tabla de tres formas: cien particiones aleatorias, cien deduplicadas y diez retenciones de sitio completo.' : 'Split the table three ways: a hundred random splits, a hundred deduplicated ones, and ten whole-site hold-outs.'}</li>
-          <li>{es ? 'Se ajusta cada brazo solo con las filas de entrenamiento de cada partición, y se predice cada fila de prueba o se registra por qué el brazo se abstiene.' : 'Fit each arm on each split’s training rows only, and predict each test row or record why the arm abstains.'}</li>
+          <li>{es ? 'Se ajusta cada predictor solo con las filas de entrenamiento de cada partición, y se predice cada fila de prueba o se registra por qué el predictor se abstiene.' : 'Fit each arm on each split’s training rows only, and predict each test row or record why the arm abstains.'}</li>
           <li>{es ? 'Se puntúa con la varianza explicada y con la correlación, con un modelo nulo al lado, sobre dos conjuntos de filas, con un intervalo por remuestreo de sitios.' : 'Score with variance explained and with correlation, with a null model beside each arm, on two row sets, with a site-resampled interval.'}</li>
           <li>{es ? 'Se escriben artefactos direccionados por contenido y se vuelven a leer y verificar antes de publicarlos.' : 'Write content-addressed artifacts, then re-read and re-check them before they are published.'}</li>
           <li>{es ? 'En el navegador se reproducen esos artefactos, y las ecuaciones y los modelos ajustados se recalculan en vivo cuando usted cambia un diseño.' : 'In the browser, replay those artifacts, and recompute the equations and the fitted models live when you change a design.'}</li>

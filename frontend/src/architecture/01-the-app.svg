@@ -96,8 +96,8 @@
 <text class="mu" x="612.0" y="146.0">la ecuación clásica puntúa cerca de 0.30</text>
 <text class="mu" x="612.0" y="160.0">en todo protocolo (0.311 con el sitio</text>
 <text class="mu" x="612.0" y="174.0">excluido)</text>
-<text class="mu" x="612.0" y="188.0">ningún brazo ajustado sin el corpus tiene</text>
-<text class="mu" x="612.0" y="202.0">un intervalo sobre cero</text>
+<text class="mu" x="612.0" y="188.0">ningún predictor ajustado sin el corpus</text>
+<text class="mu" x="612.0" y="202.0">tiene un intervalo sobre cero</text>
 <rect class="bx" x="22.0" y="296.0" width="856.0" height="66.0" rx="6"/>
 <text class="hd" x="32.0" y="317.0">Lo que no es</text>
 <text class="mu" x="32.0" y="336.0">Sin simulación mecanicista, sin detonación no ideal, sin proyección de rocas, sin vibración, sin modelo de conminución; la secuencia</text>
