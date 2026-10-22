@@ -18,7 +18,7 @@ export function Contract({ es, index }: TopicProps) {
       schema: `${CASE_SCHEMA} (${count(index?.n_cases)})`,
       holds: t(
         'The case’s blasts and patterns, every arm’s prediction or abstention with its reason, the scores, the distributions, the variants, the controls, the provenance and the models file it runs live.',
-        'Los tiros y mallas del caso, la predicción o abstención de cada brazo con su razón, los puntajes, las distribuciones, las variantes, los controles, la procedencia y el archivo de modelos que corre en vivo.',
+        'Los tiros y mallas del caso, la predicción o abstención de cada predictor con su razón, los puntajes, las distribuciones, las variantes, los controles, la procedencia y el archivo de modelos que corre en vivo.',
       ),
       producer: t('the bake: export stage', 'el horneado: etapa de exportación'),
       consumer: t('the App and the replayed pages', 'la App y las páginas que reproducen'),
@@ -28,7 +28,7 @@ export function Contract({ es, index }: TopicProps) {
       schema: BENCHMARK_SCHEMA,
       holds: t(
         'The three protocols with their draws and site-resampled intervals, the verdict on both row sets, the per-site errors, the arm provenance, the diagnostics, the published reproductions and the corpus, hold-out and field rows.',
-        'Los tres protocolos con sus sorteos e intervalos por remuestreo de sitios, el veredicto sobre ambos conjuntos de filas, los errores por sitio, la procedencia de cada brazo, los diagnósticos, las reproducciones publicadas y las filas del corpus, de validación y de campo.',
+        'Los tres protocolos con sus sorteos e intervalos por remuestreo de sitios, el veredicto sobre ambos conjuntos de filas, los errores por sitio, la procedencia de cada predictor, los diagnósticos, las reproducciones publicadas y las filas del corpus, de validación y de campo.',
       ),
       producer: t('the bake: benchmark stage', 'el horneado: etapa del benchmark'),
       consumer: t('the Benchmark, Experiments and documentation pages', 'las páginas Benchmark, Experimentos y de documentación'),
@@ -38,7 +38,7 @@ export function Contract({ es, index }: TopicProps) {
       schema: `${MODELS_SCHEMA} (${count(index?.models?.length)})`,
       holds: t(
         'The fitted learned arms of one training scope in the engine’s portable form, and fixtures of the original models’ predictions at every shipped blast.',
-        'Los brazos aprendidos ajustados de un alcance de entrenamiento en la forma portátil del motor, y fijaciones de las predicciones de los modelos originales en cada tiro publicado.',
+        'Los predictores aprendidos ajustados de un alcance de entrenamiento en la forma portátil del motor, y fijaciones de las predicciones de los modelos originales en cada tiro publicado.',
       ),
       producer: t('the bake: models stage', 'el horneado: etapa de modelos'),
       consumer: t('the live walker in the browser', 'el recorredor en vivo en el navegador'),

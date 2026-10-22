@@ -436,7 +436,7 @@ export function RockFactorDiagram() {
     { title: t('Lilly, as printed in 2019', 'Lilly, según 2019'), tone: 'warn', lines: [t('strength = UCS/3 or /5', 'resistencia = UCS/3 o /5')] },
     { title: t('Protodyakonov lookup', 'Tabla de Protodyakonov'), lines: [t('five bands, A = 3 to 13', 'cinco bandas, A = 3 a 13')] },
     { title: t('Recovered per site', 'Recuperado por sitio'), tone: 'good', lines: [t('invert x50 on the', 'invertir x50 sobre la'), t('published prediction', 'predicción publicada')] },
-    { title: t('Predicted from E', 'Predicho desde E'), tone: 'accent', lines: [t('line over training sites', 'recta sobre sitios de'), t('only (transfer arm)', 'entrenamiento (brazo de transferencia)')] },
+    { title: t('Predicted from E', 'Predicho desde E'), tone: 'accent', lines: [t('line over training sites', 'recta sobre sitios de'), t('only (transfer arm)', 'entrenamiento (predictor de transferencia)')] },
   ]);
   const a = centred({ x: 310, w: 200, tone: 'accent', title: t('Rock factor A', 'Factor de roca A'), lines: [t('valid range 0.8 to 22', 'rango válido 0,8 a 22'), t('x50 is linear in A', 'x50 es lineal en A')] }, bottomOf(sources) / 2 + 6);
   const spread = centred({ x: 580, w: 308, tone: 'bad', title: t('How far the routes disagree', 'Cuánto discrepan las rutas'), lines: [t('2010 vs 2019 tables: up to', 'tablas 2010 vs 2019: hasta'), t('0.85 in A at UCS 100 MPa', '0,85 en A con UCS 100 MPa'), t('recovered: within-site', 'recuperado: dispersión'), t('spread 0.6 to 3.7%', 'dentro del sitio 0,6 a 3,7%')] }, a.y + a.h / 2);
@@ -447,7 +447,7 @@ export function RockFactorDiagram() {
       label={t('Five routes to the rock factor', 'Cinco rutas al factor de roca')}
       caption={t(
         'Five routes to one number. The two rating tables carry the same attribution and different strength terms; the recovered factors come from the published predictions; the transfer arm predicts the factor from the modulus without the target site.',
-        'Cinco rutas a un número. Las dos tablas de calificación llevan la misma atribución y términos de resistencia distintos; los factores recuperados salen de las predicciones publicadas; el brazo de transferencia predice el factor desde el módulo sin el sitio objetivo.',
+        'Cinco rutas a un número. Las dos tablas de calificación llevan la misma atribución y términos de resistencia distintos; los factores recuperados salen de las predicciones publicadas; el predictor de transferencia estima el factor desde el módulo sin el sitio objetivo.',
       )}
     >
       {(m) => (
@@ -618,7 +618,7 @@ export function EnsembleDiagram({ boostingWeight, forestWeight }: { boostingWeig
       label={t('The 2025 learners', 'Los aprendices de 2025')}
       caption={t(
         'The 2025 learners with their published final parameters. The forest and the boosting model feed a linear meta-learner, which the source fitted without cross-validation; the support-vector arms stand alone, in the two parameterisations two sources published.',
-        'Los aprendices de 2025 con sus parámetros finales publicados. El bosque y el modelo boosting alimentan un meta-aprendiz lineal, que la fuente ajustó sin validación cruzada; los brazos de vectores de soporte van solos, en las dos parametrizaciones que publicaron dos fuentes.',
+        'Los aprendices de 2025 con sus parámetros finales publicados. El bosque y el modelo boosting alimentan un meta-aprendiz lineal, que la fuente ajustó sin validación cruzada; los predictores de vectores de soporte van solos, en las dos parametrizaciones que publicaron dos fuentes.',
       )}
       notes={[
         t(
@@ -698,7 +698,7 @@ export function ArchitectureDiagram() {
   const artifacts = column(312, 250, 30, 12, [
     { title: t('16 case artifacts', '16 artefactos de caso'), lines: [t('predictions, refusals, curves', 'predicciones, negativas, curvas')] },
     { title: t('Benchmark artifact', 'Artefacto de benchmark'), lines: [t('100 draws, two supports,', '100 sorteos, dos soportes,'), t('site intervals, per site', 'intervalos por sitio')] },
-    { title: t('11 model files', '11 archivos de modelos'), tone: 'warn', lines: [t('fitted arms per training scope', 'brazos ajustados por alcance')] },
+    { title: t('11 model files', '11 archivos de modelos'), tone: 'warn', lines: [t('fitted arms per training scope', 'predictores ajustados por alcance')] },
   ]);
   const browser = column(612, 276, 30, 12, [
     { title: t('Replay', 'Reproducción'), lines: [t('reads the committed files', 'lee los archivos comprometidos')] },
@@ -748,7 +748,7 @@ export function PipelineDiagram() {
     ['split', t('3 protocols', '3 protocolos'), t('leakage guards', 'guardas de fuga')],
     ['features', t('7 ratios', '7 razones'), t('+ absolutes', '+ absolutos')],
     ['train', t('site withheld', 'sitio retenido'), t('per case', 'por caso')],
-    ['infer', t('every arm', 'todo brazo'), t('value or reason', 'valor o razón')],
+    ['infer', t('every arm', 'todo predictor'), t('value or reason', 'valor o razón')],
     ['evaluate', t('both statistics', 'ambos estadísticos'), t('null beside it', 'nulo al lado')],
     ['export', t('content-addressed', 'por contenido'), t('models per scope', 'modelos por alcance')],
     ['validate', t('re-read, re-hash', 'releer, rehashear'), t('fail on a hole', 'fallar ante un hueco')],
@@ -837,7 +837,7 @@ export function ContractsDiagram() {
 export function LeakageDiagram() {
   const t = useT();
   const corpus = place({ x: 12, y: 40, w: 200, tone: 'good', title: t('Corpus minus the site', 'Corpus menos el sitio'), lines: [t('e.g. 90 of 97 rows', 'p. ej. 90 de 97 filas'), t('asserted at bake time', 'comprobado al hornear')] });
-  const fit = place({ x: 250, y: 40, w: 200, title: t('Fit every fitted arm', 'Ajustar todo brazo'), lines: [t('network, kernels, trees,', 'red, núcleos, árboles,'), t('refit, transfer line', 'reajuste, recta')] });
+  const fit = place({ x: 250, y: 40, w: 200, title: t('Fit every fitted arm', 'Ajustar todo predictor'), lines: [t('network, kernels, trees,', 'red, núcleos, árboles,'), t('refit, transfer line', 'reajuste, recta')] });
   const outs = column(490, 190, 14, 12, [
     { title: t('Case predictions', 'Predicciones del caso'), tone: 'accent', lines: [t('the site never seen', 'el sitio nunca visto')] },
     { title: t('Model file', 'Archivo de modelos'), tone: 'warn', lines: [t('scope = that site', 'alcance = ese sitio')] },
@@ -850,7 +850,7 @@ export function LeakageDiagram() {
       label={t('How a case withholds its own campaign', 'Cómo un caso retiene su propia campaña')}
       caption={t(
         'For each real campaign, every fitted arm is trained on the corpus without that campaign; the predictions the App replays and the models it runs live both come from that fit.',
-        'Para cada campaña real, todo brazo ajustado se entrena con el corpus sin esa campaña; las predicciones que la App reproduce y los modelos que corre en vivo salen ambos de ese ajuste.',
+        'Para cada campaña real, todo predictor ajustado se entrena con el corpus sin esa campaña; las predicciones que la App reproduce y los modelos que corre en vivo salen ambos de ese ajuste.',
       )}
       notes={[
         t(
@@ -882,7 +882,7 @@ export function ReconstructionDiagram() {
   const pattern = centred({ x: 262, w: 200, tone: 'accent', title: t('Pattern in metres', 'Malla en metros'), lines: ['B = (B/D)·D', 'S, H, T from ratios', 'V = B·S·H, Q = Pf·V'] }, bottomOf(inputs) / 2 + 7);
   const checks = column(502, 386, 14, 12, [
     { title: t('Checked against the prose', 'Comprobada contra la prosa'), tone: 'good', lines: [t('15 stated constraints, 9 sites,', '15 restricciones declaradas, 9 sitios,'), t('all satisfied', 'todas satisfechas')] },
-    { title: t('Cannot be reconstructed', 'No reconstruible'), tone: 'bad', lines: [t('Miami: no diameter stated,', 'Miami: sin diámetro declarado,'), t('6 blasts, classical arms abstain', '6 tiros, los brazos clásicos se abstienen')] },
+    { title: t('Cannot be reconstructed', 'No reconstruible'), tone: 'bad', lines: [t('Miami: no diameter stated,', 'Miami: sin diámetro declarado,'), t('6 blasts, classical arms abstain', '6 tiros, los predictores clásicos se abstienen')] },
   ]);
   const boxes = [...inputs, pattern, ...checks];
   return (
@@ -909,10 +909,10 @@ export function ReconstructionDiagram() {
 
 export function PortableModelDiagram() {
   const t = useT();
-  const fitted = place({ x: 12, y: 30, w: 200, title: t('Fitted arm (Python)', 'Brazo ajustado (Python)'), lines: ['numpy, scikit-learn,', 'xgboost'] });
+  const fitted = place({ x: 12, y: 30, w: 200, title: t('Fitted arm (Python)', 'Predictor ajustado (Python)'), lines: ['numpy, scikit-learn,', 'xgboost'] });
   const json = place({ x: 252, y: 30, w: 240, tone: 'accent', title: t('Portable JSON', 'JSON portátil'), lines: [t('weights, support vectors,', 'pesos, vectores de soporte,'), t('trees as four flat arrays', 'árboles como cuatro arreglos')] });
   const walker = place({ x: 532, y: 30, w: 200, tone: 'good', title: t('Walker (TypeScript)', 'Recorrido (TypeScript)'), lines: [t('inputs rounded to 32 bits', 'entradas redondeadas a 32 bits'), t('boosting summed in 32 bits', 'boosting sumado en 32 bits')] });
-  const fixtures = place({ x: 772, y: 30, w: 116, tone: 'warn', title: t('Fixtures', 'Fijaciones'), lines: [t('116 blasts,', '116 tiros,'), t('every arm', 'todo brazo')] });
+  const fixtures = place({ x: 772, y: 30, w: 116, tone: 'warn', title: t('Fixtures', 'Fijaciones'), lines: [t('116 blasts,', '116 tiros,'), t('every arm', 'todo predictor')] });
   const boxes = [fitted, json, walker, fixtures];
   return (
     <Figure
@@ -920,7 +920,7 @@ export function PortableModelDiagram() {
       label={t('Running a fitted model in a browser', 'Correr un modelo ajustado en el navegador')}
       caption={t(
         'The fitted learned arms leave Python as plain JSON and are walked in TypeScript. Each model file carries the original model’s predictions at all 116 shipped blasts, and a test holds the walker to them.',
-        'Los brazos aprendidos ajustados salen de Python como JSON plano y se recorren en TypeScript. Cada archivo de modelos lleva las predicciones del modelo original en los 116 tiros publicados, y una prueba ata el recorrido a ellas.',
+        'Los predictores aprendidos ajustados salen de Python como JSON plano y se recorren en TypeScript. Cada archivo de modelos lleva las predicciones del modelo original en los 116 tiros publicados, y una prueba ata el recorrido a ellas.',
       )}
       notes={[
         t(
@@ -960,7 +960,7 @@ export function SafeProtocolDiagram() {
   ]);
   const good = column(468, 420, 40, 12, [
     { title: t('Hold out a whole campaign', 'Retener una campaña entera'), tone: 'good', lines: [t('every fitted quantity, including scaling and', 'toda magnitud ajustada, incluidas la escala y'), t('the rock-factor line, from the other nine sites', 'la recta del factor de roca, de los otros nueve')], prose: true },
-    { title: t('Report the interval', 'Informar el intervalo'), tone: 'good', lines: [t('resample sites, not rows, and say when', 'remuestrear sitios, no filas, y decir cuándo'), t('two arms cannot be told apart', 'dos brazos no se distinguen')], prose: true },
+    { title: t('Report the interval', 'Informar el intervalo'), tone: 'good', lines: [t('resample sites, not rows, and say when', 'remuestrear sitios, no filas, y decir cuándo'), t('two arms cannot be told apart', 'dos predictores no se distinguen')], prose: true },
   ]);
   const boxes = [...bad, ...good];
   return (
@@ -988,7 +988,7 @@ export function SupportsDiagram({ all, geometry }: { all?: { n: number; best: nu
   const t = useT();
   const f = (v?: number | null) => (v === undefined || v === null ? '...' : num(v, 3));
   const a = place({ x: 12, y: 14, w: 420, tone: 'bad', title: t(`All ${all?.n ?? 97} blasts`, `Los ${all?.n ?? 97} tiros`), lines: [t(`best learned: ${all?.arm ?? '...'} ${f(all?.best)}`, `mejor aprendido: ${all?.arm ?? '...'} ${f(all?.best)}`), t('includes Miami: smallest fragments,', 'incluye Miami: fragmentos más finos,'), t('no geometry, classical arms abstain', 'sin geometría, los clásicos se abstienen')] });
-  const g = place({ x: 468, y: 14, w: 420, tone: 'good', title: t(`The ${geometry?.n ?? 91} with geometry`, `Los ${geometry?.n ?? 91} con geometría`), lines: [t(`best learned: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`, `mejor aprendido: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`), t('the rows every arm can answer,', 'las filas que todo brazo responde,'), t('so arms are compared like for like', 'así se comparan en igualdad')] });
+  const g = place({ x: 468, y: 14, w: 420, tone: 'good', title: t(`The ${geometry?.n ?? 91} with geometry`, `Los ${geometry?.n ?? 91} con geometría`), lines: [t(`best learned: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`, `mejor aprendido: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`), t('the rows every arm can answer,', 'las filas que todo predictor responde,'), t('so arms are compared like for like', 'así se comparan en igualdad')] });
   const boxes = [a, g];
   return (
     <Figure

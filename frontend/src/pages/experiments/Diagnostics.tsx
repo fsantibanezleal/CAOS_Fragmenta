@@ -71,7 +71,7 @@ export function Diagnostics({ es, b }: TopicProps) {
       <p>
         {t(
           'Two views of which inputs matter. The first reads the internal importance of a forest and a boosting model fitted on the 97 blasts, to compare it with what the 2025 source publishes. The second asks how much worse each arm does on a campaign it has not seen when one of that campaign’s inputs is replaced by values from the training campaigns.',
-          'Dos vistas de qué entradas pesan. La primera lee la importancia interna de un bosque y de un modelo de potenciación ajustados sobre los 97 tiros, para compararla con la que publica la fuente de 2025. La segunda pregunta cuánto empeora cada brazo en una campaña que no vio cuando una entrada de esa campaña se reemplaza por valores de las de entrenamiento.',
+          'Dos vistas de qué entradas pesan. La primera lee la importancia interna de un bosque y de un modelo de potenciación ajustados sobre los 97 tiros, para compararla con la que publica la fuente de 2025. La segunda pregunta cuánto empeora cada predictor en una campaña que no vio cuando una entrada de esa campaña se reemplaza por valores de las de entrenamiento.',
         )}{' '}
         <Cite id="breiman2001" />{' '}
         <Cite id="chen2016" />{' '}

@@ -47,7 +47,7 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
       <p>
         {t(
           'Each line is one arm across the three protocols: the median of a hundred random draws, the median of a hundred deduplicated draws, and the pooled score with each campaign held out. The axis is cut at −1 and anything lower is drawn at the floor, with its value on Benchmark.',
-          'Cada línea es un brazo, cruzando los tres protocolos: la mediana de cien sorteos aleatorios, la mediana de cien deduplicados y el puntaje agrupado con cada campaña retenida. El eje se corta en −1 y lo que cae más abajo se dibuja en el piso, con su valor en Benchmark.',
+          'Cada línea es un predictor, cruzando los tres protocolos: la mediana de cien sorteos aleatorios, la mediana de cien deduplicados y el puntaje agrupado con cada campaña retenida. El eje se corta en −1 y lo que cae más abajo se dibuja en el piso, con su valor en Benchmark.',
         )}
       </p>
       {F ? (
@@ -76,7 +76,7 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
       <p>
         {t(
           `Deduplicating barely moves anything: each arm’s median shifts by what the table shows, and for the trees, the boosting model and the kernels the shift is at most ${f(shiftOfTrees, 3)}. The drop is in the third column: holding out the whole campaign takes between ${f(F?.learnedGapRange[0], 2)} and ${f(F?.learnedGapRange[1], 2)} of variance explained from every learned arm. The classical arm, with fixed coefficients, predicts the same value for a blast under every protocol, which is why its line is nearly flat.`,
-          `Deduplicar casi no mueve nada: la mediana de cada brazo cambia en lo que muestra la tabla, y para los árboles, la potenciación y los núcleos el cambio no pasa de ${f(shiftOfTrees, 3)}. La caída está en la tercera columna: retener la campaña completa le quita a cada brazo aprendido entre ${f(F?.learnedGapRange[0], 2)} y ${f(F?.learnedGapRange[1], 2)} de varianza explicada. El brazo clásico, con coeficientes fijos, predice lo mismo para un tiro bajo cualquier protocolo, y por eso su línea es casi horizontal.`,
+          `Deduplicar casi no mueve nada: la mediana de cada predictor cambia en lo que muestra la tabla, y para los árboles, la potenciación y los núcleos el cambio no pasa de ${f(shiftOfTrees, 3)}. La caída está en la tercera columna: retener la campaña completa le quita a cada predictor aprendido entre ${f(F?.learnedGapRange[0], 2)} y ${f(F?.learnedGapRange[1], 2)} de varianza explicada. El predictor clásico, con coeficientes fijos, predice lo mismo para un tiro bajo cualquier protocolo, y por eso su línea es casi horizontal.`,
         )}
       </p>
       {F && b ? (
@@ -84,7 +84,7 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
           <table className="fr-table">
             <thead>
               <tr>
-                <th>{t('arm', 'brazo')}</th>
+                <th>{t('arm', 'predictor')}</th>
                 <th>{t('random, median', 'aleatorio, mediana')}</th>
                 <th>{t('deduplicated minus random', 'deduplicado menos aleatorio')}</th>
                 <th>{t('random minus site held out', 'aleatorio menos sitio excluido')}</th>
@@ -114,7 +114,7 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
       <p>
         {t(
           'The reason the drop is so large is the structure of the corpus and not a flaw of one learner. Rows of a campaign share a rock, a rig, an explosive supply and a measurement method, so a random split lets a model recognise the campaign of a test row from its training rows, and the learned arms score well; holding the campaign out removes that shortcut and leaves what transfers. Leakage of this kind inflates reported performance in machine-learning-based science generally, and a hundred draws are run precisely so that the inflation is measured here.',
-          'La razón de que la caída sea tan grande es la estructura del corpus y no un defecto de un aprendiz. Las filas de una campaña comparten roca, equipo, suministro de explosivo y método de medición, así que una partición aleatoria deja que un modelo reconozca la campaña de una fila de prueba desde sus filas de entrenamiento, y los brazos aprendidos puntúan bien; retener la campaña quita ese atajo y deja lo que transfiere. La fuga de este tipo infla el desempeño informado en la ciencia con aprendizaje automático en general, y se corren cien sorteos justamente para que la inflación se mida aquí.',
+          'La razón de que la caída sea tan grande es la estructura del corpus y no un defecto de un aprendiz. Las filas de una campaña comparten roca, equipo, suministro de explosivo y método de medición, así que una partición aleatoria deja que un modelo reconozca la campaña de una fila de prueba desde sus filas de entrenamiento, y los predictores aprendidos puntúan bien; retener la campaña quita ese atajo y deja lo que transfiere. La fuga de este tipo infla el desempeño informado en la ciencia con aprendizaje automático en general, y se corren cien sorteos justamente para que la inflación se mida aquí.',
         )}{' '}
         <Cite id="kapoor2023" />
       </p>

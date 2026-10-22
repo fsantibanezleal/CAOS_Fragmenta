@@ -87,7 +87,7 @@ export default function Live({ b, corpus }: TopicData) {
       />
       <ChipGroup
         id="bench-arm"
-        label={{ en: 'Arm in the chart', es: 'Brazo en el gráfico' }}
+        label={{ en: 'Arm in the chart', es: 'Predictor en el gráfico' }}
         value={arm}
         onChange={setArm}
         options={LIVE_ARMS.map((a) => ({ id: a, label: ARM_BY_ID.get(a)?.label ?? { en: a, es: a } }))}
@@ -97,7 +97,7 @@ export default function Live({ b, corpus }: TopicData) {
           <table className="fr-table">
             <thead>
               <tr>
-                <th>{t(`arm, fitted on the ${nCorpus}`, `brazo, ajustado sobre los ${nCorpus}`)}</th>
+                <th>{t(`arm, fitted on the ${nCorpus}`, `predictor, ajustado sobre los ${nCorpus}`)}</th>
                 <th>{t('variance explained, live', 'varianza explicada, en vivo')}</th>
                 <th>RMSE</th>
                 <th>{t('scored', 'puntuadas')}</th>
