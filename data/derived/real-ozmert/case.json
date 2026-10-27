@@ -218,7 +218,7 @@
   }
  },
  "controls": {},
- "digest": "69abead16ab7179ee3106dfe9ebf20816636653155a64e56290761f632961512",
+ "digest": "a6e06558b7f2df069bae0831e0a582d787d98cef26493e8c4e9d16bf54d2469a",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1746,7 +1746,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "c35f125363bba1e1e29f59ded693ebc12b1b387e2b4c8d6de12526fb51d15b18",
+  "digest": "510aedf293ba5c9224e18640efd49349c168c4c9ea602884eb6feb1347cdfa26",
   "path": "models/Ozmert.json",
   "scope": "Ozmert"
  },
@@ -2685,7 +2685,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.005",
+  "app_version": "0.10.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
