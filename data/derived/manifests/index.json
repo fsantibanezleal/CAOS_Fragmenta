@@ -1,8 +1,8 @@
 {
- "app_version": "0.09.005",
+ "app_version": "0.10.000",
  "benchmark": {
   "bytes": 369608,
-  "digest": "319b309d0eb68da0cafef22c04cfb5ad44af43d97a4871f9da7c4bd58f828415",
+  "digest": "e3f97cf1b0d1571aaa159699f991cf3c4392330f658c5e7b9ca913ceead1a556",
   "path": "benchmark.json",
   "verdict": "THE VERDICT DEPENDS ON THE ROW SET. Over all 97 blasts the best learned arm under leave-one-site-out, xgboost, scores -0.034 and the learned tier does not meet the criterion. Over the 91 blasts whose pattern geometry is resolvable, the rows on which the classical arms are also scored, stacking scores 0.034, 0.266 above the null, and the tier meets it. The blasts that separate the two row sets come from Miami. Apart from arms whose source fitted them on this corpus, no arm has a site-resampled 95 percent interval above zero: with ten sites, none of them is distinguishable from predicting the corpus mean. The null's held-out predictions correlate with the measurements at -0.79: holding out a coarse site lowers the training mean, so any margin over the null under this protocol is larger than the skill it measures."
  },
@@ -13,7 +13,7 @@
    "case_id": "ctrl-degenerate",
    "category": "negative-control",
    "controls_passed": true,
-   "digest": "b37fb9ee716b8928f52b5c166f99be14a9222871c1f0b2c8e2c51aa0428206c4",
+   "digest": "dfb15b4477fe7b4f4a21f024aad2256998b822e4eac87c01faa5a2c92c73f876",
    "lane": "live",
    "manifest_path": "manifests/ctrl-degenerate.json",
    "real_or_synthetic": "synthetic",
@@ -29,7 +29,7 @@
    "case_id": "ctrl-oracle",
    "category": "positive-control",
    "controls_passed": true,
-   "digest": "9b07484dd729bf306317cc93d89dd53aa0fd2d55896cd882c052ed2656081b85",
+   "digest": "49c5b6cfe6031f3333913f5308a82259e2d9bdd67d76105f00a8d5ceb741b374",
    "lane": "live",
    "manifest_path": "manifests/ctrl-oracle.json",
    "real_or_synthetic": "synthetic",
@@ -45,7 +45,7 @@
    "case_id": "real-akdaglar",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "000c600f9dc562a71326f30703b28f6bea3af5b3f0e3044b8213fd39c6258dfa",
+   "digest": "8d67bc1f45ae1e56431d3a4c6717f98c5fb34911e8ade06447df50adbea3ee4d",
    "lane": "live",
    "manifest_path": "manifests/real-akdaglar.json",
    "real_or_synthetic": "real",
@@ -61,7 +61,7 @@
    "case_id": "real-dongri-buzurg",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "3795c4a489fce87439aca4e120b0246a8371f58e5dc5e19a71b2e6e173eef44e",
+   "digest": "63a9dbdae239ef6bf5c5e370118f05d089c36d3d3336ae9c5c3101bc62db4a27",
    "lane": "live",
    "manifest_path": "manifests/real-dongri-buzurg.json",
    "real_or_synthetic": "real",
@@ -77,7 +77,7 @@
    "case_id": "real-enusa",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "ebf08e13743b3746d68887b7acdd53f99fb8a8bced8a60e99d6c5d0561fe79c5",
+   "digest": "a3d8ef65cde6caefd2aa2386a64202a4fcc4859cf45721a349164544bd57b7e7",
    "lane": "live",
    "manifest_path": "manifests/real-enusa.json",
    "real_or_synthetic": "real",
@@ -93,7 +93,7 @@
    "case_id": "real-granite-ne",
    "category": "extrapolation-control",
    "controls_passed": true,
-   "digest": "9d9ecda9b8280438156d13460bd41a6ce4f346eaf9699fff5ca11a68d4f39044",
+   "digest": "3d628c11e833438c27e4b42482cd0168568b90b9cf7a4d0fd47f32599b19c0ed",
    "lane": "live",
    "manifest_path": "manifests/real-granite-ne.json",
    "real_or_synthetic": "real",
@@ -109,7 +109,7 @@
    "case_id": "real-miami",
    "category": "negative-control",
    "controls_passed": true,
-   "digest": "7d9099c4698048d4e96c99cd94c0d2b2fb4ba29c91f729ff253d3ecedb227c87",
+   "digest": "0d7debd755daf282e4f9696b4501078792b0e51183fd2d36ec30ec71244241aa",
    "lane": "live",
    "manifest_path": "manifests/real-miami.json",
    "real_or_synthetic": "real",
@@ -125,7 +125,7 @@
    "case_id": "real-mrica",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "ba7b9a72ae24b687d523d4d42bde7bcb048cee7426a0f82fab967dce27e42cee",
+   "digest": "f70b2be70f798c2313b777c18320a7ae0bd519e4bc612cf7dcd833fa407471e7",
    "lane": "live",
    "manifest_path": "manifests/real-mrica.json",
    "real_or_synthetic": "real",
@@ -141,7 +141,7 @@
    "case_id": "real-murgul",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "bb613ac37d8ab67db03bb4169f4cee453d7f5cb17e49c74ad50732a7330e9fe3",
+   "digest": "c50b54cdfd2b8d030d5024fe5a54ba082a392434f0cbcaab5367d67e7d14afa0",
    "lane": "live",
    "manifest_path": "manifests/real-murgul.json",
    "real_or_synthetic": "real",
@@ -157,7 +157,7 @@
    "case_id": "real-ozmert",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "69abead16ab7179ee3106dfe9ebf20816636653155a64e56290761f632961512",
+   "digest": "a6e06558b7f2df069bae0831e0a582d787d98cef26493e8c4e9d16bf54d2469a",
    "lane": "live",
    "manifest_path": "manifests/real-ozmert.json",
    "real_or_synthetic": "real",
@@ -173,7 +173,7 @@
    "case_id": "real-reocin",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "e988558dc62db5c5b6792a7d38f768767931c578bb69dc12db00a6d778e8e260",
+   "digest": "c7f79fd679b457dc1f78c0a16f054d24cbebdeb920a39c4df637d0fe1593377b",
    "lane": "live",
    "manifest_path": "manifests/real-reocin.json",
    "real_or_synthetic": "real",
@@ -189,7 +189,7 @@
    "case_id": "real-reocin-ug",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "d1bebfac2ded167a2aa5eb8980dd78b742446b262f8c8a4eb194e4f469162def",
+   "digest": "bf334d446972746fcf427b6920c0854a5b2fe62ac7ed2bc096b0d589e940e166",
    "lane": "live",
    "manifest_path": "manifests/real-reocin-ug.json",
    "real_or_synthetic": "real",
@@ -205,7 +205,7 @@
    "case_id": "real-soma",
    "category": "real-campaign",
    "controls_passed": true,
-   "digest": "9af6dca5240a513a8f4bd6b62d432e5238da054451087c18c042bc722b825ed2",
+   "digest": "7aa49f807ee263ad4964f5222bb361ae07a6aec91c59390b2da7eebbc04c01a4",
    "lane": "live",
    "manifest_path": "manifests/real-soma.json",
    "real_or_synthetic": "real",
@@ -221,7 +221,7 @@
    "case_id": "synth-ibsd-capped",
    "category": "structural-control",
    "controls_passed": true,
-   "digest": "4b1697e1924bc8a389ac38892396cfdcf73ec1f8931509b9190ec548eab470ac",
+   "digest": "43a7a77574d3ac87a54ecf9ea250dff882f4d90f8ebdb097c35aba248524a4d2",
    "lane": "live",
    "manifest_path": "manifests/synth-ibsd-capped.json",
    "real_or_synthetic": "synthetic",
@@ -237,7 +237,7 @@
    "case_id": "synth-sweep-burden",
    "category": "parameter-sweep",
    "controls_passed": true,
-   "digest": "24824407bb605037191975c54bf170ce077dafdb21fb90db9e12ad5332fc5af6",
+   "digest": "c048c6b34032815b475cd8abfdb2da3830a35ce99f0ed725e0c09ee10259b76e",
    "lane": "live",
    "manifest_path": "manifests/synth-sweep-burden.json",
    "real_or_synthetic": "synthetic",
@@ -253,7 +253,7 @@
    "case_id": "synth-sweep-powder",
    "category": "parameter-sweep",
    "controls_passed": true,
-   "digest": "9bdf686dea164d146ac3443b4129b052dc5fa46a00bc5ce9ba2f326c2cdf33e8",
+   "digest": "ab57234820426abe01e0c87561cdfab9cfb05cc6328272d4339d580d5976553f",
    "lane": "live",
    "manifest_path": "manifests/synth-sweep-powder.json",
    "real_or_synthetic": "synthetic",
@@ -278,7 +278,7 @@
     "xgboost"
    ],
    "bytes": 223788,
-   "digest": "8d818d787ffafa24c5ba16b1e47f26fab5ced6595ac8044defc93181dad8798b",
+   "digest": "895f4472439cb081783a34505649b6ee9ea6f8e73f48b4dfe77215b87a3137b3",
    "path": "models/Akdaglar.json",
    "scope": "Akdaglar"
   },
@@ -293,7 +293,7 @@
     "xgboost"
    ],
    "bytes": 241488,
-   "digest": "6963d51c249a697e06a34da0d3b3e29a4eb7b399baf99dc781c6b08190617f74",
+   "digest": "89dc08eb837e4ba9828377a61bbbfb8f3c400a71657889c7de4a88bb1fceb795",
    "path": "models/Dongri-Buzurg.json",
    "scope": "Dongri-Buzurg"
   },
@@ -308,7 +308,7 @@
     "xgboost"
    ],
    "bytes": 238371,
-   "digest": "e2a79809d8a7adc0d1539c01ef90ac2a131c0843b0b9f30b77023a51776391cd",
+   "digest": "09718700206e7a706c66661fcf7aef46d9b50d1f14466db4f6ae8121a4bc7dfd",
    "path": "models/Enusa.json",
    "scope": "Enusa"
   },
@@ -323,7 +323,7 @@
     "xgboost"
    ],
    "bytes": 250126,
-   "digest": "93ad17ede94c67adb3a09aa4e38331d8f556ccde53569ccdd5f2c4605ca583d9",
+   "digest": "e6018a2fa335448be684bbb1f72ef47c477fae1c9710c4d738a043e94b2120f0",
    "path": "models/Miami.json",
    "scope": "Miami"
   },
@@ -338,7 +338,7 @@
     "xgboost"
    ],
    "bytes": 239510,
-   "digest": "4f2cf4cf23881907cd8a550ec035d4aab82a0c2de61fa2daff0c26b8f2007e88",
+   "digest": "c9a13135d8f6db53856c76df11e9fd45934fcba9092106ecc88e47c8e8dd3c24",
    "path": "models/Mrica.json",
    "scope": "Mrica"
   },
@@ -353,7 +353,7 @@
     "xgboost"
    ],
    "bytes": 247719,
-   "digest": "bb3fc32e613a3ffece27f4fc8084c9119b977b9ddbc7ea8079f58a2b6bfc04ab",
+   "digest": "22b94475cf5df8eab76d69d2dd672a157f0d4d7237dea427608d0c40534e4761",
    "path": "models/Murgul.json",
    "scope": "Murgul"
   },
@@ -368,7 +368,7 @@
     "xgboost"
    ],
    "bytes": 247500,
-   "digest": "c35f125363bba1e1e29f59ded693ebc12b1b387e2b4c8d6de12526fb51d15b18",
+   "digest": "510aedf293ba5c9224e18640efd49349c168c4c9ea602884eb6feb1347cdfa26",
    "path": "models/Ozmert.json",
    "scope": "Ozmert"
   },
@@ -383,7 +383,7 @@
     "xgboost"
    ],
    "bytes": 240032,
-   "digest": "5ff8e2c7f45a4de7f519b953fab79a5bdea641fa1e91a1a620708ffa2aad1efa",
+   "digest": "e5d0283cf1352d9efbaa3f4eb46c510360908eb369183bff39f554f74aabc4af",
    "path": "models/Reocin.json",
    "scope": "Reocin"
   },
@@ -398,7 +398,7 @@
     "xgboost"
    ],
    "bytes": 248525,
-   "digest": "25eb39e31aee92694cc7b4ad0b698033d2fb7b87224eded3fb3137f6f5b8571a",
+   "digest": "35617995b2a853a6bd612e4edc70868bfbe5526472bd11fb3d06117ecc348b16",
    "path": "models/Reocin-UG.json",
    "scope": "Reocin-UG"
   },
@@ -413,7 +413,7 @@
     "xgboost"
    ],
    "bytes": 253813,
-   "digest": "9436f7c843057c4f88be8953c539bd332433c11f94bd328b71e4729c688adab5",
+   "digest": "e895d913bf4b3f51feb79fa4622f9b542867c954b92fe487bb1392289f0d7608",
    "path": "models/Soma.json",
    "scope": "Soma"
   },
@@ -428,7 +428,7 @@
     "xgboost"
    ],
    "bytes": 261957,
-   "digest": "4ea26b49d2f2adf96ebdb5db9014097d2d9e91f239df4b0ac0a2e3b304315614",
+   "digest": "8938e679ee4960feba61d38c45a4ddf839ecefae93b6feda80c7077a8e4b0a77",
    "path": "models/corpus.json",
    "scope": "corpus"
   }
