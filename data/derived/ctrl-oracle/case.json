@@ -252,7 +252,7 @@
    "passed": true
   }
  },
- "digest": "9b07484dd729bf306317cc93d89dd53aa0fd2d55896cd882c052ed2656081b85",
+ "digest": "49c5b6cfe6031f3333913f5308a82259e2d9bdd67d76105f00a8d5ceb741b374",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1742,7 +1742,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "4ea26b49d2f2adf96ebdb5db9014097d2d9e91f239df4b0ac0a2e3b304315614",
+  "digest": "8938e679ee4960feba61d38c45a4ddf839ecefae93b6feda80c7077a8e4b0a77",
   "path": "models/corpus.json",
   "scope": "corpus"
  },
@@ -2810,7 +2810,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.09.005",
+  "app_version": "0.10.000",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
