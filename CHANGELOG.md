@@ -2,6 +2,33 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.10.000] - 2026-10-27
+
+The notebooks rewritten to the bar of CAOS_MANAGE `conventions/product-notebooks.md` section 1 (Felipe, 2026-10-26:
+"fix that trash", "state cleat what is the bar"): each notebook is a worked lesson on one question of the problem,
+running `blastfrag` step by step on the corpus, with its results as figures read in the prose and its answer in numbers
+the notebook computed. The template's 0.12.000 guards adopted, with the notebook bar's gate. The re-bake moved no number: of the 428,171 numbers of the
+committed documents none changed, only the version stamps and the digests over them.
+
+### Changed
+
+- The 19 notebooks of each tree rewritten: a question in the first cell and its answer in Results; the method run step
+  by step through the engine; figures with titles, labelled axes and units, each read after it; what each does not
+  show; one setup cell; the comparisons with committed artifacts moved to the tests (at most one reproduction check per
+  notebook, under its own heading). Spanish prose with the decimal comma. Every notebook re-run by the runner; reviewed
+  against the ten points by a reader other than its writer (CAOS_MANAGE `wip/fragmenta/notebook-review-2026-10-27.md`).
+- The notebook indexes carry each notebook's question and what it teaches, in both languages.
+- The template's guards at 0.12.000 (`scripts/check_*.py`, `scripts/notebook_bar.json`); `product.json` declares
+  `method_entrypoints`, the 44 calls that run the product's method (loaders and registry lookups excluded), which the
+  notebook gate counts. `.template-version` records it; the shell pin stays 0.18.0 until the product adopts shell 0.19.
+
+### Added
+
+- `tests/test_artifact_parity.py`: the five comparisons that left the notebooks (the Enusa artifact against a live run of
+  the classical predictor; the transfer line and the leave-one-site-out scores; the published reproduction; the printed
+  columns' hold-out scores; the Akdaglar variant curves), each against a live run of the engine, each with a test that
+  alters a copy and must fail.
+
 ## [0.09.005] - 2026-10-22
 
 A patch on 0.09.004: in Spanish a benchmark arm is a "predictor", never a "brazo", on every surface. 0.09.003 made that
