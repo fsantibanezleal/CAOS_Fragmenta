@@ -1,5 +1,5 @@
 {
- "app_version": "0.09.005",
+ "app_version": "0.10.000",
  "arms_that_failed_to_fit": {},
  "artifact": {
   "bytes": 68085,
@@ -9,7 +9,7 @@
  "case_id": "real-murgul",
  "category": "real-campaign",
  "controls": {},
- "digest": "bb613ac37d8ab67db03bb4169f4cee453d7f5cb17e49c74ad50732a7330e9fe3",
+ "digest": "c50b54cdfd2b8d030d5024fe5a54ba082a392434f0cbcaab5367d67e7d14afa0",
  "engine": {
   "package": "blastfrag",
   "version": "0.04.000"
