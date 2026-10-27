@@ -3,23 +3,23 @@
 Five comparisons used to sit in the notebooks, each a cell that printed "equal to the committed value".
 Checking an artifact is the test suite's job, not a lesson's, so they live here:
 
-1. the Enusa case's `kuznetsov` predictions and score equal a live run of the predictor;
-2. the transfer line (`diagnostics.transfer_fit`) equals a live `KuznetsovTransfer().fit`, and the committed
-   leave-one-site-out score and interval of `kuznetsov`, `kuznetsov-transfer` and `null` equal a live run;
-3. the `published_reproduction` values of both validation sets (2010 and 2012) equal a live recomputation;
-4. the hold-out scores of the three printed columns (and the null) equal the committed `benchmark.json`;
-5. the committed variant curves of Akdaglar (notebook 06-01) equal a recomputation.
+1. the Enusa case's `kuznetsov` predictions and score equal a live run of the predictor; 2. the transfer line
+(`diagnostics.transfer_fit`) equals a live `KuznetsovTransfer().fit`, and the committed leave-one-site-out
+score and interval of `kuznetsov`, `kuznetsov-transfer` and `null` equal a live run; 3. the
+`published_reproduction` values of both validation sets (2010 and 2012) equal a live recomputation; 4. the
+hold-out scores of the three printed columns (and the null) equal the committed `benchmark.json`; 5. the
+committed variant curves of Akdaglar (notebook 06-01) equal a recomputation.
 
-Each comparison is a function that returns the list of mismatches, so the same code runs twice: on the committed
-artifact, where the list must be empty, and on a copy with one value changed, where it must not be. A parity test
-that read nothing, or compared an artifact with itself, would pass the second run and fail it.
+Each comparison is a function that returns the list of mismatches, so the same code runs twice: on the
+committed artifact, where the list must be empty, and on a copy with one value changed, where it must not be.
+A parity test that read nothing, or compared an artifact with itself, would pass the second run and fail it.
 
-Exact where the bake writes the same float (plain arithmetic: scores, printed columns); the tolerance the existing
-re-bake test uses (`compare_bakes.RELATIVE_TOLERANCE`) where a model is fitted, because two builds of the same
-pins reduce a dot product in a different order.
+Exact where the bake writes the same float (plain arithmetic: scores, printed columns); the tolerance the
+existing re-bake test uses (`compare_bakes.RELATIVE_TOLERANCE`) where a model is fitted, because two builds of
+the same pins reduce a dot product in a different order.
 
-`FRAGMENTA_PARITY_DERIVED` points the tests at another copy of `data/derived/`; it exists so a copy with one value
-changed can be checked from outside (the unit's Red run). Unset, the tests read the committed artifacts.
+`FRAGMENTA_PARITY_DERIVED` points the tests at another copy of `data/derived/`; it exists so a copy with one
+value changed can be checked from outside (the unit's Red run). Unset, the tests read the committed artifacts.
 """
 
 from __future__ import annotations
@@ -72,7 +72,9 @@ def _differs(live, committed, relative: float, absolute: float | None = None) ->
         live = None
     if live is None or committed is None:
         return live is not committed
-    return not math.isclose(live, committed, rel_tol=relative, abs_tol=relative if absolute is None else absolute)
+    return not math.isclose(
+        live, committed, rel_tol=relative, abs_tol=relative if absolute is None else absolute
+    )
 
 
 def _compare(label: str, live: dict, committed: dict, relative: float, keys=None) -> list[str]:
@@ -87,7 +89,15 @@ def _compare(label: str, live: dict, committed: dict, relative: float, keys=None
 
 
 SCORE_KEYS = (
-    "bias_m", "mae_m", "mape_pct", "n_abstained", "n_extrapolated", "n_scored", "pearson_r2", "r2_identity", "rmse_m",
+    "bias_m",
+    "mae_m",
+    "mape_pct",
+    "n_abstained",
+    "n_extrapolated",
+    "n_scored",
+    "pearson_r2",
+    "r2_identity",
+    "rmse_m",
 )
 
 
@@ -99,6 +109,7 @@ def _printed(rows, column: str, label: str) -> list:
 # 1. The Enusa artifact against a live run of the predictor
 # ---------------------------------------------------------------------------------------------
 
+
 def check_enusa_kuznetsov(artifact: dict, corpus: list) -> list[str]:
     enusa = [b for b in corpus if b.site == "Enusa"]
     predictions = bf.Kuznetsov().predict(enusa)
@@ -107,7 +118,8 @@ def check_enusa_kuznetsov(artifact: dict, corpus: list) -> list[str]:
         committed = artifact["predictions"]["kuznetsov"].get(blast.blast_id)
         if committed is None:
             problems.append(f"{blast.blast_id}: no committed prediction")
-        # The case artifact stores a predicted size rounded to 6 decimals (micrometres): half a unit of the last one.
+        # The case artifact stores a predicted size rounded to 6 decimals (micrometres):
+        # half a unit of the last one.
         elif _differs(prediction.x50_m, committed["x50_m"], 0.0, absolute=5e-7):
             problems.append(f"{blast.blast_id}: live {prediction.x50_m!r}, committed {committed['x50_m']!r}")
     live = bf.score(enusa, predictions, method="kuznetsov").as_dict()
@@ -132,6 +144,7 @@ def test_the_enusa_check_fails_on_an_altered_artifact(corpus):
 # 2. The transfer line and the leave-one-site-out scores of the classical arms
 # ---------------------------------------------------------------------------------------------
 
+
 @pytest.fixture(scope="module")
 def live_loso(corpus) -> dict:
     """Per arm, the rows answered on the geometry support and their predictions, as the bake scores them."""
@@ -143,7 +156,9 @@ def live_loso(corpus) -> dict:
         tested += list(split.test)
     out = {}
     for name, predicted in predictions.items():
-        answered = [(b, p) for b, p in zip(tested, predicted) if p.x50_m is not None and bf.has_absolute_geometry(b)]
+        answered = [
+            (b, p) for b, p in zip(tested, predicted) if p.x50_m is not None and bf.has_absolute_geometry(b)
+        ]
         rows, preds = [a[0] for a in answered], [a[1] for a in answered]
         point, low, high = bf.bootstrap_interval(rows, preds, "r2_identity", n_boot=2000, unit="site", seed=0)
         out[name] = {"n": len(rows), "r2_identity": point, "interval_95": [low, high]}
@@ -160,7 +175,9 @@ def check_transfer_line(benchmark: dict, corpus: list) -> list[str]:
         FITTED,
     )
     if list(transfer.fit_sites) != committed["fit_sites"]:
-        problems.append(f"transfer_fit.fit_sites: live {list(transfer.fit_sites)}, committed {committed['fit_sites']}")
+        problems.append(
+            f"transfer_fit.fit_sites: live {list(transfer.fit_sites)}, committed {committed['fit_sites']}"
+        )
     return problems
 
 
@@ -187,7 +204,9 @@ def test_the_transfer_check_fails_on_an_altered_artifact(benchmark, corpus):
         altered["diagnostics"]["transfer_fit"][key] += 0.01
         assert any(key in p for p in check_transfer_line(altered, corpus)), key
     altered = copy.deepcopy(benchmark)
-    altered["diagnostics"]["transfer_fit"]["fit_sites"] = altered["diagnostics"]["transfer_fit"]["fit_sites"][:-1]
+    altered["diagnostics"]["transfer_fit"]["fit_sites"] = altered["diagnostics"]["transfer_fit"]["fit_sites"][
+        :-1
+    ]
     assert any("fit_sites" in p for p in check_transfer_line(altered, corpus))
 
 
@@ -203,13 +222,16 @@ def test_the_leave_one_site_out_check_fails_on_an_altered_artifact(benchmark, li
         arm["score"]["r2_identity"] += 0.001
         assert any(f"{name}.r2_identity" in p for p in check_loso(altered, live_loso)), name
         altered = copy.deepcopy(benchmark)
-        altered["protocols"]["leave-one-site-out"]["arms"][name]["supports"]["geometry"]["interval_95"][1] += 0.001
+        altered["protocols"]["leave-one-site-out"]["arms"][name]["supports"]["geometry"]["interval_95"][
+            1
+        ] += 0.001
         assert any(f"{name}.interval_95 high" in p for p in check_loso(altered, live_loso)), name
 
 
 # ---------------------------------------------------------------------------------------------
 # 3. The published reproduction of both validation sets against a live recomputation
 # ---------------------------------------------------------------------------------------------
+
 
 def check_published_reproduction(benchmark: dict) -> list[str]:
     committed = benchmark["published_reproduction"]
@@ -223,8 +245,12 @@ def check_published_reproduction(benchmark: dict) -> list[str]:
             problems.append(f"{label}.n_rows: live {len(rows)}, committed {block['n_rows']}")
         as_printed = bf.score(rows, _printed(rows, column, "as-published"), method="as-published")
         recomputed = bf.score(rows, regression.predict(rows), method="recomputed")
-        problems += _compare(f"{label}.as_published", as_printed.as_dict(), block["as_published"], EXACT, SCORE_KEYS)
-        problems += _compare(f"{label}.recomputed", recomputed.as_dict(), block["recomputed"], EXACT, SCORE_KEYS)
+        problems += _compare(
+            f"{label}.as_published", as_printed.as_dict(), block["as_published"], EXACT, SCORE_KEYS
+        )
+        problems += _compare(
+            f"{label}.recomputed", recomputed.as_dict(), block["recomputed"], EXACT, SCORE_KEYS
+        )
         gain = {"gain_in_r2_identity": recomputed.r2_identity - as_printed.r2_identity}
         problems += _compare(label, gain, block, EXACT)
     return problems
@@ -239,7 +265,10 @@ def test_the_published_reproduction_check_fails_on_an_altered_artifact(benchmark
         for side in ("as_published", "recomputed"):
             altered = copy.deepcopy(benchmark)
             altered["published_reproduction"][label][side]["r2_identity"] += 0.001
-            assert any(f"{label}.{side}.r2_identity" in p for p in check_published_reproduction(altered)), (label, side)
+            assert any(f"{label}.{side}.r2_identity" in p for p in check_published_reproduction(altered)), (
+                label,
+                side,
+            )
     altered = copy.deepcopy(benchmark)
     altered["published_reproduction"]["2012"]["n_rows"] += 1
     assert any("n_rows" in p for p in check_published_reproduction(altered))
@@ -259,11 +288,25 @@ def check_printed_columns(benchmark: dict, corpus: list) -> list[str]:
     problems = []
     for label, column in PRINTED:
         live = bf.score(holdout, _printed(holdout, column, label), method=label).as_dict()
-        problems += _compare(f"published_holdout_arms.{label}", live, committed["published_holdout_arms"][label], EXACT, SCORE_KEYS)
+        problems += _compare(
+            f"published_holdout_arms.{label}",
+            live,
+            committed["published_holdout_arms"][label],
+            EXACT,
+            SCORE_KEYS,
+        )
         live = bf.score(clean, _printed(clean, column, label), method=label).as_dict()
-        problems += _compare(f"without_the_leaked_row.{label}", live, committed["without_the_leaked_row"][label], EXACT, SCORE_KEYS)
+        problems += _compare(
+            f"without_the_leaked_row.{label}",
+            live,
+            committed["without_the_leaked_row"][label],
+            EXACT,
+            SCORE_KEYS,
+        )
     null = bf.null_model_score(holdout, training_mean_m=bf.training_mean(corpus)).as_dict()
-    problems += _compare("published_holdout_arms.null", null, committed["published_holdout_arms"]["null"], EXACT, SCORE_KEYS)
+    problems += _compare(
+        "published_holdout_arms.null", null, committed["published_holdout_arms"]["null"], EXACT, SCORE_KEYS
+    )
     return problems
 
 
@@ -276,7 +319,10 @@ def test_the_printed_columns_check_fails_on_an_altered_artifact(benchmark, corpu
         for block in ("published_holdout_arms", "without_the_leaked_row"):
             altered = copy.deepcopy(benchmark)
             altered["published_reproduction"][block][label]["rmse_m"] += 0.001
-            assert any(f"{block}.{label}.rmse_m" in p for p in check_printed_columns(altered, corpus)), (block, label)
+            assert any(f"{block}.{label}.rmse_m" in p for p in check_printed_columns(altered, corpus)), (
+                block,
+                label,
+            )
     altered = copy.deepcopy(benchmark)
     altered["published_reproduction"]["published_holdout_arms"]["null"]["r2_identity"] += 0.001
     assert any("null.r2_identity" in p for p in check_printed_columns(altered, corpus))
@@ -285,6 +331,7 @@ def test_the_printed_columns_check_fails_on_an_altered_artifact(benchmark, corpu
 # ---------------------------------------------------------------------------------------------
 # 5. The variant curves of the Akdaglar case (notebook 06-01) against a recomputation
 # ---------------------------------------------------------------------------------------------
+
 
 def check_variant_curves(artifact: dict, corpus: list) -> list[str]:
     case = get_case("real-akdaglar")
