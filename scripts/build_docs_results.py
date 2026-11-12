@@ -34,9 +34,9 @@ DOCS = ROOT / "docs"
 NAMES = {
     "null": "null, predict the training mean",
     "oracle": "oracle, return the measurement",
-    "kuznetsov": "classical mean size, site factor",
-    "kuznetsov-transfer": "classical mean size, transfer factor",
-    "kuznetsov-capped": "classical mean size, capped at the in-situ block (declared)",
+    "kuznetsov": "Kuznetsov mean size, site rock factor",
+    "kuznetsov-transfer": "Kuznetsov mean size, transferred rock factor",
+    "kuznetsov-capped": "Kuznetsov mean size, capped at the in-situ block (declared)",
     "group-discriminant": "group router",
     "published-regression": "published regression",
     "refitted-regression": "refitted regression",
@@ -170,7 +170,7 @@ def pages(b: dict, index: dict) -> dict[str, str]:
     lines = [GENERATED, "", "# Published reproductions", "", head, "",
              "## The 2012 hold-out, three published models and a null", "",
              "| model | variance explained | squared correlation | RMSE, m | MAPE, % |", "|---|---|---|---|---|"]
-    for k, n in (("classical", "classical, as published"), ("regression", "regression, as published"), ("neural-net", "neural network, as published"), ("null", "null, the training mean")):
+    for k, n in (("classical", "Kuznetsov equation, as published"), ("regression", "regression, as published"), ("neural-net", "neural network, as published"), ("null", "null, the training mean")):
         a = arms[k]
         lines.append(f"| {n} | {f(a.get('r2_identity'))} | {f(a.get('pearson_r2'))} | {f(a.get('rmse_m'), 4)} | {f(a.get('mape_pct'), 1)} |")
     lines += ["", "## The published regression, recomputed against the papers' own tables", "",
@@ -180,8 +180,8 @@ def pages(b: dict, index: dict) -> dict[str, str]:
         lines.append(f"| {k} | {blk['n_rows']} | {f(blk['as_published']['r2_identity'])} | {f(blk['recomputed']['r2_identity'])} | {blk['gain_in_r2_identity']:+.3f} |")
     lines += ["", "## Without the row that is in both training and hold-out (Rc1)", "",
               "| model | with Rc1 | without |", "|---|---|---|"]
-    for k in ("classical", "regression", "neural-net"):
-        lines.append(f"| {k} | {f(arms[k].get('r2_identity'))} | {f(wl[k].get('r2_identity'))} |")
+    for k, n in (("classical", "Kuznetsov equation"), ("regression", "regression"), ("neural-net", "neural-net")):
+        lines.append(f"| {n} | {f(arms[k].get('r2_identity'))} | {f(wl[k].get('r2_identity'))} |")
     lines += ["", f"## The published network across {sw['n_seeds']} seeds", "",
               f"Variance explained on the 2012 hold-out: minimum {f(sw['min'])}, median {f(sw['median'])}, maximum {f(sw['max'])}; published {f(sw['published'])}, "
               f"{'above' if sw['published_above_every_seed'] else 'not above'} every seed.", "",
@@ -366,8 +366,8 @@ def blocks(b: dict, index: dict) -> dict[str, str]:
         for k in moved
     )
     out["cap"] = (
-        f"The cap binds on {len(moved)} corpus blasts, where the classical prediction exceeds the in-situ block: {detail}. "
-        f"Held out by site it moves the classical arm from {f(classical['r2_identity'])} to "
+        f"The cap binds on {len(moved)} corpus blasts, where the Kuznetsov prediction exceeds the in-situ block: {detail}. "
+        f"Held out by site it moves the Kuznetsov predictor from {f(classical['r2_identity'])} to "
         f"{f(capped['r2_identity'])} (site-resampled interval {iv(capped['supports']['all']['interval_95'])}), and the "
         f"median of the random draws from {f(rnd['kuznetsov']['r2_identity'])} to {f(rnd['kuznetsov-capped']['r2_identity'])}."
     )
@@ -437,7 +437,7 @@ def blocks(b: dict, index: dict) -> dict[str, str]:
         "|---|---|---|---|",
     ]
     for k, n in (
-        ("classical", "classical"),
+        ("classical", "Kuznetsov equation"),
         ("regression", "regression"),
         ("neural-net", "neural network"),
         ("null", "null, the training mean"),

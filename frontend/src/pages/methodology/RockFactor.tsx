@@ -31,8 +31,8 @@ export default function RockFactor({ b, corpus }: TopicData) {
     >
       <p>
         {es
-          ? 'Un solo número adimensional, A, carga con todo lo que la ecuación clásica sabe de la roca. En su forma original era una tabla de tres valores (7 para roca media, 10 para roca dura muy fisurada, 13 para roca muy dura poco fisurada), y el artículo de 2010 dice que esas categorías son demasiado amplias. La vía de Cunningham es el índice de tronabilidad de Lilly, que el artículo de 2010 imprime así:'
-          : 'One dimensionless number, A, carries everything the classical equation knows about the rock. In its original form it was a three-value table (7 for medium rock, 10 for hard, highly fissured rock, 13 for very hard, weakly fissured rock), and the 2010 paper says those categories are too wide. Cunningham’s route out is Lilly’s blastability index, which the 2010 paper prints as:'}{' '}
+          ? 'Un solo número adimensional, A, carga con todo lo que la ecuación de Kuznetsov sabe de la roca. En su forma original era una tabla de tres valores (7 para roca media, 10 para roca dura muy fisurada, 13 para roca muy dura poco fisurada), y el artículo de 2010 dice que esas categorías son demasiado amplias. La vía de Cunningham es el índice de tronabilidad de Lilly, que el artículo de 2010 imprime así:'
+          : 'One dimensionless number, A, carries everything the Kuznetsov equation knows about the rock. In its original form it was a three-value table (7 for medium rock, 10 for hard, highly fissured rock, 13 for very hard, weakly fissured rock), and the 2010 paper says those categories are too wide. Cunningham’s route out is Lilly’s blastability index, which the 2010 paper prints as:'}{' '}
         <Cite id="hudaverdi2010" />
       </p>
       <Equation
@@ -47,17 +47,17 @@ export default function RockFactor({ b, corpus }: TopicData) {
       </p>
       <p>
         {es
-          ? 'Ambos artículos dicen que el factor de roca se estimó para cada tiro, y ninguno imprime el valor. Invirtiendo la ecuación clásica sobre una predicción publicada, con la geometría recuperada, se obtiene:'
-          : 'Both papers say the rock factor was estimated for each blast, and neither prints the value. Inverting the classical equation on a published prediction, with the recovered geometry, gives:'}
+          ? 'Ambos artículos dicen que el factor de roca se estimó para cada tiro, y ninguno imprime el valor. Invirtiendo la ecuación de Kuznetsov sobre una predicción publicada, con la geometría recuperada, se obtiene:'
+          : 'Both papers say the rock factor was estimated for each blast, and neither prints the value. Inverting the Kuznetsov equation on a published prediction, with the recovered geometry, gives:'}
       </p>
       <Equation
         tex={String.raw`A = \frac{x_{50}^{\mathrm{pub}}}{(V/Q)^{0.8}\,Q^{1/6}\,(\mathrm{RWS}/115)^{-19/30}}`}
-        caption={es ? 'Factor de roca recuperado de la predicción clásica publicada, con x50 en centímetros.' : 'Rock factor recovered from the published classical prediction, with x50 in centimetres.'}
+        caption={es ? 'Factor de roca recuperado de la predicción de Kuznetsov publicada, con x50 en centímetros.' : 'Rock factor recovered from the published Kuznetsov prediction, with x50 in centimetres.'}
       />
       <p>
         {es
-          ? 'Los valores recuperados casi no se mueven dentro de un sitio: la mayor dispersión es 3,7 por ciento, lo que produce redondear las predicciones publicadas a dos decimales, y un error en la geometría los dispersaría. Ordenan la roca casi por rigidez, aunque no del todo: el esquisto plegado de 60 GPa de Enusa queda por debajo de los carbonatos de 45 GPa de Reocin. Los dos artículos imprimen predicciones clásicas distintas para los mismos tiros, así que implican factores distintos; la recuperación usa la columna de 2012, la tabla que trae los tres modelos publicados, y lo declara.'
-          : 'The recovered values barely move within a site: the widest spread is 3.7 percent, which is what rounding the published predictions to two decimals produces, and an error in the geometry would scatter them. They order the rock almost by stiffness, though not entirely: the folded 60 GPa schist at Enusa sits below the 45 GPa carbonates at Reocin. The two papers print different classical predictions for the same blasts, so they imply different factors; the recovery uses the 2012 column, the table that carries all three published models, and says so.'}{' '}
+          ? 'Los valores recuperados casi no se mueven dentro de un sitio: la mayor dispersión es 3,7 por ciento, lo que produce redondear las predicciones publicadas a dos decimales, y un error en la geometría los dispersaría. Ordenan la roca casi por rigidez, aunque no del todo: el esquisto plegado de 60 GPa de Enusa queda por debajo de los carbonatos de 45 GPa de Reocin. Los dos artículos imprimen predicciones de Kuznetsov distintas para los mismos tiros, así que implican factores distintos; la recuperación usa la columna de 2012, la tabla que trae los tres modelos publicados, y lo declara.'
+          : 'The recovered values barely move within a site: the widest spread is 3.7 percent, which is what rounding the published predictions to two decimals produces, and an error in the geometry would scatter them. They order the rock almost by stiffness, though not entirely: the folded 60 GPa schist at Enusa sits below the 45 GPa carbonates at Reocin. The two papers print different Kuznetsov predictions for the same blasts, so they imply different factors; the recovery uses the 2012 column, the table that carries all three published models, and says so.'}{' '}
         <Cite id="kulatilake2012" />
       </p>
       <p>
@@ -100,8 +100,8 @@ export default function RockFactor({ b, corpus }: TopicData) {
       <RockFactorDiagram />
       <Callout variant="honest" title={es ? 'Derivados, no publicados' : 'Derived, not published'}>
         {es
-          ? 'Los factores recuperados son un resultado de este trabajo, no valores de la fuente, y el de transferencia es una calibración. Cada predicción clásica lleva en su detalle qué factor usó y de dónde salió. La recta de transferencia no ve la estructura del macizo; la tabla de Lilly sí, pero ningún tiro del corpus trae los datos de juntas que pide.'
-          : 'The recovered factors are a result of this work, not values from the source, and the transfer factor is a calibration. Every classical prediction carries in its detail which factor it used and where it came from. The transfer line does not see the rock-mass structure; Lilly’s table does, but no blast in the corpus carries the joint data it asks for.'}
+          ? 'Los factores recuperados son un resultado de este trabajo, no valores de la fuente, y el de transferencia es una calibración. Cada predicción de Kuznetsov lleva en su detalle qué factor usó y de dónde salió. La recta de transferencia no ve la estructura del macizo; la tabla de Lilly sí, pero ningún tiro del corpus trae los datos de juntas que pide.'
+          : 'The recovered factors are a result of this work, not values from the source, and the transfer factor is a calibration. Every Kuznetsov prediction carries in its detail which factor it used and where it came from. The transfer line does not see the rock-mass structure; Lilly’s table does, but no blast in the corpus carries the joint data it asks for.'}
       </Callout>
     </DocSection>
   );

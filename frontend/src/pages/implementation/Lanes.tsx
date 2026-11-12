@@ -19,7 +19,7 @@ export function Lanes({ es, index }: TopicProps) {
     [t('replay', 'reproducción'), t('the case, benchmark and models files', 'los archivos de caso, benchmark y modelos'), t('a content digest per file', 'un resumen de contenido por archivo')],
     [
       t('live: equations', 'vivo: ecuaciones'),
-      t('the classical equation, the curves, the router, the published regression', 'la ecuación clásica, las curvas, el enrutador, la regresión publicada'),
+      t('the Kuznetsov equation, the curves, the router, the published regression', 'la ecuación de Kuznetsov, las curvas, el enrutador, la regresión publicada'),
       t('a parity test against every baked blast', 'una prueba de paridad contra cada tiro horneado'),
     ],
     [

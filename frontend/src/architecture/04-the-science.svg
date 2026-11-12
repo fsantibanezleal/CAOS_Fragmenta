@@ -23,7 +23,7 @@
 <rect class="bx bx-bad" x="22.0" y="64.0" width="270.0" height="80.0" rx="6"/>
 <text class="hd" x="32.0" y="85.0">A dimensionless corpus</text>
 <text class="mu" x="32.0" y="104.0">seven ratios and no dimensions; the</text>
-<text class="mu" x="32.0" y="118.0">classical equation needs volume and</text>
+<text class="mu" x="32.0" y="118.0">Kuznetsov equation needs volume and</text>
 <text class="mu" x="32.0" y="132.0">charge per hole</text>
 <rect class="bx" x="22.0" y="154.0" width="270.0" height="80.0" rx="6"/>
 <text class="hd" x="32.0" y="175.0">The prose closes it</text>
@@ -46,7 +46,7 @@
 <text class="mu" x="322.0" y="222.0">held out by site, against 0.311 with the</text>
 <text class="mu" x="322.0" y="236.0">site&#x27;s own factor</text>
 <rect class="bx" x="602.0" y="64.0" width="276.0" height="66.0" rx="6"/>
-<text class="hd" x="612.0" y="85.0">Classical</text>
+<text class="hd" x="612.0" y="85.0">Empirical equations</text>
 <text class="mu" x="612.0" y="104.0">the mean size two ways, and three curve</text>
 <text class="mu" x="612.0" y="118.0">shapes that share it</text>
 <rect class="bx" x="602.0" y="140.0" width="276.0" height="80.0" rx="6"/>
@@ -76,7 +76,7 @@
 <rect class="bx bx-bad" x="22.0" y="64.0" width="270.0" height="80.0" rx="6"/>
 <text class="hd" x="32.0" y="85.0">Un corpus adimensional</text>
 <text class="mu" x="32.0" y="104.0">siete razones y ninguna dimensión; la</text>
-<text class="mu" x="32.0" y="118.0">ecuación clásica necesita volumen y</text>
+<text class="mu" x="32.0" y="118.0">ecuación de Kuznetsov necesita volumen y</text>
 <text class="mu" x="32.0" y="132.0">carga por barreno</text>
 <rect class="bx" x="22.0" y="154.0" width="270.0" height="80.0" rx="6"/>
 <text class="hd" x="32.0" y="175.0">La prosa lo cierra</text>
@@ -100,7 +100,7 @@
 <text class="mu" x="322.0" y="238.0">con el sitio excluido, frente a 0.311</text>
 <text class="mu" x="322.0" y="252.0">con el factor propio</text>
 <rect class="bx" x="602.0" y="64.0" width="276.0" height="66.0" rx="6"/>
-<text class="hd" x="612.0" y="85.0">Clásicos</text>
+<text class="hd" x="612.0" y="85.0">Ecuaciones empíricas</text>
 <text class="mu" x="612.0" y="104.0">el tamaño medio de dos formas, y tres</text>
 <text class="mu" x="612.0" y="118.0">formas de curva que lo comparten</text>
 <rect class="bx" x="602.0" y="140.0" width="276.0" height="80.0" rx="6"/>

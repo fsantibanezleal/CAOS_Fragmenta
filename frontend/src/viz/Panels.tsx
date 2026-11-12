@@ -256,7 +256,7 @@ export function RefusalsPanel({
 /**
  * Both variance statistics, each named.
  *
- * They differ by a factor of two and a half for the classical arm on the published hold-out. A
+ * They differ by a factor of two and a half for the Kuznetsov predictor on the published hold-out. A
  * screen that prints one of them under a bare label is showing something a reader will misread, and
  * that misreading is the single most consequential error in this literature.
  */

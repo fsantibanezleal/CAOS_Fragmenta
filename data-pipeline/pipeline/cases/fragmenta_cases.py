@@ -228,12 +228,12 @@ _REAL_SITES: tuple[tuple[str, str, str, str, str, str], ...] = (
         "Mina de manganeso Dongri-Buzurg, India",
         (
     "The weakest rock in the corpus at 9.57 GPa, and the lowest recovered rock factor at 3.68. "
-    "It is also where the classical model fails hardest: on the hold-out blast from this site it "
+    "It is also where the Kuznetsov model fails hardest: on the hold-out blast from this site it "
     "predicts 0.08 m against 0.35 m measured."
         ),
         (
     "La roca más débil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3,68. "
-    "También es donde el modelo clásico falla más: en el tiro de validación de este sitio "
+    "También es donde el modelo de Kuznetsov falla más: en el tiro de validación de este sitio "
     "predice 0,08 m frente a 0,35 m medidos."
         ),
         "medium, 0.23 to 0.76 m measured",
@@ -309,8 +309,8 @@ def _real_cases() -> list[Case]:
                 "aquí sería una invención, y este caso existe para que la negativa sea visible."
             ),
             expected_band=_band(
-                "the classical arm abstains on all six; the ratio arms answer",
-                "el predictor clásico se abstiene en los seis; los predictores de razones responden",
+                "the Kuznetsov predictor abstains on all six; the ratio arms answer",
+                "el predictor de Kuznetsov se abstiene en los seis; los predictores de razones responden",
             ),
             variants=_STANDARD_VARIANTS,
         )

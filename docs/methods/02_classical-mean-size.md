@@ -80,7 +80,7 @@ blasts next to the measurement. Scored as printed:
 <!-- facts:holdout-2012 -->
 | model, as printed in the 2012 paper | variance explained | squared correlation | RMSE, m |
 |---|---|---|---|
-| classical | 0.232 | 0.570 | 0.1279 |
+| Kuznetsov equation | 0.232 | 0.570 | 0.1279 |
 | regression | 0.708 | 0.820 | 0.0788 |
 | neural network | 0.910 | 0.937 | 0.0439 |
 | null, the training mean | -0.009 | n/a | 0.1466 |
@@ -100,7 +100,7 @@ form are right is different: the recovered factor barely varies within each site
 ## 4. Evidence on this corpus
 
 <!-- facts:arm-kuznetsov -->
-Evidence for **classical mean size, site factor** in the committed benchmark (variance explained about the identity line):
+Evidence for **Kuznetsov mean size, site rock factor** in the committed benchmark (variance explained about the identity line):
 
 - random 80/20, 100 draws: median 0.303, 5th to 95th percentile -0.59 to 0.74;
 - deduplicated, 100 draws: median 0.310;
@@ -112,7 +112,7 @@ Provenance: it reads a constant derived from the held-out site itself.
 <!-- /facts -->
 
 <!-- facts:arm-kuznetsov-transfer -->
-Evidence for **classical mean size, transfer factor** in the committed benchmark (variance explained about the identity line):
+Evidence for **Kuznetsov mean size, transferred rock factor** in the committed benchmark (variance explained about the identity line):
 
 - random 80/20, 100 draws: median 0.312, 5th to 95th percentile -0.57 to 0.69;
 - deduplicated, 100 draws: median 0.331;
@@ -147,11 +147,11 @@ choice, because dividing by the passing fraction at $X_B$ would move that mass i
 mechanism here supports.
 
 <!-- facts:cap -->
-The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the classical arm from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
+The cap binds on 3 corpus blasts, where the Kuznetsov prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the Kuznetsov predictor from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
 <!-- /facts -->
 
 <!-- facts:arm-kuznetsov-capped -->
-Evidence for **classical mean size, capped at the in-situ block (declared)** in the committed benchmark (variance explained about the identity line):
+Evidence for **Kuznetsov mean size, capped at the in-situ block (declared)** in the committed benchmark (variance explained about the identity line):
 
 - random 80/20, 100 draws: median 0.399, 5th to 95th percentile -0.49 to 0.75;
 - deduplicated, 100 draws: median 0.360;

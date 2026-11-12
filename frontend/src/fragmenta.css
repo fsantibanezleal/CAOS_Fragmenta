@@ -875,9 +875,18 @@
 
 .fr-control-inline {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin: 6px 0;
+  max-width: 100%;
+}
+
+/* A long predictor name (the Spanish Kuznetsov labels) must not widen the page at phone width: the select shrinks to the row. */
+.fr-control-inline select {
+  min-width: 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
 }
 
 .fr-button {

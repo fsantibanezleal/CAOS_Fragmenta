@@ -20,6 +20,7 @@ import { MemoryRouter } from 'react-router';
 import { CITATIONS, SECTION_REFS } from '../src/data/citations';
 import { BENCHMARK_REFS } from '../src/data/citations/benchmark';
 import type { BenchmarkArtifact, GroupedArmBlock, ModelsFile } from '../src/lib/contract.types';
+import { verdictText } from '../src/pages/benchmark/shared';
 import type { TopicData } from '../src/pages/benchmark/shared';
 
 // The charts import the uPlot stylesheet, which Node cannot load: the page modules are imported after this hook
@@ -227,6 +228,17 @@ test('the numbers read from the committed documents are on the page, formatted f
   assert.ok(textOf(topicHtml('robustness', 'es').html).includes(String(published).replace('.', ',')), 'the published figure of one random split');
   const miami = benchmark.site_meta.Miami;
   assert.ok(textOf(topicHtml('provenance', 'en').html).includes(String(miami.n_blasts)), 'the per-site blast count');
+});
+
+test('the verdict callout is composed from the fields in both languages and carries no tier name (BL-060)', () => {
+  for (const lang of ['en', 'es'] as const) {
+    const text = verdictText(benchmark, lang);
+    assert.doesNotMatch(text, /classical|cl[aá]sic|state of the art|estado del arte/i, `verdict (${lang})`);
+    assert.ok(text.includes('Kuznetsov'), `the Kuznetsov predictors are named (${lang})`);
+  }
+  const en = verdictText(benchmark, 'en');
+  assert.ok(en.includes(benchmark.verdict.supports.all.best_learned_r2_identity.toFixed(3)), "the number is the artifact's");
+  assert.ok(en.startsWith(benchmark.verdict.depends_on_support ? 'THE VERDICT DEPENDS ON THE ROW SET.' : 'The learned group'), 'the lead sentence follows the structured fields');
 });
 
 test('no topic prints a placeholder of a failed interpolation, in either language', () => {

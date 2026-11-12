@@ -264,8 +264,8 @@
   "licence": "numeric facts from Hudaverdi, Kulatilake and Kuzu 2010, doi:10.1002/nag.957",
   "real_or_synthetic": "real",
   "reason": {
-   "en": "The weakest rock in the corpus at 9.57 GPa, and the lowest recovered rock factor at 3.68. It is also where the classical model fails hardest: on the hold-out blast from this site it predicts 0.08 m against 0.35 m measured.",
-   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3,68. Tambi\u00e9n es donde el modelo cl\u00e1sico falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0,08 m frente a 0,35 m medidos."
+   "en": "The weakest rock in the corpus at 9.57 GPa, and the lowest recovered rock factor at 3.68. It is also where the Kuznetsov model fails hardest: on the hold-out blast from this site it predicts 0.08 m against 0.35 m measured.",
+   "es": "La roca m\u00e1s d\u00e9bil del conjunto, 9,57 GPa, y el menor factor de roca recuperado, 3,68. Tambi\u00e9n es donde el modelo de Kuznetsov falla m\u00e1s: en el tiro de validaci\u00f3n de este sitio predice 0,08 m frente a 0,35 m medidos."
   },
   "site": "Dongri-Buzurg",
   "title": {
@@ -274,7 +274,7 @@
   }
  },
  "controls": {},
- "digest": "63a9dbdae239ef6bf5c5e370118f05d089c36d3d3336ae9c5c3101bc62db4a27",
+ "digest": "648f682455d98fb477532588d332809d4f5fdac026f95c057096a5cccdaa8811",
  "distributions": {
   "crush-zone": {
    "constants_published": false,
@@ -1815,7 +1815,7 @@
    "svr-rbf",
    "xgboost"
   ],
-  "digest": "89dc08eb837e4ba9828377a61bbbfb8f3c400a71657889c7de4a88bb1fceb795",
+  "digest": "bd9723b155d78ae636b20d16aee36eb95dba1634993fa78c9a9b44e0ea146967",
   "path": "models/Dongri-Buzurg.json",
   "scope": "Dongri-Buzurg"
  },
@@ -3012,7 +3012,7 @@
   }
  },
  "provenance": {
-  "app_version": "0.10.000",
+  "app_version": "0.10.001",
   "corpus_digest": "9a72094d641a2557be4f22a100f4103d466dfbfe3830172dcf4e631979c56073",
   "engine": {
    "package": "blastfrag",
