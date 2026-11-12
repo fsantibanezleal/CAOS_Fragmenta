@@ -25,8 +25,8 @@ export function EngineGeometry({ es, b }: TopicProps) {
     >
       <p>
         {t(
-          `The corpus publishes ratios and no dimensions, and the classical equation needs rock volume and explosive mass per hole, so on ratios alone it could not run. The source prose gives a hole diameter in eight of its ten sites, and a diameter closes the system. The reconstruction resolves the geometry of ${count(sites.length ? resolved : undefined)} of the ${count(sites.length ? total : undefined)} blasts; the rest of this topic is how, and how that is checked.`,
-          `El corpus publica razones y ninguna dimensión, y la ecuación clásica necesita volumen de roca y masa de explosivo por barreno, así que sobre razones no podía correr. La prosa de la fuente da un diámetro de perforación en ocho de los diez sitios, y un diámetro cierra el sistema. La reconstrucción resuelve la geometría de ${count(sites.length ? resolved : undefined)} de los ${count(sites.length ? total : undefined)} tiros; el resto de este tema es cómo, y cómo se comprueba.`,
+          `The corpus publishes ratios and no dimensions, and the Kuznetsov equation needs rock volume and explosive mass per hole, so on ratios alone it could not run. The source prose gives a hole diameter in eight of its ten sites, and a diameter closes the system. The reconstruction resolves the geometry of ${count(sites.length ? resolved : undefined)} of the ${count(sites.length ? total : undefined)} blasts; the rest of this topic is how, and how that is checked.`,
+          `El corpus publica razones y ninguna dimensión, y la ecuación de Kuznetsov necesita volumen de roca y masa de explosivo por barreno, así que sobre razones no podía correr. La prosa de la fuente da un diámetro de perforación en ocho de los diez sitios, y un diámetro cierra el sistema. La reconstrucción resuelve la geometría de ${count(sites.length ? resolved : undefined)} de los ${count(sites.length ? total : undefined)} tiros; el resto de este tema es cómo, y cómo se comprueba.`,
         )}{' '}
         <Cite id="hudaverdi2010" />
       </p>

@@ -97,7 +97,7 @@ export default function Published({ b }: TopicData) {
   const without = b.published_reproduction.without_the_leaked_row;
   const order = ['classical', 'regression', 'neural-net', 'null'];
   const names: Record<string, string> = {
-    classical: t('classical, as published', 'clásico, como se publicó'),
+    classical: t('Kuz-Ram, as published', 'Kuz-Ram, como se publicó'),
     regression: t('regression, as published', 'regresión, como se publicó'),
     'neural-net': t('neural network, as published', 'red neuronal, como se publicó'),
     null: t('null: the training mean', 'nulo: la media de entrenamiento'),
@@ -114,8 +114,8 @@ export default function Published({ b }: TopicData) {
       <DocSection title={{ en: 'The published hold-outs', es: 'Las validaciones publicadas' }} area="comparison" refs={SECTION_REFS['b-published']}>
         <p>
           {t(
-            `The 2012 paper prints, in one table and on the same twelve rows, the predictions of three models. Scored here with a null beside them, the classical equation is the worst of the three and improves on the error of predicting a constant by ${gain === null ? notAvailable() : num(gain * 100, 0)} percent. Those twelve rows come from the same sites as the training rows, so this is the validation the literature reports and not a transfer test.`,
-            `El artículo de 2012 imprime, en una misma tabla y sobre las mismas doce filas, las predicciones de tres modelos. Puntuadas aquí con un nulo al lado, la ecuación clásica es la peor de las tres y mejora en ${gain === null ? notAvailable() : num(gain * 100, 0)} por ciento el error de predecir una constante. Esas doce filas son de los mismos sitios que el entrenamiento, así que esta es la validación que reporta la literatura y no una prueba de transferencia.`,
+            `The 2012 paper prints, in one table and on the same twelve rows, the predictions of three models. Scored here with a null beside them, the Kuznetsov equation is the worst of the three and improves on the error of predicting a constant by ${gain === null ? notAvailable() : num(gain * 100, 0)} percent. Those twelve rows come from the same sites as the training rows, so this is the validation the literature reports and not a transfer test.`,
+            `El artículo de 2012 imprime, en una misma tabla y sobre las mismas doce filas, las predicciones de tres modelos. Puntuadas aquí con un nulo al lado, la ecuación de Kuznetsov es la peor de las tres y mejora en ${gain === null ? notAvailable() : num(gain * 100, 0)} por ciento el error de predecir una constante. Esas doce filas son de los mismos sitios que el entrenamiento, así que esta es la validación que reporta la literatura y no una prueba de transferencia.`,
           )}{' '}
           <Cite id="kulatilake2012" />
         </p>
@@ -194,8 +194,8 @@ export default function Published({ b }: TopicData) {
         <h3>{t('One row in both training and validation', 'Una fila en entrenamiento y en validación')}</h3>
         <p>
           {t(
-            'Blast Rc1 appears in the 2010 paper’s training table and in the 2012 paper’s hold-out. Removing it barely moves the learned models and adds a great deal to the classical one, because it is that model’s second-worst row.',
-            'El tiro Rc1 aparece en la tabla de entrenamiento del artículo de 2010 y en el conjunto de validación del de 2012. Quitarlo apenas mueve los modelos aprendidos y le suma mucho al clásico, porque es su segunda peor fila.',
+            'Blast Rc1 appears in the 2010 paper’s training table and in the 2012 paper’s hold-out. Removing it barely moves the learned models and adds a great deal to the Kuznetsov one, because it is that model’s second-worst row.',
+            'El tiro Rc1 aparece en la tabla de entrenamiento del artículo de 2010 y en el conjunto de validación del de 2012. Quitarlo apenas mueve los modelos aprendidos y le suma mucho al de Kuznetsov, porque es su segunda peor fila.',
           )}{' '}
           <Cite id="hudaverdi2010" />
         </p>

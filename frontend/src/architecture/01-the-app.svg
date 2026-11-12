@@ -48,7 +48,7 @@
 <text class="mu" x="612.0" y="104.0">learned arms explain a median 0.36 to</text>
 <text class="mu" x="612.0" y="118.0">0.75 on random splits and lose 0.74 to</text>
 <text class="mu" x="612.0" y="132.0">4.94 with a site held out</text>
-<text class="mu" x="612.0" y="146.0">the classical equation scores about 0.30</text>
+<text class="mu" x="612.0" y="146.0">the Kuznetsov equation scores about 0.30</text>
 <text class="mu" x="612.0" y="160.0">under every protocol (0.311 held out by</text>
 <text class="mu" x="612.0" y="174.0">site)</text>
 <text class="mu" x="612.0" y="188.0">no arm fitted without the corpus has an</text>
@@ -93,9 +93,9 @@
 <text class="mu" x="612.0" y="104.0">los aprendidos explican una mediana de</text>
 <text class="mu" x="612.0" y="118.0">0.36 a 0.75 al azar y pierden de 0.74 a</text>
 <text class="mu" x="612.0" y="132.0">4.94 con el sitio excluido</text>
-<text class="mu" x="612.0" y="146.0">la ecuación clásica puntúa cerca de 0.30</text>
-<text class="mu" x="612.0" y="160.0">en todo protocolo (0.311 con el sitio</text>
-<text class="mu" x="612.0" y="174.0">excluido)</text>
+<text class="mu" x="612.0" y="146.0">la ecuación de Kuznetsov puntúa cerca de</text>
+<text class="mu" x="612.0" y="160.0">0.30 en todo protocolo (0.311 con el</text>
+<text class="mu" x="612.0" y="174.0">sitio excluido)</text>
 <text class="mu" x="612.0" y="188.0">ningún predictor ajustado sin el corpus</text>
 <text class="mu" x="612.0" y="202.0">tiene un intervalo sobre cero</text>
 <rect class="bx" x="22.0" y="296.0" width="856.0" height="66.0" rx="6"/>

@@ -49,7 +49,7 @@
 <text class="mu" x="322.0" y="256.0">the fitted arms of each training scope</text>
 <rect class="bx bx-good" x="602.0" y="64.0" width="276.0" height="80.0" rx="6"/>
 <text class="hd" x="612.0" y="85.0">Live: closed forms</text>
-<text class="mu" x="612.0" y="104.0">classical, curves, router, regression, in</text>
+<text class="mu" x="612.0" y="104.0">Kuznetsov, curves, router, regression, in</text>
 <text class="mu" x="612.0" y="118.0">TypeScript; parity-tested on every baked</text>
 <text class="mu" x="612.0" y="132.0">blast</text>
 <rect class="bx bx-good" x="602.0" y="154.0" width="276.0" height="80.0" rx="6"/>

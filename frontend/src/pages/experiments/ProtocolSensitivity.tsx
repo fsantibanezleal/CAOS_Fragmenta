@@ -75,8 +75,8 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
       )}
       <p>
         {t(
-          `Deduplicating barely moves anything: each arm’s median shifts by what the table shows, and for the trees, the boosting model and the kernels the shift is at most ${f(shiftOfTrees, 3)}. The drop is in the third column: holding out the whole campaign takes between ${f(F?.learnedGapRange[0], 2)} and ${f(F?.learnedGapRange[1], 2)} of variance explained from every learned arm. The classical arm, with fixed coefficients, predicts the same value for a blast under every protocol, which is why its line is nearly flat.`,
-          `Deduplicar casi no mueve nada: la mediana de cada predictor cambia en lo que muestra la tabla, y para los árboles, la potenciación y los núcleos el cambio no pasa de ${f(shiftOfTrees, 3)}. La caída está en la tercera columna: retener la campaña completa le quita a cada predictor aprendido entre ${f(F?.learnedGapRange[0], 2)} y ${f(F?.learnedGapRange[1], 2)} de varianza explicada. El predictor clásico, con coeficientes fijos, predice lo mismo para un tiro bajo cualquier protocolo, y por eso su línea es casi horizontal.`,
+          `Deduplicating barely moves anything: each arm’s median shifts by what the table shows, and for the trees, the boosting model and the kernels the shift is at most ${f(shiftOfTrees, 3)}. The drop is in the third column: holding out the whole campaign takes between ${f(F?.learnedGapRange[0], 2)} and ${f(F?.learnedGapRange[1], 2)} of variance explained from every learned arm. The Kuznetsov predictor, with fixed coefficients, predicts the same value for a blast under every protocol, which is why its line is nearly flat.`,
+          `Deduplicar casi no mueve nada: la mediana de cada predictor cambia en lo que muestra la tabla, y para los árboles, la potenciación y los núcleos el cambio no pasa de ${f(shiftOfTrees, 3)}. La caída está en la tercera columna: retener la campaña completa le quita a cada predictor aprendido entre ${f(F?.learnedGapRange[0], 2)} y ${f(F?.learnedGapRange[1], 2)} de varianza explicada. El predictor de Kuznetsov, con coeficientes fijos, predice lo mismo para un tiro bajo cualquier protocolo, y por eso su línea es casi horizontal.`,
         )}
       </p>
       {F && b ? (
@@ -120,8 +120,8 @@ export function ProtocolSensitivity({ es, b }: TopicProps) {
       </p>
       <Callout variant="honest" title={t('Two claims withdrawn', 'Dos afirmaciones retiradas')}>
         {t(
-          'Before 0.05.000 this page said the classical model improves with a site held out and that deduplication raises the learned scores. Both readings came from the seed-0 draw; over a hundred draws neither holds, and the table shows why.',
-          'Antes de la versión 0.05.000 esta página decía que el modelo clásico mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos. Las dos lecturas venían del sorteo de la semilla 0; sobre cien sorteos ninguna se sostiene, y la tabla muestra por qué.',
+          'Before 0.05.000 this page said the Kuznetsov model improves with a site held out and that deduplication raises the learned scores. Both readings came from the seed-0 draw; over a hundred draws neither holds, and the table shows why.',
+          'Antes de la versión 0.05.000 esta página decía que el modelo de Kuznetsov mejora al excluir un sitio y que deduplicar sube los puntajes aprendidos. Las dos lecturas venían del sorteo de la semilla 0; sobre cien sorteos ninguna se sostiene, y la tabla muestra por qué.',
         )}
       </Callout>
     </DocSection>

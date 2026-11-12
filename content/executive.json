@@ -747,8 +747,8 @@
       },
       {
         "action": {
-          "en": "Accept a prediction method for blast design only after it is tested on a mine not used to build it, against the classical equation.",
-          "es": "Aceptar un método de predicción para el diseño de voladura solo después de probarlo en una mina que no se usó para construirlo y de compararlo con la ecuación clásica."
+          "en": "Accept a prediction method for blast design only after it is tested on a mine not used to build it, against the Kuznetsov equation.",
+          "es": "Aceptar un método de predicción para el diseño de voladura solo después de probarlo en una mina que no se usó para construirlo y de compararlo con la ecuación de Kuznetsov."
         },
         "owner": {
           "en": "Drill and blast engineer",
@@ -759,8 +759,8 @@
           "es": "Ahora"
         },
         "check": {
-          "en": "The error on the unseen mine is reported next to the error of the classical equation.",
-          "es": "El error en la mina excluida del entrenamiento se informa junto al error de la ecuación clásica."
+          "en": "The error on the unseen mine is reported next to the error of the Kuznetsov equation.",
+          "es": "El error en la mina excluida del entrenamiento se informa junto al error de la ecuación de Kuznetsov."
         }
       }
     ],

@@ -30,7 +30,7 @@ import { provenanceOf, type DesignView, type Selection } from './model';
 
 const t = (lang: Lang, en: string, es: string) => (lang === 'es' ? es : en);
 
-/** The arm the surface maps: the selected model when it predicts a size from a design, else the classical one. */
+/** The arm the surface maps: the selected model when it predicts a size from a design, else the Kuznetsov one. */
 export const surfaceArm = (armId: string) => ((DESIGN_ARMS as readonly string[]).includes(armId) ? armId : 'kuznetsov');
 
 export function DesignGroup({

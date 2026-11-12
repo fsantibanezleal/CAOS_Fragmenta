@@ -140,8 +140,8 @@ export function PredictGroup({
           provenance={provenanceOf(sel, false)}
           dataKey={sel.stateKey}
           note={{
-            en: 'R²id is the variance explained about the identity line, the score this product reports; r² is the squared correlation, the one the source papers report. They are different quantities, and on the published hold-out they differ by a factor of two and a half for the classical model.',
-            es: 'R²id es la varianza explicada respecto de la recta identidad, el puntaje que reporta este producto; r² es la correlación al cuadrado, la que reportan los artículos fuente. Son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo clásico.',
+            en: 'R²id is the variance explained about the identity line, the score this product reports; r² is the squared correlation, the one the source papers report. They are different quantities, and on the published hold-out they differ by a factor of two and a half for the Kuznetsov model.',
+            es: 'R²id es la varianza explicada respecto de la recta identidad, el puntaje que reporta este producto; r² es la correlación al cuadrado, la que reportan los artículos fuente. Son cantidades distintas y en el conjunto de validación publicado difieren por un factor de dos y medio para el modelo de Kuznetsov.',
           }}
         >
           <div className="fr-scrolly">
@@ -439,7 +439,7 @@ export const canDrawCurves = (sel: Omit<Selection, 'stateKey'>) => sel.blast.roc
 export const canDecide = (sel: Omit<Selection, 'stateKey'>) =>
   !!sel.blast.pattern && typeof sel.artifact.predictions[sel.armId]?.[sel.blast.blast_id]?.x50_m === 'number';
 
-/** The curves of the current design: the classical shape, the three-parameter Swebrec and the crush-zone fines. */
+/** The curves of the current design: the Kuz-Ram shape, the three-parameter Swebrec and the crush-zone fines. */
 export function useCurves(sel: Selection) {
   return useMemo(() => {
     if (sel.blast.rock_factor === null || !sel.blast.pattern) return null;
@@ -491,7 +491,7 @@ function CurvesView({ sel }: { sel: Selection }) {
   const title: BiText = { en: 'Fragment-size distribution of the design', es: 'Curva granulométrica del diseño' };
   if (!curves) return <NoCurve sel={sel} title={title} />;
   const series: CurveSpec[] = [
-    { id: 'classical', label: { en: 'Classical', es: 'Clásica' }, values: curves.classical.passing },
+    { id: 'classical', label: { en: 'Kuz-Ram', es: 'Kuz-Ram' }, values: curves.classical.passing },
     { id: 'three', label: { en: 'Three-parameter', es: 'Tres parámetros' }, values: curves.three.passing },
     { id: 'crush', label: { en: 'Crush zone', es: 'Zona triturada' }, values: curves.crush.passing, dashed: true },
   ];
@@ -528,9 +528,9 @@ function CurvesView({ sel }: { sel: Selection }) {
               sizeMarkers={[{ sizeM: sel.design.XB_m, label: { en: 'in-situ block', es: 'bloque in situ' } }]}
               height={compact ? 240 : 'fill'}
             />
-            {/* The live percentiles of the classical curve, under the curve they are read from. */}
+            {/* The live percentiles of the Kuz-Ram curve, under the curve they are read from. */}
             <p className="fr-readout" data-readout="percentiles">
-              <span className="fr-readout-key">{t(lang, 'Classical curve', 'Curva clásica')}</span>
+              <span className="fr-readout-key">{t(lang, 'Kuz-Ram curve', 'Curva Kuz-Ram')}</span>
               <span className="fr-readout-item">P20 <b>{formatSize(curves.p20)}</b></span>
               <span className="fr-readout-item">P50 <b>{formatSize(curves.x50)}</b></span>
               <span className="fr-readout-item">P80 <b>{formatSize(curves.p80)}</b></span>

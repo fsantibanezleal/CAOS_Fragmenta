@@ -34,20 +34,38 @@ export const ORDER = [
 ];
 
 /**
- * The verdict in the reader's language. The engine writes one canonical English sentence group into
- * the artifact; it is shown verbatim in English. The Spanish is composed from the same structured
+ * The verdict in the reader's language. Both languages are composed from the structured
  * fields, so the two languages derive from the numbers and cannot drift apart.
  */
 export function verdictText(b: BenchmarkArtifact, lang: Lang): string {
-  if (lang !== 'es') return b.verdict.outcome;
   const v = b.verdict;
   const all = v.supports.all;
   const geo = v.supports.geometry;
+  if (lang !== 'es') {
+    const arm = (id: string) => label(id, 'en');
+    const en: string[] = [];
+    if (v.depends_on_support) {
+      en.push(
+        `THE VERDICT DEPENDS ON THE ROW SET. Over all ${all.n_blasts} blasts the best learned arm under leave-one-site-out, ${arm(all.best_learned_arm)}, scores ${f(all.best_learned_r2_identity)} and the learned group ${all.generalises_across_sites ? 'meets' : 'does not meet'} the criterion. Over the ${geo.n_blasts} blasts whose pattern geometry is resolvable, the rows on which the Kuznetsov predictors are also scored, ${arm(geo.best_learned_arm)} scores ${f(geo.best_learned_r2_identity)}, ${f(geo.margin_over_null)} above the null, and the group ${geo.generalises_across_sites ? 'meets' : 'does not meet'} it. The blasts that separate the two row sets come from ${v.sites_outside_geometry_support.join(', ')}.`,
+      );
+    } else if (all.generalises_across_sites) {
+      en.push(`The learned group generalises across sites: ${arm(all.best_learned_arm)} explains ${f(all.best_learned_r2_identity)} of the variance and exceeds a constant predictor by ${f(all.margin_over_null)}.`);
+    } else {
+      en.push(`THE LEARNED GROUP DOES NOT GENERALISE ACROSS SITES: the best learned arm, ${arm(all.best_learned_arm)}, scores ${f(all.best_learned_r2_identity)} under leave-one-site-out.`);
+    }
+    if (!v.arms_with_interval_above_zero.length) {
+      en.push('Apart from arms whose source fitted them on this corpus, no arm has a site-resampled 95 percent interval above zero: with ten sites, none of them is distinguishable from predicting the corpus mean.');
+    }
+    if (all.null_pearson_r !== null && all.null_pearson_r < 0) {
+      en.push(`The null's held-out predictions correlate with the measurements at ${f(all.null_pearson_r, 2)}: holding out a coarse site lowers the training mean, so any margin over the null under this protocol is larger than the skill it measures.`);
+    }
+    return en.join(' ');
+  }
   const name = (arm: string) => label(arm, 'es');
   const parts: string[] = [];
   if (v.depends_on_support) {
     parts.push(
-      `EL VEREDICTO DEPENDE DE QUÉ FILAS SE PUNTÚAN. Sobre los ${all.n_blasts} tiros, el mejor predictor aprendido con cada sitio excluido, ${name(all.best_learned_arm)}, explica ${f(all.best_learned_r2_identity)} y el nivel aprendido ${all.generalises_across_sites ? 'cumple' : 'no cumple'} el criterio. Sobre los ${geo.n_blasts} tiros con geometría resoluble, las filas donde también se puntúan los predictores clásicos, ${name(geo.best_learned_arm)} explica ${f(geo.best_learned_r2_identity)} (${f(geo.margin_over_null)} sobre el nulo) y el nivel ${geo.generalises_across_sites ? 'lo cumple' : 'no lo cumple'}. Los tiros que separan los dos conjuntos son de ${v.sites_outside_geometry_support.join(', ')}.`,
+      `EL VEREDICTO DEPENDE DE QUÉ FILAS SE PUNTÚAN. Sobre los ${all.n_blasts} tiros, el mejor predictor aprendido con cada sitio excluido, ${name(all.best_learned_arm)}, explica ${f(all.best_learned_r2_identity)} y el nivel aprendido ${all.generalises_across_sites ? 'cumple' : 'no cumple'} el criterio. Sobre los ${geo.n_blasts} tiros con geometría resoluble, las filas donde también se puntúan los predictores de Kuznetsov, ${name(geo.best_learned_arm)} explica ${f(geo.best_learned_r2_identity)} (${f(geo.margin_over_null)} sobre el nulo) y el nivel ${geo.generalises_across_sites ? 'lo cumple' : 'no lo cumple'}. Los tiros que separan los dos conjuntos son de ${v.sites_outside_geometry_support.join(', ')}.`,
     );
   } else if (all.generalises_across_sites) {
     parts.push(`El nivel aprendido generaliza entre sitios: ${name(all.best_learned_arm)} explica ${f(all.best_learned_r2_identity)} de la varianza y supera a un predictor constante por ${f(all.margin_over_null)}.`);

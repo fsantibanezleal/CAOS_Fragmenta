@@ -2,7 +2,7 @@
 
 When a reader changes a design on the App, the closed-form arms recompute in TypeScript. The fitted
 arms (the published network, the radial support-vector arm, the random forest, gradient boosting, the
-stacked model, the refitted power law and the transfer form of the classical equation) recompute too,
+stacked model, the refitted power law and the transfer form of the Kuznetsov equation) recompute too,
 from this file: the engine's portable export of the models the train stage fitted for the case.
 
 A **scope** is the set of training rows a model saw. A real campaign's scope is the corpus minus that
@@ -67,7 +67,7 @@ def _fixture_blasts() -> list[bf.Blast]:
 def _fixture_value(name: str, arm: bf.Arm, blast: bf.Blast) -> float | None:
     if name == "kuznetsov-transfer":
         # The portable reader returns the rock factor for this arm; the size needs absolute
-        # geometry, which the browser's own classical implementation supplies.
+        # geometry, which the browser's own Kuznetsov implementation supplies.
         return arm.rock_factor_for(blast.E_GPa)
     return arm.predict_one(blast).x50_m
 

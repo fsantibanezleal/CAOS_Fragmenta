@@ -7,7 +7,7 @@
  * bench, it is this bench.
  *
  * IT IS ALSO NOT EVIDENCE, and the screen says so permanently. The timing factor in the modified
- * classical model is a SCALAR on the mean size with no spatial structure, so changing the tie-in from
+ * Kuznetsov model is a SCALAR on the mean size with no spatial structure, so changing the tie-in from
  * row-by-row to a V-cut changes the ripple below and changes nothing in the prediction. Only the
  * aggregate delay moves the number. Without that badge this view is the failure where the moving part
  * is not validated and the validated part does not move.
@@ -508,8 +508,8 @@ export function BenchView3D({
       */}
       <p className="fr-note fr-note-warn" data-bench-disclaimer="timing-is-choreography">
         {es
-          ? 'La secuencia de iniciación es coreografía. El factor de tiempo en el modelo clásico modificado es un solo número que multiplica el tamaño medio, sin estructura espacial, de modo que cambiar el amarre mueve esta animación y no mueve ninguna predicción de esta página. Solo el retardo agregado lo hace, y sus valores publicados no aparecen impresos en ninguna fuente disponible para este trabajo.'
-          : 'The initiation sequence is choreography. The timing factor in the modified classical model is a single number multiplying the mean size, with no spatial structure, so changing the tie-in moves this animation and moves no prediction on this page. Only the aggregate delay does, and its published values are not printed in any source held for this work.'}
+          ? 'La secuencia de iniciación es coreografía. El factor de tiempo en el modelo de Kuznetsov modificado es un solo número que multiplica el tamaño medio, sin estructura espacial, de modo que cambiar el amarre mueve esta animación y no mueve ninguna predicción de esta página. Solo el retardo agregado lo hace, y sus valores publicados no aparecen impresos en ninguna fuente disponible para este trabajo.'
+          : 'The initiation sequence is choreography. The timing factor in the modified Kuznetsov model is a single number multiplying the mean size, with no spatial structure, so changing the tie-in moves this animation and moves no prediction on this page. Only the aggregate delay does, and its published values are not printed in any source held for this work.'}
       </p>
     </div>
   );
