@@ -747,7 +747,7 @@
       },
       {
         "action": {
-          "en": "Accept a prediction method for blast design only after it is tested on a mine not used to build it, against the Kuznetsov equation.",
+          "en": "Accept a blast-design prediction method only after it is tested on a mine not used to build it, against the Kuznetsov equation.",
           "es": "Aceptar un método de predicción para el diseño de voladura solo tras probarlo en una mina que no se usó para construirlo y compararlo con la ecuación de Kuznetsov."
         },
         "owner": {
@@ -759,7 +759,7 @@
           "es": "Ahora"
         },
         "check": {
-          "en": "The error on the unseen mine is reported next to the error of the Kuznetsov equation.",
+          "en": "The error on the unseen mine is reported next to the Kuznetsov equation's error.",
           "es": "El error en la mina excluida del entrenamiento se informa junto al error de la ecuación de Kuznetsov."
         }
       }
