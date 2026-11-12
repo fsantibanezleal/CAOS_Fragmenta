@@ -748,7 +748,7 @@
       {
         "action": {
           "en": "Accept a prediction method for blast design only after it is tested on a mine not used to build it, against the Kuznetsov equation.",
-          "es": "Aceptar un método de predicción para el diseño de voladura solo después de probarlo en una mina que no se usó para construirlo y de compararlo con la ecuación de Kuznetsov."
+          "es": "Aceptar un método de predicción para el diseño de voladura solo tras probarlo en una mina que no se usó para construirlo y compararlo con la ecuación de Kuznetsov."
         },
         "owner": {
           "en": "Drill and blast engineer",

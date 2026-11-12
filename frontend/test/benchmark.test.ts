@@ -237,7 +237,7 @@ test('the verdict callout is composed from the fields in both languages and carr
     assert.ok(text.includes('Kuznetsov'), `the Kuznetsov predictors are named (${lang})`);
   }
   const en = verdictText(benchmark, 'en');
-  assert.ok(en.includes(benchmark.verdict.supports.all.best_learned_r2_identity.toFixed(3)), 'the number is the artifact's');
+  assert.ok(en.includes(benchmark.verdict.supports.all.best_learned_r2_identity.toFixed(3)), "the number is the artifact's");
   assert.ok(en.startsWith(benchmark.verdict.depends_on_support ? 'THE VERDICT DEPENDS ON THE ROW SET.' : 'The learned group'), 'the lead sentence follows the structured fields');
 });
 
