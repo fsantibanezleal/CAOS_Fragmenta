@@ -2,13 +2,13 @@
 
 # Published reproductions
 
-Benchmark baked with engine `blastfrag` 0.04.000 and application 0.10.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.10.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 ## The 2012 hold-out, three published models and a null
 
 | model | variance explained | squared correlation | RMSE, m | MAPE, % |
 |---|---|---|---|---|
-| classical, as published | 0.232 | 0.570 | 0.1279 | 34.9 |
+| Kuznetsov equation, as published | 0.232 | 0.570 | 0.1279 | 34.9 |
 | regression, as published | 0.708 | 0.820 | 0.0788 | 18.3 |
 | neural network, as published | 0.910 | 0.937 | 0.0439 | 12.5 |
 | null, the training mean | -0.009 | n/a | 0.1466 | 42.7 |
@@ -24,7 +24,7 @@ Benchmark baked with engine `blastfrag` 0.04.000 and application 0.10.000, 100 d
 
 | model | with Rc1 | without |
 |---|---|---|
-| classical | 0.232 | 0.448 |
+| Kuznetsov equation | 0.232 | 0.448 |
 | regression | 0.708 | 0.696 |
 | neural-net | 0.910 | 0.905 |
 
