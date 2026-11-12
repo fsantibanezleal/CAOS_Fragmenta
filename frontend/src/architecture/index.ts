@@ -31,7 +31,7 @@ export const architecture: ArchitectureConfig = {
       es: 'Qué es esto',
       svg: theApp,
       body_en: `Fragmenta predicts the mean fragment size of a bench blast from its design and its rock, with ten
-published predictors from the 1973 classical equation to the 2025 stacking ensemble, and measures what
+published predictors from the 1973 Kuznetsov equation to the 2025 stacking ensemble, and measures what
 each prediction is worth at a mine the model has not seen. The data are 97 published bench blasts from
 ten campaigns in five countries, two published hold-outs and five field blasts.
 
@@ -43,7 +43,7 @@ correlation the literature reports and with a null model that predicts the train
 What it is not: no mechanistic simulation, no non-ideal detonation, no flyrock or vibration, and no
 downstream comminution model. Constants that no source prints are user parameters.`,
       body_es: `Fragmenta predice el tamaño medio de fragmento de una voladura de banco a partir de su diseño y de su
-roca, con diez predictores publicados que van de la ecuación clásica de 1973 al ensamble apilado de
+roca, con diez predictores publicados que van de la ecuación de Kuznetsov de 1973 al ensamble apilado de
 2025, y mide cuánto vale cada predicción en una mina que el modelo no ha visto. Los datos son 97 tiros
 de banco publicados de diez campañas en cinco países, dos conjuntos de validación publicados y cinco
 tiros de campo.
@@ -131,7 +131,7 @@ en una línea de lectura bajo el dibujo.`,
       en: 'The science flow',
       es: 'El flujo científico',
       svg: theScience,
-      body_en: `The corpus publishes seven ratios and no dimensions, and the classical equation needs a rock volume and
+      body_en: `The corpus publishes seven ratios and no dimensions, and the Kuznetsov equation needs a rock volume and
 a charge mass per hole. The source prose gives a hole diameter for eight of its ten sites, a ninth comes
 from its stated bench height, and the reconstruction is checked against fifteen dimensional constraints
 the same prose states. The tenth site publishes nothing absolute and every arm that needs a volume
@@ -139,13 +139,13 @@ abstains there with a reason.
 
 The rock factor both source papers say they estimated, and neither printed, is recovered by inverting
 the equation on the published predictions, and it barely moves within a site. A transfer form predicts
-it from Young's modulus with a line fitted over the training sites only, so the classical arm can be
+it from Young's modulus with a line fitted over the training sites only, so the Kuznetsov predictor can be
 scored on a site without any information about that site, and it scores almost the same.
 
 The predictors then run under the three protocols, each one declaring what it was fitted on: the router
 and the published regression were fitted by their source on the corpus itself and are reported in
 sample.`,
-      body_es: `El corpus publica siete razones y ninguna dimensión, y la ecuación clásica necesita volumen de roca y
+      body_es: `El corpus publica siete razones y ninguna dimensión, y la ecuación de Kuznetsov necesita volumen de roca y
 masa de explosivo por barreno. La prosa de la fuente da un diámetro de perforación en ocho de sus diez
 sitios, un noveno sale de su altura de banco declarada, y la reconstrucción se comprueba contra quince
 restricciones dimensionales que la misma prosa declara. El décimo sitio no publica nada absoluto y todo
@@ -154,7 +154,7 @@ predictor que necesita un volumen se abstiene allí con una razón.
 El factor de roca que ambos artículos dicen haber estimado, y ninguno imprimió, se recupera invirtiendo
 la ecuación sobre las predicciones publicadas, y casi no varía dentro de un sitio. Una forma de
 transferencia lo predice desde el módulo de Young con una recta ajustada solo sobre los sitios de
-entrenamiento, así que el predictor clásico se puede puntuar en un sitio sin información de ese sitio, y
+entrenamiento, así que el predictor de Kuznetsov se puede puntuar en un sitio sin información de ese sitio, y
 puntúa casi lo mismo.
 
 Los predictores corren entonces bajo los tres protocolos, cada uno declarando con qué se ajustó: el

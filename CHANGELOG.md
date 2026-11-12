@@ -2,6 +2,20 @@
 
 All notable changes to this project. Format follows Keep a Changelog; newest on top.
 
+## [0.10.001] - 2026-11-11
+
+The internal method-tier names out of the app, the notebooks and the README; each method by its name; the tier-name gate in CI. No number changed.
+
+### Changed
+
+- The app, its documentation pages, the baked case texts and `content/executive.json` name each method: the Kuznetsov mean size, equation and predictors, the Kuz-Ram distribution, and the group of predictors "Empirical equations" (BL-060). The Distribution view's legend names its curve Kuz-Ram. The stacking blurb says "the most recent published model on this corpus (2025)".
+- The notebooks of topic 2 are `02-kuznetsov-prediction/` and `01-the-kuznetsov-equation-on-one-blast.ipynb` in both trees; every notebook, both indexes and the README use the method names.
+- Two reader texts that the engine `blastfrag` 0.4.0 bakes into the artifacts (the benchmark verdict outcome and the transfer arm's note) still carry the word "classical"; they change with an engine release.
+
+### Added
+
+- `scripts/check_internal_names.py` (the template's tier-name gate, with `scripts/check_notebook_depth.py`, which it loads) and its CI step.
+
 ## [0.10.000] - 2026-10-27
 
 The notebooks rewritten to the bar of CAOS_MANAGE `conventions/product-notebooks.md` section 1 (Felipe, 2026-10-26:

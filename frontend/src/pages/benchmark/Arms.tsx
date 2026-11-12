@@ -1,6 +1,6 @@
 /**
  * Topic 2, every arm: each arm under every protocol (area `results`), each arm on each campaign it did not see (area
- * `results`), and the best learned arm against the classical arms on the rows every size-predicting arm answered (area
+ * `results`), and the best learned arm against the Kuznetsov predictors on the rows every size-predicting arm answered (area
  * `comparison`). Every number is read from the committed benchmark.
  */
 
@@ -49,11 +49,11 @@ export default function Arms({ b }: TopicData) {
   const worst = Object.entries(bestSites).reduce<[string, number] | null>((acc, [site, e]) => (e.rmse_m !== undefined && (!acc || e.rmse_m > acc[1]) ? [site, e.rmse_m] : acc), null);
   const worstMean = worst ? bestSites[worst[0]].mean_measured_m : null;
 
-  // The comparison: the classical arms, the best learned arm of each row set and the null, on the common rows.
+  // The comparison: the Kuznetsov predictors, the best learned arm of each row set and the null, on the common rows.
   const common = (b.protocols['leave-one-site-out'].arms.null as GroupedArmBlock).common;
   const learned = [...new Set([b.verdict.supports.all.best_learned_arm, b.verdict.supports.geometry.best_learned_arm])];
   const compared = ['kuznetsov', 'kuznetsov-transfer', 'kuznetsov-capped', ...learned, 'null'];
-  const tier = (arm: string) => (b.protocols['leave-one-site-out'].arms[arm].tier === 'learned' ? t('learned', 'aprendido') : arm === 'null' ? t('control', 'control') : t('classical', 'clásico'));
+  const tier = (arm: string) => (b.protocols['leave-one-site-out'].arms[arm].tier === 'learned' ? t('learned', 'aprendido') : arm === 'null' ? t('control', 'control') : t('empirical equations', 'ecuaciones empíricas'));
   const bestCommonArm = learned.reduce((a, arm) => ((F.grouped(arm)?.common?.score.r2_identity ?? -Infinity) > (F.grouped(a)?.common?.score.r2_identity ?? -Infinity) ? arm : a), learned[0]);
   const bestLearnedCommon = F.grouped(bestCommonArm)?.common?.score.r2_identity ?? null;
   const bestLearnedInterval = F.grouped(bestCommonArm)?.common?.interval_95 ?? null;
@@ -131,8 +131,8 @@ export default function Arms({ b }: TopicData) {
         </div>
         <Callout variant="note" title={t('How to read the table', 'Cómo leer la tabla')}>
           {t(
-            'The published regression was fitted on these 97 blasts, so its site-held-out column is an in-sample fit and not transfer. The site-factor classical arm uses information about the site itself; the transfer arm does not, and scores almost the same. Arms with abstentions are scored on fewer rows, which is why the with-geometry column compares them all on the same ones.',
-            'La regresión publicada se ajustó sobre estos 97 tiros, así que su columna con el sitio excluido es un ajuste dentro de la muestra y no transferencia. El predictor clásico de factor del sitio usa información del propio sitio; el de transferencia no, y puntúa casi lo mismo. Los predictores con abstenciones se puntúan sobre menos filas, por eso la columna con geometría compara a todos sobre las mismas.',
+            'The published regression was fitted on these 97 blasts, so its site-held-out column is an in-sample fit and not transfer. The site-factor Kuznetsov predictor uses information about the site itself; the transfer arm does not, and scores almost the same. Arms with abstentions are scored on fewer rows, which is why the with-geometry column compares them all on the same ones.',
+            'La regresión publicada se ajustó sobre estos 97 tiros, así que su columna con el sitio excluido es un ajuste dentro de la muestra y no transferencia. El predictor de Kuznetsov de factor del sitio usa información del propio sitio; el de transferencia no, y puntúa casi lo mismo. Los predictores con abstenciones se puntúan sobre menos filas, por eso la columna con geometría compara a todos sobre las mismas.',
           )}
         </Callout>
       </DocSection>
@@ -176,11 +176,11 @@ export default function Arms({ b }: TopicData) {
           </table>
         </div>
       </DocSection>
-      <DocSection title={{ en: 'The best learned arm against the classical arm, on the same rows', es: 'El mejor predictor aprendido frente al clásico, sobre las mismas filas' }} area="comparison" refs={SECTION_REFS['b-comparison']}>
+      <DocSection title={{ en: 'The best learned arm against the Kuznetsov predictor, on the same rows', es: 'El mejor predictor aprendido frente al predictor de Kuznetsov, sobre las mismas filas' }} area="comparison" refs={SECTION_REFS['b-comparison']}>
         <p>
           {t(
-            `Even with geometry, each arm drops its own abstentions, so two arms in the table above are scored on different rows when one refuses a prediction outside the plausible range. The comparison here scores every arm on the rows every size-predicting arm answered: held out by site, ${common.n_rows} blasts from ${common.n_sites} sites. The classical equation scores ${f(classicalCommon)} on those rows and the best learned arm ${f(bestLearnedCommon)}, so on the same rows the learned arm is ${learnedAhead ? 'ahead' : 'behind'}${overlap ? ', and each interval contains the other’s point estimate' : ''}.`,
-            `Aun con geometría, cada predictor descarta sus propias abstenciones, así que dos predictores de la tabla de arriba se puntúan sobre filas distintas cuando uno rehúsa una predicción fuera del rango plausible. La comparación de aquí puntúa a todos los predictores sobre las filas que respondió todo predictor que entrega un tamaño: con el sitio excluido, ${common.n_rows} tiros de ${common.n_sites} sitios. La ecuación clásica puntúa ${f(classicalCommon)} sobre esas filas y el mejor predictor aprendido ${f(bestLearnedCommon)}, así que sobre las mismas filas el predictor aprendido queda ${learnedAhead ? 'por delante' : 'por detrás'}${overlap ? ', y cada intervalo contiene la estimación puntual del otro' : ''}.`,
+            `Even with geometry, each arm drops its own abstentions, so two arms in the table above are scored on different rows when one refuses a prediction outside the plausible range. The comparison here scores every arm on the rows every size-predicting arm answered: held out by site, ${common.n_rows} blasts from ${common.n_sites} sites. The Kuznetsov equation scores ${f(classicalCommon)} on those rows and the best learned arm ${f(bestLearnedCommon)}, so on the same rows the learned arm is ${learnedAhead ? 'ahead' : 'behind'}${overlap ? ', and each interval contains the other’s point estimate' : ''}.`,
+            `Aun con geometría, cada predictor descarta sus propias abstenciones, así que dos predictores de la tabla de arriba se puntúan sobre filas distintas cuando uno rehúsa una predicción fuera del rango plausible. La comparación de aquí puntúa a todos los predictores sobre las filas que respondió todo predictor que entrega un tamaño: con el sitio excluido, ${common.n_rows} tiros de ${common.n_sites} sitios. La ecuación de Kuznetsov puntúa ${f(classicalCommon)} sobre esas filas y el mejor predictor aprendido ${f(bestLearnedCommon)}, así que sobre las mismas filas el predictor aprendido queda ${learnedAhead ? 'por delante' : 'por detrás'}${overlap ? ', y cada intervalo contiene la estimación puntual del otro' : ''}.`,
           )}{' '}
           <Cite id="kuznetsov1973" />
         </p>

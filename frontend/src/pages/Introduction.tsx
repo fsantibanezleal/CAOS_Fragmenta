@@ -72,8 +72,8 @@ function TechnicalView() {
         </p>
         <p>
           {es
-            ? 'La familia clásica se ha extendido muchas veces y una revisión de 2019 recorre esas extensiones. Desde 2012, además, una serie de modelos aprendidos se ha ajustado sobre el mismo corpus de 97 tiros: una red neuronal publicada con su especificación completa, regresión por vectores de soporte, bosques, potenciación y, en 2025, un ensamble apilado que reporta 0,943 de una sola partición aleatoria 80/20.'
-            : 'The classical family has been extended many times, and a 2019 review surveys those extensions. Since 2012, a series of learned models has also been fitted to the same 97-blast corpus: a published neural network with its full specification, support-vector regression, forests, boosting and, in 2025, a stacked ensemble that reports 0.943 from one random 80/20 split.'}{' '}
+            ? 'La familia de Kuznetsov se ha extendido muchas veces y una revisión de 2019 recorre esas extensiones. Desde 2012, además, una serie de modelos aprendidos se ha ajustado sobre el mismo corpus de 97 tiros: una red neuronal publicada con su especificación completa, regresión por vectores de soporte, bosques, potenciación y, en 2025, un ensamble apilado que reporta 0,943 de una sola partición aleatoria 80/20.'
+            : 'The Kuznetsov family has been extended many times, and a 2019 review surveys those extensions. Since 2012, a series of learned models has also been fitted to the same 97-blast corpus: a published neural network with its full specification, support-vector regression, forests, boosting and, in 2025, a stacked ensemble that reports 0.943 from one random 80/20 split.'}{' '}
           <Cite id="ouchterlony2019" />{' '}
           <Cite id="kulatilake2012" />{' '}
           <Cite id="sui2025" />
@@ -99,13 +99,13 @@ function TechnicalView() {
               </li>
               <li>
                 {es
-                  ? `La ecuación clásica puntúa cerca de 0,30 bajo todo protocolo (${f(F.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana, ${f(F.site('kuznetsov'))} con el sitio excluido), y también ${f(F.site('kuznetsov-transfer'))} cuando su factor de roca se predice desde el módulo con los otros sitios.`
-                  : `The classical equation scores about 0.30 under every protocol (${f(F.random('kuznetsov')?.r2_identity)} at the median random split, ${f(F.site('kuznetsov'))} with its site held out), and ${f(F.site('kuznetsov-transfer'))} when its rock factor is predicted from the modulus using the other sites.`}
+                  ? `La ecuación de Kuznetsov puntúa cerca de 0,30 bajo todo protocolo (${f(F.random('kuznetsov')?.r2_identity)} en la partición aleatoria mediana, ${f(F.site('kuznetsov'))} con el sitio excluido), y también ${f(F.site('kuznetsov-transfer'))} cuando su factor de roca se predice desde el módulo con los otros sitios.`
+                  : `The Kuznetsov equation scores about 0.30 under every protocol (${f(F.random('kuznetsov')?.r2_identity)} at the median random split, ${f(F.site('kuznetsov'))} with its site held out), and ${f(F.site('kuznetsov-transfer'))} when its rock factor is predicted from the modulus using the other sites.`}
               </li>
               <li>
                 {es
-                  ? `Con diez sitios, ningún predictor que no se haya ajustado sobre el propio corpus tiene un intervalo por encima de cero: el clásico va de ${iv(F.interval('kuznetsov'), 2, true)}, el mejor aprendido de ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'), 2, true)}. Que el nivel aprendido cumpla el criterio declarado depende de si se puntúan los seis tiros de Miami.`
-                  : `With ten sites, no arm that was not fitted on the corpus itself has an interval above zero: the classical arm runs ${iv(F.interval('kuznetsov'))}, the best learned arm ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'))}. Whether the learned tier meets the declared criterion depends on whether the six Miami blasts are scored.`}
+                  ? `Con diez sitios, ningún predictor que no se haya ajustado sobre el propio corpus tiene un intervalo por encima de cero: el predictor de Kuznetsov va de ${iv(F.interval('kuznetsov'), 2, true)}, el mejor aprendido de ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'), 2, true)}. Que el nivel aprendido cumpla el criterio declarado depende de si se puntúan los seis tiros de Miami.`
+                  : `With ten sites, no arm that was not fitted on the corpus itself has an interval above zero: the Kuznetsov predictor runs ${iv(F.interval('kuznetsov'))}, the best learned arm ${iv(F.interval(benchmark?.verdict.supports.all.best_learned_arm ?? 'xgboost'))}. Whether the learned tier meets the declared criterion depends on whether the six Miami blasts are scored.`}
               </li>
             </ul>
           </Callout>
@@ -139,8 +139,8 @@ function TechnicalView() {
       <DocSection title={{ en: 'The mathematics: the relations the other pages use', es: 'La matemática: las relaciones que usan las demás páginas' }} area="math" refs={SECTION_REFS['intro-math']}>
         <p>
           {es
-            ? 'Tres relaciones recorren todo el producto. La primera es la ecuación clásica de tamaño medio, de Kuznetsov con la corrección de Cunningham por potencia del explosivo, tal como la imprimen las fuentes:'
-            : 'Three relations run through the whole product. The first is the classical mean-size equation, Kuznetsov with Cunningham’s explosive-strength correction, as the sources print it:'}{' '}
+            ? 'Tres relaciones recorren todo el producto. La primera es la ecuación de tamaño medio de Kuznetsov, con la corrección de Cunningham por potencia del explosivo, tal como la imprimen las fuentes:'
+            : 'Three relations run through the whole product. The first is the Kuznetsov mean-size equation, with Cunningham’s explosive-strength correction, as the sources print it:'}{' '}
           <Cite id="kuznetsov1973" />{' '}
           <Cite id="hudaverdi2010" />
         </p>
@@ -193,7 +193,7 @@ function TechnicalView() {
         <ol className="fr-list">
           <li>{es ? 'Se cargan los 97 tiros y se comprueba que reproducen la tabla de estadísticas descriptivas del propio artículo; esa comprobación encontró cinco errores de transcripción.' : 'Load the 97 blasts and check that they reproduce the source paper’s own descriptive-statistics table; that check found five transcription errors.'}</li>
           <li>{es ? 'Se recupera la malla en metros desde las razones y los diámetros que declara la prosa de la fuente, y se verifica contra quince restricciones que esa prosa también declara.' : 'Recover the pattern in metres from the ratios and the hole diameters the source prose states, and verify it against fifteen constraints the same prose states.'}</li>
-          <li>{es ? 'Se recupera un factor de roca por sitio invirtiendo la ecuación clásica sobre las predicciones publicadas.' : 'Recover a rock factor per site by inverting the classical equation on the published predictions.'}</li>
+          <li>{es ? 'Se recupera un factor de roca por sitio invirtiendo la ecuación de Kuznetsov sobre las predicciones publicadas.' : 'Recover a rock factor per site by inverting the Kuznetsov equation on the published predictions.'}</li>
           <li>{es ? 'Se parte la tabla de tres formas: cien particiones aleatorias, cien deduplicadas y diez retenciones de sitio completo.' : 'Split the table three ways: a hundred random splits, a hundred deduplicated ones, and ten whole-site hold-outs.'}</li>
           <li>{es ? 'Se ajusta cada predictor solo con las filas de entrenamiento de cada partición, y se predice cada fila de prueba o se registra por qué el predictor se abstiene.' : 'Fit each arm on each split’s training rows only, and predict each test row or record why the arm abstains.'}</li>
           <li>{es ? 'Se puntúa con la varianza explicada y con la correlación, con un modelo nulo al lado, sobre dos conjuntos de filas, con un intervalo por remuestreo de sitios.' : 'Score with variance explained and with correlation, with a null model beside each arm, on two row sets, with a site-resampled interval.'}</li>
@@ -253,8 +253,8 @@ function TechnicalView() {
         </div>
         <Callout variant="honest" title={es ? 'Lo que no se reproduce, y por qué' : 'What is not reproduced, and why'}>
           {es
-            ? 'Un híbrido de 2025 que combina una red convolucional, una máquina de vectores de soporte por mínimos cuadrados y un optimizador tipo Newton-Raphson reporta cifras fuertes sobre un superconjunto de este corpus. No se reproduce porque la regla de actualización del optimizador no se puede transcribir con confianza desde la copia disponible; se cita con sus cifras, no como un modelo de este producto. Las constantes que ninguna fuente imprime, como el factor de tiempo del modelo clásico modificado o las de la rama de finos, se exponen como parámetros del usuario.'
-            : 'A 2025 hybrid combining a convolutional network, a least-squares support-vector machine and a Newton-Raphson-based optimiser reports strong figures on a superset of this corpus. It is not reproduced, because the optimiser’s update rule cannot be transcribed with confidence from the copy available; it is cited with its figures, not as a model of this product. Constants that no source prints, such as the timing factor of the modified classical model or those of the fines branch, are exposed as user parameters.'}{' '}
+            ? 'Un híbrido de 2025 que combina una red convolucional, una máquina de vectores de soporte por mínimos cuadrados y un optimizador tipo Newton-Raphson reporta cifras fuertes sobre un superconjunto de este corpus. No se reproduce porque la regla de actualización del optimizador no se puede transcribir con confianza desde la copia disponible; se cita con sus cifras, no como un modelo de este producto. Las constantes que ninguna fuente imprime, como el factor de tiempo del modelo de Kuznetsov modificado o las de la rama de finos, se exponen como parámetros del usuario.'
+            : 'A 2025 hybrid combining a convolutional network, a least-squares support-vector machine and a Newton-Raphson-based optimiser reports strong figures on a superset of this corpus. It is not reproduced, because the optimiser’s update rule cannot be transcribed with confidence from the copy available; it is cited with its figures, not as a model of this product. Constants that no source prints, such as the timing factor of the modified Kuznetsov model or those of the fines branch, are exposed as user parameters.'}{' '}
           <Cite id="huan2025" />
         </Callout>
       </DocSection>

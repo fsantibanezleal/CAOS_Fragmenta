@@ -50,7 +50,7 @@ export const chargeLength = (p: LivePattern) =>
   Math.max(0, p.benchHeightM + (p.subdrillM ?? 0) - p.stemmingM);
 
 /**
- * The classical mean fragment size, in metres.
+ * The Kuznetsov mean fragment size, in metres.
  *
  *   x50 = A * (V/Q)^0.8 * Q^(1/6) * (RWS/115)^(-19/30)      [centimetres]
  *
@@ -159,7 +159,7 @@ export const CRUSH_ZONE_DEFAULTS: CrushZoneParameters = {
 };
 
 /**
- * The two-branch composition: the classical coarse branch plus a crushed-zone fines branch.
+ * The two-branch composition: the Kuz-Ram coarse branch plus a crushed-zone fines branch.
  *
  * The mechanism is sourced and the constants are not. No source held for this work prints the
  * crossover size, the fines-branch uniformity or the fines fraction, so they are the caller's and

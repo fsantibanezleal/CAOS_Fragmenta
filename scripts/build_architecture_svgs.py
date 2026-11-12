@@ -241,7 +241,7 @@ def tab1(F: dict, es: bool) -> tuple[str, float]:
     right = column(602, 276, 64, 12, [
         (t("What it finds", "Lo que encuentra"), [
             t(f"learned arms explain a median {F['medians'][0]:.2f} to {F['medians'][1]:.2f} on random splits and lose {F['gap'][0]:.2f} to {F['gap'][1]:.2f} with a site held out", f"los aprendidos explican una mediana de {F['medians'][0]:.2f} a {F['medians'][1]:.2f} al azar y pierden de {F['gap'][0]:.2f} a {F['gap'][1]:.2f} con el sitio excluido"),
-            t(f"the classical equation scores about 0.30 under every protocol ({F['kuz_site']:.3f} held out by site)", f"la ecuación clásica puntúa cerca de 0.30 en todo protocolo ({F['kuz_site']:.3f} con el sitio excluido)"),
+            t(f"the Kuznetsov equation scores about 0.30 under every protocol ({F['kuz_site']:.3f} held out by site)", f"la ecuación de Kuznetsov puntúa cerca de 0.30 en todo protocolo ({F['kuz_site']:.3f} con el sitio excluido)"),
             t("no arm fitted without the corpus has an interval above zero", "ningún predictor ajustado sin el corpus tiene un intervalo sobre cero"),
         ], "bad"),
     ])
@@ -269,7 +269,7 @@ def tab2(F: dict, es: bool) -> tuple[str, float]:
         (t(f"{F['n_models']} model files, {F['model_kb']} kB", f"{F['n_models']} archivos de modelos, {F['model_kb']} kB"), [t("the fitted arms of each training scope", "los predictores ajustados de cada alcance")], "warn"),
     ])
     live = column(602, 276, 64, 10, [
-        (t("Live: closed forms", "Vivo: formas cerradas"), [t("classical, curves, router, regression, in TypeScript; parity-tested on every baked blast", "clásica, curvas, enrutador, regresión, en TypeScript; paridad probada en cada tiro")], "good"),
+        (t("Live: closed forms", "Vivo: formas cerradas"), [t("Kuznetsov, curves, router, regression, in TypeScript; parity-tested on every baked blast", "Kuznetsov, curvas, enrutador, regresión, en TypeScript; paridad probada en cada tiro")], "good"),
         (t("Live: fitted models", "Vivo: modelos ajustados"), [t("network, kernels, trees, stack, refit, transfer line, walked from JSON; exact against the original fit", "red, núcleos, árboles, apilado, reajuste, recta; recorridos desde JSON; exactos frente al ajuste")], "good"),
     ])
     arrows = [arrow(offline[0].bottom(), offline[1].top()), arrow(offline[1].bottom(), offline[2].top())]
@@ -318,7 +318,7 @@ def tab3(F: dict, es: bool) -> tuple[str, float]:
 def tab4(F: dict, es: bool) -> tuple[str, float]:
     t = picker(es)
     a = column(22, 270, 64, 10, [
-        (t("A dimensionless corpus", "Un corpus adimensional"), [t("seven ratios and no dimensions; the classical equation needs volume and charge per hole", "siete razones y ninguna dimensión; la ecuación clásica necesita volumen y carga por barreno")], "bad"),
+        (t("A dimensionless corpus", "Un corpus adimensional"), [t("seven ratios and no dimensions; the Kuznetsov equation needs volume and charge per hole", "siete razones y ninguna dimensión; la ecuación de Kuznetsov necesita volumen y carga por barreno")], "bad"),
         (t("The prose closes it", "La prosa lo cierra"), ["B = (B/D)·D, V = B·S·H, Q = Pf·V", t("a diameter for 8 of 10 sites, a 9th from its bench height", "un diámetro en 8 de 10 sitios, un noveno desde su altura de banco")]),
         (t("Checked: 15 of 15", "Comprobado: 15 de 15"), [t("dimensional constraints the same prose states, at nine sites", "restricciones dimensionales que declara la misma prosa, en nueve sitios")], "good"),
     ])
@@ -327,7 +327,7 @@ def tab4(F: dict, es: bool) -> tuple[str, float]:
         (t("A transfer line", "Una recta de transferencia"), [t(f"the factor predicted from Young's modulus over training sites only: {F['transfer_site']:.3f} held out by site, against {F['kuz_site']:.3f} with the site's own factor", f"el factor predicho desde el módulo solo con los sitios de entrenamiento: {F['transfer_site']:.3f} con el sitio excluido, frente a {F['kuz_site']:.3f} con el factor propio")], "good"),
     ])
     c = column(602, 276, 64, 10, [
-        (t("Classical", "Clásicos"), [t("the mean size two ways, and three curve shapes that share it", "el tamaño medio de dos formas, y tres formas de curva que lo comparten")]),
+        (t("Empirical equations", "Ecuaciones empíricas"), [t("the mean size two ways, and three curve shapes that share it", "el tamaño medio de dos formas, y tres formas de curva que lo comparten")]),
         (t("Statistical", "Estadísticos"), [t("the router and the published regression, both fitted by their source on the corpus; the refit", "el enrutador y la regresión publicada, ambos ajustados por su fuente sobre el corpus; el reajuste")]),
         (t("Learned, 6", "Aprendidos, 6"), [t("network, two kernels, forest, boosting, stacking", "red, dos núcleos, bosque, potenciación, apilado")]),
         (t("Controls, 2", "Controles, 2"), [t("the null predicts the training mean; the oracle returns the measurement", "el nulo predice la media de entrenamiento; el oráculo devuelve la medición")]),

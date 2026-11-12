@@ -2,7 +2,7 @@
 
 # Diagnostics
 
-Benchmark baked with engine `blastfrag` 0.04.000 and application 0.10.000, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
+Benchmark baked with engine `blastfrag` 0.04.000 and application 0.10.001, 100 draws per random protocol, 2000 site resamples per interval, seed 0, corpus digest `9a72094d641a2557`.
 
 ## Outlier screen (Isolation Forest, Liu, Ting and Zhou 2008)
 
@@ -16,7 +16,7 @@ Flagged: Ru1, Ru4, Db4, Db5, Mi6 (by site: Dongri-Buzurg 2, Miami 1, Reocin-UG 2
 |---|---|---|---|---|---|---|---|
 | random forest, native (mean decrease in impurity) | 0.014 | 0.051 | 0.006 | 0.132 | 0.048 | 0.143 | 0.606 |
 | gradient boosting, native (xgboost gain) | 0.008 | 0.014 | 0.004 | 0.007 | 0.008 | 0.040 | 0.919 |
-| classical mean size, transfer factor, held-out-site resampling share | 0.000 | 0.218 | 0.000 | 0.000 | 0.370 | 0.000 | 0.412 |
+| Kuznetsov mean size, transferred rock factor, held-out-site resampling share | 0.000 | 0.218 | 0.000 | 0.000 | 0.370 | 0.000 | 0.412 |
 | published neural network, held-out-site resampling share | 0.188 | 0.262 | 0.363 | 0.021 | 0.000 | 0.000 | 0.167 |
 | published regression, held-out-site resampling share | 0.074 | 0.304 | 0.002 | 0.141 | 0.021 | 0.035 | 0.424 |
 | random forest, held-out-site resampling share | 0.000 | 0.000 | 0.003 | 0.234 | 0.053 | 0.000 | 0.711 |

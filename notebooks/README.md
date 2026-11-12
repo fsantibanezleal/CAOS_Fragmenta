@@ -2,36 +2,36 @@
 
 Didactic notebooks for the blast-fragmentation test bench, in two trees that hold the same notebooks: [`en/`](en/README.md) in English and
 [`es/`](es/README.md) in Spanish. They teach, step by step and on the product's own data, how the engine's methods work, where each stands against the
-state of the art, and what the product adds beyond it. The methods live in the engine, the PyPI package
+published methods, and what the product adds beyond them. The methods live in the engine, the PyPI package
 [`blastfrag`](https://pypi.org/project/blastfrag/) (pinned `0.4.0`), and in the named pipeline `data-pipeline/`; a notebook imports them and never
 re-implements them.
 
 Los notebooks didácticos del banco de pruebas de fragmentación por voladura, en dos árboles que contienen los mismos notebooks: [`en/`](en/README.md) en inglés y
 [`es/`](es/README.md) en español. Enseñan, paso a paso y sobre los datos del propio producto, cómo funcionan los métodos del motor, dónde está cada uno
-frente al estado del arte y qué aporta el producto más allá de él. Los métodos viven en el motor, el paquete de PyPI
+frente a los métodos publicados y qué aporta el producto más allá de ellos. Los métodos viven en el motor, el paquete de PyPI
 [`blastfrag`](https://pypi.org/project/blastfrag/) (fijado en `0.4.0`), y en el pipeline `data-pipeline/`; un notebook los importa y nunca los reimplementa.
 
 ## What the set covers
 
-Six topics, from simple to complex. Each topic has a fundamentals notebook and a method notebook, and some add a state-of-the-art and a beyond-the-state-of-the-art one.
+Six topics, from simple to complex. Each topic has a fundamentals notebook and a method notebook, and some add a comparison with published methods and a notebook on the product's own method.
 
 | Topic | Question | Levels |
 |---|---|---|
 | `01-the-data` | What are the 97 blasts, how is their geometry recovered, and what keeps the table honest? | 1, 2, 4 |
-| `02-classical-prediction` | How does the classical mean-size equation work, where does its one free number come from, and how much of its score is borrowed? | 1, 2, 3, 4 |
+| `02-kuznetsov-prediction` | How does the Kuznetsov mean-size equation work, where does its one free number come from, and how much of its score is borrowed? | 1, 2, 3, 4 |
 | `03-size-distribution` | How is a mean size turned into a curve a crusher can be specified against? | 1, 2 |
 | `04-benchmark-protocol` | How is a prediction judged on blasts the model has not seen, and what does a published score look like inside its own protocol? | 1, 2, 3, 4 |
 | `05-learned-arms` | What do the learned arms do on a campaign they have not seen, why does each refuse where it does, and what is the published network worth? | 1, 2, 3 |
 | `06-design-response` | How does a prediction respond when the design changes, and how does the browser compute it live? | 1, 2, 4 |
 
-Levels: 1 fundamentals, 2 the method in practice, 3 state of the art, 4 beyond the state of the art. The index of each tree lists every notebook, what it
-teaches and the reason a topic has no state-of-the-art notebook.
+Levels: 1 fundamentals, 2 the method in practice, 3 comparison with published methods, 4 evidence for the product's own method. The index of each tree lists every notebook, what it
+teaches and the reason a topic has no comparison notebook.
 
 ## Cubre el conjunto
 
-Seis temas, de simple a complejo. Cada tema tiene un notebook de fundamentos y uno del método, y algunos suman uno de estado del arte y otro más allá del estado del arte.
-Los niveles son los mismos: 1 fundamentos, 2 el método en la práctica, 3 estado del arte, 4 más allá del estado del arte. El índice de cada árbol lista cada notebook,
-qué enseña y la razón por la que un tema no tiene notebook de estado del arte.
+Seis temas, de simple a complejo. Cada tema tiene un notebook de fundamentos y uno del método, y algunos suman uno de comparación con métodos publicados y otro sobre el método propio del producto.
+Los niveles son los mismos: 1 fundamentos, 2 el método en la práctica, 3 comparación con métodos publicados, 4 evidencia del método propio del producto. El índice de cada árbol lista cada notebook,
+qué enseña y la razón por la que un tema no tiene notebook de comparación.
 
 ## How to run them
 

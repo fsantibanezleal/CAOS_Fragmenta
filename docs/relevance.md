@@ -71,7 +71,7 @@ rock volume and charge per hole rather than with ratios alone.
 moves with burden, spacing and powder factor.
 
 <!-- facts:arm-kuznetsov -->
-Evidence for **classical mean size, site factor** in the committed benchmark (variance explained about the identity line):
+Evidence for **Kuznetsov mean size, site rock factor** in the committed benchmark (variance explained about the identity line):
 
 - random 80/20, 100 draws: median 0.303, 5th to 95th percentile -0.59 to 0.74;
 - deduplicated, 100 draws: median 0.310;
@@ -95,7 +95,7 @@ sites, so it answers whether the baseline's held-out score was borrowed.
 **Decision it informs.** A classical prediction at a mine where only the rock's modulus is known.
 
 <!-- facts:arm-kuznetsov-transfer -->
-Evidence for **classical mean size, transfer factor** in the committed benchmark (variance explained about the identity line):
+Evidence for **Kuznetsov mean size, transferred rock factor** in the committed benchmark (variance explained about the identity line):
 
 - random 80/20, 100 draws: median 0.312, 5th to 95th percentile -0.57 to 0.69;
 - deduplicated, 100 draws: median 0.331;

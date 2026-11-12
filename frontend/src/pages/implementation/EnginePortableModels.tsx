@@ -45,7 +45,7 @@ const KINDS: { kind: string; stored: Bi; evaluated: Bi }[] = [
   {
     kind: 'kuznetsov-transfer',
     stored: { en: 'the fitted line of the log rock factor on the log Young modulus', es: 'la recta ajustada del logaritmo del factor de roca sobre el logaritmo del módulo de Young' },
-    evaluated: { en: 'returns the rock factor; the browser’s classical equation does the rest', es: 'devuelve el factor de roca; la ecuación clásica del navegador hace el resto' },
+    evaluated: { en: 'returns the rock factor; the browser’s Kuznetsov equation does the rest', es: 'devuelve el factor de roca; la ecuación de Kuznetsov del navegador hace el resto' },
   },
 ];
 

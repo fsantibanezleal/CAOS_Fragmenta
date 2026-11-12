@@ -49,7 +49,7 @@ const SHARED_CITATIONS: Citation[] = [
     citation:
       'Amoako, R., Jha, A. and Zhong, S. (2022). Rock fragmentation prediction using an artificial ' +
       'neural network and support vector regression hybrid approach. Mining 2:233-247. Open access, ' +
-      'CC BY. Held. Controllable and uncontrollable blast parameters, the classical equations as ' +
+      'CC BY. Held. Controllable and uncontrollable blast parameters, the empirical equations as ' +
       'printed, the uniformity index, the Swebrec form, the two-branch crush-zone mechanism, and the ' +
       'support-vector hyperparameters.',
     doi: '10.3390/mining2020013',

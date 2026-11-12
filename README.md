@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Fragmenta predicts the mean fragment size x50 of a bench blast from its design and its rock, with ten
-published predictors from the 1973 classical equation to the 2025 stacking ensemble, and measures what
+published predictors from the 1973 Kuznetsov equation to the 2025 stacking ensemble, and measures what
 each prediction is worth at a mine the model has not seen. It is a test bench over 97 published bench
 blasts from ten campaigns in five countries, with two published hold-outs and five field blasts outside
 the corpus envelope, and a web application where every model, the learned ones included, recomputes
@@ -59,7 +59,7 @@ What that supports, and what it does not:
   both row sets and for every learned arm. Collapsing duplicated inputs does not explain the gap; the
   shared campaign does.
 - **With ten campaigns, no arm that was not fitted on the corpus itself has a site-resampled interval
-  above zero.** The classical equation scores about 0.30 under every protocol, and about the same with
+  above zero.** The Kuznetsov equation scores about 0.30 under every protocol, and about the same with
   its rock factor predicted from the modulus over the other sites, so its score is not borrowed from the
   held-out site; its interval still spans zero.
 - **The published regression's held-out score is in sample**: its source fitted it on these same 97
@@ -79,7 +79,7 @@ in [docs/relevance.md](docs/relevance.md); the full tables are in [docs/results.
 
 - **The corpus had five transcription errors** against the published tables, two on the measured size.
   The paper prints its own summary statistics; the integrity gate now reproduces them on every load.
-- **The corpus is dimensionless, so the classical equation could not run on it.** The source prose gives
+- **The corpus is dimensionless, so the Kuznetsov equation could not run on it.** The source prose gives
   a hole diameter for eight of ten campaigns, a ninth follows from its bench height, and the
   reconstruction holds against all fifteen dimensional constraints the same prose states.
 - **The rock factors both papers say they estimated were never printed.** Back-solved from the published
@@ -94,12 +94,12 @@ in [docs/relevance.md](docs/relevance.md); the full tables are in [docs/results.
 Reproduced on the 2012 hold-out, the source's width selection picks 8 hidden units for the high-modulus group and 11 for the low, against the published 9 and 7. Held out by site, every width from 6 to 15 scores from -1.486 to -0.568, and the published pair -0.626; the null, which predicts the training mean, scores -0.216.
 <!-- /facts -->
 
-- **The classical equation can predict a mean size larger than the in-situ block it breaks.** Capping
+- **The Kuznetsov equation can predict a mean size larger than the in-situ block it breaks.** Capping
   it at the block is a declared choice, not a published relation, so it is benchmarked as its own arm
   beside the uncapped one:
 
 <!-- facts:cap -->
-The cap binds on 3 corpus blasts, where the classical prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the classical arm from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
+The cap binds on 3 corpus blasts, where the Kuznetsov prediction exceeds the in-situ block: Rc1 predicted at 0.720 m against a 0.68 m block and measured at 0.46 m; Rc2 predicted at 0.765 m against a 0.68 m block and measured at 0.48 m; Rc3 predicted at 0.806 m against a 0.68 m block and measured at 0.48 m. Held out by site it moves the Kuznetsov predictor from 0.311 to 0.352 (site-resampled interval -0.95 to 0.74), and the median of the random draws from 0.303 to 0.399.
 <!-- /facts -->
 
 ## The application
@@ -181,7 +181,7 @@ missing values, outliers) is in [docs/data/04_data-contract.md](docs/data/04_dat
 
 No mechanistic simulation (discrete-element, grain-based or hybrid stress models), no non-ideal
 detonation, no flyrock, ground vibration or comminution model. The initiation sequence of the bench view
-(the App's Design group) is drawn and enters no prediction: the timing factor of the modified classical model is a scalar.
+(the App's Design group) is drawn and enters no prediction: the timing factor of the modified Kuznetsov model is a scalar.
 Constants that no held source prints, such as that timing factor and the crush-zone branch, are user
 parameters with stated ranges. No passing curve is validated here, because no available dataset carries
 a measured one.

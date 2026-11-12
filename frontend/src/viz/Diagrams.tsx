@@ -287,8 +287,8 @@ export function OverviewDiagram() {
       )}
       notes={[
         t(
-          'The geometry step is what lets the classical equation run at all: the corpus prints ratios, and the hole diameters in the source prose turn them into metres for 91 of the 97 blasts.',
-          'El paso de geometría es lo que permite que la ecuación clásica corra: el corpus imprime razones, y los diámetros de perforación de la prosa de la fuente las convierten en metros para 91 de los 97 tiros.',
+          'The geometry step is what lets the Kuznetsov equation run at all: the corpus prints ratios, and the hole diameters in the source prose turn them into metres for 91 of the 97 blasts.',
+          'El paso de geometría es lo que permite que la ecuación de Kuznetsov corra: el corpus imprime razones, y los diámetros de perforación de la prosa de la fuente las convierten en metros para 91 de los 97 tiros.',
         ),
       ]}
     >
@@ -326,8 +326,8 @@ export function BenchSectionDiagram() {
       height={300}
       label={t('Bench blast terminology', 'Terminología de una voladura de banco')}
       caption={t(
-        'Left, a section through the bench; right, the pattern seen from above. These are the quantities the classical equation uses in metres and the corpus records only as ratios: S/B, H/B, B/D and T/B.',
-        'A la izquierda, un corte del banco; a la derecha, la malla vista desde arriba. Son las magnitudes que la ecuación clásica usa en metros y que el corpus registra solo como razones: S/B, H/B, B/D y T/B.',
+        'Left, a section through the bench; right, the pattern seen from above. These are the quantities the Kuznetsov equation uses in metres and the corpus records only as ratios: S/B, H/B, B/D and T/B.',
+        'A la izquierda, un corte del banco; a la derecha, la malla vista desde arriba. Son las magnitudes que la ecuación de Kuznetsov usa en metros y que el corpus registra solo como razones: S/B, H/B, B/D y T/B.',
       )}
       notes={[
         t(
@@ -403,10 +403,10 @@ export function ClassicalFlowDiagram() {
   return (
     <Figure
       height={bottomOf(boxes) + 12}
-      label={t('The classical model, term by term', 'El modelo clásico, término a término')}
+      label={t('The Kuznetsov model, term by term', 'El modelo de Kuznetsov, término a término')}
       caption={t(
-        'The classical chain. The rock factor enters multiplicatively, so a predicted size is linear in it; the uniformity index sets the shape around the mean size and never moves the mean size itself.',
-        'La cadena clásica. El factor de roca entra multiplicando, así que el tamaño predicho es lineal en él; el índice de uniformidad fija la forma alrededor del tamaño medio y nunca mueve el tamaño medio.',
+        'The Kuznetsov chain. The rock factor enters multiplicatively, so a predicted size is linear in it; the uniformity index sets the shape around the mean size and never moves the mean size itself.',
+        'La cadena de Kuznetsov. El factor de roca entra multiplicando, así que el tamaño predicho es lineal en él; el índice de uniformidad fija la forma alrededor del tamaño medio y nunca mueve el tamaño medio.',
       )}
       notes={[
         t(
@@ -882,7 +882,7 @@ export function ReconstructionDiagram() {
   const pattern = centred({ x: 262, w: 200, tone: 'accent', title: t('Pattern in metres', 'Malla en metros'), lines: ['B = (B/D)·D', 'S, H, T from ratios', 'V = B·S·H, Q = Pf·V'] }, bottomOf(inputs) / 2 + 7);
   const checks = column(502, 386, 14, 12, [
     { title: t('Checked against the prose', 'Comprobada contra la prosa'), tone: 'good', lines: [t('15 stated constraints, 9 sites,', '15 restricciones declaradas, 9 sitios,'), t('all satisfied', 'todas satisfechas')] },
-    { title: t('Cannot be reconstructed', 'No reconstruible'), tone: 'bad', lines: [t('Miami: no diameter stated,', 'Miami: sin diámetro declarado,'), t('6 blasts, classical arms abstain', '6 tiros, los predictores clásicos se abstienen')] },
+    { title: t('Cannot be reconstructed', 'No reconstruible'), tone: 'bad', lines: [t('Miami: no diameter stated,', 'Miami: sin diámetro declarado,'), t('6 blasts, Kuznetsov predictors abstain', '6 tiros, los predictores de Kuznetsov se abstienen')] },
   ]);
   const boxes = [...inputs, pattern, ...checks];
   return (
@@ -987,7 +987,7 @@ export function SafeProtocolDiagram() {
 export function SupportsDiagram({ all, geometry }: { all?: { n: number; best: number | null; arm: string } | null; geometry?: { n: number; best: number | null; arm: string } | null }) {
   const t = useT();
   const f = (v?: number | null) => (v === undefined || v === null ? '...' : num(v, 3));
-  const a = place({ x: 12, y: 14, w: 420, tone: 'bad', title: t(`All ${all?.n ?? 97} blasts`, `Los ${all?.n ?? 97} tiros`), lines: [t(`best learned: ${all?.arm ?? '...'} ${f(all?.best)}`, `mejor aprendido: ${all?.arm ?? '...'} ${f(all?.best)}`), t('includes Miami: smallest fragments,', 'incluye Miami: fragmentos más finos,'), t('no geometry, classical arms abstain', 'sin geometría, los clásicos se abstienen')] });
+  const a = place({ x: 12, y: 14, w: 420, tone: 'bad', title: t(`All ${all?.n ?? 97} blasts`, `Los ${all?.n ?? 97} tiros`), lines: [t(`best learned: ${all?.arm ?? '...'} ${f(all?.best)}`, `mejor aprendido: ${all?.arm ?? '...'} ${f(all?.best)}`), t('includes Miami: smallest fragments,', 'incluye Miami: fragmentos más finos,'), t('no geometry, Kuznetsov predictors abstain', 'sin geometría, los de Kuznetsov se abstienen')] });
   const g = place({ x: 468, y: 14, w: 420, tone: 'good', title: t(`The ${geometry?.n ?? 91} with geometry`, `Los ${geometry?.n ?? 91} con geometría`), lines: [t(`best learned: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`, `mejor aprendido: ${geometry?.arm ?? '...'} ${f(geometry?.best)}`), t('the rows every arm can answer,', 'las filas que todo predictor responde,'), t('so arms are compared like for like', 'así se comparan en igualdad')] });
   const boxes = [a, g];
   return (

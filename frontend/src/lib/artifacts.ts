@@ -149,7 +149,7 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'kuznetsov',
     tier: 'classical',
-    label: { en: 'Classical mean size, site factor', es: 'Tamaño medio clásico, factor del sitio' },
+    label: { en: 'Kuznetsov mean size, site rock factor', es: 'Tamaño medio de Kuznetsov, factor de roca del sitio' },
     blurb: {
       en: 'The 1973 equation with the explosive-strength correction. Its rock factor is recovered from the published predictions for the blast’s own site. Needs a rock volume and a charge mass, so it abstains where the scale is unpublished.',
       es: 'La ecuación de 1973 con la corrección por potencia del explosivo. Su factor de roca se recupera de las predicciones publicadas para el propio sitio del tiro. Necesita volumen de roca y masa de carga, así que se abstiene donde no se publica la escala.',
@@ -160,7 +160,7 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'kuznetsov-transfer',
     tier: 'classical',
-    label: { en: 'Classical mean size, transfer factor', es: 'Tamaño medio clásico, factor transferido' },
+    label: { en: 'Kuznetsov mean size, transferred rock factor', es: 'Tamaño medio de Kuznetsov, factor de roca transferido' },
     blurb: {
       en: 'The same equation with the rock factor predicted from Young’s modulus by a line fitted over the training sites only, so nothing about the target site is used. A calibration of this product, not a published relation.',
       es: 'La misma ecuación con el factor de roca predicho desde el módulo de Young por una recta ajustada solo sobre los sitios de entrenamiento, así que no se usa nada del sitio objetivo. Una calibración de este producto, no una relación publicada.',
@@ -172,12 +172,12 @@ export const ARMS: ArmMeta[] = [
     id: 'kuznetsov-capped',
     tier: 'classical',
     label: {
-      en: 'Classical mean size, capped at the in-situ block',
-      es: 'Tamaño medio clásico, limitado al bloque in situ',
+      en: 'Kuznetsov mean size, capped at the in-situ block',
+      es: 'Tamaño medio de Kuznetsov, limitado al bloque in situ',
     },
     blurb: {
-      en: 'The classical mean size with the site factor, capped at the blast’s in-situ block size, because a blast breaks blocks and does not fuse them. A declared choice of the engine, not a published relation: it changes a prediction only where the classical one exceeds the block, which on the corpus is three Reocin blasts.',
-      es: 'El tamaño medio clásico con el factor del sitio, limitado al tamaño de bloque in situ del tiro, porque una voladura rompe bloques y no los une. Una elección declarada del motor, no una relación publicada: cambia una predicción solo donde la clásica supera el bloque, que en el corpus son tres tiros de Reocin.',
+      en: 'The Kuznetsov mean size with the site factor, capped at the blast’s in-situ block size, because a blast breaks blocks and does not fuse them. A declared choice of the engine, not a published relation: it changes a prediction only where the Kuznetsov one exceeds the block, which on the corpus is three Reocin blasts.',
+      es: 'El tamaño medio de Kuznetsov con el factor del sitio, limitado al tamaño de bloque in situ del tiro, porque una voladura rompe bloques y no los une. Una elección declarada del motor, no una relación publicada: cambia una predicción solo donde la de Kuznetsov supera el bloque, que en el corpus son tres tiros de Reocin.',
     },
     distribution: false,
     cappedFrom: 'kuznetsov',
@@ -186,10 +186,10 @@ export const ARMS: ArmMeta[] = [
   {
     id: 'kuz-ram',
     tier: 'classical',
-    label: { en: 'Classical distribution', es: 'Distribución clásica' },
+    label: { en: 'Kuz-Ram distribution', es: 'Distribución Kuz-Ram' },
     blurb: {
-      en: 'The classical mean size with a two-parameter Rosin-Rammler curve around it, shaped by the Cunningham uniformity index. Same mean size as the classical arm; only the shape is added, and no measured curve validates it.',
-      es: 'El tamaño medio clásico con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham. Mismo tamaño medio que el predictor clásico; solo agrega la forma, y ninguna curva medida la valida.',
+      en: 'The Kuznetsov mean size with a two-parameter Rosin-Rammler curve around it, shaped by the Cunningham uniformity index. Same mean size as the Kuznetsov predictor; only the shape is added, and no measured curve validates it.',
+      es: 'El tamaño medio de Kuznetsov con una curva Rosin-Rammler de dos parámetros, moldeada por el índice de uniformidad de Cunningham. Mismo tamaño medio que el predictor de Kuznetsov; solo agrega la forma, y ninguna curva medida la valida.',
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',
@@ -200,8 +200,8 @@ export const ARMS: ArmMeta[] = [
     tier: 'classical',
     label: { en: 'Three-parameter distribution', es: 'Distribución de tres parámetros' },
     blurb: {
-      en: 'Adds an explicit upper size limit, which bounds the coarse tail and reshapes the fines branch. Same mean size as the classical arm; no measured curve validates the shape.',
-      es: 'Agrega un límite superior explícito, que acota la cola gruesa y reforma la rama de finos. Mismo tamaño medio que el predictor clásico; ninguna curva medida valida la forma.',
+      en: 'Adds an explicit upper size limit, which bounds the coarse tail and reshapes the fines branch. Same mean size as the Kuznetsov predictor; no measured curve validates the shape.',
+      es: 'Agrega un límite superior explícito, que acota la cola gruesa y reforma la rama de finos. Mismo tamaño medio que el predictor de Kuznetsov; ninguna curva medida valida la forma.',
     },
     distribution: true,
     sharesMeanSizeWith: 'kuznetsov',
@@ -329,8 +329,8 @@ export const ARMS: ArmMeta[] = [
     tier: 'learned',
     label: { en: 'Stacking ensemble', es: 'Ensamble apilado' },
     blurb: {
-      en: 'The 2025 state of the art on this corpus: forest and boosting under a linear meta-learner fitted on their in-sample predictions, as published. Fitted that way it gives the boosting learner almost all the weight and behaves like it.',
-      es: 'El estado del arte 2025 sobre este corpus: bosque y potenciación bajo un meta-modelo lineal ajustado sobre sus predicciones en muestra, como se publicó. Ajustado así, le da casi todo el peso al aprendiz de potenciación y se comporta como él.',
+      en: 'The most recent published model on this corpus (2025): forest and boosting under a linear meta-learner fitted on their in-sample predictions, as published. Fitted that way it gives the boosting learner almost all the weight and behaves like it.',
+      es: 'El modelo publicado más reciente sobre este corpus (2025): bosque y potenciación bajo un meta-modelo lineal ajustado sobre sus predicciones en muestra, como se publicó. Ajustado así, le da casi todo el peso al aprendiz de potenciación y se comporta como él.',
     },
     distribution: false,
     source: { en: 'Sui et al. 2025, section 4', es: 'Sui et al. 2025, sección 4' },
@@ -359,7 +359,7 @@ export const IN_SAMPLE_ARMS: Record<string, Record<Lang, string>> = {
 
 export const TIER_LABEL: Record<Tier, Record<Lang, string>> = {
   control: { en: 'Controls', es: 'Controles' },
-  classical: { en: 'Classical', es: 'Clásicos' },
+  classical: { en: 'Empirical equations', es: 'Ecuaciones empíricas' },
   'semi-mechanistic': { en: 'Semi-mechanistic', es: 'Semi-mecanicistas' },
   statistical: { en: 'Statistical', es: 'Estadísticos' },
   learned: { en: 'Learned', es: 'Aprendidos' },

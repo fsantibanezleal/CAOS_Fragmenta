@@ -69,7 +69,7 @@ export interface Answer {
 }
 
 export interface DesignContext {
-  /** The case's recovered rock factor for the classical arm, or null where the site has no geometry. */
+  /** The case's recovered rock factor for the Kuznetsov predictor, or null where the site has no geometry. */
   rockFactor: number | null;
   /** The case's training-scope models, or null while they load. */
   models: ModelsFile | null;
@@ -140,7 +140,7 @@ export function answerOnDesign(arm: string, design: LiveBlast, holeMm: number, c
         ? { value: null, reason: es ? 'sin factor de roca recuperado para este sitio' : 'no recovered rock factor for this site' }
         : plausible(kuznetsovX50M(pattern, ctx.rockFactor), ctx.lang);
     case 'kuznetsov-capped': {
-      // The cap reads the design's own in-situ block, so moving that ratio below the classical size shows it bind.
+      // The cap reads the design's own in-situ block, so moving that ratio below the Kuznetsov size shows it bind.
       const base = answerOnDesign('kuznetsov', design, holeMm, ctx);
       return !base || base.value === null ? base : plausible(cappedAtInSituBlock(base.value, design.XB_m), ctx.lang);
     }
@@ -172,7 +172,7 @@ const GRID = sieveGrid();
 
 /**
  * The 80 percent passing size of a design, from a mean size and the design's own uniformity (Cunningham's index on
- * the Rosin-Rammler curve). A declared choice: no learned arm predicts a curve, so its P80 takes the classical shape.
+ * the Rosin-Rammler curve). A declared choice: no learned arm predicts a curve, so its P80 takes the Kuz-Ram shape.
  */
 export function p80Of(x50M: number, design: LiveBlast, holeMm: number): number {
   const curve = rosinRammler(x50M, uniformityIndex(patternFromRatios(design, holeMm)), GRID);

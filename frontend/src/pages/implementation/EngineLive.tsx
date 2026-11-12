@@ -18,8 +18,8 @@ export function EngineLive({ es }: TopicProps) {
     >
       <p>
         {t(
-          'The closed forms were rewritten in TypeScript so that changing a design moves the curve without waiting on a server: the classical mean-size equation, the uniformity index, the two- and three-parameter curves, the two-branch composition, the discriminant function, the two published power laws and the guard that refuses a design whose stemming swallows the bench.',
-          'Las formas cerradas se reescribieron en TypeScript para que cambiar un diseño mueva la curva sin esperar a un servidor: la ecuación clásica de tamaño medio, el índice de uniformidad, las curvas de dos y tres parámetros, la composición de dos ramas, la función discriminante, las dos leyes de potencia publicadas y la guarda que rechaza un diseño cuyo taco se come el banco.',
+          'The closed forms were rewritten in TypeScript so that changing a design moves the curve without waiting on a server: the Kuznetsov mean-size equation, the uniformity index, the two- and three-parameter curves, the two-branch composition, the discriminant function, the two published power laws and the guard that refuses a design whose stemming swallows the bench.',
+          'Las formas cerradas se reescribieron en TypeScript para que cambiar un diseño mueva la curva sin esperar a un servidor: la ecuación de tamaño medio de Kuznetsov, el índice de uniformidad, las curvas de dos y tres parámetros, la composición de dos ramas, la función discriminante, las dos leyes de potencia publicadas y la guarda que rechaza un diseño cuyo taco se come el banco.',
         )}{' '}
         <Cite id="amoako2022" />{' '}
         <Cite id="hudaverdi2010" />
